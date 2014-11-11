@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "python": {
+            "type": "string"
+          }
+        }
+      }
+    ]
+  }
+}

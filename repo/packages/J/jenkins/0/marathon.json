@@ -1,0 +1,40 @@
+{
+  "id": "jenkins",
+  "cpus": "0.5",
+  "mem": "512",
+  "instances": "1",
+  "args": [],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "thefactory/jenkins-mesos",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 0,
+          "servicePort": {{{jenkins.servicePort}}},
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "volumes": [
+      {
+        "containerPath": "/jenkins",
+        "hostPath": "/var/lib/jenkins",
+        "mode": "RW"
+      }
+    ]
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/",
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ]
+}
+
