@@ -112,7 +112,7 @@ for more detailed instruction on app definitions.
 
 #### `command.json`
 
-This file is **optional** Describes how to install the package's CLI.
+This file is **optional**. Describes how to install the package's CLI.
 Currently the only supported format is a Python egg.
 
 ```json
