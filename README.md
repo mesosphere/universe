@@ -86,7 +86,7 @@ using [moustache template](http://mustache.github.io/) systax.
   "cpus": "1.0",
   "mem": "1024",
   "instances": "1",
-  "args": [],
+  "args": ["{{{foo.baz}}}"],
   "container": {
     "type": "DOCKER",
     "docker": {
