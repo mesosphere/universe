@@ -34,7 +34,6 @@ _Sample package directory layout._
   "version": "1.2.3",
   "scm": "https://github.com/bar/foo.git",
   "maintainer": "help@bar.io",
-  "website": "http://bar.io/foo",
   "description": "Does baz."
 }
 ```
