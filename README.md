@@ -133,8 +133,9 @@ The schema definitions live in `/repo/meta/schema`.
 ├── README.md
 ├── docs
 │   ├── best-practices.md
-│   ├── contributing.md
-│   └── specification.md
+│   └── contributing.md
+├── hooks
+│   └── pre-commit
 ├── repo
 │   ├── meta
 │   │   ├── index.json
@@ -149,6 +150,7 @@ The schema definitions live in `/repo/meta/schema`.
 │       ├── B
 │       │   ├── bar
 │       │   │   ├── 0
+│       │   │   │   ├── command.json
 │       │   │   │   ├── marathon.json
 │       │   │   │   └── package.json
 │       │   │   └── ...
@@ -165,6 +167,8 @@ The schema definitions live in `/repo/meta/schema`.
     ├── 1-validate-packages.sh
     ├── 2-build-index.sh
     ├── 3-validate-index.sh
-    └── 4-detect-dependency-cycles.sh
+    ├── 4-detect-dependency-cycles.sh
+    ├── build.sh
+    └── install-git-hooks.sh
 ```
 
