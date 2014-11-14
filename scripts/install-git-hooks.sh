@@ -14,7 +14,5 @@ for file in $(ls $HOOKS_DIR); do
   chmod +x "$GIT_HOOKS_DIR/$file";
 done
 
-cp $HOOKS_DIR/* $UNIVERSE_DIR/.git/hooks/
-
 echo "OK";
 
