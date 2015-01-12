@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Universe by mesosphere</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Universe</h1>
+        <p>The Mesos package repository.</p>
+
+        <p class="view"><a href="https://github.com/mesosphere/universe">View the Project on GitHub <small>mesosphere/universe</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/mesosphere/universe/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mesosphere/universe/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mesosphere/universe">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="universe" class="anchor" href="#universe" aria-hidden="true"><span class="octicon octicon-link"></span></a>Universe</h1>
+
+<p>The Mesos package repository.</p>
+
+<h2>
+<a id="package-entries" class="anchor" href="#package-entries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Package entries</h2>
+
+<h3>
+<a id="organization" class="anchor" href="#organization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Organization</h3>
+
+<p>Packages are encapsulated in their own directory, with one subdirectory
+for each package version.</p>
+
+<pre><code>└── foo
+    ├── 0
+    │   ├── command.json
+    │   ├── marathon.json
+    │   └── package.json
+    ├── 1
+    │   ├── command.json
+    │   ├── marathon.json
+    │   └── package.json
+    └── ...
+
+</code></pre>
+
+<p><em>Sample package directory layout.</em></p>
+
+<h3>
+<a id="content" class="anchor" href="#content" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h3>
+
+<h4>
+<a id="packagejson" class="anchor" href="#packagejson" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>package.json</code>
+</h4>
+
+<div class="highlight highlight-json"><pre>{
+  <span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1.2.3<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>scm<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>https://github.com/bar/foo.git<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>maintainer<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>help@bar.io<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Does baz.<span class="pl-pds">"</span></span>
+}</pre></div>
+
+<p><em>Sample <code>package.json</code> (minimal).</em></p>
+
+<p>Additionally, site-specific metadata and dependencies may be specified,
+as shown in the following example.</p>
+
+<div class="highlight highlight-json"><pre>{
+  <span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1.2.3<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>scm<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>https://github.com/bar/foo.git<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>maintainer<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>help@bar.io<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>http://bar.io/foo<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Does baz.<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>dataSchema<span class="pl-pds">"</span></span>: {
+    <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>object<span class="pl-pds">"</span></span>,
+    <span class="pl-s1"><span class="pl-pds">"</span>properties<span class="pl-pds">"</span></span>: {
+      <span class="pl-s1"><span class="pl-pds">"</span>foo.baz<span class="pl-pds">"</span></span>: {
+        <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>integer<span class="pl-pds">"</span></span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>How many times to do baz.<span class="pl-pds">"</span></span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>minimum<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>maximum<span class="pl-pds">"</span></span>: <span class="pl-c1">16</span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>: <span class="pl-c1">false</span>,
+        <span class="pl-s1"><span class="pl-pds">"</span>default<span class="pl-pds">"</span></span>: <span class="pl-c1">4</span>
+      }
+    },
+    <span class="pl-s1"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>: [<span class="pl-s1"><span class="pl-pds">"</span>foo.baz<span class="pl-pds">"</span></span>]
+  },
+  <span class="pl-s1"><span class="pl-pds">"</span>dependencies<span class="pl-pds">"</span></span>: [
+    { <span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>biz<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1.2.+<span class="pl-pds">"</span></span> }
+  ]
+}</pre></div>
+
+<p><em>Sample <code>package.json</code> (advanced).</em></p>
+
+<h4>
+<a id="marathonjson" class="anchor" href="#marathonjson" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>marathon.json</code>
+</h4>
+
+<p>This file describes how to run the package as a
+<a href="http://github.com/mesosphere/marathon">Marathon</a> app.</p>
+
+<p>User-supplied metadata (as described in <code>package.json</code>) can be injected
+using <a href="http://mustache.github.io/">moustache template</a> systax.</p>
+
+<div class="highlight highlight-json"><pre>{
+  <span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>cpus<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1.0<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>mem<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1024<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>instances<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>args<span class="pl-pds">"</span></span>: [<span class="pl-s1"><span class="pl-pds">"</span>{{{foo.baz}}}<span class="pl-pds">"</span></span>],
+  <span class="pl-s1"><span class="pl-pds">"</span>container<span class="pl-pds">"</span></span>: {
+    <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>DOCKER<span class="pl-pds">"</span></span>,
+    <span class="pl-s1"><span class="pl-pds">"</span>docker<span class="pl-pds">"</span></span>: {
+      <span class="pl-s1"><span class="pl-pds">"</span>image<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>bar/foo<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>network<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>BRIDGE<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>portMappings<span class="pl-pds">"</span></span>: [
+        {
+          <span class="pl-s1"><span class="pl-pds">"</span>containerPort<span class="pl-pds">"</span></span>: <span class="pl-c1">8080</span>,
+          <span class="pl-s1"><span class="pl-pds">"</span>hostPort<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
+          <span class="pl-s1"><span class="pl-pds">"</span>servicePort<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
+          <span class="pl-s1"><span class="pl-pds">"</span>protocol<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>tcp<span class="pl-pds">"</span></span>
+        }
+      ]
+    }
+  }
+}</pre></div>
+
+<p><em>Sample <code>marathon.json</code>.</em></p>
+
+<p>See the
+<a href="https://mesosphere.github.io/marathon/docs/rest-api.html">Marathon API Documentation</a>
+for more detailed instruction on app definitions.</p>
+
+<h4>
+<a id="commandjson" class="anchor" href="#commandjson" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>command.json</code>
+</h4>
+
+<p>This file is <strong>optional</strong>. Describes how to install the package's CLI.
+Currently the only supported format is a Python egg.</p>
+
+<div class="highlight highlight-json"><pre>{
+  <span class="pl-s1"><span class="pl-pds">"</span>python<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>https://pypi.python.org/packages/source/f/foo/foo-1.2.3.tar.gz<span class="pl-pds">"</span></span>
+}</pre></div>
+
+<p><em>Sample <code>command.json</code>.</em></p>
+
+<h3>
+<a id="validation" class="anchor" href="#validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Validation</h3>
+
+<p>Package content is validated using <a href="http://json-schema.org">JSON Schema</a>.
+The schema definitions live in <code>/repo/meta/schema</code>.</p>
+
+<h2>
+<a id="directory-structure" class="anchor" href="#directory-structure" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directory Structure</h2>
+
+<pre><code>├── LICENSE
+├── README.md
+├── docs
+│   ├── best-practices.md
+│   └── contributing.md
+├── hooks
+│   └── pre-commit
+├── repo
+│   ├── meta
+│   │   ├── index.json
+│   │   ├── index.json.gz
+│   │   ├── schema
+│   │   │   ├── command-schema.json
+│   │   │   ├── index-schema.json
+│   │   │   ├── marathon-schema.json
+│   │   │   └── package-schema.json
+│   │   └── version.json
+│   └── packages
+│       ├── B
+│       │   ├── bar
+│       │   │   ├── 0
+│       │   │   │   ├── command.json
+│       │   │   │   ├── marathon.json
+│       │   │   │   └── package.json
+│       │   │   └── ...
+│       │   └── ...
+│       ├── F
+│       │   ├── foo
+│       │   │   ├── 0
+│       │   │   │   ├── marathon.json
+│       │   │   │   └── package.json
+│       │   │   └── ...
+│       │   └── ...
+│       └── ...
+└── scripts
+    ├── 1-validate-packages.sh
+    ├── 2-build-index.sh
+    ├── 3-validate-index.sh
+    ├── 4-detect-dependency-cycles.sh
+    ├── build.sh
+    └── install-git-hooks.sh
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/mesosphere">mesosphere</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
