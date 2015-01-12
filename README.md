@@ -1,6 +1,6 @@
-# Mesosphere Universe
+# Universe
 
-The Mesosphere package repository.
+The Mesos package repository.
 
 ## Package entries
 
