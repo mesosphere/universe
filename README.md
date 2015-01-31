@@ -13,10 +13,12 @@ for each package version.
 └── foo
     ├── 0
     │   ├── command.json
+    │   ├── config.json
     │   ├── marathon.json
     │   └── package.json
     ├── 1
     │   ├── command.json
+    │   ├── config.json
     │   ├── marathon.json
     │   └── package.json
     └── ...
@@ -34,42 +36,34 @@ _Sample package directory layout._
   "version": "1.2.3",
   "scm": "https://github.com/bar/foo.git",
   "maintainer": "help@bar.io",
-  "description": "Does baz."
-}
-```
-_Sample `package.json` (minimal)._
-
-Additionally, site-specific metadata and dependencies may be specified,
-as shown in the following example.
-
-```json
-{
-  "name": "foo",
-  "version": "1.2.3",
-  "scm": "https://github.com/bar/foo.git",
-  "maintainer": "help@bar.io",
-  "website": "http://bar.io/foo",
   "description": "Does baz.",
-  "dataSchema": {
-    "type": "object",
-    "properties": {
-      "foo.baz": {
-        "type": "integer",
-        "description": "How many times to do baz.",
-        "minimum": 0,
-        "maximum": 16,
-        "required": false,
-        "default": 4
-      }
-    },
-    "required": ["foo.baz"]
-  },
+  "website": "http://bar.io/foo",
   "dependencies": [
     { "name": "biz", "version": "1.2.+" }
   ]
 }
 ```
-_Sample `package.json` (advanced)._
+_Sample `package.json`._
+
+#### `config.json`
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "foo.baz": {
+      "type": "integer",
+      "description": "How many times to do baz.",
+      "minimum": 0,
+      "maximum": 16,
+      "required": false,
+      "default": 4
+    }
+  },
+  "required": ["foo.baz"]
+}
+```
+_Sample `config.json`._
 
 #### `marathon.json`
 
@@ -142,6 +136,7 @@ The schema definitions live in `/repo/meta/schema`.
 │   │   ├── index.json.gz
 │   │   ├── schema
 │   │   │   ├── command-schema.json
+│   │   │   ├── config-schema.json
 │   │   │   ├── index-schema.json
 │   │   │   ├── marathon-schema.json
 │   │   │   └── package-schema.json
@@ -151,6 +146,7 @@ The schema definitions live in `/repo/meta/schema`.
 │       │   ├── bar
 │       │   │   ├── 0
 │       │   │   │   ├── command.json
+│       │   │   │   ├── config.json
 │       │   │   │   ├── marathon.json
 │       │   │   │   └── package.json
 │       │   │   └── ...
@@ -158,6 +154,7 @@ The schema definitions live in `/repo/meta/schema`.
 │       ├── F
 │       │   ├── foo
 │       │   │   ├── 0
+│       │   │   │   ├── config.json
 │       │   │   │   ├── marathon.json
 │       │   │   │   └── package.json
 │       │   │   └── ...
