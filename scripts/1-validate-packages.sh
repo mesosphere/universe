@@ -15,7 +15,7 @@ validate () {
   done
 }
 
-echo "\nValidating package definitions...";
+echo "Validating package definitions...";
 
 # validate all command.json files
 validate "command.json" "$SCHEMA_DIR/command-schema.json";
