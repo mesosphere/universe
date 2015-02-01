@@ -11,9 +11,9 @@
   "cpus": 0.5,
   "mem": 512,
   "instances": 1,
-  "constraints": [["hostname", "CLUSTER", "{{mesos-dns.host}}"]],
+  "constraints": [["hostname", "CLUSTER", "{{mesos-dns/host}}"]],
   "uris": [
-    "{{mesos-dns.config-url}}"
+    "{{mesos-dns/config-url}}"
   ]
 }
 
