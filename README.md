@@ -40,7 +40,8 @@ _Sample package directory layout._
   "website": "http://bar.io/foo",
   "dependencies": [
     { "name": "biz", "version": "1.2.+" }
-  ]
+  ],
+  "postInstallNotes": "Have fun foo-ing and baz-ing!"
 }
 ```
 _Sample `package.json`._
