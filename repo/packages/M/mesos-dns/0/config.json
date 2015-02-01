@@ -1,11 +1,11 @@
 {
   "type": "object",
   "properties": {
-    "mesos-dns.config-url": {
+    "mesos-dns/config-url": {
       "type": "string",
       "description": "Location of the config file, accessible to the Mesos fetcher."
     },
-    "mesos-dns.host": {
+    "mesos-dns/host": {
       "type": "string",
       "description": "Host on which to run Mesos-DNS."
     }
