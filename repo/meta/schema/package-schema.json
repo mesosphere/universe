@@ -47,24 +47,6 @@
     },
     "postInstallNotes": {
       "type": "string"
-    },
-    "dependencies": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "version": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "version"
-        ]
-      }
     }
   },
   "required": [
@@ -72,6 +54,7 @@
     "version",
     "maintainer",
     "description"
-  ]
+  ],
+  "additionalProperties": false
 }
 
