@@ -210,7 +210,8 @@ Example: `git://github.com/mesosphere/universe.git`
 
 **HTTP and HTTPS**
 
-A URL that designates a [tar](http://savannah.gnu.org/projects/tar) file
-accessible over HTTP or HTTPS.  
-Example: `http://my.org/files/universe/packages.tgz`
+A URL that designates a
+[zip](http://en.wikipedia.org/wiki/Zip_%28file_format%29) file
+accessible over HTTP or HTTPS with media type `application/zip`.  
+Example: `http://my.org/files/universe/packages.zip`
 
