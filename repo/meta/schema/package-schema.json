@@ -20,11 +20,33 @@
     "description": {
       "type": "string"
     },
+    "images": {
+      "type": "object",
+      "properties": {
+        "icon-small": {
+          "type": "string",
+          "description": "PNG icon URL, preferably 48 by 48 pixels."
+        },
+        "icon-small": {
+          "type": "string",
+          "description": "PNG icon URL, preferably 128 by 128 pixels."
+        },
+        "icon-small": {
+          "type": "string",
+          "description": "PNG icon URL, preferably 256 by 256 pixels."
+        },
+        "screenshots": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "PNG screen URL, preferably 1024 by 1024 pixels."
+          }
+        }
+      },
+      "additionalProperties": false
+    },
     "postInstallNotes": {
       "type": "string"
-    },
-    "dataSchema": {
-      "type": "object"
     },
     "dependencies": {
       "type": "array",
@@ -48,7 +70,6 @@
   "required": [
     "name",
     "version",
-    "scm",
     "maintainer",
     "description"
   ]

@@ -38,6 +38,15 @@ _Sample package directory layout._
   "maintainer": "help@bar.io",
   "description": "Does baz.",
   "website": "http://bar.io/foo",
+  "images": {
+    "icon-small": "http://some.org/foo/small.png",
+    "icon-medium": "http://some.org/foo/medium.png",
+    "icon-large": "http://some.org/foo/large.png",
+    "screenshots": [
+      "http://some.org/foo/screen-1.png",
+      "http://some.org/foo/screen-2.png"
+    ]
+  },
   "dependencies": [
     { "name": "biz", "version": "1.2.+" }
   ],
@@ -45,6 +54,13 @@ _Sample package directory layout._
 }
 ```
 _Sample `package.json`._
+
+The required fields are:
+
+- name
+- version
+- maintainer
+- description
 
 #### `config.json`
 
