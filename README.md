@@ -186,3 +186,48 @@ The schema definitions live in `/repo/meta/schema`.
     └── install-git-hooks.sh
 ```
 
+## Sources and Transfer Protocols
+
+This section describes transfer of package metadata from a universe
+source to a client program.
+
+```
+ ┌───────────────┐   ┌────────────────┐
+ │public universe│   │private universe│
+ └───────────────┘   └────────────────┘
+          git \         / http
+               \       /
+                \     /
+               ┌──────┐           ┌────────┐
+               │client│-----------│marathon│
+               └──────┘    http   └────────┘
+                  |
+                  |
+            ┌───────────┐
+            │local cache│
+            └───────────┘
+```
+_Sample (simplified) architecture for a universe client program._
+
+Package sources are described as URLs.
+
+Source URLs encode the transfer protocol.
+Recommendations for several transfer protocols follow.
+
+**Filesystem**
+
+A URL that designates a local directory.  
+Example: `file:///some/nfs/mount/universe`
+
+**Git**
+
+A URL that designates a git repository.  
+Example: `git://github.com/mesosphere/universe.git`
+
+**HTTP and HTTPS**
+
+A URL that designates a
+[zip](http://en.wikipedia.org/wiki/Zip_%28file_format%29) file
+accessible over HTTP or HTTPS with media type `application/zip`.  
+Example: `http://my.org/files/universe/packages.zip`
+
