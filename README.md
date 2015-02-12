@@ -47,9 +47,6 @@ _Sample package directory layout._
       "http://some.org/foo/screen-2.png"
     ]
   },
-  "dependencies": [
-    { "name": "biz", "version": "1.2.+" }
-  ],
   "postInstallNotes": "Have fun foo-ing and baz-ing!"
 }
 ```
