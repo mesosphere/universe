@@ -1,5 +1,48 @@
 {
   "$schema": "http://json-schema.org/schema#",
-  "type": "object"
+  "type": "object",
+  "properties": {
+    "version": { "type": "string" },
+    "packages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+            "name": {
+              "type": "string"
+            },
+            "currentVersion": {
+              "type": "string"
+            },
+            "versions": {
+              "type": "object",
+              "description": "Maps software versions to their latest package.",
+              "additionalProperties": { "type": "string" }
+            },
+            "description": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[^\\s]+$"
+              }
+            }
+        },
+        "required": [
+          "name",
+          "currentVersion",
+          "versions",
+          "description",
+          "tags"
+        ]
+      }
+    }
+  },
+  "required": [
+    "version",
+    "packages"
+  ]
 }
 

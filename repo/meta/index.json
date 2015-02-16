@@ -1,2 +1,37 @@
-{}
-
+{
+  "packages":[
+    {
+      "currentVersion":"2.1.0",
+      "description":"A fault tolerant job scheduler for Mesos which handles dependencies and ISO8601 based schedules.",
+      "name":"chronos",
+      "tags":[
+        "mesosphere",
+        "framework"
+      ],
+      "versions":{
+        "2.1.0":"0"
+      }
+    },
+    {
+      "currentVersion":"1.564",
+      "description":"Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.",
+      "name":"jenkins",
+      "tags":[],
+      "versions":{
+        "1.564":"0"
+      }
+    },
+    {
+      "currentVersion":"alpha",
+      "description":"DNS-based service discovery for Mesos.",
+      "name":"mesos-dns",
+      "tags":[
+        "mesosphere"
+      ],
+      "versions":{
+        "alpha":"0"
+      }
+    }
+  ],
+  "version":"0.1.0-alpha"
+}
