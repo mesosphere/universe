@@ -10,7 +10,6 @@ validate () {
   query=$1;
   schema=$2;
   for file in $(find $PKG_DIR -name $query); do
-    echo "Validating $file";
     jsonschema -i $file $schema
   done
 }

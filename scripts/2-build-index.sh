@@ -8,8 +8,7 @@ META_DIR="$UNIVERSE_DIR/repo/meta"
 INDEX_FILE_NAME="index.json"
 
 echo "Building index...";
-# TODO
-
+$SCRIPTS_DIR/"build-index.py" $UNIVERSE_DIR;
 echo "OK";
 
 echo "Compressing index...";
