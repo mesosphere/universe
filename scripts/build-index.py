@@ -17,7 +17,7 @@ def main():
 
     # Write the index file
     index_file = os.path.join(repo_dir, 'repo', 'meta', 'index.json')
-    write_compact_json(index_file, index)
+    write_pretty_json(index_file, index)
 
     return 0
 
@@ -80,9 +80,12 @@ def read_json(path):
         return json.load(json_file)
 
 
-def write_compact_json(path, data):
+def write_pretty_json(path, data):
     with open(path, 'w') as fd:
-        fd.write(json.dumps(data, sort_keys=True, separators=(',',':')))
+        fd.write(json.dumps(data,
+                            sort_keys=True,
+                            separators=(',',':'),
+                            indent=2))
         fd.flush()
         os.fsync(fd)
 
