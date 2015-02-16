@@ -55,9 +55,12 @@ def build_index(repo_dir):
 
 def make_index_entry(package_dir):
 
-    package_versions = sorted([ v for v in os.listdir(package_dir)
-                             if os.path.isdir(os.path.join(package_dir, v))
-                             and not v.startswith('.') ])
+    def is_version_dir(d):
+        is_dir = os.path.isdir(os.path.join(package_dir, d))
+        starts_with_dot = d.startswith('.')
+        return is_dir and not starts_with_dot
+
+    package_versions = sorted(filter(is_version_dir, os.listdir(package_dir)))
 
     entry = collections.OrderedDict()
     entry['versions'] = collections.OrderedDict()
@@ -66,11 +69,13 @@ def make_index_entry(package_dir):
         package_metadata_file = os.path.join(package_dir, v, 'package.json')
         package_metadata = read_json(package_metadata_file)
         software_version = package_metadata['version']
-        entry['name'] = package_metadata['name']
-        entry['currentVersion'] = software_version
+        entry.update({
+            'name':           package_metadata['name'],
+            'currentVersion': software_version,
+            'description':    package_metadata['description'],
+            'tags':           package_metadata['tags']
+        })
         entry['versions'][software_version] = v
-        entry['description'] = package_metadata['description']
-        entry['tags'] = package_metadata['tags']
 
     return entry
 
