@@ -59,29 +59,20 @@ def make_index_entry(package_dir):
                              if os.path.isdir(os.path.join(package_dir, v))
                              and not v.startswith('.') ])
 
-    name = ''
-    versions = collections.OrderedDict()
-    latest_version = ''
-    description = ''
-    tags = []
+    entry = collections.OrderedDict()
+    entry['versions'] = collections.OrderedDict()
 
     for v in package_versions:
         package_metadata_file = os.path.join(package_dir, v, 'package.json')
         package_metadata = read_json(package_metadata_file)
-        name = package_metadata['name']
         software_version = package_metadata['version']
-        latest_version = software_version
-        versions[software_version] = v
-        description = package_metadata['description']
-        tags = package_metadata['tags']
+        entry['name'] = package_metadata['name']
+        entry['currentVersion'] = software_version
+        entry['versions'][software_version] = v
+        entry['description'] = package_metadata['description']
+        entry['tags'] = package_metadata['tags']
 
-    return {
-        'name': name,
-        'currentVersion': latest_version,
-        'versions': versions,
-        'description': description,
-        'tags': tags
-    }
+    return entry
 
 
 def read_json(path):
