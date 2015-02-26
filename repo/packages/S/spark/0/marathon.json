@@ -1,0 +1,15 @@
+{
+  "id": "spark",
+  "cpus": 4,
+  "mem": 2048,
+  "instances": 1,
+  "cmd": "./bin/spark-class org.apache.spark.deploy.mesos.MesosClusterDispatcher --port {{spark/port}} --webui-port {{spark/webui-port}} --master {{spark/mesos-master}} --host `hostname`",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "mesosphere/spark:1.3.0-SNAPSHOT",
+      "network": "HOST"
+    }
+  }
+}
+

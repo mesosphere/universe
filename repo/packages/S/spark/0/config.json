@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "spark/port": {
+      "type": "integer",
+      "description": "Port of the REST endpoint for submitting Spark jobs.",
+      "default": 7177,
+      "minimum": 0,
+      "maximum": 65535
+    },
+    "spark/webui-port": {
+      "type": "integer",
+      "description": "Port of the Web UI for showing job progress and results.",
+      "default": 8180,
+      "minimum": 0,
+      "maximum": 65535
+    },
+    "spark/mesos-master": {
+      "type": "string",
+      "description": "URL to the Mesos master that Spark jobs will be communicating to. (i.e: mesos://mesos-host.com:5050)"
+    }
+  }
+}
