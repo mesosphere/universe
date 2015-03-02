@@ -1,0 +1,11 @@
+{
+  "mesos/master": "zk://zk-host:2181/mesos",
+  "marathon/zk": "zk://zk-host:2181/marathon-test",
+  "marathon/zk-max-versions": 64,
+  "marathon/framework-name": "marathon-test",
+  "marathon/mesos-role": "test",
+  "marathon/event-subscriber": "http_callback",
+  "marathon/cpus": 1.0,
+  "marathon/mem": 512.0,
+  "marathon/http-port": 8888
+}
