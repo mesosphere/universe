@@ -1,0 +1,147 @@
+{
+  "type": "object",
+  "properties": {
+    "marathon/libprocess-ip": {
+      "description": "Interface to bind to for communication with the Mesos master.",
+      "type": "string"
+    },
+    "mesos/master": {
+      "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard URLs like http://localhost are also acceptable.",
+      "type": "string"
+    },
+    "marathon/cpus": {
+      "description": "CPU shares to allocate to each Marathon instance.",
+      "type": "number",
+      "minimum": 0.0,
+      "default": 1.0
+    },
+    "marathon/mem": {
+      "description": "Memory (MB) to allocate to each Marathon instance.",
+      "type": "number",
+      "minimum": 0.0,
+      "default": 512.0
+    },
+    "marathon/instances": {
+      "description": "Number of Marathon instances to run.",
+      "type": "integer",
+      "minimum": 0,
+      "default": 1
+    },
+    "marathon/artifact_store": {
+      "description": "URL to the artifact store. Examples: \"hdfs://localhost:54310/path/to/store\", \"file:///var/log/store\". For details, see the artifact store docs: https://mesosphere.github.io/marathon/docs/artifact-store.html.",
+      "type": "string"
+    },
+    "marathon/checkpoint": {
+      "description": "Enable checkpointing of tasks. Requires checkpointing enabled on slaves. Allows tasks to continue running during mesos-slave restarts and Marathon scheduler failover.",
+      "type": "boolean",
+      "default": true
+    },
+    "marathon/executor": {
+      "description": "Executor to use when none is specified.",
+      "type": "string"
+    },
+    "marathon/failover-timeout": {
+      "description": "The failover_timeout for Mesos in seconds. If a new Marathon instance has not re-registered with Mesos this long after a failover, Mesos will shut down all running tasks started by Marathon. Requires checkpointing to be enabled.",
+      "type": "integer",
+      "minimum": 0,
+      "default": 604800
+    },
+    "marathon/framework-name": {
+      "description": "The framework name to register with Mesos.",
+      "type": "string"
+    },
+    "marathon/ha": {
+      "description": "Runs Marathon in high-availability mode with leader election. Allows starting an arbitrary number of other Marathons but all need to be started in HA mode. This mode requires a running ZooKeeper.",
+      "type": "boolean",
+      "default": true
+    },
+    "marathon/local-port-max": {
+      "description": "Maximum port number to use when assigning service ports to apps.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 65535
+    },
+    "marathon/local-port-min": {
+      "description": "Minimum port number to use when assigning service ports to apps.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 65535
+    },
+    "marathon/mesos-role": {
+      "description": "Mesos role for this framework.",
+      "type": "string"
+    },
+    "marathon/reconciliation-initial-delay": {
+      "description": "The delay, in milliseconds, before Marathon begins to periodically perform task reconciliation operations.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "marathon/reconciliation-interval": {
+      "description": "The period, in milliseconds, between task reconciliation operations.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "marathon/event-subscriber": {
+      "description": "Event subscriber module to enable. Currently the only valid value is \"http_callback\".",
+      "type": "string"
+    },
+    "marathon/http-endpoints": {
+      "description": "Pre-configured http callback URLs. Valid only in conjunction with --event_subscriber http_callback. Additional callback URLs may also be set dynamically via the REST API.",
+      "type": "string"
+    },
+    "marathon/zk": {
+      "description": "ZooKeeper URL for storing state. Format: zk://host1:port1,host2:port2,.../path",
+      "type": "string"
+    },
+    "marathon/zk-max-versions": {
+      "description": "Limit the number of versions stored for one entity.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "marathon/zk-timeout": {
+      "description": "Timeout for ZooKeeper in milliseconds.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "marathon/mesos-authentication-principal": {
+      "description": "The Mesos principal used for authentication.",
+      "type": "string"
+    },
+    "marathon/mesos-authentication-secret-file": {
+      "description": "The path to the Mesos secret file containing the authentication secret.",
+      "type": "string"
+    },
+    "marathon/marathon-store-timeout": {
+      "description": "Maximum time in milliseconds, to wait for persistent storage operations to complete.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "marathon/http-credentials": {
+      "description": "Credentials for accessing the HTTP service in the format of username:password. The username may not contain a colon (:).",
+      "type": "string"
+    },
+    "marathon/http-port": {
+      "description": "The port on which to listen for HTTP requests.",
+      "type": "integer",
+      "minumum": 0,
+      "default": 8080
+    },
+    "marathon/https-port": {
+      "description": "The port on which to listen for HTTPS requests.",
+      "type": "integer",
+      "minumum": 0
+    },
+    "marathon/ssl-keystore-password": {
+      "description": "Password for the keystore supplied with the marathon/ssl-keystore-path option.",
+      "type": "string"
+    },
+    "marathon/ssl-keystore-path": {
+      "description": "Path to the SSL keystore. SSL will be enabled if this option is supplied.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "mesos/master",
+    "marathon/zk"
+  ]
+}

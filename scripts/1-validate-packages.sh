@@ -22,9 +22,6 @@ validate "command.json" "$SCHEMA_DIR/command-schema.json";
 # validate all config.json files
 validate "config.json" "$SCHEMA_DIR/config-schema.json";
 
-# validate all marathon.json files
-validate "marathon.json" "$SCHEMA_DIR/marathon-schema.json";
-
 # validate all package.json files
 validate "package.json" "$SCHEMA_DIR/package-schema.json";
 
