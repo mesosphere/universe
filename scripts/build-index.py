@@ -68,11 +68,18 @@ def make_index_entry(package_dir):
     for v in package_versions:
         package_metadata_file = os.path.join(package_dir, v, 'package.json')
         package_metadata = read_json(package_metadata_file)
+
         software_version = package_metadata['version']
+
+        is_framework = package_metadata.get('framework')
+        if is_framework is None:
+            is_framework = False
+
         entry.update({
             'name':           package_metadata['name'],
             'currentVersion': software_version,
             'description':    package_metadata['description'],
+            'framework':      is_framework,
             'tags':           package_metadata['tags']
         })
         entry['versions'][software_version] = v
