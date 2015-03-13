@@ -19,7 +19,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "mesosphere/marathon:v0.8.1-RC1",
+      "image": "mesosphere/marathon:v0.8.1",
       "network": "HOST"
     }
   },
