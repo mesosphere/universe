@@ -22,6 +22,11 @@
             "description": {
               "type": "string"
             },
+            "framework": {
+              "type": "boolean",
+              "default": false,
+              "description": "True if this package installs a new Mesos framework."
+            },
             "tags": {
               "type": "array",
               "items": {
