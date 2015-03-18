@@ -1,4 +1,4 @@
-# Universe
+# Universe [![Build Status](https://travis-ci.org/mesosphere/universe.png?branch=master)](https://travis-ci.org/mesosphere/universe)
 
 The Mesos package repository.
 
