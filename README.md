@@ -85,7 +85,7 @@ This file describes how to run the package as a
 [Marathon](http://github.com/mesosphere/marathon) app.
 
 User-supplied metadata (as described in `package.json`) can be injected
-using [moustache template](http://mustache.github.io/) systax.
+using [moustache template](http://mustache.github.io/) syntax.
 
 ```json
 {
