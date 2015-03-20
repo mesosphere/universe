@@ -1,19 +1,6 @@
 {
   "packages":[
     {
-      "currentVersion":"2.1.0",
-      "description":"A fault tolerant job scheduler for Mesos which handles dependencies and ISO8601 based schedules.",
-      "framework":true,
-      "name":"chronos",
-      "tags":[
-        "mesosphere",
-        "framework"
-      ],
-      "versions":{
-        "2.1.0":"0"
-      }
-    },
-    {
       "currentVersion":"1.564",
       "description":"Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.",
       "framework":false,
@@ -60,6 +47,32 @@
       ],
       "versions":{
         "1.3.0-SNAPSHOT":"0"
+      }
+    },
+    {
+      "currentVersion":"0.1.0",
+      "description":"Hadoop Distributed File System (HDFS), Highly Available",
+      "framework":true,
+      "name":"hdfs",
+      "tags":[
+        "mesosphere",
+        "framework"
+      ],
+      "versions":{
+        "0.1.0":"0"
+      }
+    },
+    {
+      "currentVersion":"2.1.0",
+      "description":"A fault tolerant job scheduler for Mesos which handles dependencies and ISO8601 based schedules.",
+      "framework":true,
+      "name":"chronos",
+      "tags":[
+        "mesosphere",
+        "framework"
+      ],
+      "versions":{
+        "2.1.0":"0"
       }
     }
   ],

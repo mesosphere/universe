@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "mesos/master": {
+      "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard URLs like http://localhost are also acceptable.",
+      "type": "string"
+    },
+    "hdfs/state.zk": {
+      "description": "The zookeeper URL(s) that the framework should use to persist its frameworkId and task state.",
+      "type": "string"
+    },
+    "hdfs/zkfc.ha.zookeeper.quorum": {
+      "description": "The zookeeper URL(s) to fill into hdfs-site.xml for the NameNodes and DataNodes.",
+      "type": "string"
+    },
+    "hdfs/scheduler-uris": {
+      "description": "The URI(s) of the hdfs-mesos tarball, which will be extracted and used to run the scheduler.",
+      "type": "string",
+      "default": [ "https://s3.amazonaws.com/downloads.mesosphere.io/hdfs/release/0.1.0/hdfs-mesos-0.1.0.tgz" ]
+    }
+  },
+  "required": [ ]
+}
