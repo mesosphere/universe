@@ -29,7 +29,8 @@
       </header>
       <section>
         <h1>
-<a id="universe" class="anchor" href="#universe" aria-hidden="true"><span class="octicon octicon-link"></span></a>Universe</h1>
+<a id="universe-" class="anchor" href="#universe-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Universe <a href="https://travis-ci.org/mesosphere/universe"><img src="https://travis-ci.org/mesosphere/universe.svg?branch=master" alt="Build Status"></a>
+</h1>
 
 <p>The Mesos package repository.</p>
 
@@ -45,10 +46,12 @@ for each package version.</p>
 <pre><code>└── foo
     ├── 0
     │   ├── command.json
+    │   ├── config.json
     │   ├── marathon.json
     │   └── package.json
     ├── 1
     │   ├── command.json
+    │   ├── config.json
     │   ├── marathon.json
     │   └── package.json
     └── ...
@@ -69,41 +72,51 @@ for each package version.</p>
   <span class="pl-s1"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1.2.3<span class="pl-pds">"</span></span>,
   <span class="pl-s1"><span class="pl-pds">"</span>scm<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>https://github.com/bar/foo.git<span class="pl-pds">"</span></span>,
   <span class="pl-s1"><span class="pl-pds">"</span>maintainer<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>help@bar.io<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Does baz.<span class="pl-pds">"</span></span>
+  <span class="pl-s1"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Does baz.<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>http://bar.io/foo<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>images<span class="pl-pds">"</span></span>: {
+    <span class="pl-s1"><span class="pl-pds">"</span>icon-small<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>http://some.org/foo/small.png<span class="pl-pds">"</span></span>,
+    <span class="pl-s1"><span class="pl-pds">"</span>icon-medium<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>http://some.org/foo/medium.png<span class="pl-pds">"</span></span>,
+    <span class="pl-s1"><span class="pl-pds">"</span>icon-large<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>http://some.org/foo/large.png<span class="pl-pds">"</span></span>,
+    <span class="pl-s1"><span class="pl-pds">"</span>screenshots<span class="pl-pds">"</span></span>: [
+      <span class="pl-s1"><span class="pl-pds">"</span>http://some.org/foo/screen-1.png<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>http://some.org/foo/screen-2.png<span class="pl-pds">"</span></span>
+    ]
+  },
+  <span class="pl-s1"><span class="pl-pds">"</span>postInstallNotes<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Have fun foo-ing and baz-ing!<span class="pl-pds">"</span></span>
 }</pre></div>
 
-<p><em>Sample <code>package.json</code> (minimal).</em></p>
+<p><em>Sample <code>package.json</code>.</em></p>
 
-<p>Additionally, site-specific metadata and dependencies may be specified,
-as shown in the following example.</p>
+<p>The required fields are:</p>
+
+<ul>
+<li>name</li>
+<li>version</li>
+<li>maintainer</li>
+<li>description</li>
+</ul>
+
+<h4>
+<a id="configjson" class="anchor" href="#configjson" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>config.json</code>
+</h4>
 
 <div class="highlight highlight-json"><pre>{
-  <span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1.2.3<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>scm<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>https://github.com/bar/foo.git<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>maintainer<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>help@bar.io<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>http://bar.io/foo<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Does baz.<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>dataSchema<span class="pl-pds">"</span></span>: {
-    <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>object<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>properties<span class="pl-pds">"</span></span>: {
-      <span class="pl-s1"><span class="pl-pds">"</span>foo.baz<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>integer<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>How many times to do baz.<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>minimum<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>maximum<span class="pl-pds">"</span></span>: <span class="pl-c1">16</span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>: <span class="pl-c1">false</span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>default<span class="pl-pds">"</span></span>: <span class="pl-c1">4</span>
-      }
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>: [<span class="pl-s1"><span class="pl-pds">"</span>foo.baz<span class="pl-pds">"</span></span>]
+  <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>object<span class="pl-pds">"</span></span>,
+  <span class="pl-s1"><span class="pl-pds">"</span>properties<span class="pl-pds">"</span></span>: {
+    <span class="pl-s1"><span class="pl-pds">"</span>foo/baz<span class="pl-pds">"</span></span>: {
+      <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>integer<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>How many times to do baz.<span class="pl-pds">"</span></span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>minimum<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>maximum<span class="pl-pds">"</span></span>: <span class="pl-c1">16</span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>: <span class="pl-c1">false</span>,
+      <span class="pl-s1"><span class="pl-pds">"</span>default<span class="pl-pds">"</span></span>: <span class="pl-c1">4</span>
+    }
   },
-  <span class="pl-s1"><span class="pl-pds">"</span>dependencies<span class="pl-pds">"</span></span>: [
-    { <span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>biz<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1.2.+<span class="pl-pds">"</span></span> }
-  ]
+  <span class="pl-s1"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>: [<span class="pl-s1"><span class="pl-pds">"</span>foo/baz<span class="pl-pds">"</span></span>]
 }</pre></div>
 
-<p><em>Sample <code>package.json</code> (advanced).</em></p>
+<p><em>Sample <code>config.json</code>.</em></p>
 
 <h4>
 <a id="marathonjson" class="anchor" href="#marathonjson" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>marathon.json</code>
@@ -113,7 +126,7 @@ as shown in the following example.</p>
 <a href="http://github.com/mesosphere/marathon">Marathon</a> app.</p>
 
 <p>User-supplied metadata (as described in <code>package.json</code>) can be injected
-using <a href="http://mustache.github.io/">moustache template</a> systax.</p>
+using <a href="http://mustache.github.io/">moustache template</a> syntax.</p>
 
 <div class="highlight highlight-json"><pre>{
   <span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
@@ -179,6 +192,7 @@ The schema definitions live in <code>/repo/meta/schema</code>.</p>
 │   │   ├── index.json.gz
 │   │   ├── schema
 │   │   │   ├── command-schema.json
+│   │   │   ├── config-schema.json
 │   │   │   ├── index-schema.json
 │   │   │   ├── marathon-schema.json
 │   │   │   └── package-schema.json
@@ -188,6 +202,7 @@ The schema definitions live in <code>/repo/meta/schema</code>.</p>
 │       │   ├── bar
 │       │   │   ├── 0
 │       │   │   │   ├── command.json
+│       │   │   │   ├── config.json
 │       │   │   │   ├── marathon.json
 │       │   │   │   └── package.json
 │       │   │   └── ...
@@ -195,6 +210,7 @@ The schema definitions live in <code>/repo/meta/schema</code>.</p>
 │       ├── F
 │       │   ├── foo
 │       │   │   ├── 0
+│       │   │   │   ├── config.json
 │       │   │   │   ├── marathon.json
 │       │   │   │   └── package.json
 │       │   │   └── ...
@@ -208,6 +224,52 @@ The schema definitions live in <code>/repo/meta/schema</code>.</p>
     ├── build.sh
     └── install-git-hooks.sh
 </code></pre>
+
+<h2>
+<a id="sources-and-transfer-protocols" class="anchor" href="#sources-and-transfer-protocols" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sources and Transfer Protocols</h2>
+
+<p>This section describes transfer of package metadata from a universe
+source to a client program.</p>
+
+<pre><code> ┌───────────────┐   ┌────────────────┐
+ │public universe│   │private universe│
+ └───────────────┘   └────────────────┘
+          git \         / http
+               \       /
+                \     /
+               ┌──────┐           ┌────────┐
+               │client│-----------│marathon│
+               └──────┘    http   └────────┘
+                  |
+                  |
+            ┌───────────┐
+            │local cache│
+            └───────────┘
+</code></pre>
+
+<p><em>Sample (simplified) architecture for a universe client program.</em></p>
+
+<p>Package sources are described as URLs.</p>
+
+<p>Source URLs encode the transfer protocol.
+Recommendations for several transfer protocols follow.</p>
+
+<p><strong>Filesystem</strong></p>
+
+<p>A URL that designates a local directory.<br>
+Example: <code>file:///some/nfs/mount/universe</code></p>
+
+<p><strong>Git</strong></p>
+
+<p>A URL that designates a git repository.<br>
+Example: <code>git://github.com/mesosphere/universe.git</code></p>
+
+<p><strong>HTTP and HTTPS</strong></p>
+
+<p>A URL that designates a
+<a href="http://en.wikipedia.org/wiki/Zip_%28file_format%29">zip</a> file
+accessible over HTTP or HTTPS with media type <code>application/zip</code>.<br>
+Example: <code>http://my.org/files/universe/packages.zip</code></p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/mesosphere">mesosphere</a></p>
