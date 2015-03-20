@@ -65,7 +65,7 @@ The required fields are:
 {
   "type": "object",
   "properties": {
-    "foo.baz": {
+    "foo/baz": {
       "type": "integer",
       "description": "How many times to do baz.",
       "minimum": 0,
@@ -74,7 +74,7 @@ The required fields are:
       "default": 4
     }
   },
-  "required": ["foo.baz"]
+  "required": ["foo/baz"]
 }
 ```
 _Sample `config.json`._
