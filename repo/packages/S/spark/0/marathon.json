@@ -3,7 +3,7 @@
   "cpus": 4,
   "mem": 2048,
   "instances": 1,
-  "cmd": "./bin/spark-class org.apache.spark.deploy.mesos.MesosClusterDispatcher --port {{spark/port}} --webui-port {{spark/webui-port}} --master {{spark/mesos-master}} --host `hostname`",
+  "cmd": "./bin/spark-class org.apache.spark.deploy.mesos.MesosClusterDispatcher --port {{spark/port}} --webui-port {{spark/webui-port}} --master {{spark/mesos-master}} --zk {{spark/zookeeper}} --host `hostname`",
   "container": {
     "type": "DOCKER",
     "docker": {
@@ -12,4 +12,3 @@
     }
   }
 }
-

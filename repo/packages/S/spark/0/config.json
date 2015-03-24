@@ -18,6 +18,10 @@
     "spark/mesos-master": {
       "type": "string",
       "description": "URL to the Mesos master that Spark jobs will be communicating to. (i.e: mesos://mesos-host.com:5050)"
+    },
+    "spark/zookeeper": {
+      "type": "string",
+      "description": "URL to the Zookeeper that Spark cluster framework connects to persist state to. (l.e: zk://0.0.0.0:2181)"
     }
   }
 }
