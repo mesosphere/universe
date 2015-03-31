@@ -16,7 +16,7 @@
     "hdfs/scheduler-uri": {
       "description": "The URI of the hdfs-mesos tarball, which will be extracted and used to run the scheduler.",
       "type": "string",
-      "default": "https://downloads.mesosphere.io/hdfs/pkgpanda/hdfs-mesos-0.1.0.tgz"
+      "default": "https://s3.amazonaws.com/downloads.mesosphere.io/hdfs/ovh/hdfs-mesos-0.1.0.tgz"
     }
   }
 }
