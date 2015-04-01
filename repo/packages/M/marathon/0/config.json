@@ -27,7 +27,7 @@
       "minimum": 0,
       "default": 1
     },
-    "marathon/artifact_store": {
+    "marathon/artifact-store": {
       "description": "URL to the artifact store. Examples: \"hdfs://localhost:54310/path/to/store\", \"file:///var/log/store\". For details, see the artifact store docs: https://mesosphere.github.io/marathon/docs/artifact-store.html.",
       "type": "string"
     },
