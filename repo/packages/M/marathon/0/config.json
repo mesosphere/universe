@@ -123,13 +123,13 @@
     "marathon/http-port": {
       "description": "The port on which to listen for HTTP requests.",
       "type": "integer",
-      "minumum": 0,
+      "minimum": 0,
       "default": 8080
     },
     "marathon/https-port": {
       "description": "The port on which to listen for HTTPS requests.",
       "type": "integer",
-      "minumum": 0
+      "minimum": 0
     },
     "marathon/ssl-keystore-password": {
       "description": "Password for the keystore supplied with the marathon/ssl-keystore-path option.",
