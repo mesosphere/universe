@@ -13,10 +13,15 @@
       "description": "The zookeeper URL(s) to fill into hdfs-site.xml for the NameNodes and DataNodes.",
       "type": "string"
     },
-    "hdfs/scheduler-uri": {
+    "hdfs/scheduler-uris": {
       "description": "The URI of the hdfs-mesos tarball, which will be extracted and used to run the scheduler.",
-      "type": "string",
-      "default": "https://s3.amazonaws.com/downloads.mesosphere.io/hdfs/ovh/hdfs-mesos-0.1.0.tgz"
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "https://s3.amazonaws.com/downloads.mesosphere.io/hdfs/ovh/hdfs-mesos-0.1.0.tgz"
+      ]
     }
   }
 }
