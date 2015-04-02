@@ -1,0 +1,8 @@
+{
+  "id": "hdfs",
+  "cpus": 0.5,
+  "mem": 512,
+  "instances": 1,
+  "cmd": "cd hdfs-mesos* && ./bin/hdfs-mesos",
+  "uris": {{{hdfs/scheduler-uris}}}
+}
