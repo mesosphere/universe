@@ -9,3 +9,5 @@ SCRIPTS_DIR=$UNIVERSE_DIR/scripts
 
 $SCRIPTS_DIR/build.sh
 
+# Fail if there are unstaged changes
+git diff --exit-code
