@@ -7,7 +7,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "mesosphere/spark:1.3.0-SNAPSHOT",
+      "image": "mesosphere/spark:1.4.0-SNAPSHOT",
       "network": "HOST"
     }
   }
