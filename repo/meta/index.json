@@ -1,6 +1,16 @@
 {
   "packages":[
     {
+      "currentVersion":"1.564",
+      "description":"Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.",
+      "framework":false,
+      "name":"jenkins",
+      "tags":[],
+      "versions":{
+        "1.564":"0"
+      }
+    },
+    {
       "currentVersion":"0.1.0-SNAPSHOT",
       "description":"Apache Cassandra running on Apache Mesos",
       "framework":true,
@@ -27,40 +37,17 @@
       }
     },
     {
-      "currentVersion":"0.1.0",
-      "description":"Hadoop Distributed File System (HDFS), Highly Available",
-      "framework":true,
-      "name":"hdfs",
+      "currentVersion":"1.3.0-SNAPSHOT",
+      "description":"Spark is a fast and general cluster computing system for Big Data",
+      "framework":false,
+      "name":"spark",
       "tags":[
         "mesosphere",
-        "framework"
+        "framework",
+        "bigdata"
       ],
       "versions":{
-        "0.1.0":"0"
-      }
-    },
-    {
-      "currentVersion":"0.1.0",
-      "description":"Example DCOS application package",
-      "framework":false,
-      "name":"helloworld",
-      "tags":[
-        "mesosphere",
-        "example",
-        "subcommand"
-      ],
-      "versions":{
-        "0.1.0":"0"
-      }
-    },
-    {
-      "currentVersion":"1.564",
-      "description":"Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.",
-      "framework":false,
-      "name":"jenkins",
-      "tags":[],
-      "versions":{
-        "1.564":"0"
+        "1.3.0-SNAPSHOT":"0"
       }
     },
     {
@@ -89,17 +76,30 @@
       }
     },
     {
-      "currentVersion":"1.3.0-SNAPSHOT",
-      "description":"Spark is a fast and general cluster computing system for Big Data",
-      "framework":false,
-      "name":"spark",
+      "currentVersion":"0.1.0",
+      "description":"Hadoop Distributed File System (HDFS), Highly Available",
+      "framework":true,
+      "name":"hdfs",
       "tags":[
         "mesosphere",
-        "framework",
-        "bigdata"
+        "framework"
       ],
       "versions":{
-        "1.3.0-SNAPSHOT":"0"
+        "0.1.0":"0"
+      }
+    },
+    {
+      "currentVersion":"0.1.0",
+      "description":"Example DCOS application package",
+      "framework":false,
+      "name":"helloworld",
+      "tags":[
+        "mesosphere",
+        "example",
+        "subcommand"
+      ],
+      "versions":{
+        "0.1.0":"0"
       }
     }
   ],
