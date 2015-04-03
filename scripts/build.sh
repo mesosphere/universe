@@ -10,3 +10,6 @@ $SCRIPTS_DIR/"2-build-index.sh";
 $SCRIPTS_DIR/"3-validate-index.sh";
 $SCRIPTS_DIR/"4-detect-dependency-cycles.sh";
 
+# Fail if there are unstaged changes
+git diff --exit-code
+
