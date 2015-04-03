@@ -1,0 +1,14 @@
+{
+  "id": "helloworld",
+  "cpus": 1.0,
+  "mem": 512,
+  "instances": 1,
+  "cmd": "python3 -m http.server 8080",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "python/3.4.3",
+      "network": "HOST"
+    }
+  }
+}

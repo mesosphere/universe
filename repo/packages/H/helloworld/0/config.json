@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "helloworld/secret": {
+      "type": "string",
+      "title": "Install Secret",
+      "description": "The temporary secret needed to download and install the DCOS CLI packages"
+    }
+  },
+  "additionalProperties": false,
+  "required": [ "helloworld/secret" ]
+}
