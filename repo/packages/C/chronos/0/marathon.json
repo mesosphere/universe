@@ -1,4 +1,83 @@
 {
-  "id": "chronos"
-}
+  "id": "{{id}}",
+  "instances": {{instances}},
+  "cpus": {{cpus}},
+  "mem": {{mem}},
+  "disk": 0.0,
+  "env": {
+    "NO_OP": ""
 
+    {{#http_credentials}}
+    , "MESOSPHERE_HTTP_CREDENTIALS": "{{http_credentials}}"
+    {{/http_credentials}}
+
+  },
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "mesosphere/chronos:chronos-2.3.2-0.1.20150207000917.ubuntu1404-mesos-0.22.0-1.0.ubuntu1404",
+      "network": "BRIDGE",
+      "portMappings": [
+        { "containerPort": 4400, "hostPort": 0, "servicePort": 4400, "protocol": "tcp" }
+      ]
+    }
+  },
+  "args": [
+    "chronos", "run_jar",
+    "--master", "{{mesos/master}}",
+    "--zk_hosts", "{{zk_hosts}}",
+    "--http_port", "4400"
+
+
+    {{#assets_path}},                 "--assets_path", "{{assets_path}}"                                {{/assets_path}}
+    {{#cassandra_consistency}},       "--cassandra_consistency", "{{cassandra_consistency}}"            {{/cassandra_consistency}}
+    {{#cassandra_contact_points}},    "--cassandra_contact_points", "{{cassandra_contact_points}}"      {{/cassandra_contact_points}}
+    {{#cassandra_keyspace}},          "--cassandra_keyspace", "{{cassandra_keyspace}}"                  {{/cassandra_keyspace}}
+    {{#cassandra_port}},              "--cassandra_port", "{{cassandra_port}}"                          {{/cassandra_port}}
+    {{#cassandra_table}},             "--cassandra_table", "{{cassandra_table}}"                        {{/cassandra_table}}
+    {{#cassandra_ttl}},               "--cassandra_ttl", "{{cassandra_ttl}}"                            {{/cassandra_ttl}}
+    {{#cluster_name}},                "--cluster_name", "{{cluster_name}}"                              {{/cluster_name}}
+    {{#disable_after_failures}},      "--disable_after_failures", "{{disable_after_failures}}"          {{/disable_after_failures}}
+    {{#failover_timeout}},            "--failover_timeout", "{{failover_timeout}}"                      {{/failover_timeout}}
+    {{#failure_retry}},               "--failure_retry", "{{failure_retry}}"                            {{/failure_retry}}
+    {{#graphite_group_prefix}},       "--graphite_group_prefix", "{{graphite_group_prefix}}"            {{/graphite_group_prefix}}
+    {{#graphite_host_port}},          "--graphite_host_port", "{{graphite_host_port}}"                  {{/graphite_host_port}}
+    {{#graphite_reporting_interval}}, "--graphite_reporting_interval", "{{graphite_reporting_interval}}"{{/graphite_reporting_interval}}
+    {{#hostname}},                    "--hostname", "{{hostname}}"                                      {{/hostname}}
+    {{#http_credentials}},            "--http_credentials", "{{http_credentials}}"                      {{/http_credentials}}
+    {{#http_realm}},                  "--http_realm", "{{http_realm}}"                                  {{/http_realm}}
+    {{#leader_max_idle_time}},        "--leader_max_idle_time", "{{leader_max_idle_time}}"              {{/leader_max_idle_time}}
+    {{#mail_from}},                   "--mail_from", "{{mail_from}}"                                    {{/mail_from}}
+    {{#mail_password}},               "--mail_password", "{{mail_password}}"                            {{/mail_password}}
+    {{#mail_server}},                 "--mail_server", "{{mail_server}}"                                {{/mail_server}}
+    {{#mail_ssl}},                    "--mail_ssl"                                                      {{/mail_ssl}}
+    {{#mail_user}},                   "--mail_user", "{{mail_user}}"                                    {{/mail_user}}
+    {{#mesos_checkpoint}},            "--mesos_checkpoint"                                              {{/mesos_checkpoint}}
+    {{#mesos_framework_name}},        "--mesos_framework_name", "{{mesos_framework_name}}"              {{/mesos_framework_name}}
+    {{#mesos_role}},                  "--mesos_role", "{{mesos_role}}"                                  {{/mesos_role}}
+    {{#mesos_task_cpu}},              "--mesos_task_cpu", "{{mesos_task_cpu}}"                          {{/mesos_task_cpu}}
+    {{#mesos_task_disk}},             "--mesos_task_disk", "{{mesos_task_disk}}"                        {{/mesos_task_disk}}
+    {{#mesos_task_mem}},              "--mesos_task_mem", "{{mesos_task_mem}}"                          {{/mesos_task_mem}}
+    {{#raven_dsn}},                   "--raven_dsn", "{{raven_dsn}}"                                    {{/raven_dsn}}
+    {{#reconciliation_interval}},     "--reconciliation_interval", "{{reconciliation_interval}}"        {{/reconciliation_interval}}
+    {{#schedule_horizon}},            "--schedule_horizon", "{{schedule_horizon}}"                      {{/schedule_horizon}}
+    {{#slack_channel}},               "--slack_channel", "{{slack_channel}}"                            {{/slack_channel}}
+    {{#slack_token}},                 "--slack_token", "{{slack_token}}"                                {{/slack_token}}
+    {{#slack_url}},                   "--slack_url", "{{slack_url}}"                                    {{/slack_url}}
+    {{#task_epsilon}},                "--task_epsilon", "{{task_epsilon}}"                              {{/task_epsilon}}
+    {{#user}},                        "--user", "{{user}}"                                              {{/user}}
+    {{#webui_url}},                   "--webui_url", "{{webui_url}}"                                    {{/webui_url}}
+    {{#zk_path}},                     "--zk_path", "{{zk_path}}"                                        {{/zk_path}}
+    {{#zk_timeout}},                  "--zk_timeout", "{{zk_timeout}}"                                  {{/zk_timeout}}
+  ],
+  "healthChecks": [
+    {
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 2,
+      "path": "/",
+      "portIndex": 0,
+      "protocol": "HTTP"
+    }
+  ]
+
+}
