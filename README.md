@@ -120,11 +120,14 @@ for more detailed instruction on app definitions.
 #### `command.json`
 
 This file is **optional**. Describes how to install the package's CLI.
-Currently the only supported format is a Python egg.
+Currently the only supported format is a Pip requirements file where each
+element in the array is a line in the requirements file.
 
 ```json
 {
-  "python": "https://pypi.python.org/packages/source/f/foo/foo-1.2.3.tar.gz"
+  "pip": [
+    "https://pypi.python.org/packages/source/f/foo/foo-1.2.3.tar.gz"
+  ]
 }
 ```
 _Sample `command.json`._
