@@ -1,0 +1,13 @@
+{
+  "mesos/master": "zk://zk-host:2181/mesos",
+  "cassandra/zk": "zk://zk-host:2181/cassandra-mesos/stage",
+  "cassandra/data-directory": "/var/lib/cassandra",
+  "framework/name": "stage",
+  "cassandra/node-count": "3",
+  "cassandra/seed-count": "2",
+  "cassandra/resource/cpus": "2.0",
+  "cassandra/resource/disk": "2048",
+  "cassandra/resource/heap-mb": "2048",
+  "cassandra/resource/mem": "4096",
+  "framework/role": "*"
+}
