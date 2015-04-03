@@ -4,7 +4,7 @@
     "spark/port": {
       "type": "integer",
       "description": "Port of the REST endpoint for submitting Spark jobs.",
-      "default": 7177,
+      "default": 7077,
       "minimum": 0,
       "maximum": 65535
     },
@@ -14,6 +14,11 @@
       "default": 8180,
       "minimum": 0,
       "maximum": 65535
+    },
+    "spark/host": {
+      "type": "string",
+      "description": "The host that the Spark cluster dispatcher will register under.",
+      "default": "`hostname`"
     },
     "spark/mesos-master": {
       "type": "string",
