@@ -1,4 +1,3 @@
-
 {
   "id": "/cassandra/{{framework/name}}",
   "instances": 1,
@@ -8,13 +7,13 @@
     0
   ],
   "uris": [
-    "https://downloads.mesosphere.io/cassandra-mesos/artifacts/0.1.0-SNAPSHOT-390-rewrite-825756a084/cassandra-mesos-0.1.0-SNAPSHOT-390-rewrite-825756a084.tar.gz",
+    "https://downloads.mesosphere.io/cassandra-mesos/artifacts/0.1.0-SNAPSHOT-402-master-c0e080b4d4/cassandra-mesos-0.1.0-SNAPSHOT-402-master-c0e080b4d4.tar.gz",
     "https://downloads.mesosphere.io/java/jre-7u76-linux-x64.tar.gz"
   ],
   "env": {
     "MESOS_ZK": "{{mesos/master}}"
     ,"JAVA_OPTS": "-Xms256m -Xmx256m"
-    ,"FRAMEWORK_NAME": "{{framework/name}}"
+    ,"CASSANDRA_CLUSTER_NAME": "{{cassandra/cluster-name}}"
     ,"CASSANDRA_ZK": "{{cassandra/zk}}"
     ,"CASSANDRA_NODE_COUNT": "{{cassandra/node-count}}"
     ,"CASSANDRA_SEED_COUNT": "{{cassandra/node-count}}"

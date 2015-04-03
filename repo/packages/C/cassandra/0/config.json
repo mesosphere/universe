@@ -3,7 +3,8 @@
   "properties": {
     "mesos/master": {
       "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard URLs like http://localhost are also acceptable.",
-      "type": "string"
+      "type": "string",
+      "default": "zk://master.mesos:2181/mesos"
     },
 
     "framework/failover-timeout-seconds": {
@@ -11,10 +12,6 @@
       "type": "integer",
       "minimum": 0,
       "default": 604800
-    },
-    "framework/name": {
-      "description": "The name of the framework to register with mesos. Will also be used as the cluster name in Cassandra",
-      "type": "string"
     },
     "framework/role": {
       "description": "Mesos role for this framework.",
@@ -35,9 +32,15 @@
       "type": "string"
     },
 
+    "cassandra/cluster-name": {
+      "description": "The name of the framework to register with mesos. Will also be used as the cluster name in Cassandra",
+      "type": "string",
+      "default": "dcos"
+    },
     "cassandra/zk": {
       "description": "ZooKeeper URL for storing state. Format: zk://host1:port1,host2:port2,.../path (can have nested directories)",
-      "type": "string"
+      "type": "string",
+      "default": "zk://master.mesos:2181/cassandra-mesos/dcos"
     },
     "cassandra/zk-timeout-ms": {
       "description": "Timeout for ZooKeeper in milliseconds.",
@@ -79,29 +82,24 @@
       "description": "CPU shares to allocate to each Cassandra Server Instance.",
       "type": "number",
       "minimum": 0.0,
-      "default": 2.0
+      "default": 0.1
     },
     "cassandra/resource/mem": {
       "description": "Memory (MB) to allocate to each Cassandra Server instance.",
       "type": "integer",
       "minimum": 0,
-      "default": 2048
+      "default": 768
     },
     "cassandra/resource/disk": {
       "description": "Disk (MB) to allocate to each Cassandra Server instance.",
       "type": "integer",
       "minimum": 0,
-      "default": 2048
+      "default": 16
     },
     "cassandra/resource/heap-mb": {
       "description": "The amount of memory in MB that are allocated to each Cassandra Server Instance. This value should be smaller than 'cassandra/resource/mem' the remaining difference will be used for memory mapped files and other off-heap memory requirements.",
       "type": "integer",
       "minimum": 0
     }
-  },
-  "required": [
-    "mesos/master",
-    "cassandra/zk",
-    "framework/name"
-  ]
+  }
 }
