@@ -37,5 +37,5 @@
     ,"DEFAULT_SECRET": "{{framework/authentication/secret}}"
 {{/framework/authentication/secret}}
   },
-  "cmd": "$(pwd)/jre*/bin/java $JAVA_OPTS -classpath cassandra-framework.jar io.mesosphere.mesos.frameworks.cassandra.framework.Main"
+  "cmd": "$(pwd)/jre*/bin/java $JAVA_OPTS -classpath cassandra-mesos-framework.jar io.mesosphere.mesos.frameworks.cassandra.framework.Main"
 }
