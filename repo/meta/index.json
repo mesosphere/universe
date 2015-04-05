@@ -1,16 +1,13 @@
 {
   "packages":[
     {
-      "currentVersion":"2.3.2",
-      "description":"A fault tolerant job scheduler for Mesos which handles dependencies and ISO8601 based schedules.",
-      "framework":true,
-      "name":"chronos",
-      "tags":[
-        "mesosphere",
-        "framework"
-      ],
+      "currentVersion":"1.564",
+      "description":"Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.",
+      "framework":false,
+      "name":"jenkins",
+      "tags":[],
       "versions":{
-        "2.3.2":"0"
+        "1.564":"0"
       }
     },
     {
@@ -27,13 +24,30 @@
       }
     },
     {
-      "currentVersion":"1.564",
-      "description":"Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.",
-      "framework":false,
-      "name":"jenkins",
-      "tags":[],
+      "currentVersion":"2.3.2",
+      "description":"A fault tolerant job scheduler for Mesos which handles dependencies and ISO8601 based schedules.",
+      "framework":true,
+      "name":"chronos",
+      "tags":[
+        "mesosphere",
+        "framework"
+      ],
       "versions":{
-        "1.564":"0"
+        "2.3.2":"0"
+      }
+    },
+    {
+      "currentVersion":"1.3.0-SNAPSHOT",
+      "description":"Spark is a fast and general cluster computing system for Big Data",
+      "framework":false,
+      "name":"spark",
+      "tags":[
+        "mesosphere",
+        "framework",
+        "bigdata"
+      ],
+      "versions":{
+        "1.3.0-SNAPSHOT":"0"
       }
     },
     {
@@ -59,20 +73,6 @@
       ],
       "versions":{
         "alpha":"0"
-      }
-    },
-    {
-      "currentVersion":"1.3.0-SNAPSHOT",
-      "description":"Spark is a fast and general cluster computing system for Big Data",
-      "framework":false,
-      "name":"spark",
-      "tags":[
-        "mesosphere",
-        "framework",
-        "bigdata"
-      ],
-      "versions":{
-        "1.3.0-SNAPSHOT":"0"
       }
     },
     {
