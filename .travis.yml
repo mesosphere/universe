@@ -7,5 +7,6 @@ python:
 install: "pip install -r scripts/requirements/requirements.txt"
 
 # command to run tests
-script: scripts/build.sh
-
+script:
+  - scripts/build.sh
+  - git diff --exit-code
