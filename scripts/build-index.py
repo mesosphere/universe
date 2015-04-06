@@ -35,7 +35,7 @@ def build_index(repo_dir):
     package_dirs = [ p for d in os.listdir(packages_dir)
                        for p in os.listdir(os.path.join(packages_dir, d)) ]
 
-    index_entries =[ make_index_entry(
+    index_entries = [ make_index_entry(
         os.path.join(
             repo_dir,
             'repo',
@@ -44,6 +44,8 @@ def build_index(repo_dir):
             dir
         )
     ) for dir in package_dirs ]
+
+    index_entries.sort(key=lambda p: p.get('name', ''))
 
     index = {
         'version': version,
