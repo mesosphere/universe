@@ -1,0 +1,100 @@
+{
+  "type": "object",
+  "properties": {
+    "framework/zookeeper": {
+      "type": "string",
+      "description": "URL to the Zookeeper Crate will communicate to (without protocol prefix, e.g. mesos-master:2181)"
+    },
+    "framework/api-port": {
+      "type": "integer",
+      "description": "Port for the REST API of the Crate Mesos Framework.",
+      "default": 4040,
+      "minimum": 0,
+      "maximum": 65535
+    },
+    "framework/user": {
+      "type": "string",
+      "description": "User to run the framework as."
+    },
+    "framework/role": {
+      "type": "string",
+      "description": "Mesos role for the framework."
+    },
+    "framework/auth/enabled": {
+      "type": "boolean",
+      "description": "Whether framework authentication should be enabled. Requires principal and secret to be set.",
+      "default": false
+    },
+    "framework/auth/principal": {
+      "type": "string",
+      "description": "The Mesos principal used for framework authentication."
+    },
+    "framework/auth/secret": {
+      "type": "string",
+      "description": "The Mesos secret used for framework authentication."
+    },
+    "crate/version": {
+      "type": "string",
+      "description": "The version number of Crate that should be used for the framework."
+    },
+    "crate/cluster-name": {
+      "type": "string",
+      "description": "The name of the Crate cluster.",
+      "default": "crate"
+    },
+    "crate/http-port": {
+      "type": "integer",
+      "description": "HTTP port of the Crate instances.",
+      "default": 4200,
+      "minimum": 0,
+      "maximum": 65535
+    },
+    "crate/transport-port": {
+      "type": "integer",
+      "description": "Internal transport port of the Crate instances.",
+      "default": 4300,
+      "minimum": 0,
+      "maximum": 65535
+    },
+    "crate/data-path": {
+      "type": "string",
+      "description": "The absolute path where Crate should store table data. Note that the user `crate` needs write access!"
+    },
+    "crate/blob-path": {
+      "type": "string",
+      "description": "The absolute path where Crate should store blobs. Note that the user `crate` needs write access!"
+    },
+    "crate/resource/cpus": {
+      "type": "number",
+      "description": "Required number of CPUs.",
+      "default": 0.5,
+      "minimum": 0.5,
+      "maximum": 128.0
+    },
+    "crate/resource/memory": {
+      "type": "integer",
+      "description": "Required size of memory.",
+      "default": 1024,
+      "minimum": 512,
+      "maximum": 65535
+    },
+    "crate/resource/heap": {
+      "type": "integer",
+      "description": "Required heap size.",
+      "default": 512,
+      "minimum": 256,
+      "maximum": 65535
+    },
+    "crate/resource/disk": {
+      "type": "integer",
+      "description": "Required free disk space.",
+      "default": 2048,
+      "minimum": 1024,
+      "maximum": 65535
+    }
+  },
+  "required": [
+    "framework/zookeeper",
+    "crate/version"
+  ]
+}

@@ -27,6 +27,20 @@
       }
     },
     {
+      "currentVersion":"0.1.0-SNAPSHOT",
+      "description":"A Mesos Framework that allows running and resizing one or multiple Crate database clusters.",
+      "framework":true,
+      "name":"crate",
+      "tags":[
+        "database",
+        "distributed",
+        "nosql"
+      ],
+      "versions":{
+        "0.1.0-SNAPSHOT":"0"
+      }
+    },
+    {
       "currentVersion":"0.1.1",
       "description":"Hadoop Distributed File System (HDFS), Highly Available",
       "framework":true,
