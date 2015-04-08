@@ -17,5 +17,16 @@
       "image": "mesosphere/spark:1.4.0-SNAPSHOT-f668313",
       "network": "HOST"
     }
-  }
+  },
+  "healthChecks": [
+    {
+      "path": "/",
+      "portIndex": 1,
+      "protocol": "HTTP",
+      "gracePeriodSeconds": 5,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 3
+    }
+  ]
 }
