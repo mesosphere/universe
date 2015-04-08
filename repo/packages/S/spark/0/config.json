@@ -1,20 +1,6 @@
 {
   "type": "object",
   "properties": {
-    "spark/port": {
-      "type": "integer",
-      "description": "Port of the REST endpoint for submitting Spark jobs.",
-      "default": 7077,
-      "minimum": 0,
-      "maximum": 65535
-    },
-    "spark/webui-port": {
-      "type": "integer",
-      "description": "Port of the Web UI for showing job progress and results.",
-      "default": 8180,
-      "minimum": 0,
-      "maximum": 65535
-    },
     "spark/host": {
       "type": "string",
       "description": "The host that the Spark cluster dispatcher will register under.",
