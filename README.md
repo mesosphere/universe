@@ -132,6 +132,9 @@ element in the array is a line in the requirements file.
 ```
 _Sample `command.json`._
 
+See the [Command Schema](repo/meta/schema/command-schema.json) for a detailed description of
+the schema.
+
 ### Validation
 
 Package content is validated using [JSON Schema](http://json-schema.org).
