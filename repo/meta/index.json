@@ -54,6 +54,20 @@
       }
     },
     {
+      "currentVersion":"0.0.4",
+      "description":"DCOS history application package",
+      "framework":false,
+      "name":"history",
+      "tags":[
+        "mesosphere",
+        "dcos",
+        "ui"
+      ],
+      "versions":{
+        "0.0.4":"0"
+      }
+    },
+    {
       "currentVersion":"1.564",
       "description":"Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.",
       "framework":false,

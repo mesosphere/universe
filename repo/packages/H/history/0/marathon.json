@@ -1,0 +1,29 @@
+{
+  "id": "history",
+  "cpus": 0.5,
+  "mem": 512,
+  "instances": 1,
+  "ports": [5055],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "mesosphere/dcos-history-service:0.0.4",
+      "network": "HOST"
+    }
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 180,
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 3,
+      "path": "/ping",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "timeoutSeconds": 20
+    }
+  ],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0
+  }
+}
+
