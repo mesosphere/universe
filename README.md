@@ -34,9 +34,10 @@ _Sample package directory layout._
 {
   "name": "foo",
   "version": "1.2.3",
-  "scm": "https://github.com/bar/foo.git",
+  "tags": ["mesosphere", "framework"],
   "maintainer": "help@bar.io",
   "description": "Does baz.",
+  "scm": "https://github.com/bar/foo.git",
   "website": "http://bar.io/foo",
   "images": {
     "icon-small": "http://some.org/foo/small.png",
@@ -56,6 +57,7 @@ The required fields are:
 
 - name
 - version
+- tags
 - maintainer
 - description
 
