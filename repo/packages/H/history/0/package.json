@@ -1,8 +1,8 @@
 {
   "name": "history",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "website": "https://github.com/mesosphere/dcos-history-service",
   "maintainer": "support@mesosphere.io",
-  "description": "DCOS history application package",
-  "tags": [ "mesosphere", "dcos", "ui"]
+  "description": "This service is a companion service to the dcos dashboard to enable historicized data. It collects the mesos master state of the mesos leader periodically.",
+  "tags": [ "mesosphere", "dcos", "dashboard"]
 }

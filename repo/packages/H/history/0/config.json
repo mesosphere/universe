@@ -1,7 +1,31 @@
 {
   "$schema": "http://json-schema.org/schema#",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "mesos/master/url": {
+      "description": "The URL of the Mesos master. The format is a comma-delimited list of URLs like http://host:port.",
+      "type": "string",
+      "default": "http://leader.mesos:5050"
+    },
+    "history/resource/cpus": {
+      "description": "CPU shares to allocate to the history service.",
+      "type": "number",
+      "minimum": 0.0,
+      "default": 0.1
+    },
+    "history/resource/mem": {
+      "description": "Memory (MB) to allocate to each history service instance.",
+      "type": "integer",
+      "minimum": 0,
+      "default": 256
+    },
+    "history/port": {
+      "description": "The port this rest service will bind to.",
+      "type": "integer",
+      "minimum": 0,
+      "default": 15055
+    }
+  },
   "additionalProperties": false,
   "required": []
 }

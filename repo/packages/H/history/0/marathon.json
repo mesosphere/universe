@@ -1,13 +1,13 @@
 {
   "id": "history",
-  "cpus": 0.5,
-  "mem": 512,
+  "cpus": {{history/resource/cpus}},
+  "mem": {{history/resource/mem}},
   "instances": 1,
-  "ports": [5055],
+  "ports": [{{history/port}}],
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "mesosphere/dcos-history-service:0.0.4",
+      "image": "mesosphere/dcos-history-service:0.0.6",
       "network": "HOST"
     }
   },
@@ -24,6 +24,9 @@
   ],
   "upgradeStrategy": {
     "minimumHealthCapacity": 0
+  },
+  "env": {
+    "MASTER_URLS": "{{mesos/master/url}}"
   }
 }
 

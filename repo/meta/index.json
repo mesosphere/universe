@@ -54,17 +54,17 @@
       }
     },
     {
-      "currentVersion":"0.0.4",
-      "description":"DCOS history application package",
+      "currentVersion":"0.0.6",
+      "description":"This service is a companion service to the dcos dashboard to enable historicized data. It collects the mesos master state of the mesos leader periodically.",
       "framework":false,
       "name":"history",
       "tags":[
         "mesosphere",
         "dcos",
-        "ui"
+        "dashboard"
       ],
       "versions":{
-        "0.0.4":"0"
+        "0.0.6":"0"
       }
     },
     {
