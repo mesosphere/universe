@@ -54,6 +54,20 @@
       }
     },
     {
+      "currentVersion":"0.0.6",
+      "description":"This service is a companion service to the dcos dashboard to enable historicized data. It collects the mesos master state of the mesos leader periodically.",
+      "framework":false,
+      "name":"history",
+      "tags":[
+        "mesosphere",
+        "dcos",
+        "dashboard"
+      ],
+      "versions":{
+        "0.0.6":"0"
+      }
+    },
+    {
       "currentVersion":"1.564",
       "description":"Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.",
       "framework":false,

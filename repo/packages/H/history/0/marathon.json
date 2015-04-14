@@ -1,0 +1,32 @@
+{
+  "id": "history",
+  "cpus": {{history/resource/cpus}},
+  "mem": {{history/resource/mem}},
+  "instances": 1,
+  "ports": [{{history/port}}],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "mesosphere/dcos-history-service:0.0.6",
+      "network": "HOST"
+    }
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 180,
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 3,
+      "path": "/ping",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "timeoutSeconds": 20
+    }
+  ],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0
+  },
+  "env": {
+    "MASTER_URLS": "{{mesos/master/url}}"
+  }
+}
+
