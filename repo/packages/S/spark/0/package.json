@@ -5,5 +5,6 @@
   "maintainer": "support@mesosphere.io",
   "description": "Spark is a fast and general cluster computing system for Big Data",
   "framework": true,
-  "tags": ["mesosphere", "framework", "bigdata"]
+  "tags": ["mesosphere", "framework", "bigdata"],
+  "postInstallNotes": "Spark cluster mode on Mesos is ready!"
 }
