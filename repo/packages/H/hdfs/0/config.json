@@ -10,6 +10,10 @@
       "default": [
         "https://downloads.mesosphere.io/hdfs/dcos/0.1.0/hdfs-mesos-0.1.0.tgz"
       ]
+    },
+    "hdfs/custom-config": {
+      "description": "Custom mesos-site.xml (base64 encoded)",
+      "type": "string"
     }
   }
 }
