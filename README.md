@@ -61,6 +61,14 @@ The required fields are:
 - maintainer
 - description
 
+While `images` is an optional field, it is highly recommended you include icons and screenshots in your package and update the path definitions accordingly.  Specifications are as follows:
+* `icon-small`: 48px (w) x 48px (h)
+* `icon-medium`: 96px (w) x 96px (h)
+* `icon-large`: 256px (w) x 256px (h)
+* `screenshots[...]`: 1200x675
+
+**NOTE:** To ensure your service icons look beautiful on retina-ready displays, please supply 2x versions of all icons.  No specifications are need to the package defintion, simply add `@2x` before the file extension of the image.  For example, the icon `icon-cassandra-small.png` would have a retina-ready alternate image named `icon-cassandra-small@2x.png`.  The Mesosphere DCOS will look for this alternate image first if the viewport is at a 2x resolution.
+
 #### `config.json`
 
 ```json
@@ -235,4 +243,3 @@ A URL that designates a
 [zip](http://en.wikipedia.org/wiki/Zip_%28file_format%29) file
 accessible over HTTP or HTTPS with media type `application/zip`.  
 Example: `http://my.org/files/universe/packages.zip`
-
