@@ -54,13 +54,17 @@
       }
     },
     {
-      "currentVersion":"1.564",
+      "currentVersion":"1.596.2",
       "description":"Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.",
-      "framework":false,
+      "framework":true,
       "name":"jenkins",
-      "tags":[],
+      "tags":[
+        "framework",
+        "cloudbees",
+        "continuous-integration"
+      ],
       "versions":{
-        "1.564":"0"
+        "1.596.2":"0"
       }
     },
     {
