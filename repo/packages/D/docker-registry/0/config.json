@@ -1,0 +1,431 @@
+{
+  "type": "object",
+  "properties": {
+    "flavour": {
+      "description": "The registry can be instructed to use a specific flavor. Following flavours are available: local, s3, ceph-s3, azureblob, dev, test, prod, gcs, swift, glance, glance-swift, elliptics. Every flavour has its own set of configuration properties.",
+      "type": "string",
+      "default": "local"
+    },
+    "registry/version": {
+      "description": "The version of the docker registry to use.",
+      "type": "string",
+      "default": "latest"
+    },
+    "port": {
+      "description": "The port the registry is listening on.",
+      "type": "number",
+      "minimum": 0.0,
+      "default": 5000
+    },
+    "host/storage_path": {
+      "description": "The path on the local machine, where the projects get stored.",
+      "type": "string",
+      "default": "/tmp"
+    },
+    "provider/storage_path": {
+      "description": "The docker internal path to write to.",
+      "type": "string",
+      "default": "/storage"
+    },
+    "resource/cpus": {
+      "description": "CPU shares to allocate to each docker Server Instance.",
+      "type": "number",
+      "minimum": 0.0,
+      "default": 0.5
+    },
+    "resource/mem": {
+      "description": "Memory (MB) to allocate to each docker Server instance.",
+      "type": "integer",
+      "minimum": 0,
+      "default": 1024
+    },
+    "resource/disk": {
+      "description": "Disk (MB) to allocate to each docker Server instance.",
+      "type": "integer",
+      "minimum": 0,
+      "default": 1024
+    },
+    "common/loglevel": {
+      "description": "Log-Level of the service.",
+      "type": "string",
+      "default": "info"
+    },
+    "common/debug": {
+      "description": "Enable debugging (additional informations in the output of the _ping endpoint)",
+      "type": "boolean",
+      "default": false
+    },
+    "common/standalone": {
+      "description": "By default, the registry acts standalone (eg: doesn't query the index) ",
+      "type": "boolean",
+      "default": true
+    },
+    "common/index_endpoint": {
+      "description": "The default endpoint to use (if NOT standalone)",
+      "type": "string",
+      "default": "https://index.docker.io"
+    },
+    "common/storage_redirect": {
+      "description": "Storage redirect",
+      "type": "boolean",
+      "default": false
+    },
+    "common/disable_token_auth": {
+      "description": "Token auth is enabled (if NOT standalone)",
+      "type": "boolean",
+      "default": false
+    },
+    "common/privileged_key": {
+      "description": "The privileged key to use",
+      "type": "string"
+    },
+    "common/search_backend": {
+      "description": "The name of the search backend (e.g. sqlalchemy)",
+      "type": "string"
+    },
+    "common/sqlalchemy_index_database": {
+      "description": "The path to the sqlalchemy db file",
+      "type": "string"
+    },
+    "mirroring/source": {
+      "description": "The mirror source to use",
+      "type": "string"
+    },
+    "mirroring/source_index": {
+      "description": "The mirror index to use",
+      "type": "string"
+    },
+    "mirroring/tags_cache_ttl": {
+      "description": "The ttl of the mirror entries in seconds",
+      "type": "integer"
+    },
+    "cache/host": {
+      "description": "The redis cache host to use",
+      "type": "string"
+    },
+    "cache/port": {
+      "description": "The redis cache port to use",
+      "type": "string"
+    },
+    "cache/db": {
+      "description": "The redis cache db to use",
+      "type": "string"
+    },
+    "cache/password": {
+      "description": "The password to connect to redis",
+      "type": "string"
+    },
+    "cache_lru/host": {
+      "description": "The redis lru cache host to use",
+      "type": "string"
+    },
+    "cache_lru/port": {
+      "description": "The redis lru cache port to use",
+      "type": "string"
+    },
+    "cache_lru/db": {
+      "description": "The redis lru cache db to use",
+      "type": "string"
+    },
+    "cache_lru/password": {
+      "description": "The redis lru cache password to connect",
+      "type": "string"
+    },
+    "email_exceptions/smtp_host": {
+      "description": "SMTP host to get emails for exceptions",
+      "type": "string"
+    },
+    "email_exceptions/smtp_port": {
+      "description": "SMTP port to get emails for exceptions",
+      "type": "integer"
+    },
+    "email_exceptions/smtp_login": {
+      "description": "SMTP login name to get emails for exceptions",
+      "type": "string"
+    },
+    "email_exceptions/smtp_password": {
+      "description": "SMTP password to get emails for exceptions",
+      "type": "string"
+    },
+    "email_exceptions/smtp_secure": {
+      "description": "Use secure channel for delivering emails for exceptions",
+      "type": "boolean"
+    },
+    "email_exceptions/from_addr": {
+      "description": "Take this from address when sending an email",
+      "type": "string"
+    },
+    "email_exceptions/to_addr": {
+      "description": "Send emails to this address.",
+      "type": "string"
+    },
+    "bugsnag": {
+      "description": "BugSnag API Key",
+      "type": "string"
+    },
+    "cors/origins": {
+      "description": "Enable CORS with this origin.",
+      "type": "string"
+    },
+    "cors/methods": {
+      "description": "Enable CORS for this HTTP methods",
+      "type": "string"
+    },
+    "cors/headers": {
+      "description": "Enable CORS with this headers",
+      "type": "string"
+    },
+    "cors/expose_headers": {
+      "description": "Expose CORS headers",
+      "type": "boolean"
+    },
+    "cors/supports_credentials": {
+      "description": "Support CORS with this credentials",
+      "type": "boolean"
+    },
+    "cors/max_age": {
+      "description": "Support CORS with this max age",
+      "type": "string"
+    },
+    "cors/send_wildcard": {
+      "description": "Support CORS with wildcard",
+      "type": "boolean"
+    },
+    "cors/always_send": {
+      "description": "Support CORS always",
+      "type": "boolean"
+    },
+    "cors/automatic_options": {
+      "description": "Enable CORS with automatic options",
+      "type": "string"
+    },
+    "cors/vary_header": {
+      "description": "Enable CORS with variable headers",
+      "type": "string"
+    },
+    "cors/resources": {
+      "description": "Enable CORS for this resources",
+      "type": "string"
+    },
+    "s3/s3_region": {
+      "description": "Support S3 in this region",
+      "type": "string"
+    },
+    "s3/s3_bucket": {
+      "description": "Support S3 for this bucket",
+      "type": "string"
+    },
+    "s3/boto_bucket": {
+      "description": "Support S3 for this boto bucket",
+      "type": "string"
+    },
+    "s3/s3_encrypt": {
+      "description": "Support S3 encrypted",
+      "type": "boolean"
+    },
+    "s3/s3_secure": {
+      "description": "Support S3 secured",
+      "type": "boolean"
+    },
+    "s3/s3_access_key": {
+      "description": "Support S3 with this access key",
+      "type": "string"
+    },
+    "s3/s3_secret_key": {
+      "description": "Support S3 with this secret key",
+      "type": "string"
+    },
+    "s3/s3_use_sigv4": {
+      "description": "Support S3 with siv4",
+      "type": "string"
+    },
+    "s3/boto_host": {
+      "description": "Defines the S3 host for boto",
+      "type": "string"
+    },
+    "s3/boto_port": {
+      "description": "Defines the S3 port for boto ",
+      "type": "string"
+    },
+    "s3/boto_calling_format": {
+      "description": "Defines the S3 calling format for boto",
+      "type": "string"
+    },
+    "cloudfronts3/base": {
+      "description": "Support cloudfront with this base URL",
+      "type": "string"
+    },
+    "cloudfronts3/keyid": {
+      "description": "Support cloudfront with this id",
+      "type": "string"
+    },
+    "cloudfronts3/keysecret": {
+      "description": "Support cloudfront with this secret",
+      "type": "string"
+    },
+    "azureblob/azure_storage_account_name": {
+      "description": "Support azure with this account name",
+      "type": "string"
+    },
+    "azureblob/azure_storage_account_key": {
+      "description": "Support azure with this account key",
+      "type": "string"
+    },
+    "azureblob/azure_storage_container": {
+      "description": "Support azure with this storage container",
+      "type": "string"
+    },
+    "azureblob/azure_use_https": {
+      "description": "Support azure via https",
+      "type": "boolean"
+    },
+    "ceph-s3/s3_bucket": {
+      "description": "Support s3 via ceph with this bucket",
+      "type": "string"
+    },
+    "ceph-s3/s3_encrypt": {
+      "description": "Support s3 via ceph encrypted",
+      "type": "boolean"
+    },
+    "ceph-s3/s3_secure": {
+      "description": "Support s3 via ceph with secured",
+      "type": "string"
+    },
+    "ceph-s3/s3_access_key": {
+      "description": "Support s3 via ceph with this access key",
+      "type": "string"
+    },
+    "ceph-s3/s3_secret_key": {
+      "description": "Support s3 via ceph with this secret key",
+      "type": "string"
+    },
+    "ceph-s3/boto_bucket": {
+      "description": "Support boto on s3 via ceph with this bucket",
+      "type": "string"
+    },
+    "ceph-s3/boto_host": {
+      "description": "Support boto on s3 via ceph on this host",
+      "type": "string"
+    },
+    "ceph-s3/boto_port": {
+      "description": "Support boto on s3 via ceph on this port",
+      "type": "integer"
+    },
+    "ceph-s3/boto_debug": {
+      "description": "Support boto on s3 via ceph in debug mode",
+      "type": "boolean"
+    },
+    "ceph-s3/boto_calling_format": {
+      "description": "Support boto on s3 via ceph with this calling format",
+      "type": "string"
+    },
+    "gcs/boto_bucket": {
+      "description": "Support boto on google cloud storage with this bucket",
+      "type": "string"
+    },
+    "gcs/gs_secure": {
+      "description": "Support google cloud storage secured",
+      "type": "string"
+    },
+    "gcs/gs_access_key": {
+      "description": "Support google cloud storage with this access key",
+      "type": "string"
+    },
+    "gcs/gs_secret_key": {
+      "description": "Support google cloud storage with this secret key",
+      "type": "string"
+    },
+    "gcs/oauth2": {
+      "description": "Support google cloud storage with oauth 2.0 authentication",
+      "type": "boolean"
+    },
+    "swift/swift_authurl": {
+      "description": "Support Openstack Swift with this authentication url",
+      "type": "string"
+    },
+    "swift/swift_container": {
+      "description": "Support Openstack Swift with this container",
+      "type": "string"
+    },
+    "swift/swift_user": {
+      "description": "Support Openstack Swift with this user name",
+      "type": "string"
+    },
+    "swift/swift_password": {
+      "description": "Support Openstack Swift with this user password",
+      "type": "string"
+    },
+    "swift/swift_tenant_name": {
+      "description": "Support Openstack Swift with this tenant name",
+      "type": "string"
+    },
+    "swift/swift_region_name": {
+      "description": "Support Openstack Swift with this region name",
+      "type": "string"
+    },
+    "glance/storage_alternate": {
+      "description": "Support Glance with alternate file",
+      "type": "string"
+    },
+    "elliptics/elliptics_nodes": {
+      "description": "Support elliptics with this nodes",
+      "type": "string"
+    },
+    "elliptics/elliptics_wait_timeout": {
+      "description": "Support elliptics with this wait time",
+      "type": "string"
+    },
+    "elliptics/elliptics_check_timeout": {
+      "description": "Support elliptics with this check timeout",
+      "type": "string"
+    },
+    "elliptics/elliptics_io_thread_num": {
+      "description": "Support elliptics with this thread number for io",
+      "type": "string"
+    },
+    "elliptics/elliptics_net_thread_num": {
+      "description": "Support elliptics with this thread number for network",
+      "type": "string"
+    },
+    "elliptics/elliptics_nonblocking_io_thread_num": {
+      "description": "Support elliptics with this thread number for nonblocking io",
+      "type": "string"
+    },
+    "elliptics/elliptics_groups": {
+      "description": "Support elliptics with this groups",
+      "type": "string"
+    },
+    "elliptics/elliptics_verbosity": {
+      "description": "Support elliptics with verbosity",
+      "type": "string"
+    },
+    "elliptics/elliptics_logfile": {
+      "description": "Support elliptics logging to this logfile",
+      "type": "string"
+    },
+    "elliptics/elliptics_addr_family": {
+      "description": "Support elliptics with this network address family",
+      "type": "string"
+    },
+    "oss/oss_host": {
+      "description": "Support Aliyun OSS with this host",
+      "type": "string"
+    },
+    "oss/oss_bucket": {
+      "description": "Support Aliyun OSS with this bucket",
+      "type": "string"
+    },
+    "oss/oss_accessid": {
+      "description": "Support Aliyun OSS with this access identifier",
+      "type": "string"
+    },
+    "oss/oss_accesskey": {
+      "description": "Support Aliyun OSS with this access key",
+      "type": "string"
+    },
+    "dev/loglevel": {
+      "description": "Define the loglevel",
+      "type": "string"
+    }
+  }
+}
