@@ -5,5 +5,10 @@
   "maintainer": "support@mesosphere.io",
   "description": "Apache Cassandra running on Apache Mesos",
   "framework": true,
-  "tags": ["mesosphere", "framework"]
+  "tags": ["mesosphere", "framework"],
+  "images": {
+    "icon-small": "https://downloads.mesosphere.io/cassandra-mesos/assets/cassandra-small.png",
+    "icon-medium": "https://downloads.mesosphere.io/cassandra-mesos/assets/cassandra-medium.png",
+    "icon-large": "https://downloads.mesosphere.io/cassandra-mesos/assets/cassandra-large.png"
+  }
 }
