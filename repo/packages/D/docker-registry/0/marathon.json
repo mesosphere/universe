@@ -1,0 +1,326 @@
+{
+  "id": "/docker/registry",
+  "instances": 1,
+  "ports": [ 0 ],
+  "cpus": {{resource/cpus}},
+  "mem": {{resource/mem}},
+  "disk": {{resource/cpus}},
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "registry:{{registry/version}}",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": {{port}},
+          "hostPort": 0,
+          "protocol": "tcp",
+          "servicePort": {{port}}
+        }
+      ]
+    },
+    "volumes": [
+      {
+        "containerPath": "{{provider/storage_path}}",
+        "hostPath": "{{host/storage_path}}",
+        "mode": "RW"
+      }
+    ]
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/",
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "env": {
+     "LOGLEVEL": "{{common/loglevel}}"
+    ,"SETTINGS_FLAVOR": "{{flavour}}"
+    {{#common-debug}}
+    ,"DEBUG": "{{common/debug}}"
+    {{/common-debug}}
+    {{#common/standalone}}
+    ,"STANDALONE": "{{common/standalone}}"
+    {{/common/standalone}}
+    {{#common/index_endpoint}}
+    ,"INDEX_ENDPOINT": "{{common/index_endpoint}}"
+    {{/common/index_endpoint}}
+    {{#common/storage_redirect}}
+    ,"STORAGE_REDIRECT": "{{common/storage_redirect}}"
+    {{/common/storage_redirect}}
+    {{#common/disable_token_auth}}
+    ,"DISABLE_TOKEN_AUTH": "{{common/disable_token_auth}}"
+    {{/common/disable_token_auth}}
+    {{#common/privileged_key}}
+    ,"PRIVILEGED_KEY": "{{common/privileged_key}}"
+    {{/common/privileged_key}}
+    {{#common/search_backend}}
+    ,"SEARCH_BACKEND": "{{common/search_backend}}"
+    {{/common/search_backend}}
+    {{#common/sqlalchemy_index_database}}
+    ,"SQLALCHEMY_INDEX_DATABASE": "{{common/sqlalchemy_index_database}}"
+    {{/common/sqlalchemy_index_database}}
+    {{#mirroring/source}}
+    ,"MIRROR_SOURCE": "{{mirroring/source}}"
+    {{/mirroring/source}}
+    {{#mirroring/source_index}}
+    ,"MIRROR_SOURCE_INDEX": "{{mirroring/source_index}}"
+    {{/mirroring/source_index}}
+    {{#mirroring/tags_cache_ttl}}
+    ,"MIRROR_TAGS_CACHE_TTL": "{{mirroring/tags_cache_ttl}}"
+    {{/mirroring/tags_cache_ttl}}
+    {{#cache/host}}
+    ,"CACHE_REDIS_HOST": "{{cache/host}}"
+    {{/cache/host}}
+    {{#cache/port}}
+    ,"CACHE_REDIS_PORT": "{{cache/port}}"
+    {{/cache/port}}
+    {{#cache/db}}
+    ,"CACHE_REDIS_DB": "{{cache/db}}"
+    {{/cache/db}}
+    {{#cache/password}}
+    ,"CACHE_REDIS_PASSWORD": "{{cache/password}}"
+    {{/cache/password}}
+    {{#cache_lru/host}}
+    ,"CACHE_LRU_REDIS_HOST": "{{cache_lru/host}}"
+    {{/cache_lru/host}}
+    {{#cache_lru/port}}
+    ,"CACHE_LRU_REDIS_PORT": "{{cache_lru/port}}"
+    {{/cache_lru/port}}
+    {{#cache_lru/db}}
+    ,"CACHE_LRU_REDIS_DB": "{{cache_lru/db}}"
+    {{/cache_lru/db}}
+    {{#cache_lru/password}}
+    ,"CACHE_LRU_REDIS_PASSWORD": "{{cache_lru/password}}"
+    {{/cache_lru/password}}
+    {{#email_exceptions/smtp_host}}
+    ,"SMTP_HOST": "{{email_exceptions/smtp_host}}"
+    {{/email_exceptions/smtp_host}}
+    {{#email_exceptions/smtp_port}}
+    ,"SMTP_PORT": "{{email_exceptions/smtp_port}}"
+    {{/email_exceptions/smtp_port}}
+    {{#email_exceptions/smtp_login}}
+    ,"SMTP_LOGIN": "{{email_exceptions/smtp_login}}"
+    {{/email_exceptions/smtp_login}}
+    {{#email_exceptions/smtp_password}}
+    ,"SMTP_PASSWORD": "{{email_exceptions/smtp_password}}"
+    {{/email_exceptions/smtp_password}}
+    {{#email_exceptions/smtp_secure}}
+    ,"SMTP_SECURE": "{{email_exceptions/smtp_secure}}"
+    {{/email_exceptions/smtp_secure}}
+    {{#email_exceptions/from_addr}}
+    ,"SMTP_FROM_ADDR": "{{email_exceptions/from_addr}}"
+    {{/email_exceptions/from_addr}}
+    {{#email_exceptions/to_addr}}
+    ,"SMTP_TO_ADDR": "{{email_exceptions/to_addr}}"
+    {{/email_exceptions/to_addr}}
+    {{#bugsnag}}
+    ,"BUGSNAG": "{{bugsnag}}"
+    {{/bugsnag}}
+    {{#cors/origins}}
+    ,"CORS_ORIGINS": "{{cors/origins}}"
+    {{/cors/origins}}
+    {{#cors/methods}}
+    ,"CORS_METHODS": "{{cors/methods}}"
+    {{/cors/methods}}
+    {{#cors/headers}}
+    ,"CORS_HEADERS": "{{cors/headers}}"
+    {{/cors/headers}}
+    {{#cors/expose_headers}}
+    ,"CORS_EXPOSE_HEADERS": "{{cors/expose_headers}}"
+    {{/cors/expose_headers}}
+    {{#cors/supports_credentials}}
+    ,"CORS_SUPPORTS_CREDENTIALS": "{{cors/supports_credentials}}"
+    {{/cors/supports_credentials}}
+    {{#cors/max_age}}
+    ,"CORS_MAX_AGE": "{{cors/max_age}}"
+    {{/cors/max_age}}
+    {{#cors/send_wildcard}}
+    ,"CORS_SEND_WILDCARD": "{{cors/send_wildcard}}"
+    {{/cors/send_wildcard}}
+    {{#cors/always_send}}
+    ,"CORS_ALWAYS_SEND": "{{cors/always_send}}"
+    {{/cors/always_send}}
+    {{#cors/automatic_options}}
+    ,"CORS_AUTOMATIC_OPTIONS": "{{cors/automatic_options}}"
+    {{/cors/automatic_options}}
+    {{#cors/vary_header}}
+    ,"CORS_VARY_HEADER": "{{cors/vary_header}}"
+    {{/cors/vary_header}}
+    {{#cors/resources}}
+    ,"CORS_RESOURCES": "{{cors/resources}}"
+    {{/cors/resources}}
+    {{#provider/storage_path}}
+    ,"STORAGE_PATH": "{{provider/storage_path}}"
+    {{/provider/storage_path}}
+    {{#s3/s3_region}}
+    ,"AWS_REGION": "{{s3/s3_region}}"
+    {{/s3/s3_region}}
+    {{#s3/s3_bucket}}
+    ,"AWS_BUCKET": "{{s3/s3_bucket}}"
+    {{/s3/s3_bucket}}
+    {{#s3/boto_bucket}}
+    ,"AWS_BUCKET": "{{s3/boto_bucket}}"
+    {{/s3/boto_bucket}}
+    {{#s3/s3_encrypt}}
+    ,"AWS_ENCRYPT": "{{s3/s3_encrypt}}"
+    {{/s3/s3_encrypt}}
+    {{#s3/s3_secure}}
+    ,"AWS_SECURE": "{{s3/s3_secure}}"
+    {{/s3/s3_secure}}
+    {{#s3/s3_access_key}}
+    ,"AWS_KEY": "{{s3/s3_access_key}}"
+    {{/s3/s3_access_key}}
+    {{#s3/s3_secret_key}}
+    ,"AWS_SECRET": "{{s3/s3_secret_key}}"
+    {{/s3/s3_secret_key}}
+    {{#s3/s3_use_sigv4}}
+    ,"AWS_USE_SIGV4": "{{s3/s3_use_sigv4}}"
+    {{/s3/s3_use_sigv4}}
+    {{#s3/boto_host}}
+    ,"AWS_HOST": "{{s3/boto_host}}"
+    {{/s3/boto_host}}
+    {{#s3/boto_port}}
+    ,"AWS_PORT": "{{s3/boto_port}}"
+    {{/s3/boto_port}}
+    {{#s3/boto_calling_format}}
+    ,"AWS_CALLING_FORMAT": "{{s3/boto_calling_format}}"
+    {{/s3/boto_calling_format}}
+    {{#cloudfronts3/base}}
+    ,"CF_BASE_URL": "{{cloudfronts3/base}}"
+    {{/cloudfronts3/base}}
+    {{#cloudfronts3/keyid}}
+    ,"CF_KEYID": "{{cloudfronts3/keyid}}"
+    {{/cloudfronts3/keyid}}
+    {{#cloudfronts3/keysecret}}
+    ,"CF_KEYSECRET": "{{cloudfronts3/keysecret}}"
+    {{/cloudfronts3/keysecret}}
+    {{#azureblob/azure_storage_account_name}}
+    ,"AZURE_STORAGE_ACCOUNT_NAME": "{{azureblob/azure_storage_account_name}}"
+    {{/azureblob/azure_storage_account_name}}
+    {{#azureblob/azure_storage_account_key}}
+    ,"AZURE_STORAGE_ACCOUNT_KEY": "{{azureblob/azure_storage_account_key}}"
+    {{/azureblob/azure_storage_account_key}}
+    {{#azureblob/azure_storage_container}}
+    ,"AZURE_STORAGE_CONTAINER": "{{azureblob/azure_storage_container}}"
+    {{/azureblob/azure_storage_container}}
+    {{#azureblob/azure_use_https}}
+    ,"AZURE_USE_HTTPS": "{{azureblob/azure_use_https}}"
+    {{/azureblob/azure_use_https}}
+    {{#ceph-s3/s3_bucket}}
+    ,"AWS_BUCKET": "{{ceph-s3/s3_bucket}}"
+    {{/ceph-s3/s3_bucket}}
+    {{#ceph-s3/s3_encrypt}}
+    ,"AWS_ENCRYPT": "{{ceph-s3/s3_encrypt}}"
+    {{/ceph-s3/s3_encrypt}}
+    {{#ceph-s3/s3_secure}}
+    ,"AWS_SECURE": "{{ceph-s3/s3_secure}}"
+    {{/ceph-s3/s3_secure}}
+    {{#ceph-s3/s3_access_key}}
+    ,"AWS_KEY": "{{ceph-s3/s3_access_key}}"
+    {{/ceph-s3/s3_access_key}}
+    {{#ceph-s3/s3_secret_key}}
+    ,"AWS_SECRET": "{{ceph-s3/s3_secret_key}}"
+    {{/ceph-s3/s3_secret_key}}
+    {{#ceph-s3/boto_bucket}}
+    ,"AWS_BUCKET": "{{ceph-s3/boto_bucket}}"
+    {{/ceph-s3/boto_bucket}}
+    {{#ceph-s3/boto_host}}
+    ,"AWS_HOST": "{{ceph-s3/boto_host}}"
+    {{/ceph-s3/boto_host}}
+    {{#ceph-s3/boto_port}}
+    ,"AWS_PORT": "{{ceph-s3/boto_port}}"
+    {{/ceph-s3/boto_port}}
+    {{#ceph-s3/boto_debug}}
+    ,"AWS_DEBUG": "{{ceph-s3/boto_debug}}"
+    {{/ceph-s3/boto_debug}}
+    {{#ceph-s3/boto_calling_format}}
+    ,"AWS_CALLING_FORMAT": "{{ceph-s3/boto_calling_format}}"
+    {{/ceph-s3/boto_calling_format}}
+    {{#gcs/boto_bucket}}
+    ,"GCS_BUCKET": "{{gcs/boto_bucket}}"
+    {{/gcs/boto_bucket}}
+    {{#gcs/gs_secure}}
+    ,"GCS_SECURE": "{{gcs/gs_secure}}"
+    {{/gcs/gs_secure}}
+    {{#gcs/gs_access_key}}
+    ,"GCS_KEY": "{{gcs/gs_access_key}}"
+    {{/gcs/gs_access_key}}
+    {{#gcs/gs_secret_key}}
+    ,"GCS_SECRET": "{{gcs/gs_secret_key}}"
+    {{/gcs/gs_secret_key}}
+    {{#gcs/oauth2}}
+    ,"GCS_OAUTH2": "{{gcs/oauth2}}"
+    {{/gcs/oauth2}}
+    {{#swift/swift_authurl}}
+    ,"OS_AUTH_URL": "{{swift/swift_authurl}}"
+    {{/swift/swift_authurl}}
+    {{#swift/swift_container}}
+    ,"OS_CONTAINER": "{{swift/swift_container}}"
+    {{/swift/swift_container}}
+    {{#swift/swift_user}}
+    ,"OS_USERNAME": "{{swift/swift_user}}"
+    {{/swift/swift_user}}
+    {{#swift/swift_password}}
+    ,"OS_PASSWORD": "{{swift/swift_password}}"
+    {{/swift/swift_password}}
+    {{#swift/swift_tenant_name}}
+    ,"OS_TENANT_NAME": "{{swift/swift_tenant_name}}"
+    {{/swift/swift_tenant_name}}
+    {{#swift/swift_region_name}}
+    ,"OS_REGION_NAME": "{{swift/swift_region_name}}"
+    {{/swift/swift_region_name}}
+    {{#glance/storage_alternate}}
+    ,"GLANCE_STORAGE_ALTERNATE": "{{glance/storage_alternate}}"
+    {{/glance/storage_alternate}}
+    {{#elliptics/elliptics_nodes}}
+    ,"ELLIPTICS_NODES": "{{elliptics/elliptics_nodes}}"
+    {{/elliptics/elliptics_nodes}}
+    {{#elliptics/elliptics_wait_timeout}}
+    ,"ELLIPTICS_WAIT_TIMEOUT": "{{elliptics/elliptics_wait_timeout}}"
+    {{/elliptics/elliptics_wait_timeout}}
+    {{#elliptics/elliptics_check_timeout}}
+    ,"ELLIPTICS_CHECK_TIMEOUT": "{{elliptics/elliptics_check_timeout}}"
+    {{/elliptics/elliptics_check_timeout}}
+    {{#elliptics/elliptics_io_thread_num}}
+    ,"ELLIPTICS_IO_THREAD_NUM": "{{elliptics/elliptics_io_thread_num}}"
+    {{/elliptics/elliptics_io_thread_num}}
+    {{#elliptics/elliptics_net_thread_num}}
+    ,"ELLIPTICS_NET_THREAD_NUM": "{{elliptics/elliptics_net_thread_num}}"
+    {{/elliptics/elliptics_net_thread_num}}
+    {{#elliptics/elliptics_nonblocking_io_thread_num}}
+    ,"ELLIPTICS_NONBLOCKING_IO_THREAD_NUM": "{{elliptics/elliptics_nonblocking_io_thread_num}}"
+    {{/elliptics/elliptics_nonblocking_io_thread_num}}
+    {{#elliptics/elliptics_groups}}
+    ,"ELLIPTICS_GROUPS": "{{elliptics/elliptics_groups}}"
+    {{/elliptics/elliptics_groups}}
+    {{#elliptics/elliptics_verbosity}}
+    ,"ELLIPTICS_VERBOSITY": "{{elliptics/elliptics_verbosity}}"
+    {{/elliptics/elliptics_verbosity}}
+    {{#elliptics/elliptics_logfile}}
+    ,"ELLIPTICS_LOGFILE": "{{elliptics/elliptics_logfile}}"
+    {{/elliptics/elliptics_logfile}}
+    {{#elliptics/elliptics_addr_family}}
+    ,"ELLIPTICS_ADDR_FAMILY": "{{elliptics/elliptics_addr_family}}"
+    {{/elliptics/elliptics_addr_family}}
+    {{#oss/oss_host}}
+    ,"OSS_HOST": "{{oss/oss_host}}"
+    {{/oss/oss_host}}
+    {{#oss/oss_bucket}}
+    ,"OSS_BUCKET": "{{oss/oss_bucket}}"
+    {{/oss/oss_bucket}}
+    {{#oss/oss_accessid}}
+    ,"OSS_KEY": "{{oss/oss_accessid}}"
+    {{/oss/oss_accessid}}
+    {{#oss/oss_accesskey}}
+    ,"OSS_SECRET": "{{oss/oss_accesskey}}"
+    {{/oss/oss_accesskey}}
+    {{#dev/loglevel}}
+    ,"LOGLEVEL": "{{dev/loglevel}}"
+    {{/dev/loglevel}}
+  }
+}
