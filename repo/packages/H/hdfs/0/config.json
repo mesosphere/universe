@@ -8,7 +8,7 @@
         "type": "string"
       },
       "default": [
-        "https://downloads.mesosphere.io/hdfs/dcos/0.1.0/hdfs-mesos-0.1.0.tgz"
+        "https://s3.amazonaws.com/downloads.mesosphere.io/hdfs/dcos-ea/0.1.0/hdfs-mesos-0.1.0.tgz"
       ]
     },
     "hdfs/custom-config": {
