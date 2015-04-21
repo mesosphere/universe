@@ -1,4 +1,4 @@
-# Universe [![Build Status](https://travis-ci.org/mesosphere/universe.svg?branch=master)](https://travis-ci.org/mesosphere/universe)
+# Universe [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)
 
 The Mesos package repository.
 
