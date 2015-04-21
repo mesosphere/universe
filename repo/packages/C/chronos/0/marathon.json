@@ -3,6 +3,8 @@
   "instances": {{chronos/instances}},
   "cpus": {{chronos/cpus}},
   "mem": {{chronos/mem}},
+  "ports": [4400],
+  “requirePorts”: true,
   "disk": 0.0,
   "env": {
     "NO_OP": ""
