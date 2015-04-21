@@ -37,7 +37,7 @@
     ,"CASSANDRA_CLUSTER_NAME": "{{cassandra/cluster-name}}"
     ,"CASSANDRA_ZK": "{{cassandra/zk}}"
     ,"CASSANDRA_NODE_COUNT": "{{cassandra/node-count}}"
-    ,"CASSANDRA_SEED_COUNT": "{{cassandra/node-count}}"
+    ,"CASSANDRA_SEED_COUNT": "{{cassandra/seed-count}}"
     ,"CASSANDRA_RESOURCE_CPU_CORES": "{{cassandra/resource/cpus}}"
     ,"CASSANDRA_RESOURCE_MEM_MB": "{{cassandra/resource/mem}}"
     ,"CASSANDRA_RESOURCE_DISK_MB": "{{cassandra/resource/disk}}"
