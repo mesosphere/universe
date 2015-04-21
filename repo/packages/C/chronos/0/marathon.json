@@ -26,7 +26,7 @@
     "chronos", "run_jar",
     "--master", "{{mesos/master}}",
     "--zk_hosts", "{{chronos/zk-hosts}}",
-    "--http_port", "$PORT0"
+    "--http_port", "4400"
 
 
     {{#chronos/assets-path}},                 "--assets_path", "{{chronos/assets_path}}"                                {{/chronos/assets-path}}
