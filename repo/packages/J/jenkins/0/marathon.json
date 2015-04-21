@@ -1,32 +1,15 @@
 {
   "id": "jenkins",
-  "cpus": 0.5,
-  "mem": 512,
   "instances": 1,
-  "args": [],
-  "container": {
-    "type": "DOCKER",
-    "docker": {
-      "image": "thefactory/jenkins-mesos",
-      "network": "BRIDGE",
-      "portMappings": [
-        {
-          "containerPort": 8080,
-          "hostPort": 0,
-          "servicePort": 0,
-          "protocol": "tcp"
-        }
-      ]
-    },
-    "volumes": [
-      {
-        "containerPath": "/jenkins",
-        "hostPath": "/var/lib/jenkins",
-        "mode": "RW"
-      }
-    ]
-  },
-  "healthChecks": [
+  "mem": 1500,
+  "env": {
+    "JAVA_OPTS": "-Xmx300m"
+   },
+   "uris": [
+      "https://s3.amazonaws.com/downloads.mesosphere.io/jenkins/0.7.0/jenkins-on-mesos.tgz"
+   ],
+   "cmd": "cd jenkins-on-mesos && export JENKINS_HOME=$(pwd) && export JENKINS_URL=http://$MESOS_HOSTNAME:$PORT0 && java -jar jenkins.war --httpPort=$PORT0",
+   "healthChecks": [
     {
       "protocol": "HTTP",
       "portIndex": 0,
@@ -37,4 +20,3 @@
     }
   ]
 }
-
