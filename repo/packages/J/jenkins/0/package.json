@@ -1,10 +1,11 @@
 {
   "name": "jenkins",
-  "version": "1.564",
+  "version": "1.596.2",
   "scm": "https://github.com/jenkinsci/jenkins.git",
   "maintainer": "support@mesosphere.io",
   "website": "http://jenkins-ci.org",
+  "framework": true,
   "description": "Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.",
-  "tags": []
+  "tags": ["framework", "cloudbees", "continuous-integration"]
 }
 
