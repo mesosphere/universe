@@ -71,8 +71,9 @@ Specifications are as follows:
 * `screenshots[...]`: 1200px (w) x 675px (h)
 
 **NOTE:** To ensure your service icons look beautiful on retina-ready displays,
-please supply 2x versions of all icons.  No specifications are needed to the
-package definition, simply add `@2x` before the file extension of the image.
+please supply 2x versions of all icons. No changes are needed to
+`package.json` - simply supply an additional icon file with the text `@2x` in
+the name before the file extension.
 For example, the icon `icon-cassandra-small.png` would have a retina-ready
 alternate image named `icon-cassandra-small@2x.png`.
 
