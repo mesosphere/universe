@@ -39,8 +39,7 @@
     },
     "cassandra/zk": {
       "description": "ZooKeeper URL for storing state. Format: zk://host1:port1,host2:port2,.../path (can have nested directories)",
-      "type": "string",
-      "default": "zk://master.mesos:2181/cassandra-mesos/dcos"
+      "type": "string"
     },
     "cassandra/zk-timeout-ms": {
       "description": "Timeout for ZooKeeper in milliseconds.",
