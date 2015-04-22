@@ -65,7 +65,7 @@ While `images` is an optional field, it is highly recommended you include icons 
 * `icon-small`: 48px (w) x 48px (h)
 * `icon-medium`: 96px (w) x 96px (h)
 * `icon-large`: 256px (w) x 256px (h)
-* `screenshots[...]`: 1200x675
+* `screenshots[...]`: 1200px (w) x 675px (h)
 
 **NOTE:** To ensure your service icons look beautiful on retina-ready displays, please supply 2x versions of all icons.  No specifications are need to the package defintion, simply add `@2x` before the file extension of the image.  For example, the icon `icon-cassandra-small.png` would have a retina-ready alternate image named `icon-cassandra-small@2x.png`.  The Mesosphere DCOS will look for this alternate image first if the viewport is at a 2x resolution.
 
