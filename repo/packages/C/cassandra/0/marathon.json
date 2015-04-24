@@ -8,7 +8,7 @@
     0
   ],
   "uris": [
-    "https://downloads.mesosphere.io/cassandra-mesos/artifacts/0.1.0-SNAPSHOT-424-master-5c6e140d5b/cassandra-mesos-0.1.0-SNAPSHOT-424-master-5c6e140d5b.tar.gz",
+    "https://downloads.mesosphere.io/cassandra-mesos/artifacts/0.1.0-SNAPSHOT-429-master-b418354e3a/cassandra-mesos-0.1.0-SNAPSHOT-429-master-b418354e3a.tar.gz",
     "https://downloads.mesosphere.io/java/jre-7u76-linux-x64.tar.gz"
   ],
   "healthChecks": [
@@ -35,7 +35,6 @@
     "MESOS_ZK": "{{mesos/master}}"
     ,"JAVA_OPTS": "-Xms256m -Xmx256m"
     ,"CASSANDRA_CLUSTER_NAME": "{{cassandra/cluster-name}}"
-    ,"CASSANDRA_ZK": "{{cassandra/zk}}"
     ,"CASSANDRA_NODE_COUNT": "{{cassandra/node-count}}"
     ,"CASSANDRA_SEED_COUNT": "{{cassandra/seed-count}}"
     ,"CASSANDRA_RESOURCE_CPU_CORES": "{{cassandra/resource/cpus}}"
@@ -48,6 +47,12 @@
     ,"CASSANDRA_BOOTSTRAP_GRACE_TIME_SECONDS": "{{cassandra/bootstrap-grace-time-seconds}}"
     ,"CASSANDRA_FRAMEWORK_MESOS_ROLE": "{{framework/role}}"
     ,"MESOS_AUTHENTICATE": "{{framework/authentication/enabled}}"
+{{#cassandra/zk}} {{! if the full cassandra zk url has been specified use it }}
+    ,"CASSANDRA_ZK": "{{cassandra/zk}}"
+{{/cassandra/zk}}
+{{^cassandra/zk}} {{! else, create a url based on convention and cluster name }}
+    ,"CASSANDRA_ZK": "zk://master.mesos:2181/cassandra-mesos/{{cassandra/cluster-name}}"
+{{/cassandra/zk}}
 {{#cassandra/resource/heap-mb}}
 ,"CASSANDRA_RESOURCE_HEAP_MB": "{{cassandra/resource/heap-mb}}"
 {{/cassandra/resource/heap-mb}}

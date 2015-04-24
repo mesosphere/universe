@@ -61,6 +61,22 @@ The required fields are:
 - maintainer
 - description
 
+While `images` is an optional field, it is highly recommended you include icons
+and screenshots in your package and update the path definitions accordingly.
+Specifications are as follows:
+
+* `icon-small`: 48px (w) x 48px (h)
+* `icon-medium`: 96px (w) x 96px (h)
+* `icon-large`: 256px (w) x 256px (h)
+* `screenshots[...]`: 1200px (w) x 675px (h)
+
+**NOTE:** To ensure your service icons look beautiful on retina-ready displays,
+please supply 2x versions of all icons. No changes are needed to
+`package.json` - simply supply an additional icon file with the text `@2x` in
+the name before the file extension.
+For example, the icon `icon-cassandra-small.png` would have a retina-ready
+alternate image named `icon-cassandra-small@2x.png`.
+
 #### `config.json`
 
 ```json
@@ -235,4 +251,3 @@ A URL that designates a
 [zip](http://en.wikipedia.org/wiki/Zip_%28file_format%29) file
 accessible over HTTP or HTTPS with media type `application/zip`.  
 Example: `http://my.org/files/universe/packages.zip`
-
