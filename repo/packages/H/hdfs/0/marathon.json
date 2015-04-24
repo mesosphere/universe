@@ -9,7 +9,7 @@
   "healthChecks": [
     {
       "protocol": "COMMAND",
-      "command": { "value": "curl -f -X GET http://namenode2.hdfs.mesos:50070" },
+      "command": { "value": "hadoop fs -ls hdfs://hdfs/ && hadoop fs -rm -f hdfs://hdfs/test.txt && rm -f test1.txt && echo \"this is a test\" > test.txt && hadoop fs -put test.txt hdfs://hdfs/ && hadoop fs -get hdfs://hdfs/test.txt test1.txt" },
       "gracePeriodSeconds": 300,
       "intervalSeconds": 60,
       "timeoutSeconds": 20,
