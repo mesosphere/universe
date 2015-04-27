@@ -159,6 +159,26 @@ _Sample `command.json`._
 See the [Command Schema](repo/meta/schema/command-schema.json) for a detailed description of
 the schema.
 
+### Versioning
+
+The repository specification is versioned separately in the
+file `/repo/meta/version.json`.
+
+```json
+{
+  "version": "0.1.0-alpha"
+}
+```
+_Sample `repo/meta/version.json`._
+
+This version is updated with any change to the required file content
+(typically validated using JSON schema) or expected file organization in the
+`repo` directory.
+
+_NOTE: The current version is `0.1.0-alpha` to facilitate rapid
+iteration.  This version will be fixed and incremented as
+described above as programs that consume the format reach maturity._
+
 ### Validation
 
 Package content is validated using [JSON Schema](http://json-schema.org).
