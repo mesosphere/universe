@@ -9,5 +9,16 @@
   ],
   "ports": [
     0
+  ],
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/api/brokers/status",
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 60,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 3
+    }
   ]
 }
