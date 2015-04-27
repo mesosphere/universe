@@ -5,5 +5,14 @@
   "maintainer": "support@mesosphere.io",
   "description": "Apache Kafka running on top of Apache Mesos",
   "framework": true,
-  "tags": ["mesosphere", "framework", "bigdata"]
+  "tags": ["mesosphere", "framework", "bigdata"],
+  "images": {
+    "icon-small": "https://s3-us-west-2.amazonaws.com/kafka-mesos/icon-small.png",
+    "icon-medium": "https://s3-us-west-2.amazonaws.com/kafka-mesos/icon-medium.png",
+    "icon-large": "https://s3-us-west-2.amazonaws.com/kafka-mesos/icon-large.png",
+    "screenshots": [
+        "https://s3-us-west-2.amazonaws.com/kafka-mesos/screen-0-kafka-cluster-overview.png",
+        "https://s3-us-west-2.amazonaws.com/kafka-mesos/screen-1-kafka-communication-scheme.png"
+    ]
+  }
 }
