@@ -5,5 +5,10 @@
   "maintainer": "support@mesosphere.io",
   "description": "A cluster-wide init and control system for services in cgroups or Docker containers.",
   "framework": true,
+  "images": {
+    "icon-small": "https://downloads.mesosphere.io/marathon/assets/icon-service-marathon-small.png",
+    "icon-medium": "https://downloads.mesosphere.io/marathon/assets/icon-service-marathon-medium.png",
+    "icon-large": "https://downloads.mesosphere.io/marathon/assets/icon-service-marathon-large.png"
+  },
   "tags": ["mesosphere", "framework"]
 }
