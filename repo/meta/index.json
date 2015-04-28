@@ -68,6 +68,20 @@
       }
     },
     {
+      "currentVersion":"0.9.0-beta",
+      "description":"Apache Kafka running on top of Apache Mesos",
+      "framework":true,
+      "name":"kafka",
+      "tags":[
+        "mesosphere",
+        "framework",
+        "bigdata"
+      ],
+      "versions":{
+        "0.9.0-beta":"0"
+      }
+    },
+    {
       "currentVersion":"0.8.1",
       "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
       "framework":true,

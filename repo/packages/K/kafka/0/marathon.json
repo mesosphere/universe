@@ -1,0 +1,24 @@
+{
+  "id": "kafka",
+  "cpus": 0.5,
+  "mem": 256,
+  "instances": 1,
+  "cmd": "java -jar kafka-mesos*.jar scheduler --master=zk://master.mesos:2181/mesos --zk=master.mesos:2181 --api=http://$HOST:$PORT0 --storage=zk:/kafka-mesos",
+  "uris": [
+    "https://s3-us-west-2.amazonaws.com/kafka-mesos/kafka-mesos-0.9.0-beta.zip"
+  ],
+  "ports": [
+    0
+  ],
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/api/brokers/status",
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 60,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 3
+    }
+  ]
+}
