@@ -7,7 +7,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "python/3.4.3",
+      "image": "python:3",
       "network": "HOST"
     }
   }
