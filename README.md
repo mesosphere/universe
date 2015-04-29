@@ -161,7 +161,7 @@ the schema.
 
 ### Versioning
 
-The repository specification is versioned separately in the
+The registry specification is versioned separately in the
 file `/repo/meta/version.json`.
 
 ```json
