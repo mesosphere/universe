@@ -3,12 +3,12 @@
   "instances": 1,
   "mem": 1500,
   "env": {
-    "JAVA_OPTS": "-Xmx300m"
+    "JAVA_OPTS": "-Xmx1024m"
    },
    "uris": [
       "https://s3.amazonaws.com/downloads.mesosphere.io/jenkins/0.7.0/jenkins-on-mesos.tgz"
    ],
-   "cmd": "cd jenkins-on-mesos && export JENKINS_HOME=$(pwd) && export JENKINS_URL=http://$MESOS_HOSTNAME:$PORT0 && java -jar jenkins.war --httpPort=$PORT0",
+   "cmd": "cd jenkins-on-mesos && export JENKINS_HOME=$(pwd) && export JENKINS_URL=http://$MESOS_HOSTNAME:$PORT0 && java $JAVA_OPTS -jar jenkins.war --httpPort=$PORT0",
    "healthChecks": [
     {
       "protocol": "HTTP",
