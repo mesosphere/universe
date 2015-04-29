@@ -3,7 +3,7 @@
   "cpus": 0.5,
   "mem": 256,
   "instances": 1,
-  "cmd": "java -jar kafka-mesos*.jar scheduler --master={{master}} --zk={{zk}} --api={{api}} --storage={{storage}} {{other}}",
+  "cmd": "java -jar kafka-mesos*.jar scheduler --master={{master}} --zk={{zk}} --api={{api}} --storage={{storage}} {{otherOptions}}",
   "uris": ["{{image}}"],
   "ports": [0],
   "healthChecks": [
