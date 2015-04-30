@@ -1,32 +1,32 @@
 {
     "type": "object",
     "properties": {
-        "image": {
+        "kafka/image": {
             "type": "string",
             "description": "Scheduler image",
             "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/kafka-mesos-0.9.0-beta.zip"
         },
-        "master": {
+        "kafka/master": {
             "type": "string",
             "description": "--master option",
             "default": "zk://master.mesos:2181/mesos"
         },
-        "zk": {
+        "kafka/zk": {
             "type": "string",
             "description": "--zk option",
             "default": "master.mesos:2181"
         },
-        "api": {
+        "kafka/api": {
             "type": "string",
             "description": "--api option",
             "default": "http://$HOST:$PORT0"
         },
-        "storage": {
+        "kafka/storage": {
             "type": "string",
             "description": "--storage option",
             "default": "zk:/kafka-mesos"
         },
-        "otherOptions": {
+        "kafka/otherOptions": {
             "type": "string",
             "description": "other options if required",
             "default": ""
