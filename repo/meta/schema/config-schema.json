@@ -4,8 +4,11 @@
   "properties": {
     "properties": {
       "type": "object"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["object"]
     }
   },
   "required": ["properties"]
 }
-
