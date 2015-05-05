@@ -18,10 +18,12 @@
     "cassandra": {
       "description": "Cassandra Framework Configuration Properties",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "framework": {
           "description": "Framework Scheduler specific Configuration Properties",
           "type": "object",
+          "additionalProperties": false,
           "properties": {
             "failover-timeout-seconds": {
               "description": "The failover_timeout for Mesos in seconds. If the framework instance has not re-registered with Mesos this long after a failover, Mesos will shut down all running tasks started by the framework.",
@@ -37,6 +39,7 @@
             "authentication": {
               "description": "Framework Scheduler Authentication Configuration Properties",
               "type": "object",
+              "additionalProperties": false,
               "properties": {
                 "enabled": {
                   "description": "Whether framework authentication should be used",
@@ -99,10 +102,10 @@
           "type": "string",
           "default": "."
         },
-
         "resources": {
           "description": "Cassandra Server Resources Configuration Properties",
           "type": "object",
+          "additionalProperties": false,
           "properties": {
             "cpus": {
               "description": "CPU shares to allocate to each Cassandra Server Instance.",
@@ -123,7 +126,7 @@
               "default": 16
             },
             "heap-mb": {
-              "description": "The amount of memory in MB that are allocated to each Cassandra Server Instance. This value should be smaller than 'cassandra/resource/mem' the remaining difference will be used for memory mapped files and other off-heap memory requirements.",
+              "description": "The amount of memory in MB that are allocated to each Cassandra Server Instance. This value should be smaller than 'cassandra.resources.mem'. The remaining difference will be used for memory mapped files and other off-heap memory requirements.",
               "type": "integer",
               "minimum": 0
             }
