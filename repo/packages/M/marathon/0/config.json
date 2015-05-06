@@ -1,6 +1,7 @@
 {
   "properties": {
     "marathon": {
+      "additionalProperties": false,
       "depscription": "Marathon specific configuration properties",
       "properties": {
         "artifact-store": {
