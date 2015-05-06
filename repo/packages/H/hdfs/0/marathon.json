@@ -9,7 +9,7 @@
   "healthChecks": [
     {
       "protocol": "COMMAND",
-      "command": { "value": "hadoop fs -ls hdfs://hdfs/ && hadoop fs -mkdir hdfs://hdfs/hdfs-framework-healthcheck && mkdir hdfs-framework-healthcheck && echo \"this is a test\" > hdfs-framework-healthcheck/test1.txt && hadoop fs -put hdfs-framework-healthcheck/test1.txt hdfs://hdfs/hdfs-framework-healthcheck && hadoop fs -get hdfs://hdfs/hdfs-framework-healthcheck/test1.txt hdfs-framework-healthcheck/test2.txt && rm -rf hdfs-framework-healthcheck && hadoop fs -rm -r -f hdfs://hdfs/hdfs-framework-healthcheck" },
+      "command": { "value": "hadoop fs -ls hdfs://hdfs/ && rm -rf hdfs-framework-healthcheck && hadoop fs -rm -r -f hdfs://hdfs/hdfs-framework-healthcheck && hadoop fs -mkdir hdfs://hdfs/hdfs-framework-healthcheck && mkdir hdfs-framework-healthcheck && echo \"this is a test\" > hdfs-framework-healthcheck/test1.txt && hadoop fs -put hdfs-framework-healthcheck/test1.txt hdfs://hdfs/hdfs-framework-healthcheck && hadoop fs -get hdfs://hdfs/hdfs-framework-healthcheck/test1.txt hdfs-framework-healthcheck/test2.txt && rm -rf hdfs-framework-healthcheck && hadoop fs -rm -r -f hdfs://hdfs/hdfs-framework-healthcheck" },
       "gracePeriodSeconds": 300,
       "intervalSeconds": 60,
       "timeoutSeconds": 20,
