@@ -31,6 +31,9 @@
       "timeoutSeconds": 5
     }
   ],
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "cassandra.{{cassandra.cluster-name}}"
+  },
   "env": {
     "MESOS_ZK": "{{mesos.master}}"
     ,"JAVA_OPTS": "-Xms256m -Xmx256m"
