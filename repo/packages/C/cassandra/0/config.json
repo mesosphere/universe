@@ -54,9 +54,17 @@
                   "description": "The path to the Mesos secret file containing the authentication secret.",
                   "type": "string"
                 }
-              }
+              },
+              "required": [
+                "enabled"
+              ]
             }
-          }
+          },
+          "required": [
+            "failover-timeout-seconds",
+            "role",
+            "authentication"
+          ]
         },
         "cluster-name": {
           "description": "The name of the framework to register with mesos. Will also be used as the cluster name in Cassandra",
@@ -130,9 +138,30 @@
               "type": "integer",
               "minimum": 0
             }
-          }
+          },
+          "required": [
+            "cpus",
+            "mem",
+            "disk"
+          ]
         }
-      }
+      },
+      "required": [
+        "framework",
+        "cluster-name",
+        "zk-timeout-ms",
+        "node-count",
+        "seed-count",
+        "health-check-interval-seconds",
+        "bootstrap-grace-time-seconds",
+        "data-directory",
+        "resources"
+      ]
     }
-  }
+  },
+  "required": [
+    "mesos",
+    "cassandra"
+  ]
+
 }
