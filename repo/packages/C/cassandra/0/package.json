@@ -10,5 +10,6 @@
     "icon-small": "https://downloads.mesosphere.io/cassandra-mesos/assets/cassandra-small.png",
     "icon-medium": "https://downloads.mesosphere.io/cassandra-mesos/assets/cassandra-medium.png",
     "icon-large": "https://downloads.mesosphere.io/cassandra-mesos/assets/cassandra-large.png"
-  }
+  },
+  "postInstallNotes": "The Apache Cassandra DCOS Service implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.\nIn order for Cassandra to run all resources must be availalbe in the cluster, this includes ports, cpus, mem and disk.\n\n\tDocumentation: http://mesosphere.github.io/cassandra-mesos/\n\tIssues: https://github.com/mesosphere/cassandra-mesos/issues"
 }
