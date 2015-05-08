@@ -11,4 +11,5 @@
     "icon-medium": "https://downloads.mesosphere.io/hdfs/assets/icon-service-hdfs-medium.png",
     "icon-large": "https://downloads.mesosphere.io/hdfs/assets/icon-service-hdfs-large.png"
   }
+  "postInstallNotes": "The Hadoop Distributed File System (HDFS) DCOS Service implementation has been successfully installed! Note that the service is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.\nIn order for HDFS to start successfully, all resources must be available in the cluster, including ports, CPU shares, RAM and disk.\nWe recommend a minimum of five slaves with at least 2 CPU's and 8GB of RAM available for use by the HDFS Service.\n\n\tDocumentation: https://github.com/mesosphere/hdfs\n\tIssues: https://github.com/mesosphere/hdfs/issues"
 }
