@@ -10,6 +10,6 @@
     "icon-small": "https://downloads.mesosphere.io/chronos/assets/icon-service-chronos-small.png",
     "icon-medium": "https://downloads.mesosphere.io/chronos/assets/icon-service-chronos-medium.png",
     "icon-large": "https://downloads.mesosphere.io/chronos/assets/icon-service-chronos-large.png"
-  }
+  },
    "postInstallNotes": "The Chronos (Job Scheduling/Cron Scheduling) DCOS Service implementation has been successfully installed!\nIn order for Chronos to start successfully, all resources must be available in the cluster, including ports, CPU shares, Ram and Disk.\nWe recommend a minimum of one slave with at least 1 CPU and 2GB of RAM available for use by the Chronos Service.\n\n\tDocumentation: https://github.com/mesos/chronos\n\tIssues: https:/github.com/mesos/chronos/issues"
 }
