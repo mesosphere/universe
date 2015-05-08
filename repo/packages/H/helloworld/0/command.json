@@ -1,6 +1,6 @@
 {
   "pip": [
-    "http://downloads.mesosphere.io/dcos-cli/dcos-0.1.0-py2.py3-none-any.whl",
+    "dcos<1.0",
     "git+https://github.com/mesosphere/dcos-helloworld.git#dcos-helloworld=0.1.0"
   ]
 }

@@ -51,7 +51,8 @@
       "description": "True if this package installs a new Mesos framework."
     },
     "postInstallNotes": {
-      "type": "string"
+      "type": "string",
+      "description": "Post installation notes that would be useful to the user of this package."
     },
     "tags": {
       "type": "array",
