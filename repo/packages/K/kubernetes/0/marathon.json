@@ -18,6 +18,34 @@
     "K8SM_MESOS_ROLE": "{{kubernetes.mesos-role}}",
     {{/kubernetes.mesos-role}}
 
+    {{#kubernetes.enable-dns}}
+    "ENABLE_DNS": "{{kubernetes.enable-dns}}",
+    {{/kubernetes.enable-dns}}
+
+    {{#kubernetes.kube-dns-domain}}
+    "DNS_DOMAIN": "{{kubernetes.kube-dns-domain}}",
+    {{/kubernetes.kube-dns-domain}}
+
+    {{#kubernetes.kube-dns-service-ip}}
+    "DNS_SERVER_IP": "{{kubernetes.kube-dns-service-ip}}",
+    {{/kubernetes.kube-dns-service-ip}}
+
+    {{#kubernetes.kube-dns-replicas}}
+    "DNS_REPLICAS": "{{kubernetes.kube-dns-replicas}}",
+    {{/kubernetes.kube-dns-replicas}}
+
+    {{#kubernetes.kube-dns-nameservers}}
+    "DNS_NAMESERVERS": "{{kubernetes.kube-dns-nameservers}}",
+    {{/kubernetes.kube-dns-nameservers}}
+
+    {{#kubernetes.portal-net}}
+    "PORTAL_NET": "{{kubernetes.portal-net}}",
+    {{/kubernetes.portal-net}}
+
+    {{#kubernetes.scheduler-service-ip}}
+    "SCHEDULER_SERVICE_ADDRESS": "{{kubernetes.scheduler-service-ip}}",
+    {{/kubernetes.scheduler-service-ip}}
+
     "K8SM_FAILOVER_TIMEOUT": "{{kubernetes.failover-timeout}}",
     "ETCD_SERVER_PORT": "25500",
     "ETCD_SERVER_PEER_PORT": "25501",
