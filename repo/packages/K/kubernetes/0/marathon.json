@@ -5,7 +5,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "mesosphere/kubernetes:k8s-0.14.2-k8sm-0.5-dcos-dev",
+      "image": "{{kubernetes.docker-image}}",
       "forcePullImage": true,
       "network": "HOST"
     }
@@ -47,14 +47,13 @@
     {{/kubernetes.scheduler-service-ip}}
 
     "K8SM_FAILOVER_TIMEOUT": "{{kubernetes.failover-timeout}}",
-    "ETCD_SERVER_PORT": "25500",
-    "ETCD_SERVER_PEER_PORT": "25501",
-    "APISERVER_PORT": "25502",
-    "APISERVER_RO_PORT": "25503",
-    "SCHEDULER_PORT": "25504",
-    "CONTROLLER_MANAGER_PORT": "25505"
+    "APISERVER_PORT": "{{kubernetes.apiserver-port}}",
+    "APISERVER_RO_PORT": "{{kubernetes.apiserver-ro-port}}",
+    "SCHEDULER_PORT": "{{kubernetes.scheduler-port}}",
+    "SCHEDULER_DRIVER_PORT": "{{kubernetes.scheduler-driver-port}}",
+    "CONTROLLER_MANAGER_PORT": "{{kubernetes.controller-manager-port}}"
   },
-  "ports": [25500, 25501, 25502, 25503, 25504, 25505],
+  "ports": [{{kubernetes.apiserver-port}}, {{kubernetes.apiserver-ro-port}}, {{kubernetes.scheduler-port}}, {{kubernetes.controller-manager-port}}, {{kubernetes.scheduler-driver-port}}],
   "requirePorts": true,
   "upgradeStrategy":{
     "minimumHealthCapacity": 0,

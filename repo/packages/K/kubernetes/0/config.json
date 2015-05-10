@@ -9,6 +9,11 @@
           "type": "string",
           "pattern": "^(?:[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)$"
         },
+        "docker-image": {
+          "default": "mesosphere/kubernetes:k8s-0.14.2-k8sm-0.5-dcos-dev",
+          "description": "Docker image used to launch the Kubernetes framework on DCOS.",
+          "type": "string"
+        },
         "dns-suffix": {
           "default": ".marathon.mesos",
           "description": "This value is appended to the app-id value to form the canonical DNS name for the Kubernetes components.",
@@ -65,6 +70,41 @@
           "default": 300,
           "description": "The failover_timeout for Mesos in seconds. If a new Kubernetes scheduler instance has not re-registered with Mesos this long after a failover, Mesos will shut down all running pods. Requires checkpointing to be enabled.",
           "minimum": 0,
+          "type": "integer"
+        },
+        "apiserver-port": {
+          "default": 25502,
+          "description": "Read/write host port that the Kubernetes apiserver listens on.",
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "apiserver-ro-port": {
+          "default": 25503,
+          "description": "Read-only host port that the Kubernetes apiserver listens on.",
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "scheduler-driver-port": {
+          "default": 25501,
+          "description": "Host port that the Kubernetes-Mesos scheduler driver listens on.",
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "scheduler-port": {
+          "default": 25504,
+          "description": "Host port that the Kubernetes scheduler listens on.",
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "controller-manager-port": {
+          "default": 25505,
+          "description": "Host port that the Kubernetes controller-manager listens on.",
+          "minimum": 1,
+          "maximum": 65535,
           "type": "integer"
         },
         "instances": {
