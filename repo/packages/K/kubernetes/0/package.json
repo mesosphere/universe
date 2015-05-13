@@ -5,5 +5,10 @@
   "maintainer": "support@mesosphere.io",
   "description": "Manage a cluster of Linux containers as a single system to accelerate Dev and simplify Ops.",
   "framework": true,
+  "images": {
+    "icon-small": "https://downloads.mesosphere.io/kubernetes/artifacts/images/k8s-48x48.png",
+    "icon-medium": "https://downloads.mesosphere.io/kubernetes/artifacts/images/k8s-96x96.png",
+    "icon-large": "https://downloads.mesosphere.io/kubernetes/artifacts/images/k8s-256x256.png"
+  },
   "tags": ["mesosphere", "framework", "pod", "label", "paas"]
 }
