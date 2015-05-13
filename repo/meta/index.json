@@ -27,16 +27,17 @@
       }
     },
     {
-      "currentVersion":"0.1.0",
+      "currentVersion":"0.1.1",
       "description":"Hadoop Distributed File System (HDFS), Highly Available",
       "framework":true,
       "name":"hdfs",
       "tags":[
         "mesosphere",
-        "framework"
+        "framework",
+        "filesystem"
       ],
       "versions":{
-        "0.1.0":"0"
+        "0.1.1":"0"
       }
     },
     {
@@ -51,6 +52,21 @@
       ],
       "versions":{
         "0.1.0":"0"
+      }
+    },
+    {
+      "currentVersion":"0.0.1",
+      "description":"Hue Web Interface to Hadoop",
+      "framework":false,
+      "name":"hue",
+      "tags":[
+        "mesosphere",
+        "hadoop",
+        "filesystem",
+        "hdfs"
+      ],
+      "versions":{
+        "0.0.1":"0"
       }
     },
     {
