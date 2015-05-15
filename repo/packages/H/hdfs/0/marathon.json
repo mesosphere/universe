@@ -4,8 +4,8 @@
   "mem": 512,
   "disk": 100,
   "instances": 1,
-  "cmd": "{{#hdfs/custom-config}}echo {{hdfs/custom-config}} | base64 --decode > mesos-site.xml && {{/hdfs/custom-config}}cd hdfs-mesos* && if [ -e '../mesos-site.xml' ]; then cp -f ../mesos-site.xml ./etc/hadoop/; fi && ./bin/hdfs-mesos",
-  "uris": {{{hdfs/scheduler-uris}}},
+  "cmd": "{{#hdfs.custom-config}}echo {{hdfs.custom-config}} | base64 --decode > mesos-site.xml && {{/hdfs.custom-config}}cd hdfs-mesos* && if [ -e '../mesos-site.xml' ]; then cp -f ../mesos-site.xml ./etc/hadoop/; fi && ./bin/hdfs-mesos",
+  "uris": {{{hdfs.scheduler-uris}}},
   "healthChecks": [
     {
       "protocol": "COMMAND",
