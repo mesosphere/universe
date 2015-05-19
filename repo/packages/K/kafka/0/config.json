@@ -1,10 +1,20 @@
 {
     "type": "object",
     "properties": {
-        "kafka/image": {
+        "kafka/jre": {
             "type": "string",
-            "description": "Scheduler image",
-            "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/kafka-mesos-0.9.0-beta.zip"
+            "description": "JRE zip",
+            "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/jre-7-openjdk.zip"
+        },
+        "kafka/kafka": {
+            "type": "string",
+            "description": "Kafka distro",
+            "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/kafka_2.10-0.8.2.1.tgz"
+        },
+        "kafka/jar": {
+            "type": "string",
+            "description": "Kafka-Mesos jar",
+            "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/kafka-mesos-0.9.0-beta.jar"
         },
         "kafka/master": {
             "type": "string",
@@ -25,6 +35,11 @@
             "type": "string",
             "description": "--storage option",
             "default": "zk:/kafka-mesos"
+        },
+        "kafka/jre-file": {
+            "type": "string",
+            "description": "--jre option",
+            "default": "jre-7-openjdk.zip"
         },
         "kafka/otherOptions": {
             "type": "string",
