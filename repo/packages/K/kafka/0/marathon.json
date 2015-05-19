@@ -9,12 +9,12 @@
   "healthChecks": [
     {
       "protocol": "HTTP",
-      "path": "/api/brokers/status",
+      "path": "/health",
       "gracePeriodSeconds": 120,
       "intervalSeconds": 60,
       "portIndex": 0,
       "timeoutSeconds": 30,
-      "maxConsecutiveFailures": 3
+      "maxConsecutiveFailures": 0
     }
   ]
 }
