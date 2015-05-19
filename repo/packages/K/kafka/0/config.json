@@ -92,7 +92,10 @@
             },
             "required": [
                 "jre", "kafka", "jar",
-                "zk", "api", "storage", "jre-file", "other-options"
+                "zk", "api", "storage", "jre-file",
+                "framework-name", "framework-role",
+                "user", "principal", "secret",
+                "other-options"
             ]
         }
     }
