@@ -56,6 +56,13 @@
                     "description": "See --jre option",
                     "default": "jre-7-openjdk.zip"
                 },
+
+                "framework-name": {
+                    "type": "string",
+                    "description": "Mesos Framework Name",
+                    "default": "kafka"
+                },
+
                 "other-options": {
                     "type": "string",
                     "description": "Other Scheduler options if required",
