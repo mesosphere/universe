@@ -68,6 +68,12 @@
                     "default": "*"
                 },
 
+                "user": {
+                    "type": "string",
+                    "description": "Mesos user to run tasks",
+                    "default": ""
+                },
+
                 "other-options": {
                     "type": "string",
                     "description": "Other Scheduler options if required",
