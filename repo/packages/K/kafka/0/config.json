@@ -73,6 +73,16 @@
                     "description": "Mesos user to run tasks",
                     "default": ""
                 },
+                "principal": {
+                    "type": "string",
+                    "description": "Mesos principal (username)",
+                    "default": ""
+                },
+                "secret": {
+                    "type": "string",
+                    "description": "Mesos secret (password)",
+                    "default": ""
+                },
 
                 "other-options": {
                     "type": "string",
