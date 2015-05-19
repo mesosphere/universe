@@ -3,8 +3,8 @@
   "cpus": 0.5,
   "mem": 256,
   "instances": 1,
-  "cmd": "jre/bin/java -jar kafka-mesos*.jar scheduler --master={{kafka/master}} --zk={{kafka/zk}} --api={{kafka/api}} --storage={{kafka/storage}} --jre={{kafka/jre-file}} {{kafka/otherOptions}}",
-  "uris": ["{{kafka/jre}}", "{{kafka/kafka}}", "{{kafka/jar}}"],
+  "cmd": "jre/bin/java -jar kafka-mesos*.jar scheduler --master={{mesos.master}} --zk={{kafka.zk}} --api={{kafka.api}} --storage={{kafka.storage}} --jre={{kafka.jre-file}} {{kafka.other-options}}",
+  "uris": ["{{kafka.jre}}", "{{kafka.kafka}}", "{{kafka.jar}}"],
   "ports": [0],
   "healthChecks": [
     {

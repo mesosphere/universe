@@ -1,50 +1,71 @@
 {
     "type": "object",
     "properties": {
-        "kafka/jre": {
-            "type": "string",
-            "description": "JRE zip",
-            "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/jre-7-openjdk.zip"
+        "mesos": {
+            "description": "Mesos specific configuration properties",
+            "type": "object",
+            "properties": {
+                "master": {
+                    "default": "zk://master.mesos:2181/mesos",
+                    "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard host:port patterns, like localhost:5050 or 10.0.0.5:5050,10.0.0.6:5050, are also acceptable.",
+                    "type": "string"
+                }
+            },
+            "required": ["master"]
         },
-        "kafka/kafka": {
-            "type": "string",
-            "description": "Kafka distro",
-            "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/kafka_2.10-0.8.2.1.tgz"
-        },
-        "kafka/jar": {
-            "type": "string",
-            "description": "Kafka-Mesos jar",
-            "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/kafka-mesos-0.9.0-beta.jar"
-        },
-        "kafka/master": {
-            "type": "string",
-            "description": "--master option",
-            "default": "zk://master.mesos:2181/mesos"
-        },
-        "kafka/zk": {
-            "type": "string",
-            "description": "--zk option",
-            "default": "master.mesos:2181"
-        },
-        "kafka/api": {
-            "type": "string",
-            "description": "--api option",
-            "default": "http://$HOST:$PORT0"
-        },
-        "kafka/storage": {
-            "type": "string",
-            "description": "--storage option",
-            "default": "zk:/kafka-mesos"
-        },
-        "kafka/jre-file": {
-            "type": "string",
-            "description": "--jre option",
-            "default": "jre-7-openjdk.zip"
-        },
-        "kafka/otherOptions": {
-            "type": "string",
-            "description": "other options if required",
-            "default": ""
+
+        "kafka": {
+            "description": "Kafka Framework Configuration Properties",
+            "type": "object",
+            "additionalProperties": false,
+
+            "properties": {
+                "jre": {
+                    "type": "string",
+                    "description": "JRE zip URL",
+                    "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/jre-7-openjdk.zip"
+                },
+                "kafka": {
+                    "type": "string",
+                    "description": "Kafka distro URL",
+                    "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/kafka_2.10-0.8.2.1.tgz"
+                },
+                "jar": {
+                    "type": "string",
+                    "description": "kafka-mesos*.jar URL",
+                    "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/kafka-mesos-0.9.0-beta.jar"
+                },
+
+                "zk": {
+                    "type": "string",
+                    "description": "ZK URL for Kafka",
+                    "default": "master.mesos:2181"
+                },
+                "api": {
+                    "type": "string",
+                    "description": "Scheduler API URL to bind to",
+                    "default": "http://$HOST:$PORT0"
+                },
+                "storage": {
+                    "type": "string",
+                    "description": "State storage path. See --storage option",
+                    "default": "zk:/kafka-mesos"
+                },
+                "jre-file": {
+                    "type": "string",
+                    "description": "See --jre option",
+                    "default": "jre-7-openjdk.zip"
+                },
+                "other-options": {
+                    "type": "string",
+                    "description": "Other Scheduler options if required",
+                    "default": ""
+                }
+            },
+            "required": [
+                "jre", "kafka", "jar",
+                "zk", "api", "storage", "jre-file", "other-options"
+            ]
         }
     }
 }
