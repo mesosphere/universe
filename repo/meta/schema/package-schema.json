@@ -50,6 +50,10 @@
       "default": false,
       "description": "True if this package installs a new Mesos framework."
     },
+    "preInstallNotes": {
+      "type": "string",
+      "description": "Pre installation notes that would be useful to the user of this package."
+    },
     "postInstallNotes": {
       "type": "string",
       "description": "Post installation notes that would be useful to the user of this package."
