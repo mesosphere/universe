@@ -14,6 +14,15 @@
       "intervalSeconds": 60,
       "portIndex": 0,
       "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 3
+    },
+    {
+      "protocol": "HTTP",
+      "path": "/api/status",
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 60,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
       "maxConsecutiveFailures": 0
     }
   ]
