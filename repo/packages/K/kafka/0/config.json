@@ -23,17 +23,17 @@
                 "jre": {
                     "type": "string",
                     "description": "JRE zip URL",
-                    "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/jre-7-openjdk.zip"
+                    "default": "https://d1vubr0evspla.cloudfront.net/jre-7-openjdk.zip"
                 },
                 "kafka": {
                     "type": "string",
                     "description": "Kafka distro URL",
-                    "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/kafka_2.10-0.8.2.1.tgz"
+                    "default": "https://d1vubr0evspla.cloudfront.net/kafka_2.10-0.8.2.1.tgz"
                 },
                 "jar": {
                     "type": "string",
                     "description": "kafka-mesos*.jar URL",
-                    "default": "https://s3-us-west-2.amazonaws.com/kafka-mesos/kafka-mesos-0.9.0-beta.jar"
+                    "default": "https://d1vubr0evspla.cloudfront.net/kafka-mesos-0.9.0-beta.jar"
                 },
 
                 "zk": {
