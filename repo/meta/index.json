@@ -1,6 +1,21 @@
 {
   "packages":[
     {
+      "currentVersion":"0.2.0",
+      "description":"A distributed free and open-source database with a flexible data model for documents, graphs, and key-values. Build high performance applications using a convenient SQL-like query language or JavaScript extensions.",
+      "framework":true,
+      "name":"arangodb",
+      "tags":[
+        "arangodb",
+        "NoSQL",
+        "database",
+        "framework"
+      ],
+      "versions":{
+        "0.2.0":"0"
+      }
+    },
+    {
       "currentVersion":"0.1.0-1",
       "description":"Apache Cassandra running on Apache Mesos",
       "framework":true,
