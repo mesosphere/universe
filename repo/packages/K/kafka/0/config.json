@@ -13,27 +13,49 @@
             },
             "required": ["master"]
         },
-
         "kafka": {
-            "description": "Kafka Framework Configuration Properties",
+            "description": "Kafka framework configuration properties",
             "type": "object",
             "additionalProperties": false,
 
             "properties": {
-                "jre": {
-                    "type": "string",
-                    "description": "JRE zip URL",
-                    "default": "https://d1vubr0evspla.cloudfront.net/jre-7-openjdk.zip"
-                },
-                "kafka": {
-                    "type": "string",
-                    "description": "Kafka distro URL",
-                    "default": "https://d1vubr0evspla.cloudfront.net/kafka_2.10-0.8.2.1.tgz"
-                },
-                "jar": {
-                    "type": "string",
-                    "description": "kafka-mesos*.jar URL",
-                    "default": "https://d1vubr0evspla.cloudfront.net/kafka-mesos-0.9.0-beta.jar"
+                "app": {
+                    "description": "Marathon app configuration properties",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "id": {
+                            "description": "app id",
+                            "type": "string",
+                            "default": "kafka"
+                        },
+                        "cpus": {
+                            "description": "cpu requirements",
+                            "type": "number",
+                            "default": 0.5
+                        },
+                        "mem": {
+                            "description": "mem requirements",
+                            "type": "integer",
+                            "default": 256
+                        },
+                        "jre": {
+                            "type": "string",
+                            "description": "JRE distro URL",
+                            "default": "https://d1vubr0evspla.cloudfront.net/jre-7-openjdk.zip"
+                        },
+                        "kafka": {
+                            "type": "string",
+                            "description": "Kafka distro URL",
+                            "default": "https://d1vubr0evspla.cloudfront.net/kafka_2.10-0.8.2.1.tgz"
+                        },
+                        "jar": {
+                            "type": "string",
+                            "description": "kafka-mesos*.jar URL",
+                            "default": "https://d1vubr0evspla.cloudfront.net/kafka-mesos-0.9.0-beta.jar"
+                        }
+                    },
+                    "required": ["id", "cpus", "mem", "jre", "kafka", "jar"]
                 },
 
                 "zk": {
@@ -51,7 +73,7 @@
                     "description": "State storage path. See --storage option",
                     "default": "zk:/kafka-mesos"
                 },
-                "jre-file": {
+                "jre": {
                     "type": "string",
                     "description": "See --jre option",
                     "default": "jre-7-openjdk.zip"
@@ -91,8 +113,8 @@
                 }
             },
             "required": [
-                "jre", "kafka", "jar",
-                "zk", "api", "storage", "jre-file",
+                "app",
+                "zk", "api", "storage", "jre",
                 "framework-name", "framework-role",
                 "user", "principal", "secret",
                 "other-options"
