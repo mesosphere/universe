@@ -1,75 +1,6 @@
 {
   "packages":[
     {
-      "currentVersion":"0.1.0-SNAPSHOT-447-master-3ad1bbf8f7",
-      "description":"Apache Cassandra running on Apache Mesos",
-      "framework":true,
-      "name":"cassandra",
-      "tags":[
-        "mesosphere",
-        "framework"
-      ],
-      "versions":{
-        "0.1.0-SNAPSHOT-447-master-3ad1bbf8f7":"0"
-      }
-    },
-    {
-      "currentVersion":"2.3.4",
-      "description":"A fault tolerant job scheduler for Mesos which handles dependencies and ISO8601 based schedules.",
-      "framework":true,
-      "name":"chronos",
-      "tags":[
-        "mesosphere",
-        "framework"
-      ],
-      "versions":{
-        "2.3.4":"0"
-      }
-    },
-    {
-      "currentVersion":"0.1.1",
-      "description":"Hadoop Distributed File System (HDFS), Highly Available",
-      "framework":true,
-      "name":"hdfs",
-      "tags":[
-        "mesosphere",
-        "framework",
-        "filesystem"
-      ],
-      "versions":{
-        "0.1.1":"0"
-      }
-    },
-    {
-      "currentVersion":"0.1.0",
-      "description":"Example DCOS application package",
-      "framework":false,
-      "name":"helloworld",
-      "tags":[
-        "mesosphere",
-        "example",
-        "subcommand"
-      ],
-      "versions":{
-        "0.1.0":"0"
-      }
-    },
-    {
-      "currentVersion":"0.0.1",
-      "description":"Hue Web Interface to Hadoop",
-      "framework":false,
-      "name":"hue",
-      "tags":[
-        "mesosphere",
-        "hadoop",
-        "filesystem",
-        "hdfs"
-      ],
-      "versions":{
-        "0.0.1":"0"
-      }
-    },
-    {
       "currentVersion":"1.596.2",
       "description":"Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.",
       "framework":true,
@@ -81,47 +12,6 @@
       ],
       "versions":{
         "1.596.2":"0"
-      }
-    },
-    {
-      "currentVersion":"0.9.0-beta",
-      "description":"Apache Kafka running on top of Apache Mesos",
-      "framework":true,
-      "name":"kafka",
-      "tags":[
-        "mesosphere",
-        "framework",
-        "bigdata"
-      ],
-      "versions":{
-        "0.9.0-beta":"0"
-      }
-    },
-    {
-      "currentVersion":"0.8.1",
-      "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
-      "framework":true,
-      "name":"marathon",
-      "tags":[
-        "mesosphere",
-        "framework"
-      ],
-      "versions":{
-        "0.8.1":"0"
-      }
-    },
-    {
-      "currentVersion":"1.4.0-SNAPSHOT",
-      "description":"Spark is a fast and general cluster computing system for Big Data",
-      "framework":true,
-      "name":"spark",
-      "tags":[
-        "mesosphere",
-        "framework",
-        "bigdata"
-      ],
-      "versions":{
-        "1.4.0-SNAPSHOT":"0"
       }
     }
   ],
