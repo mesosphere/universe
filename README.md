@@ -83,16 +83,42 @@ alternate image named `icon-cassandra-small@2x.png`.
 {
   "type": "object",
   "properties": {
-    "foo/baz": {
-      "type": "integer",
-      "description": "How many times to do baz.",
-      "minimum": 0,
-      "maximum": 16,
-      "required": false,
-      "default": 4
-    }
-  },
-  "required": ["foo/baz"]
+    "mesos": {
+      "description": "Mesos specific configuration properties",
+      "type": "object",
+      "properties": {
+        "master": {
+          "default": "zk://master.mesos:2181/mesos",
+          "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard host:port patterns, like localhost:5050 or 10.0.0.5:5050,10.0.0.6:5050, are also acceptable.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "master"
+      ]
+    },
+    "foo": {
+      "description": "Foo Framework Configuration Properties",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "baz": {
+          "type": "integer",
+          "description": "How many times to do baz.",
+          "minimum": 0,
+          "maximum": 16,
+          "default": 4
+        }
+      },
+      "required": [
+        "baz"
+      ]
+    },
+    "required": [
+      "mesos",
+      "foo"
+    ]
+  }
 }
 ```
 _Sample `config.json`._
