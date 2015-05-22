@@ -17,6 +17,6 @@
     }],
     "cmd": "sed \"s#<value>8080</value>#<value>$PORT0</value>#\" < conf/zeppelin-site.xml.template > conf/zeppelin-site.xml && sed -i \"s#<value>-1</value>#<value>$PORT1</value>#\" conf/zeppelin-site.xml && bin/zeppelin.sh start",
     "ports": [0, 0],
-    "cpus": 0.5,
-    "mem": 2048.0
+    "cpus": 1,
+    "mem": 1024.0
 }
