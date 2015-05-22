@@ -1,0 +1,15 @@
+{
+  "name": "zeppelin",
+  "version": "0.0.1",
+  "scm": "https://github.com/apache/incubator-zeppelin",
+  "maintainer": "support@mesosphere.io",
+  "description": "Zeppelin is a web-based notebook that enables interactive data analytics",
+  "framework": true,
+  "tags": ["nflabs", "framework", "bigdata", "spark", "notebook", "interactive"],
+  "images": {
+    "icon-small": "https://downloads.mesosphere.io/zeppelin/assets/icon-service-zeppelin-small.png",
+    "icon-medium": "https://downloads.mesosphere.io/zeppelin/assets/icon-service-zeppelin-medium.png",
+    "icon-large": "https://downloads.mesosphere.io/zeppelin/assets/icon-service-zeppelin-large.png"
+  },
+  "postInstallNotes": "Zeppelin has been successfully installed!\nNote that the service is experimental and there may be bugs, incomplete features, incorrect documentation or other discrepancies."
+}
