@@ -1,0 +1,22 @@
+{
+    "id": "/zeppelin",
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "mesosphere/zeppelin:5-16",
+            "network": "HOST"
+        }
+    },
+    "healthChecks": [{
+        "protocol": "TCP",
+        "gracePeriodSeconds": 300,
+        "intervalSeconds": 60,
+        "portIndex": 0,
+        "timeoutSeconds": 15,
+        "maxConsecutiveFailures": 3
+    }],
+    "cmd": "sed \"s#<value>8080</value>#<value>$PORT0</value>#\" < conf/zeppelin-site.xml.template > conf/zeppelin-site.xml && sed -i \"s#<value>-1</value>#<value>$PORT1</value>#\" conf/zeppelin-site.xml && bin/zeppelin.sh start",
+    "ports": [0, 0],
+    "cpus": 1,
+    "mem": 1024.0
+}
