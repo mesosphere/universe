@@ -7,13 +7,10 @@
   "framework": true,
   "tags": ["mesosphere", "framework", "bigdata"],
   "images": {
-    "icon-small": "https://s3-us-west-2.amazonaws.com/kafka-mesos/icon-small.png",
-    "icon-medium": "https://s3-us-west-2.amazonaws.com/kafka-mesos/icon-medium.png",
-    "icon-large": "https://s3-us-west-2.amazonaws.com/kafka-mesos/icon-large.png",
-    "screenshots": [
-        "https://s3-us-west-2.amazonaws.com/kafka-mesos/screen-0-kafka-cluster-overview.png",
-        "https://s3-us-west-2.amazonaws.com/kafka-mesos/screen-1-kafka-communication-scheme.png"
-    ]
+    "icon-small": "https://d1vubr0evspla.cloudfront.net/img/icon-small.png",
+    "icon-medium": "https://d1vubr0evspla.cloudfront.net/img/icon-medium.png",
+    "icon-large": "https://d1vubr0evspla.cloudfront.net/img/icon-large.png",
+    "screenshots": ["https://d1vubr0evspla.cloudfront.net/img/screen-0-kafka.png"]
   },
-  "postInstallNotes": "Kafka DCOS Service is installed"
+  "postInstallNotes": "Kafka DCOS Service is installed:\n  docs   - https://github.com/mesos/kafka\n  issues - https://github.com/mesos/kafka/issues"
 }

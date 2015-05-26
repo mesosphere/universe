@@ -1,20 +1,29 @@
 {
-  "id": "kafka",
-  "cpus": 0.5,
-  "mem": 256,
+  "id": "{{kafka.app.id}}",
+  "cpus": {{kafka.app.cpus}},
+  "mem": {{kafka.app.mem}},
   "instances": 1,
-  "cmd": "jre/bin/java -jar kafka-mesos*.jar scheduler --master={{kafka/master}} --zk={{kafka/zk}} --api={{kafka/api}} --storage={{kafka/storage}} --jre={{kafka/jre-file}} {{kafka/otherOptions}}",
-  "uris": ["{{kafka/jre}}", "{{kafka/kafka}}", "{{kafka/jar}}"],
+  "cmd": "jre/bin/java -jar kafka-mesos*.jar scheduler --master={{mesos.master}} --zk={{kafka.zk}} --api={{kafka.api}} --storage=\"{{kafka.storage}}\" --jre={{kafka.jre}} {{#kafka.user}}--user=\"{{kafka.user}}\"{{/kafka.user}} --framework-name=\"{{kafka.framework-name}}\" --framework-role=\"{{kafka.framework-role}}\" {{#kafka.principal}}--principal=\"{{kafka.principal}}\"{{/kafka.principal}} {{#kafka.secret}}--secret=\"{{kafka.secret}}\"{{/kafka.secret}} --log=scheduler.log {{kafka.other-options}}",
+  "uris": ["{{kafka.app.jre}}", "{{kafka.app.kafka}}", "{{kafka.app.jar}}"],
   "ports": [0],
   "healthChecks": [
     {
       "protocol": "HTTP",
-      "path": "/api/brokers/status",
+      "path": "/health",
       "gracePeriodSeconds": 120,
       "intervalSeconds": 60,
       "portIndex": 0,
       "timeoutSeconds": 30,
       "maxConsecutiveFailures": 3
+    },
+    {
+      "protocol": "HTTP",
+      "path": "/api/status",
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 60,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
     }
   ]
 }
