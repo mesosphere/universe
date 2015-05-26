@@ -110,6 +110,20 @@
       "versions":{
         "1.4.0-SNAPSHOT":"0"
       }
+    },
+    {
+      "currentVersion":"0.3",
+      "description":"Swarm is a Docker-native clustering system.",
+      "framework":true,
+      "name":"swarm",
+      "tags":[
+        "mesosphere",
+        "framework",
+        "docker"
+      ],
+      "versions":{
+        "0.3":"0"
+      }
     }
   ],
   "version":"1.0.0-rc1"
