@@ -27,6 +27,21 @@
       }
     },
     {
+      "currentVersion":"0.1.0",
+      "description":"DCOS Cluster Status package",
+      "framework":false,
+      "name":"cluster",
+      "tags":[
+        "mesosphere",
+        "cluster",
+        "status",
+        "subcommand"
+      ],
+      "versions":{
+        "0.1.0":"0"
+      }
+    },
+    {
       "currentVersion":"0.1.1",
       "description":"Hadoop Distributed File System (HDFS), Highly Available",
       "framework":true,
@@ -112,5 +127,5 @@
       }
     }
   ],
-  "version":"0.1.0-alpha"
+  "version":"1.0.0-rc1"
 }
