@@ -1,20 +1,36 @@
 {
   "type": "object",
   "properties": {
-    "spark/host": {
-      "type": "string",
-      "description": "The host that the Spark cluster dispatcher will register under.",
-      "default": "$HOST"
+    "mesos": {
+      "description": "Mesos specific configuration properties",
+      "type": "object",
+      "properties": {
+        "master": {
+          "default": "mesos://zk://master.mesos:2181/mesos",
+          "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard host:port patterns, like localhost:5050 or 10.0.0.5:5050,10.0.0.6:5050, are also acceptable.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "master"
+      ]
     },
-    "spark/mesos-master": {
-      "type": "string",
-      "description": "URL to the Mesos master that Spark jobs will be communicating to. (i.e: mesos://mesos-host.com:5050)",
-      "default": "mesos://zk://master.mesos:2181/mesos"
-    },
-    "spark/zookeeper": {
-      "type": "string",
-      "description": "URL to the Zookeeper that Spark cluster framework connects to persist state to. (l.e: zk://0.0.0.0:2181)",
-      "default": "master.mesos:2181"
+    "spark": {
+      "description": "Spark Framework Configuration Properties",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "host": {
+          "type": "string",
+          "description": "The host that the Spark cluster dispatcher will register under.",
+          "default": "$HOST"
+        },
+        "zookeeper": {
+          "type": "string",
+          "description": "URL to the Zookeeper that Spark cluster framework connects to persist state to. (l.e: zk://0.0.0.0:2181)",
+          "default": "master.mesos:2181"
+        }
+      }
     }
   }
 }

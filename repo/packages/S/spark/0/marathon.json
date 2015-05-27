@@ -3,7 +3,7 @@
   "cpus": 1,
   "mem": 1024,
   "instances": 1,
-  "cmd": "mv /mnt/mesos/sandbox/log4j.properties conf/log4j.properties && ./bin/spark-class org.apache.spark.deploy.mesos.MesosClusterDispatcher --port $PORT0 --webui-port $PORT1 --master {{spark/mesos-master}} --zk {{spark/zookeeper}} --host {{spark/host}} --name spark",
+  "cmd": "mv /mnt/mesos/sandbox/log4j.properties conf/log4j.properties && ./bin/spark-class org.apache.spark.deploy.mesos.MesosClusterDispatcher --port $PORT0 --webui-port $PORT1 --master {{mesos.master}} --zk {{spark.zookeeper}} --host {{spark.host}} --name spark",
   "uris": [
     "http://downloads.mesosphere.com.s3.amazonaws.com/assets/spark/log4j.properties"
   ],
