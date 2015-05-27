@@ -11,5 +11,5 @@
     "icon-medium": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-medium.png",
     "icon-large": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-large.png"
   },
-  "postInstallNotes": "Spark cluster mode on Mesos is ready!"
+  "postInstallNotes": "Spark DCOS Service has been successfully installed!\nNote that the service is beta and there may be bugs, incomplete features, incorrect documentation or other discrepancies.\nWe recommend a minimum of one node with at least 1 CPU and 2GB of RAM available for use by the Spark Service.\n\n\tDocumentation: https://spark.apache.org/docs/latest/running-on-mesos.html\n\tIssues: https://issues.apache.org/jira/browse/SPARK"
 }
