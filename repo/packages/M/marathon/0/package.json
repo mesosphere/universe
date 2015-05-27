@@ -10,5 +10,6 @@
     "icon-medium": "https://downloads.mesosphere.io/marathon/assets/icon-service-marathon-medium.png",
     "icon-large": "https://downloads.mesosphere.io/marathon/assets/icon-service-marathon-large.png"
   },
-  "tags": ["mesosphere", "framework"]
+  "tags": ["mesosphere", "framework"],
+  "postInstallNotes": "Marathon DCOS Service has been successfully installed!\nWe recommend a minimum of one node with at least 2 CPU's and 1GB of RAM available for the Marathon Service.\n\n\tDocumentation: https://github.com/mesosphere/marathon\n\tIssues: https:/github.com/mesosphere/marathon/issues\n"
 }
