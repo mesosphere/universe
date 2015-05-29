@@ -18,7 +18,7 @@
     },
     {
       "protocol": "HTTP",
-      "path": "/api/status",
+      "path": "/api/brokers/status",
       "gracePeriodSeconds": 120,
       "intervalSeconds": 60,
       "portIndex": 0,
