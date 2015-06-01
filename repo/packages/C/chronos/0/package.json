@@ -11,5 +11,6 @@
     "icon-medium": "https://downloads.mesosphere.io/chronos/assets/icon-service-chronos-medium.png",
     "icon-large": "https://downloads.mesosphere.io/chronos/assets/icon-service-chronos-large.png"
   },
-   "postInstallNotes": "Chronos DCOS Service has been successfully installed!\nWe recommend a minimum of one node with at least 1 CPU and 2GB of RAM available for the Chronos Service.\n\n\tDocumentation: http://mesos.github.io/chronos\n\tIssues: https://github.com/mesos/chronos/issues"
+   "preInstallNotes": "We recommend a minimum of one node with at least 1 CPU and 2GB of RAM available for the Chronos Service.",
+   "postInstallNotes": "Chronos DCOS Service has been successfully installed!\n\n\tDocumentation: http://mesos.github.io/chronos\n\tIssues: https://github.com/mesos/chronos/issues"
 }
