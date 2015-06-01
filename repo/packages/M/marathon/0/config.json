@@ -2,7 +2,7 @@
   "properties": {
     "marathon": {
       "additionalProperties": false,
-      "depscription": "Marathon specific configuration properties",
+      "description": "Marathon specific configuration properties",
       "properties": {
         "artifact-store": {
           "description": "URL to the artifact store. Examples: \"hdfs://localhost:54310/path/to/store\", \"file:///var/log/store\". For details, see the artifact store docs: https://mesosphere.github.io/marathon/docs/artifact-store.html.",
@@ -14,14 +14,14 @@
           "type": "boolean"
         },
         "cpus": {
-          "default": 1.0,
+          "default": 2.0,
           "description": "CPU shares to allocate to each Marathon instance.",
           "minimum": 0.0,
           "type": "number"
         },
         "enable-https": {
           "default": false,
-          "description": "Enables the HTTPS protocol. Use in conjuction with ssl-keystore-path and ssl-keystore-password.",
+          "description": "Enables the HTTPS protocol. Use in conjunction with ssl-keystore-path and ssl-keystore-password.",
           "type": "boolean"
         },
         "event-subscriber": {
@@ -93,9 +93,21 @@
           "type": "integer"
         },
         "mem": {
-          "default": 512.0,
-          "description": "Memory (MB) to allocate to each Marathon instance.",
-          "minimum": 0.0,
+          "default": 1024.0,
+          "description": "Memory (MB) to allocate to each Marathon task.",
+          "minimum": 512.0,
+          "type": "number"
+        },
+        "jvm-heap-min": {
+          "default": 256,
+          "description": "Memory (MB) start size for the JVM heap. This number should be be less or equals than the jvm-heap-max.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "jvm-heap-max": {
+          "default": 768,
+          "description": "Memory (MB) max size for the JVM heap. This number should be be less than the absolute memory.",
+          "minimum": 0,
           "type": "number"
         },
         "mesos-authentication-principal": {
