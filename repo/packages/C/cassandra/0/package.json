@@ -11,5 +11,7 @@
     "icon-medium": "https://downloads.mesosphere.io/cassandra-mesos/assets/cassandra-medium.png",
     "icon-large": "https://downloads.mesosphere.io/cassandra-mesos/assets/cassandra-large.png"
   },
-  "postInstallNotes": "The Apache Cassandra DCOS Service implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.\nIn order for Cassandra to start successfully, all resources must be available in the cluster, including ports, CPU shares, RAM and disk.\n\n\tDocumentation: http://mesosphere.github.io/cassandra-mesos/\n\tIssues: https://github.com/mesosphere/cassandra-mesos/issues"
+  "preInstallNotes":"The Apache Cassandra DCOS Service implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.\nThe default configuration requires 3 nodes each with 0.3 CPU shares, 1184MB of memory and 272MB of disk.",
+  "postInstallNotes": "Thank you for installing the Apache Cassandra DCOS Service.\n\n\tDocumentation: http://mesosphere.github.io/cassandra-mesos/\n\tIssues: https://github.com/mesosphere/cassandra-mesos/issues",
+  "postUninstallNotes": "The Apache Cassandra DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at http://beta-docs.mesosphere.com/services/cassandra/#uninstall to clean up any persisted state"
 }
