@@ -12,5 +12,11 @@
     "icon-large": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-large.png"
   },
   "preInstallNotes": "We recommend a minimum of two nodes with at least 2 CPU and 2GB of RAM available for the Spark Service and running a Spark job. Also the Spark client might take up to a few minutes to download",
-  "postInstallNotes": "Spark DCOS Service has been successfully installed!\nNote that the service is beta and there may be bugs, incomplete features, incorrect documentation or other discrepancies.\nWe recommend a minimum of one node with at least 1 CPU and 2GB of RAM available for use by the Spark Service.\n\n\tDocumentation: https://spark.apache.org/docs/latest/running-on-mesos.html\n\tIssues: https://issues.apache.org/jira/browse/SPARK"
+  "postInstallNotes": "Spark DCOS Service has been successfully installed!\nNote that the service is beta and there may be bugs, incomplete features, incorrect documentation or other discrepancies.\nWe recommend a minimum of one node with at least 1 CPU and 2GB of RAM available for use by the Spark Service.\n\n\tDocumentation: https://spark.apache.org/docs/latest/running-on-mesos.html\n\tIssues: https://issues.apache.org/jira/browse/SPARK",
+    "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/apache/spark/master/LICENSE"
+    }
+  ]
 }
