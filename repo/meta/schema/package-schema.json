@@ -64,6 +64,23 @@
         "type": "string",
         "pattern": "^[^\\s]+$"
       }
+    },
+    "licenses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the license. For example one of [Apache License Version 2.0 | MIT License | BSD License | Proprietary]"
+          },
+          "url": {
+            "type": "string",
+            "description": "The URL where the license can be accessed"
+          }
+        },
+        "additionalProperties": false
+      }
     }
   },
   "required": [
