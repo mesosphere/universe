@@ -25,6 +25,12 @@
           "type": "string",
           "pattern": "^1?$"
         },
+        "framework-name": {
+          "default": "kubernetes",
+          "description": "Human-readable name to use when registering with the Mesos master.",
+          "type": "string",
+          "pattern": "^(?:[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)$"
+        },
         "kube-dns-domain": {
           "default": "kubernetes.local",
           "description": "Domain used by pods for Kubernetes service lookup.",
