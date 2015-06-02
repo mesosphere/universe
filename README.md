@@ -83,16 +83,22 @@ alternate image named `icon-cassandra-small@2x.png`.
 {
   "type": "object",
   "properties": {
-    "foo/baz": {
-      "type": "integer",
-      "description": "How many times to do baz.",
-      "minimum": 0,
-      "maximum": 16,
-      "required": false,
-      "default": 4
+    "foo": {
+      "type": "object",
+      "properties": {
+        "baz": {
+          "type": "integer",
+          "description": "How many times to do baz.",
+          "minimum": 0,
+          "maximum": 16,
+          "required": false,
+          "default": 4
+        }
+      },
+      "required": ["baz"]
     }
   },
-  "required": ["foo/baz"]
+  "required": ["foo"]
 }
 ```
 _Sample `config.json`._
