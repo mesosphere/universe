@@ -85,7 +85,7 @@ alternate image named `icon-cassandra-small@2x.png`.
   "properties": {
     "foo": {
       "type": "object",
-      "properties": [
+      "properties": {
         "baz": {
           "type": "integer",
           "description": "How many times to do baz.",
@@ -94,7 +94,7 @@ alternate image named `icon-cassandra-small@2x.png`.
           "required": false,
           "default": 4
         }
-      ],
+      },
       "required": ["baz"]
     }
   },
