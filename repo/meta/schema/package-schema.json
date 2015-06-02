@@ -58,6 +58,10 @@
       "type": "string",
       "description": "Post installation notes that would be useful to the user of this package."
     },
+    "postUninstallNotes": {
+      "type": "string",
+      "description": "Post uninstallation notes that would be useful to the user of this package."
+    },
     "tags": {
       "type": "array",
       "items": {
