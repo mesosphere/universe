@@ -14,7 +14,7 @@
     "GLOG_v": "{{kubernetes.logging-verbosity}}",
     "DEFAULT_DNS_NAME": "{{kubernetes.app-id}}{{kubernetes.dns-suffix}}",
     "FRAMEWORK_NAME": "{{kubernetes.app-id}}",
-    "FRAMEWORK_WEBURI": "http://{{kubernetes.app-id}}{{kubernetes.dns-suffix}}:{{kubernetes.apiserver-port}}/",
+    "FRAMEWORK_WEBURI": "http://{{kubernetes.app-id}}{{kubernetes.dns-suffix}}:{{kubernetes.apiserver-port}}",
 
     {{#kubernetes.mesos-role}}
     "K8SM_MESOS_ROLE": "{{kubernetes.mesos-role}}",
