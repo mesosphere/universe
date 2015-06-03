@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]\\.[0-9]\\.[0-9](-[0-9A-Za-z]+)?$"
+    }
+  },
+  "required": ["version"],
+  "additionalProperties": false
+}
