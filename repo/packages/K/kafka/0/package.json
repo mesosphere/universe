@@ -12,7 +12,7 @@
     "icon-large": "https://d1vubr0evspla.cloudfront.net/img/icon-large.png",
     "screenshots": ["https://d1vubr0evspla.cloudfront.net/img/screen-0-kafka.png"]
   },
-  "preInstallNotes": "The Apache Cassandra DCOS Service implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
+  "preInstallNotes": "The Apache Kafka DCOS Service implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
   "postInstallNotes": "The Kafka DCOS Service is installed:\n  docs   - https://github.com/mesos/kafka\n  issues - https://github.com/mesos/kafka/issues",
   "postUninstallNotes": "The Kafka DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at http://beta-docs.mesosphere.com/services/kafka/#uninstall to clean up any persisted state",
   "licenses": [
