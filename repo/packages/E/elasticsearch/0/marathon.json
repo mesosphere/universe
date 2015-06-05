@@ -1,8 +1,8 @@
 {
   "id": "elasticsearch",
-  "cpus": "0.2",
-  "mem": "512",
-  "instances": "1",
+  "cpus": 0.2,
+  "mem": 512,
+  "instances": 1,
   "args": ["-m", "{{mesos.master}}", "-n", "{{elasticsearch.instances}}", "-d", "-nn", "{{hdfs.namenode}}"],
   "container": {
     "type": "DOCKER",
