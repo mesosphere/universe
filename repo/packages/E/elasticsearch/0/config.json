@@ -18,7 +18,7 @@
       "depscription": "Zookeeper specific configuration properties",
       "properties": {
         "master": {
-          "default": "zk://master.mesos:2181",
+          "default": "master.mesos:2181",
           "description": "The URL of the ZooKeeper node. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard host:port patterns, like localhost:5050 or 10.0.0.5:5050,10.0.0.6:5050, are also acceptable.",
           "type": "string"
         }
