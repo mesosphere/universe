@@ -98,6 +98,20 @@
       }
     },
     {
+      "currentVersion":"0.0.1",
+      "description":"MemSQL running on Apache Mesos",
+      "framework":false,
+      "name":"memsql-mesosphere-framework",
+      "tags":[
+        "memsql",
+        "mesosphere",
+        "framework"
+      ],
+      "versions":{
+        "0.0.1":"0"
+      }
+    },
+    {
       "currentVersion":"1.4.0-SNAPSHOT",
       "description":"Spark is a fast and general cluster computing system for Big Data",
       "framework":true,
