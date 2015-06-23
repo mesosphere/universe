@@ -28,12 +28,12 @@
     ],
     "env": {
         "MESOS_MASTER_URL": "{{mesos/master}}"
-        {{#memsql-mesosphere-framework/zk}} {{! if the full memsql-mesosphere-framework zk url has been specified use it }}
-            ,"ZOOKEEPER_URL": "{{memsql-mesosphere-framework/zk}}"
-        {{/memsql-mesosphere-framework/zk}}
-        {{^memsql-mesosphere-framework/zk}} {{! else, create a url based on convention }}
-            ,"ZOOKEEPER_URL": "master.mesos:2181/memsql-mesosphere-framework-mesos/"
-        {{/memsql-mesosphere-framework/zk}}
+        {{#memsql/zk}} {{! if the full memsql zk url has been specified use it }}
+            ,"ZOOKEEPER_URL": "{{memsql/zk}}"
+        {{/memsql/zk}}
+        {{^memsql/zk}} {{! else, create a url based on convention }}
+            ,"ZOOKEEPER_URL": "master.mesos:2181/memsql-mesos/"
+        {{/memsql/zk}}
         ,"MESOS_AUTHENTICATE": "{{framework/authentication/enabled}}"
         {{#framework/authentication/principal}}
             ,"DEFAULT_PRINCIPAL": "{{framework/authentication/principal}}"

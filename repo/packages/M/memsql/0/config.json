@@ -1,6 +1,13 @@
 {
   "type": "object",
    "properties": {
+    "memsql": {
+     "framework-name": {
+       "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
+       "type": "string",
+       "default": "memsql"
+     }
+    },
     "mesos/master": {
      "description": "The URL of the Mesos master.",
      "type": "string",
@@ -19,7 +26,7 @@
       "description": "The path to the Mesos secret file containing the authentication secret.",
       "type": "string"
     },
-    "memsql-mesosphere-framework/zk": {
+    "memsql/zk": {
       "description": "ZooKeeper URL for storing state. Format: host1:port1",
       "type": "string"
     }
