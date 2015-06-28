@@ -1,0 +1,195 @@
+{
+  "properties": {
+    "kubernetes": {
+      "description": "Kubernetes specific configuration properties",
+      "properties": {
+        "app-id": {
+          "default": "kubernetes",
+          "description": "Application ID.",
+          "type": "string",
+          "pattern": "^(?:[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)$"
+        },
+        "docker-image": {
+          "default": "mesosphere/kubernetes:v1.0.1-v0.6.0-alpha",
+          "description": "Docker image used to launch the Kubernetes framework on DCOS.",
+          "type": "string"
+        },
+        "dns-suffix": {
+          "default": ".marathon.mesos",
+          "description": "This value is appended to the app-id value to form the canonical DNS name for the Kubernetes components.",
+          "type": "string",
+          "pattern": "^(?:\\.[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)+$"
+        },
+        "enable-dns": {
+          "default": "1",
+          "description": "Set to 1 to enable Kubernetes local DNS services, allows pods to locate services by name.",
+          "type": "string",
+          "pattern": "^1?$"
+        },
+        "framework-name": {
+          "default": "kubernetes",
+          "description": "Human-readable name to use when registering with the Mesos master.",
+          "type": "string",
+          "pattern": "^(?:[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)$"
+        },
+        "kube-dns-domain": {
+          "default": "kubernetes.local",
+          "description": "Domain used by pods for Kubernetes service lookup.",
+          "type": "string",
+          "pattern": "^(?:[a-z][a-z0-9]*?(?:-[a-z0-9]+)*?\\.)?(?:[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)$"
+        },
+        "kube-dns-service-ip": {
+          "default": "10.10.10.10",
+          "description": "Kubernetes DNS service portal IP address, should fall in service-cluster-ip-range network range.",
+          "type": "string",
+          "pattern": "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+        },
+        "kube-dns-replicas": {
+          "default": 1,
+          "description": "The number of kube-dns pods that Kubernetes will spin up at deploy time.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "kube-dns-nameservers": {
+          "description": "Comma-delimited list of host:ip entries that point to fallback nameservers. Only used if nameservers cannot be extracted from the slave's /etc/resolv.conf",
+          "type": "string",
+          "pattern": "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):(6553[0-5]|655[0-2][0-9]\\d|65[0-4](\\d){2}|6[0-4](\\d){3}|[1-5](\\d){4}|[1-9](\\d){0,3})(?:,(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):(6553[0-5]|655[0-2][0-9]\\d|65[0-4](\\d){2}|6[0-4](\\d){3}|[1-5](\\d){4}|[1-9](\\d){0,3}))*$"
+        },
+        "service-cluster-ip-range": {
+          "default": "10.10.10.0/24",
+          "description": "Kubernetes DNS service portal IP address, should fall in service-cluster-ip-range network range.",
+          "type": "string",
+          "pattern": "^(?:(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(?:\\/(?:[0-9]|[1-2][0-9]|3[0-2]))$"
+        },
+        "scheduler-service-ip": {
+          "default": "10.10.10.9",
+          "description": "Kubernetes-Mesos scheduler service portal IP address, should fall in service-cluster-ip-range network range.",
+          "type": "string",
+          "pattern": "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+        },
+        "disable-etcd-server": {
+          "description": "Set to 1 to disable the pre-packaged etcd server component. Do this if you already have an etcd cluster set up that you want to use as the backing store for Kubernetes. Also see the docs for etcd-server-list.",
+          "type": "string",
+          "pattern": "^1?$"
+        },
+        "etcd-server-list": {
+          "description": "Comma-delimited list of URLs that reference etcd-server endpoints. For example, http://myserver:2001,http://anotherserver:2001. Specify this option if you have disabled the built-in etcd-server via disable-etcd-server.",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 1.0,
+          "description": "CPU shares to allocate to each instance.",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "failover-timeout": {
+          "default": 300,
+          "description": "The failover_timeout for Mesos in seconds. If a new Kubernetes scheduler instance has not re-registered with Mesos this long after a failover, Mesos will shut down all running pods. Requires checkpointing to be enabled.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "apiserver-port": {
+          "default": 25502,
+          "description": "Read/write host port that the Kubernetes apiserver listens on.",
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "apiserver-secure-port": {
+          "default": 25500,
+          "description": "The Kubernetes apiserver port from which to serve HTTPS with authentication and authorization.",
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "scheduler-driver-port": {
+          "default": 25501,
+          "description": "Host port that the Kubernetes-Mesos scheduler driver listens on.",
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "scheduler-port": {
+          "default": 25504,
+          "description": "Host port that the Kubernetes scheduler listens on.",
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "controller-manager-port": {
+          "default": 25505,
+          "description": "Host port that the Kubernetes controller-manager listens on.",
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of Kubernetes scheduler instances to run.",
+          "minimum": 0,
+          "maximum": 1,
+          "type": "integer"
+        },
+        "logging-verbosity": {
+          "default": 1,
+          "description": "Increase this value to obtain more detailed log messages.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "mem": {
+          "default": 768.0,
+          "description": "Memory (MB) to allocate to each Kubernetes scheduler instance.",
+          "minimum": 128.0,
+          "type": "number"
+        },
+        "mesos-role": {
+          "description": "Mesos role for this framework.",
+          "type": "string"
+        },
+        "uris": {
+          "default": [],
+          "description": "List of URIs that will be download and made available in the current working directory of the scheduler.",
+          "items": {
+            "pattern": "^[\\s]+",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "debug": {
+          "default": "false",
+          "description": "Enable debug output",
+          "pattern": "^(true|false)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "app-id",
+        "cpus",
+        "dns-suffix",
+        "instances",
+        "failover-timeout",
+        "logging-verbosity",
+        "mem",
+        "uris"
+      ],
+      "type": "object"
+    },
+    "mesos": {
+      "depscription": "Mesos specific configuration properties",
+      "properties": {
+        "master": {
+          "default": "zk://master.mesos:2181/mesos",
+          "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard host:port patterns, like localhost:5050 or 10.0.0.5:5050,10.0.0.6:5050, are also acceptable.",
+          "type": "string"
+        }
+      },
+      "required": ["master"],
+      "type": "object"
+    }
+  },
+  "required": [
+    "kubernetes",
+    "mesos"
+  ],
+  "type": "object"
+}
