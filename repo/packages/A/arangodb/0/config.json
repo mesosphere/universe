@@ -36,6 +36,30 @@
       "description": "Path for persistent data (until persistent volumes are available).",
       "type": "string",
       "default": "/tmp"
+    },
+
+    "arangodb/mode": {
+      "description": "Mode for framework, possible values: \"standalone\", \"cluster\"",
+      "type": "string",
+      "default": "cluster"
+    },
+
+    "arangodb/minimal-resources-agent": {
+      "description": "Minimal mesos resources for an agent",
+      "type": "string",
+      "default": "mem:512(*); cpus:0.2(*); disk:512(*)"
+    },
+
+    "arangodb/minimal-resources-coordinator": {
+      "description": "Minimal mesos resources for a coordinator",
+      "type": "string",
+      "default": "mem:1024(*); cpus:1(*); disk:1024(*)"
+    },
+
+    "arangodb/minimal-resources-dbserver": {
+      "description": "Minimal mesos resources for a DBserver",
+      "type": "string",
+      "default": "mem:1024(*); cpus:1(*); disk:1024(*)"
     }
 
   },
