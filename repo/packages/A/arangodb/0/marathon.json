@@ -11,7 +11,11 @@
     "--master={{mesos/master}}",
     "--zk={{arangodb/zk}}/{{arangodb/id}}",
     "--volume_path={{arangodb/volume-path}}",
-    "--role=*"
+    "--role=*",
+    "--mode={{arangodb/mode}}",
+    "--minimal_resources_agent={{arangodb/minimal-resources-agent}}",
+    "--minimal_resources_dbserver={{arangodb/minimal-resources-dbserver}}",
+    "--minimal_resources_coordinator={{arangodb/minimal-resources-coordinator}}"
   ],
 
   "env": {
