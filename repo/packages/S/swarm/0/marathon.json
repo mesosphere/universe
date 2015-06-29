@@ -18,5 +18,14 @@
     }
   },
   "healthChecks": [
+    {
+      "path": "/_ping",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "gracePeriodSeconds": 5,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 3
+    }
   ]
 }

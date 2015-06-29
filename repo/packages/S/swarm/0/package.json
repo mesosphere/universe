@@ -7,8 +7,8 @@
   "framework": true,
   "tags": ["mesosphere", "framework", "docker"],
   "images": {
-    "icon-small": "https://downloads.mesosphere.io/swarm/assets/icon-service-swarm-small.png",
-    "icon-medium": "https://downloads.mesosphere.io/swarm/assets/icon-service-swarm-medium.png",
+    "icon-small": "https://downloads.mesosphere.io/swarm/assets/icon-service-swarm-large.png",
+    "icon-medium": "https://downloads.mesosphere.io/swarm/assets/icon-service-swarm-large.png",
     "icon-large": "https://downloads.mesosphere.io/swarm/assets/icon-service-swarm-large.png"
   },
   "postInstallNotes": "Swarm is installed in your cluster. Please set DOCKER_HOST environment variable to the public slave ip once it is in running state and use your docker client to interact with swarm.",
