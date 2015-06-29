@@ -4,5 +4,11 @@
   "tags": ["memsql", "mesosphere", "framework"],
   "maintainer": "ops@memsql.com",
   "description": "MemSQL running on Apache Mesos",
+  "licenses": [
+    {
+      "name": "Commercial License",
+      "url": "http://www.memsql.com/terms/"
+    }
+  ],
   "preInstallNotes": "We require a minimum of one node with at least 4 CPU's and 16GB of RAM available for MemSQL."
 }
