@@ -1,36 +1,63 @@
 {
   "type": "object",
    "properties": {
+    "mesos": {
+     "description": "Mesos specific configuration properties",
+     "type": "object",
+     "master": {
+       "description": "The URL of the Mesos master.",
+       "type": "string",
+       "default": "master.mesos:5050"
+     },
+     "required": [
+       "master"
+     ]
+    },
     "memsql": {
      "framework-name": {
        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
        "type": "string",
        "default": "memsql"
-     }
-    },
-    "mesos/master": {
-     "description": "The URL of the Mesos master.",
-     "type": "string",
-     "default": "master.mesos:5050"
-    },
-    "framework/authentication/enabled": {
-      "description": "Whether framework authentication should be used",
-      "type": "boolean",
-      "default": false
-    },
-    "framework/authentication/principal": {
-      "description": "The Mesos principal used for authentication.",
-      "type": "string"
-    },
-    "framework/authentication/secret": {
-      "description": "The path to the Mesos secret file containing the authentication secret.",
-      "type": "string"
-    },
-    "memsql/zk": {
+     },
+     "framework": {
+       "description": "Framework Scheduler specific Configuration Properties",
+       "type": "object",
+       "properties": {
+        "authentication": {
+         "description": "Framework Scheduler Authentication Configuration Properties",
+         "type": "object",
+         "properties": {
+          "enabled": {
+            "description": "Whether framework authentication should be used",
+            "type": "boolean",
+            "default": false
+          },
+          "principal": {
+            "description": "The Mesos principal used for authentication.",
+            "type": "string"
+          },
+          "secret": {
+            "description": "The path to the Mesos secret file containing the authentication secret.",
+            "type": "string"
+          }
+         }
+        }
+       }
+     },
+    "zk": {
       "description": "ZooKeeper URL for storing state. Format: host1:port1",
-      "type": "string"
-    }
+      "type": "string",
+      "default": "zk://master.mesos:2181/memsql"
+    },
+    "required": [
+      "framework-name",
+      "zk"
+    ]
    },
-  "additionalProperties": false,
-  "required": []
+   "additionalProperties": false,
+   "required": [
+     "memsql",
+     "mesos"
+   ]
+  }
 }
