@@ -65,19 +65,19 @@
     "arangodb/nr-agents": {
       "description": "Initial number of agents",
       "type": "integer",
-      "default": "1"
+      "default": 1
     },
 
     "arangodb/nr-dbservers": {
       "description": "Initial number of DBservers",
       "type": "integer",
-      "default": "2"
+      "default": 2
     },
 
     "arangodb/nr-coordinators": {
       "description": "Initial number of coordinators",
       "type": "integer",
-      "default": "1"
+      "default": 1
     }
   },
 
