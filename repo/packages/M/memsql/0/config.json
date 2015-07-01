@@ -19,6 +19,24 @@
        "type": "string",
        "default": "memsql"
      },
+     "cpus": {
+       "default": 1.0,
+       "description": "CPU shares to allocate to each MemSQL scheduler instance.",
+       "minimum": 0.0,
+       "type": "number"
+     },
+     "mem": {
+       "default": 512.0,
+       "description": "Memory (MB) to allocate to each MemSQL scheduler instance.",
+       "minimum": 512.0,
+       "type": "number"
+     },
+     "instances": {
+       "default": 1,
+       "description": "Number of MemSQL scheduler instances to run.",
+       "minimum": 0,
+       "type": "integer"
+     },
      "framework": {
        "description": "Framework Scheduler specific Configuration Properties",
        "type": "object",

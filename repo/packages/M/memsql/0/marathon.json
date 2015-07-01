@@ -1,11 +1,10 @@
 {
     "id": "{{memsql.framework-name}}",
     "cmd": "/sbin/my_init",
-    "cpus": 1.0,
-    "mem": 512.0,
-    "disk": 1024.0,
+    "cpus": {{memsql.cpus}},
+    "mem": {{memsql.mem}},
     "ports": [0],
-    "instances": 1,
+    "instances": {{memsql.instances}},
     "container": {
         "type": "DOCKER",
         "docker": {
