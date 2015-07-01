@@ -60,8 +60,25 @@
       "description": "Minimal mesos resources for a DBserver",
       "type": "string",
       "default": "mem(*):1024;cpus(*):1;disk(*):1024"
-    }
+    },
 
+    "arangodb/nr-agents": {
+      "description": "Initial number of agents",
+      "type": "integer",
+      "default": "1"
+    },
+
+    "arangodb/nr-dbservers": {
+      "description": "Initial number of DBservers",
+      "type": "integer",
+      "default": "2"
+    },
+
+    "arangodb/nr-coordinators": {
+      "description": "Initial number of coordinators",
+      "type": "integer",
+      "default": "1"
+    }
   },
 
   "required": [
