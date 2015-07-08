@@ -71,7 +71,9 @@ Marathon App Definition: [AppDefinition.json](https://github.com/mesosphere/mara
 
 Marathon App: [full-app.json](https://mesosphere.github.io/marathon/docs/rest-api.html#post-/v2/apps)
 
-### MUST allow `id` to be configured
+### MUST allow `id` to be configurable
+
+### MUST allow `role` to be configurable
 
 ### MUST allow resources for scheduler to be configured
 
