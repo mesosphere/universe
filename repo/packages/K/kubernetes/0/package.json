@@ -13,7 +13,7 @@
   "tags": ["mesosphere", "framework", "pod", "label", "paas"],
   "preInstallNotes": "In order for Kubernetes to start successfully all resources must be available in the cluster including ports, CPU shares and RAM.\nWe recommend a minimum of 1 node with 1 CPU share and 128 MB of RAM available for use by the Kubernetes service.\nNote that the service is alpha and there may be bugs, including possible data loss, incomplete features, incorrect documentation or other discrepancies.",
   "postInstallNotes": "Kubernetes DCOS Service has been successfully installed!\n\n\tDocumentation: https://github.com/mesosphere/kubernetes-mesos\n\tIssues: https://github.com/mesosphere/kubernetes-mesos/issues",
-  "postUninstallNotes": "The Kubernetes DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at http://beta-docs.mesosphere.com/services/kubernetes/#uninstall to clean up any persisted state.",
+  "postUninstallNotes": "The Kubernetes DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at http://docs.mesosphere.com/services/kubernetes/#uninstall to clean up any persisted state.",
   "licenses": [
     {
       "name": "Apache License Version 2.0",
