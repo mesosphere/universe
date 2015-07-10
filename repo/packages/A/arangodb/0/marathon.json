@@ -1,35 +1,36 @@
 {
-  "id": "{{arangodb/id}}",
-  "cpus": 0.2,
-  "mem": 64.0,
-  "ports": [ {{arangodb/framework-port}} ],
-  "instances": 1,
+  "id": "{{arangodb.id}}",
+  "cpus": {{arangodb.framework-cpus}},
+  "framework-name": "{{arangodb.id}}",
+  "mem": {{arangodb.framework-mem}},
+  "ports": [ {{arangodb.framework-port}} ],
+  "instances": {{arangodb.framework-instances}} ,
 
   "args": [
     "framework",
-    "--framework_name={{arangodb/id}}",
-    "--master={{mesos/master}}",
-    "--zk={{arangodb/zk}}/{{arangodb/id}}",
-    "--volume_path={{arangodb/volume-path}}",
+    "--framework_name={{arangodb.id}}",
+    "--master={{mesos.master}}",
+    "--zk={{arangodb.zk}}/{{arangodb.id}}",
+    "--volume_path={{arangodb.volume-path}}",
     "--role=*",
-    "--mode={{arangodb/mode}}",
-    "--minimal_resources_agent={{arangodb/minimal-resources-agent}}",
-    "--minimal_resources_dbserver={{arangodb/minimal-resources-dbserver}}",
-    "--minimal_resources_coordinator={{arangodb/minimal-resources-coordinator}}",
-    "--nr_agents={{arangodb/nr-agents}}",
-    "--nr_dbservers={{arangodb/nr-dbservers}}",
-    "--nr_coordinators={{arangodb/nr-coordinators}}"
+    "--mode={{arangodb.mode}}",
+    "--minimal_resources_agent={{arangodb.minimal-resources-agent}}",
+    "--minimal_resources_dbserver={{arangodb.minimal-resources-dbserver}}",
+    "--minimal_resources_coordinator={{arangodb.minimal-resources-coordinator}}",
+    "--nr_agents={{arangodb.nr-agents}}",
+    "--nr_dbservers={{arangodb.nr-dbservers}}",
+    "--nr_coordinators={{arangodb.nr-coordinators}}"
   ],
 
   "env": {
-    "ARANGODB_WEBUI_HOST": "{{arangodb/webui-host}}",
-    "ARANGODB_WEBUI_PORT": "{{arangodb/framework-port}}"
+    "ARANGODB_WEBUI_HOST": "{{arangodb.webui-host}}",
+    "ARANGODB_WEBUI_PORT": "{{arangodb.framework-port}}"
   },
 
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "arangodb/arangodb-mesos",
+      "image": "arangodb.arangodb-mesos",
       "forcePullImage": true,
       "network": "HOST"
     }
