@@ -76,6 +76,12 @@
           "default": "cluster"
         },
 
+        "role": {
+          "description": "Role for framework",
+          "type": "string",
+          "default": "*"
+        },
+
         "minimal-resources-agent": {
           "description": "Minimal mesos resources for an agent",
           "type": "string",
@@ -122,6 +128,7 @@
         "framework-instances",
         "volume-path",
         "mode",
+        "role",
         "minimal-resources-agent",
         "minimal-resources-coordinator",
         "minimal-resources-dbserver",
