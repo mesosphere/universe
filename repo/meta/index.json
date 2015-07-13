@@ -98,6 +98,20 @@
       }
     },
     {
+      "currentVersion":"0.0.1",
+      "description":"MemSQL running on Apache Mesos. This framework provides the ability to create and manage a set of MemSQL clusters, each running with the MemSQL Ops management tool.",
+      "framework":true,
+      "name":"memsql",
+      "tags":[
+        "memsql",
+        "mesosphere",
+        "framework"
+      ],
+      "versions":{
+        "0.0.1":"0"
+      }
+    },
+    {
       "currentVersion":"1.4.0-SNAPSHOT",
       "description":"Spark is a fast and general cluster computing system for Big Data",
       "framework":true,
