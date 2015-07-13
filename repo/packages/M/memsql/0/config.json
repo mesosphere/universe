@@ -46,7 +46,12 @@
         },
         "framework-name": {
           "default": "memsql",
-          "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "description": "The name of the framework.",
+          "type": "string"
+        },
+        "id": {
+          "default": "memsql",
+          "description": "A unique ID for the framework.",
           "type": "string"
         },
         "instances": {

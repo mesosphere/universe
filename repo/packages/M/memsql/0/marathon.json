@@ -1,5 +1,5 @@
 {
-    "id": "{{memsql.framework-name}}",
+    "id": "{{memsql.id}}",
     "cmd": "/sbin/my_init",
     "cpus": {{memsql.cpus}},
     "mem": {{memsql.mem}},
@@ -43,5 +43,8 @@
         {{#memsql.mesos-role}}
             ,"MEMSQL_SCHEDULER_ROLE": "{{memsql.mesos-role}}"
         {{/memsql.mesos-role}}
+        {{#memsql.framework-name}}
+            ,"MEMSQL_SCHEDULER_NAME": "{{memsql.framework-name}}"
+        {{/memsql.framework-name}}
     }
 }
