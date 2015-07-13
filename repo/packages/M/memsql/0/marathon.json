@@ -1,5 +1,5 @@
 {
-    "id": "{{memsql.id}}",
+    "id": "{{memsql.framework-name}}",
     "cmd": "/sbin/my_init",
     "cpus": {{memsql.cpus}},
     "mem": {{memsql.mem}},
