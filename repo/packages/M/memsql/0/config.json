@@ -67,7 +67,7 @@
           "type": "number"
         },
         "zk": {
-          "default": "zk://master.mesos:2181/memsql",
+          "default": "master.mesos:2181/memsql",
           "description": "ZooKeeper URL for storing state. Format: host1:port1",
           "type": "string"
         }
