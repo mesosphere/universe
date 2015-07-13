@@ -37,6 +37,10 @@
        "minimum": 0,
        "type": "integer"
      },
+     "mesos-role": {
+      "description": "Mesos role for this framework.",
+      "type": "string"
+     },
      "framework": {
        "description": "Framework Scheduler specific Configuration Properties",
        "type": "object",

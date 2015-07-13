@@ -40,5 +40,8 @@
         {{#memsql.framework.authentication.secret}}
             ,"DEFAULT_SECRET": "{{memsql.framework.authentication.secret}}"
         {{/memsql.framework.authentication.secret}}
+        {{#memsql.mesos-role}}
+            ,"MEMSQL_SCHEDULER_ROLE": "{{memsql.mesos-role}}"
+        {{/memsql.mesos-role}}
     }
 }
