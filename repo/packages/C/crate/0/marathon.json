@@ -1,26 +1,26 @@
 {
-    "id": "/crate/{{crate.cluster-name}}",
-    "instances": {{framework.instances}},
-    "cpus": {{framework.cpus}},
-    "mem": {{framework.memory}},
-    "ports": [{{framework.api-port}}],
-    "env": {
-{{#framework.auth.enabled}}
+  "id": "/crate/{{crate.cluster-name}}",
+  "instances": {{crate.framework.instances}},
+  "cpus": {{crate.framework.cpus}},
+  "mem": {{crate.framework.memory}},
+  "ports": [{{crate.framework.api-port}}],
+  "env": {
+    {{#crate.framework.auth.enabled}}
       "MESOS_AUTHENTICATE": "true",
-      "DEFAULT_PRINCIAL": "{{framework.auth.princial}}",
-      "DEFAULT_SECRET": "{{framework.auth.secret}}"
-{{/framework.auth.enabled}}
-    },
-    "uris": [
-        "http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jre-7u79-linux-x64.tar.gz",
-        "https://cdn.crate.io/downloads/releases/crate-mesos-0.1.0-SNAPSHOT-cec0ad0.tar.gz"
-    ],
-    "cmd": "env && $(pwd)/jre*/bin/java $JAVA_OPTS -jar $(pwd)/crate-mesos-*.jar --zookeeper {{framework.zookeeper}} {{#framework.user}}--framework-user {{framework.user}}{{/framework.user}} {{#framework.role}}--framework-role {{framework.role}}{{/framework.role}} --crate-cluster-name {{crate.cluster-name}} --crate-version {{crate.version}} --api-port $PORT0 --crate-http-port {{crate.http-port}} --crate-transport-port {{crate.transport-port}} {{#crate.data-path}} --crate-data-path {{crate.data-path}} {{/crate.data-path}} {{#crate.blob-path}} --crate-blob-path {{crate.blob-path}} {{/crate.blob-path}} --resource-cpus {{crate.resource.cpus}} --resource-memory {{crate.resource.memory}} --resource-heap {{crate.resource.heap}} --resource-disk {{crate.resource.disk}}",
-    "healthChecks": [
-        {
-            "protocol": "COMMAND",
-            "command": { "value": "curl -f -X GET http://$HOST:$PORT0/" },
-            "maxConsecutiveFailures": 3
-        }
-    ]
+      "DEFAULT_PRINCIAL": "{{crate.framework.auth.princial}}",
+      "DEFAULT_SECRET": "{{crate.framework.auth.secret}}"
+    {{/crate.framework.auth.enabled}}
+  },
+  "uris": [
+    "http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jre-7u79-linux-x64.tar.gz",
+    "https://cdn.crate.io/downloads/releases/crate-mesos-0.1.0-SNAPSHOT-cec0ad0.tar.gz"
+  ],
+  "cmd": "env && $(pwd)/jre*/bin/java $JAVA_OPTS -jar $(pwd)/crate-mesos-*.jar --zookeeper {{crate.framework.zookeeper}} {{#crate.framework.user}}--framework-user {{crate.framework.user}}{{/crate.framework.user}} {{#crate.framework.role}}--framework-role {{crate.framework.role}}{{/crate.framework.role}} --crate-cluster-name {{crate.cluster-name}} --crate-version {{crate.version}} --api-port $PORT0 --crate-http-port {{crate.http-port}} --crate-transport-port {{crate.transport-port}} {{#crate.data-path}} --crate-data-path {{crate.data-path}} {{/crate.data-path}} {{#crate.blob-path}} --crate-blob-path {{crate.blob-path}} {{/crate.blob-path}} --resource-cpus {{crate.resource.cpus}} --resource-memory {{crate.resource.memory}} --resource-heap {{crate.resource.heap}} --resource-disk {{crate.resource.disk}}",
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "curl -f -X GET http://$HOST:$PORT0/" },
+      "maxConsecutiveFailures": 3
+    }
+  ]
 }
