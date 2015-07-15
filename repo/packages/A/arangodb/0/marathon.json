@@ -1,0 +1,50 @@
+{
+  "framework-name": "{{arangodb.framework-name}}",
+  "id": "{{arangodb.framework-name}}",
+  "cpus": {{arangodb.framework-cpus}},
+  "mem": {{arangodb.framework-mem}},
+  "ports": [ {{arangodb.framework-port}} ],
+  "instances": {{arangodb.framework-instances}} ,
+
+  "args": [
+    "framework",
+    "--framework_name={{arangodb.framework-name}}",
+    "--master={{mesos.master}}",
+    "--zk={{arangodb.zk}}/{{arangodb.framework-name}}",
+    "--volume_path={{arangodb.volume-path}}",
+    "--role={{arangodb.role}}",
+    "--mode={{arangodb.mode}}",
+    "--minimal_resources_agent={{arangodb.minimal-resources-agent}}",
+    "--minimal_resources_dbserver={{arangodb.minimal-resources-dbserver}}",
+    "--minimal_resources_coordinator={{arangodb.minimal-resources-coordinator}}",
+    "--nr_agents={{arangodb.nr-agents}}",
+    "--nr_dbservers={{arangodb.nr-dbservers}}",
+    "--nr_coordinators={{arangodb.nr-coordinators}}"
+  ],
+
+  "env": {
+    "ARANGODB_WEBUI_HOST": "{{arangodb.webui-host}}",
+    "ARANGODB_WEBUI_PORT": "{{arangodb.framework-port}}"
+  },
+
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "arangodb/arangodb-mesos",
+      "forcePullImage": true,
+      "network": "HOST"
+    }
+  },
+
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/v1/health.json",
+      "gracePeriodSeconds": 3,
+      "intervalSeconds": 10,
+      "portIndex": 0,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 0
+    }
+  ]
+}
