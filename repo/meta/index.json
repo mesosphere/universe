@@ -16,16 +16,19 @@
       }
     },
     {
-      "currentVersion":"0.1.0-1",
+      "currentVersion":"0.2.0-1",
       "description":"Apache Cassandra running on Apache Mesos",
       "framework":true,
       "name":"cassandra",
       "tags":[
         "mesosphere",
-        "framework"
+        "framework",
+        "data",
+        "database"
       ],
       "versions":{
-        "0.1.0-1":"0"
+        "0.1.0-1":"0",
+        "0.2.0-1":"1"
       }
     },
     {
