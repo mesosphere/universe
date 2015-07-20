@@ -1,7 +1,7 @@
 {
   "properties": {
     "memsql": {
-      "additionalProperties": [],
+      "additionalProperties": false,
       "properties": {
         "cpus": {
           "default": 1.0,
