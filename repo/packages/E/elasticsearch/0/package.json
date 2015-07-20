@@ -1,6 +1,6 @@
 {
   "name": "elasticsearch",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "tags": ["dcos", "mesos", "framework", "elasticsearch", "elastic"],
   "maintainer": "pnw@trifork.com",
   "description": "DCOS implementation of the Mesos-Elasticsearch framework",
@@ -9,5 +9,5 @@
   "images": {
     "icon-large": "https://www.elastic.co/static/img/logo-elastic.png"
   },
-  "postInstallNotes": "Elasticsearch installed!"
+  "postInstallNotes": "Elasticsearch is staging. Check Marathon and the ES management front-end for status."
 }

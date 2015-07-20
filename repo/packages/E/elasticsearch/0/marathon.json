@@ -3,7 +3,7 @@
   "cpus": 0.2,
   "mem": 512,
   "instances": 1,
-  "args": ["-m", "{{mesos.master}}", "-n", "{{elasticsearch.instances}}", "-d", "-nn", "{{hdfs.namenode}}", "-zk", "{{zookeeper.master}}"],
+  "args": ["-zk", "{{mesos.master}}", "-n", "{{elasticsearch.instances}}", "-m", "{{elasticsearch.port}}", "-ram", "{{elasticsearch.ram}}"],
   "container": {
     "type": "DOCKER",
     "docker": {
