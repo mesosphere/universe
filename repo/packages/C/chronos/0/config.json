@@ -58,6 +58,12 @@
          "minimum": 0.0,
          "default": 1.0
        },
+      "hostport": {
+         "description": "Host port to allocate to each Chronos instance.",
+         "type": "integer",
+         "minimum": 0,
+         "default": 0
+       },
        "instances": {
          "description": "Number of Chronos instances to run.",
          "type": "integer",
