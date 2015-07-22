@@ -1,0 +1,16 @@
+{
+  "name": "crate",
+  "version": "0.1.0-SNAPSHOT",
+  "scm": "https://github.com/crate/crate-mesos-framework.git",
+  "maintainer": "office@crate.io",
+  "description": "A Mesos Framework that allows running and resizing one or multiple Crate database clusters.",
+  "website": "https://crate.io",
+  "tags": ["database", "distributed", "nosql"],
+  "framework": true,
+  "images": {
+    "icon-small": "https://cdn.crate.io/web/2.0/img/crate-avatar_100x100.png"
+  },
+  "preInstallNotes": "The Crate DCOS Service implementation is experimental and therefore there may be bugs or incomplete features. Never use alpha version software in production!\n\tPlease refer to the documentation at https://github.com/crate/crate-mesos-framework for information how to start a Crate cluster.",
+  "postInstallNotes": "Thanks for using Crate! Please read the documentation at https://crate.io/docs/stable/ for usage instructions."
+}
+
