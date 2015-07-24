@@ -21,10 +21,16 @@
           "pattern": "^(?:\\.[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)+$"
         },
         "enable-dns": {
-          "default": "1",
-          "description": "Set to 1 to enable Kubernetes local DNS services, allows pods to locate services by name.",
+          "default": "true",
+          "description": "Set to true to enable Kubernetes local DNS service, allows pods to locate services by name.",
           "type": "string",
-          "pattern": "^1?$"
+          "pattern": "^(true|false)$"
+        },
+        "enable-ui": {
+          "default": "true",
+          "description": "Set to true to enable Kubernetes web UI service.",
+          "type": "string",
+          "pattern": "^(true|false)$"
         },
         "framework-name": {
           "default": "kubernetes",

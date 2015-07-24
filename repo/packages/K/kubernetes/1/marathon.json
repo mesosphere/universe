@@ -37,6 +37,10 @@
     "ENABLE_DNS": "{{kubernetes.enable-dns}}",
     {{/kubernetes.enable-dns}}
 
+    {{#kubernetes.enable-ui}}
+    "ENABLE_UI": "{{kubernetes.enable-ui}}",
+    {{/kubernetes.enable-ui}}
+
     {{#kubernetes.kube-dns-domain}}
     "DNS_DOMAIN": "{{kubernetes.kube-dns-domain}}",
     {{/kubernetes.kube-dns-domain}}
