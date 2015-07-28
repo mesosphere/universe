@@ -71,6 +71,11 @@
           "type": "string",
           "default": "dcos"
         },
+        "ld-library-path": {
+          "desription": "Library path",
+          "type": "string",
+          "default": "/opt/mesosphere/lib"
+        },
         "zk": {
           "description": "ZooKeeper URL for storing state. Format: zk://host1:port1,host2:port2,.../path (can have nested directories)",
           "type": "string"
@@ -163,5 +168,4 @@
     "mesos",
     "cassandra"
   ]
-
 }
