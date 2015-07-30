@@ -1,0 +1,29 @@
+{
+  "id": "prometheus",
+  "cpus": 4,
+  "mem": 1024,
+  "ports": [9090],
+  "requirePorts": true,
+  "instances": 2,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "prom/prometheus",
+      "network": "HOST",
+      "forcePullImage": true
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/version",
+      "portIndex": 0,
+      "gracePeriodSeconds": 5,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 1,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "env": {}
+}
