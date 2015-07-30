@@ -5,18 +5,33 @@
   "ports": [9090],
   "requirePorts": true,
   "instances": 2,
+  "env": {
+    "PAGERDUTY_KEY": "{{ prometheus.pagerduty-key }}"
+  },
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "prom/prometheus",
-      "network": "HOST",
+      "image": "mesosphere/prometheus-dcos",
+      "network": "BRIDGE",
+      "portMappings": [{
+        "containerPort": 9090,
+        "hostPort": 0,
+        "servicePort": 9090,
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": 9093,
+        "hostPort": 0,
+        "servicePort": 9093,
+        "protocol": "tcp"
+      }],
       "forcePullImage": true
     }
   },
   "healthChecks": [
     {
       "protocol": "HTTP",
-      "path": "/version",
+      "path": "/",
       "portIndex": 0,
       "gracePeriodSeconds": 5,
       "intervalSeconds": 60,
