@@ -1,14 +1,14 @@
 {
   "type": "object",
   "properties": {
-    "mesos": {
-      "description": "Mesos specific configuration properties",
+    "prometheus": {
+      "description": "Prometheus specific configuration properties",
       "type": "object",
       "properties": {
         "master": {
           "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard URLs like http://localhost are also acceptable.",
           "type": "string",
-          "default": "zk://master.mesos:2181/mesos"
+          "default": "zk://leader.mesos:2181/mesos"
         },
         "pagerduty-key": {
           "description": "PagerDuty Service Key to send Prometheus Alerts to",
@@ -18,5 +18,5 @@
       "required": ["master"]
     }
   },
-  "required": ["mesos"]
+  "required": ["prometheus"]
 }

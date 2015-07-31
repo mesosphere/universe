@@ -1,10 +1,11 @@
 {
   "id": "prometheus",
-  "cpus": 4,
-  "mem": 1024,
+  "cpus": 1,
+  "mem": 2048,
   "ports": [9090],
   "requirePorts": true,
-  "instances": 2,
+  "instances": 1,
+  "constraints": [["hostname", "UNIQUE"]],
   "env": {
     "PAGERDUTY_KEY": "{{ prometheus.pagerduty-key }}"
   },
@@ -33,12 +34,15 @@
       "protocol": "HTTP",
       "path": "/",
       "portIndex": 0,
-      "gracePeriodSeconds": 5,
-      "intervalSeconds": 60,
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 30,
       "timeoutSeconds": 10,
-      "maxConsecutiveFailures": 1,
+      "maxConsecutiveFailures": 2,
       "ignoreHttp1xx": false
     }
   ],
-  "env": {}
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0.5,
+    "maximumOverCapacity": 0.0
+  }
 }
