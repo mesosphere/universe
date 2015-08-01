@@ -66,9 +66,9 @@
           "type": "string",
           "pattern": "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
         },
-        "enable-etcd-server": {
-          "default": true,
-          "description": "Set to false to disable the pre-packaged etcd server component. Do this if you already have an etcd cluster set up that you want to use as the backing store for Kubernetes. Also see the docs for etcd-server-list.",
+        "disable-etcd-server": {
+          "default": false,
+          "description": "Set to true to disable the pre-packaged etcd server component. Do this if you already have an etcd cluster set up that you want to use as the backing store for Kubernetes. Also see the docs for etcd-server-list.",
           "type": "boolean"
         },
         "etcd-server-list": {
