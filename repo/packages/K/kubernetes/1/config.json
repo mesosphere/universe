@@ -10,7 +10,7 @@
           "pattern": "^(?:[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)$"
         },
         "docker-image": {
-          "default": "mesosphere/kubernetes:v1.0.1-v0.6.0-alpha",
+          "default": "sttts/kubernetes:v1.0.2-v0.6.1-alpha",
           "description": "Docker image used to launch the Kubernetes framework on DCOS.",
           "type": "string"
         },
@@ -139,6 +139,18 @@
           "default": 768.0,
           "description": "Memory (MB) to allocate to each Kubernetes scheduler instance.",
           "minimum": 128.0,
+          "type": "number"
+        },
+        "default-container-cpu-limit": {
+          "default": 0.25,
+          "description": "CPU shared to allocate to a containter in a pod which is not CPU limited.",
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "default-container-mem-limit": {
+          "default": 64.0,
+          "description": "Memory (MB) to allocate to a containter in a pod which is not memory limited.",
+          "minimum": 32.0,
           "type": "number"
         },
         "mesos-role": {
