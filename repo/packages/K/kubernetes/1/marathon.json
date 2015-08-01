@@ -66,7 +66,9 @@
     "APISERVER_SECURE_PORT": "{{kubernetes.apiserver-secure-port}}",
     "SCHEDULER_PORT": "{{kubernetes.scheduler-port}}",
     "SCHEDULER_DRIVER_PORT": "{{kubernetes.scheduler-driver-port}}",
-    "CONTROLLER_MANAGER_PORT": "{{kubernetes.controller-manager-port}}"
+    "CONTROLLER_MANAGER_PORT": "{{kubernetes.controller-manager-port}}",
+    "DEFAULT_CONTAINER_CPU_LIMIT": "{{kubernetes.default-container-cpu-limit}}",
+    "DEFAULT_CONTAINER_MEM_LIMIT": "{{kubernetes.default-container-mem-limit}}"
   },
   "ports": [{{kubernetes.apiserver-port}}, {{kubernetes.apiserver-secure-port}}, {{kubernetes.scheduler-port}}, {{kubernetes.controller-manager-port}}, {{kubernetes.scheduler-driver-port}}],
   "requirePorts": true,
