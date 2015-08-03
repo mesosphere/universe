@@ -10,7 +10,7 @@
           "pattern": "^(?:[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)$"
         },
         "docker-image": {
-          "default": "sttts/kubernetes:v1.0.2-v0.6.1-alpha",
+          "default": "mesosphere/kubernetes:v1.0.2-v0.6.1-alpha",
           "description": "Docker image used to launch the Kubernetes framework on DCOS.",
           "type": "string"
         },
