@@ -25,9 +25,9 @@
     "K8SM_MESOS_ROLE": "{{kubernetes.mesos-role}}",
     {{/kubernetes.mesos-role}}
 
-    {{#kubernetes.disable-etcd-server}}
-    "DISABLE_ETCD_SERVER": "{{kubernetes.disable-etcd-server}}",
-    {{/kubernetes.disable-etcd-server}}
+    {{#kubernetes.enable-etcd-server}}
+    "ENABLE_ETCD_SERVER": "{{kubernetes.enable-etcd-server}}",
+    {{/kubernetes.enable-etcd-server}}
 
     {{#kubernetes.etcd-server-list}}
     "ETCD_SERVER_LIST": "{{kubernetes.etcd-server-list}}",
