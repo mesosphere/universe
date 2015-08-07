@@ -4,11 +4,15 @@
   "mem": 512,
   "instances": 1,
   "args": ["-zk", "{{mesos.master}}", "-n", "{{elasticsearch.instances}}", "-m", "{{elasticsearch.port}}", "-ram", "{{elasticsearch.ram}}"],
+  "env": {
+    "JAVA_OPTS": "-Xms128m -Xmx256m"
+  },
   "container": {
     "type": "DOCKER",
     "docker": {
       "image": "mesos/elasticsearch-scheduler",
-      "network": "HOST"
+      "network": "HOST",
+      "forcePullImage": true
     }
   }
 }
