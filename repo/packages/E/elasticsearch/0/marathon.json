@@ -1,8 +1,8 @@
 {
   "id": "{{elasticsearch.framework-name}}",
-  "cpus": "{{elasticsearch.scheduler.cpu}}",
-  "mem": "{{elasticsearch.scheduler.ram}}",
-  "instances": "{{elasticsearch.scheduler.instances}},
+  "cpus": {{elasticsearch.scheduler.cpu}},
+  "mem": {{elasticsearch.scheduler.ram}},
+  "instances": {{elasticsearch.scheduler.instances}},
   "args": ["-zk", "{{mesos.master}}", "-n", "{{elasticsearch.executor.instances}}", "-m", "{{elasticsearch.port}}", "-ram", "{{elasticsearch.executor.ram}}"],
   "env": {
     "JAVA_OPTS": "{{elasticsearch.scheduler.java-heap}}"
