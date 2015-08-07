@@ -17,23 +17,79 @@
     "elasticsearch": {
       "depscription": "Elasticsearch specific configuration properties",
       "properties": {
-        "instances": {
-          "default": "3",
-          "description": "The number of elasticsearch nodes to be instantiated. It is recommended that you provide an odd number, to prevent split brain issues.",
-          "type": "string"
+        "framework-name": {
+          "instances": {
+            "default": "elasticsearch",
+            "description": "The framework name.",
+            "type": "string"
+          },
+          "port": {
+            "default": "8080",
+            "description": "The port number of the ES-Mesos management front-end. Defaults to 8080.",
+            "type": "string"
+          },
+          "executor": {
+            "properties": {
+              "ram": {
+                "default": "2048",
+                "description": "The amount of ram that Mesos shall give give to the executors.",
+                "type": "string"
+              },
+              "instances": {
+                "default": "3",
+                "description": "The number of elasticsearch nodes to be instantiated. It is recommended that you provide an odd number, to prevent split brain issues.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ram",
+              "instances"
+            ],
+            "type": "object"
+          },
+          "scheduler": {
+            "properties": {
+              "cpu": {
+                "default": "0.2",
+                "description": "The amount of CPU that Mesos shall allocate to the scheduler.",
+                "type": "string"
+              },
+              "ram": {
+                "default": "512",
+                "description": "The amount of RAM that Mesos shall allocate to the scheduler.",
+                "type": "string"
+              },
+              "instances": {
+                "default": "1",
+                "description": "The number of scheduler instances.",
+                "type": "string"
+              },
+              "java-heap": {
+                "default": "-Xms128m -Xmx256m",
+                "description": "The java heap space environmental variables to pass to the scheduler",
+                "type": "string"
+              }
+            },
+            "required": [
+              "cpu",
+              "ram",
+              "instances",
+              "java-heap"
+            ],
+            "type": "object"
+          }
         },
-        "port": {
-          "default": "8080",
-          "description": "The port number of the ES-Mesos management front-end. Defaults to 8080.",
-          "type": "string"
-        },
-        "ram": {
-          "default": "2048",
-          "description": "The amount of ram that Mesos shall give give to the executors.",
-          "type": "string"
-        }
+        "required": [
+          "framework-name",
+          "port",
+          "executor",
+          "scheduler"
+        ],
+        "type": "object"
       },
       "required": [
+        "mesos",
+        "elasticsearch"
       ],
       "type": "object"
     }
