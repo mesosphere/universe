@@ -18,7 +18,6 @@
     "spark": {
       "description": "Spark Framework Configuration Properties",
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "framework-name": {
             "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
@@ -30,12 +29,58 @@
           "description": "The host that the Spark cluster dispatcher will register under.",
           "default": "$HOST"
         },
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares to allocate to each Marathon instance.",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of Marathon instances to run.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "mem": {
+          "default": 1024.0,
+          "description": "Memory (MB) to allocate to each Marathon task.",
+          "minimum": 1024.0,
+          "type": "number"
+        },
+        "mesos-authentication-principal": {
+          "description": "The Mesos principal used for authentication.",
+          "type": "string"
+        },
+        "mesos-authentication-secret-file": {
+          "description": "The path to the Mesos secret file containing the authentication secret.",
+          "type": "string"
+        },
+        "mesos-role": {
+          "description": "Mesos role for this framework.",
+          "type": "string"
+        },
+        "mesos-user": {
+          "description": "Mesos user to run the executor under",
+          "type": "string",
+          "default": "root"
+        },
         "zookeeper": {
           "type": "string",
           "description": "URL to the Zookeeper that Spark cluster framework connects to persist state to. (l.e: zk://0.0.0.0:2181)",
           "default": "master.mesos:2181"
         }
-      }
+      },
+      "required": [
+        "cpus",
+        "framework-name",
+        "instances",
+        "mem",
+        "zk"
+      ]
     }
-  }
+  },
+  "required": [
+  	"mesos",
+    "spark"
+  ]
 }
