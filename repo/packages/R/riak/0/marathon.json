@@ -1,0 +1,43 @@
+{
+  "id": "{{riak.app-id}}",
+  "instances": {{riak.instances}},
+  "cpus": {{riak.cpus}},
+  "mem": {{riak.mem}},
+  "ports": [0, 0],
+  "uris": ["{{riak.url}}"],
+  "env": {},
+  "args": [
+      "riak_mesos_framework/framework_linux_amd64"
+      ,"-master={{riak.master}}"
+      ,"-zk={{riak.zk}}"
+      {{#riak.ip}}
+      ,"-ip={{riak.ip}}"
+      {{/riak.ip}}
+      {{#riak.hostname}}
+      ,"-hostname={{riak.hostname}}"
+      {{/riak.hostname}}
+      {{#riak.log}}
+      ,"-log={{riak.log}}"
+      {{/riak.log}}
+      {{#riak.user}}
+      ,"-user={{riak.user}}"
+      {{/riak.user}}
+      {{#riak.framework-name}}
+      ,"-name={{riak.framework-name}}"
+      {{/riak.framework-name}}
+      {{#riak.role}}
+      ,"-role={{riak.role}}"
+      {{/riak.role}}
+  ],
+  "healthChecks": [
+    {
+      "path": "/healthcheck",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "gracePeriodSeconds": {{riak.healthcheck-grace-period-seconds}},
+      "intervalSeconds": {{riak.healthcheck-interval-seconds}},
+      "timeoutSeconds": {{riak.healthcheck-timeout-seconds}},
+      "maxConsecutiveFailures": {{riak.healthcheck-max-consecutive-failures}},
+      "ignoreHttp1xx": false
+    }]
+}

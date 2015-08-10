@@ -1,0 +1,26 @@
+{
+  "name": "riak",
+  "version": "0.1.0",
+  "tags": ["mesosphere", "framework"],
+  "maintainer": "help@basho.com",
+  "description": "A distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability.",
+  "scm": "https://github.com/basho-labs/riak-mesos.git",
+  "website": "https://github.com/basho-labs/riak-mesos",
+  "images": {
+    "icon-small": "http://riak-tools.s3.amazonaws.com/riak-mesos/riak-mesos-small.png",
+    "icon-medium": "http://riak-tools.s3.amazonaws.com/riak-mesos/riak-mesos-medium.png",
+    "icon-large": "http://riak-tools.s3.amazonaws.com/riak-mesos/riak-mesos-large.png",
+    "screenshots": [
+      "http://riak-tools.s3.amazonaws.com/riak-mesos/riak-mesos-screenshot.png"
+    ]
+  },
+  "postInstallNotes": "Thank you for installing Riak on Mesos. Visit https://github.com/basho-labs/riak-mesos for usage information.",
+  "preInstallNotes": "The Mesos Riak Framework implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
+  "postUninstallNotes": "The Mesos Riak Framework has been uninstalled and will no longer run.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/basho-labs/riak-mesos/blob/master/LICENSE"
+    }
+  ]
+}
