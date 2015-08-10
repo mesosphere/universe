@@ -15,11 +15,6 @@
               "description": "Zookeeper address. Specify in the format host:port.",
               "default": "mesos.master:2181"
             },
-            "app-id": {
-              "type": "string",
-              "description": "Riak Application ID.",
-              "default": "riak"
-            },
             "ip": {
               "type": "string",
               "description": "Framework HTTP API bind address."
@@ -88,7 +83,7 @@
             }
           },
           "required": [
-            "app-id",
+            "framework-name",
             "instances",
             "cpus",
             "mem",
