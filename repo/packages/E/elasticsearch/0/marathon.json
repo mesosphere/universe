@@ -3,6 +3,17 @@
   "cpus": {{elasticsearch.scheduler.cpu}},
   "mem": {{elasticsearch.scheduler.ram}},
   "instances": {{elasticsearch.scheduler.instances}},
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 0,
+      "path": "/",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "timeoutSeconds": 5
+    }
+  ],
   "args": ["-zk", "{{mesos.master}}", "-n", "{{elasticsearch.executor.instances}}", "-m", "{{elasticsearch.port}}", "-ram", "{{elasticsearch.executor.ram}}"],
   "env": {
     "JAVA_OPTS": "{{elasticsearch.scheduler.java-heap}}"
