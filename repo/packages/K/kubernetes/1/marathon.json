@@ -1,5 +1,5 @@
 {
-  "id": "{{kubernetes.app-id}}",
+  "id": "{{kubernetes.framework-name}}",
   "cpus": {{kubernetes.cpus}},
   "mem": {{kubernetes.mem}},
   "container": {
@@ -13,9 +13,9 @@
   "env":{
     "DEBUG": "{{kubernetes.debug}}",
     "GLOG_v": "{{kubernetes.logging-verbosity}}",
-    "DEFAULT_DNS_NAME": "{{kubernetes.app-id}}{{kubernetes.dns-suffix}}",
+    "DEFAULT_DNS_NAME": "{{kubernetes.framework-name}}{{kubernetes.dns-suffix}}",
     "FRAMEWORK_NAME": "{{kubernetes.framework-name}}",
-    "FRAMEWORK_WEBURI": "http://{{kubernetes.app-id}}{{kubernetes.dns-suffix}}:{{kubernetes.apiserver-port}}",
+    "FRAMEWORK_WEBURI": "http://{{kubernetes.framework-name}}{{kubernetes.dns-suffix}}:{{kubernetes.apiserver-port}}",
 
     {{#mesos.master}}
     "K8SM_MESOS_MASTER": "{{mesos.master}}",
