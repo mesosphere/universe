@@ -54,12 +54,12 @@
             "cpus": {
                 "type": "number",
                 "description": "CPU requirements",
-                "default": 0.1
+                "default": 0.5
             },
             "mem": {
                 "type": "number",
                 "description": "Memory requirements",
-                "default": 100
+                "default": 512
             },
             "healthcheck-grace-period-seconds": {
                 "type": "number",
