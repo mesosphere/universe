@@ -6,7 +6,7 @@
   "ports": [0, 0],
   "uris": ["{{riak.url}}"],
   "env": {},
-  "cmd": "riak_mesos_framework/framework_linux_amd64 -master={{riak.master}} -zk={{riak.zk}} -name={{riak.framework-name}} {{#riak.ip}}-ip={{riak.ip}}{{/riak.ip}} {{#riak.hostname}}-hostname={{riak.hostname}}{{/riak.hostname}} {{#riak.log}}-log={{riak.log}}{{/riak.log}} {{#riak.user}}-user={{riak.user}}{{/riak.user}} {{#riak.role}}-role={{riak.role}}{{/riak.role}}",
+  "cmd": "riak_mesos_framework/framework_linux_amd64 -master={{riak.master}} -zk={{riak.zk}} -name={{riak.framework-name}} -user={{riak.user}}{{#riak.ip}} -ip={{riak.ip}}{{/riak.ip}}{{#riak.hostname}} -hostname={{riak.hostname}}{{/riak.hostname}}{{#riak.log}} -log={{riak.log}}{{/riak.log}}{{#riak.role}} -role={{riak.role}}{{/riak.role}}",
   "healthChecks": [
     {
       "path": "/healthcheck",

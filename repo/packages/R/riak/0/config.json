@@ -29,7 +29,8 @@
             },
             "user": {
               "type": "string",
-              "description": "Framework User."
+              "description": "Framework User.",
+              "default": "root"
             },
             "framework-name": {
               "type": "string",
@@ -90,6 +91,7 @@
             "url",
             "master",
             "zk",
+            "user",
             "healthcheck-grace-period-seconds",
             "healthcheck-interval-seconds",
             "healthcheck-timeout-seconds",
