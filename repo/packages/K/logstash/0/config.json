@@ -1,0 +1,69 @@
+{
+  "type": "object",
+    "properties": {
+
+      "mesos": {
+        "description": "Mesos specific configuration properties",
+        "type": "object",
+        "properties": {
+          "master": {
+            "default": "zk://master.mesos:2181/mesos",
+            "description": "The URL of the Mesos master. This should point to the Mesos ZNode on the Zookeeper machine.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "master"
+        ]
+      },
+
+    "logstash": {
+      "type": "object",
+      "description": "Logstash specific configuration properties",
+      "additionalProperties": false,
+
+      "properties": {
+
+        "framework-name": {
+          "description": "The framework name",
+          "type": "string",
+          "default": "logstash"
+        },
+        "port":{
+          "default":"9092",
+          "description":"The port number of the Logstash-Mesos management front-end. Defaults to 9092.",
+          "type":"string"
+        },
+        "executor":{
+          "properties":{
+            "heap-size":{
+              "default":"256",
+              "description":"The heap-size in MB that is used to run the java executor inside the executor container.",
+              "type":"string"
+            },
+            "logstash-heap-size":{
+              "default":"512",
+              "description":"The heap-size in MB that is used to run logstash inside the executor container.",
+              "type":"string"
+            },
+            "volumes":{
+              "default":"",
+              "description":"Comma-separated list of absolute directory-paths on the slave, containing log files that logstash should have read-only access to",
+              "type":"string"
+            }
+          },
+          "type":"object"
+        }
+      },
+      "required":[
+        "framework-name",
+        "port",
+        "executor"
+      ]
+    }
+  },
+  "required": [
+    "mesos",
+    "logstash"
+  ]
+}
