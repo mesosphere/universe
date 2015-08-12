@@ -59,9 +59,9 @@
       }
     },
     {
-      "currentVersion":"0.1.0",
+      "currentVersion":"0.2.0",
       "description":"DCOS implementation of the Mesos-Elasticsearch framework",
-      "framework":false,
+      "framework":true,
       "name":"elasticsearch",
       "tags":[
         "dcos",
@@ -71,7 +71,7 @@
         "elastic"
       ],
       "versions":{
-        "0.1.0":"0"
+        "0.2.0":"0"
       }
     },
     {
