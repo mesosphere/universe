@@ -6,7 +6,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "mesos/logstash-scheduler:0.0.5",
+      "image": "mesos/logstash-scheduler:0.0.6",
       "network": "HOST"
     }
   },
