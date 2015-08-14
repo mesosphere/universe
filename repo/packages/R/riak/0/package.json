@@ -16,7 +16,7 @@
     ]
   },
   "postInstallNotes": "Thank you for installing Riak on Mesos. Visit https://github.com/basho-labs/riak-mesos for usage information.",
-  "preInstallNotes": "The Mesos Riak Framework implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies. The Riak framework should have at least 1GB of RAM and 0.5 CPUs to perform successfully.",
+  "preInstallNotes": "The Mesos Riak Framework implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies. The Riak framework should have at least 2GB of RAM and 0.5 CPUs to perform successfully.",
   "postUninstallNotes": "The Mesos Riak Framework has been uninstalled and will no longer run. In order to fully remove Riak from the DCOS cluster, delete the /riak/frameworks/<framework-id> or /riak nodes from Zookeeper.",
   "licenses": [
     {

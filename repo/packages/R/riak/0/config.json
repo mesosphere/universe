@@ -44,8 +44,23 @@
             },
             "url": {
                 "type": "string",
-                "description": "Riak Mesos Framework download URL",
+                "description": "Riak Mesos Framework download URL.",
                 "default": "http://riak-tools.s3.amazonaws.com/riak-mesos/coreos/riak_mesos_linux_amd64_0.1.0.tar.gz"
+            },
+            "auth-provider": {
+                "type": "string",
+                "description": "Authentication provider to use, default is SASL that supports mechanisms.",
+                "default": ""
+            },
+            "auth-principal": {
+                "type": "string",
+                "description": "Mesos authentication principal.",
+                "default": ""
+            },
+            "auth-secret-file": {
+                "type": "string",
+                "description": "Mesos authentication secret file.",
+                "default": ""
             },
             "instances": {
                 "type": "number",
@@ -60,7 +75,7 @@
             "mem": {
                 "type": "number",
                 "description": "Memory requirements",
-                "default": 1024
+                "default": 2048
             },
             "healthcheck-grace-period-seconds": {
                 "type": "number",
