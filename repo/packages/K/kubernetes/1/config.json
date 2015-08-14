@@ -10,7 +10,7 @@
         },
         "dns-suffix": {
           "default": ".marathon.mesos",
-          "description": "This value is appended to the app-id value to form the canonical DNS name for the Kubernetes components.",
+          "description": "This value is appended to the framework-name value to form the canonical DNS name for the Kubernetes components.",
           "type": "string",
           "pattern": "^(?:\\.[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)+$"
         },
@@ -167,7 +167,7 @@
         }
       },
       "required": [
-        "app-id",
+        "framework-name",
         "cpus",
         "dns-suffix",
         "instances",
