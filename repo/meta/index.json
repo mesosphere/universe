@@ -16,16 +16,19 @@
       }
     },
     {
-      "currentVersion":"0.1.0-1",
+      "currentVersion":"0.2.0-1",
       "description":"Apache Cassandra running on Apache Mesos",
       "framework":true,
       "name":"cassandra",
       "tags":[
         "mesosphere",
-        "framework"
+        "framework",
+        "data",
+        "database"
       ],
       "versions":{
-        "0.1.0-1":"0"
+        "0.1.0-1":"0",
+        "0.2.0-1":"1"
       }
     },
     {
@@ -143,21 +146,25 @@
       }
     },
     {
-      "currentVersion":"1.4.0-SNAPSHOT",
+      "currentVersion":"1.4.1",
       "description":"Spark is a fast and general cluster computing system for Big Data",
       "framework":true,
       "name":"spark",
       "tags":[
         "mesosphere",
         "framework",
-        "bigdata"
+        "bigdata",
+        "mesos",
+        "spark",
+        "mapreduce"
       ],
       "versions":{
-        "1.4.0-SNAPSHOT":"0"
+        "1.4.0-SNAPSHOT":"0",
+        "1.4.1":"1"
       }
     },
     {
-      "currentVersion":"0.3",
+      "currentVersion":"0.4.0",
       "description":"Swarm is a Docker-native clustering system.",
       "framework":true,
       "name":"swarm",
@@ -167,7 +174,7 @@
         "docker"
       ],
       "versions":{
-        "0.3":"0"
+        "0.4.0":"0"
       }
     }
   ],
