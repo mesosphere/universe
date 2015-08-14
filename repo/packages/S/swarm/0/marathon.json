@@ -3,7 +3,7 @@
   "cpus": 1,
   "mem": 512,
   "instances": 1,
-  "cmd": "SWARM_MESOS_OFFER_TIMEOUT={{swarm.offer-timeout}}s swarm --debug m -H :$PORT0 -c mesos-experimental {{mesos.master}}",
+  "cmd": "SWARM_MESOS_USER={{swarm.user}} SWARM_MESOS_OFFER_TIMEOUT={{swarm.offer-timeout}}s swarm --debug m -H :$PORT0 -c mesos-experimental {{mesos.master}}",
   "ports": [
     0
   ],

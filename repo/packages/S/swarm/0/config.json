@@ -25,6 +25,11 @@
           "type": "integer",
           "description": "The amount of time in seconds Swarm is going to hold on to offers for future containers request before declining them.",
           "default": 30
+        },
+        "user": {
+          "type": "string",
+          "description": "The user that the Mesos slave will launch Swarm tasks under.",
+          "default": "root"
         }
       }
     }
