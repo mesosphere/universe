@@ -9,7 +9,7 @@
                     "key": "name", "value": "dd-agent"
                 },
                 {
-                    "key": "env", "value": "{{datadog.api_key}}"
+                    "key": "env", "value": "API_KEY={{datadog.api_key}}"
                 }
             ],
             "network": "BRIDGE",
