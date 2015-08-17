@@ -1,0 +1,27 @@
+{
+    "description": "Cloud-scale monitoring",
+    "framework": false,
+    "images": {
+        "icon-large": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-large.png",
+        "icon-medium": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-medium.png",
+        "icon-small": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-small.png"
+    },
+    "licenses": [
+        {
+            "name": "Simplified BSD license",
+            "url": "https://raw.githubusercontent.com/DataDog/dd-agent/master/LICENSE"
+        }
+    ],
+    "maintainer": "package@datadoghq.com",
+    "name": "datadog",
+    "postInstallNotes": "Datadog on DCOS successfully installed.\nHead over to https://app.datadoghq.com to monitor your DCOS cluster.",
+    "postUninstallNotes": "Datadog on DCOS successfully uninstalled.\n.",
+    "preInstallNotes": "Make sure you have a Datadog account; it's free and takes seconds to set up. If you don't have one, sign up at https://www.datadoghq.com/",
+    "scm": "https://github.com/datadog/dd-agent.git",
+    "tags": [
+        "datadog",
+        "monitoring"
+    ],
+    "version": "5.4.2",
+    "website": "http://www.datadog.com"
+}
