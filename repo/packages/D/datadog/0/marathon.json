@@ -1,0 +1,45 @@
+{
+    "id": "dd-agent",
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "datadog/docker-dd-agent",
+            "parameters": [
+                {
+                    "key": "name", "value": "dd-agent"
+                },
+                {
+                    "key": "env", "value": "{{datadog.api_key}}"
+                }
+            ],
+            "network": "BRIDGE",
+            "portMappings": [
+                { "containerPort": 8125, "hostPort": 0 }
+            ]
+        },
+        "volumes": [
+            {
+                "containerPath": "/var/run/docker.sock",
+                "hostPath": "/var/run/docker.sock",
+                "mode": "RW"
+            },
+            {
+                "containerPath": "/host/proc/mounts",
+                "hostPath": "/proc/mounts",
+                "mode": "RO"
+            },
+            {
+                "containerPath": "/host/sys/fs/cgroup",
+                "hostPath": "/sys/fs/cgroup",
+                "mode": "RO"
+            }
+        ]
+    },
+    "cpus": {{datadog.cpus}},
+    "mem": {{datadog.mem}},
+    "instances": {{datadog.instances}},
+    "constraints": [
+        ["hostname", "UNIQUE"],
+	["hostname", "GROUP_BY"]
+    ]
+}
