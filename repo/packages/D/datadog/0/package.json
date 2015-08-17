@@ -16,7 +16,7 @@
     "name": "datadog",
     "postInstallNotes": "Datadog on DCOS successfully installed.\nHead over to https://app.datadoghq.com to monitor your DCOS cluster.",
     "postUninstallNotes": "Datadog on DCOS successfully uninstalled.\n.",
-    "preInstallNotes": "Make sure you have a Datadog account; it's free and takes seconds to set up. If you don't have one, sign up at https://www.datadoghq.com/",
+    "preInstallNotes": "Pass your API key as a package option (datadog.api_key).\nAlso pass the number of Mesos slaves as an option (datadog.instances).\nMarathon will make sure that the Datadog Agent runs only once per slave.",
     "scm": "https://github.com/datadog/dd-agent.git",
     "tags": [
         "datadog",
