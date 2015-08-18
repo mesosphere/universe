@@ -43,5 +43,17 @@
     "constraints": [
         ["hostname", "UNIQUE"],
 	["hostname", "GROUP_BY"]
+    ],
+    "healthChecks": [
+        {
+            "path": "/",
+            "portIndex": 9001,
+            "protocol": "HTTP",
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3,
+            "ignoreHttp1xx": false
+        }
     ]
 }
