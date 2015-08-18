@@ -27,6 +27,11 @@
           "description":"The port number of the ES-Mesos management front-end. Defaults to 8080.",
           "type":"string"
         },
+        "forcePullImage":{
+          "default":false,
+          "description":"Forces docker to re-pull the image.",
+          "type":"boolean"
+        },
         "executor":{
           "properties":{
             "ram":{
@@ -81,6 +86,7 @@
       "required":[
         "framework-name",
         "port",
+        "forcePullImage",
         "executor",
         "scheduler"
       ],
