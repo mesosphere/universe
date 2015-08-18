@@ -47,7 +47,7 @@
     "healthChecks": [
         {
             "path": "/",
-            "portIndex": 9001,
+            "portIndex": 1,
             "protocol": "HTTP",
             "gracePeriodSeconds": 300,
             "intervalSeconds": 60,
