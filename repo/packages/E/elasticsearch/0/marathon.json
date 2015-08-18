@@ -24,10 +24,9 @@
     "docker": {
       "image": "mesos/elasticsearch-scheduler",
       "network": "HOST",
-      "forcePullImage": true,
-      "portMappings": [
-        { "containerPort": 8080, "hostPort": 0 }
-      ]
+      "forcePullImage": true
     }
   }
+  "ports": [{{elasticsearch.port}}],
+  "requirePorts": true
 }
