@@ -14,8 +14,8 @@
             ],
             "network": "BRIDGE",
             "portMappings": [
-                { "hostPort": 8125, "protocol": "udp" },
-                { "hostPort": 9001, "protocol": "tcp" },
+                { "hostPort": 8125, "containerPort": 8125, "protocol": "udp" },
+                { "hostPort": 9001, "containerPort": 9001, "protocol": "tcp" }
             ]
         },
         "volumes": [
