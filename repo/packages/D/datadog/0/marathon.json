@@ -14,7 +14,8 @@
             ],
             "network": "BRIDGE",
             "portMappings": [
-                { "containerPort": 8125, "hostPort": 0 }
+                { "hostPort": 8125, "protocol": "udp" },
+                { "hostPort": 9001, "protocol": "tcp" },
             ]
         },
         "volumes": [
@@ -38,6 +39,7 @@
     "cpus": {{datadog.cpus}},
     "mem": {{datadog.mem}},
     "instances": {{datadog.instances}},
+    "acceptedResourceRoles": ["slave_public"],
     "constraints": [
         ["hostname", "UNIQUE"],
 	["hostname", "GROUP_BY"]
