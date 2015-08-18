@@ -3,7 +3,7 @@
     "container": {
         "type": "DOCKER",
         "docker": {
-            "image": "datadog/docker-dd-agent",
+            "image": "alq666/docker-dd-agent:mesos",
             "parameters": [
                 {
                     "key": "name", "value": "dd-agent"
