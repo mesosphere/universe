@@ -1,9 +1,9 @@
 {
-    "id": "dd-agent",
+    "id": "datadog-agent",
     "container": {
         "type": "DOCKER",
         "docker": {
-            "image": "datadog/docker-dd-agent",
+            "image": "alq666/docker-dd-agent:mesos",
             "parameters": [
                 {
                     "key": "name", "value": "dd-agent"
@@ -14,7 +14,8 @@
             ],
             "network": "BRIDGE",
             "portMappings": [
-                { "containerPort": 8125, "hostPort": 0 }
+                { "hostPort": 8125, "containerPort": 8125, "protocol": "udp" },
+                { "hostPort": 9001, "containerPort": 9001, "protocol": "tcp" }
             ]
         },
         "volumes": [
@@ -38,8 +39,21 @@
     "cpus": {{datadog.cpus}},
     "mem": {{datadog.mem}},
     "instances": {{datadog.instances}},
+    "acceptedResourceRoles": ["slave_public", "*"],
     "constraints": [
         ["hostname", "UNIQUE"],
 	["hostname", "GROUP_BY"]
+    ],
+    "healthChecks": [
+        {
+            "path": "/",
+            "portIndex": 1,
+            "protocol": "HTTP",
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3,
+            "ignoreHttp1xx": false
+        }
     ]
 }

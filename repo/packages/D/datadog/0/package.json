@@ -1,11 +1,6 @@
 {
     "description": "Cloud-scale monitoring",
     "framework": false,
-    "images": {
-        "icon-large": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-large.png",
-        "icon-medium": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-medium.png",
-        "icon-small": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-small.png"
-    },
     "licenses": [
         {
             "name": "Simplified BSD license",
@@ -22,6 +17,6 @@
         "datadog",
         "monitoring"
     ],
-    "version": "5.4.2",
+    "version": "5.4.3",
     "website": "http://www.datadog.com"
 }
