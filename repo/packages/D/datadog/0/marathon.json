@@ -39,7 +39,7 @@
     "cpus": {{datadog.cpus}},
     "mem": {{datadog.mem}},
     "instances": {{datadog.instances}},
-    "acceptedResourceRoles": ["slave_public"],
+    "acceptedResourceRoles": ["*"],
     "constraints": [
         ["hostname", "UNIQUE"],
 	["hostname", "GROUP_BY"]
