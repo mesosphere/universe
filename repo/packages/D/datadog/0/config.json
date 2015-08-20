@@ -33,8 +33,13 @@
                 },
                 "supervisor_port": {
                     "default": 9001,
-                    "description": "Agent supervisord port"
+                    "description": "Agent supervisord port",
                     "type": "integer"
+                },
+                "marathon_url": {
+                    "default": "",
+                    "description": "Marathon REST API endpoint",
+                    "type": "string"
                 }
             },
             "required": [

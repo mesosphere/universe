@@ -10,6 +10,9 @@
                 },
                 {
                     "key": "env", "value": "API_KEY={{datadog.api_key}}"
+                },
+                {
+                    "key": "env", "value": "MARATHON_URL={{datadog.marathon_url}}"
                 }
             ],
             "network": "BRIDGE",
