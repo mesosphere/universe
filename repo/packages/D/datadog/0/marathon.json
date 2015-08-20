@@ -1,5 +1,5 @@
 {
-    "id": "datadog-agent",
+    "id": "{{datadog.app_id}",
     "container": {
         "type": "DOCKER",
         "docker": {

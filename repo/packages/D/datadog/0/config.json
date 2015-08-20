@@ -8,6 +8,11 @@
                     "description": "Your Datadog API key.",
                     "type": "string"
                 },
+                "app_id": {
+                    "default": "datadog-agent",
+                    "description": "Marathon Application ID",
+                    "type": "string"
+                },
                 "cpus": {
                     "default": 0.05,
                     "description": "CPU shares to allocate to each Marathon instance.",
