@@ -25,6 +25,16 @@
                     "description": "Memory (MB) to allocate to each Marathon task.",
                     "minimum": 128.0,
                     "type": "number"
+                },
+                "statsd_port": {
+                    "default": 8125,
+                    "description": "statsD port",
+                    "type": "integer"
+                },
+                "supervisor_port": {
+                    "default": 9001,
+                    "description": "Agent supervisord port"
+                    "type": "integer"
                 }
             },
             "required": [
