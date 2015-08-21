@@ -32,7 +32,7 @@
       }
     },
     {
-      "currentVersion":"2.3.4",
+      "currentVersion":"2.4.0",
       "description":"A fault tolerant job scheduler for Mesos which handles dependencies and ISO8601 based schedules.",
       "framework":true,
       "name":"chronos",
@@ -41,7 +41,8 @@
         "framework"
       ],
       "versions":{
-        "2.3.4":"0"
+        "2.3.4":"0",
+        "2.4.0":"1"
       }
     },
     {
