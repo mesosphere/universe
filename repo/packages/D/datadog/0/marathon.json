@@ -1,5 +1,5 @@
 {
-    "id": "datadog-agent",
+    "id": "{{datadog.app_id}}",
     "container": {
         "type": "DOCKER",
         "docker": {
@@ -10,12 +10,15 @@
                 },
                 {
                     "key": "env", "value": "API_KEY={{datadog.api_key}}"
+                },
+                {
+                    "key": "env", "value": "MARATHON_URL={{datadog.marathon_url}}"
                 }
             ],
             "network": "BRIDGE",
             "portMappings": [
-                { "hostPort": 8125, "containerPort": 8125, "protocol": "udp" },
-                { "hostPort": 9001, "containerPort": 9001, "protocol": "tcp" }
+                { "hostPort": {{datadog.statsd_port}}, "containerPort": 8125, "protocol": "udp" },
+                { "hostPort": {{datadog.supervisor_port}}, "containerPort": 9001, "protocol": "tcp" }
             ]
         },
         "volumes": [
