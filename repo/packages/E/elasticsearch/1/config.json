@@ -39,6 +39,16 @@
               "description":"The amount of ram that Mesos shall give give to the executors.",
               "type":"string"
             },
+            "cpu":{
+              "default":"1.0",
+              "description":"The amount of CPU resource to allocate to the elasticsearch instance.",
+              "type":"string"
+            },
+            "disk":{
+              "default":"1024",
+              "description":"The amount of Disk resource to allocate to the elasticsearch instance (MB).",
+              "type":"string"
+            },
             "instances":{
               "default":"3",
               "description":"The number of elasticsearch nodes to be instantiated. It is recommended that you provide an odd number, to prevent split brain issues.",
