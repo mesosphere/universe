@@ -80,7 +80,7 @@
               "type":"string"
             },
             "image":{
-              "default":"mesos/elasticsearch-executor",
+              "default":"mesos/elasticsearch-executor:0.3.0",
               "description":"The docker executor image to use.",
               "type":"string"
             },
