@@ -97,7 +97,15 @@
           },
           "required":[
             "ram",
-            "instances"
+            "cpu",
+            "disk",
+            "instances",
+            "cluster-name",
+            "settings-location",
+            "health-delay",
+            "image",
+            "name",
+            "timeout"
           ],
           "type":"object"
         },
@@ -132,6 +140,7 @@
           "required":[
             "cpu",
             "ram",
+            "image",
             "instances",
             "java-heap"
           ],
@@ -140,6 +149,8 @@
       },
       "required":[
         "framework-name",
+        "failover-timeout",
+        "zookeeper-timeout",
         "port",
         "force-pull-image",
         "executor",
