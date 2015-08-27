@@ -17,24 +17,23 @@
   ],
   "args": [
     "--zookeeperUrl={{mesos.master}}",
-    "--zookeeperTimeout={{elasticsearch.…}}", //TODO
+    "--zookeeperTimeout={{elasticsearch.zookeeper-timeout}}",
     "--webUiPort={{elasticsearch.port}}",
-    "--frameworkFailoverTimeout={{elasticsearch.…}}", //TODO
-    "--frameworkName={{elasticsearch.…}}", //TODO
+    "--frameworkFailoverTimeout={{elasticsearch.failover-timeout}}",
+    "--frameworkName={{elasticsearch.framework-name}}",
 
     "--elasticsearchNodes={{elasticsearch.executor.instances}}",
-    "--elasticsearchClusterName={{elasticsearch.executor.…}}", //TODO
+    "--elasticsearchClusterName={{elasticsearch.executor.cluster-name}}",
     "--elasticsearchCpu={{elasticsearch.executor.cpu}}",
     "--elasticsearchDisk={{elasticsearch.executor.disk}}",
     "--elasticsearchRam={{elasticsearch.executor.ram}}",
-    "--elasticsearchSettingsLocation={{elasticsearch.executor.…}}", //TODO
+    "--elasticsearchSettingsLocation={{elasticsearch.executor.settings-location}}",
 
-    "--executorForcePullImage={{elasticsearch.executor.…}}", //TODO
-    "--executorHealthDelay={{elasticsearch.executor.…}}", //TODO
-    "--executorImage={{elasticsearch.executor.…}}", //TODO
-    "--executorName={{elasticsearch.executor.…}}", //TODO
-    "--executorTimeout={{elasticsearch.executor.…}}", //TODO
-    "--executorHealthDelay. Will start new executor after this length of time.={{elasticsearch.executor.…}}" //TODO
+    "--executorForcePullImage={{elasticsearch.forcePullImage}}",
+    "--executorHealthDelay={{elasticsearch.executor.healthDelay}}",
+    "--executorImage={{elasticsearch.executor.image}}",
+    "--executorName={{elasticsearch.executor.name}}",
+    "--executorTimeout={{elasticsearch.executor.timeout}}",
   ],
   "env": {
     "JAVA_OPTS": "{{elasticsearch.scheduler.java-heap}}"

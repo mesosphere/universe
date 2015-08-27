@@ -22,6 +22,16 @@
           "description":"The framework name.",
           "type":"string"
         },
+        "failover-timeout":{
+          "default":"2592000.0",
+          "description":"The time before Mesos kills a scheduler and tasks if it has not recovered (ms).",
+          "type":"string"
+        },
+        "zookeeper-timeout":{
+          "default":"20000",
+          "description":"The timeout for connecting to zookeeper (ms).",
+          "type":"string"
+        },
         "port":{
           "default":"31105",
           "description":"The port number of the ES-Mesos management front-end. Defaults to 8080.",
@@ -52,6 +62,41 @@
             "instances":{
               "default":"3",
               "description":"The number of elasticsearch nodes to be instantiated. It is recommended that you provide an odd number, to prevent split brain issues.",
+              "type":"string"
+            },
+            "cluster-name":{
+              "default":"mesos-ha",
+              "description":"Name of the elasticsearch cluster",
+              "type":"string"
+            },
+            "settings-location":{
+              "default":"",
+              "description":"URI to ES yml settings file. If file is copied to all slaves, the file must be in /tmp/config. E.g. 'file:/tmp/config/elasticsearch.yml', 'http://webserver.com/elasticsearch.yml'",
+              "type":"mesos-ha"
+            },
+            "healthDelay":{
+              "default":"3000",
+              "description":"The delay between executor healthcheck requests (ms).",
+              "type":"string"
+            },
+            "image":{
+              "default":"mesos/elasticsearch-executor",
+              "description":"The docker executor image to use.",
+              "type":"string"
+            },
+            "image":{
+              "default":"mesos/elasticsearch-executor",
+              "description":"The docker executor image to use.",
+              "type":"string"
+            },
+            "name":{
+              "default":"elasticsearch-executor",
+              "description":"The name given to the executor task.",
+              "type":"string"
+            },
+            "timeout":{
+              "default":"60000",
+              "description":"The maximum executor healthcheck timeout (ms). Must be greater than elasticsearch.executor.healthdelay. Will start new executor after this length of time.",
               "type":"string"
             }
           },
