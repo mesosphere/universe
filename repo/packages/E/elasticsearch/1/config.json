@@ -113,6 +113,11 @@
               "description":"The amount of RAM that Mesos shall allocate to the scheduler.",
               "type":"string"
             },
+            "image":{
+              "default":"mesos/elasticsearch-scheduler:0.3.0",
+              "description":"The docker scheduler image to use.",
+              "type":"string"
+            },
             "instances":{
               "default":"1",
               "description":"The number of scheduler instances.",

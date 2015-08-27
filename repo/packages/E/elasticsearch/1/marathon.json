@@ -41,7 +41,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "mesos/elasticsearch-scheduler:0.3.0",
+      "image": "{{elasticsearch.scheduler.image}}",
       "network": "HOST",
       "forcePullImage": {{elasticsearch.force-pull-image}}
     }
