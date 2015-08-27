@@ -60,6 +60,19 @@
       }
     },
     {
+      "currentVersion":"5.4.3",
+      "description":"Cloud-scale monitoring",
+      "framework":false,
+      "name":"datadog",
+      "tags":[
+        "datadog",
+        "monitoring"
+      ],
+      "versions":{
+        "5.4.3":"0"
+      }
+    },
+    {
       "currentVersion":"0.2.0",
       "description":"DCOS implementation of the Mesos-Elasticsearch framework",
       "framework":true,
