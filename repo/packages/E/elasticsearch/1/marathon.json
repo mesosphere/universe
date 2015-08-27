@@ -29,8 +29,8 @@
     "--elasticsearchRam={{elasticsearch.executor.ram}}",
     "--elasticsearchSettingsLocation={{elasticsearch.executor.settings-location}}",
 
-    "--executorForcePullImage={{elasticsearch.forcePullImage}}",
-    "--executorHealthDelay={{elasticsearch.executor.healthDelay}}",
+    "--executorForcePullImage={{elasticsearch.force-pull-image}}",
+    "--executorHealthDelay={{elasticsearch.executor.health-delay}}",
     "--executorImage={{elasticsearch.executor.image}}",
     "--executorName={{elasticsearch.executor.name}}",
     "--executorTimeout={{elasticsearch.executor.timeout}}",
