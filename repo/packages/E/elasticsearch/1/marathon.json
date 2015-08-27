@@ -17,11 +17,24 @@
   ],
   "args": [
     "--zookeeperUrl={{mesos.master}}",
-    "--elasticsearchNodes={{elasticsearch.executor.instances}}",
+    "--zookeeperTimeout={{elasticsearch.…}}", //TODO
     "--webUiPort={{elasticsearch.port}}",
+    "--frameworkFailoverTimeout={{elasticsearch.…}}", //TODO
+    "--frameworkName={{elasticsearch.…}}", //TODO
+
+    "--elasticsearchNodes={{elasticsearch.executor.instances}}",
+    "--elasticsearchClusterName={{elasticsearch.executor.…}}", //TODO
+    "--elasticsearchCpu={{elasticsearch.executor.cpu}}",
+    "--elasticsearchDisk={{elasticsearch.executor.disk}}",
     "--elasticsearchRam={{elasticsearch.executor.ram}}",
-    "--elasticsearchCpu={{elasticsearch.executor.cpu}}"
-    "--elasticsearchDisk={{elasticsearch.executor.disk}}"
+    "--elasticsearchSettingsLocation={{elasticsearch.executor.…}}", //TODO
+
+    "--executorForcePullImage={{elasticsearch.executor.…}}", //TODO
+    "--executorHealthDelay={{elasticsearch.executor.…}}", //TODO
+    "--executorImage={{elasticsearch.executor.…}}", //TODO
+    "--executorName={{elasticsearch.executor.…}}", //TODO
+    "--executorTimeout={{elasticsearch.executor.…}}", //TODO
+    "--executorHealthDelay. Will start new executor after this length of time.={{elasticsearch.executor.…}}" //TODO
   ],
   "env": {
     "JAVA_OPTS": "{{elasticsearch.scheduler.java-heap}}"
