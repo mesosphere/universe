@@ -16,24 +16,24 @@
     }
   ],
   "args": [
-    "--zookeeperUrl={{mesos.master}}",
-    "--zookeeperTimeout={{elasticsearch.zookeeper-timeout}}",
-    "--webUiPort={{elasticsearch.port}}",
-    "--frameworkFailoverTimeout={{elasticsearch.failover-timeout}}",
-    "--frameworkName={{elasticsearch.framework-name}}",
+    "--zookeeperUrl", "{{mesos.master}}",
+    "--zookeeperTimeout", "{{elasticsearch.zookeeper-timeout}}",
+    "--webUiPort", "{{elasticsearch.port}}",
+    "--frameworkFailoverTimeout", "{{elasticsearch.failover-timeout}}",
+    "--frameworkName", "{{elasticsearch.framework-name}}",
 
-    "--elasticsearchNodes={{elasticsearch.executor.instances}}",
-    "--elasticsearchClusterName={{elasticsearch.executor.cluster-name}}",
-    "--elasticsearchCpu={{elasticsearch.executor.cpu}}",
-    "--elasticsearchDisk={{elasticsearch.executor.disk}}",
-    "--elasticsearchRam={{elasticsearch.executor.ram}}",
-    "--elasticsearchSettingsLocation={{elasticsearch.executor.settings-location}}",
+    "--elasticsearchNodes", "{{elasticsearch.executor.instances}}",
+    "--elasticsearchClusterName", "{{elasticsearch.executor.cluster-name}}",
+    "--elasticsearchCpu", "{{elasticsearch.executor.cpu}}",
+    "--elasticsearchDisk", "{{elasticsearch.executor.disk}}",
+    "--elasticsearchRam", "{{elasticsearch.executor.ram}}",
+    "--elasticsearchSettingsLocation", "{{elasticsearch.executor.settings-location}}",
 
-    "--executorForcePullImage={{elasticsearch.force-pull-image}}",
-    "--executorHealthDelay={{elasticsearch.executor.health-delay}}",
-    "--executorImage={{elasticsearch.executor.image}}",
-    "--executorName={{elasticsearch.executor.name}}",
-    "--executorTimeout={{elasticsearch.executor.timeout}}"
+    "--executorForcePullImage", "{{elasticsearch.force-pull-image}}",
+    "--executorHealthDelay", "{{elasticsearch.executor.health-delay}}",
+    "--executorImage", "{{elasticsearch.executor.image}}",
+    "--executorName", "{{elasticsearch.executor.name}}",
+    "--executorTimeout", "{{elasticsearch.executor.timeout}}"
   ],
   "env": {
     "JAVA_OPTS": "{{elasticsearch.scheduler.java-heap}}"
