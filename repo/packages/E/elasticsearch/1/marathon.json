@@ -33,7 +33,7 @@
     "--executorHealthDelay={{elasticsearch.executor.health-delay}}",
     "--executorImage={{elasticsearch.executor.image}}",
     "--executorName={{elasticsearch.executor.name}}",
-    "--executorTimeout={{elasticsearch.executor.timeout}}",
+    "--executorTimeout={{elasticsearch.executor.timeout}}"
   ],
   "env": {
     "JAVA_OPTS": "{{elasticsearch.scheduler.java-heap}}"
