@@ -38,7 +38,9 @@
        },
        "cassandra-port": {
          "description": "Port for Cassandra (default = 9042)",
-         "type": "integer"
+         "type": "integer",
+         "default": 9042,
+         "minimum": 0
        },
        "cassandra-table": {
          "description": "Table to use for Cassandra (default = chronos)",
@@ -46,7 +48,9 @@
        },
        "cassandra-ttl": {
          "description": "TTL for records written to Cassandra (default = 31536000)",
-         "type": "integer"
+         "type": "integer",
+         "default": 31536000,
+         "minimum": 0
        },
        "cluster-name": {
          "description": "The name of the cluster where Chronos is run",
@@ -64,17 +68,29 @@
          "minimum": 0,
          "default": 1
       },
+      "decline-offer-duration": {
+        "description": "The duration (milliseconds) for which to decline offers by default. (Default: Use Mesos default of 5 seconds).",
+         "type": "integer",
+         "minimum": 0,
+         "default": 5000
+      },
       "disable-after-failures": {
         "description": "Disables a job after this many failures have occurred (default = 0)",
-        "type": "integer"
+        "type": "integer",
+        "default": 0,
+        "minimum": 0
       },
       "failover-timeout": {
         "description": "The failover timeout in seconds for Mesos (default = 604800)",
-        "type": "integer"
+        "type": "integer",
+        "default": 604800,
+        "minimum": 0
       },
       "failure-retry": {
         "description": "Number of ms between retries (default = 60000)",
-        "type": "integer"
+        "type": "integer",
+        "default": 60000,
+        "minimum": 0
       },
       "framework-name": {
         "description": "The framework name (default = chronos)",
@@ -91,7 +107,9 @@
       },
       "graphite-reporting-interval": {
         "description": "Graphite reporting interval (seconds) (default = 60)",
-        "type": "integer"
+        "type": "integer",
+        "default": 60,
+        "minimum": 0
       },
       "hostname": {
         "description": "The advertised hostname stored in ZooKeeper so another standby host can redirect to this elected leader (default = localhost)",
@@ -151,15 +169,27 @@
       },
       "mesos-task-cpu": {
         "description": "Number of CPUs to request from Mesos for each task (default = 0.1)",
-        "type": "string"
+        "type": "number",
+        "default": 0.1,
+        "minimum": 0.0
       },
       "mesos-task-disk": {
         "description": "Amount of disk capacity to request from Mesos for each task (MB) (default = 256.0)",
-        "type": "string"
+        "type": "number",
+        "default": 256.0,
+        "minimum": 0.0
       },
       "mesos-task-mem": {
         "description": "Amount of memory to request from Mesos for each task (MB) (default = 128.0)",
-        "type": "string"
+        "type": "number",
+        "default": 128.0,
+        "minimum": 0.0
+      },
+      "min-revive-offers-interval": {
+        "description": "Do not ask for all offers (also already seen ones) more often than this interval (ms). (default = 5000)",
+        "type": "integer",
+        "default": 5000,
+        "minimum": 0
       },
       "raven-dsn": {
         "description": "Raven DSN for connecting to a raven or sentry event service",
@@ -167,11 +197,20 @@
       },
       "reconciliation-interval": {
         "description": "Reconciliation interval in seconds (default = 600)",
-        "type": "string"
+        "type": "integer",
+        "default": 600,
+        "minimum": 0
+      },
+      "revive-offers-for-new-jobs": {
+        "description": "Whether to call reviveOffers for new or changed jobs. (default: do not use reviveOffers)",
+        "type": "boolean",
+        "default": false
       },
       "schedule-horizon": {
         "description": "The look-ahead time for scheduling tasks in seconds (default = 60)",
-        "type": "string"
+        "type": "integer",
+        "default": 60,
+        "minimum": 0
       },
       "slack-channel": {
         "description": "The channel to post to in Slack",
@@ -187,7 +226,9 @@
       },
       "task-epsilon": {
         "description": "The default epsilon value for tasks, in seconds (default = 60)",
-        "type": "string"
+        "type": "integer",
+        "default": 60,
+        "minimum": 0
       },
       "user": {
         "description": "The  user to run the processes under (default = root)",
@@ -208,9 +249,11 @@
       },
       "zk-timeout": {
         "description": "The timeout for ZooKeeper in milliseconds (default = 10000)",
-        "type": "string"
+        "type": "integer",
+        "default": 10000,
+        "minimum": 0
       }
-    }, 
+    },
     "required": [
       "cpus",
       "framework-name",
