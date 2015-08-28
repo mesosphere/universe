@@ -4,7 +4,6 @@
             "description": "Datadog specific configuration properties",
             "properties": {
                 "api_key": {
-                    "default": "",
                     "description": "Your Datadog API key.",
                     "type": "string"
                 },
