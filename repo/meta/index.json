@@ -60,19 +60,6 @@
       }
     },
     {
-      "currentVersion":"5.4.3",
-      "description":"Cloud-scale monitoring",
-      "framework":false,
-      "name":"datadog",
-      "tags":[
-        "datadog",
-        "monitoring"
-      ],
-      "versions":{
-        "5.4.3":"0"
-      }
-    },
-    {
       "currentVersion":"0.2.0",
       "description":"DCOS implementation of the Mesos-Elasticsearch framework",
       "framework":true,
@@ -100,20 +87,6 @@
       ],
       "versions":{
         "0.1.3":"0"
-      }
-    },
-    {
-      "currentVersion":"0.1.0",
-      "description":"Example DCOS application package",
-      "framework":false,
-      "name":"helloworld",
-      "tags":[
-        "mesosphere",
-        "example",
-        "subcommand"
-      ],
-      "versions":{
-        "0.1.0":"0"
       }
     },
     {
