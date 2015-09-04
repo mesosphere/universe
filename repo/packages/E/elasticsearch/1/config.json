@@ -27,9 +27,19 @@
           "description":"The time before Mesos kills a scheduler and tasks if it has not recovered (ms).",
           "type":"string"
         },
-        "zookeeper-timeout":{
+        "zookeeper-framework-url":{
+          "default":"DEFAULT",
+          "description":"Zookeeper urls for the framework in the format zk://IP:PORT,IP:PORT,...)",
+          "type":"string"
+        },
+        "zookeeper-framework-timeout":{
           "default":"20000",
-          "description":"The timeout for connecting to zookeeper (ms).",
+          "description":"The timeout for connecting to zookeeper for the framework (ms).",
+          "type":"string"
+        },
+        "zookeeper-mesos-timeout":{
+          "default":"20000",
+          "description":"The timeout for connecting to zookeeper for Mesos (ms).",
           "type":"string"
         },
         "port":{
@@ -75,7 +85,7 @@
               "type":"string"
             },
             "health-delay":{
-              "default":"3000",
+              "default":"1000",
               "description":"The delay between executor healthcheck requests (ms).",
               "type":"string"
             },
@@ -150,7 +160,9 @@
       "required":[
         "framework-name",
         "failover-timeout",
-        "zookeeper-timeout",
+        "zookeeper-framework-url",
+        "zookeeper-framework-timeout",
+        "zookeeper-mesos-timeout",
         "port",
         "force-pull-image",
         "executor",
