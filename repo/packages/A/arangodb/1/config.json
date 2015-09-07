@@ -164,6 +164,12 @@
           "description": "Flag, if each secondary must run on a node with a DBServer",
           "type": "boolean",
           "default": false
+        },
+
+        "docker-image": {
+          "description": "Docker image to run the framework executable.",
+          "type": "string",
+          "default": "arangodb/arangodb-mesos:latest"
         }
 
       },
@@ -189,7 +195,8 @@
         "failover-timeout",
         "mesos-authenticate",
         "secret",
-        "secondaries-with-dbservers"
+        "secondaries-with-dbservers",
+        "docker-image"
       ]
     }
   },

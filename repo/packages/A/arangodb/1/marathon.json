@@ -38,7 +38,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "arangodb/arangodb-mesos",
+      "image": "{{arangodb.docker-image}}",
       "forcePullImage": true,
       "network": "HOST"
     }
