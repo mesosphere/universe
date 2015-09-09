@@ -6,7 +6,7 @@
     <title>Universe by mesosphere</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -29,10 +29,10 @@
       </header>
       <section>
         <h1>
-<a id="universe-" class="anchor" href="#universe-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Universe <a href="https://travis-ci.org/mesosphere/universe"><img src="https://travis-ci.org/mesosphere/universe.svg?branch=master" alt="Build Status"></a>
+<a id="mesosphere-universe-" class="anchor" href="#mesosphere-universe-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mesosphere Universe <a href="https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&amp;guest=1"><img src="https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon" alt="Build Status"></a>
 </h1>
 
-<p>The Mesos package repository.</p>
+<p>The Mesosphere Universe package repository.</p>
 
 <h2>
 <a id="package-entries" class="anchor" href="#package-entries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Package entries</h2>
@@ -68,22 +68,23 @@ for each package version.</p>
 </h4>
 
 <div class="highlight highlight-json"><pre>{
-  <span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1.2.3<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>scm<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>https://github.com/bar/foo.git<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>maintainer<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>help@bar.io<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Does baz.<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>http://bar.io/foo<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>images<span class="pl-pds">"</span></span>: {
-    <span class="pl-s1"><span class="pl-pds">"</span>icon-small<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>http://some.org/foo/small.png<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>icon-medium<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>http://some.org/foo/medium.png<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>icon-large<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>http://some.org/foo/large.png<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>screenshots<span class="pl-pds">"</span></span>: [
-      <span class="pl-s1"><span class="pl-pds">"</span>http://some.org/foo/screen-1.png<span class="pl-pds">"</span></span>,
-      <span class="pl-s1"><span class="pl-pds">"</span>http://some.org/foo/screen-2.png<span class="pl-pds">"</span></span>
+  <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1.2.3<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>tags<span class="pl-pds">"</span></span>: [<span class="pl-s"><span class="pl-pds">"</span>mesosphere<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>framework<span class="pl-pds">"</span></span>],
+  <span class="pl-s"><span class="pl-pds">"</span>maintainer<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>help@bar.io<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Does baz.<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>scm<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>https://github.com/bar/foo.git<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://bar.io/foo<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>images<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>icon-small<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/small.png<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>icon-medium<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/medium.png<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>icon-large<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/large.png<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>screenshots<span class="pl-pds">"</span></span>: [
+      <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/screen-1.png<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/screen-2.png<span class="pl-pds">"</span></span>
     ]
   },
-  <span class="pl-s1"><span class="pl-pds">"</span>postInstallNotes<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Have fun foo-ing and baz-ing!<span class="pl-pds">"</span></span>
+  <span class="pl-s"><span class="pl-pds">"</span>postInstallNotes<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Have fun foo-ing and baz-ing!<span class="pl-pds">"</span></span>
 }</pre></div>
 
 <p><em>Sample <code>package.json</code>.</em></p>
@@ -93,27 +94,56 @@ for each package version.</p>
 <ul>
 <li>name</li>
 <li>version</li>
+<li>tags</li>
 <li>maintainer</li>
 <li>description</li>
 </ul>
+
+<p>While <code>images</code> is an optional field, it is highly recommended you include icons
+and screenshots in your package and update the path definitions accordingly.
+Specifications are as follows:</p>
+
+<ul>
+<li>
+<code>icon-small</code>: 48px (w) x 48px (h)</li>
+<li>
+<code>icon-medium</code>: 96px (w) x 96px (h)</li>
+<li>
+<code>icon-large</code>: 256px (w) x 256px (h)</li>
+<li>
+<code>screenshots[...]</code>: 1200px (w) x 675px (h)</li>
+</ul>
+
+<p><strong>NOTE:</strong> To ensure your service icons look beautiful on retina-ready displays,
+please supply 2x versions of all icons. No changes are needed to
+<code>package.json</code> - simply supply an additional icon file with the text <code>@2x</code> in
+the name before the file extension.
+For example, the icon <code>icon-cassandra-small.png</code> would have a retina-ready
+alternate image named <code>icon-cassandra-small@2x.png</code>.</p>
 
 <h4>
 <a id="configjson" class="anchor" href="#configjson" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>config.json</code>
 </h4>
 
 <div class="highlight highlight-json"><pre>{
-  <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>object<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>properties<span class="pl-pds">"</span></span>: {
-    <span class="pl-s1"><span class="pl-pds">"</span>foo/baz<span class="pl-pds">"</span></span>: {
-      <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>integer<span class="pl-pds">"</span></span>,
-      <span class="pl-s1"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>How many times to do baz.<span class="pl-pds">"</span></span>,
-      <span class="pl-s1"><span class="pl-pds">"</span>minimum<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
-      <span class="pl-s1"><span class="pl-pds">"</span>maximum<span class="pl-pds">"</span></span>: <span class="pl-c1">16</span>,
-      <span class="pl-s1"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>: <span class="pl-c1">false</span>,
-      <span class="pl-s1"><span class="pl-pds">"</span>default<span class="pl-pds">"</span></span>: <span class="pl-c1">4</span>
+  <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>object<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>properties<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>: {
+      <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>object<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>properties<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>baz<span class="pl-pds">"</span></span>: {
+          <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>integer<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>How many times to do baz.<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>minimum<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
+          <span class="pl-s"><span class="pl-pds">"</span>maximum<span class="pl-pds">"</span></span>: <span class="pl-c1">16</span>,
+          <span class="pl-s"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>: <span class="pl-c1">false</span>,
+          <span class="pl-s"><span class="pl-pds">"</span>default<span class="pl-pds">"</span></span>: <span class="pl-c1">4</span>
+        }
+      },
+      <span class="pl-s"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>: [<span class="pl-s"><span class="pl-pds">"</span>baz<span class="pl-pds">"</span></span>]
     }
   },
-  <span class="pl-s1"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>: [<span class="pl-s1"><span class="pl-pds">"</span>foo/baz<span class="pl-pds">"</span></span>]
+  <span class="pl-s"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>: [<span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>]
 }</pre></div>
 
 <p><em>Sample <code>config.json</code>.</em></p>
@@ -125,26 +155,26 @@ for each package version.</p>
 <p>This file describes how to run the package as a
 <a href="http://github.com/mesosphere/marathon">Marathon</a> app.</p>
 
-<p>User-supplied metadata (as described in <code>package.json</code>) can be injected
+<p>User-supplied metadata (as described in <code>config.json</code>) can be injected
 using <a href="http://mustache.github.io/">moustache template</a> syntax.</p>
 
 <div class="highlight highlight-json"><pre>{
-  <span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>cpus<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1.0<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>mem<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1024<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>instances<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>,
-  <span class="pl-s1"><span class="pl-pds">"</span>args<span class="pl-pds">"</span></span>: [<span class="pl-s1"><span class="pl-pds">"</span>{{{foo.baz}}}<span class="pl-pds">"</span></span>],
-  <span class="pl-s1"><span class="pl-pds">"</span>container<span class="pl-pds">"</span></span>: {
-    <span class="pl-s1"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>DOCKER<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>docker<span class="pl-pds">"</span></span>: {
-      <span class="pl-s1"><span class="pl-pds">"</span>image<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>bar/foo<span class="pl-pds">"</span></span>,
-      <span class="pl-s1"><span class="pl-pds">"</span>network<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>BRIDGE<span class="pl-pds">"</span></span>,
-      <span class="pl-s1"><span class="pl-pds">"</span>portMappings<span class="pl-pds">"</span></span>: [
+  <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>cpus<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1.0<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>mem<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1024<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>instances<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>args<span class="pl-pds">"</span></span>: [<span class="pl-s"><span class="pl-pds">"</span>{{{foo.baz}}}<span class="pl-pds">"</span></span>],
+  <span class="pl-s"><span class="pl-pds">"</span>container<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>DOCKER<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>docker<span class="pl-pds">"</span></span>: {
+      <span class="pl-s"><span class="pl-pds">"</span>image<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>bar/foo<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>network<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>BRIDGE<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>portMappings<span class="pl-pds">"</span></span>: [
         {
-          <span class="pl-s1"><span class="pl-pds">"</span>containerPort<span class="pl-pds">"</span></span>: <span class="pl-c1">8080</span>,
-          <span class="pl-s1"><span class="pl-pds">"</span>hostPort<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
-          <span class="pl-s1"><span class="pl-pds">"</span>servicePort<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
-          <span class="pl-s1"><span class="pl-pds">"</span>protocol<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>tcp<span class="pl-pds">"</span></span>
+          <span class="pl-s"><span class="pl-pds">"</span>containerPort<span class="pl-pds">"</span></span>: <span class="pl-c1">8080</span>,
+          <span class="pl-s"><span class="pl-pds">"</span>hostPort<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
+          <span class="pl-s"><span class="pl-pds">"</span>servicePort<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>,
+          <span class="pl-s"><span class="pl-pds">"</span>protocol<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>tcp<span class="pl-pds">"</span></span>
         }
       ]
     }
@@ -162,13 +192,39 @@ for more detailed instruction on app definitions.</p>
 </h4>
 
 <p>This file is <strong>optional</strong>. Describes how to install the package's CLI.
-Currently the only supported format is a Python egg.</p>
+Currently the only supported format is a Pip requirements file where each
+element in the array is a line in the requirements file.</p>
 
 <div class="highlight highlight-json"><pre>{
-  <span class="pl-s1"><span class="pl-pds">"</span>python<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>https://pypi.python.org/packages/source/f/foo/foo-1.2.3.tar.gz<span class="pl-pds">"</span></span>
+  <span class="pl-s"><span class="pl-pds">"</span>pip<span class="pl-pds">"</span></span>: [
+    <span class="pl-s"><span class="pl-pds">"</span>https://pypi.python.org/packages/source/f/foo/foo-1.2.3.tar.gz<span class="pl-pds">"</span></span>
+  ]
 }</pre></div>
 
 <p><em>Sample <code>command.json</code>.</em></p>
+
+<p>See the <a href="repo/meta/schema/command-schema.json">Command Schema</a> for a detailed description of
+the schema.</p>
+
+<h3>
+<a id="versioning" class="anchor" href="#versioning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Versioning</h3>
+
+<p>The registry specification is versioned separately in the
+file <code>/repo/meta/version.json</code>.</p>
+
+<div class="highlight highlight-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>0.1.0-alpha<span class="pl-pds">"</span></span>
+}</pre></div>
+
+<p><em>Sample <code>repo/meta/version.json</code>.</em></p>
+
+<p>This version is updated with any change to the required file content
+(typically validated using JSON schema) or expected file organization in the
+<code>repo</code> directory.</p>
+
+<p><em>NOTE: The current version is <code>0.1.0-alpha</code> to facilitate rapid
+iteration.  This version will be fixed and incremented as
+described above as programs that consume the format reach maturity.</em></p>
 
 <h3>
 <a id="validation" class="anchor" href="#validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Validation</h3>
