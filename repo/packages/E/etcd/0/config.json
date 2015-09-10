@@ -8,11 +8,22 @@
           "description": "Docker image used to launch the etcd framework on DCOS.",
           "type": "string"
         },
+        "dns-suffix": {
+          "default": ".marathon.mesos",
+          "description": "This value is appended to the framework-name value to form the canonical DNS name for the etcd components.",
+          "type": "string",
+          "pattern": "^(?:\\.[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)+$"
+        },
         "framework-name": {
           "default": "etcd",
           "description": "The framework name to register with Mesos.",
           "type": "string",
           "pattern": "^/?(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$"
+        },
+        "admin-port": {
+          "default": "$PORT0",
+          "description": "Admin port that the etcd framework listens on.",
+          "type": "string"
         },
         "cpus": {
           "default": 0.2,
@@ -81,7 +92,9 @@
       },
       "required": [
         "docker-image",
+        "dns-suffix",
         "framework-name",
+        "admin-port",
         "cpus",
         "mem",
         "reseed-timeout",

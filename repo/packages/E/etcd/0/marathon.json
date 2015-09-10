@@ -23,7 +23,8 @@
       "RESEED_TIMEOUT":"{{etcd.reseed-timeout}}",
       "DISK_LIMIT":"{{etcd.disk-limit}}",
       "CPU_LIMIT":"{{etcd.cpu-limit}}",
-      "MEM_LIMIT":"{{etcd.mem-limit}}"
+      "MEM_LIMIT":"{{etcd.mem-limit}}",
+      "WEBURI": "http://{{etcd.framework-name}}{{etcd.dns-suffix}}:{{etcd.admin-port}}"
     },
     "healthChecks": [{
       "protocol": "HTTP",
