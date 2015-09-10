@@ -74,8 +74,8 @@
           "minimum": 0
         },
         "zk": {
-          "default": "zk://master.mesos:2181",
-          "description": "The URL of Zookeeper to be used to persist etcd framework data. The format is a comma-delimited list of hosts like zk://host1:port,host2:port, WITHOUT the trailing slash.",
+          "default": "zk://master.mesos:2181/etcd",
+          "description": "The URL of Zookeeper to be used to persist etcd framework data. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/zk, including the trailing path.",
           "type": "string"
         }
       },
