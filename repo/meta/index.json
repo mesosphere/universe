@@ -27,6 +27,20 @@
       }
     },
     {
+      "currentVersion":"v0.0.1",
+      "description":"Manage a cluster of etcd.",
+      "framework":true,
+      "name":"etcd",
+      "tags":[
+        "mesosphere",
+        "framework",
+        "etcd"
+      ],
+      "versions":{
+        "v0.0.1":"0"
+      }
+    },
+    {
       "currentVersion":"0.1.1",
       "description":"Hadoop Distributed File System (HDFS), Highly Available",
       "framework":true,

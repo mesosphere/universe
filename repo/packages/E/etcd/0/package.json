@@ -1,0 +1,23 @@
+{
+  "name": "etcd",
+  "version": "v0.0.1",
+  "scm": "https://github.com/mesosphere/etcd-mesos",
+  "maintainer": "support@mesosphere.io",
+  "description": "Manage a cluster of etcd.",
+  "framework": true,
+  "images": {
+    "icon-small": "https://github.com/coreos/etcd/blob/master/logos/etcd-glyph-color.png",
+    "icon-medium": "https://github.com/coreos/etcd/blob/master/logos/etcd-glyph-color.png",
+    "icon-large": "https://github.com/coreos/etcd/blob/master/logos/etcd-glyph-color.png"
+  },
+  "tags": ["mesosphere", "framework", "etcd"],
+  "preInstallNotes": "In order for etcd to start successfully all resources must be available in the cluster including ports, CPU shares and RAM.\nWe recommend a minimum of 5 nodes with 1 CPU share and 128 MB of RAM available for use by the etcd service.\nNote that the service is alpha and there may be bugs, including possible data loss, incomplete features, incorrect documentation or other discrepancies.",
+  "postInstallNotes": "etcd DCOS Service has been successfully installed!\n\n\tDocumentation: https://github.com/mesosphere/etcd-mesos\n\tIssues: https://github.com/mesosphere/etcd-mesos/issues",
+  "postUninstallNotes": "The etcd DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at http://docs.mesosphere.com/services/etcd/#uninstall to clean up any persisted state.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/mesosphere/etcd-mesos/blob/master/LICENSE"
+    }
+  ]
+}

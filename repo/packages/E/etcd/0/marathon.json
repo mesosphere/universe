@@ -1,0 +1,28 @@
+{
+    "id": "{{etcd.framework-name}}",
+    "container": {
+        "docker": {
+            "image": "{{etcd.docker-image}}",
+            "forcePullImage": true
+        },
+        "type": "DOCKER",
+        "volumes": []
+    },
+    "args": [],
+    "cpus": {{etcd.cpus}},
+    "mem": {{etcd.mem}},
+    "instances": 1,
+    "ports": [0, 0, 0],
+    "env": {
+      "CLUSTER_NAME":"{{etcd.cluster-name}}",
+      "CLUSTER_SIZE":"{{etcd.cluster-size}}",
+      "MESOS_MASTER":"{{mesos.master}}",
+      "ZK_PERSIST":"{{etcd.zk}}/{{etcd.framework-name}}",
+      "VERBOSITY":"{{etcd.logging-verbosity}}",
+      "AUTO_RESEED":"{{etcd.auto-reseed}}",
+      "RESEED_TIMEOUT":"{{etcd.reseed-timeout}}",
+      "DISK_LIMIT":"{{etcd.disk-limit}}",
+      "CPU_LIMIT":"{{etcd.cpu-limit}}",
+      "MEM_LIMIT":"{{etcd.mem-limit}}"
+    }
+}
