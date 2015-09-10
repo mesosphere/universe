@@ -24,5 +24,13 @@
       "DISK_LIMIT":"{{etcd.disk-limit}}",
       "CPU_LIMIT":"{{etcd.cpu-limit}}",
       "MEM_LIMIT":"{{etcd.mem-limit}}"
-    }
+    },
+    "healthChecks": [{
+      "protocol": "HTTP",
+      "path": "/stats",
+      "portIndex": 0,
+      "gracePeriodSeconds": 60,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 2
+    }]
 }
