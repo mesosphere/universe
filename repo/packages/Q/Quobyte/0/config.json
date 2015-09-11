@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "quobyte": {
+      "type": "object",
+      "description": "Quobyte Framework specific configuration properties",
+      "properties": {
+        "zk": {
+          "type": "string",
+          "description": "Name or IP address of the zookeeper server.",
+          "default": "$ZOOKEEPER"
+          },
+        "master": {
+          "type": "string",
+          "description": "Name, IP address or Zookeeper URL of the Mesos master server.",
+          "default": "$MESOS_MASTER"
+          },
+        "port": {
+          "type": "string",
+          "description": "Port to which the framework's HTTP server is bound.",
+          "default": "$PORT"
+          },
+        "docker_image": {
+          "type": "string",
+          "description": "Docker image to be used for the Quobyte services.",
+          "default": "quobyte-server:latest"
+          },
+        "mesos-dns_domain": {
+          "type": "string",
+          "description": "The Mesos DNS domain featuring SRV records in the Mesos cluster.",
+          "default": "$MESOS_DNS_DOMAIN"
+          }
+      },
+      "required": [
+        "zookeeper",
+        "mesos_master",
+        "http_port",
+        "docker_image",
+        "mesos-dns_domain"
+      ]
+    }
+  },
+  "required": [
+    "marathon",
+    "mesos",
+    "quobyte"
+  ]
+}

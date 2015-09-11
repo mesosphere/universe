@@ -154,6 +154,26 @@
       }
     },
     {
+      "currentVersion":"1.2",
+      "description":"Quobyte is a software defined distributed file system, running on commodity hardware.",
+      "framework":false,
+      "name":"quobyte",
+      "tags":[
+        "mesosphere",
+        "framework",
+        "quobyte",
+        "storage",
+        "filesystem",
+        "scalability",
+        "mesos",
+        "performance",
+        "bigdata"
+      ],
+      "versions":{
+        "1.2":"0"
+      }
+    },
+    {
       "currentVersion":"0.1.1",
       "description":"A distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability.",
       "framework":true,
