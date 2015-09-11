@@ -1,0 +1,31 @@
+{
+  "name": "quobyte",
+  "version": "1.2",
+  "tags": [
+    "mesosphere",
+    "framework",
+    "quobyte",
+    "storage",
+    "filesystem",
+    "scalability",
+    "mesos",
+    "performance",
+    "bigdata"
+  ],
+  "maintainer": "silvan@quobyte.com",
+  "description": "Quobyte is a software defined distributed file system, running on commodity hardware.",
+  "scm": "https://github.com/bar/foo.git",
+  "website": "http://www.quobyte.com/",
+  "images": {
+    "icon-small": "http://some.org/foo/small.png",
+    "icon-medium": "http://some.org/foo/medium.png",
+    "icon-large": "http://some.org/foo/large.png",
+    "screenshots": [
+      "http://some.org/foo/screen-1.png",
+      "http://some.org/foo/screen-2.png"
+    ]
+  },
+  "preInstallNotes": "Welcome to Quobyte.",
+  "postInstallNotes": "Quobyte has been successfully installed!\n\n\tDocumentation: https://support.quobyte.com/",
+  "postUninstallNotes": "Quobyte has been uninstalled and will no longer run."
+}
