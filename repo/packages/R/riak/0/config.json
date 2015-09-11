@@ -77,6 +77,11 @@
                 "description": "Memory requirements",
                 "default": 2048
             },
+            "super-chroot":{
+                "type": "string",
+                "description": "When this is false, use the default chroot.",
+                "default": "true"
+            },
             "healthcheck-grace-period-seconds": {
                 "type": "number",
                 "description": "Memory requirements",
