@@ -59,11 +59,11 @@
 {{#cassandra.resource.heap-mb}}
 ,"CASSANDRA_RESOURCE_HEAP_MB": "{{cassandra.resource.heap-mb}}"
 {{/cassandra.resource.heap-mb}}
-{{#framework.authentication.principal}}
+{{#cassandra.framework.authentication.principal}}
     ,"DEFAULT_PRINCIPAL": "{{cassandra.framework.authentication.principal}}"
-{{/framework.authentication.principal}}
-{{#framework.authentication.secret}}
+{{/cassandra.framework.authentication.principal}}
+{{#cassandra.framework.authentication.secret}}
     ,"DEFAULT_SECRET": "{{cassandra.framework.authentication.secret}}"
-{{/framework.authentication.secret}}
+{{/cassandra.framework.authentication.secret}}
   }
 }
