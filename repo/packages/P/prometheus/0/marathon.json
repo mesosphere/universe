@@ -1,0 +1,48 @@
+{
+  "id": "prometheus",
+  "cpus": 1,
+  "mem": 2048,
+  "ports": [9090],
+  "requirePorts": true,
+  "instances": 1,
+  "constraints": [["hostname", "UNIQUE"]],
+  "env": {
+    "PAGERDUTY_KEY": "{{ prometheus.pagerduty-key }}"
+  },
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "mesosphere/prometheus-dcos",
+      "network": "BRIDGE",
+      "portMappings": [{
+        "containerPort": 9090,
+        "hostPort": 0,
+        "servicePort": 9090,
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": 9093,
+        "hostPort": 0,
+        "servicePort": 9093,
+        "protocol": "tcp"
+      }],
+      "forcePullImage": true
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/",
+      "portIndex": 0,
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 30,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 2,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0.5,
+    "maximumOverCapacity": 0.0
+  }
+}

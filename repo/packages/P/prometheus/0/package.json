@@ -1,0 +1,22 @@
+{
+  "name": "prometheus",
+  "version": "0.15.1-0.1",
+  "scm": "https://github.com/prometheus/prometheus",
+  "maintainer": "support@mesosphere.io",
+  "description": "The Prometheus monitoring system and time series database.",
+  "framework": true,
+  "images": {
+    "icon-small": "https://downloads.mesosphere.io/prometheus/artifacts/images/prometheus-48x48.png",
+    "icon-medium": "https://downloads.mesosphere.io/prometheus/artifacts/images/prometheus-96x96.png",
+    "icon-large": "https://downloads.mesosphere.io/prometheus/artifacts/images/prometheus-256x256.png"
+  },
+  "tags": ["mesosphere", "monitoring", "time-series"],
+  "postInstallNotes": "Prometheus DCOS Service has been successfully installed!",
+  "postUninstallNotes": "Prometheus DCOS Service has been uninstalled and will no longer run.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/prometheus/prometheus/blob/master/LICENSE"
+    }
+  ]
+}
