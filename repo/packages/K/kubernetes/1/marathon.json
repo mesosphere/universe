@@ -1,0 +1,95 @@
+{
+  "id": "{{kubernetes.framework-name}}",
+  "cpus": {{kubernetes.cpus}},
+  "mem": {{kubernetes.mem}},
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{kubernetes.docker-image}}",
+      "forcePullImage": true,
+      "network": "HOST"
+    }
+  },
+  "env":{
+    "DEBUG": "{{kubernetes.debug}}",
+    "GLOG_v": "{{kubernetes.logging-verbosity}}",
+    "DEFAULT_DNS_NAME": "{{kubernetes.framework-name}}{{kubernetes.dns-suffix}}",
+    "FRAMEWORK_NAME": "{{kubernetes.framework-name}}",
+    "FRAMEWORK_WEBURI": "http://{{kubernetes.framework-name}}{{kubernetes.dns-suffix}}:{{kubernetes.apiserver-port}}",
+
+    {{#mesos.master}}
+    "K8SM_MESOS_MASTER": "{{mesos.master}}",
+    {{/mesos.master}}
+
+    {{#kubernetes.mesos-role}}
+    "K8SM_MESOS_ROLE": "{{kubernetes.mesos-role}}",
+    {{/kubernetes.mesos-role}}
+
+    {{#kubernetes.enable-etcd-server}}
+    "ENABLE_ETCD_SERVER": "{{kubernetes.enable-etcd-server}}",
+    {{/kubernetes.enable-etcd-server}}
+
+    {{#kubernetes.etcd-server-list}}
+    "ETCD_SERVER_LIST": "{{kubernetes.etcd-server-list}}",
+    {{/kubernetes.etcd-server-list}}
+
+    {{#kubernetes.enable-dns}}
+    "ENABLE_DNS": "{{kubernetes.enable-dns}}",
+    {{/kubernetes.enable-dns}}
+
+    {{#kubernetes.kube-dns-domain}}
+    "DNS_DOMAIN": "{{kubernetes.kube-dns-domain}}",
+    {{/kubernetes.kube-dns-domain}}
+
+    {{#kubernetes.kube-dns-service-ip}}
+    "DNS_SERVER_IP": "{{kubernetes.kube-dns-service-ip}}",
+    {{/kubernetes.kube-dns-service-ip}}
+
+    {{#kubernetes.kube-dns-replicas}}
+    "DNS_REPLICAS": "{{kubernetes.kube-dns-replicas}}",
+    {{/kubernetes.kube-dns-replicas}}
+
+    {{#kubernetes.kube-dns-nameservers}}
+    "DNS_NAMESERVERS": "{{kubernetes.kube-dns-nameservers}}",
+    {{/kubernetes.kube-dns-nameservers}}
+
+    {{#kubernetes.service-cluster-ip-range}}
+    "SERVICE_CLUSTER_IP_RANGE": "{{kubernetes.service-cluster-ip-range}}",
+    {{/kubernetes.service-cluster-ip-range}}
+
+    {{#kubernetes.scheduler-service-ip}}
+    "SCHEDULER_SERVICE_ADDRESS": "{{kubernetes.scheduler-service-ip}}",
+    {{/kubernetes.scheduler-service-ip}}
+
+    "K8SM_FAILOVER_TIMEOUT": "{{kubernetes.failover-timeout}}",
+    "APISERVER_PORT": "{{kubernetes.apiserver-port}}",
+    "APISERVER_SECURE_PORT": "{{kubernetes.apiserver-secure-port}}",
+    "SCHEDULER_PORT": "{{kubernetes.scheduler-port}}",
+    "SCHEDULER_DRIVER_PORT": "{{kubernetes.scheduler-driver-port}}",
+    "SCHEDULER_CONTAIN_POD_RESOURCES": "false",
+    "SCHEDULER_ACCOUNT_FOR_POD_RESOURCES": "false",
+    "CONTROLLER_MANAGER_PORT": "{{kubernetes.controller-manager-port}}",
+    "DEFAULT_CONTAINER_CPU_LIMIT": "{{kubernetes.default-container-cpu-limit}}",
+    "DEFAULT_CONTAINER_MEM_LIMIT": "{{kubernetes.default-container-mem-limit}}",
+    "SCHEDULER_MESOS_EXECUTOR_CPUS": "{{kubernetes.initial-executor-cpus}}",
+    "SCHEDULER_MESOS_EXECUTOR_MEM": "{{kubernetes.initial-executor-mem}}"
+  },
+  "ports": [{{kubernetes.apiserver-port}}, {{kubernetes.apiserver-secure-port}}, {{kubernetes.scheduler-port}}, {{kubernetes.controller-manager-port}}, {{kubernetes.scheduler-driver-port}}],
+  "requirePorts": true,
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "instances": {{kubernetes.instances}},
+  "uris": {{kubernetes.uris}},
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/healthz",
+      "portIndex": 0,
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 2
+    }
+  ]
+}

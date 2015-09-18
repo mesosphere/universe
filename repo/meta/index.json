@@ -106,7 +106,7 @@
       }
     },
     {
-      "currentVersion":"k8s-0.14.2-k8sm-0.5-dcos-20150603T1136520000",
+      "currentVersion":"v1.0.5-v0.6.4-alpha",
       "description":"Manage a cluster of Linux containers as a single system to accelerate Dev and simplify Ops.",
       "framework":true,
       "name":"kubernetes",
@@ -118,7 +118,8 @@
         "paas"
       ],
       "versions":{
-        "k8s-0.14.2-k8sm-0.5-dcos-20150603T1136520000":"0"
+        "k8s-0.14.2-k8sm-0.5-dcos-20150603T1136520000":"0",
+        "v1.0.5-v0.6.4-alpha":"1"
       }
     },
     {
