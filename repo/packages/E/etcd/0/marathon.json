@@ -28,10 +28,10 @@
     },
     "healthChecks": [{
       "protocol": "HTTP",
-      "path": "/stats",
+      "path": "/healthz",
       "portIndex": 0,
       "gracePeriodSeconds": 60,
       "intervalSeconds": 30,
-      "maxConsecutiveFailures": 2
+      "maxConsecutiveFailures": 1000000000
     }]
 }
