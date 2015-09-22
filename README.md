@@ -18,7 +18,7 @@ dcos config set package.sources '["https://github.com/mesosphere/universe/archiv
 
 The default branch for this repository is `version-1.x`, which reflects the current schema for the Universe. In the future, if the format changes significantly, there will be additional branches.
 
-The `cli-tests` branch is used for integration testing by the [DCOS CLI](https://docs.mesosphere.com/install/cli/) and provides a fixed and well known set of packages to write tests against.
+The `cli-tests` branch is used for integration testing by the [DCOS CLI](https://github.com/mesosphere/dcos-cli) and provides a fixed and well known set of packages to write tests against.
 
 
 ## Package entries
