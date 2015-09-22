@@ -11,8 +11,3 @@ echo "Building index...";
 $SCRIPTS_DIR/"build-index.py" $UNIVERSE_DIR;
 echo "OK";
 
-echo "Compressing index...";
-gzip -c -n "$META_DIR/$INDEX_FILE_NAME" > "$META_DIR/$INDEX_FILE_NAME.gz";
-
-echo "OK";
-
