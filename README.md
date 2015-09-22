@@ -216,7 +216,6 @@ The schema definitions live in `/repo/meta/schema`.
 ├── repo
 │   ├── meta
 │   │   ├── index.json
-│   │   ├── index.json.gz
 │   │   ├── schema
 │   │   │   ├── command-schema.json
 │   │   │   ├── config-schema.json
