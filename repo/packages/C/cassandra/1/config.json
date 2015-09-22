@@ -73,14 +73,14 @@
                 }
               },
               "required": [
-                "instances",
-                "cpus",
-                "mem",
                 "enabled"
               ]
             }
           },
           "required": [
+            "instances",
+            "cpus",
+            "mem",
             "failover-timeout-seconds",
             "role",
             "authentication"
