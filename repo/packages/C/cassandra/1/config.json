@@ -31,6 +31,23 @@
               "minimum": 0,
               "default": 604800
             },
+            "cpus": {
+              "default": 0.5,
+              "description": "CPU shares to allocate to each Cassandra framework instance.",
+              "type": "number"
+            },
+            "mem": {
+              "default": 512.0,
+              "description": "Memory (MB) to allocate to each Cassandra framework instance.",
+              "minimum": 512.0,
+              "type": "number"
+            },
+            "instances": {
+              "default": 1,
+              "description": "Number of Cassandra framework instances to run.",
+              "minimum": 0,
+              "type": "integer"
+            },            
             "role": {
               "description": "Mesos role for this framework.",
               "type": "string",
@@ -61,6 +78,9 @@
             }
           },
           "required": [
+            "instances",
+            "cpus",
+            "mem",
             "failover-timeout-seconds",
             "role",
             "authentication"
