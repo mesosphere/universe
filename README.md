@@ -14,6 +14,13 @@ If you would like to add this to your CLI manually:
 dcos config set package.sources '["https://github.com/mesosphere/universe/archive/version-1.x.zip"]'
 ```
 
+## Branches
+
+The default branch for this repository is `version-1.x`, which reflects the current schema for the Universe. In the future, if the format changes significantly, there will be additional branches.
+
+The `cli-tests` branch is used for integration testing by the DCOS-CLI and provides a fixed and well known set of packages to write tests against.
+
+
 ## Package entries
 
 ### Organization
