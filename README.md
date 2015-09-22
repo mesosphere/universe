@@ -1,6 +1,18 @@
 # Mesosphere Universe [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)
 
-The Mesosphere Universe package repository.
+The DCOS package repository for packages that have been certified by Mesosphere.
+
+Experimental packages can be found in the [Multiverse repository](https://github.com/mesosphere/multiverse).
+
+## Installation
+
+The [DCOS CLI](https://docs.mesosphere.com/install/cli/) comes pre-configured to use the Universe repository.
+
+If you would like to add this to your CLI manually:
+
+```sh
+dcos config set package.sources '["https://github.com/mesosphere/universe/archive/version-1.x.zip"]'
+```
 
 ## Package entries
 
