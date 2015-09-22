@@ -1,9 +1,9 @@
 {
   "id": "/cassandra/{{cassandra.cluster-name}}",
   "cmd": "$(pwd)/jre*/bin/java $JAVA_OPTS -classpath cassandra-mesos-framework.jar io.mesosphere.mesos.frameworks.cassandra.framework.Main",
-  "instances": 1,
-  "cpus": 0.5,
-  "mem": 512,
+  "instances": {{cassandra.framework.instances}},
+  "cpus": {{cassandra.framework.cpus}},
+  "mem": {{cassandra.framework.mem}},
   "ports": [
     0
   ],
