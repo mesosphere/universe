@@ -14,7 +14,7 @@
     "instances": 1,
     "ports": [0, 0, 0],
     "env": {
-      "CLUSTER_NAME":"{{etcd.cluster-name}}",
+      "FRAMEWORK_NAME":"{{etcd.framework-name}}",
       "CLUSTER_SIZE":"{{etcd.cluster-size}}",
       "MESOS_MASTER":"{{mesos.master}}",
       "ZK_PERSIST":"{{etcd.zk}}",
@@ -24,7 +24,7 @@
       "DISK_LIMIT":"{{etcd.disk-limit}}",
       "CPU_LIMIT":"{{etcd.cpu-limit}}",
       "MEM_LIMIT":"{{etcd.mem-limit}}",
-      "WEBURI": "http://{{etcd.framework-name}}{{etcd.dns-suffix}}:{{etcd.admin-port}}"
+      "WEBURI": "http://{{etcd.framework-name}}{{etcd.dns-suffix}}:{{etcd.admin-port}}/stats"
     },
     "healthChecks": [{
       "protocol": "HTTP",

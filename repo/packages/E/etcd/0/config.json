@@ -72,12 +72,6 @@
           "minimum": 1,
           "type": "integer"
         },
-        "cluster-name": {
-          "default": "1",
-          "description": "The etcd cluster name.",
-          "type": "string",
-          "pattern": "^[a-bA-Z0-9-_.]+$"
-        },
         "logging-verbosity": {
           "default": 1,
           "description": "Increase this value to obtain more detailed log messages.",
@@ -103,7 +97,6 @@
         "mem-limit",
         "disk-limit",
         "cluster-size",
-        "cluster-name",
         "logging-verbosity",
         "zk"
       ],
