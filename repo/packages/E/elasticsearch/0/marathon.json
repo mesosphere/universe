@@ -1,6 +1,6 @@
 {
   "id": "{{elasticsearch.framework-name}}",
-  "cpus": {{elasticsearch.scheduler.cpu}},
+  "cpus": 0.1,
   "mem": {{elasticsearch.scheduler.ram}},
   "ports": [0],
   "instances": {{elasticsearch.scheduler.instances}},
@@ -15,9 +15,9 @@
       "timeoutSeconds": 5
     }
   ],
-  "args": ["-zk", "{{mesos.master}}", "-n", "{{elasticsearch.executor.instances}}", "-m", "{{elasticsearch.port}}", "-ram", "{{elasticsearch.executor.ram}}"],
+  "args": ["--zookeeperMesosUrl", "{{mesos.master}}"],
   "env": {
-    "JAVA_OPTS": "{{elasticsearch.scheduler.java-heap}}"
+    "JAVA_OPTS": "-Xms128m -Xmx256m"
   },
   "container": {
     "type": "DOCKER",
