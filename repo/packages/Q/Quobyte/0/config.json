@@ -32,17 +32,15 @@
           }
       },
       "required": [
-        "zookeeper",
-        "mesos_master",
-        "http_port",
+        "zk",
+        "master",
+        "port",
         "docker_image",
         "mesos-dns_domain"
       ]
     }
   },
   "required": [
-    "marathon",
-    "mesos",
     "quobyte"
   ]
 }
