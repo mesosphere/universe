@@ -1,5 +1,5 @@
 {
-  "id": "Quobyte Framework",
+  "id": "quobyte",
   "cpus": "1.0",
   "mem": "1024",
   "instances": "1",
@@ -16,7 +16,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "quobyte/quobyte-mesos:latest",
+      "image": "quobyte/quobyte-mesos",
       "network": "BRIDGE",
       "portMappings": [
         {
