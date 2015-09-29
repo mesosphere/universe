@@ -22,7 +22,7 @@
         {
           "containerPort": {{quobyte.port}},
           "hostPort": {{quobyte.port}},
-          "servicePort": 0,
+          "servicePort": {{quobyte.port}},
           "protocol": "tcp"
         }
       ]
