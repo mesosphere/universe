@@ -42,7 +42,7 @@
                         "jre": {
                             "type": "string",
                             "description": "JRE distro URL",
-                            "default": "https://d1vubr0evspla.cloudfront.net/jre-7-openjdk.zip"
+                            "default": "https://d1vubr0evspla.cloudfront.net/jre-7u79-openjdk.tgz"
                         },
                         "kafka": {
                             "type": "string",
@@ -76,7 +76,7 @@
                 "jre": {
                     "type": "string",
                     "description": "See --jre option",
-                    "default": "jre-7-openjdk.zip"
+                    "default": "jre-7u79-openjdk.tgz"
                 },
 
                 "framework-name": {
