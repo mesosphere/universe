@@ -18,7 +18,7 @@
   "args": [
     "--zookeeperMesosUrl", "{{mesos.master}}",
     "--zookeeperMesosTimeout", "{{elasticsearch.zookeeper-mesos-timeout}}",
-    "--zookeeperFrameworkUrl", "{{TODO}}",
+    "--zookeeperFrameworkUrl", "{{elasticsearch.zookeeper-framework-url}}",
     "--zookeeperFrameworkTimeout", "{{elasticsearch.zookeeper-framework-timeout}}",
     "--webUiPort", "{{elasticsearch.port}}",
     "--frameworkFailoverTimeout", "{{elasticsearch.failover-timeout}}",
