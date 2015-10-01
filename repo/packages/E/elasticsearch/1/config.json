@@ -90,7 +90,7 @@
               "type":"string"
             },
             "image":{
-              "default":"mesos/elasticsearch-executor:0.4.1",
+              "default":"mesos/elasticsearch-executor:0.4.3",
               "description":"The docker executor image to use.",
               "type":"string"
             },
@@ -132,7 +132,7 @@
               "type":"string"
             },
             "image":{
-              "default":"mesos/elasticsearch-scheduler:0.4.1",
+              "default":"mesos/elasticsearch-scheduler:0.4.3",
               "description":"The docker scheduler image to use.",
               "type":"string"
             },
