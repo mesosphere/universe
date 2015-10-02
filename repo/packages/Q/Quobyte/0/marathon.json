@@ -1,0 +1,31 @@
+{
+  "id": "quobyte",
+  "cpus": "1.0",
+  "mem": "1024",
+  "instances": "1",
+  "args": [
+    {{quobyte.zk}},
+    {{quobyte.master}},
+    {{quobyte.port}},
+    {{quobyte.docker_image}},
+    {{quobyte.mesos-dns_domain}}
+    ],
+  "env":{
+    "LD_LIBRARY_PATH": "/opt:$LD_LIBRARY_PATH"
+    },
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "quobyte/quobyte-mesos",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": {{quobyte.port}},
+          "hostPort": {{quobyte.port}},
+          "servicePort": {{quobyte.port}},
+          "protocol": "tcp"
+        }
+      ]
+    }
+  }
+}

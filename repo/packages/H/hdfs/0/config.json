@@ -11,7 +11,8 @@
           "type": "string"
         },
         "default": [
-          "https://s3.amazonaws.com/downloads.mesosphere.io/hdfs/artifacts/dcos/0.1.1/hdfs-mesos-0.1.1.tgz"
+          "https://s3.amazonaws.com/downloads.mesosphere.io/hdfs/artifacts/dcos/0.1.3/hdfs-mesos-0.1.3.tgz",
+          "https://downloads.mesosphere.io/java/jre-7u76-linux-x64.tar.gz"
         ]
       },
       "custom-config": {
@@ -22,11 +23,29 @@
         "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
         "type": "string",
         "default": "hdfs"
+      },
+      "framework-version": {
+        "description": "Framework version",
+        "type": "string",
+        "default": "hdfs-mesos-0.1.3"
+      },
+      "jre-version": {
+        "description": "JRE version",
+        "type": "string",
+        "default": "jre1.7.0_76"
+      },
+      "ld-library-path": {
+        "desription": "Library path",
+        "type": "string",
+        "default": "/opt/mesosphere/lib"
       }
      },
      "required": [
       "scheduler-uris",
-      "framework-name"
+      "framework-name",
+      "ld-library-path",
+      "jre-version",
+      "framework-version"
      ]
     } 
   }

@@ -1,6 +1,25 @@
 # Mesosphere Universe [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)
 
-The Mesosphere Universe package repository.
+The DCOS package repository for packages that have been certified by Mesosphere.
+
+Experimental packages can be found in the [Multiverse repository](https://github.com/mesosphere/multiverse).
+
+## Installation
+
+The [DCOS CLI](https://docs.mesosphere.com/install/cli/) comes pre-configured to use the Universe repository.
+
+If you would like to add this to your CLI manually:
+
+```sh
+dcos config set package.sources '["https://github.com/mesosphere/universe/archive/version-1.x.zip"]'
+```
+
+## Branches
+
+The default branch for this repository is `version-1.x`, which reflects the current schema for the Universe. In the future, if the format changes significantly, there will be additional branches.
+
+The `cli-tests` branch is used for integration testing by the [DCOS CLI](https://github.com/mesosphere/dcos-cli) and provides a fixed and well known set of packages to write tests against.
+
 
 ## Package entries
 
@@ -159,6 +178,26 @@ _Sample `command.json`._
 See the [Command Schema](repo/meta/schema/command-schema.json) for a detailed description of
 the schema.
 
+### Versioning
+
+The registry specification is versioned separately in the
+file `/repo/meta/version.json`.
+
+```json
+{
+  "version": "0.1.0-alpha"
+}
+```
+_Sample `repo/meta/version.json`._
+
+This version is updated with any change to the required file content
+(typically validated using JSON schema) or expected file organization in the
+`repo` directory.
+
+_NOTE: The current version is `0.1.0-alpha` to facilitate rapid
+iteration.  This version will be fixed and incremented as
+described above as programs that consume the format reach maturity._
+
 ### Validation
 
 Package content is validated using [JSON Schema](http://json-schema.org).
@@ -177,7 +216,6 @@ The schema definitions live in `/repo/meta/schema`.
 ├── repo
 │   ├── meta
 │   │   ├── index.json
-│   │   ├── index.json.gz
 │   │   ├── schema
 │   │   │   ├── command-schema.json
 │   │   │   ├── config-schema.json
