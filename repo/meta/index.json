@@ -106,23 +106,6 @@
       }
     },
     {
-      "currentVersion":"v1.0.5-v0.6.4-alpha",
-      "description":"Manage a cluster of Linux containers as a single system to accelerate Dev and simplify Ops.",
-      "framework":true,
-      "name":"kubernetes",
-      "tags":[
-        "mesosphere",
-        "framework",
-        "pod",
-        "label",
-        "paas"
-      ],
-      "versions":{
-        "k8s-0.14.2-k8sm-0.5-dcos-20150603T1136520000":"0",
-        "v1.0.5-v0.6.4-alpha":"1"
-      }
-    },
-    {
       "currentVersion":"0.10.1",
       "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
       "framework":true,
@@ -184,20 +167,6 @@
       "versions":{
         "1.4.0-SNAPSHOT":"0",
         "1.4.1":"1"
-      }
-    },
-    {
-      "currentVersion":"0.4.0",
-      "description":"Swarm is a Docker-native clustering system.",
-      "framework":true,
-      "name":"swarm",
-      "tags":[
-        "mesosphere",
-        "framework",
-        "docker"
-      ],
-      "versions":{
-        "0.4.0":"0"
       }
     }
   ],
