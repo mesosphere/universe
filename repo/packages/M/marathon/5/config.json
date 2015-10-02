@@ -194,6 +194,11 @@
           "description": "Mesos role for this framework.",
           "type": "string"
         },
+        "mesos-leader-ui-url": {
+          "default": "/mesos",
+          "description": "The host and port (e.g. http://mesos_host:5050) of the Mesos master.",
+          "type": "string"
+        },
         "min-revive-offers-interval": {
           "default": 5000,
           "description": "Do not ask for all offers (also already seen ones) more often than this interval (ms).",
