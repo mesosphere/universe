@@ -15,7 +15,7 @@
       "timeoutSeconds": 5
     }
   ],
-  "args": ["-zk", "{{mesos.master}}", "-n", "{{elasticsearch.executor.instances}}", "-m", "{{elasticsearch.port}}", "-ram", "{{elasticsearch.executor.ram}}"],
+  "args": ["--zookeeperMesosUrl", "{{mesos.master}}", "--elasticsearchNodes", "{{elasticsearch.executor.instances}}", "--webUiPort", "{{elasticsearch.port}}", "--elasticsearchRam", "{{elasticsearch.executor.ram}}"],
   "env": {
     "JAVA_OPTS": "{{elasticsearch.scheduler.java-heap}}"
   },
