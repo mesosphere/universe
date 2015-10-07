@@ -1,0 +1,23 @@
+{
+  "name": "spark",
+  "version": "1.5.0-db83ac7",
+  "scm": "https://github.com/apache/spark.git",
+  "maintainer": "support@mesosphere.io",
+  "description": "Spark is a fast and general cluster computing system for Big Data",
+  "framework": true,
+  "tags": ["bigdata", "mapreduce", "batch", "analytics"],
+  "images": {
+    "icon-small": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-small.png",
+    "icon-medium": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-medium.png",
+    "icon-large": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-large.png"
+  },
+  "preInstallNotes": "Note that the Apache Spark DCOS Service is beta and there may be bugs, incomplete features, incorrect documentation or other discrepancies.\nWe recommend a minimum of two nodes with at least 2 CPU and 2GB of RAM available for the Spark Service and running a Spark job.\nNote: The Spark CLI may take up to 5min to download depending on your connection.",
+  "postInstallNotes": "The Apache Spark DCOS Service has been successfully installed!\n\n\tDocumentation: https://spark.apache.org/docs/latest/running-on-mesos.html\n\tIssues: https://issues.apache.org/jira/browse/SPARK",
+  "postUninstallNotes": "The Apache Spark DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at http://docs.mesosphere.com/services/spark/#uninstall to clean up any persisted state.",
+    "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/apache/spark/master/LICENSE"
+    }
+  ]
+}
