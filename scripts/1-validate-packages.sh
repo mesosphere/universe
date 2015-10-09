@@ -10,7 +10,10 @@ validate () {
   query=$1;
   schema=$2;
   for file in $(find $PKG_DIR -name $query); do
+    package=${file/$PKG_DIR/}
+    echo "- $package"
     jsonschema -i $file $schema
+    $SCRIPTS_DIR/json_dup_key_check.py $file
   done
 }
 
