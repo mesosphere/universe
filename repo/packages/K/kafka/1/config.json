@@ -24,11 +24,6 @@
                     "type": "object",
                     "additionalProperties": false,
                     "properties": {
-                        "id": {
-                            "description": "app id",
-                            "type": "string",
-                            "default": "kafka"
-                        },
                         "cpus": {
                             "description": "cpu requirements",
                             "type": "number",
@@ -38,6 +33,11 @@
                             "description": "mem requirements",
                             "type": "integer",
                             "default": 256
+                        },
+                        "instances": {
+                            "description": "app instances",
+                            "type": "integer",
+                            "default": 1
                         },
                         "jre": {
                             "type": "string",
@@ -55,7 +55,7 @@
                             "default": "https://d1vubr0evspla.cloudfront.net/kafka-mesos-0.9.2.0.jar"
                         }
                     },
-                    "required": ["id", "cpus", "mem", "jre", "kafka", "jar"]
+                    "required": ["cpus", "mem", "instances", "jre", "kafka", "jar"]
                 },
 
                 "zk": {
