@@ -8,6 +8,7 @@ META_DIR="$UNIVERSE_DIR/repo/meta"
 INDEX_FILE_NAME="index.json"
 
 echo "Building index...";
+[ -f "$META_DIR/$INDEX_FILE_NAME" ] && rm "$META_DIR/$INDEX_FILE_NAME"
 $SCRIPTS_DIR/"build-index.py" $UNIVERSE_DIR;
 echo "OK";
 
