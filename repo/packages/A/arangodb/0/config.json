@@ -1,0 +1,146 @@
+{
+  "type": "object",
+  "properties": {
+
+    "mesos": {
+      "description": "Mesos specific configuration properties",
+      "type": "object",
+      "properties": {
+        "master": {
+          "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard URLs like http://localhost are also acceptable.",
+          "type": "string",
+          "default": "zk://master.mesos:2181/mesos"
+        }
+      },
+      "required": [
+        "master"
+      ]
+    },
+
+    "arangodb": {
+      "description": "ArangoDB specific configuration properties",
+      "type": "object",
+      "properties": {
+
+        "framework-name": {
+          "description": "Identifier for the cluster.",
+          "type": "string",
+          "default": "arangodb"
+        },
+
+        "zk": {
+          "description": "ZooKeeper URL for storing state. Format: zk://host1:port1,host2:port2,.../path. Please note that the framework name is appended to the path.",
+          "type": "string",
+          "default": "zk://master.mesos:2181/arangodb"
+        },
+
+        "webui-host": {
+          "description": "For debugging: use this host for WEBUI request.",
+          "type": "string",
+          "default": ""
+        },
+
+        "framework-port": {
+          "description": "Framework port, use '0' to let Mesos select a port for you.",
+          "type": "integer",
+          "default": 0
+        },
+
+        "framework-cpus": {
+          "description": "cpus resources needed for each framework instance.",
+          "type": "number",
+          "default": 0.2
+        },
+
+        "framework-mem": {
+          "description": "mem resources needed for each framework instance.",
+          "type": "number",
+          "default": 64.0
+        },
+
+        "framework-instances": {
+          "description": "number of instances of the framework to run.",
+          "type": "integer",
+          "default": 1
+        },
+
+        "volume-path": {
+          "description": "Path for persistent data (until persistent volumes are available).",
+          "type": "string",
+          "default": "/tmp"
+        },
+
+        "mode": {
+          "description": "Mode for framework, possible values: \"standalone\", \"cluster\"",
+          "type": "string",
+          "default": "cluster"
+        },
+
+        "role": {
+          "description": "Role for framework",
+          "type": "string",
+          "default": "*"
+        },
+
+        "minimal-resources-agent": {
+          "description": "Minimal mesos resources for an agent",
+          "type": "string",
+          "default": "mem(*):512;cpus(*):0.2;disk(*):512"
+        },
+
+        "minimal-resources-coordinator": {
+          "description": "Minimal mesos resources for a coordinator",
+          "type": "string",
+          "default": "mem(*):1024;cpus(*):1;disk(*):1024"
+        },
+
+        "minimal-resources-dbserver": {
+          "description": "Minimal mesos resources for a DBserver",
+          "type": "string",
+          "default": "mem(*):1024;cpus(*):1;disk(*):1024"
+        },
+
+        "nr-agents": {
+          "description": "Initial number of agents",
+          "type": "integer",
+          "default": 1
+        },
+
+        "nr-dbservers": {
+          "description": "Initial number of DBservers",
+          "type": "integer",
+          "default": 2
+        },
+
+        "nr-coordinators": {
+          "description": "Initial number of coordinators",
+          "type": "integer",
+          "default": 1
+        }
+      },
+      "required": [
+        "framework-name",
+        "zk",
+        "webui-host",
+        "framework-port",
+        "framework-cpus",
+        "framework-mem",
+        "framework-instances",
+        "volume-path",
+        "mode",
+        "role",
+        "minimal-resources-agent",
+        "minimal-resources-coordinator",
+        "minimal-resources-dbserver",
+        "nr-agents",
+        "nr-dbservers",
+        "nr-coordinators"
+      ]
+    }
+  },
+
+  "required": [
+      "mesos",
+      "arangodb"
+  ]
+}
