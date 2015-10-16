@@ -8,7 +8,7 @@
     "http://downloads.mesosphere.com.s3.amazonaws.com/assets/spark/log4j.properties"
   ],
   "env": {
-    "APPLICATION_WEB_PROXY_BASE": "/service/spark",
+    "APPLICATION_WEB_PROXY_BASE": "/service/{{spark.framework-name}}",
     "SPARK_USER": "{{spark.mesos-user}}"
   },
   "ports": [
