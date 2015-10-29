@@ -1,9 +1,9 @@
 {
-  "id": "hdfs",
-  "cpus": 0.5,
-  "mem": 512,
-  "disk": 100,
-  "instances": 1,
+  "id": "{{hdfs.framework-name}}",
+  "cpus": {{hdfs.cpus}},
+  "mem": {{hdfs.mem}},
+  "disk": {{hdfs.disk-size}},
+  "instances": {{hdfs.instances}},
   "env": {
     "LD_LIBRARY_PATH": "{{hdfs.ld-library-path}}" 
   },

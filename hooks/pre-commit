@@ -4,7 +4,7 @@ set -o errexit -o nounset -o pipefail
 echo "RUNNING PRE-COMMIT";
 
 GIT_HOOKS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
-UNIVERSE_DIR=$GIT_HOOKS_DIR/..
+UNIVERSE_DIR=$GIT_HOOKS_DIR/../..
 SCRIPTS_DIR=$UNIVERSE_DIR/scripts
 
 $SCRIPTS_DIR/build.sh
