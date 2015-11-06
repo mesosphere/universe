@@ -20,6 +20,38 @@ The default branch for this repository is `version-1.x`, which reflects the curr
 
 The `cli-tests` branch is used for integration testing by the [DCOS CLI](https://github.com/mesosphere/dcos-cli) and provides a fixed and well known set of packages to write tests against.
 
+## Contributing a Package
+
+Interested in making your package or service available to the world? The instructions below will help you set up a local copy of the Universe for development.
+
+### Local Set Up
+
+1. Clone the repo (or you may wish to fork it first):
+  git clone https://github.com/mesosphere/multiverse.git /path/to/universe
+
+2. You may need to install the `jsonschema` Python package if you don't have it:
+  sudo pip install jsonschema
+
+3. Install pre-commit hook:
+  bash /path/to/universe/scripts/install-git-hooks.sh
+
+4. To use the local cloned repository from the DCOS CLI for testing your own package:
+  dcos config prepend package.sources "file:///path/to/universe"
+
+The pre-commit hook will run [build.sh](/scripts/build.sh) before allowing you to commit. This script validates your package definitions and regenerates the index file. You may need to `git add repo/meta/index.json` after running it once before you are able to pass validation and commit your changes.
+
+Whenever you make changes locally, be sure to update the CLI's cache to pick them up:
+```
+dcos package update
+```
+
+### Merging to Universe
+
+Before merging to Universe, you **must** run build.sh to regenerate the package index. If you have installed the pre-commit hook as above, this will be done automatically on commit.
+
+Packages in the Universe are required to pass Mesosphere certification. The certification requirements for the [Multiverse repository](https://github.com/mesosphere/multiverse) are less strict, which is preferable for alpha or beta quality packages. Full certification requirements are available from [Mesosphere support](https://docs.mesosphere.com/support/).
+
+Once your package meets these requirements, please submit a pull request against the `version-1.x` branch with your changes.
 
 ## Package entries
 
