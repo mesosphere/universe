@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "properties": {
+    "scheduler": {
+      "description": "Scheduler specific configuration",
+      "properties": {
+        "master": {
+          "type": "string",
+          "description": "URL to the Zookeeper",
+          "default": "zk://localhost:2181/mesos"
+        },
+        "cpus": {
+          "default": 0.1,
+          "description": "CPUs to allocate to the scheduler.",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "mem": {
+          "default": 128.0,
+          "description": "Memory (MB) to allocate  to the scheduler.",
+          "minimum": 32.0,
+          "type": "number"
+        },
+        "disk": {
+          "description": "Disk (MB) to allocate to the scheduler.",
+          "type": "integer",
+          "minimum": 100,
+          "default": 100
+        },
+        "port": {
+          "default": 9001,
+          "description": "Port to allocate to the scheduler management API.",
+          "type": "number"
+        }
+      }
+    },
+    "kibana": {
+      "description": "Kibana specific configuration",
+      "properties": {
+        "cpus": {
+          "default": 0.1,
+          "description": "CPUs to allocate to a Kibana.",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "mem": {
+          "default": 64.0,
+          "description": "Memory (MB) to allocate  to a Kibana.",
+          "minimum": 32.0,
+          "type": "number"
+        },
+        "disk": {
+          "description": "Disk (MB) to allocate to a Kibana.",
+          "type": "integer",
+          "minimum": 25,
+          "default": 25
+        }
+      }
+    }
+  }
+}
