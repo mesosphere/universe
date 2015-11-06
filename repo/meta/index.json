@@ -78,6 +78,20 @@
       }
     },
     {
+      "currentVersion":"0.2.0",
+      "description":"Kibana for Mesos.",
+      "framework":false,
+      "name":"kibana",
+      "tags":[
+        "mesosphere",
+        "framework",
+        "kibana"
+      ],
+      "versions":{
+        "0.2.0":"0"
+      }
+    },
+    {
       "currentVersion":"0.11.1",
       "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
       "framework":true,
