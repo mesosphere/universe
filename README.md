@@ -10,8 +10,8 @@ The [DCOS CLI](https://docs.mesosphere.com/install/cli/) comes pre-configured to
 
 If you would like to add this to your CLI manually:
 
-```sh
-dcos config set package.sources '["https://github.com/mesosphere/universe/archive/version-1.x.zip"]'
+```
+dcos config prepend package.sources https://github.com/mesosphere/universe/archive/version-1.x.zip
 ```
 
 ## Branches
