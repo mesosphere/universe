@@ -10,8 +10,8 @@ The [DCOS CLI](https://docs.mesosphere.com/install/cli/) comes pre-configured to
 
 If you would like to add this to your CLI manually:
 
-```sh
-dcos config set package.sources '["https://github.com/mesosphere/universe/archive/version-1.x.zip"]'
+```
+dcos config prepend package.sources https://github.com/mesosphere/universe/archive/version-1.x.zip
 ```
 
 ## Branches
@@ -27,7 +27,7 @@ Interested in making your package or service available to the world? The instruc
 ### Local Set Up
 
 1. Clone the repo (or you may wish to fork it first):
-  git clone https://github.com/mesosphere/multiverse.git /path/to/universe
+  git clone https://github.com/mesosphere/universe.git /path/to/universe
 
 2. You may need to install the `jsonschema` Python package if you don't have it:
   sudo pip install jsonschema
