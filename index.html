@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-light.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -16,7 +16,7 @@
     <div class="wrapper">
       <header>
         <h1>Universe</h1>
-        <p>The Mesos package repository.</p>
+        <p>The Mesosphere DCOS package repository.</p>
 
         <p class="view"><a href="https://github.com/mesosphere/universe">View the Project on GitHub <small>mesosphere/universe</small></a></p>
 
@@ -32,7 +32,77 @@
 <a id="mesosphere-universe-" class="anchor" href="#mesosphere-universe-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mesosphere Universe <a href="https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&amp;guest=1"><img src="https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon" alt="Build Status"></a>
 </h1>
 
-<p>The Mesosphere Universe package repository.</p>
+<p>The DCOS package repository for packages that have been certified by Mesosphere.</p>
+
+<p>Experimental packages can be found in the <a href="https://github.com/mesosphere/multiverse">Multiverse repository</a>.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>The <a href="https://docs.mesosphere.com/install/cli/">DCOS CLI</a> comes pre-configured to use the Universe repository.</p>
+
+<p>If you would like to add this to your CLI manually:</p>
+
+<pre><code>dcos config prepend package.sources https://github.com/mesosphere/universe/archive/version-1.x.zip
+</code></pre>
+
+<h2>
+<a id="branches" class="anchor" href="#branches" aria-hidden="true"><span class="octicon octicon-link"></span></a>Branches</h2>
+
+<p>The default branch for this repository is <code>version-1.x</code>, which reflects the current schema for the Universe. In the future, if the format changes significantly, there will be additional branches.</p>
+
+<p>The <code>cli-tests</code> branch is used for integration testing by the <a href="https://github.com/mesosphere/dcos-cli">DCOS CLI</a> and provides a fixed and well known set of packages to write tests against.</p>
+
+<h2>
+<a id="contributing-a-package" class="anchor" href="#contributing-a-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing a Package</h2>
+
+<p>Interested in making your package or service available to the world? The instructions below will help you set up a local copy of the Universe for development.</p>
+
+<h3>
+<a id="local-set-up" class="anchor" href="#local-set-up" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local Set Up</h3>
+
+<ol>
+<li>
+<p>Clone the repo (or you may wish to fork it first):</p>
+
+<pre><code>git clone https://github.com/mesosphere/universe.git /path/to/universe
+</code></pre>
+</li>
+<li>
+<p>You may need to install the <code>jsonschema</code> Python package if you don't have it:</p>
+
+<pre><code>sudo pip install jsonschema
+</code></pre>
+</li>
+<li>
+<p>Install pre-commit hook:</p>
+
+<pre><code>bash /path/to/universe/scripts/install-git-hooks.sh
+</code></pre>
+</li>
+<li>
+<p>To use the local cloned repository from the DCOS CLI for testing your own package:</p>
+
+<pre><code>dcos config prepend package.sources "file:///path/to/universe"
+</code></pre>
+</li>
+</ol>
+
+<p>The pre-commit hook will run <a href="scripts/build.sh">build.sh</a> before allowing you to commit. This script validates your package definitions and regenerates the index file. You may need to <code>git add repo/meta/index.json</code> after running it once before you are able to pass validation and commit your changes.</p>
+
+<p>Whenever you make changes locally, be sure to update the CLI's cache to pick them up:</p>
+
+<pre><code>dcos package update
+</code></pre>
+
+<h3>
+<a id="merging-to-universe" class="anchor" href="#merging-to-universe" aria-hidden="true"><span class="octicon octicon-link"></span></a>Merging to Universe</h3>
+
+<p>Before merging to Universe, you <strong>must</strong> run build.sh to regenerate the package index. If you have installed the pre-commit hook as above, this will be done automatically on commit.</p>
+
+<p>Packages in the Universe are required to pass Mesosphere certification. The certification requirements for the <a href="https://github.com/mesosphere/multiverse">Multiverse repository</a> are less strict, which is preferable for alpha or beta quality packages. Full certification requirements are available from <a href="https://docs.mesosphere.com/support/">Mesosphere support</a>.</p>
+
+<p>Once your package meets these requirements, please submit a pull request against the <code>version-1.x</code> branch with your changes.</p>
 
 <h2>
 <a id="package-entries" class="anchor" href="#package-entries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Package entries</h2>
@@ -67,7 +137,7 @@ for each package version.</p>
 <a id="packagejson" class="anchor" href="#packagejson" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>package.json</code>
 </h4>
 
-<div class="highlight highlight-json"><pre>{
+<div class="highlight highlight-source-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1.2.3<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>tags<span class="pl-pds">"</span></span>: [<span class="pl-s"><span class="pl-pds">"</span>mesosphere<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>framework<span class="pl-pds">"</span></span>],
@@ -125,7 +195,11 @@ alternate image named <code>icon-cassandra-small@2x.png</code>.</p>
 <a id="configjson" class="anchor" href="#configjson" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>config.json</code>
 </h4>
 
-<div class="highlight highlight-json"><pre>{
+<p>This file describes the configuration properties supported by the package. Each property can specify whether or not it is required, a default value, as well as some basic validation.</p>
+
+<p>Users can then <a href="https://docs.mesosphere.com/using/cli/packagesyntax/">override specific values</a> at installation time by passing an options file to the DCOS CLI.</p>
+
+<div class="highlight highlight-source-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>object<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>properties<span class="pl-pds">"</span></span>: {
     <span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>: {
@@ -148,6 +222,8 @@ alternate image named <code>icon-cassandra-small@2x.png</code>.</p>
 
 <p><em>Sample <code>config.json</code>.</em></p>
 
+<p><code>config.json</code> must be a valid <a href="http://json-schema.org/">JSON Schema</a> file. Check out the <a href="http://json-schema.org/examples.html">JSON Schema examples</a>.</p>
+
 <h4>
 <a id="marathonjson" class="anchor" href="#marathonjson" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>marathon.json</code>
 </h4>
@@ -158,7 +234,7 @@ alternate image named <code>icon-cassandra-small@2x.png</code>.</p>
 <p>User-supplied metadata (as described in <code>config.json</code>) can be injected
 using <a href="http://mustache.github.io/">moustache template</a> syntax.</p>
 
-<div class="highlight highlight-json"><pre>{
+<div class="highlight highlight-source-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>cpus<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1.0<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>mem<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1024<span class="pl-pds">"</span></span>,
@@ -195,7 +271,7 @@ for more detailed instruction on app definitions.</p>
 Currently the only supported format is a Pip requirements file where each
 element in the array is a line in the requirements file.</p>
 
-<div class="highlight highlight-json"><pre>{
+<div class="highlight highlight-source-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>pip<span class="pl-pds">"</span></span>: [
     <span class="pl-s"><span class="pl-pds">"</span>https://pypi.python.org/packages/source/f/foo/foo-1.2.3.tar.gz<span class="pl-pds">"</span></span>
   ]
@@ -212,7 +288,7 @@ the schema.</p>
 <p>The registry specification is versioned separately in the
 file <code>/repo/meta/version.json</code>.</p>
 
-<div class="highlight highlight-json"><pre>{
+<div class="highlight highlight-source-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>0.1.0-alpha<span class="pl-pds">"</span></span>
 }</pre></div>
 
@@ -245,7 +321,6 @@ The schema definitions live in <code>/repo/meta/schema</code>.</p>
 ├── repo
 │   ├── meta
 │   │   ├── index.json
-│   │   ├── index.json.gz
 │   │   ├── schema
 │   │   │   ├── command-schema.json
 │   │   │   ├── config-schema.json
