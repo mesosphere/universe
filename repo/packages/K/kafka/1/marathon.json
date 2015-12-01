@@ -3,7 +3,7 @@
   "cpus": {{kafka.app.cpus}},
   "mem": {{kafka.app.mem}},
   "instances": {{kafka.app.instances}},
-  "cmd": "jre/bin/java -jar kafka-mesos*.jar scheduler --master={{mesos.master}} --zk={{kafka.zk}} --api={{kafka.api}} --storage=\"{{kafka.storage}}\" --jre={{kafka.jre}} {{#kafka.user}}--user=\"{{kafka.user}}\"{{/kafka.user}} --framework-name=\"{{kafka.framework-name}}\" --framework-role=\"{{kafka.framework-role}}\" {{#kafka.principal}}--principal=\"{{kafka.principal}}\"{{/kafka.principal}} {{#kafka.secret}}--secret=\"{{kafka.secret}}\"{{/kafka.secret}} --log=scheduler.log {{kafka.other-options}}",
+  "cmd": "jre/bin/java -Xmx{{kafka.app.heap-mb}}m -jar kafka-mesos*.jar scheduler --master={{mesos.master}} --zk={{kafka.zk}} --api={{kafka.api}} --storage=\"{{kafka.storage}}\" --jre={{kafka.jre}} {{#kafka.user}}--user=\"{{kafka.user}}\"{{/kafka.user}} --framework-name=\"{{kafka.framework-name}}\" --framework-role=\"{{kafka.framework-role}}\" {{#kafka.principal}}--principal=\"{{kafka.principal}}\"{{/kafka.principal}} {{#kafka.secret}}--secret=\"{{kafka.secret}}\"{{/kafka.secret}} --log=scheduler.log {{kafka.other-options}}",
   "uris": ["{{kafka.app.jre}}", "{{kafka.app.kafka}}", "{{kafka.app.jar}}"],
   "ports": [0],
   "healthChecks": [

@@ -30,7 +30,12 @@
                             "default": 0.5
                         },
                         "mem": {
-                            "description": "mem requirements",
+                            "description": "mem requirements (this should be approximately 120% of the heap size).",
+                            "type": "integer",
+                            "default": 307
+                        },
+                        "heap-mb": {
+                            "description": "Heap size for scheduler JVM, in MiB",
                             "type": "integer",
                             "default": 256
                         },
@@ -55,7 +60,7 @@
                             "default": "https://d1vubr0evspla.cloudfront.net/kafka-mesos-0.9.2.0.jar"
                         }
                     },
-                    "required": ["cpus", "mem", "instances", "jre", "kafka", "jar"]
+                    "required": ["cpus", "mem", "instances", "jre", "kafka", "jar", "heap-mb"]
                 },
 
                 "zk": {
