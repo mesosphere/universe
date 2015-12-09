@@ -1,0 +1,26 @@
+{
+  "id": "{{dse.framework-name}}",
+  "cmd": "$(pwd)/jre*/bin/java -Xmx{{dse.app.heap-mb}}m -jar dse-mesos*.jar scheduler --master={{mesos.master}} --api={{dse.api}} --storage=\"{{dse.storage}}\" --jre={{dse.jre}} {{#dse.user}}--user=\"{{dse.user}}\"{{/dse.user}} --framework-name=\"{{dse.framework-name}}\" --framework-role=\"{{dse.framework-role}}\" {{#dse.principal}}--principal=\"{{dse.principal}}\"{{/dse.principal}} {{#dse.secret}}--secret=\"{{dse.secret}}\"{{/dse.secret}} {{dse.other-options}}",
+  "instances": {{dse.app.instances}},
+  "cpus": {{dse.app.cpus}},
+  "mem": {{dse.app.mem}},
+  "ports": [
+    0
+  ],
+  "uris": [
+    "{{dse.app.jar}}",
+    "{{dse.app.jre}}",
+    "{{dse.app.dse}}"
+  ],
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 15,
+      "maxConsecutiveFailures": 0,
+      "path": "/health",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "timeoutSeconds": 5
+    }
+  ]
+}

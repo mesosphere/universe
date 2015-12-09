@@ -47,6 +47,20 @@
       }
     },
     {
+      "currentVersion":"0.0.1",
+      "description":"Datastax Enterpise Cassandra running on Apache Mesos",
+      "framework":true,
+      "name":"dse",
+      "tags":[
+        "data",
+        "database",
+        "nosql"
+      ],
+      "versions":{
+        "0.0.1":"0"
+      }
+    },
+    {
       "currentVersion":"0.1.7",
       "description":"Hadoop Distributed File System (HDFS), Highly Available",
       "framework":true,
