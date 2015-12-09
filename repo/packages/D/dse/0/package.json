@@ -1,0 +1,24 @@
+{
+  "name": "dse",
+  "version": "0.0.1",
+  "scm": "https://github.com/elodina/datastax-enterprise-mesos",
+  "maintainer": "joestein@elodina.net",
+  "description": "Datastax Enterpise Cassandra running on Apache Mesos",
+  "framework": true,
+  "tags": ["data", "database", "nosql"],
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/dcos-dse/icon-small.png",
+    "icon-medium": "https://s3.amazonaws.com/dcos-dse/icon-medium.png",
+    "icon-large": "https://s3.amazonaws.com/dcos-dse/icon-large.png",
+    "screenshots": ["https://s3.amazonaws.com/dcos-dse/screen-0-dse.png"]
+  },
+  "preInstallNotes":"The DSE DCOS Service implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
+  "postInstallNotes": "Thank you for installing the DSE DCOS Service.\n\n\tDocumentation: https://github.com/elodina/datastax-enterprise-mesos/blob/master/README.md \n\tIssues: https://github.com/elodina/datastax-enterprise-mesos/issues",
+  "postUninstallNotes": "The DSE DCOS Service has been uninstalled and will no longer run.",
+  "licenses": [
+    {
+      "name": "TODO",
+      "url": "https://github.com/elodina/datastax-enterprise-mesos/blob/master/LICENSE.txt"
+    }
+  ]
+}
