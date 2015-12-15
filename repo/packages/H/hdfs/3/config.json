@@ -11,7 +11,7 @@
           "type": "string"
         },
         "default": [
-          "https://downloads.mesosphere.com/hdfs/artifacts/dcos/0.1.7/hdfs-mesos-0.1.7.tgz",
+          "https://downloads.mesosphere.com/hdfs/artifacts/dcos/0.1.8/hdfs-mesos-0.1.8.tgz",
           "https://downloads.mesosphere.com/java/jre-7u76-linux-x64.tar.gz"
         ]
       },
@@ -27,7 +27,7 @@
       "framework-version": {
         "description": "Framework version",
         "type": "string",
-        "default": "hdfs-mesos-0.1.7"
+        "default": "hdfs-mesos-0.1.8"
       },
       "cpus": {
         "default": 0.5,
