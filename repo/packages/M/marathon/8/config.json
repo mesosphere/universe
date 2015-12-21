@@ -255,7 +255,7 @@
           "type": "array"
         },
         "zk": {
-          "default": "zk://master.mesos:2181/",
+          "default": "zk://master.mesos:2181/universe",
           "description": "Parent ZooKeeper URL for storing state. The framework name is joined to the path of this value. Format: zk://host1:port1,host2:port2,.../path",
           "type": "string"
         },
