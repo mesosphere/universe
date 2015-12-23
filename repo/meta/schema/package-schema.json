@@ -2,6 +2,10 @@
   "$schema": "http://json-schema.org/schema#",
   "type": "object",
   "properties": {
+    "packagingVersion": {
+      "type": "string",
+      "enum": ["2.0"]
+    },
     "name": {
       "type": "string"
     },
@@ -68,6 +72,7 @@
     }
   },
   "required": [
+    "packagingVersion",
     "name",
     "version",
     "maintainer",
