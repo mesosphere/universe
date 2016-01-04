@@ -67,7 +67,7 @@
           ]
         },
         "cluster-name": {
-          "description": "The name of the framework to register with mesos. Will also be used as the cluster name in Cassandra",
+          "description": "The name of the framework to register with Mesos. Will also be used as the cluster name in Cassandra",
           "type": "string",
           "default": "dcos"
         },

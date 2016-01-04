@@ -7,9 +7,9 @@
   "framework": true,
   "tags": ["data", "database", "nosql"],
   "images": {
-    "icon-small": "https://downloads.mesosphere.io/cassandra-mesos/assets/cassandra-small.png",
-    "icon-medium": "https://downloads.mesosphere.io/cassandra-mesos/assets/cassandra-medium.png",
-    "icon-large": "https://downloads.mesosphere.io/cassandra-mesos/assets/cassandra-large.png"
+    "icon-small": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-large.png"
   },
   "preInstallNotes":"The Apache Cassandra DCOS Service implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.\nThe default configuration requires 3 nodes each with 0.3 CPU shares, 1184MB of memory and 272MB of disk.",
   "postInstallNotes": "Thank you for installing the Apache Cassandra DCOS Service.\n\n\tDocumentation: http://mesosphere.github.io/cassandra-mesos/\n\tIssues: https://github.com/mesosphere/cassandra-mesos/issues",

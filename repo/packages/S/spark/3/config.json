@@ -47,18 +47,6 @@
           "minimum": 1024.0,
           "type": "number"
         },
-        "mesos-authentication-principal": {
-          "description": "The Mesos principal used for authentication.",
-          "type": "string"
-        },
-        "mesos-authentication-secret-file": {
-          "description": "The path to the Mesos secret file containing the authentication secret.",
-          "type": "string"
-        },
-        "mesos-role": {
-          "description": "Mesos role for this framework.",
-          "type": "string"
-        },
         "mesos-user": {
           "description": "Mesos user to run the executor under",
           "type": "string",

@@ -1,6 +1,69 @@
 # Mesosphere Universe [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)
 
-The Mesosphere Universe package repository.
+The DCOS package repository for packages that have been certified by Mesosphere.
+
+Experimental packages can be found in the [Multiverse repository](https://github.com/mesosphere/multiverse).
+
+## Installation
+
+The [DCOS CLI](https://docs.mesosphere.com/install/cli/) comes pre-configured to use the Universe repository.
+
+If you would like to add this to your CLI manually:
+
+```
+dcos config prepend package.sources https://github.com/mesosphere/universe/archive/version-1.x.zip
+```
+
+## Branches
+
+The default branch for this repository is `version-1.x`, which reflects the current schema for the Universe. In the future, if the format changes significantly, there will be additional branches.
+
+The `cli-tests` branch is used for integration testing by the [DCOS CLI](https://github.com/mesosphere/dcos-cli) and provides a fixed and well known set of packages to write tests against.
+
+## Contributing a Package
+
+Interested in making your package or service available to the world? The instructions below will help you set up a local copy of the Universe for development.
+
+### Local Set Up
+
+1. Clone the repo (or you may wish to fork it first):
+
+  ```
+  git clone https://github.com/mesosphere/universe.git /path/to/universe
+  ```
+
+2. You may need to install the `jsonschema` Python package if you don't have it:
+
+  ```
+  sudo pip install jsonschema
+  ```
+
+3. Install pre-commit hook:
+
+  ```
+  bash /path/to/universe/scripts/install-git-hooks.sh
+  ```
+
+4. To use the local cloned repository from the DCOS CLI for testing your own package:
+
+  ```
+  dcos config prepend package.sources "file:///path/to/universe"
+  ```
+
+The pre-commit hook will run [build.sh](scripts/build.sh) before allowing you to commit. This script validates your package definitions and regenerates the index file. You may need to `git add repo/meta/index.json` after running it once before you are able to pass validation and commit your changes.
+
+Whenever you make changes locally, be sure to update the CLI's cache to pick them up:
+```
+dcos package update
+```
+
+### Merging to Universe
+
+Before merging to Universe, you **must** run build.sh to regenerate the package index. If you have installed the pre-commit hook as above, this will be done automatically on commit.
+
+Packages in the Universe are required to pass Mesosphere certification. The certification requirements for the [Multiverse repository](https://github.com/mesosphere/multiverse) are less strict, which is preferable for alpha or beta quality packages. Full certification requirements are available from [Mesosphere support](https://docs.mesosphere.com/support/).
+
+Once your package meets these requirements, please submit a pull request against the `version-1.x` branch with your changes.
 
 ## Package entries
 
@@ -79,6 +142,10 @@ alternate image named `icon-cassandra-small@2x.png`.
 
 #### `config.json`
 
+This file describes the configuration properties supported by the package. Each property can specify whether or not it is required, a default value, as well as some basic validation.
+
+Users can then [override specific values](https://docs.mesosphere.com/using/cli/packagesyntax/) at installation time by passing an options file to the DCOS CLI.
+
 ```json
 {
   "type": "object",
@@ -102,6 +169,8 @@ alternate image named `icon-cassandra-small@2x.png`.
 }
 ```
 _Sample `config.json`._
+
+`config.json` must be a valid [JSON Schema](http://json-schema.org/) file. Check out the [JSON Schema examples](http://json-schema.org/examples.html).
 
 #### `marathon.json`
 
@@ -197,7 +266,6 @@ The schema definitions live in `/repo/meta/schema`.
 ├── repo
 │   ├── meta
 │   │   ├── index.json
-│   │   ├── index.json.gz
 │   │   ├── schema
 │   │   │   ├── command-schema.json
 │   │   │   ├── config-schema.json

@@ -1,20 +1,20 @@
 {
   "id": "/cassandra/{{cassandra.cluster-name}}",
   "cmd": "$(pwd)/jre*/bin/java $JAVA_OPTS -classpath cassandra-mesos-framework.jar io.mesosphere.mesos.frameworks.cassandra.framework.Main",
-  "instances": 1,
-  "cpus": 0.5,
-  "mem": 512,
+  "instances": {{cassandra.framework.instances}},
+  "cpus": {{cassandra.framework.cpus}},
+  "mem": {{cassandra.framework.mem}},
   "ports": [
     0
   ],
   "uris": [
-    "https://downloads.mesosphere.io/cassandra-mesos/artifacts/0.1.0-1/cassandra-mesos-0.1.0-1.tar.gz",
-    "https://downloads.mesosphere.io/java/jre-7u76-linux-x64.tar.gz"
+    "https://downloads.mesosphere.com/cassandra-mesos/artifacts/0.2.0-1/cassandra-mesos-0.2.0-1.tar.gz",
+    "https://downloads.mesosphere.com/java/jre-7u76-linux-x64.tar.gz"
   ],
   "healthChecks": [
     {
       "gracePeriodSeconds": 120,
-      "intervalSeconds": 30,
+      "intervalSeconds": 15,
       "maxConsecutiveFailures": 0,
       "path": "/health/cluster",
       "portIndex": 0,
@@ -49,7 +49,12 @@
     ,"CASSANDRA_ZK_TIMEOUT_MS": "{{cassandra.zk-timeout-ms}}"
     ,"CASSANDRA_BOOTSTRAP_GRACE_TIME_SECONDS": "{{cassandra.bootstrap-grace-time-seconds}}"
     ,"CASSANDRA_FRAMEWORK_MESOS_ROLE": "{{cassandra.framework.role}}"
+    ,"CASSANDRA_DEFAULT_DC": "{{cassandra.dc.default-dc}}"
+    ,"CASSANDRA_DEFAULT_RACK": "{{cassandra.dc.default-rack}}"
     ,"MESOS_AUTHENTICATE": "{{cassandra.framework.authentication.enabled}}"
+{{#cassandra.dc.external-dcs}}
+    ,"CASSANDRA_EXTERNAL_DC_{{name}}": "{{url}}"
+{{/cassandra.dc.external-dcs}}
 {{#cassandra.zk}} {{! if the full cassandra zk url has been specified use it }}
     ,"CASSANDRA_ZK": "{{cassandra.zk}}"
 {{/cassandra.zk}}
