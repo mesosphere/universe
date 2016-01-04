@@ -79,6 +79,20 @@
       }
     },
     {
+      "currentVersion":"0.0.6",
+      "description":"Logstash framework for Mesos.",
+      "framework":false,
+      "name":"logstash",
+      "tags":[
+        "mesosphere",
+        "framework",
+        "logging"
+      ],
+      "versions":{
+        "0.0.6":"0"
+      }
+    },
+    {
       "currentVersion":"0.11.1",
       "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
       "framework":true,
