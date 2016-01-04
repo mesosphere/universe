@@ -1,0 +1,14 @@
+{
+  "name": "logstash",
+  "version": "0.0.6",
+  "tags": ["mesosphere", "framework", "logging"],
+  "scm": "https://github.com/mesos/logstash.git",
+  "maintainer": "frank.scholten@container-solutions.com",
+  "description": "Logstash framework for Mesos.",
+  "website": "https://github.com/mesos/logstash",
+  "images": {
+    "icon-small": "http://logstash.net/images/logstash.png",
+    "icon-medium": "http://logstash.net/images/logstash.png",
+    "icon-large": "http://logstash.net/images/logstash.png"
+  }
+}
