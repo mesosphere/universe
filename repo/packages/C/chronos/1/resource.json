@@ -1,0 +1,14 @@
+{
+    "images": {
+        "icon-large": "https://downloads.mesosphere.io/chronos/assets/icon-service-chronos-large.png",
+        "icon-medium": "https://downloads.mesosphere.io/chronos/assets/icon-service-chronos-medium.png",
+        "icon-small": "https://downloads.mesosphere.io/chronos/assets/icon-service-chronos-small.png"
+    },
+    "assets": {
+        "container": {
+            "docker": {
+                "chronos-2-4-0-0-1-20150828104228-ubuntu1404-mesos-0-23-0-1-0-ubuntu1404": "mesosphere/chronos:chronos-2.4.0-0.1.20150828104228.ubuntu1404-mesos-0.23.0-1.0.ubuntu1404"
+            }
+        }
+    }
+}
