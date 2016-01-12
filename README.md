@@ -170,7 +170,7 @@ This file describes how to run the package as a
 
 User-supplied metadata (as described in `config.json`), the defaults from `config.json` and the
 resource information in `resource.json` will be injected to the template using
-[moustache template](http://mustache.github.io/) syntax.
+[mustache template](http://mustache.github.io/) syntax.
 
 ```json
 {
@@ -182,7 +182,7 @@ resource information in `resource.json` will be injected to the template using
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "bar/foo",
+      "image": "{{resource.assets.container.docker.foo23b1cfe8e04a}}",
       "network": "BRIDGE",
       "portMappings": [
         {
@@ -196,7 +196,7 @@ resource information in `resource.json` will be injected to the template using
   }
 }
 ```
-_Sample `marathon.json`._
+_Sample `marathon.json.mustache`._
 
 See the
 [Marathon API Documentation](https://mesosphere.github.io/marathon/docs/rest-api.html)
@@ -222,7 +222,7 @@ the schema.
 
 #### `resource.json`
 
-This file contains all of the resources (E.g. docker images, HTTP objects, images) needed to
+This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects, images) needed to
 install the application.
 
 ```json
@@ -245,9 +245,12 @@ install the application.
         "23b1cfe8e04a": "some-org/foo:1.0.0"
       }
     }
-  },
+  }
 }
 ```
+_Sample `resource.json`._
+
+For the Docker image, please use the image ID for the referenced image. You can find this by pulling the image locally and running `docker images some-org/foo:1.0.0`.
 
 While `images` is an optional field, it is highly recommended you include icons
 and screenshots in your package and update the path definitions accordingly.
@@ -272,7 +275,7 @@ file `/repo/meta/version.json`.
 
 ```json
 {
-  "version": "0.1.0-alpha"
+  "version": "2.0.0"
 }
 ```
 _Sample `repo/meta/version.json`._
