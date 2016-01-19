@@ -1,0 +1,35 @@
+{
+  "id": "{{kafka.framework-name}}",
+  "cpus": {{kafka.app.cpus}},
+  "mem": {{kafka.app.mem}},
+  "instances": {{kafka.app.instances}},
+  "cmd": "jre/bin/java -Xmx{{kafka.app.heap-mb}}m -jar kafka-scheduler*.jar",
+  "env": {
+    "LD_LIBRARY_PATH": "{{kafka.ld-library-path}}",
+    "FRAMEWORK_NAME": "{{kafka.framework-name}}",
+    "ROLE": "{{kafka.framework-role}}",
+    "USER": "{{kafka.user}}",
+    "BROKER_COUNT": "{{kafka.broker-count}}",
+    "ZOOKEEPER_ADDR": "{{kafka.zookeeper-addr}}",
+    "KAFKA_VER_NAME": "{{kafka.version_name}}",
+    "KAFKA_URI": "{{resource.assets.uris.kafka_2-10-0-9-0-0-tgz}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.kafka-executor-0-1-0-tgz}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-7u79-openjdk-tgz}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-7u79-openjdk-tgz}}",
+    "{{resource.assets.uris.kafka-scheduler-0-1-0-jar}}"
+  ],
+  "ports": [0],
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/health",
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 60,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 3
+    }
+  ]
+}

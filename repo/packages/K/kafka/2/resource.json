@@ -1,0 +1,16 @@
+{
+  "assets": {
+    "uris": {
+      "jre-7u79-openjdk-tgz": "https://s3-eu-west-1.amazonaws.com/downloads.mesosphere.com/kafka/jre-7u79-openjdk.tgz",
+      "kafka_2-10-0-9-0-0-tgz": "https://s3-eu-west-1.amazonaws.com/downloads.mesosphere.com/kafka/kafka_2.10-0.9.0.0.tgz",
+      "kafka-scheduler-0-1-0-jar": "https://s3-us-west-2.amazonaws.com/gabriel-kafka-test/kafka-scheduler-0.1.0-uber.jar",
+      "kafka-executor-0-1-0-tgz": "https://s3-us-west-2.amazonaws.com/gabriel-kafka-test/kafka-executor-0.1.0.tgz"
+    }
+  },
+  "images": {
+    "icon-small": "https://d1vubr0evspla.cloudfront.net/img/icon-small.png",
+    "icon-medium": "https://d1vubr0evspla.cloudfront.net/img/icon-medium.png",
+    "icon-large": "https://d1vubr0evspla.cloudfront.net/img/icon-large.png",
+    "screenshots": ["https://d1vubr0evspla.cloudfront.net/img/screen-0-kafka.png"]
+  }
+}
