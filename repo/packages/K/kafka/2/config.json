@@ -107,6 +107,11 @@
                   "type": "integer",
                   "default": 2048 
                 },
+                "disk": {
+                  "description": "Broker disk requirements (only respected with persistent volumes)",
+                  "type": "integer",
+                  "default": 5000
+                },
                 "pv": {
                   "description": "Whether persistent volumes should be used",
                   "type": "boolean",
