@@ -57,6 +57,11 @@
                     "description": "Mesos Framework Role",
                     "default": "*"
                 },
+                "framework-principal": {
+                    "type": "string",
+                    "description": "Mesos Framework Principal",
+                    "default": "kafka-principal"
+                },
                 "user": {
                     "type": "string",
                     "description": "Mesos user to run tasks",
