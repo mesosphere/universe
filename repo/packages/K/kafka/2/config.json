@@ -120,7 +120,7 @@
                 "placement-strategy": {
                   "description": "Broker placement strategy. See documentation. [ANY, NODE]",
                   "type": "string",
-                  "default": "NODE"
+                  "default": "ANY"
                 }
             },
             "required": [
