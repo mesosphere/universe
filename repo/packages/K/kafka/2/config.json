@@ -27,17 +27,17 @@
                         "cpus": {
                             "description": "cpu requirements",
                             "type": "number",
-                            "default": 0.5
+                            "default": 1.0
                         },
                         "mem": {
                             "description": "mem requirements (this should be approximately 120% of the heap size).",
                             "type": "integer",
-                            "default": 307
+                            "default": 1230
                         },
                         "heap-mb": {
                             "description": "Heap size for scheduler JVM, in MiB",
                             "type": "integer",
-                            "default": 256
+                            "default": 1024
                         },
                         "instances": {
                             "description": "app instances",
