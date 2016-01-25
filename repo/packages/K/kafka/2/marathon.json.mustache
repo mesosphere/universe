@@ -3,7 +3,7 @@
   "cpus": {{kafka.app.cpus}},
   "mem": {{kafka.app.mem}},
   "instances": {{kafka.app.instances}},
-  "cmd": "jre/bin/java -Xmx{{kafka.app.heap-mb}}m -jar kafka-scheduler*.jar",
+  "cmd": "export PATH=$PATH:$MESOS_SANDBOX/jre/bin && java -Xmx{{kafka.app.heap-mb}}m -jar kafka-scheduler*.jar",
   "env": {
     "LD_LIBRARY_PATH": "{{kafka.ld-library-path}}",
     "FRAMEWORK_NAME": "{{kafka.framework-name}}",
