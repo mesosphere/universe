@@ -8,8 +8,8 @@
     0
   ],
   "uris": [
-    "{{resource.assets.uris.cassandra-mesos-0-2-0-1-tar-gz}}",
-    "{{resource.assets.uris.jre-7u76-linux-x64-tar-gz}}"
+    "{{cassandra.binary}}",
+    "{{resource.assets.uris.jre-tar-gz}}"
   ],
   "healthChecks": [
     {
@@ -32,7 +32,7 @@
     }
   ],
   "labels": {
-    "DCOS_PACKAGE_FRAMEWORK_NAME": "cassandra.{{cassandra.cluster-name}}"
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{cassandra.cluster-name}}"
   },
   "env": {
     "MESOS_ZK": "{{mesos.master}}"
@@ -70,5 +70,10 @@
 {{#cassandra.framework.authentication.secret}}
     ,"DEFAULT_SECRET": "{{cassandra.framework.authentication.secret}}"
 {{/cassandra.framework.authentication.secret}}
+    ,"HOST":"{{cassandra.cluster-name}}.mesos"
+    ,"CASSANDRA_RESERVATION":"{{cassandra.framework.reservation}}"
+    ,"CASSANDRA_PRINCIPAL":"{{cassandra.framework.authentication.principal}}"
+    ,"CASSANDRA_DATA_DIRECTORY": "{{cassandra.data-directory}}"
+    ,"CASSANDRA_FRAMEWORK_MESOS_ROLE": "{{cassandra.framework.role}}"
   }
 }

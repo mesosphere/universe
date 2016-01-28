@@ -53,6 +53,11 @@
               "type": "string",
               "default": "*"
             },
+            "reservation": {
+                "description": "Enable resource reservation and persistent volumes",
+                "type": "boolean",
+                "default": false
+            },
             "authentication": {
               "description": "Framework Scheduler Authentication Configuration Properties",
               "type": "object",
@@ -83,6 +88,7 @@
             "mem",
             "failover-timeout-seconds",
             "role",
+            "reservation",
             "authentication"
           ]
         },
@@ -90,6 +96,11 @@
           "description": "The name of the framework to register with mesos. Will also be used as the cluster name in Cassandra",
           "type": "string",
           "default": "dcos"
+        },
+        "binary": {
+          "description":"Cassandra binary",
+          "type":"string",
+          "default":"http://downloads.mesosphere.com/cassandra-mesos/artifacts/0.2.0-1/cassandra-mesos-0.2.0-1.tar.gz"
         },
         "zk": {
           "description": "ZooKeeper URL for storing state. Format: zk://host1:port1,host2:port2,.../path (can have nested directories)",
@@ -217,7 +228,8 @@
         "health-check-interval-seconds",
         "bootstrap-grace-time-seconds",
         "data-directory",
-        "resources"
+        "resources",
+        "binary"
       ]
     }
   },
