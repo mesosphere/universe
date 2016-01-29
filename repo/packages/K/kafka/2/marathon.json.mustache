@@ -37,6 +37,14 @@
       "intervalSeconds": 60,
       "timeoutSeconds": 60,
       "maxConsecutiveFailures": 3
+    },
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "./kafka-topics.sh --zookeeper master.mesos:2181/kafka0 --describe --under-replicated-partitions | wc -l | { read count; echo Under replicated partition count = $count; exit $count; }" },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 60,
+      "maxConsecutiveFailures": 3
     }
   ],
   "ports": [0]
