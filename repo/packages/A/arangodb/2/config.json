@@ -91,7 +91,7 @@
         "async-replication": {
           "description": "Whether we do asynchronous replication, possible values: \"true\", \"false\"",
           "type": "boolean",
-          "default": false
+          "default": true
         },
 
         "role": {
@@ -162,6 +162,12 @@
 
         "secondaries-with-dbservers": {
           "description": "Flag, if each secondary must run on a node with a DBServer",
+          "type": "boolean",
+          "default": false
+        },
+        
+        "coordinators-with-dbservers": {
+          "description": "Flag, if each coordinator must run on a node with a DBServer",
           "type": "boolean",
           "default": false
         },
