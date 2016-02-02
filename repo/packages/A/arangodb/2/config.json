@@ -49,7 +49,7 @@
         "framework-cpus": {
           "description": "cpus resources needed for each framework instance.",
           "type": "number",
-          "default": 0.2
+          "default": 0.25
         },
 
         "framework-mem": {
@@ -97,13 +97,13 @@
         "role": {
           "description": "Role for framework",
           "type": "string",
-          "default": "*"
+          "default": "arangodb"
         },
 
         "minimal-resources-agent": {
           "description": "Minimal mesos resources for an agent",
           "type": "string",
-          "default": "mem(*):512;cpus(*):0.2;disk(*):512"
+          "default": "mem(*):512;cpus(*):0.25;disk(*):512"
         },
 
         "minimal-resources-coordinator": {
