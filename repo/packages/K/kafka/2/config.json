@@ -55,12 +55,12 @@
                 "framework-role": {
                     "type": "string",
                     "description": "Mesos Framework Role",
-                    "default": "*"
+                    "default": "kafka0-role"
                 },
                 "framework-principal": {
                     "type": "string",
                     "description": "Mesos Framework Principal",
-                    "default": "kafka-principal"
+                    "default": "kafka0-principal"
                 },
                 "user": {
                     "type": "string",
