@@ -122,6 +122,11 @@
                   "type": "string",
                   "default": "ANY"
                 },
+                "plan-strategy": {
+                  "description": "Broker placement strategy. See documentation. [INSTALL, STAGE]",
+                  "type": "string",
+                  "default": "INSTALL"
+                },
                 "broker-delete-topic-enable": {
                   "description": "Enables delete topic. Delete topic through the admin tool will have no effect if this config is turned off.",
                   "type": "boolean",
