@@ -144,7 +144,7 @@ alternate image named `icon-cassandra-small@2x.png`.
 
 This file describes the configuration properties supported by the package. Each property can specify whether or not it is required, a default value, as well as some basic validation.
 
-Users can then [override specific values](https://docs.mesosphere.com/using/cli/packagesyntax/) at installation time by passing an options file to the DCOS CLI.
+Users can then [override specific values](https://docs.mesosphere.com/manage-service/service-tutorials/install-service-with-a-custom-options-file/) at installation time by passing an options file to the DCOS CLI.
 
 ```json
 {
