@@ -1,0 +1,682 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://cassandra/docs/mesosphere.com",
+  "type": "object",
+  "properties": {
+    "framework": {
+      "id": "http://cassandra/docs/mesosphere.com/framework",
+      "type": "object",
+      "properties": {
+        "memoryMb": {
+          "id": "http://cassandra/docs/mesosphere.com/framework/memoryMb",
+          "type": "integer",
+          "default": 2048
+        },
+        "cpus": {
+          "id": "http://cassandra/docs/mesosphere.com/framework/cpus",
+          "type": "number",
+          "default": 0.5
+        },
+        "name": {
+          "id": "http://cassandra/docs/mesosphere.com/framework/name",
+          "type": "string",
+          "default": "cassandra"
+        },
+        "version": {
+          "id": "http://cassandra/docs/mesosphere.com/framework/version",
+          "type": "string",
+          "default": "0.1.0"
+        },
+        "user": {
+          "id": "http://cassandra/docs/mesosphere.com/framework/user",
+          "type": "string",
+          "default": "root"
+        },
+        "cluster": {
+          "id": "http://cassandra/docs/mesosphere.com/framework/cluster",
+          "type": "string",
+          "default": "dcos"
+        },
+        "role": {
+          "id": "http://cassandra/docs/mesosphere.com/framework/role",
+          "type": "string",
+          "default": "role1"
+        },
+        "principal": {
+          "id": "http://cassandra/docs/mesosphere.com/framework/principal",
+          "type": "string",
+          "default": "principal"
+        },
+        "failoverTimeoutS": {
+          "id": "http://cassandra/docs/mesosphere.com/framework/failoverTimeoutS",
+          "type": "integer",
+          "default": 604800
+        },
+        "checkpoint": {
+          "id": "http://cassandra/docs/mesosphere.com/framework/checkpoint",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "memoryMb",
+        "cpus",
+        "name",
+        "version",
+        "user",
+        "cluster",
+        "role",
+        "principal",
+        "failoverTimeoutS",
+        "checkpoint"
+      ]
+    },
+    "mesos": {
+      "id": "http://cassandra/docs/mesosphere.com/mesos",
+      "type": "object",
+      "properties": {
+        "servers": {
+          "id": "http://cassandra/docs/mesosphere.com/mesos/servers",
+          "type": "string",
+          "default": "master.mesos:2181"
+        },
+        "path": {
+          "id": "http://cassandra/docs/mesosphere.com/mesos/path",
+          "type": "string",
+          "default": "/mesos"
+        },
+        "timeoutMs": {
+          "id": "http://cassandra/docs/mesosphere.com/mesos/timeoutMs",
+          "type": "integer",
+          "default": 10000
+        }
+      },
+      "additionalProperties": false
+    },
+    "zookeeper": {
+      "id": "http://cassandra/docs/mesosphere.com/zookeeper",
+      "type": "object",
+      "properties": {
+        "servers": {
+          "id": "http://cassandra/docs/mesosphere.com/zookeeper/servers",
+          "type": "string",
+          "default": "master.mesos:2181"
+        },
+        "sessionTimeoutMs": {
+          "id": "http://cassandra/docs/mesosphere.com/zookeeper/sessionTimeoutMs",
+          "type": "integer",
+          "default": 10000
+        },
+        "connectionTimeoutMs": {
+          "id": "http://cassandra/docs/mesosphere.com/zookeeper/connectionTimeoutMs",
+          "type": "integer",
+          "default": 10000
+        },
+        "backoffMs": {
+          "id": "http://cassandra/docs/mesosphere.com/zookeeper/backoffMs",
+          "type": "integer",
+          "default": 250
+        }
+      },
+      "additionalProperties": false
+    },
+    "cassandra": {
+      "id": "http://cassandra/docs/mesosphere.com/cassandra",
+      "type": "object",
+      "properties": {
+        "version": {
+          "id": "http://cassandra/docs/mesosphere.com/cassandra/version",
+          "type": "string",
+          "default": "2.2.5"
+        },
+        "cpus": {
+          "id": "http://cassandra/docs/mesosphere.com/cassandra/cpus",
+          "type": "number",
+          "default": 0.5
+        },
+        "memoryMb": {
+          "id": "http://cassandra/docs/mesosphere.com/cassandra/memoryMb",
+          "type": "integer",
+          "default": 4096
+        },
+        "diskMb": {
+          "id": "http://cassandra/docs/mesosphere.com/cassandra/diskMb",
+          "type": "integer",
+          "default": 10240
+        },
+        "heap": {
+          "id": "http://cassandra/docs/mesosphere.com/cassandra/heap",
+          "type": "object",
+          "properties": {
+            "sizeMb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/heap/sizeMb",
+              "type": "integer",
+              "default": 2048
+            },
+            "newMb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/heap/newMb",
+              "type": "integer",
+              "default": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "location": {
+          "id": "http://cassandra/docs/mesosphere.com/cassandra/location",
+          "type": "object",
+          "properties": {
+            "rack": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/location/rack",
+              "type": "string",
+              "default": "rac1"
+            },
+            "dataCenter": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/location/dataCenter",
+              "type": "string",
+              "default": "dc"
+            }
+          },
+          "additionalProperties": false
+        },
+        "jmxPort": {
+          "id": "http://cassandra/docs/mesosphere.com/cassandra/jmxPort",
+          "type": "integer",
+          "default": 7199
+        },
+        "volume": {
+          "id": "http://cassandra/docs/mesosphere.com/cassandra/volume",
+          "type": "object",
+          "properties": {
+            "path": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/volume/path",
+              "type": "string",
+              "default": "./volume"
+            },
+            "sizeMb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/volume/sizeMb",
+              "type": "integer",
+              "default": 9216
+            }
+          },
+          "additionalProperties": false
+        },
+        "application": {
+          "id": "http://cassandra/docs/mesosphere.com/cassandra/application",
+          "type": "object",
+          "properties": {
+            "clusterName": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/clusterName",
+              "type": "string",
+              "default": "dcos"
+            },
+            "numTokens": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/numTokens",
+              "type": "integer",
+              "default": 256
+            },
+            "hintedHandoffEnabled": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/hintedHandoffEnabled",
+              "type": "boolean",
+              "default": true
+            },
+            "maxHintWindowInMs": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/maxHintWindowInMs",
+              "type": "integer",
+              "default": 10800000
+            },
+            "hintedHandoffThrottleInKb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/hintedHandoffThrottleInKb",
+              "type": "integer",
+              "default": 1024
+            },
+            "maxHintsDeliveryThreads": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/maxHintsDeliveryThreads",
+              "type": "integer",
+              "default": 2
+            },
+            "batchlogReplayThrottleInKb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/batchlogReplayThrottleInKb",
+              "type": "integer",
+              "default": 1024
+            },
+            "authenticator": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/authenticator",
+              "type": "string",
+              "default": "AllowAllAuthenticator"
+            },
+            "authorizer": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/authorizer",
+              "type": "string",
+              "default": "AllowAllAuthorizer"
+            },
+            "roleManager": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/roleManager",
+              "type": "string",
+              "default": "CassandraRoleManager"
+            },
+            "rolesValidityInMs": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/rolesValidityInMs",
+              "type": "integer",
+              "default": 2000
+            },
+            "permissionsValidityInMs": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/permissionsValidityInMs",
+              "type": "integer",
+              "default": 2000
+            },
+            "partitioner": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/partitioner",
+              "type": "string",
+              "default": "org.apache.cassandra.dht.Murmur3Partitioner"
+            },
+            "persistentVolume": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/persistentVolume",
+              "type": "string",
+              "default": "./volume"
+            },
+            "diskFailurePolicy": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/diskFailurePolicy",
+              "type": "string",
+              "default": "stop"
+            },
+            "commitFailurePolicy": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/commitFailurePolicy",
+              "type": "string",
+              "default": "stop"
+            },
+            "keyCacheSavePeriod": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/keyCacheSavePeriod",
+              "type": "integer",
+              "default": 14400
+            },
+            "rowCacheSizeInMb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/rowCacheSizeInMb",
+              "type": "integer",
+              "default": 0
+            },
+            "rowCacheSavePeriod": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/rowCacheSavePeriod",
+              "type": "integer",
+              "default": 0
+            },
+            "counterCacheSavePeriod": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/counterCacheSavePeriod",
+              "type": "integer",
+              "default": 7200
+            },
+            "commitlogSync": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/commitlogSync",
+              "type": "string",
+              "default": "periodic"
+            },
+            "commitlogSyncPeriodInMs": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/commitlogSyncPeriodInMs",
+              "type": "integer",
+              "default": 10000
+            },
+            "commitlogSegmentSizeInMb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/commitlogSegmentSizeInMb",
+              "type": "integer",
+              "default": 32
+            },
+            "concurrentReads": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/concurrentReads",
+              "type": "integer",
+              "default": 32
+            },
+            "concurrentWrites": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/concurrentWrites",
+              "type": "integer",
+              "default": 32
+            },
+            "concurrentCounterWrites": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/concurrentCounterWrites",
+              "type": "integer",
+              "default": 32
+            },
+            "memtableAllocationType": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/memtableAllocationType",
+              "type": "string",
+              "default": "heap_buffers"
+            },
+            "indexSummaryResizeIntervalInMinutes": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/indexSummaryResizeIntervalInMinutes",
+              "type": "integer",
+              "default": 60
+            },
+            "trickleFsync": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/trickleFsync",
+              "type": "boolean",
+              "default": false
+            },
+            "trickleFsyncIntervalInKb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/trickleFsyncIntervalInKb",
+              "type": "integer",
+              "default": 10240
+            },
+            "storagePort": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/storagePort",
+              "type": "integer",
+              "default": 7000
+            },
+            "sslStoragePort": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/sslStoragePort",
+              "type": "integer",
+              "default": 7001
+            },
+            "listenAddress": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/listenAddress",
+              "type": "string",
+              "default": "localhost"
+            },
+            "startNativeTransport": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/startNativeTransport",
+              "type": "boolean",
+              "default": true
+            },
+            "nativeTransportPort": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/nativeTransportPort",
+              "type": "integer",
+              "default": 9042
+            },
+            "startRpc": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/startRpc",
+              "type": "boolean",
+              "default": false
+            },
+            "rpcAddress": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/rpcAddress",
+              "type": "string",
+              "default": "localhost"
+            },
+            "rpcPort": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/rpcPort",
+              "type": "integer",
+              "default": 9160
+            },
+            "rpcKeepalive": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/rpcKeepalive",
+              "type": "boolean",
+              "default": true
+            },
+            "rpcServerType": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/rpcServerType",
+              "type": "string",
+              "default": "sync"
+            },
+            "thriftFramedTransportSizeInMb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/thriftFramedTransportSizeInMb",
+              "type": "integer",
+              "default": 15
+            },
+            "incrementalBackups": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/incrementalBackups",
+              "type": "boolean",
+              "default": false
+            },
+            "snapshotBeforeCompaction": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/snapshotBeforeCompaction",
+              "type": "boolean",
+              "default": false
+            },
+            "autoSnapshot": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/autoSnapshot",
+              "type": "boolean",
+              "default": true
+            },
+            "tombstoneWarnThreshold": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/tombstoneWarnThreshold",
+              "type": "integer",
+              "default": 1000
+            },
+            "tombstoneFailureThreshold": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/tombstoneFailureThreshold",
+              "type": "integer",
+              "default": 100000
+            },
+            "columnIndexSizeInKb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/columnIndexSizeInKb",
+              "type": "integer",
+              "default": 64
+            },
+            "batchSizeWarnThresholdInKb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/batchSizeWarnThresholdInKb",
+              "type": "integer",
+              "default": 5
+            },
+            "batchSizeFailThresholdInKb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/batchSizeFailThresholdInKb",
+              "type": "integer",
+              "default": 50
+            },
+            "compactionThroughputMbPerSec": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/compactionThroughputMbPerSec",
+              "type": "integer",
+              "default": 16
+            },
+            "compactionLargePartitionWarningThresholdMb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/compactionLargePartitionWarningThresholdMb",
+              "type": "integer",
+              "default": 100
+            },
+            "sstablePreemptiveOpenIntervalInMb": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/sstablePreemptiveOpenIntervalInMb",
+              "type": "integer",
+              "default": 50
+            },
+            "readRequestTimeoutInMs": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/readRequestTimeoutInMs",
+              "type": "integer",
+              "default": 5000
+            },
+            "rangeRequestTimeoutInMs": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/rangeRequestTimeoutInMs",
+              "type": "integer",
+              "default": 10000
+            },
+            "writeRequestTimeoutInMs": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/writeRequestTimeoutInMs",
+              "type": "integer",
+              "default": 2000
+            },
+            "counterWriteRequestTimeoutInMs": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/counterWriteRequestTimeoutInMs",
+              "type": "integer",
+              "default": 5000
+            },
+            "casContentionTimeoutInMs": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/casContentionTimeoutInMs",
+              "type": "integer",
+              "default": 1000
+            },
+            "truncateRequestTimeoutInMs": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/truncateRequestTimeoutInMs",
+              "type": "integer",
+              "default": 60000
+            },
+            "requestTimeoutInMs": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/requestTimeoutInMs",
+              "type": "integer",
+              "default": 10000
+            },
+            "crossNodeTimeout": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/crossNodeTimeout",
+              "type": "boolean",
+              "default": false
+            },
+            "endpointSnitch": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/endpointSnitch",
+              "type": "string",
+              "default": "SimpleSnitch"
+            },
+            "dynamicSnitchUpdateIntervalInMs": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/dynamicSnitchUpdateIntervalInMs",
+              "type": "integer",
+              "default": 100
+            },
+            "dynamicSnitchResetIntervalInMs": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/dynamicSnitchResetIntervalInMs",
+              "type": "integer",
+              "default": 600000
+            },
+            "dynamicSnitchBadnessThreshold": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/dynamicSnitchBadnessThreshold",
+              "type": "number",
+              "default": 0.1
+            },
+            "requestScheduler": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/requestScheduler",
+              "type": "string",
+              "default": "org.apache.cassandra.scheduler.NoScheduler"
+            },
+            "internodeCompression": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/internodeCompression",
+              "type": "string",
+              "default": "all"
+            },
+            "interDcTcpNodelay": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/interDcTcpNodelay",
+              "type": "boolean",
+              "default": false
+            },
+            "tracetypeQueryTtl": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/tracetypeQueryTtl",
+              "type": "integer",
+              "default": 86400
+            },
+            "tracetypeRepairTtl": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/tracetypeRepairTtl",
+              "type": "integer",
+              "default": 604800
+            },
+            "enableUserDefinedFunctions": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/enableUserDefinedFunctions",
+              "type": "boolean",
+              "default": false
+            },
+            "windowsTimerInterval": {
+              "id": "http://cassandra/docs/mesosphere.com/cassandra/application/windowsTimerInterval",
+              "type": "integer",
+              "default": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "executor": {
+      "id": "http://cassandra/docs/mesosphere.com/executor",
+      "type": "object",
+      "properties": {
+        "command": {
+          "id": "http://cassandra/docs/mesosphere.com/executor/command",
+          "type": "string",
+          "default": "./executor/bin/cassandra-executor server executor/conf/executor.yml"
+        },
+        "cpus": {
+          "id": "http://cassandra/docs/mesosphere.com/executor/cpus",
+          "type": "number",
+          "default": 0.1
+        },
+        "memoryMb": {
+          "id": "http://cassandra/docs/mesosphere.com/executor/memoryMb",
+          "type": "integer",
+          "default": 768
+        },
+        "diskMb": {
+          "id": "http://cassandra/docs/mesosphere.com/executor/diskMb",
+          "type": "integer",
+          "default": 1024
+        },
+        "heapMb": {
+          "id": "http://cassandra/docs/mesosphere.com/executor/heapMb",
+          "type": "integer",
+          "default": 512
+        },
+        "apiPort": {
+          "id": "http://cassandra/docs/mesosphere.com/executor/apiPort",
+          "type": "integer",
+          "default": 9000
+        },
+        "adminPort": {
+          "id": "http://cassandra/docs/mesosphere.com/executor/adminPort",
+          "type": "integer",
+          "default": 9001
+        },
+        "javaHome": {
+          "id": "http://cassandra/docs/mesosphere.com/executor/javaHome",
+          "type": "string",
+          "default": "./jre"
+        },
+        "jreLocation": {
+          "id": "http://cassandra/docs/mesosphere.com/executor/jreLocation",
+          "type": "string",
+          "default": "https://s3-us-west-2.amazonaws.com/cassandra-framework-dev/jre/linux/server-jre-8u74-linux-x64.tar.gz"
+        },
+        "executorLocation": {
+          "id": "http://cassandra/docs/mesosphere.com/executor/executorLocation",
+          "type": "string",
+          "default": "https://s3-us-west-2.amazonaws.com/cassandra-framework-dev/testing/executor.zip"
+        },
+        "cassandraLocation": {
+          "id": "http://cassandra/docs/mesosphere.com/executor/cassandraLocation",
+          "type": "string",
+          "default": "https://s3-us-west-2.amazonaws.com/cassandra-framework-dev/testing/apache-cassandra-2.2.5-bin.tar.gz"
+        }
+      },
+      "additionalProperties": false
+    },
+    "servers": {
+      "id": "http://cassandra/docs/mesosphere.com/servers",
+      "type": "integer",
+      "default": 3
+    },
+    "seeds": {
+      "id": "http://cassandra/docs/mesosphere.com/seeds",
+      "type": "integer",
+      "default": 2
+    },
+    "updateConfig": {
+      "id": "http://cassandra/docs/mesosphere.com/updateConfig",
+      "type": "boolean",
+      "default": false
+    },
+    "placementStrategy": {
+      "id": "http://cassandra/docs/mesosphere.com/placementStrategy",
+      "type": "string",
+      "default": "NODE"
+    },
+    "planStrategy": {
+      "id": "http://cassandra/docs/mesosphere.com/planStrategy",
+      "type": "string",
+      "default": "INSTALL"
+    },
+    "apiPort": {
+      "id": "http://cassandra/docs/mesosphere.com/apiPort",
+      "type": "integer",
+      "default": 9000
+    },
+    "adminPort": {
+      "id": "http://cassandra/docs/mesosphere.com/adminPort",
+      "type": "integer",
+      "default": 9001
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "framework",
+    "mesos",
+    "zookeeper",
+    "cassandra",
+    "executor",
+    "servers",
+    "seeds",
+    "updateConfig",
+    "placementStrategy",
+    "planStrategy",
+    "apiPort",
+    "adminPort"
+  ]
+}
