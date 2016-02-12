@@ -12,15 +12,14 @@
 "{{resource.assets.uris.server-jre-8u74-linux-x64-tar-gz}}"
 ],
 "healthChecks": [
-{
-"gracePeriodSeconds": 120,
-"intervalSeconds": 30,
-"maxConsecutiveFailures": 20,
-"path": "/healthcheck",
-"portIndex" : 1,
-"protocol": "HTTP",
-"timeoutSeconds": 20
-}
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "curl -f -X GET http://$HOST:{{adminPort}}/healthcheck" },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
 ],
 "labels": {
 "DCOS_PACKAGE_FRAMEWORK_NAME": "{{framework.name}}"
