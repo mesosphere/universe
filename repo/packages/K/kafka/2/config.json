@@ -1,18 +1,6 @@
 {
     "type": "object",
     "properties": {
-        "mesos": {
-            "description": "Mesos specific configuration properties",
-            "type": "object",
-            "properties": {
-                "master": {
-                    "default": "zk://master.mesos:2181/mesos",
-                    "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard host:port patterns, like localhost:5050 or 10.0.0.5:5050,10.0.0.6:5050, are also acceptable.",
-                    "type": "string"
-                }
-            },
-            "required": ["master"]
-        },
         "kafka": {
             "description": "Kafka framework configuration properties",
             "type": "object",
@@ -52,24 +40,9 @@
                     "description": "Mesos Framework Name",
                     "default": "kafka0"
                 },
-                "framework-role": {
-                    "type": "string",
-                    "description": "Mesos Framework Role",
-                    "default": "kafka0-role"
-                },
-                "framework-principal": {
-                    "type": "string",
-                    "description": "Mesos Framework Principal",
-                    "default": "kafka0-principal"
-                },
                 "user": {
                     "type": "string",
                     "description": "Mesos user to run tasks",
-                    "default": ""
-                },
-                "principal": {
-                    "type": "string",
-                    "description": "Mesos principal (username)",
                     "default": ""
                 },
                 "secret": {
@@ -86,11 +59,6 @@
                   "description": "Broker count",
                   "type": "integer",
                   "default": 3
-                },
-                "zookeeper-addr": {
-                  "description": "Zookeeper address",
-                  "type": "string",
-                  "default": "master.mesos:2181" 
                 },
                 "version_name": {
                   "description": "Kafka version name",
@@ -126,17 +94,13 @@
                   "description": "Broker placement strategy. See documentation. [INSTALL, STAGE]",
                   "type": "string",
                   "default": "INSTALL"
-                },
-                "broker-delete-topic-enable": {
-                  "description": "Enables delete topic. Delete topic through the admin tool will have no effect if this config is turned off.",
-                  "type": "boolean",
-                  "default": false 
                 }
             },
             "required": [
                 "app",
-                "framework-name", "framework-role",
-                "user", "principal", "secret"
+                "framework-name",
+                "user",
+                "secret"
             ]
         }
     }

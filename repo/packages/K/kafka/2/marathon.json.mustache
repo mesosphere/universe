@@ -7,8 +7,6 @@
   "env": {
     "LD_LIBRARY_PATH": "{{kafka.ld-library-path}}",
     "FRAMEWORK_NAME": "{{kafka.framework-name}}",
-    "ROLE": "{{kafka.framework-role}}",
-    "PRINCIPAL": "{{kafka.framework-principal}}",
     "USER": "{{kafka.user}}",
     "PLACEMENT_STRATEGY": "{{kafka.placement-strategy}}",
     "PLAN_STRATEGY": "{{kafka.plan-strategy}}",
@@ -17,11 +15,8 @@
     "BROKER_MEM": "{{kafka.mem}}",
     "BROKER_DISK": "{{kafka.disk}}",
     "BROKER_PV": "{{kafka.pv}}",
-    "BROKER_DELETE_TOPIC_ENABLE": "{{kafka.broker-delete-topic-enable}}",
-    "ZOOKEEPER_ADDR": "{{kafka.zookeeper-addr}}",
     "KAFKA_VER_NAME": "{{kafka.version_name}}",
     "KAFKA_URI": "{{resource.assets.uris.kafka_2-10-0-8-2-2-tgz}}",
-    "KAFKA_BIN_PATH": "kafka_2.10-0.8.2.2/bin",
     "CONTAINER_HOOK_URI": "{{resource.assets.uris.container-hook-0-1-0-tgz}}",
     "OVERRIDER_URI": "{{resource.assets.uris.kafka-config-overrider-0-1-0-jar}}",
     "JAVA_URI": "{{resource.assets.uris.jre-8u72-linux-x64-tar-gz}}"
