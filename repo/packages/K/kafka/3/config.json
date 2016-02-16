@@ -83,12 +83,12 @@
                 "pv": {
                   "description": "Whether persistent volumes should be used",
                   "type": "boolean",
-                  "default": false 
+                  "default": true
                 },
                 "placement-strategy": {
                   "description": "Broker placement strategy. See documentation. [ANY, NODE]",
                   "type": "string",
-                  "default": "ANY"
+                  "default": "NODE"
                 },
                 "plan-strategy": {
                   "description": "Broker placement strategy. See documentation. [INSTALL, STAGE]",
