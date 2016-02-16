@@ -150,6 +150,11 @@
                   "type": "integer",
                   "default": 1073741824
                 },
+                "kafka_override_delete_topic_enable": {
+                  "description": "Enable topic deletion.",
+                  "type": "boolean",
+                  "default": false 
+                },
                 "kafka_override_log_cleaner_enable": {
                   "description": "Kafka broker log cleaner enabled.",
                   "type": "boolean",
