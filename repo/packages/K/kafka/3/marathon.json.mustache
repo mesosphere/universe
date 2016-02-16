@@ -35,13 +35,13 @@
   },
   "uris": [
     "{{resource.assets.uris.jre-8u72-linux-x64-tar-gz}}",
-    "{{resource.assets.uris.kafka-scheduler-0-2-0-jar}}",
+    "{{resource.assets.uris.kafka-scheduler-0-1-0-jar}}",
     "{{resource.assets.uris.kafka_2-10-0-9-0-0-tgz}}"
   ],
   "healthChecks": [
     {
       "protocol": "COMMAND",
-      "command": { "value": "export PATH=$PATH:$MESOS_SANDBOX/jre/bin && ./kafka_2.10-0.8.2.2/bin/kafka-topics.sh --zookeeper master.mesos:2181/{{kafka.framework-name}} --describe --under-replicated-partitions | wc -l | { read count; echo Under replicated partition count = $count; exit $count; }" },
+      "command": { "value": "export PATH=$PATH:$MESOS_SANDBOX/jre/bin && ./kafka_2.10-0.9.0.0/bin/kafka-topics.sh --zookeeper master.mesos:2181/{{kafka.framework-name}} --describe --under-replicated-partitions | wc -l | { read count; echo Under replicated partition count = $count; exit $count; }" },
       "gracePeriodSeconds": 300,
       "intervalSeconds": 60,
       "timeoutSeconds": 60,
