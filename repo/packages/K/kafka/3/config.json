@@ -159,6 +159,11 @@
                   "description": "Kafka broker log cleaner enabled.",
                   "type": "boolean",
                   "default": false 
+                },
+                "kafka_override_inter_broker_protocol_version": {
+                  "description": "Kafka broker log cleaner enabled.",
+                  "type": "string",
+                  "default": "0.8.2.2"
                 }
             },
             "required": [
