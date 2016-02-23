@@ -145,7 +145,7 @@
         "failover-timeout": {
           "description": "Timeout after which an automatic failover is done.",
           "type": "number",
-          "default": 30
+          "default": 604800
         },
 
         "mesos-authenticate": {
