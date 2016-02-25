@@ -63,7 +63,7 @@
                 "version_name": {
                   "description": "Kafka version name",
                   "type": "string",
-                  "default": "kafka_2.10-0.8.2.2"
+                  "default": "kafka_2.10-0.9.0.0"
                 },
                 "cpus": {
                   "description": "Broker cpu requirements",
@@ -83,17 +83,22 @@
                 "pv": {
                   "description": "Whether persistent volumes should be used",
                   "type": "boolean",
-                  "default": false 
+                  "default": true
                 },
                 "placement-strategy": {
                   "description": "Broker placement strategy. See documentation. [ANY, NODE]",
                   "type": "string",
-                  "default": "ANY"
+                  "default": "NODE"
                 },
                 "plan-strategy": {
                   "description": "Broker placement strategy. See documentation. [INSTALL, STAGE]",
                   "type": "string",
                   "default": "INSTALL"
+                },
+                "kafka_advertise_host_ip": {
+                  "description": "Override the advertised.host.name Kafka configuration value with the IP address detected in /opt/mesosphere/detect_ip",
+                  "type": "boolean",
+                  "default": false
                 },
                 "kafka_override_socket_request_max_bytes": {
                   "description": "Kafka broker socket request max bytes.",
@@ -150,10 +155,20 @@
                   "type": "integer",
                   "default": 1073741824
                 },
+                "kafka_override_delete_topic_enable": {
+                  "description": "Enable topic deletion.",
+                  "type": "boolean",
+                  "default": false 
+                },
                 "kafka_override_log_cleaner_enable": {
                   "description": "Kafka broker log cleaner enabled.",
                   "type": "boolean",
                   "default": false 
+                },
+                "kafka_override_inter_broker_protocol_version": {
+                  "description": "Kafka broker log cleaner enabled.",
+                  "type": "string",
+                  "default": "0.8.2.2"
                 }
             },
             "required": [
