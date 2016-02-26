@@ -4,6 +4,10 @@ The DCOS package repository for packages that have been certified by Mesosphere.
 
 Experimental packages can be found in the [Multiverse repository](https://github.com/mesosphere/multiverse).
 
+# Deprecation Notice
+
+This branch (`version-1.x`) uses a deprecated Universe schema and can only be used by legacy versions of the DCOS CLI (<0.4.0). Please see the current default branch at `version-2.x`. To ensure you can continue to install the latest packages, please [upgrade your installed DCOS CLI](https://docs.mesosphere.com/install/cli/).
+
 ## Installation
 
 The [DCOS CLI](https://docs.mesosphere.com/install/cli/) comes pre-configured to use the Universe repository.
@@ -16,9 +20,11 @@ dcos config prepend package.sources https://github.com/mesosphere/universe/archi
 
 ## Branches
 
-The default branch for this repository is `version-1.x`, which reflects the current schema for the Universe. In the future, if the format changes significantly, there will be additional branches.
+The default branch for this repository is `version-2.x`, which reflects the current schema for the Universe. In the future, if the format changes significantly, there will be additional branches.
 
-The `cli-tests` branch is used for integration testing by the [DCOS CLI](https://github.com/mesosphere/dcos-cli) and provides a fixed and well known set of packages to write tests against.
+This branch (version-1.x) has been deprecated, please use branch version-2.x instead.
+
+The `cli-test-X` branches are used for integration testing by the [DCOS CLI](https://github.com/mesosphere/dcos-cli) and provide a fixed and well known set of packages to write tests against.
 
 ## Contributing a Package
 
