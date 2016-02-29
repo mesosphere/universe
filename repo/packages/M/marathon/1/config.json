@@ -156,8 +156,7 @@
         },
         "http-port" : {
           "description" : "The port to listen on for HTTP requests",
-          "type" : "integer",
-          "default" : 0
+          "type" : "integer"
         },
         "http-realm" : {
           "description" : "The security realm (aka 'area') associated with the credentials",
@@ -170,8 +169,7 @@
         },
         "https-port" : {
           "description" : "The port to listen on for HTTPS requests",
-          "type" : "integer",
-          "default" : 0
+          "type" : "integer"
         },
         "launch-token-refresh-interval" : {
           "description" : "The interval (ms) in which to refresh the launch tokens to --launch_token_count",
@@ -181,7 +179,7 @@
         "launch-tokens" : {
           "description" : "Launch tokens per interval",
           "type" : "integer",
-          "default" : 1000
+          "default" : 100
         },
         "leader-proxy-connection-timeout" : {
           "description" : "Maximum time, in milliseconds, to wait for connecting to the current Marathon leader from another Marathon instance.",
@@ -247,7 +245,7 @@
           "type" : "string"
         },
         "metrics" : {
-          "description" : "Enabled: (Default) Enable metric measurement of service method calls. Disabled: Disable metric measurement of service method calls.",
+          "description" : "Enabled: (Default) Expose the execution time of service method calls using code instrumentation via the metrics endpoint (/metrics). This might noticeably degrade performance but can help finding performance problems. Disabled: Disable exposing execution time of service method calls using code instrumentation via the metrics endpoing (/metrics). This does not turn off reporting of other metrics.",
           "type" : "boolean",
           "default" : true
         },
@@ -282,7 +280,7 @@
         "reconciliation-interval" : {
           "description" : "This is the length of time, in milliseconds, between task reconciliation operations.",
           "type" : "integer",
-          "default" : 300000
+          "default" : 600000
         },
         "reporter-datadog" : {
           "description" : "URL to dogstatsd agent. e.g. udp://localhost:8125?prefix=marathon-test&tags=marathon&interval=10",

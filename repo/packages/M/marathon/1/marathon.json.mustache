@@ -6,11 +6,11 @@
   "instances": {{application.instances}},
   "constraints": [["hostname", "UNIQUE"]],
   "ports": [
-    {{marathon.http-port}}
+    {{#marathon.http-port}}{{marathon.http-port}}{{/marathon.http-port}}{{^marathon.http-port}}0{{/marathon.http-port}}
     , 0
     {{#marathon.ssl-keystore-path}}
     {{#marathon.ssl-keystore-password}}
-    , {{marathon.https-port}}
+    , {{#marathon.https-port}}{{marathon.https-port}}{{/marathon.https-port}}{{^marathon.https-port}}0{{/marathon.https-port}}
     {{/marathon.ssl-keystore-password}}
     {{/marathon.ssl-keystore-path}}
   ],
