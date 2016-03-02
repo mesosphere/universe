@@ -1,0 +1,85 @@
+{
+  "type": "object",
+  "properties": {
+    "hdfs": {
+      "type": "object",
+      "properties": {
+        "scheduler-uris": {
+        "description": "The URIs of the hdfs-mesos tarball, which will be extracted and used to run the scheduler.",
+        "type": "array",
+          "items": {
+          "type": "string"
+        },
+        "default": [
+          "https://downloads.mesosphere.com/hdfs/artifacts/dcos/0.1.8/hdfs-mesos-0.1.8.tgz",
+          "https://downloads.mesosphere.com/java/jre-7u76-linux-x64.tar.gz"
+        ]
+      },
+      "custom-config": {
+        "description": "Custom mesos-site.xml (base64 encoded)",
+        "type": "string"
+      },
+      "framework-name": {
+        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
+        "type": "string",
+        "default": "hdfs"
+      },
+      "framework-version": {
+        "description": "Framework version",
+        "type": "string",
+        "default": "hdfs-mesos-0.1.8"
+      },
+      "cpus": {
+        "default": 0.5,
+        "description": "CPU shares to allocate to each Marathon instance.",
+        "minimum": 0.0,
+        "type": "number"
+      },
+      "mem": {
+        "default": 512.0,
+        "description": "Memory (MB) to allocate to each Marathon task.",
+        "minimum": 512.0,
+        "type": "number"
+      },
+      "instances": {
+        "default": 1,
+        "description": "Number of Marathon instances to run.",
+        "minimum": 0,
+        "type": "integer"
+      },
+      "disk-size": {
+        "default": 100,
+        "description": "Number of Marathon instances to run.",
+        "minimum": 0,
+        "type": "integer"
+      },
+    	"role": {
+      	"description": "Framework role",
+      	"type": "string",
+      	"default": "*"
+      },
+      "jre-version": {
+        "description": "JRE version",
+        "type": "string",
+        "default": "jre1.7.0_76"
+      },
+      "ld-library-path": {
+        "desription": "Library path",
+        "type": "string",
+        "default": "/opt/mesosphere/lib"
+      }
+     },
+     "required": [
+      "scheduler-uris",
+      "framework-name",
+      "ld-library-path",
+      "jre-version",
+      "framework-version",
+	  "cpus",
+	  "mem",
+	  "instances",
+	  "disk-size"
+     ]
+    } 
+  }
+}
