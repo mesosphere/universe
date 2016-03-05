@@ -3,10 +3,12 @@
   "cmd": "./scheduler/bin/cassandra-scheduler server ./scheduler/conf/scheduler.yml",
   "instances": 1,
   "cpus": {{framework.cpus}},
-"mem": {{framework.memoryMb}},
-"ports": [
-{{apiPort}}, {{adminPort}}
-],
+  "mem": {{framework.memoryMb}},
+  "requirePorts": true,
+  "ports": [
+    {{apiPort}}, 
+    {{adminPort}}
+  ],
 "uris": [
 "{{resource.assets.uris.scheduler-zip}}",
 "{{resource.assets.uris.server-jre-8u74-linux-x64-tar-gz}}"
