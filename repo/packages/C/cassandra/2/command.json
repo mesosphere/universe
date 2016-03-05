@@ -1,6 +1,5 @@
 {
   "pip": [
-    "dcos==0.1.13",
-    "git+https://github.com/mesosphere/dcos-cassandra.git#dcos-cassandra=0.1.0"
+    "https://s3-us-west-2.amazonaws.com/cassandra-framework-dev/testing/dcos-cassandra-0.1.0.tar.gz"
   ]
 }

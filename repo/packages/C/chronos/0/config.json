@@ -130,7 +130,7 @@
         "default": "/chronos"
       },
       "leader-max-idle-time": {
-        "integer": "The look-ahead time for scheduling tasks in milliseconds (default = 5000)",
+        "description": "The look-ahead time for scheduling tasks in milliseconds (default = 5000)",
         "type": "string"
       },
       "mail-from": {
