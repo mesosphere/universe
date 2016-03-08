@@ -4,7 +4,7 @@
     "service":{
       "type":"object",
       "properties":{
-        "framework-name":{
+        "name":{
           "description":"The name of the service in DCOS.",
           "type":"string",
           "default":"hdfs",
@@ -15,14 +15,12 @@
           "type":"string"
         },
         "role":{
-          "description":"Framework role",
-          "type":"string",
-          "default":"*"
+          "default":"*",
+          "type":"string"
         },
         "user":{
-          "description":"user",
-          "type":"string",
-          "default":"root"
+          "default":"root",
+          "type":"string"
         }
       },
       "required":[
@@ -31,12 +29,13 @@
       ]
     },
     "journal-node":{
+	  "title" : "Journal Nodes",
       "type":"object",
       "properties":{
         "cpus":{
-          "default":0.5,
+          "default":1,
           "description":"CPU shares to allocate to each journal node instance.",
-          "minimum":1,
+          "minimum":0.5,
           "type":"number"
         },
         "mem":{
@@ -58,7 +57,7 @@
       ]
     },
     "name-node":{
-      "description":"HDFS specific configuration",
+	  "title" : "Name Nodes",
       "type":"object",
       "properties":{
         "cpus":{
@@ -87,7 +86,7 @@
       ]
     },
     "data-node":{
-      "description":"HDFS specific configuration",
+	  "title" : "Data Nodes",
       "type":"object",
       "properties":{
         "cpus":{
@@ -119,9 +118,15 @@
       ]
     },
     "hdfs":{
-      "description":"HDFS specific configuration",
+	  "title" : "HDFS",
       "type":"object",
       "properties":{
+	    "framework-name":{
+          "description":"The name of the service in DCOS.",
+          "type":"string",
+          "default":"hdfs",
+          "title":"name"
+        },  
         "dfs-datanode-balance-bandwidthPerSec":{
           "description":"Sets the HDFS datanode balance bandwidth/sec.",
           "type":"integer",
@@ -148,12 +153,12 @@
           "default":20
         },
         "dfs-namenode-invalidate-work-pct-per-iteration":{
-          "description":"Advanced property. Change with caution. This determines the percentage amount of block invalidations (deletes) to do over a single DN heartbeat deletion command. The final deletion count is determined by applying this percentage to the number of live nodes in the system. The resultant number is the number of blocks from the deletion list chosen for proper invalidation over a single heartbeat of a single DN. Value should be a positive, non-zero percentage in float notation (X.Yf), with 1.0f meaning 100%",
+          "description":"Advanced property. Sets dfs.namenode.invalidate.work.pct.per.iteration property in hdfs-site.xml.  This determines the percentage amount of block invalidations (deletes) to do over a single DN heartbeat deletion command. The final deletion count is determined by applying this percentage to the number of live nodes in the system. The resultant number is the number of blocks from the deletion list chosen for proper invalidation over a single heartbeat of a single DN. Value should be a positive, non-zero percentage in float notation (X.Yf), with 1.0f meaning 100%",
           "type":"string",
           "default":"0.32f"
         },
         "dfs-namenode-replication-work-multiplier-per-iteration":{
-          "description":"Advanced property. Change with caution. This determines the total amount of block transfers to begin in parallel at a DN, for replication, when such a command list is being sent over a DN heartbeat by the NN. The actual number is obtained by multiplying this multiplier with the total number of live nodes in the cluster. The result number is the number of blocks to begin transfers immediately for, per DN heartbeat. This number can be any positive, non-zero integer.",
+          "description":"Advanced property. Sets dfs.namenode.replication.work.multiplier.per.iteration property in hdfs-site.xml. This determines the total amount of block transfers to begin in parallel at a DN, for replication, when such a command list is being sent over a DN heartbeat by the NN. The actual number is obtained by multiplying this multiplier with the total number of live nodes in the cluster. The result number is the number of blocks to begin transfers immediately for, per DN heartbeat. This number can be any positive, non-zero integer.",
           "type":"integer",
           "default":2
         }
