@@ -1,272 +1,273 @@
 {
-  "type": "object",
-  "properties": {
-	"journal-node" : {
-	  "description" : "HDFS specific configuration",
-      "type": "object",
-      "properties": {
-	      "cpus": {
-	        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
-	        "type": "string",
-	        "default": "hdfs"
-	      },
-	      "mem": {
-	        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
-	        "type": "string",
-	        "default": "hdfs"
-	      },
-	      "instances": {
-	        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
-	        "type": "string",
-	        "default": "3"
-	      }			  
-		}		
-	},	
-	"name-node" : {
-	  "description" : "HDFS specific configuration",
-      "type": "object",
-      "properties": {
-	      "cpus": {
-	        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
-	        "type": "string",
-	        "default": "hdfs"
-	      },
-	      "mem": {
-	        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
-	        "type": "string",
-	        "default": "hdfs"
-	      },
-	      "instances": {
-	        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
-	        "type": "string",
-	        "default": "2"
-	      }			  
-		}		
-	},	
-	"data-node" : {
-	  "description" : "HDFS specific configuration",
-      "type": "object",
-      "properties": {
-	      "cpus": {
-	        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
-	        "type": "string",
-	        "default": "hdfs"
-	      },
-	      "mem": {
-	        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
-	        "type": "string",
-	        "default": "hdfs"
-	      },
-	      "instances": {
-	        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
-	        "type": "string",
-	        "default": "2"
-	      }			  
-		}		
-	},	
-	"hdfs" : {
-	  "description" : "HDFS specific configuration",
-      "type": "object",
-      "properties": {
-	      "name": {
-	        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
-	        "type": "string",
-	        "default": "hdfs"
-	      },
-		  "dfs-ha-namenodes-hdfs": {
-		    "description": "The zookeeper the HDFS system should use for HA.  The default is the DCOS zookeeper.",
-		    "type": "string",
-		    "default": "nn1,nn2"
-		  },
-	      "dfs-journalnode-edits-dir": {
-	        "description": "The journalnode default edit directory. This is a default value and can be overriden by the executor.",
-		    "type": "string",
-		    "default": "/var/lib/hdfs/data/jn"
-		  },
-		  "dfs-namenode-name-dir": {
-		    "description": "The namenode default directory. This is a default value and can be overriden by the executor.",
-		    "type": "string",
-		    "default": "/var/lib/hdfs/data/name"
-		  },
-		  "dfs-datanode-data-dir": {
-		    "description": "The data default directory. This is a default value and can be overriden by the executor.",
-		    "type": "string",
-		    "default": "/var/lib/hdfs/data/data"
-		  },
-		  "dfs-domain-socket-path": {
-		    "description": "The default socket path. This is a default value and can be overriden by the executor.",
-		    "type": "string",
-		    "default": "/var/run/hadoop-hdfs/dn._PORT"
-		   },
-	 	  "dfs-ha-automatic-failover-enabled": {
-		    "description": "Sets HA mode for HDFS",
-		    "type": "boolean",
-		    "default": true
-		  },
-		  "dfs-client-failover-proxy-provider-hdfs": {
-		    "description": "Sets the failover provider.",
-		    "type": "string",
-		    "default": "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider"
-		  },
-		  "dfs-ha-fencing-methods": {
-		    "description": "Sets the HDFS fencing method.",
-		    "type": "string",
-		    "default": "shell(/bin/true)"
-		  },
-		  "dfs-permissions": {
-		    "description": "Sets the HDFS persmissions.",
-		    "type": "boolean",
-		    "default": false
-		  },
-		  "mesos-hdfs-healthcheck-frequency-ms": {
-		    "description": "Sets the healthcheck freq.",
-		    "type": "integer",
-		    "default": 60000
-		  },
-		  "mesos-hdfs-healthcheck-waitingperiod-ms": {
-		    "description": "Sets healthcheck waiting period.",
-		    "type": "integer",
-		    "default": 900000
-		  },
-		  "dfs-datanode-du-reserved": {
-		    "description": "Sets the HDFS datanode reserved space.",
-		    "type": "integer",
-		    "default": 10485760
-		  },
-		  "dfs-datanode-balance-bandwidthPerSec": {
-		    "description": "Sets the HDFS datanode balance bandwidth/sec.",
-		    "type": "integer",
-		    "default": 41943040
-		  },
-		  "dfs-namenode-safemode-threshold-pct": {
-		    "description": "Sets the HDFS namenode safemode threshold percentage.",
-		    "type": "number",
-		    "default": 0.90
-		  },
-		  "dfs-namenode-heartbeat-recheck-interval": {
-		    "description": "Sets the HDFS namenode heartbeat interval.",
-		    "type": "integer",
-		    "default": 60000
-		  },
-		  "dfs-datanode-handler-count": {
-		    "description": "Sets the HDFS datanode handler count.",
-		    "type": "integer",
-		    "default": 10
-		  },
-		  "dfs-namenode-handler-count": {
-		    "description": "Sets the HDFS namenode handler count.",
-		    "type": "integer",
-		    "default": 20
-		  },
-		  "dfs-image-compress": {
-		    "description": "Compresses images in HDFS.",
-		    "type": "boolean",
-		    "default": true
-		  },
-		  "dfs-image-compression-codec": {
-		    "description": "Compression codec to use on images in HDFS",
-		    "type": "string",
-		    "default": "org.apache.hadoop.io.compress.SnappyCodec"
-		  },
-		  "dfs-namenode-invalidate-work-pct-per-iteration": {
-		    "description": "Sets the namenode invalidate work percentage",
-		    "type": "string",
-		    "default": "0.35f"
-		  },
-		  "dfs-namenode-replication-work-multiplier-per-iteration": {
-		    "description": "Sets the namenode replication work multiplier",
-		    "type": "integer",
-		    "default": 4
-		  },
-		  "dfs-client-read-shortcircuit": {
-		    "description": "Sets the client read shortcircuit",
-		    "type": "boolean",
-		    "default": true
-		  },
-		  "dfs-client-read-shortcircuit-streams-cache-size": {
-		    "description": "Sets the client read shortcircuit cache size.",
-		    "type": "integer",
-		    "default": 1000
-		  },
-		  "dfs-client-read-shortcircuit-streams-cache-size-expiry-ms": {
-		    "description": "Sets the client read shortcircuit cache size expiry",
-		    "type": "integer",
-		    "default": 1000
-		  }	
-		}		
-	},
-    "service": {
-      "type": "object",
-      "properties": {
-      "framework-name": {
-        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
-        "type": "string",
-        "default": "hdfs",
-		"title" : "name"
-      },
-      "framework-version": {
-        "description": "Framework version",
-        "type": "string",
-        "default": "hdfs-mesos-0.1.9"
-      },
-	  "placement_strategy": {
-	    "default": "node"
-	  },
-      "cpus": {
-        "default": 0.5,
-        "description": "CPU shares to allocate to each Marathon instance.",
-        "minimum": 0.0,
-        "type": "number"
-      },
-      "role": {
-      	"description": "Framework role",
-      	"type": "string",
-      	"default": "*"
-      },
-      "user": {
-      	"description": "Framework role",
-      	"type": "string",
-      	"default": "*"
-      },
-	  "ha-zookeeper-quorum": {
-		"description": "The zookeeper the HDFS system should use for HA.  The default is the DCOS zookeeper.",
-	     "type": "string",
-	     "default": "master.mesos:2181"
-	  },
- 	  "mesos-hdfs-state-zk": {
-  	    "description": "Zookeeper to be used by the scheduler and executor for state.",
-  	    "type": "string",
-  	    "default": "master.mesos:2181"
-  	  }, 
-     "mesos-master-uri": {
-  	    "description": "Zookeeper to be used to discover the mesos master.",
-  	    "type": "string",
-  	    "default": "zk://master.mesos:2181/mesos"
-  	  }, 
-     "mesos-hdfs-zkfc-ha-zookeeper-quorum": {
-  	    "description": "Zookeeper to be used for the zkfc.",
-  	    "type": "string",
-  	    "default": "master.mesos:2181"
-	  }, "dfs-namenode-datanode-registration-ip-hostname-check": {
-  	    "type": "boolean",
-  	    "default": false
-	  },
-      "ld-library-path": {
-        "description": "Library path",
-        "type": "string",
-        "default": "/opt/mesosphere/lib"
+  "type":"object",
+  "properties":{
+    "journal-node":{
+      "description":"HDFS specific configuration",
+      "type":"object",
+      "properties":{
+        "cpus":{
+          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "type":"string",
+          "default":"hdfs"
+        },
+        "mem":{
+          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "type":"string",
+          "default":"hdfs"
+        },
+        "instances":{
+          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "type":"string",
+          "default":"3"
+        }
       }
-     },
-     "required": [
-       "framework-name",
-       "ld-library-path",
-       "jre-version",
-       "framework-version",
-       "cpus",
-       "mem",
-       "instances",
-       "disk-size"
-     ]
+    },
+    "name-node":{
+      "description":"HDFS specific configuration",
+      "type":"object",
+      "properties":{
+        "cpus":{
+          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "type":"string",
+          "default":"hdfs"
+        },
+        "mem":{
+          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "type":"string",
+          "default":"hdfs"
+        },
+        "instances":{
+          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "type":"string",
+          "default":"2"
+        }
+      }
+    },
+    "data-node":{
+      "description":"HDFS specific configuration",
+      "type":"object",
+      "properties":{
+        "cpus":{
+          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "type":"string",
+          "default":"hdfs"
+        },
+        "mem":{
+          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "type":"string",
+          "default":"hdfs"
+        },
+        "instances":{
+          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "type":"string",
+          "default":"2"
+        }
+      }
+    },
+    "hdfs":{
+      "description":"HDFS specific configuration",
+      "type":"object",
+      "properties":{
+        "name":{
+          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "type":"string",
+          "default":"hdfs"
+        },
+        "dfs-ha-namenodes-hdfs":{
+          "description":"The zookeeper the HDFS system should use for HA.  The default is the DCOS zookeeper.",
+          "type":"string",
+          "default":"nn1,nn2"
+        },
+        "dfs-journalnode-edits-dir":{
+          "description":"The journalnode default edit directory. This is a default value and can be overriden by the executor.",
+          "type":"string",
+          "default":"/var/lib/hdfs/data/jn"
+        },
+        "dfs-namenode-name-dir":{
+          "description":"The namenode default directory. This is a default value and can be overriden by the executor.",
+          "type":"string",
+          "default":"/var/lib/hdfs/data/name"
+        },
+        "dfs-datanode-data-dir":{
+          "description":"The data default directory. This is a default value and can be overriden by the executor.",
+          "type":"string",
+          "default":"/var/lib/hdfs/data/data"
+        },
+        "dfs-domain-socket-path":{
+          "description":"The default socket path. This is a default value and can be overriden by the executor.",
+          "type":"string",
+          "default":"/var/run/hadoop-hdfs/dn._PORT"
+        },
+        "dfs-ha-automatic-failover-enabled":{
+          "description":"Sets HA mode for HDFS",
+          "type":"boolean",
+          "default":true
+        },
+        "dfs-client-failover-proxy-provider-hdfs":{
+          "description":"Sets the failover provider.",
+          "type":"string",
+          "default":"org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider"
+        },
+        "dfs-ha-fencing-methods":{
+          "description":"Sets the HDFS fencing method.",
+          "type":"string",
+          "default":"shell(/bin/true)"
+        },
+        "dfs-permissions":{
+          "description":"Sets the HDFS persmissions.",
+          "type":"boolean",
+          "default":false
+        },
+        "mesos-hdfs-healthcheck-frequency-ms":{
+          "description":"Sets the healthcheck freq.",
+          "type":"integer",
+          "default":60000
+        },
+        "mesos-hdfs-healthcheck-waitingperiod-ms":{
+          "description":"Sets healthcheck waiting period.",
+          "type":"integer",
+          "default":900000
+        },
+        "dfs-datanode-du-reserved":{
+          "description":"Sets the HDFS datanode reserved space.",
+          "type":"integer",
+          "default":10485760
+        },
+        "dfs-datanode-balance-bandwidthPerSec":{
+          "description":"Sets the HDFS datanode balance bandwidth/sec.",
+          "type":"integer",
+          "default":41943040
+        },
+        "dfs-namenode-safemode-threshold-pct":{
+          "description":"Sets the HDFS namenode safemode threshold percentage.",
+          "type":"number",
+          "default":0.90
+        },
+        "dfs-namenode-heartbeat-recheck-interval":{
+          "description":"Sets the HDFS namenode heartbeat interval.",
+          "type":"integer",
+          "default":60000
+        },
+        "dfs-datanode-handler-count":{
+          "description":"Sets the HDFS datanode handler count.",
+          "type":"integer",
+          "default":10
+        },
+        "dfs-namenode-handler-count":{
+          "description":"Sets the HDFS namenode handler count.",
+          "type":"integer",
+          "default":20
+        },
+        "dfs-image-compress":{
+          "description":"Compresses images in HDFS.",
+          "type":"boolean",
+          "default":true
+        },
+        "dfs-image-compression-codec":{
+          "description":"Compression codec to use on images in HDFS",
+          "type":"string",
+          "default":"org.apache.hadoop.io.compress.SnappyCodec"
+        },
+        "dfs-namenode-invalidate-work-pct-per-iteration":{
+          "description":"Sets the namenode invalidate work percentage",
+          "type":"string",
+          "default":"0.35f"
+        },
+        "dfs-namenode-replication-work-multiplier-per-iteration":{
+          "description":"Sets the namenode replication work multiplier",
+          "type":"integer",
+          "default":4
+        },
+        "dfs-client-read-shortcircuit":{
+          "description":"Sets the client read shortcircuit",
+          "type":"boolean",
+          "default":true
+        },
+        "dfs-client-read-shortcircuit-streams-cache-size":{
+          "description":"Sets the client read shortcircuit cache size.",
+          "type":"integer",
+          "default":1000
+        },
+        "dfs-client-read-shortcircuit-streams-cache-size-expiry-ms":{
+          "description":"Sets the client read shortcircuit cache size expiry",
+          "type":"integer",
+          "default":1000
+        }
+      }
+    },
+    "service":{
+      "type":"object",
+      "properties":{
+        "framework-name":{
+          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "type":"string",
+          "default":"hdfs",
+          "title":"name"
+        },
+        "framework-version":{
+          "description":"Framework version",
+          "type":"string",
+          "default":"hdfs-mesos-0.1.9"
+        },
+        "placement_strategy":{
+          "default":"node"
+        },
+        "cpus":{
+          "default":0.5,
+          "description":"CPU shares to allocate to each Marathon instance.",
+          "minimum":0.0,
+          "type":"number"
+        },
+        "role":{
+          "description":"Framework role",
+          "type":"string",
+          "default":"*"
+        },
+        "user":{
+          "description":"Framework role",
+          "type":"string",
+          "default":"*"
+        },
+        "ha-zookeeper-quorum":{
+          "description":"The zookeeper the HDFS system should use for HA.  The default is the DCOS zookeeper.",
+          "type":"string",
+          "default":"master.mesos:2181"
+        },
+        "mesos-hdfs-state-zk":{
+          "description":"Zookeeper to be used by the scheduler and executor for state.",
+          "type":"string",
+          "default":"master.mesos:2181"
+        },
+        "mesos-master-uri":{
+          "description":"Zookeeper to be used to discover the mesos master.",
+          "type":"string",
+          "default":"zk://master.mesos:2181/mesos"
+        },
+        "mesos-hdfs-zkfc-ha-zookeeper-quorum":{
+          "description":"Zookeeper to be used for the zkfc.",
+          "type":"string",
+          "default":"master.mesos:2181"
+        },
+        "dfs-namenode-datanode-registration-ip-hostname-check":{
+          "type":"boolean",
+          "default":false
+        },
+        "ld-library-path":{
+          "description":"Library path",
+          "type":"string",
+          "default":"/opt/mesosphere/lib"
+        }
+      },
+      "required":[
+        "framework-name",
+        "ld-library-path",
+        "jre-version",
+        "framework-version",
+        "cpus",
+        "mem",
+        "instances",
+        "disk-size"
+      ]
     }
   }
 }
