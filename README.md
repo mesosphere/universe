@@ -2,17 +2,15 @@
 
 The DCOS package repository for packages that have been certified by Mesosphere.
 
-Experimental packages can be found in the [Multiverse repository](https://github.com/mesosphere/multiverse).
-
 ## Installation
 
-The [DCOS CLI](https://docs.mesosphere.com/install/cli/) comes pre-configured to use the Universe
+The latest [DCOS](https://mesosphere.com/product/) comes pre-configured to use the Universe
 repository.
 
-If you would like to add this to your CLI manually:
+If you would like to add this to your DCOS manually:
 
 ```
-dcos config prepend package.sources https://github.com/mesosphere/universe/archive/version-2.x.zip
+dcos package repo add Universe https://universe.mesosphere.com/repo
 ```
 
 ## Branches
@@ -20,14 +18,14 @@ dcos config prepend package.sources https://github.com/mesosphere/universe/archi
 The default branch for this repository is `version-2.x`, which reflects the current schema for the
 Universe. In the future, if the format changes significantly, there will be additional branches.
 
-The `cli-tests-3` branch is used for integration testing by the [DCOS CLI](https://github.com/mesosphere/dcos-cli) and provides a fixed and well known set of packages to write tests against.
+The `cli-tests-*` branches are used for integration testing by the [DCOS CLI](https://github.com/mesosphere/dcos-cli) and provides a fixed and well known set of packages to write tests against.
 
 ## Contributing a Package
 
 Interested in making your package or service available to the world? The instructions below will
 help you set up a local copy of the Universe for development.
 
-### Local Set Up
+### Development Set Up
 
 1. Clone the repo (or you may wish to fork it first):
 
@@ -47,21 +45,24 @@ help you set up a local copy of the Universe for development.
   bash /path/to/universe/scripts/install-git-hooks.sh
   ```
 
-4. To use the local cloned repository from the DCOS CLI for testing your own package:
+4. To test in DCOS we need to make the packages available to your cluster. We can do this using
+topic or feature branches. Once you have committed your changes and pushed them to a topic branch.
+We can use them within DCOS with:
 
   ```
-  dcos config prepend package.sources "file:///path/to/universe"
+  dcos package repo add Development http://github/path/to/branch/zip
+  ```
+
+  E.g. assuming the topic branch is named `topic-branch`:
+
+  ```
+  dcos package repo add Developement https://github.com/mesosphere/universe/archive/topic-branch.zip
   ```
 
 The pre-commit hook will run [build.sh](scripts/build.sh) before allowing you to commit. This
 script validates your package definitions and regenerates the index file. You may need to
 `git add repo/meta/index.json` after running it once before you are able to pass validation and
 commit your changes.
-
-Whenever you make changes locally, be sure to update the CLI's cache to pick them up:
-```
-dcos package update
-```
 
 ### Merging to Universe
 
@@ -161,7 +162,8 @@ installation time by passing an options file to the DCOS CLI.
 ```
 _Sample `config.json`._
 
-`config.json` must be a valid [JSON Schema](http://json-schema.org/) file. Check out the [JSON Schema examples](http://json-schema.org/examples.html).
+`config.json` must be a valid [JSON Schema](http://json-schema.org/) file. Check out the
+[JSON Schema examples](http://json-schema.org/examples.html).
 
 #### `marathon.json.mustache`
 
@@ -222,8 +224,8 @@ the schema.
 
 #### `resource.json`
 
-This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects, images) needed to
-install the application.
+This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects and
+images) needed to install the application.
 
 ```json
 {
@@ -250,11 +252,11 @@ install the application.
 ```
 _Sample `resource.json`._
 
-For the Docker image, please use the image ID for the referenced image. You can find this by pulling the image locally and running `docker images some-org/foo:1.0.0`.
+For the Docker image, please use the image ID for the referenced image. You can find this by
+pulling the image locally and running `docker images some-org/foo:1.0.0`.
 
-While `images` is an optional field, it is highly recommended you include icons
-and screenshots in your package and update the path definitions accordingly.
-Specifications are as follows:
+While `images` is an optional field, it is highly recommended you include icons and screenshots
+in your package and update the path definitions accordingly. Specifications are as follows:
 
 * `icon-small`: 48px (w) x 48px (h)
 * `icon-medium`: 96px (w) x 96px (h)
@@ -270,8 +272,7 @@ alternate image named `icon-cassandra-small@2x.png`.
 
 ### Versioning
 
-The registry specification is versioned separately in the
-file `/repo/meta/version.json`.
+The registry specification is versioned separately in the file `/repo/meta/version.json`.
 
 ```json
 {
@@ -313,7 +314,6 @@ The schema definitions live in `/repo/meta/schema`.
 │   │   │   ├── command-schema.json
 │   │   │   ├── config-schema.json
 │   │   │   ├── index-schema.json
-│   │   │   ├── marathon-schema.json
 │   │   │   ├── resource-schema.json
 │   │   │   └── package-schema.json
 │   │   └── version.json
@@ -349,41 +349,24 @@ The schema definitions live in `/repo/meta/schema`.
 
 ## Sources and Transfer Protocols
 
-This section describes transfer of package metadata from a universe
-source to a client program.
+This section describes transfer of package metadata from a universe source to a client program.
 
 ```
  ┌───────────────┐   ┌────────────────┐
  │public universe│   │private universe│
  └───────────────┘   └────────────────┘
-          git \         / http
+         http \         / http
                \       /
                 \     /
-               ┌──────┐           ┌────────┐
-               │client│-----------│marathon│
-               └──────┘    http   └────────┘
-                  |
-                  |
-            ┌───────────┐
-            │local cache│
-            └───────────┘
+               ┌────┐           ┌────────┐
+               │DCOS│-----------│Marathon│
+               └────┘    http   └────────┘
 ```
 _Sample (simplified) architecture for a universe client program._
 
 Package sources are described as URLs.
 
-Source URLs encode the transfer protocol.
-Recommendations for several transfer protocols follow.
-
-**Filesystem**
-
-A URL that designates a local directory.
-Example: `file:///some/nfs/mount/universe`
-
-**Git**
-
-A URL that designates a git repository.
-Example: `git://github.com/mesosphere/universe.git`
+Source URLs encode the transfer protocol. Recommendations for several transfer protocols follow.
 
 **HTTP and HTTPS**
 
