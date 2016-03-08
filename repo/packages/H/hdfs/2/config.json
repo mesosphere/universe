@@ -5,20 +5,14 @@
       "type":"object",
       "properties":{
         "framework-name":{
-          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "description":"The name of the service in DCOS.",
           "type":"string",
           "default":"hdfs",
           "title":"name"
         },
-        "placement_strategy":{
+        "placement-strategy":{
           "default":"node",
           "type":"string"
-        },
-        "cpus":{
-          "default":0.5,
-          "description":"CPU shares to allocate to each Marathon instance.",
-          "minimum":0.0,
-          "type":"number"
         },
         "role":{
           "description":"Framework role",
@@ -29,25 +23,14 @@
           "description":"user",
           "type":"string",
           "default":"root"
-        },
-        "mesos-hdfs-state-zk":{
-          "description":"Zookeeper to be used by the scheduler and executor for state.",
-          "type":"string",
-          "default":"master.mesos:2181"
-        },
-        "mesos-master-uri":{
-          "description":"Zookeeper to be used to discover the mesos master.",
-          "type":"string",
-          "default":"zk://master.mesos:2181/mesos"
         }
       },
       "required":[
         "framework-name",
-        "cpus"
+		"placement-strategy"
       ]
     },
     "journal-node":{
-      "description":"HDFS specific configuration",
       "type":"object",
       "properties":{
         "cpus":{
@@ -57,11 +40,11 @@
           "type":"number"
         },
         "mem":{
-          "description":"The amount of heap memory for the journalnode.",
+          "description":"The amount of heap memory for the journal node.",
           "type":"integer",
           "default":512
         },
-        "instances":{
+        "nodes":{
           "default":3,
           "description":"Number of journal node instances to run.",
           "minimum":3,
@@ -71,7 +54,7 @@
       "required":[
         "cpus",
         "mem",
-		"instances"
+		"nodes"
       ]
     },
     "name-node":{
@@ -90,7 +73,7 @@
           "default":4096,
           "minimum":4096
         },
-        "instances":{
+        "nodes":{
           "default":2,
           "description":"Number of journal node instances to run.",
           "minimum":2,
@@ -100,7 +83,7 @@
       "required":[
         "cpus",
         "mem",
-		"instances"
+		"nodes"
       ]
     },
     "data-node":{
@@ -109,77 +92,36 @@
       "properties":{
         "cpus":{
           "default":1,
-          "description":"CPU shares to allocate to each journal node instance.",
+          "description":"CPUs",
           "minimum":0.5,
           "type":"number"
         },
         "mem":{
-          "description":"The amount of heap memory for the journalnode.",
+          "description":"Memory in MB",
           "type":"integer",
           "default":1024
         },
-        "instances":{
+        "nodes":{
           "default":2,
-          "description":"Number of journal node instances to run.",
+          "description":"Number of data nodes",
           "minimum":2,
           "type":"integer"
-        }
+        },
+		"disk-size" : {
+          "description":"The amount of disk space for the data node.",
+          "type":"integer"
+		}
       },
       "required":[
         "cpus",
         "mem",
-		"instances"
+		"nodes"
       ]
     },
     "hdfs":{
       "description":"HDFS specific configuration",
       "type":"object",
       "properties":{
-        "name":{
-          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
-          "type":"string",
-          "default":"hdfs"
-        },
-        "dfs-ha-namenodes-hdfs":{
-          "description":"The zookeeper the HDFS system should use for HA.  The default is the DCOS zookeeper.",
-          "type":"string",
-          "default":"nn1,nn2"
-        },
-        "dfs-ha-automatic-failover-enabled":{
-          "description":"Sets HA mode for HDFS",
-          "type":"boolean",
-          "default":true
-        },
-        "dfs-client-failover-proxy-provider-hdfs":{
-          "description":"Sets the failover provider.",
-          "type":"string",
-          "default":"org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider"
-        },
-        "dfs-ha-fencing-methods":{
-          "description":"Sets the HDFS fencing method.",
-          "type":"string",
-          "default":"shell(/bin/true)"
-        },
-        "dfs-permissions":{
-          "description":"Sets the HDFS persmissions.",
-          "type":"boolean",
-          "default":false
-        },
-        "mesos-hdfs-healthcheck-frequency-ms":{
-          "description":"Sets the healthcheck freq.",
-          "type":"integer",
-          "default":60000
-        },
-        "mesos-hdfs-healthcheck-waitingperiod-ms":{
-          "description":"Sets healthcheck waiting period.",
-          "type":"integer",
-          "default":900000
-        },
-        "dfs-datanode-du-reserved":{
-          "description":"Sets the HDFS datanode reserved space.",
-          "type":"integer",
-          "default":10485760
-        },
         "dfs-datanode-balance-bandwidthPerSec":{
           "description":"Sets the HDFS datanode balance bandwidth/sec.",
           "type":"integer",
@@ -205,44 +147,15 @@
           "type":"integer",
           "default":20
         },
-        "dfs-image-compress":{
-          "description":"Compresses images in HDFS.",
-          "type":"boolean",
-          "default":true
-        },
-        "dfs-image-compression-codec":{
-          "description":"Compression codec to use on images in HDFS",
-          "type":"string",
-          "default":"org.apache.hadoop.io.compress.SnappyCodec"
-        },
         "dfs-namenode-invalidate-work-pct-per-iteration":{
-          "description":"Sets the namenode invalidate work percentage",
+          "description":"Advanced property. Change with caution. This determines the percentage amount of block invalidations (deletes) to do over a single DN heartbeat deletion command. The final deletion count is determined by applying this percentage to the number of live nodes in the system. The resultant number is the number of blocks from the deletion list chosen for proper invalidation over a single heartbeat of a single DN. Value should be a positive, non-zero percentage in float notation (X.Yf), with 1.0f meaning 100%",
           "type":"string",
-          "default":"0.35f"
+          "default":"0.32f"
         },
         "dfs-namenode-replication-work-multiplier-per-iteration":{
-          "description":"Sets the namenode replication work multiplier",
+          "description":"Advanced property. Change with caution. This determines the total amount of block transfers to begin in parallel at a DN, for replication, when such a command list is being sent over a DN heartbeat by the NN. The actual number is obtained by multiplying this multiplier with the total number of live nodes in the cluster. The result number is the number of blocks to begin transfers immediately for, per DN heartbeat. This number can be any positive, non-zero integer.",
           "type":"integer",
-          "default":4
-        },
-        "dfs-client-read-shortcircuit":{
-          "description":"Sets the client read shortcircuit",
-          "type":"boolean",
-          "default":true
-        },
-        "dfs-client-read-shortcircuit-streams-cache-size":{
-          "description":"Sets the client read shortcircuit cache size.",
-          "type":"integer",
-          "default":1000
-        },
-        "dfs-namenode-datanode-registration-ip-hostname-check":{
-          "type":"boolean",
-          "default":false
-        },
-        "dfs-client-read-shortcircuit-streams-cache-size-expiry-ms":{
-          "description":"Sets the client read shortcircuit cache size expiry",
-          "type":"integer",
-          "default":1000
+          "default":2
         }
       }
     }
