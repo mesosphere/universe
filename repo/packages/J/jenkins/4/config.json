@@ -47,6 +47,11 @@
             "type": "string",
             "default": "github.com"
         },
+        "role": {
+            "description": "The accepted resource roles (e.g. slave_public). By default, this will deploy to any agents with the * role.",
+            "type": "string",
+            "default": "*"
+        },
         "pinned-hostname": {
             "description": "An optional DCOS agent hostname to run this Jenkins instance on (e.g. 10.0.0.1).",
             "type" : "string"
@@ -60,7 +65,8 @@
         "mesos-master",
         "host-volume",
         "jvm-opts",
-        "known-hosts"
+        "known-hosts",
+        "role"
       ]
     }
   },
