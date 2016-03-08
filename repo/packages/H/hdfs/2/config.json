@@ -1,68 +1,135 @@
 {
   "type":"object",
   "properties":{
+    "service":{
+      "type":"object",
+      "properties":{
+        "framework-name":{
+          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
+          "type":"string",
+          "default":"hdfs",
+          "title":"name"
+        },
+        "placement_strategy":{
+          "default":"node",
+          "type":"string"
+        },
+        "cpus":{
+          "default":0.5,
+          "description":"CPU shares to allocate to each Marathon instance.",
+          "minimum":0.0,
+          "type":"number"
+        },
+        "role":{
+          "description":"Framework role",
+          "type":"string",
+          "default":"*"
+        },
+        "user":{
+          "description":"user",
+          "type":"string",
+          "default":"root"
+        },
+        "mesos-hdfs-state-zk":{
+          "description":"Zookeeper to be used by the scheduler and executor for state.",
+          "type":"string",
+          "default":"master.mesos:2181"
+        },
+        "mesos-master-uri":{
+          "description":"Zookeeper to be used to discover the mesos master.",
+          "type":"string",
+          "default":"zk://master.mesos:2181/mesos"
+        }
+      },
+      "required":[
+        "framework-name",
+        "cpus"
+      ]
+    },
     "journal-node":{
       "description":"HDFS specific configuration",
       "type":"object",
       "properties":{
         "cpus":{
-          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
-          "type":"string",
-          "default":"hdfs"
+          "default":0.5,
+          "description":"CPU shares to allocate to each journal node instance.",
+          "minimum":1,
+          "type":"number"
         },
         "mem":{
-          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
-          "type":"string",
-          "default":"hdfs"
+          "description":"The amount of heap memory for the journalnode.",
+          "type":"integer",
+          "default":512
         },
         "instances":{
-          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
-          "type":"string",
-          "default":"3"
+          "default":3,
+          "description":"Number of journal node instances to run.",
+          "minimum":3,
+          "type":"integer"
         }
-      }
+      },
+      "required":[
+        "cpus",
+        "mem",
+		"instances"
+      ]
     },
     "name-node":{
       "description":"HDFS specific configuration",
       "type":"object",
       "properties":{
         "cpus":{
-          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
-          "type":"string",
-          "default":"hdfs"
+          "default":1,
+          "description":"CPU shares to allocate to each name node instance.",
+          "minimum":0.5,
+          "type":"number"
         },
         "mem":{
-          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
-          "type":"string",
-          "default":"hdfs"
+          "description":"The amount of heap memory for the name node.",
+          "type":"integer",
+          "default":4096,
+          "minimum":4096
         },
         "instances":{
-          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
-          "type":"string",
-          "default":"2"
+          "default":2,
+          "description":"Number of journal node instances to run.",
+          "minimum":2,
+          "type":"integer"
         }
-      }
+      },
+      "required":[
+        "cpus",
+        "mem",
+		"instances"
+      ]
     },
     "data-node":{
       "description":"HDFS specific configuration",
       "type":"object",
       "properties":{
         "cpus":{
-          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
-          "type":"string",
-          "default":"hdfs"
+          "default":1,
+          "description":"CPU shares to allocate to each journal node instance.",
+          "minimum":0.5,
+          "type":"number"
         },
         "mem":{
-          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
-          "type":"string",
-          "default":"hdfs"
+          "description":"The amount of heap memory for the journalnode.",
+          "type":"integer",
+          "default":1024
         },
         "instances":{
-          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
-          "type":"string",
-          "default":"2"
+          "default":2,
+          "description":"Number of journal node instances to run.",
+          "minimum":2,
+          "type":"integer"
         }
-      }
+      },
+      "required":[
+        "cpus",
+        "mem",
+		"instances"
+      ]
     },
     "hdfs":{
       "description":"HDFS specific configuration",
@@ -188,86 +255,23 @@
           "type":"integer",
           "default":1000
         },
+        "dfs-namenode-datanode-registration-ip-hostname-check":{
+          "type":"boolean",
+          "default":false
+        },
         "dfs-client-read-shortcircuit-streams-cache-size-expiry-ms":{
           "description":"Sets the client read shortcircuit cache size expiry",
           "type":"integer",
           "default":1000
         }
       }
-    },
-    "service":{
-      "type":"object",
-      "properties":{
-        "framework-name":{
-          "description":"The name of the framework. Until this is configurable, please do not change this from it's default value.",
-          "type":"string",
-          "default":"hdfs",
-          "title":"name"
-        },
-        "framework-version":{
-          "description":"Framework version",
-          "type":"string",
-          "default":"hdfs-mesos-0.1.9"
-        },
-        "placement_strategy":{
-          "default":"node"
-        },
-        "cpus":{
-          "default":0.5,
-          "description":"CPU shares to allocate to each Marathon instance.",
-          "minimum":0.0,
-          "type":"number"
-        },
-        "role":{
-          "description":"Framework role",
-          "type":"string",
-          "default":"*"
-        },
-        "user":{
-          "description":"Framework role",
-          "type":"string",
-          "default":"*"
-        },
-        "ha-zookeeper-quorum":{
-          "description":"The zookeeper the HDFS system should use for HA.  The default is the DCOS zookeeper.",
-          "type":"string",
-          "default":"master.mesos:2181"
-        },
-        "mesos-hdfs-state-zk":{
-          "description":"Zookeeper to be used by the scheduler and executor for state.",
-          "type":"string",
-          "default":"master.mesos:2181"
-        },
-        "mesos-master-uri":{
-          "description":"Zookeeper to be used to discover the mesos master.",
-          "type":"string",
-          "default":"zk://master.mesos:2181/mesos"
-        },
-        "mesos-hdfs-zkfc-ha-zookeeper-quorum":{
-          "description":"Zookeeper to be used for the zkfc.",
-          "type":"string",
-          "default":"master.mesos:2181"
-        },
-        "dfs-namenode-datanode-registration-ip-hostname-check":{
-          "type":"boolean",
-          "default":false
-        },
-        "ld-library-path":{
-          "description":"Library path",
-          "type":"string",
-          "default":"/opt/mesosphere/lib"
-        }
-      },
-      "required":[
-        "framework-name",
-        "ld-library-path",
-        "jre-version",
-        "framework-version",
-        "cpus",
-        "mem",
-        "instances",
-        "disk-size"
-      ]
     }
-  }
+  },
+  "required":[
+    "service",
+    "hdfs",
+	"journal-node",
+	"name-node",
+	"data-node"
+  ]
 }
