@@ -160,16 +160,10 @@
           "default": false
         },
 
-	"coordinators-with-dbservers": {
+        "coordinators-with-dbservers": {
           "description": "Flag, if each coordinator must run on a node with a DBServer",
           "type": "boolean",
           "default": false
-        },
-
-        "framework-docker-image": {
-          "description": "Docker image to run the framework executable.",
-          "type": "string",
-          "default": "arangodb/arangodb-mesos-framework:mesosphere-V3"
         },
 
         "arangodb-docker-image": {
@@ -186,30 +180,28 @@
       },
 
       "required": [
-	"zk",
-        "webui-host",
-        "framework-port",
-        "framework-cpus",
-        "framework-mem",
-        "framework-instances",
-        "volume-path",
-        "mode",
+        "agency",
+        "arangodb-docker-image",
+        "arangodb-privileged-image",
         "async-replication",
-        "role",
+        "failover-timeout",
+        "framework-cpus",
+        "framework-instances",
+        "framework-mem",
+        "framework-port",
+        "mesos-authenticate",
         "minimal-resources-agent",
         "minimal-resources-coordinator",
         "minimal-resources-dbserver",
         "minimal-resources-secondary",
-        "agency",
-        "nr-dbservers",
+        "mode",
         "nr-coordinators",
-        "failover-timeout",
-        "mesos-authenticate",
-        "secret",
+        "nr-dbservers",
+        "role",
         "secondaries-with-dbservers",
-        "framework-docker-image",
-        "arangodb-docker-image",
-        "arangodb-privileged-image"
+        "secret",
+        "webui-host",
+        "zk"
       ]
     }
   },

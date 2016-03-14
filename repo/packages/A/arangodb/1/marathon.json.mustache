@@ -1,17 +1,16 @@
 {
-  "id": "{{arangodb.framework-name}}",
+  "id": "{{arangodb.id}}",
   "cpus": {{arangodb.framework-cpus}},
   "mem": {{arangodb.framework-mem}},
-  "ports": [ {{arangodb.framework-port}},0 ],
-  "instances": {{arangodb.framework-instances}} ,
+  "ports": [ {{arangodb.framework-port}}, 0 ],
+  "instances": {{arangodb.framework-instances}},
 
   "args": [
     "framework",
-    "--framework_name={{arangodb.framework-name}}",
+    "--framework_name={{arangodb.id}}",
     "--master={{mesos.master}}",
-    "--zk={{arangodb.zk}}/{{arangodb.framework-name}}",
+    "--zk={{arangodb.zk}}/{{arangodb.id}}",
     "--user={{arangodb.framework-user}}",
-    "--volume_path={{arangodb.volume-path}}",
     "--principal={{arangodb.principal}}",
     "--role={{arangodb.role}}",
     "--mode={{arangodb.mode}}",
@@ -20,7 +19,7 @@
     "--minimal_resources_dbserver={{arangodb.minimal-resources-dbserver}}",
     "--minimal_resources_secondary={{arangodb.minimal-resources-secondary}}",
     "--minimal_resources_coordinator={{arangodb.minimal-resources-coordinator}}",
-    "--nr_agents={{arangodb.nr-agents}}",
+    "--agency={{arangodb.agency}}",
     "--nr_dbservers={{arangodb.nr-dbservers}}",
     "--nr_coordinators={{arangodb.nr-coordinators}}",
     "--failover_timeout={{arangodb.failover-timeout}}",
@@ -40,21 +39,12 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "{{resource.assets.container.docker.XXXXXXXXXXXX}}",
+      "image": "{{resource.assets.container.docker.0040110abea2}}",
       "forcePullImage": true,
       "network": "HOST"
     }
   },
 	
-  "container": {
-    "type": "DOCKER",
-    "docker": {
-      "image": "{{resource.assets.container.docker.XXXXXXXXXXXX}}",
-      "forcePullImage": true,
-      "network": "HOST"
-    }
-  },  
-
   "healthChecks": [
     {
       "protocol": "HTTP",
