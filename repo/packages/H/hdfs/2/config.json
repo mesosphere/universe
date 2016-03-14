@@ -114,14 +114,14 @@
           "type":"integer",
           "default":1024
         },
+        "disk-size":{
+          "description":"The amount of disk space for the data node.",
+          "type":"integer"
+        },
         "count":{
           "default":2,
           "description":"Number of data nodes",
           "minimum":2,
-          "type":"integer"
-        },
-        "disk-size":{
-          "description":"The amount of disk space for the data node.",
           "type":"integer"
         }
       },
