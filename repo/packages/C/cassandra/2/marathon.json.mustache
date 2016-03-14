@@ -1,12 +1,14 @@
 {
-  "id": "/{{framework.name}}",
+  "id": "/{{service.name}}",
   "cmd": "./scheduler/bin/cassandra-scheduler server ./scheduler/conf/scheduler.yml",
   "instances": 1,
-  "cpus": {{framework.cpus}},
-"mem": {{framework.memoryMb}},
-"ports": [
-{{apiPort}}, {{adminPort}}
-],
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "requirePorts": true,
+  "ports": [
+    {{service.apiPort}}, 
+    {{service.adminPort}}
+  ],
 "uris": [
 "{{resource.assets.uris.scheduler-zip}}",
 "{{resource.assets.uris.server-jre-8u74-linux-x64-tar-gz}}"
@@ -22,20 +24,22 @@
     }
 ],
 "labels": {
-"DCOS_PACKAGE_FRAMEWORK_NAME": "{{framework.name}}"
+"DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}"
 },
 "env":{
 "JAVA_HOME":"./jre"
-,"FRAMEWORK_NAME":"{{framework.name}}"
-,"FRAMEWORK_VERSION":"{{framework.version}}"
+,"FRAMEWORK_NAME":"{{service.name}}"
+,"FRAMEWORK_VERSION":"{{service.version}}"
+,"FRAMEWORK_ROLE":"{{service.role}}"
+,"FRAMEWORK_PRINCIPAL":"{service.principal}"
 ,"CASSANDRA_VERSION":"{{cassandra.version}}"
-,"CASSANDRA_CPUS":"{{cassandra.cpus}}"
-,"CASSANDRA_MEMORY_MB":"{{cassandra.memoryMb}}"
-,"CASSANDRA_DISK_MB":"{{cassandra.diskMb}}"
-,"CASSANDRA_HEAP_SIZE_MB":"{{cassandra.heap.sizeMb}}"
-,"CASSANDRA_HEAP_NEW_MB":"{{cassandra.heap.newMb}}"
+,"CASSANDRA_CPUS":"{{node.cpus}}"
+,"CASSANDRA_MEMORY_MB":"{{node.mem}}"
+,"CASSANDRA_DISK_MB":"{{node.disk}}"
+,"CASSANDRA_HEAP_SIZE_MB":"{{node.heap.size}}"
+,"CASSANDRA_HEAP_NEW_MB":"{{node.heap.new}}"
 ,"CASSANDRA_JMX_PORT":"{{cassandra.jmxPort}}"
-,"CASSANDRA_VOLUME_SIZE_MB":"{{cassandra.volumeSizeMb}}"
+,"CASSANDRA_VOLUME_SIZE_MB":"{{node.volume_size}}"
 ,"CASSANDRA_NUM_TOKENS":"{{cassandra.numTokens}}"
 ,"CASSANDRA_HINTED_HANDOFF_ENABLED":"{{cassandra.hintedHandoffEnabled}}"
 ,"CASSANDRA_MAX_HINT_WINDOW_IN_MS":"{{cassandra.maxHintWindowInMs}}"
@@ -43,14 +47,13 @@
 ,"CASSANDRA_MAX_HINTS_DELIVERY_THREADS":"{{cassandra.maxHintsDeliveryThreads}}"
 ,"CASSANDRA_BATCHLOG_REPLAY_THROTTLE_IN_KB":"{{cassandra.batchlogReplayThrottleInKb}}"
 ,"CASSANDRA_PARTITIONER":"{{cassandra.partitioner}}"
-,"CASSANDRA_PERSISTENT_VOLUME":"{{cassandra.persistentVolume}}"
-,"CASSANDRA_DISK_FAILURE_POLICY":"{{cassandra.diskFailurePolicy}}"
-,"CASSANDRA_COMMIT_FAILURE_POLICY":"{{cassandra.commitFailurePolicy}}"
+,"CASSANDRA_PERSISTENT_VOLUME":"volume"
+,"CASSANDRA_DISK_FAILURE_POLICY":"stop"
+,"CASSANDRA_COMMIT_FAILURE_POLICY":"stop"
 ,"CASSANDRA_KEY_CACHE_SAVE_PERIOD":"{{cassandra.keyCacheSavePeriod}}"
 ,"CASSANDRA_ROW_CACHE_SIZE_IN_MB":"{{cassandra.rowCacheSizeInMb}}"
 ,"CASSANDRA_ROW_CACHE_SAVE_PERIOD":"{{cassandra.rowCacheSavePeriod}}"
-,"CASSANDRA_COUNTER_CACHE_SAVE_PERIOD":"{{cassandra.counterCacheSavePeriod}}"
-,"CASSANDRA_COMMITLOG_SYNC":"{{cassandra.commitlogSync}}"
+,"CASSANDRA_COMMITLOG_SYNC":"periodic"
 ,"CASSANDRA_COMMITLOG_SYNC_PERIOD_IN_MS":"{{cassandra.commitlogSyncPeriodInMs}}"
 ,"CASSANDRA_COMMITLOG_SEGMENT_SIZE_IN_MB":"{{cassandra.commitlogSegmentSizeInMb}}"
 ,"CASSANDRA_CONCURRENT_READS":"{{cassandra.concurrentReads}}"
@@ -58,8 +61,8 @@
 ,"CASSANDRA_CONCURRENT_COUNTER_WRITES":"{{cassandra.concurrentCounterWrites}}"
 ,"CASSANDRA_MEMTABLE_ALLOCATION_TYPE":"{{cassandra.memtableAllocationType}}"
 ,"CASSANDRA_INDEX_SUMMARY_RESIZE_INTERVAL_IN_MINUTES":"{{cassandra.indexSummaryResizeIntervalInMinutes}}"
-,"CASSANDRA_TRICKLE_FSYNC":"{{cassandra.trickleFsync}}"
-,"CASSANDRA_TRICKLE_FSYNC_INTERVAL_IN_KB":"{{cassandra.trickleFsyncIntervalInKb}}"
+,"CASSANDRA_TRICKLE_FSYNC":"false"
+,"CASSANDRA_TRICKLE_FSYNC_INTERVAL_IN_KB":"10240"
 ,"CASSANDRA_STORAGE_PORT":"{{cassandra.storagePort}}"
 ,"CASSANDRA_SSL_STORAGE_PORT":"{{cassandra.sslStoragePort}}"
 ,"CASSANDRA_START_NATIVE_TRANSPORT":"{{cassandra.startNativeTransport}}"
@@ -67,7 +70,7 @@
 ,"CASSANDRA_START_RPC":"{{cassandra.startRpc}}"
 ,"CASSANDRA_RPC_PORT":"{{cassandra.rpcPort}}"
 ,"CASSANDRA_RPC_KEEPALIVE":"{{cassandra.rpcKeepalive}}"
-,"CASSANDRA_RPC_SERVER_TYPE":"{{cassandra.rpcServerType}}"
+,"CASSANDRA_RPC_SERVER_TYPE":"sync"
 ,"CASSANDRA_THRIFT_FRAMED_TRANSPORT_SIZE_IN_MB":"{{cassandra.thriftFramedTransportSizeInMb}}"
 ,"CASSANDRA_TOMBSTONE_WARN_THRESHOLD":"{{cassandra.tombstoneWarnThreshold}}"
 ,"CASSANDRA_TOMBSTONE_FAILURE_THRESHOLD":"{{cassandra.tombstoneFailureThreshold}}"
@@ -75,7 +78,7 @@
 ,"CASSANDRA_BATCH_SIZE_WARN_THRESHOLD_IN_KB":"{{cassandra.batchSizeWarnThresholdInKb}}"
 ,"CASSANDRA_BATCH_SIZE_FAIL_THRESHOLD_IN_KB":"{{cassandra.batchSizeFailThresholdInKb}}"
 ,"CASSANDRA_COMPACTION_THROUGHPUT_MB_PER_SEC":"{{cassandra.compactionThroughputMbPerSec}}"
-,"CASSANDRA_COMPACTION_LARGE_PARTITION_WARNING_THRESHOLD_MB":"{{cassandra.compactionLargePartitionWarningThresholdMb}}"
+,"CASSANDRA_COMPACTION_LARGE_PARTITION_WARNING_THRESHOLD_MB":"100"
 ,"CASSANDRA_SSTABLE_PREEMPTIVE_OPEN_INTERVAL_IN_MB":"{{cassandra.sstablePreemptiveOpenIntervalInMb}}"
 ,"CASSANDRA_READ_REQUEST_TIMEOUT_IN_MS":"{{cassandra.readRequestTimeoutInMs}}"
 ,"CASSANDRA_RANGE_REQUEST_TIMEOUT_IN_MS":"{{cassandra.rangeRequestTimeoutInMs}}"
@@ -84,35 +87,34 @@
 ,"CASSANDRA_CAS_CONTENTION_TIMEOUT_IN_MS":"{{cassandra.casContentionTimeoutInMs}}"
 ,"CASSANDRA_TRUNCATE_REQUEST_TIMEOUT_IN_MS":"{{cassandra.truncateRequestTimeoutInMs}}"
 ,"CASSANDRA_REQUEST_TIMEOUT_IN_MS":"{{cassandra.requestTimeoutInMs}}"
-,"CASSANDRA_CROSS_NODE_TIMEOUT":"{{cassandra.crossNodeTimeout}}"
-,"CASSANDRA_ENDPOINT_SNITCH":"{{cassandra.endpointSnitch}}"
+,"CASSANDRA_CROSS_NODE_TIMEOUT":"false"
 ,"CASSANDRA_DYNAMIC_SNITCH_UPDATE_INTERVAL_IN_MS":"{{cassandra.dynamicSnitchUpdateIntervalInMs}}"
 ,"CASSANDRA_DYNAMIC_SNITCH_RESET_INTERVAL_IN_MS":"{{cassandra.dynamicSnitchResetIntervalInMs}}"
 ,"CASSANDRA_DYNAMIC_SNITCH_BADNESS_THRESHOLD":"{{cassandra.dynamicSnitchBadnessThreshold}}"
-,"CASSANDRA_REQUEST_SCHEDULER":"{{cassandra.requestScheduler}}"
+,"CASSANDRA_REQUEST_SCHEDULER":"org.apache.cassandra.scheduler.NoScheduler"
 ,"CASSANDRA_INTERNODE_COMPRESSION":"{{cassandra.internodeCompression}}"
 ,"CASSANDRA_INTER_DC_TCP_NODELAY":"{{cassandra.interDcTcpNodelay}}"
-,"CASSANDRA_TRACETYPE_QUERY_TTL":"{{cassandra.tracetypeQueryTtl}}"
-,"CASSANDRA_TRACETYPE_REPAIR_TTL":"{{cassandra.tracetypeRepairTtl}}"
-,"CASSANDRA_ENABLE_USER_DEFINED_FUNCTIONS":"{{cassandra.enableUserDefinedFunctions}}"
-,"CASSANDRA_WINDOWS_TIMER_INTERVAL":"{{cassandra.windowsTimerInterval}}"
-,"EXECUTOR_COMMAND":"{{executor.command}}"
-,"EXECUTOR_CPUS":"{{executor.cpus}}"
-,"EXECUTOR_MEMORY_MB":"{{executor.memoryMb}}"
-,"EXECUTOR_DISK_MB":"{{executor.diskMb}}"
-,"EXECUTOR_HEAP_MB":"{{executor.heapMb}}"
-,"EXECUTOR_API_PORT":"{{executor.apiPort}}"
-,"EXECUTOR_ADMIN_PORT":"{{executor.adminPort}}"
-,"EXECUTOR_JAVA_HOME":"{{executor.javaHome}}"
-,"EXECUTOR_JRE_LOCATION":"{{executor.jreLocation}}"
-,"EXECUTOR_LOCATION":"{{executor.executorLocation}}"
-,"EXECUTOR_CASSANDRA_LOCATION":"{{executor.cassandraLocation}}"
-,"NODES":"{{nodes}}"
-,"SEED_NODES":"{{seedNodes}}"
-,"UPDATE_CONFIG":"{{updateConfig}}"
-,"PLACEMENT_STRATEGY":"{{placementStrategy}}"
-,"PLAN_STRATEGY":"{{planStrategy}}"
-,"API_PORT":"{{apiPort}}"
-,"ADMIN_PORT":"{{adminPort}}"
+,"CASSANDRA_TRACETYPE_QUERY_TTL":"86400"
+,"CASSANDRA_TRACETYPE_REPAIR_TTL":"604800"
+,"CASSANDRA_WINDOWS_TIMER_INTERVAL":"1"
+,"EXECUTOR_COMMAND":"./executor/bin/cassandra-executor server executor/conf/executor.yml"
+,"EXECUTOR_CPUS":"{{service.executor.cpus}}"
+,"EXECUTOR_MEMORY_MB":"{{service.executor.mem}}"
+,"EXECUTOR_DISK_MB":"{{service.executor.disk}}"
+,"EXECUTOR_HEAP_MB":"{{service.executor.heap}}"
+,"EXECUTOR_API_PORT":"{{service.executor.apiPort}}"
+,"EXECUTOR_ADMIN_PORT":"{{service.executor.adminPort}}"
+,"EXECUTOR_JAVA_HOME":"./jre"
+,"EXECUTOR_JRE_LOCATION":"{{resource.assets.uris.server-jre-8u74-linux-x64-tar-gz}}"
+,"EXECUTOR_LOCATION":"{{resource.assets.uris.executor-zip}}"
+,"EXECUTOR_CASSANDRA_LOCATION":"{{resource.assets.uris.apache-cassandra-bin-tar-gz}}"
+,"CLUSTER_TASK_CPUS":"{{service.task.cpus}}"
+,"CLUSTER_TASK_MEMORY_MB":"{{service.task.mem}}"
+,"NODES":"{{node.count}}"
+,"SEED_NODES":"{{node.seeds}}"
+,"PLACEMENT_STRATEGY":"{{service.placement_strategy}}"
+, "PHASE_STRATEGY":"org.apache.mesos.scheduler.plan.DefaultInstallStrategy"
+,"API_PORT":"{{service.apiPort}}"
+,"ADMIN_PORT":"{{service.adminPort}}"
 }
 }
