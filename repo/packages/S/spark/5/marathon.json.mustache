@@ -1,0 +1,48 @@
+{
+    "id": "{{spark.framework-name}}",
+    "cpus": {{spark.cpus}},
+    "mem": {{spark.mem}},
+    "instances": {{spark.instances}},
+    "cmd": "/sbin/init.sh",
+    "env": {
+        "SPARK_USER": "{{spark.mesos-user}}",
+        "MESOS_MASTER": "{{mesos.master}}",
+        "ZK": "{{spark.zookeeper}}",
+        "FRAMEWORK_NAME": "{{spark.framework-name}}",
+        "DNS_SUFFIX": "{{spark.dns-suffix}}",
+        "ENABLE_HISTORY_SERVER": "{{spark.history-server.enabled}}",
+        "HISTORY_LOG_DIR": "{{spark.history-server.log-dir}}",
+        "HISTORY_CLEANER_ENABLED": "{{spark.history-server.cleaner-enabled}}",
+        "HISTORY_CLEANER_INTERVAL": "{{spark.history-server.cleaner-interval}}",
+        "HISTORY_CLEANER_MAXAGE": "{{spark.history-server.cleaner-maxage}}"
+    },
+    "ports": [
+        0,
+        0,
+        0,
+        0
+    ],
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.spark_docker}}",
+            "network": "HOST"
+        }
+    },
+    "healthChecks": [
+        {
+            "path": "/",
+            "portIndex": 1,
+            "protocol": "HTTP",
+            "gracePeriodSeconds": 5,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 10,
+            "maxConsecutiveFailures": 3
+        }
+    ],
+    "labels": {
+        {{#hdfs.config-url}}"SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",{{/hdfs.config-url}}
+        "SPARK_URI": "{{spark.uri}}",
+        "DCOS_SERVICE": "http:spark:4"
+    }
+}
