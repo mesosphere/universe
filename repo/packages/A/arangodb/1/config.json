@@ -119,7 +119,7 @@
         },
 
         "agency": {
-          "description": "service locator for an ETCD cluster",
+          "description": "service locator for an ETCD cluster. If your ETCD cluster is called 'etcd', then the service locator will be '_etcd-server._client.etcd.mesos'",
           "type": "string",
           "default": ""
         },
