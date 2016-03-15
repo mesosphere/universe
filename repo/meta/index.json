@@ -16,7 +16,7 @@
       }
     },
     {
-      "currentVersion":"0.2.0-1",
+      "currentVersion":"2.2.5-0.2.0-1",
       "description":"Apache Cassandra running on Apache Mesos",
       "framework":true,
       "name":"cassandra",
@@ -26,7 +26,8 @@
         "nosql"
       ],
       "versions":{
-        "0.2.0-1":"2"
+        "0.2.0-1":"1",
+        "2.2.5-0.2.0-1":"2"
       }
     },
     {

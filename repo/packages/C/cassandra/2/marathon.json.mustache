@@ -2,16 +2,16 @@
   "id": "/{{service.name}}",
   "cmd": "./scheduler/bin/cassandra-scheduler server ./scheduler/conf/scheduler.yml",
   "instances": 1,
-  "cpus": {{service.cpus}},
-  "mem": {{service.mem}},
+  "cpus": 0.5,
+  "mem": 2048,
   "requirePorts": true,
   "ports": [
-    {{service.apiPort}}, 
-    {{service.adminPort}}
+    9000, 
+    9001
   ],
 "uris": [
 "{{resource.assets.uris.scheduler-zip}}",
-"{{resource.assets.uris.server-jre-8u74-linux-x64-tar-gz}}"
+"{{resource.assets.uris.jre-tar-gz}}"
 ],
 "healthChecks": [
     {
@@ -29,7 +29,7 @@
 "env":{
 "JAVA_HOME":"./jre"
 ,"FRAMEWORK_NAME":"{{service.name}}"
-,"FRAMEWORK_VERSION":"{{service.version}}"
+,"FRAMEWORK_VERSION":"0.1.0"
 ,"FRAMEWORK_ROLE":"{{service.role}}"
 ,"FRAMEWORK_PRINCIPAL":"{service.principal}"
 ,"CASSANDRA_VERSION":"{{cassandra.version}}"
@@ -98,23 +98,23 @@
 ,"CASSANDRA_TRACETYPE_REPAIR_TTL":"604800"
 ,"CASSANDRA_WINDOWS_TIMER_INTERVAL":"1"
 ,"EXECUTOR_COMMAND":"./executor/bin/cassandra-executor server executor/conf/executor.yml"
-,"EXECUTOR_CPUS":"{{service.executor.cpus}}"
-,"EXECUTOR_MEMORY_MB":"{{service.executor.mem}}"
-,"EXECUTOR_DISK_MB":"{{service.executor.disk}}"
-,"EXECUTOR_HEAP_MB":"{{service.executor.heap}}"
-,"EXECUTOR_API_PORT":"{{service.executor.apiPort}}"
-,"EXECUTOR_ADMIN_PORT":"{{service.executor.adminPort}}"
+,"EXECUTOR_CPUS":"0.5"
+,"EXECUTOR_MEMORY_MB":"768"
+,"EXECUTOR_DISK_MB":"1024"
+,"EXECUTOR_HEAP_MB":"512"
+,"EXECUTOR_API_PORT":"9000"
+,"EXECUTOR_ADMIN_PORT":"9001"
 ,"EXECUTOR_JAVA_HOME":"./jre"
-,"EXECUTOR_JRE_LOCATION":"{{resource.assets.uris.server-jre-8u74-linux-x64-tar-gz}}"
+,"EXECUTOR_JRE_LOCATION":"{{resource.assets.uris.jre-tar-gz}}"
 ,"EXECUTOR_LOCATION":"{{resource.assets.uris.executor-zip}}"
 ,"EXECUTOR_CASSANDRA_LOCATION":"{{resource.assets.uris.apache-cassandra-bin-tar-gz}}"
-,"CLUSTER_TASK_CPUS":"{{service.task.cpus}}"
-,"CLUSTER_TASK_MEMORY_MB":"{{service.task.mem}}"
+,"CLUSTER_TASK_CPUS":"1.0"
+,"CLUSTER_TASK_MEMORY_MB":"256"
 ,"NODES":"{{node.count}}"
 ,"SEED_NODES":"{{node.seeds}}"
 ,"PLACEMENT_STRATEGY":"{{service.placement_strategy}}"
 , "PHASE_STRATEGY":"org.apache.mesos.scheduler.plan.DefaultInstallStrategy"
-,"API_PORT":"{{service.apiPort}}"
-,"ADMIN_PORT":"{{service.adminPort}}"
+,"API_PORT":"9000"
+,"ADMIN_PORT":"9001"
 }
 }

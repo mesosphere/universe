@@ -14,12 +14,6 @@
 					"description": "The name of the Cassandra service deployment.",
 					"default": "cassandra"
 				},
-				"version": {
-					"id": "http://cassandra/docs/mesosphere.com/service/version",
-					"type": "string",
-					"description": "The version of the Cassandra service deployment.",
-					"default": "0.1.0"
-				},
 				"role": {
 					"id": "http://cassandra/docs/mesosphere.com/service/role",
 					"type": "string",
@@ -32,131 +26,33 @@
 					"description": "The authentication principal for the framework.",
 					"default": "cassandra_principal"
 				},
-				"cpus": {
-					"id": "http://cassandra/docs/mesosphere.com/service/cpus",
-					"type": "number",
-					"description": "The number of cpu shares allocated for the service scheduler.",
-					"default": 0.5
-				},
-				"mem": {
-					"id": "http://cassandra/docs/mesosphere.com/service/mem",
-					"type": "integer",
-					"description": "The amount of memory, in MB, allocated for the service scheduler.",
-					"default": 2048
-				},
+				"secret": {
+					"id": "http://cassandra/docs/mesosphere.com/service/secret",
+					"type": "string",
+					"description": "The path to the file containing the authentication secret for the framework."
+				},				
+		        "user":{
+		          "default":"root",
+		          "type":"string"
+		        },				
 				"placement_strategy": {
 					"id": "http://cassandra/docs/mesosphere.com/service/placement_strategy",
 					"type": "string",
 					"description": "The placement strategy for Cassandra nodes. This should always be node.",
 					"default": "NODE"
 				},
-				"apiPort": {
-					"id": "http://cassandra/docs/mesosphere.com/service/apiPort",
-					"description": "The port for communication with the service scheduler API.",
-					"type": "integer",
-					"default": 9000
-				},
-				"adminPort": {
-					"id": "http://cassandra/docs/mesosphere.com/service/adminPort",
-					"description": "The port for communication with the service scheduler admin and health check functions.",
-					"type": "integer",
-					"default": 9001
-				},
-				"executor": {
-					"id": "http://cassandra/docs/mesosphere.com/executor",
-					"type": "object",
-					"description": "The configuration object for the Cassandra service executor.",
-					"properties": {
-						"cpus": {
-							"id": "http://cassandra/docs/mesosphere.com/service/executor/cpus",
-							"description": "The amount of cpu shares allocated for the service executor.",
-							"type": "number",
-							"default": 0.5
-						},
-						"mem": {
-							"id": "http://cassandra/docs/mesosphere.com/service/executor/mem",
-							"type": "integer",
-							"description": "The amount of memory, in MB, allocated for the service executor.",
-							"default": 768
-						},
-						"disk": {
-							"id": "http://cassandra/docs/mesosphere.com/service/executor/disk",
-							"type": "integer",
-							"description": "The amount of disk, in MB, allocated for the service executor.",
-							"default": 1024
-						},
-						"heap": {
-							"id": "http://cassandra/docs/mesosphere.com/service/executor/heap",
-							"type": "integer",
-							"description": "The amount of heap, in MB, allocated for the service executor.",
-							"default": 512
-						},
-						"apiPort": {
-							"id": "http://cassandra/docs/mesosphere.com/service/executor/apiPort",
-							"description": "The port for communication with the service executor API.",
-							"type": "integer",
-							"default": 9000
-						},
-						"adminPort": {
-							"id": "http://cassandra/docs/mesosphere.com/service/executor/adminPort",
-							"description": "The port for communication with the service executor admin and health check functions.",
-							"type": "integer",
-							"default": 9001
-						}
-					},
-					"additionalProperties": false,
-					"required": [
-						"cpus",
-						"mem",
-						"disk",
-						"heap",
-						"apiPort",
-						"adminPort"
-					]
-				},
-				"task": {
-					"id": "http://cassandra/docs/mesosphere.com/executor",
-					"type": "object",
-					"description": "The configuration object for the Cassandra cluster tasks (e.g. backup, restore, cleanup).",
-					"properties": {
-						"cpus": {
-							"id": "http://cassandra/docs/mesosphere.com/service/executor/cpus",
-							"description": "The amount of cpu shares allocated for Cassandra cluster tasks.",
-							"type": "number",
-							"default": 1.0
-						},
-						"mem": {
-							"id": "http://cassandra/docs/mesosphere.com/service/executor/mem",
-							"type": "integer",
-							"description": "The amount of memory, in MB, allocated for Cassandra cluster tasks.",
-							"default": 256
-						}
-					},
-					"additionalProperties": false,
-					"required": [
-						"cpus",
-						"mem"
-					]
-				},
-				"secret": {
-					"id": "http://cassandra/docs/mesosphere.com/service/secret",
-					"type": "string",
-					"description": "The path to the file containing the authentication secret for the framework."
-				}
+		        "plan-strategy":{
+		          "description":"Broker placement strategy. See documentation. [INSTALL, STAGE]",
+		          "type":"string",
+		          "default":"INSTALL"
+		        }								
 			},
 			"additionalProperties": false,
 			"required": [
 				"name",
-				"version",
 				"role",
 				"principal",
-				"cpus",
-				"mem",
-				"placement_strategy",
-				"apiPort",
-				"adminPort",
-				"executor",
-				"task"
+				"placement_strategy"
 			]
 		},
 		"node": {
