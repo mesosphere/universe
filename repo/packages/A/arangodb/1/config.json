@@ -22,7 +22,7 @@
       "type": "object",
       "properties": {
 
-        "id": {
+        "framework-name": {
           "description": "Identifier for the cluster.",
           "type": "string",
           "default": "arangodb"
@@ -188,6 +188,7 @@
         "framework-cpus",
         "framework-instances",
         "framework-mem",
+        "framework-name",
         "framework-port",
         "mesos-authenticate",
         "minimal-resources-agent",

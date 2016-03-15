@@ -1,5 +1,5 @@
 {
-  "id": "{{arangodb.id}}",
+  "id": "{{arangodb.framework-name}}",
   "cpus": {{arangodb.framework-cpus}},
   "mem": {{arangodb.framework-mem}},
   "ports": [ {{arangodb.framework-port}}, 0 ],
@@ -7,9 +7,9 @@
 
   "args": [
     "framework",
-    "--framework_name={{arangodb.id}}",
+    "--framework_name={{arangodb.framework-name}}",
     "--master={{mesos.master}}",
-    "--zk={{arangodb.zk}}/{{arangodb.id}}",
+    "--zk={{arangodb.zk}}/{{arangodb.framework-name}}",
     "--user={{arangodb.framework-user}}",
     "--principal={{arangodb.principal}}",
     "--role={{arangodb.role}}",
