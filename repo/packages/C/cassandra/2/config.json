@@ -30,29 +30,47 @@
 					"id": "http://cassandra/docs/mesosphere.com/service/secret",
 					"type": "string",
 					"description": "The path to the file containing the authentication secret for the framework."
-				},				
-		        "user":{
-		          "default":"root",
-		          "type":"string"
-		        },				
+				},
+				"user": {
+					"id": "http://cassandra/docs/mesosphere.com/service/user",
+					"type": "string",
+					"description": "The user that the service will run as.",
+					"default": "root"
+				},
 				"placement_strategy": {
 					"id": "http://cassandra/docs/mesosphere.com/service/placement_strategy",
 					"type": "string",
-					"description": "The placement strategy for Cassandra nodes. This should always be node.",
+					"description": "The placement strategy for Cassandra nodes. This should always be NODE.",
 					"default": "NODE"
 				},
-		        "plan-strategy":{
-		          "description":"Broker placement strategy. See documentation. [INSTALL, STAGE]",
-		          "type":"string",
-		          "default":"INSTALL"
-		        }								
+				"plan-strategy": {
+					"id": "http://cassandra/docs/mesosphere.com/service/plan-strategy",
+					"description": "Broker placement strategy. See documentation. [INSTALL, STAGE]",
+					"type": "string",
+					"default": "INSTALL"
+				},
+				"apiPort": {
+					"id": "http://cassandra/docs/mesosphere.com/service/apiPort",
+					"description": "The port that the service scheduler and executor listen on for API requests.",
+					"type": "integer",
+					"default": 9000
+				},
+				"adminPort": {
+					"id": "http://cassandra/docs/mesosphere.com/service/apiPort",
+					"description": "The port that the service scheduler and executor listen on for health check and admin requests.",
+					"type": "integer",
+					"default": 9001
+				}
 			},
 			"additionalProperties": false,
 			"required": [
 				"name",
 				"role",
 				"principal",
-				"placement_strategy"
+				"user",
+				"placement_strategy",
+				"apiPort",
+				"adminPort"
 			]
 		},
 		"node": {
