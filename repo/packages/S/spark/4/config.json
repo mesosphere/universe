@@ -54,7 +54,7 @@
                 },
                 "zookeeper": {
                     "type": "string",
-                    "description": "URL to the Zookeeper that Spark cluster framework connects to persist state to. (l.e: zk://0.0.0.0:2181)",
+                    "description": "URL to the ZooKeeper that Spark cluster framework connects to persist state to. (l.e: zk://0.0.0.0:2181)",
                     "default": "master.mesos:2181"
                 },
                 "uri": {
