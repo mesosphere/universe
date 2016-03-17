@@ -10,16 +10,6 @@
           "default":"kafka",
           "title":"name"
         },
-        "placement-strategy":{
-          "description":"Broker placement strategy. See documentation. [ANY, NODE]",
-          "type":"string",
-          "default":"NODE"
-        },
-        "plan-strategy":{
-          "description":"Broker placement strategy. See documentation. [INSTALL, STAGE]",
-          "type":"string",
-          "default":"INSTALL"
-        },
         "role":{
           "default":"*",
           "type":"string"
@@ -36,6 +26,16 @@
         "user":{
           "default":"root",
           "type":"string"
+        },
+        "placement-strategy":{
+          "description":"Broker placement strategy. See documentation. [ANY, NODE]",
+          "type":"string",
+          "default":"NODE"
+        },
+        "plan-strategy":{
+          "description":"Broker placement strategy. See documentation. [INSTALL, STAGE]",
+          "type":"string",
+          "default":"INSTALL"
         }
       },
       "required":[

@@ -10,6 +10,23 @@
           "default":"hdfs",
           "title":"name"
         },
+        "role":{
+          "default":"*",
+          "type":"string"
+        },
+        "principal":{
+          "default":"",
+          "type":"string"
+        },
+        "secret":{
+          "id":"http://cassandra/docs/mesosphere.com/service/secret",
+          "type":"string",
+          "description":"The path to the file containing the authentication secret for the framework."
+        },
+        "user":{
+          "default":"root",
+          "type":"string"
+        },
         "placement-strategy":{
           "description":"Determines the strategy used for placement of the data nodes",
           "default":"node",
@@ -19,18 +36,6 @@
           "description":"Broker placement strategy. See documentation. [INSTALL, STAGE]",
           "type":"string",
           "default":"INSTALL"
-        },
-        "role":{
-          "default":"*",
-          "type":"string"
-        },
-        "principal":{
-          "default":"",
-          "type":"string"
-        },
-        "user":{
-          "default":"root",
-          "type":"string"
         }
       },
       "required":[
