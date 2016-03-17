@@ -1,54 +1,53 @@
 {
   "type":"object",
-  "properties":{
-    "service":{
-      "type":"object",
-      "properties":{
-        "name":{
-          "description":"The name of the service in DCOS.",
-          "type":"string",
-          "default":"kafka",
-          "title":"name"
+    "properties":{
+      "service":{
+        "type":"object",
+        "properties":{
+          "name":{
+            "description":"The name of the service in DCOS.",
+            "type":"string",
+            "default":"kafka",
+            "title":"name"
+          },
+          "role":{
+            "default":"*",
+            "type":"string"
+          },
+          "principal":{
+            "default":"",
+            "type":"string"
+          },
+          "secret":{
+            "type":"string",
+            "description":"Mesos secret (password)",
+            "default":""
+          },
+          "user":{
+            "default":"root",
+            "type":"string"
+          },
+          "placement-strategy":{
+            "description":"Broker placement strategy. See documentation. [ANY, NODE]",
+            "type":"string",
+            "default":"NODE"
+          },
+          "plan-strategy":{
+            "description":"Broker placement strategy. See documentation. [INSTALL, STAGE]",
+            "type":"string",
+            "default":"INSTALL"
+          }
         },
-        "role":{
-          "default":"*",
-          "type":"string"
-        },
-        "principal":{
-          "default":"",
-          "type":"string"
-        },
-        "secret":{
-          "type":"string",
-          "description":"Mesos secret (password)",
-          "default":""
-        },
-        "user":{
-          "default":"root",
-          "type":"string"
-        },
-        "placement-strategy":{
-          "description":"Broker placement strategy. See documentation. [ANY, NODE]",
-          "type":"string",
-          "default":"NODE"
-        },
-        "plan-strategy":{
-          "description":"Broker placement strategy. See documentation. [INSTALL, STAGE]",
-          "type":"string",
-          "default":"INSTALL"
-        }
-      },
-      "required":[
-        "name",
+        "required":[
+          "name",
         "placement-strategy",
         "plan-strategy",
         "role",
         "principal",
         "user"
-      ]
-    },
-    "properties":{
-      "nodes":{
+          ]
+      },
+      "brokers":{
         "type":"object",
         "properties":{
           "cpus":{
@@ -73,10 +72,10 @@
         },
         "required":[
           "cpus",
-          "mem",
-          "disk",
-          "count"
-        ]
+        "mem",
+        "disk",
+        "count"
+          ]
       },
       "kafka":{
         "description":"Kafka framework configuration properties",
@@ -509,12 +508,6 @@
             "default":2000
           }
         }
-      },
-      "required":[
-        "kafka",
-        "nodes",
-        "service"
-      ]
+      }
     }
-  }
 }
