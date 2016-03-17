@@ -147,8 +147,8 @@
                 },
                 "kafka_override_log_retention_bytes": {
                   "description": "Override log.retention.bytes: The maximum size of the log before deleting it",
-                  "type": "integer",
-                  "default": -1 
+                  "type": "string",
+                  "default": "-1" 
                 },
                 "kafka_override_log_retention_hours": {
                   "description": "Override log.retention.hours: The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property",
