@@ -180,7 +180,6 @@
       },
 
       "required": [
-        "agency",
         "arangodb-docker-image",
         "arangodb-privileged-image",
         "async-replication",
@@ -200,8 +199,6 @@
         "nr-dbservers",
         "role",
         "secondaries-with-dbservers",
-        "secret",
-        "webui-host",
         "zk"
       ]
     }
