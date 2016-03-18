@@ -1,0 +1,193 @@
+{
+    "type": "object",
+    "properties": {
+        "mesos": {
+            "description": "Mesos specific configuration properties",
+            "type": "object",
+            "properties": {
+                "master": {
+                    "default": "mesos://zk://master.mesos:2181/mesos",
+                    "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard host:port patterns, like localhost:5050 or 10.0.0.5:5050,10.0.0.6:5050, are also acceptable.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "master"
+            ]
+        },
+        "spark": {
+            "description": "Spark Framework Configuration Properties",
+            "type": "object",
+            "properties": {
+                "history-server": {
+                    "description": "Spark-History Server configuration properties",
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "description": "Set to true to enable the Spark history server.",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "log-dir": {
+                            "description": "Base directory in which Spark events are logged if spark.history-server.enabled is set to true. Users may want to set this to a unified location like an HDFS directory so history files can be read by the history server. Note that this directory must exist prior to installing the Spark package.",
+                            "type": "string",
+                            "default": "hdfs://hdfs/history"
+                        },
+                        "cleaner-enabled": {
+                            "description": "Specifies whether the History Server should periodically clean up event logs from storage.",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "cleaner-interval": {
+                            "default": "1d",
+                            "description": "How often the job history cleaner checks for files to delete. Files are only deleted if they are older than spark.history-server.cleaner-maxage.",
+                            "type": "string"
+                        },
+                        "cleaner-maxage": {
+                            "default": "7d",
+                            "description": "Job history files older than this will be deleted when the history cleaner runs.",
+                            "type": "string"
+                        }
+                    }
+                },
+                "dns-suffix": {
+                    "default": ".marathon.mesos",
+                    "description": "This value is appended to the framework-name value to form the canonical DNS name for the Spark components.",
+                    "type": "string",
+                    "pattern": "^(?:\\.[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)+$"
+                },
+                "framework-name": {
+                    "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
+                    "type": "string",
+                    "default": "spark"
+                },
+                "host": {
+                    "type": "string",
+                    "description": "The host that the Spark cluster dispatcher will register under.",
+                    "default": "$HOST"
+                },
+                "cpus": {
+                    "default": 1,
+                    "description": "CPU shares to allocate to each Marathon instance.",
+                    "minimum": 0.0,
+                    "type": "number"
+                },
+                "instances": {
+                    "default": 1,
+                    "description": "Number of Marathon instances to run.",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "mem": {
+                    "default": 1024.0,
+                    "description": "Memory (MB) to allocate to each Marathon task.",
+                    "minimum": 1024.0,
+                    "type": "number"
+                },
+                "mesos-user": {
+                    "description": "Mesos user to run the executor under",
+                    "type": "string",
+                    "default": "root"
+                },
+                "mesos-role": {
+                    "description": "Mesos role the Dispatcher will be registered with.",
+                    "type": "string",
+                    "default": "*"
+                },
+                "dispatcher-java-opts": {
+                    "description": "Java options set when starting the Spark dispatcher.",
+                    "type": "string"
+                },
+                "zookeeper": {
+                    "type": "string",
+                    "description": "URL to the Zookeeper that Spark cluster framework connects to persist state to. (l.e: zk://0.0.0.0:2181)",
+                    "default": "master.mesos:2181"
+                },
+                "uri": {
+                    "type": "string",
+                    "description": "Spark distribution URI",
+                    "default": "https://downloads.mesosphere.com/spark/assets/spark-1.6.1.tgz"
+                },
+                "ssl": {
+                    "description": "Spark SSL certificates and private key configuration.",
+                    "properties": {
+                        "enabled": {
+                            "default": false,
+                            "description": "Set to true to enable SSL.",
+                            "type": "boolean"
+                        },
+                        "keyStoreBase64": {
+                            "default": "",
+                            "description": "Base64 encoded blob containing a Java keystore.",
+                            "type": "string"
+                        },
+                        "trustStoreBase64": {
+                            "default": "",
+                            "description": "Base64 encoded blob containing a Java truststore.",
+                            "type": "string"
+                        },
+                        "keyPassword": {
+                            "default": "",
+                            "description": "An optional password for the private key in the keystore.",
+                            "type": "string"
+                        },
+                        "keyStorePassword": {
+                            "default": "",
+                            "description": "An optional password for the keystore (and the key if keyPassword is not given).",
+                            "type": "string"
+                        },
+                        "trustStorePassword": {
+                            "default": "",
+                            "description": "An optional password for the truststore.",
+                            "type": "string"
+                        },
+                        "protocol": {
+                            "default": "TLSv1.2",
+                            "description": "The TLS version to offer.",
+                            "type": "string"
+                        },
+                        "enabledAlgorithms": {
+                            "default": "SSL_DH_anon_EXPORT_WITH_DES40_CBC_SHA,SSL_DH_anon_WITH_3DES_EDE_CBC_SHA,SSL_DH_anon_WITH_DES_CBC_SHA,SSL_DHE_DSS_EXPORT_WITH_DES40_CBC_SHA,SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA,SSL_DHE_DSS_WITH_DES_CBC_SHA,SSL_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA,SSL_DHE_RSA_WITH_DES_CBC_SHA,SSL_RSA_EXPORT_WITH_DES40_CBC_SHA,SSL_RSA_WITH_3DES_EDE_CBC_SHA,SSL_RSA_WITH_DES_CBC_SHA,SSL_RSA_WITH_NULL_MD5,SSL_RSA_WITH_NULL_SHA,TLS_DH_anon_WITH_AES_128_CBC_SHA,TLS_DH_anon_WITH_AES_128_CBC_SHA256,TLS_DH_anon_WITH_AES_128_GCM_SHA256,TLS_DH_anon_WITH_AES_256_CBC_SHA,TLS_DH_anon_WITH_AES_256_CBC_SHA256,TLS_DH_anon_WITH_AES_256_GCM_SHA384,TLS_DHE_DSS_WITH_AES_128_CBC_SHA,TLS_DHE_DSS_WITH_AES_128_CBC_SHA256,TLS_DHE_DSS_WITH_AES_128_GCM_SHA256,TLS_DHE_DSS_WITH_AES_256_CBC_SHA,TLS_DHE_DSS_WITH_AES_256_CBC_SHA256,TLS_DHE_DSS_WITH_AES_256_GCM_SHA384,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_256_CBC_SHA,TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,TLS_DHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDH_anon_WITH_3DES_EDE_CBC_SHA,TLS_ECDH_anon_WITH_AES_128_CBC_SHA,TLS_ECDH_anon_WITH_AES_256_CBC_SHA,TLS_ECDH_anon_WITH_NULL_SHA,TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDH_ECDSA_WITH_NULL_SHA,TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDH_RSA_WITH_AES_128_CBC_SHA,TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDH_RSA_WITH_AES_256_CBC_SHA,TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDH_RSA_WITH_NULL_SHA,TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_NULL_SHA,TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_NULL_SHA,TLS_EMPTY_RENEGOTIATION_INFO_SCSV,TLS_KRB5_EXPORT_WITH_DES_CBC_40_MD5,TLS_KRB5_EXPORT_WITH_DES_CBC_40_SHA,TLS_KRB5_WITH_3DES_EDE_CBC_MD5,TLS_KRB5_WITH_3DES_EDE_CBC_SHA,TLS_KRB5_WITH_DES_CBC_MD5,TLS_KRB5_WITH_DES_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_NULL_SHA256",
+                            "description": "A comma-separared list of allowed ciphers.",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "kerberos": {
+                    "description": "Spark Kerberos configuration.",
+                    "properties": {
+                        "krb5conf": {
+                            "default": "",
+                            "description": "Base64 encoded krb5.conf file that is copied to the driver and the executor (not evailable in OpenSource version).",
+                            "type": "string"
+                        }
+                    },
+                     "type": "object"
+                }
+            },
+            "required": [
+                "cpus",
+                "framework-name",
+                "instances",
+                "mem",
+                "zookeeper",
+                "uri"
+            ]
+        },
+        "hdfs": {
+            "description": "Spark-HDFS configuration properties",
+            "type": "object",
+            "properties": {
+                "config-url": {
+                    "type": "string",
+                    "description": "Base URL that serves HDFS config files (hdfs-site.xml, core-site.xml).  If not set, DCOS Spark will use its default configuration and read from DCOS HDFS."
+                }
+            }
+        }
+    },
+    "required": [
+  	    "mesos",
+        "spark"
+    ]
+}
