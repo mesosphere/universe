@@ -330,7 +330,7 @@
           "kafka_override_zookeeper_session_timeout_ms":{
             "description":"Override zookeeper.session.timeout.ms: Zookeeper session timeout",
             "type":"integer",
-            "default":60000
+            "default":6000
           },
           "kafka_override_connections_max_idle_ms":{
             "description":"Override connections.max.idle.ms: Idle connections timeout: the server socket processor threads close the connections that idle more than this",
