@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import json
@@ -13,10 +13,28 @@ import zipfile
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--repository')
-    parser.add_argument('--sudo', action='store_true', default=False)
-    parser.add_argument('--out-file', dest='outfile')
+    parser = argparse.ArgumentParser(
+        description='This script is able to download the latest artifacts for '
+        'all of the packages in the Universe repository into a zipfile. It '
+        'uses a temporary file to store all of the artifacts as it downloads '
+        'them because of this it requires that your temporary filesystem has '
+        'enough space to store all of the artifact. You can control the path '
+        'to the temporary file by setting the TMPDIR environment variable. '
+        'E.g. TMPDIR=\'.\' ./scripts/local-universe.py ...')
+    parser.add_argument(
+        '--repository',
+        required=True,
+        help='Path to the top level package directory. E.g. repo/packages')
+    parser.add_argument(
+        '--sudo',
+        action='store_true',
+        default=False,
+        help='Set this if sudo is required when executing the Docker CLI.')
+    parser.add_argument(
+        '--out-file',
+        dest='outfile',
+        required=True,
+        help='Path to the zipfile to use to store all of the resources')
     args = parser.parse_args()
 
     with zipfile.ZipFile(args.outfile, mode='w') as zip_file:
