@@ -155,6 +155,12 @@
 			"id": "http://cassandra/docs/mesosphere.com/cassandra",
 			"type": "object",
 			"properties": {
+			    "framework-name": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/framework-name",
+					"type": "string",
+					"description": "The name of the Cassandra service deployment.",
+					"default": "cassandra"
+				},
 				"version": {
 					"id": "http://cassandra/docs/mesosphere.com/cassandra/version",
 					"type": "string",
