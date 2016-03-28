@@ -1,0 +1,30 @@
+{
+    "id": "{{mr-redis.framework-name}}",
+    "container": {
+        "docker": {
+            "image": "{{resource.assets.container.docker.redis-docker}}",
+            "network": "HOST",
+            "forcePullImage": true
+        },
+        "type": "DOCKER",
+        "volumes": []
+    },
+    "args": [],
+    "cpus": {{mr-redis.cpus}},
+    "mem": {{mr-redis.mem}},
+    "instances": 1,
+    "ports": [5454, 5656, 2379],
+    "env": {
+      "FRAMEWORK_NAME":"{{mr-redis.framework-name}}",
+      "CLUSTER_SIZE":"{{mr-redis.cluster-size}}",
+      "MESOS_MASTER":"{{mesos.master}}"
+    },
+    "healthChecks": [{
+      "protocol": "HTTP",
+      "path": "/v1/STATUS",
+      "portIndex": 1,
+      "gracePeriodSeconds": 15,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }]
+}

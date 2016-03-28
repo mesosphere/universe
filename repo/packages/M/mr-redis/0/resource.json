@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://github.com/mesos/mr-redis/blob/master/logo.jpg",
+    "icon-medium": "https://github.com/mesos/mr-redis/blob/master/logo.jpg",
+    "icon-large": "https://github.com/mesos/mr-redis/blob/master/logo.jpg"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "redis-docker": "paashuawei/mr-redis:latest"
+      }
+    }
+  }
+}
