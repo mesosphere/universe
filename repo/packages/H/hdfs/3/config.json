@@ -1,0 +1,194 @@
+{
+  "type":"object",
+  "properties":{
+    "service":{
+      "type":"object",
+      "properties":{
+        "name":{
+          "description":"The name of the service in DCOS.",
+          "type":"string",
+          "default":"hdfs",
+          "title":"name"
+        },
+        "role":{
+          "default":"hdfs-role",
+          "type":"string"
+        },
+        "principal":{
+          "default":"hdfs-principal",
+          "type":"string"
+        },
+        "secret":{
+          "id":"http://cassandra/docs/mesosphere.com/service/secret",
+          "type":"string",
+          "description":"The path to the file containing the authentication secret for the framework."
+        },
+        "user":{
+          "default":"root",
+          "type":"string"
+        },
+        "placement-strategy":{
+          "description":"Determines the strategy used for placement of the data nodes",
+          "default":"node",
+          "type":"string"
+        },
+        "plan-strategy":{
+          "description":"Broker placement strategy. See documentation. [INSTALL, STAGE]",
+          "type":"string",
+          "default":"INSTALL"
+        }
+      },
+      "required":[
+        "name",
+        "placement-strategy",
+        "plan-strategy",
+        "role",
+        "principal",
+        "user"
+      ]
+    },
+    "journal-node":{
+      "title":"Journal Nodes",
+      "type":"object",
+      "properties":{
+        "cpus":{
+          "default":1,
+          "description":"CPU shares to allocate to each journal node instance.",
+          "minimum":0.5,
+          "type":"number"
+        },
+        "mem":{
+          "description":"The amount of heap memory for the journal node.",
+          "type":"integer",
+          "default":512
+        },
+        "count":{
+          "default":3,
+          "description":"Number of journal node instances to run.",
+          "minimum":3,
+          "type":"integer"
+        }
+      },
+      "required":[
+        "cpus",
+        "mem",
+        "count"
+      ]
+    },
+    "name-node":{
+      "title":"Name Nodes",
+      "type":"object",
+      "properties":{
+        "cpus":{
+          "default":1,
+          "description":"CPU shares to allocate to each name node instance.",
+          "minimum":0.5,
+          "type":"number"
+        },
+        "mem":{
+          "description":"The amount of heap memory for the name node.",
+          "type":"integer",
+          "default":4096,
+          "minimum":4096
+        },
+        "count":{
+          "default":2,
+          "description":"Number of journal node instances to run.",
+          "minimum":2,
+          "type":"integer"
+        }
+      },
+      "required":[
+        "cpus",
+        "mem",
+        "count"
+      ]
+    },
+    "data-node":{
+      "title":"Data Nodes",
+      "type":"object",
+      "properties":{
+        "cpus":{
+          "default":1,
+          "description":"CPUs",
+          "minimum":0.5,
+          "type":"number"
+        },
+        "mem":{
+          "description":"Memory in MB",
+          "type":"integer",
+          "default":1024
+        },
+        "disk-size":{
+          "description":"The amount of disk space for the data node.",
+          "type":"integer"
+        },
+        "count":{
+          "default":2,
+          "description":"Number of data nodes",
+          "minimum":2,
+          "type":"integer"
+        }
+      },
+      "required":[
+        "cpus",
+        "mem",
+        "count"
+      ]
+    },
+    "hdfs":{
+      "title":"HDFS",
+      "type":"object",
+      "properties":{
+        "framework-name":{
+          "description":"The name of the service in DCOS.",
+          "type":"string",
+          "default":"hdfs",
+          "title":"name"
+        },
+        "dfs-datanode-balance-bandwidthPerSec":{
+          "description":"Sets the HDFS datanode balance bandwidth/sec.",
+          "type":"integer",
+          "default":41943040
+        },
+        "dfs-namenode-safemode-threshold-pct":{
+          "description":"Sets the HDFS namenode safemode threshold percentage.",
+          "type":"number",
+          "default":0.90
+        },
+        "dfs-namenode-heartbeat-recheck-interval":{
+          "description":"Sets the HDFS namenode heartbeat interval.",
+          "type":"integer",
+          "default":60000
+        },
+        "dfs-datanode-handler-count":{
+          "description":"Sets the HDFS datanode handler count.",
+          "type":"integer",
+          "default":10
+        },
+        "dfs-namenode-handler-count":{
+          "description":"Sets the HDFS namenode handler count.",
+          "type":"integer",
+          "default":20
+        },
+        "dfs-namenode-invalidate-work-pct-per-iteration":{
+          "description":"Advanced property. Sets dfs.namenode.invalidate.work.pct.per.iteration property in hdfs-site.xml.  This determines the percentage amount of block invalidations (deletes) to do over a single DN heartbeat deletion command. The final deletion count is determined by applying this percentage to the number of live nodes in the system. The resultant number is the number of blocks from the deletion list chosen for proper invalidation over a single heartbeat of a single DN. Value should be a positive, non-zero percentage in float notation (X.Yf), with 1.0f meaning 100%",
+          "type":"string",
+          "default":"0.32f"
+        },
+        "dfs-namenode-replication-work-multiplier-per-iteration":{
+          "description":"Advanced property. Sets dfs.namenode.replication.work.multiplier.per.iteration property in hdfs-site.xml. This determines the total amount of block transfers to begin in parallel at a DN, for replication, when such a command list is being sent over a DN heartbeat by the NN. The actual number is obtained by multiplying this multiplier with the total number of live nodes in the cluster. The result number is the number of blocks to begin transfers immediately for, per DN heartbeat. This number can be any positive, non-zero integer.",
+          "type":"integer",
+          "default":2
+        }
+      }
+    }
+  },
+  "required":[
+    "service",
+    "hdfs",
+    "journal-node",
+    "name-node",
+    "data-node"
+  ]
+}
