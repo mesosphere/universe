@@ -75,7 +75,7 @@ def enumerate_http_resources(package, package_path):
     with (package_path / 'resource.json').open() as json_file:
         resource = json.load(json_file)
 
-    for name, url in resource['images'].items():
+    for name, url in resource.get('images', {}).items():
         if name != 'screenshots':
             yield url, pathlib.PurePosixPath(package, 'images')
 
