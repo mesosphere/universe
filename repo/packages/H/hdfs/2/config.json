@@ -11,11 +11,11 @@
           "title":"name"
         },
         "role":{
-          "default":"*",
+          "default":"hdfs-role",
           "type":"string"
         },
         "principal":{
-          "default":"",
+          "default":"hdfs-principal",
           "type":"string"
         },
         "secret":{
