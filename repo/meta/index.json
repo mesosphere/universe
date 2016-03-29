@@ -49,6 +49,80 @@
       }
     },
     {
+      "currentVersion":"0.1.0",
+      "description":"A Mesos Framework that allows running and resizing one or multiple Crate database clusters.",
+      "framework":true,
+      "name":"crate",
+      "promoted":false,
+      "tags":[
+        "database",
+        "distributed",
+        "nosql"
+      ],
+      "versions":{
+        "0.1.0":"0"
+      }
+    },
+    {
+      "currentVersion":"5.4.3",
+      "description":"Cloud-scale monitoring",
+      "framework":false,
+      "name":"datadog",
+      "promoted":false,
+      "tags":[
+        "datadog",
+        "monitoring"
+      ],
+      "versions":{
+        "5.4.3":"0"
+      }
+    },
+    {
+      "currentVersion":"0.7.0",
+      "description":"DCOS implementation of the Mesos-Elasticsearch framework",
+      "framework":true,
+      "name":"elasticsearch",
+      "promoted":false,
+      "tags":[
+        "dcos",
+        "mesos",
+        "framework",
+        "elasticsearch",
+        "elastic"
+      ],
+      "versions":{
+        "0.7.0":"0"
+      }
+    },
+    {
+      "currentVersion":"0.0.2",
+      "description":"A distributed consistent key-value store for shared configuration and service discovery.",
+      "framework":true,
+      "name":"etcd",
+      "promoted":false,
+      "tags":[
+        "mesosphere",
+        "framework",
+        "consensus"
+      ],
+      "versions":{
+        "0.0.2":"0"
+      }
+    },
+    {
+      "currentVersion":"0.8.1",
+      "description":"ZooKeeper co-process for instance monitoring, backup/recovery, cleanup and visualization.",
+      "framework":false,
+      "name":"exhibitor",
+      "promoted":false,
+      "tags":[
+        "zookeeper"
+      ],
+      "versions":{
+        "0.8.1":"0"
+      }
+    },
+    {
       "currentVersion":"0.1.8",
       "description":"Hadoop Distributed File System (HDFS), Highly Available",
       "framework":true,
@@ -62,6 +136,22 @@
       "versions":{
         "0.1.7":"0",
         "0.1.8":"1"
+      }
+    },
+    {
+      "currentVersion":"0.0.1",
+      "description":"Hue Web Interface to Hadoop",
+      "framework":false,
+      "name":"hue",
+      "promoted":false,
+      "tags":[
+        "mesosphere",
+        "hadoop",
+        "filesystem",
+        "hdfs"
+      ],
+      "versions":{
+        "0.0.1":"0"
       }
     },
     {
@@ -103,6 +193,23 @@
       }
     },
     {
+      "currentVersion":"v0.7.2-v1.1.5-alpha",
+      "description":"Kubernetes is an open source system for managing containerized applications across multiple hosts, providing basic mechanisms for deployment, maintenance, and scaling of applications.",
+      "framework":true,
+      "name":"kubernetes",
+      "promoted":false,
+      "tags":[
+        "mesosphere",
+        "framework",
+        "pod",
+        "label",
+        "paas"
+      ],
+      "versions":{
+        "v0.7.2-v1.1.5-alpha":"0"
+      }
+    },
+    {
       "currentVersion":"0.15.3",
       "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
       "framework":true,
@@ -115,6 +222,98 @@
       "versions":{
         "0.11.1":"0",
         "0.15.3":"1"
+      }
+    },
+    {
+      "currentVersion":"0.0.4-0.1",
+      "description":"HAProxy configured from marathon state",
+      "framework":false,
+      "name":"marathon-lb",
+      "promoted":false,
+      "tags":[
+        "loadbalancer",
+        "service-discovery",
+        "reverse-proxy",
+        "proxy",
+        "haproxy"
+      ],
+      "versions":{
+        "0.0.3-0.1":"0",
+        "0.0.4-0.1":"1"
+      }
+    },
+    {
+      "currentVersion":"0.0.1",
+      "description":"MemSQL running on Apache Mesos. This framework provides the ability to create and manage a set of MemSQL clusters, each running with the MemSQL Ops management tool.",
+      "framework":true,
+      "name":"memsql",
+      "promoted":false,
+      "tags":[
+        "mysql",
+        "database",
+        "rdbms"
+      ],
+      "versions":{
+        "0.0.1":"0"
+      }
+    },
+    {
+      "currentVersion":"0.0.0-0.1",
+      "description":"Your private path to access network resources and services securely: Server service",
+      "framework":false,
+      "name":"openvpn",
+      "promoted":false,
+      "tags":[
+        "vpn",
+        "remote-access"
+      ],
+      "versions":{
+        "0.0.0-0.1":"0"
+      }
+    },
+    {
+      "currentVersion":"0.0.0-0.1",
+      "description":"Your private path to access network resources and services securely: Admin service.",
+      "framework":false,
+      "name":"openvpn-admin",
+      "promoted":false,
+      "tags":[
+        "vpn",
+        "remote-access"
+      ],
+      "versions":{
+        "0.0.0-0.1":"0"
+      }
+    },
+    {
+      "currentVersion":"1.2",
+      "description":"Quobyte is a software defined and fault tolerant distributed file system running on commodity hardware.",
+      "framework":true,
+      "name":"quobyte",
+      "promoted":false,
+      "tags":[
+        "storage",
+        "filesystem",
+        "bigdata"
+      ],
+      "versions":{
+        "1.2":"0"
+      }
+    },
+    {
+      "currentVersion":"0.1.1",
+      "description":"A distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability.",
+      "framework":true,
+      "name":"riak",
+      "promoted":false,
+      "tags":[
+        "mesosphere",
+        "framework",
+        "database",
+        "riak"
+      ],
+      "versions":{
+        "0.1.1":"0"
       }
     },
     {
@@ -132,6 +331,75 @@
       "versions":{
         "1.5.0-multi-roles-v2":"0",
         "1.6.0":"4"
+      }
+    },
+    {
+      "currentVersion":"0.0.1",
+      "description":"Spark Notebook package for DCOS",
+      "framework":true,
+      "name":"spark-notebook",
+      "promoted":false,
+      "tags":[
+        "spark",
+        "notebook",
+        "spark-notebook",
+        "interactive",
+        "big-data",
+        "bigdata",
+        "apachespark",
+        "datafellas",
+        "data-fellas"
+      ],
+      "versions":{
+        "0.0.1":"0"
+      }
+    },
+    {
+      "currentVersion":"0.1.0",
+      "description":"Storm is a stream processing framework.",
+      "framework":true,
+      "name":"storm",
+      "promoted":false,
+      "tags":[
+        "mesosphere",
+        "framework",
+        "storm"
+      ],
+      "versions":{
+        "0.1.0":"0"
+      }
+    },
+    {
+      "currentVersion":"0.4.0",
+      "description":"Swarm is a Docker-native clustering system.",
+      "framework":true,
+      "name":"swarm",
+      "promoted":false,
+      "tags":[
+        "mesosphere",
+        "framework",
+        "docker"
+      ],
+      "versions":{
+        "0.4.0":"0"
+      }
+    },
+    {
+      "currentVersion":"0.5.6",
+      "description":"Zeppelin is a web-based notebook that enables interactive data analytics",
+      "framework":true,
+      "name":"zeppelin",
+      "promoted":false,
+      "tags":[
+        "nflabs",
+        "framework",
+        "bigdata",
+        "spark",
+        "notebook",
+        "interactive"
+      ],
+      "versions":{
+        "0.5.6":"0"
       }
     }
   ],

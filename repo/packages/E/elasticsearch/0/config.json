@@ -1,0 +1,154 @@
+{
+  "properties":{
+    "mesos":{
+      "description":"Mesos specific configuration properties",
+      "properties":{
+        "master":{
+          "default":"zk://master.mesos:2181/mesos",
+          "description":"The URL of the Mesos master. This should point to the Mesos ZNode on the Zookeeper machine.",
+          "type":"string"
+        }
+      },
+      "required":[
+        "master"
+      ],
+      "type":"object"
+    },
+    "elasticsearch":{
+      "description":"Elasticsearch specific configuration properties",
+      "properties":{
+        "framework-name":{
+          "default":"elasticsearch",
+          "description":"The framework name.",
+          "type":"string"
+        },
+        "failover-timeout":{
+          "default":"2592000.0",
+          "description":"The time before Mesos kills a scheduler and tasks if it has not recovered (ms).",
+          "type":"string"
+        },
+        "zookeeper-mesos-timeout":{
+          "default":"20000",
+          "description":"The timeout for connecting to zookeeper for Mesos (ms).",
+          "type":"string"
+        },
+        "port":{
+          "default":"31105",
+          "description":"The port number of the ES-Mesos management front-end. Defaults to 8080.",
+          "type":"string"
+        },
+        "force-pull-image":{
+          "default":false,
+          "description":"Forces docker to re-pull the image.",
+          "type":"boolean"
+        },
+        "executor":{
+          "properties":{
+            "ram":{
+              "default":"2048",
+              "description":"The amount of ram that Mesos shall give give to the executors.",
+              "type":"string"
+            },
+            "cpu":{
+              "default":"1.0",
+              "description":"The amount of CPU resource to allocate to the elasticsearch instance.",
+              "type":"string"
+            },
+            "disk":{
+              "default":"1024",
+              "description":"The amount of Disk resource to allocate to the elasticsearch instance (MB).",
+              "type":"string"
+            },
+            "instances":{
+              "default":"3",
+              "description":"The number of elasticsearch nodes to be instantiated. It is recommended that you provide an odd number, to prevent split brain issues.",
+              "type":"string"
+            },
+            "cluster-name":{
+              "default":"mesos-ha",
+              "description":"Name of the elasticsearch cluster",
+              "type":"string"
+            },
+            "settings-location":{
+              "default":"DEFAULT",
+              "description":"URI to ES yml settings file. If file is copied to all slaves, the file must be in /tmp/config. E.g. 'file:/tmp/config/elasticsearch.yml', 'http://webserver.com/elasticsearch.yml'",
+              "type":"string"
+            },
+            "health-delay":{
+              "default":"1000",
+              "description":"The delay between executor healthcheck requests (ms).",
+              "type":"string"
+            },
+            "name":{
+              "default":"elasticsearch-executor",
+              "description":"The name given to the executor task.",
+              "type":"string"
+            },
+            "timeout":{
+              "default":"60000",
+              "description":"The maximum executor healthcheck timeout (ms). Must be greater than elasticsearch.executor.healthdelay. Will start new executor after this length of time.",
+              "type":"string"
+            }
+          },
+          "required":[
+            "ram",
+            "cpu",
+            "disk",
+            "instances",
+            "cluster-name",
+            "settings-location",
+            "health-delay",
+            "name",
+            "timeout"
+          ],
+          "type":"object"
+        },
+        "scheduler":{
+          "properties":{
+            "cpu":{
+              "default":"0.2",
+              "description":"The amount of CPU that Mesos shall allocate to the scheduler.",
+              "type":"string"
+            },
+            "ram":{
+              "default":"512",
+              "description":"The amount of RAM that Mesos shall allocate to the scheduler.",
+              "type":"string"
+            },
+            "instances":{
+              "default":"1",
+              "description":"The number of scheduler instances.",
+              "type":"string"
+            },
+            "java-heap":{
+              "default":"-Xms128m -Xmx256m",
+              "description":"The java heap space environmental variables to pass to the scheduler",
+              "type":"string"
+            }
+          },
+          "required":[
+            "cpu",
+            "ram",
+            "instances",
+            "java-heap"
+          ],
+          "type":"object"
+        }
+      },
+      "required":[
+        "framework-name",
+        "failover-timeout",
+        "zookeeper-mesos-timeout",
+        "port",
+        "force-pull-image",
+        "executor",
+        "scheduler"
+      ],
+      "type":"object"
+    }
+  },
+  "required":[
+    "mesos",
+    "elasticsearch"
+  ]
+}

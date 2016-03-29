@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "2.0",
+  "name": "kubernetes",
+  "version": "v0.7.2-v1.1.5-alpha",
+  "scm": "https://github.com/mesosphere/kubernetes-mesos",
+  "maintainer": "support@mesosphere.io",
+  "description": "Kubernetes is an open source system for managing containerized applications across multiple hosts, providing basic mechanisms for deployment, maintenance, and scaling of applications.",
+  "framework": true,
+  "tags": ["mesosphere", "framework", "pod", "label", "paas"],
+  "preInstallNotes": "In order for Kubernetes to start successfully all resources must be available in the cluster including ports, CPU shares and RAM.\nWe recommend a minimum of 1 node with 1 CPU share and 1 GB of RAM available for use by the Kubernetes service.\nNote that the service is alpha and there may be bugs, including possible data loss, incomplete features, incorrect documentation or other discrepancies.\n\nWARNING: The standard configuration launches an embedded etcd WHICH LOOSES\n         THE COMPLETE CLUSTER STATE when the framework container restarts.\n         For production follow http://docs.mesosphere.com/services/kubernetes/#install\n         to configure kubernetes with a highly available, replicated etcd cluster.\n",
+  "postInstallNotes": "Kubernetes DCOS Service has been successfully installed!\n\n\tDocumentation: https://github.com/mesosphere/kubernetes-mesos\n\tIssues: https://github.com/mesosphere/kubernetes-mesos/issues\n\tWeb UI: <hostname>/service/kubernetes/",
+  "postUninstallNotes": "The Kubernetes DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at http://docs.mesosphere.com/services/kubernetes/#uninstall to clean up any persisted state.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/mesosphere/kubernetes-mesos/blob/master/LICENSE"
+    }
+  ]
+}

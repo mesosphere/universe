@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/swarm/assets/icon-service-swarm-large.png",
+    "icon-medium": "https://downloads.mesosphere.com/swarm/assets/icon-service-swarm-large.png",
+    "icon-large": "https://downloads.mesosphere.com/swarm/assets/icon-service-swarm-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "swarm-docker": "dockerswarm/swarm:master"
+      }
+    }
+  }
+}

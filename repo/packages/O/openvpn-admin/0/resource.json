@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.io/openvpn/artifacts/images/openvpn-48x48.png",
+    "icon-medium": "https://downloads.mesosphere.io/openvpn/artifacts/images/openvpn-96x96.png",
+    "icon-large": "https://downloads.mesosphere.io/openvpn/artifacts/images/openvpn-256x256.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "openvpn-admin-docker": "mesosphere/dcos-openvpn"
+      }
+    }
+  }
+}

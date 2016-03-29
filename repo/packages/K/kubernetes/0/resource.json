@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/kubernetes/artifacts/images/k8s-48x48.png",
+    "icon-medium": "https://downloads.mesosphere.com/kubernetes/artifacts/images/k8s-96x96.png",
+    "icon-large": "https://downloads.mesosphere.com/kubernetes/artifacts/images/k8s-256x256.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "kubernetes-docker": "mesosphere/kubernetes:v0.7.2-v1.1.5-alpha"
+      }
+    }
+  }
+}

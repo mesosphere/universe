@@ -1,0 +1,24 @@
+{
+    "id": "/zeppelin",
+    "acceptedResourceRoles": [ "{{zeppelin.role}}" ],
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.zeppelin-docker}}",
+            "network": "HOST"
+        }
+    },
+    "healthChecks": [{
+        "protocol": "TCP",
+        "gracePeriodSeconds": 300,
+        "intervalSeconds": 60,
+        "portIndex": 0,
+        "timeoutSeconds": 15,
+        "maxConsecutiveFailures": 3
+    }],
+    "cmd": "sed \"s#<value>8080</value>#<value>$PORT0</value>#\" < conf/zeppelin-site.xml.template > conf/zeppelin-site.xml && sed -i \"s#<value>-1</value>#<value>$PORT1</value>#\" conf/zeppelin-site.xml && SPARK_HOME=${MESOS_SANDBOX}/{{zeppelin.spark_version}} SPARK_MESOS_EXECUTOR_DOCKER_IMAGE={{resource.assets.container.docker.spark-docker}} bin/zeppelin.sh start",
+    "ports": [0, 0],
+    "cpus": 1,
+    "mem": 2048.0,
+    "uris": ["{{resource.assets.uris.spark-1-6-0-tgz}}"]
+}

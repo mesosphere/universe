@@ -1,0 +1,120 @@
+{
+  "id": "{{kubernetes.framework-name}}",
+  "cpus": {{kubernetes.cpus}},
+  "mem": {{kubernetes.mem}},
+  "acceptedResourceRoles": ["{{{marathon.resource-roles}}}"],
+  "labels": {{{marathon.labels}}},
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.kubernetes-docker}}",
+      "forcePullImage": true,
+      "network": "HOST"
+    }
+  },
+  "env":{
+    "DEBUG": "{{kubernetes.debug}}",
+    "SCHEDULER_GENERATE_MESOS_TASK_DISCOVERY": "{{kubernetes.generate-task-discovery}}",
+    "GLOG_v": "{{kubernetes.logging-verbosity}}",
+    "DEFAULT_DNS_NAME": "{{kubernetes.framework-name}}{{kubernetes.dns-suffix}}",
+    "FRAMEWORK_NAME": "{{kubernetes.framework-name}}",
+    "FRAMEWORK_WEBURI": "https://{{kubernetes.framework-name}}{{kubernetes.dns-suffix}}:{{kubernetes.apiserver-proxy-port}}",
+    "ENABLE_DEPLOYMENTS": "{{kubernetes.enable-deployments}}",
+    "ENABLE_DAEMONSETS": "{{kubernetes.enable-daemonsets}}",
+
+    {{#mesos.master}}
+    "K8SM_MESOS_MASTER": "{{mesos.master}}",
+    {{/mesos.master}}
+
+    {{#kubernetes.framework-roles}}
+    "SCHEDULER_MESOS_FRAMEWORK_ROLES": "{{kubernetes.framework-roles}}",
+    {{/kubernetes.framework-roles}}
+
+    {{#kubernetes.default-pod-roles}}
+    "SCHEDULER_MESOS_DEFAULT_POD_ROLES": "{{kubernetes.default-pod-roles}}",
+    {{/kubernetes.default-pod-roles}}
+
+    {{#kubernetes.etcd-mesos-framework-name}}
+    "ETCD_MESOS_FRAMEWORK_NAME": "{{kubernetes.etcd-mesos-framework-name}}",
+    {{/kubernetes.etcd-mesos-framework-name}}
+
+    {{#kubernetes.enable-dns}}
+    "ENABLE_DNS": "{{kubernetes.enable-dns}}",
+    {{/kubernetes.enable-dns}}
+
+    {{#kubernetes.kube-dns-domain}}
+    "DNS_DOMAIN": "{{kubernetes.kube-dns-domain}}",
+    {{/kubernetes.kube-dns-domain}}
+
+    {{#kubernetes.kube-dns-service-ip}}
+    "DNS_SERVER_IP": "{{kubernetes.kube-dns-service-ip}}",
+    {{/kubernetes.kube-dns-service-ip}}
+
+    {{#kubernetes.kube-dns-replicas}}
+    "DNS_REPLICAS": "{{kubernetes.kube-dns-replicas}}",
+    {{/kubernetes.kube-dns-replicas}}
+
+    {{#kubernetes.kube-dns-nameservers}}
+    "DNS_NAMESERVERS": "{{kubernetes.kube-dns-nameservers}}",
+    {{/kubernetes.kube-dns-nameservers}}
+
+    {{#kubernetes.service-cluster-ip-range}}
+    "SERVICE_CLUSTER_IP_RANGE": "{{kubernetes.service-cluster-ip-range}}",
+    {{/kubernetes.service-cluster-ip-range}}
+
+    {{#kubernetes.service-node-port-range}}
+    "SERVICE_NODE_PORT_RANGE": "{{kubernetes.service-node-port-range}}",
+    {{/kubernetes.service-node-port-range}}
+
+    {{#kubernetes.scheduler-service-ip}}
+    "SCHEDULER_SERVICE_ADDRESS": "{{kubernetes.scheduler-service-ip}}",
+    {{/kubernetes.scheduler-service-ip}}
+
+    {{#kubernetes.pki.apiserver-crt}}
+    "PKI_APISERVER_CRT": "{{kubernetes.pki.apiserver-crt}}",
+    {{/kubernetes.pki.apiserver-crt}}
+
+    {{#kubernetes.pki.apiserver-key}}
+    "PKI_APISERVER_KEY": "{{kubernetes.pki.apiserver-key}}",
+    {{/kubernetes.pki.apiserver-key}}
+
+    {{#kubernetes.pki.root-ca-crt}}
+    "PKI_ROOT_CA_CRT": "{{kubernetes.pki.root-ca-crt}}",
+    {{/kubernetes.pki.root-ca-crt}}
+
+    {{#kubernetes.pki.service-accounts-key}}
+    "PKI_SERVICE_ACCOUNTS_KEY": "{{kubernetes.pki.service-accounts-key}}",
+    {{/kubernetes.pki.service-accounts-key}}
+
+    "K8SM_FAILOVER_TIMEOUT": "{{kubernetes.failover-timeout}}",
+    "PROXY_MODE": "{{kubernetes.proxy-mode}}",
+    "APISERVER_PORT": "{{kubernetes.apiserver-port}}",
+    "APISERVER_PROXY_PORT": "{{kubernetes.apiserver-proxy-port}}",
+    "APISERVER_SECURE_PORT": "{{kubernetes.apiserver-secure-port}}",
+    "SCHEDULER_PORT": "{{kubernetes.scheduler-port}}",
+    "SCHEDULER_DRIVER_PORT": "{{kubernetes.scheduler-driver-port}}",
+    "SCHEDULER_CONTAIN_POD_RESOURCES": "false",
+    "CONTROLLER_MANAGER_PORT": "{{kubernetes.controller-manager-port}}",
+    "DEFAULT_CONTAINER_CPU_LIMIT": "{{kubernetes.default-container-cpu-limit}}",
+    "DEFAULT_CONTAINER_MEM_LIMIT": "{{kubernetes.default-container-mem-limit}}",
+    "SCHEDULER_MESOS_EXECUTOR_CPUS": "{{kubernetes.initial-executor-cpus}}",
+    "SCHEDULER_MESOS_EXECUTOR_MEM": "{{kubernetes.initial-executor-mem}}"
+  },
+  "ports": [{{kubernetes.apiserver-proxy-port}},{{kubernetes.apiserver-port}}, {{kubernetes.apiserver-secure-port}}, {{kubernetes.scheduler-port}}, {{kubernetes.controller-manager-port}}, {{kubernetes.scheduler-driver-port}}],
+  "requirePorts": true,
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "instances": {{kubernetes.instances}},
+  "uris": {{kubernetes.uris}},
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "/usr/bin/curl -f -k https://$HOST:{{kubernetes.apiserver-proxy-port}}/healthz" },
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 2
+    }
+  ]
+}

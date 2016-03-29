@@ -64,18 +64,16 @@ script validates your package definitions and regenerates the index file. You ma
 `git add repo/meta/index.json` after running it once before you are able to pass validation and
 commit your changes.
 
-### Merging to Universe
+### Submit to Universe
 
 Before merging to Universe, you **must** run build.sh to regenerate the package index. If you
 have installed the pre-commit hook as above, this will be done automatically on commit.
 
-Packages in the Universe are required to pass Mesosphere certification. The certification
-requirements for the [Multiverse repository](https://github.com/mesosphere/multiverse) are less
-strict, which is preferable for alpha or beta quality packages. Full certification requirements
-are available from [Mesosphere support](https://docs.mesosphere.com/support/).
+Once complete, please submit a pull request against the `version-2.x` branch with your changes.
 
-Once your package meets these requirements, please submit a pull request against the `version-2.x`
-branch with your changes.
+Every pull request opened on this repo will have a set of automated verifications ran against it. 
+These automated verification are reported against the pull request using the GitHub status API. 
+All verifcations must pass in order for a pull request to be eligible for merge.
 
 ## Package entries
 
