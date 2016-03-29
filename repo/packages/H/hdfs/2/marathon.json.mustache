@@ -22,7 +22,7 @@
     "DFS_NAMENODE_HANDLER_COUNT":"{{hdfs.dfs-namenode-handler-count}}",
     "DFS_NAMENODE_INVALIDATE_WORK_PCT_PER_ITERATION":"{{hdfs.dfs-namenode-invalidate-work-pct-per-iteration}}",
     "DFS_NAMENODE_REPLICATION_WORK_MULTIPLIER_PER_ITERATION":"{{hdfs.dfs-namenode-replication-work-multiplier-per-iteration}}",
-    "MESOS_HDFS_CONFIG_SERVER_PORT":8765,
+    "MESOS_HDFS_CONFIG_SERVER_PORT":"8765",
     "MESOS_HDFS_NAMENODE_CPUS":"{{name-node.cpus}}",
     "MESOS_HDFS_NAMENODE_HEAP_SIZE":"{{name-node.mem}}",
     "MESOS_HDFS_DATANODE_CPUS":"{{data-node.cpus}}",
@@ -33,8 +33,7 @@
     "MESOS_HDFS_JOURNALNODE_HEAP_SIZE":"{{journal-node.mem}}",
     "MESOS_HDFS_LOG_LEVEL":"{{hdfs.mesos-hdfs-log-level}}",
     "MESOS_HDFS_JRE_VERSION":"{{hdfs.jre-version}}",
-    "MESOS_HDFS_JRE_URL":"{{resource.assets.uris.jre-tar-gz}}",
-
+    "MESOS_HDFS_JRE_URL":"{{resource.assets.uris.jre-tar-gz}}"
   },
   "cmd":"export JAVA_HOME=$MESOS_DIRECTORY/jre1.7.0_76 && cd hdfs-mesos-0.1.9 && ./bin/hdfs-mesos",
   "uris":[
