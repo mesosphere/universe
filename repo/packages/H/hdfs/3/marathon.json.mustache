@@ -32,10 +32,9 @@
     "MESOS_HDFS_JOURNALNODE_CPUS":"{{journal-node.cpus}}",
     "MESOS_HDFS_JOURNALNODE_HEAP_SIZE":"{{journal-node.mem}}",
     "MESOS_HDFS_LOG_LEVEL":"{{hdfs.mesos-hdfs-log-level}}",
-    "MESOS_HDFS_JRE_VERSION":"{{hdfs.jre-version}}",
     "MESOS_HDFS_JRE_URL":"{{resource.assets.uris.jre-tar-gz}}"
   },
-  "cmd":"export JAVA_HOME=$MESOS_DIRECTORY/jre1.7.0_76 && cp UnlimitedJCEPolicy/*.jar jre*/lib/security &&  cd hdfs-mesos-0.1.9 && ./bin/hdfs-mesos",
+  "cmd":"cd jre*/ && export JAVA_HOME=$PWD && cd $MESOS_DIRECTORY && cd hdfs-mesos-*/ && ./bin/hdfs-mesos",
   "uris":[
     "{{resource.assets.uris.hdfs-mesos-scheduler}}",
     "{{resource.assets.uris.jre-tar-gz}}",
@@ -45,7 +44,7 @@
     {
       "protocol":"COMMAND",
       "command":{
-        "value":"export PATH=$MESOS_DIRECTORY/hdfs-mesos-0.1.9/bin:$PATH && export JAVA_HOME=$MESOS_DIRECTORY/jre1.7.0_76 && timeout 45s hadoop fs -ls hdfs://hdfs/ && rm -rf hdfs-framework-healthcheck && hadoop fs -rm -r -f hdfs://hdfs/hdfs-framework-healthcheck && hadoop fs -mkdir hdfs://hdfs/hdfs-framework-healthcheck && mkdir hdfs-framework-healthcheck && echo \"this is a test\" > hdfs-framework-healthcheck/test1.txt && hadoop fs -put hdfs-framework-healthcheck/test1.txt hdfs://hdfs/hdfs-framework-healthcheck && hadoop fs -get hdfs://hdfs/hdfs-framework-healthcheck/test1.txt hdfs-framework-healthcheck/test2.txt && rm -rf hdfs-framework-healthcheck && hadoop fs -rm -r -f hdfs://hdfs/hdfs-framework-healthcheck"
+        "value":"export PATH=$MESOS_DIRECTORY/hdfs-mesos-*/bin:$PATH && cd jre*/ && export JAVA_HOME=$PWD && cd $MESOS_DIRECTORY && timeout 45s hadoop fs -ls hdfs://hdfs/ && rm -rf hdfs-framework-healthcheck && hadoop fs -rm -r -f hdfs://hdfs/hdfs-framework-healthcheck && hadoop fs -mkdir hdfs://hdfs/hdfs-framework-healthcheck && mkdir hdfs-framework-healthcheck && echo \"this is a test\" > hdfs-framework-healthcheck/test1.txt && hadoop fs -put hdfs-framework-healthcheck/test1.txt hdfs://hdfs/hdfs-framework-healthcheck && hadoop fs -get hdfs://hdfs/hdfs-framework-healthcheck/test1.txt hdfs-framework-healthcheck/test2.txt && rm -rf hdfs-framework-healthcheck && hadoop fs -rm -r -f hdfs://hdfs/hdfs-framework-healthcheck"
       },
       "gracePeriodSeconds":300,
       "intervalSeconds":60,
