@@ -34,7 +34,7 @@
     "MESOS_HDFS_LOG_LEVEL":"{{hdfs.mesos-hdfs-log-level}}",
     "MESOS_HDFS_JRE_URL":"{{resource.assets.uris.jre-tar-gz}}"
   },
-  "cmd":"cd jre*/ && export JAVA_HOME=$PWD && cd $MESOS_DIRECTORY && cd hdfs-mesos-*/ && ./bin/hdfs-mesos",
+  "cmd":"cd jre*/ && export JAVA_HOME=$PWD && cd $MESOS_DIRECTORY && cp UnlimitedJCEPolicy*/*.jar jre*/lib/security && cd hdfs-mesos-*/ && ./bin/hdfs-mesos",
   "uris":[
     "{{resource.assets.uris.hdfs-mesos-scheduler}}",
     "{{resource.assets.uris.jre-tar-gz}}",
