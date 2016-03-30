@@ -8,32 +8,37 @@
       "items": {
         "type": "object",
         "properties": {
-            "name": {
-              "type": "string"
-            },
-            "currentVersion": {
-              "type": "string"
-            },
-            "versions": {
-              "type": "object",
-              "description": "Maps software versions to their latest package.",
-              "additionalProperties": { "type": "string" }
-            },
-            "description": {
-              "type": "string"
-            },
-            "framework": {
-              "type": "boolean",
-              "default": false,
-              "description": "True if this package installs a new Mesos framework."
-            },
-            "tags": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "pattern": "^[^\\s]+$"
-              }
+          "name": {
+            "type": "string"
+          },
+          "currentVersion": {
+            "type": "string"
+          },
+          "versions": {
+            "type": "object",
+            "description": "Maps software versions to their latest package.",
+            "additionalProperties": { "type": "string" }
+          },
+          "description": {
+            "type": "string"
+          },
+          "framework": {
+            "type": "boolean",
+            "default": false,
+            "description": "True if this package installs a new Mesos framework."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[^\\s]+$"
             }
+          },
+          "promoted": {
+            "type": "boolean",
+            "description": "Flag indicating if the package is promoted in search results",
+            "default": false
+          }
         },
         "required": [
           "name",

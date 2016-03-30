@@ -5,6 +5,7 @@ import json
 import os
 import sys
 
+
 def main():
 
     if len(sys.argv) is not 2:
@@ -32,10 +33,10 @@ def build_index(repo_dir):
     version = version_json['version']
 
     # Build index entries.
-    package_dirs = [ p for d in os.listdir(packages_dir)
-                       for p in os.listdir(os.path.join(packages_dir, d)) ]
+    package_dirs = [p for d in os.listdir(packages_dir)
+                    for p in os.listdir(os.path.join(packages_dir, d))]
 
-    index_entries = [ make_index_entry(
+    index_entries = [make_index_entry(
         os.path.join(
             repo_dir,
             'repo',
@@ -43,7 +44,7 @@ def build_index(repo_dir):
             dir[0].title(),
             dir
         )
-    ) for dir in package_dirs ]
+    ) for dir in package_dirs]
 
     index_entries.sort(key=lambda p: p.get('name', ''))
 
@@ -82,7 +83,9 @@ def make_index_entry(package_dir):
             'currentVersion': software_version,
             'description':    package_metadata['description'],
             'framework':      is_framework,
-            'tags':           package_metadata['tags']
+            'tags':           package_metadata['tags'],
+            'promoted':       package_metadata.get('promoted', False)
+
         })
         entry['versions'][software_version] = v
 
@@ -98,7 +101,7 @@ def write_pretty_json(path, data):
     with open(path, 'w') as fd:
         fd.write(json.dumps(data,
                             sort_keys=True,
-                            separators=(',',':'),
+                            separators=(',', ':'),
                             indent=2))
         fd.flush()
         os.fsync(fd)

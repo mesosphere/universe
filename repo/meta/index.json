@@ -5,6 +5,7 @@
       "description":"A distributed free and open-source database with a flexible data model for documents, graphs, and key-values. Build high performance applications using a convenient SQL-like query language or JavaScript extensions.",
       "framework":true,
       "name":"arangodb",
+      "promoted":true,
       "tags":[
         "arangodb",
         "NoSQL",
@@ -21,6 +22,7 @@
       "description":"Apache Cassandra running on Apache Mesos",
       "framework":true,
       "name":"cassandra",
+      "promoted":true,
       "tags":[
         "data",
         "database",
@@ -36,6 +38,7 @@
       "description":"A fault tolerant job scheduler for Mesos which handles dependencies and ISO8601 based schedules.",
       "framework":true,
       "name":"chronos",
+      "promoted":true,
       "tags":[
         "cron",
         "analytics",
@@ -50,6 +53,7 @@
       "description":"Hadoop Distributed File System (HDFS), Highly Available",
       "framework":true,
       "name":"hdfs",
+      "promoted":true,
       "tags":[
         "filesystem",
         "hadoop",
@@ -65,6 +69,7 @@
       "description":"Jenkins is an award-winning, cross-platform, continuous integration and continuous delivery application that increases your productivity. Use Jenkins to build and test your software projects continuously making it easier for developers to integrate changes to the project, and making it easier for users to obtain a fresh build. It also allows you to continuously deliver your software by providing powerful ways to define your build pipelines and integrating with a large number of testing and deployment technologies.",
       "framework":true,
       "name":"jenkins",
+      "promoted":true,
       "tags":[
         "mesosphere",
         "framework",
@@ -86,6 +91,7 @@
       "description":"Apache Kafka running on top of Apache Mesos",
       "framework":true,
       "name":"kafka",
+      "promoted":true,
       "tags":[
         "message",
         "broker",
@@ -101,6 +107,7 @@
       "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
       "framework":true,
       "name":"marathon",
+      "promoted":true,
       "tags":[
         "init",
         "long-running"
@@ -115,6 +122,7 @@
       "description":"Spark is a fast and general cluster computing system for Big Data",
       "framework":true,
       "name":"spark",
+      "promoted":true,
       "tags":[
         "bigdata",
         "mapreduce",
@@ -127,5 +135,5 @@
       }
     }
   ],
-  "version":"2.0.0-rc1"
+  "version":"2.0.0-rc2"
 }

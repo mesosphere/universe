@@ -276,7 +276,7 @@ The registry specification is versioned separately in the file `/repo/meta/versi
 
 ```json
 {
-  "version": "2.0.0"
+  "version": "2.0.0-rc2"
 }
 ```
 _Sample `repo/meta/version.json`._
@@ -285,7 +285,7 @@ This version is updated with any change to the required file content
 (typically validated using JSON schema) or expected file organization in the
 `repo` directory.
 
-_NOTE: The current version is `2.0.0` to facilitate rapid
+_NOTE: The current version is `2.0.0-rc2` to facilitate rapid
 iteration.  This version will be fixed and incremented as
 described above as programs that consume the format reach maturity._
 
