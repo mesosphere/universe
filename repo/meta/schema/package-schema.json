@@ -48,6 +48,11 @@
         "pattern": "^[^\\s]+$"
       }
     },
+    "promoted": {
+      "type": "boolean",
+      "description": "Flag indicating if the package is promoted in search results",
+      "default": false
+    },
     "licenses": {
       "type": "array",
       "items": {

@@ -1,0 +1,15 @@
+{
+  "images": {
+    "icon-large": "https://www.elastic.co/static/img/logo-elastic.png",
+    "icon-medium": "https://www.elastic.co/static/img/logo-elastic.png",
+    "icon-small": "https://www.elastic.co/static/img/logo-elastic.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "elasticsearch-scheduler": "mesos/elasticsearch-scheduler:0.7.0",
+        "elasticsearch-executor": "brndnmtthws/elasticsearch-executor:0.7.0"
+      }
+    }
+  }
+}

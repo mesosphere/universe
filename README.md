@@ -64,18 +64,16 @@ script validates your package definitions and regenerates the index file. You ma
 `git add repo/meta/index.json` after running it once before you are able to pass validation and
 commit your changes.
 
-### Merging to Universe
+### Submit to Universe
 
 Before merging to Universe, you **must** run build.sh to regenerate the package index. If you
 have installed the pre-commit hook as above, this will be done automatically on commit.
 
-Packages in the Universe are required to pass Mesosphere certification. The certification
-requirements for the [Multiverse repository](https://github.com/mesosphere/multiverse) are less
-strict, which is preferable for alpha or beta quality packages. Full certification requirements
-are available from [Mesosphere support](https://docs.mesosphere.com/support/).
+Once complete, please submit a pull request against the `version-2.x` branch with your changes.
 
-Once your package meets these requirements, please submit a pull request against the `version-2.x`
-branch with your changes.
+Every pull request opened on this repo will have a set of automated verifications ran against it. 
+These automated verification are reported against the pull request using the GitHub status API. 
+All verifcations must pass in order for a pull request to be eligible for merge.
 
 ## Package entries
 
@@ -276,7 +274,7 @@ The registry specification is versioned separately in the file `/repo/meta/versi
 
 ```json
 {
-  "version": "2.0.0"
+  "version": "2.0.0-rc2"
 }
 ```
 _Sample `repo/meta/version.json`._
@@ -285,7 +283,7 @@ This version is updated with any change to the required file content
 (typically validated using JSON schema) or expected file organization in the
 `repo` directory.
 
-_NOTE: The current version is `2.0.0` to facilitate rapid
+_NOTE: The current version is `2.0.0-rc2` to facilitate rapid
 iteration.  This version will be fixed and incremented as
 described above as programs that consume the format reach maturity._
 

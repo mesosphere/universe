@@ -1,0 +1,14 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "hue-docker": "mesosphere/hue"
+      }
+    },
+    "uris": {
+      "hdfs-mesos-0-1-1-tgz": "https://downloads.mesosphere.com/hdfs/artifacts/dcos/0.1.1/hdfs-mesos-0.1.1.tgz",
+      "hue-ini": "https://downloads.mesosphere.com/hue/hue.ini",
+      "httpfs-site-xml": "https://downloads.mesosphere.com/hue/httpfs-site.xml"
+    }
+  }
+}
