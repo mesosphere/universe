@@ -12,7 +12,7 @@
     "args": [],
     "cpus": {{mr-redis.cpus}},
     "mem": {{mr-redis.mem}},
-    "instances": 1,
+    "instances": {{mr-redis.cluster-size}},
     "ports": [5454, 5656, 2379],
     "env": {
       "FRAMEWORK_NAME":"{{mr-redis.framework-name}}",
@@ -23,7 +23,8 @@
       "protocol": "HTTP",
       "path": "/v1/STATUS",
       "portIndex": 1,
-      "gracePeriodSeconds": 15,
+      "port": 5656,
+      "gracePeriodSeconds": 30,
       "intervalSeconds": 30,
       "maxConsecutiveFailures": 0
     }]
