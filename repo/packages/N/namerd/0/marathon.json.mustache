@@ -1,0 +1,63 @@
+{
+  "id": "{{namerd.name}}",
+  "instances": {{namerd.instances}},
+  "cpus": {{namerd.cpus}},
+  "mem": {{namerd.mem}},
+  "acceptedResourceRoles": [ "{{namerd.resource-role}}" ],
+  "constraints": [["hostname", "UNIQUE"]],
+  "maintainer": "hello@buoyant.io",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.namerd-docker}}",
+      "network": "BRIDGE",
+      "privileged": true,
+      "portMappings": [
+        {
+          "containerPort": 0,
+          "hostPort": {{namerd.admin-port}},
+          "servicePort": 0,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 0,
+          "hostPort": {{namerd.http-port}},
+          "servicePort": 0,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 0,
+          "hostPort": {{namerd.thrift-port}},
+          "servicePort": 0,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/admin/ping"
+    }
+  ],
+  "args": [
+    "/mnt/mesos/sandbox/{{namerd.config-filename}}"
+  ],
+  "requirePorts":true,
+  "ports": [
+    {{namerd.admin-port}},
+    {{namerd.http-port}},
+    {{namerd.thrift-port}}
+  ],
+  "env": {
+    "FRAMEWORK_NAME":"{{namerd.framework-name}}",
+    "WEBURI": "http://{{namerd.framework-name}}{{namerd.dns-suffix}}:{{namerd.admin-port}}"
+  },
+  "uris": [
+    "{{namerd.config-uri}}/{{namerd.config-filename}}"
+  ],
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{namerd.framework-name}}"
+  }
+}
