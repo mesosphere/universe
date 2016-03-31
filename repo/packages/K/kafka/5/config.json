@@ -4,12 +4,6 @@
       "service":{
         "type":"object",
         "properties":{
-          "name":{
-            "description":"The name of the service in DCOS.",
-            "type":"string",
-            "default":"kafka",
-            "title":"name"
-          },
           "role":{
             "default":"*",
             "type":"string"
@@ -39,13 +33,12 @@
           }
         },
         "required":[
-          "name",
-        "placement-strategy",
-        "plan-strategy",
-        "role",
-        "principal",
-        "user"
-          ]
+          "placement-strategy",
+          "plan-strategy",
+          "role",
+          "principal",
+          "user"
+        ]
       },
       "brokers":{
         "type":"object",
