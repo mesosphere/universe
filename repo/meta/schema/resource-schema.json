@@ -1,55 +1,147 @@
 {
-  "$schema": "http://json-schema.org/schema#",
-  "type": "object",
-  "properties": {
-    "assets": {
-      "type": "object",
-      "properties": {
-        "uris": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
+    "$schema": "http://json-schema.org/schema#",
+    "definitions": {
+        "cliInfo": {
+            "additionalProperties": false,
+            "properties": {
+                "contentHash": {
+                    "items": {
+                        "$ref": "#/definitions/hash"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "kind": {
+                    "enum": [
+                        "executable",
+                        "zip"
+                    ],
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "url",
+                "kind",
+                "contentHash"
+            ],
+            "type": "object"
         },
-        "container": {
-          "type": "object",
-          "properties": {
-            "docker": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "string"
-              }
-            }
-          },
-          "additionalProperties": false
+        "hash": {
+            "additionalProperties": false,
+            "properties": {
+                "algo": {
+                    "enum": [
+                        "sha256"
+                    ],
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "algo",
+                "value"
+            ],
+            "type": "object"
         }
-      },
-      "additionalProperties": false
     },
-    "images": {
-      "type": "object",
-      "properties": {
-        "icon-small": {
-          "type": "string",
-          "description": "PNG icon URL, preferably 48 by 48 pixels."
+    "properties": {
+        "assets": {
+            "additionalProperties": false,
+            "properties": {
+                "container": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "docker": {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "uris": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
         },
-        "icon-medium": {
-          "type": "string",
-          "description": "PNG icon URL, preferably 128 by 128 pixels."
+        "cli": {
+            "additionalProperties": false,
+            "properties": {
+                "binaries": {
+                    "additionalProperties": false,
+                    "minProperties": 1,
+                    "properties": {
+                        "darwin": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "x86-64": {
+                                    "$ref": "#/definitions/cliInfo"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "linux": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "x86-64": {
+                                    "$ref": "#/definitions/cliInfo"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "windows": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "x86-64": {
+                                    "$ref": "#/definitions/cliInfo"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "required": [
+                "binaries"
+            ],
+            "type": "object"
         },
-        "icon-large": {
-          "type": "string",
-          "description": "PNG icon URL, preferably 256 by 256 pixels."
-        },
-        "screenshots": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "description": "PNG screen URL, preferably 1024 by 1024 pixels."
-          }
+        "images": {
+            "additionalProperties": false,
+            "properties": {
+                "icon-large": {
+                    "description": "PNG icon URL, preferably 256 by 256 pixels.",
+                    "type": "string"
+                },
+                "icon-medium": {
+                    "description": "PNG icon URL, preferably 128 by 128 pixels.",
+                    "type": "string"
+                },
+                "icon-small": {
+                    "description": "PNG icon URL, preferably 48 by 48 pixels.",
+                    "type": "string"
+                },
+                "screenshots": {
+                    "items": {
+                        "description": "PNG screen URL, preferably 1024 by 1024 pixels.",
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
         }
-      },
-      "additionalProperties": false
-    }
-  }
+    },
+    "type": "object"
 }

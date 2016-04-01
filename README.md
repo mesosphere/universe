@@ -87,7 +87,7 @@ Packages are encapsulated in their own directory, with one subdirectory for each
     │   ├── command.json
     │   ├── config.json
     │   ├── marathon.json.mustache
-    │   ├── resource.json
+ e  │   ├── resource.json
     │   └── package.json
     ├── 1
     │   ├── command.json
@@ -204,9 +204,9 @@ for more detailed instruction on app definitions.
 
 #### `command.json`
 
-This file is **optional**. Describes how to install the package's CLI.
-Currently the only supported format is a Pip requirements file where each
-element in the array is a line in the requirements file.
+This file is **optional** and will soon be **deprecataed**. Please see `resource.json` for how
+to specify binary CLIs instead. This file describes how to install the package's CLI from pip.
+Specify where each element in the array is a line in the requirements file.
 
 ```json
 {
@@ -223,7 +223,7 @@ the schema.
 #### `resource.json`
 
 This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects and
-images) needed to install the application.
+images, binary CLIs) needed to install the application.
 
 ```json
 {
@@ -245,6 +245,20 @@ images) needed to install the application.
         "23b1cfe8e04a": "some-org/foo:1.0.0"
       }
     }
+  },
+  "cli": {
+    "binaries": {
+      "linux": {
+        "x86-64": {
+          "kind": "executable",
+          "url": "http://url/to/executable",
+          "hashContents": [{
+            "algo": "sha256",
+            "value": "hash/of/contents"
+          }]
+        }
+      }
+    }
   }
 }
 ```
@@ -252,6 +266,10 @@ _Sample `resource.json`._
 
 For the Docker image, please use the image ID for the referenced image. You can find this by
 pulling the image locally and running `docker images some-org/foo:1.0.0`.
+
+For `cli.binaries`, we currently support windows, linux, and darwin platforms on x86-64 architecture.
+A binary "kind" can either be an executable, or a zip file, with the executable in a top-level `bin` directory.
+We currently only support sha256 as the hashing algorithm for verifying correctness of binary download.
 
 While `images` is an optional field, it is highly recommended you include icons and screenshots
 in your package and update the path definitions accordingly. Specifications are as follows:
@@ -267,6 +285,9 @@ please supply 2x versions of all icons. No changes are needed to
 the name before the file extension.
 For example, the icon `icon-cassandra-small.png` would have a retina-ready
 alternate image named `icon-cassandra-small@2x.png`.
+
+See the [Resource Schema](repo/meta/schema/resource-schema.json) for a detailed description of
+the schema.
 
 ### Versioning
 

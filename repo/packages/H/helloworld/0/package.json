@@ -1,0 +1,11 @@
+{
+  "packagingVersion": "2.0",
+  "name": "helloworld",
+  "version": "0.1.0",
+  "website": "https://github.com/mesosphere/dcos-helloworld",
+  "maintainer": "support@mesosphere.io",
+  "description": "Example DCOS application package.",
+  "preInstallNotes": "A sample pre-installation message. If you wish to install this on a non-DCOS cluster, please set the role configuration property to *.",
+  "postInstallNotes": "A sample post-installation message. Visit your public worker node to view the example application.",
+  "tags": [ "mesosphere", "example", "subcommand" ]
+}

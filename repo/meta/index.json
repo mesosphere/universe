@@ -188,6 +188,21 @@
       }
     },
     {
+      "currentVersion":"0.1.0",
+      "description":"Example DCOS application package.",
+      "framework":false,
+      "name":"helloworld",
+      "selected":false,
+      "tags":[
+        "mesosphere",
+        "example",
+        "subcommand"
+      ],
+      "versions":{
+        "0.1.0":"0"
+      }
+    },
+    {
       "currentVersion":"0.0.1",
       "description":"Hue Web Interface to Hadoop",
       "framework":false,
