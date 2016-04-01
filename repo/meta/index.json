@@ -5,7 +5,7 @@
       "description":"A distributed free and open-source database with a flexible data model for documents, graphs, and key-values. Build high performance applications using a convenient SQL-like query language or JavaScript extensions.",
       "framework":true,
       "name":"arangodb",
-      "promoted":true,
+      "selected":true,
       "tags":[
         "arangodb",
         "NoSQL",
@@ -22,7 +22,7 @@
       "description":"Apache Cassandra running on Apache Mesos",
       "framework":true,
       "name":"cassandra",
-      "promoted":true,
+      "selected":true,
       "tags":[
         "data",
         "database",
@@ -38,7 +38,7 @@
       "description":"A fault tolerant job scheduler for Mesos which handles dependencies and ISO8601 based schedules.",
       "framework":true,
       "name":"chronos",
-      "promoted":true,
+      "selected":true,
       "tags":[
         "cron",
         "analytics",
@@ -53,7 +53,7 @@
       "description":"A Mesos Framework that allows running and resizing one or multiple Crate database clusters.",
       "framework":true,
       "name":"crate",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "database",
         "distributed",
@@ -68,7 +68,7 @@
       "description":"Cloud-scale monitoring",
       "framework":false,
       "name":"datadog",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "datadog",
         "monitoring"
@@ -82,7 +82,7 @@
       "description":"DCOS implementation of the Mesos-Elasticsearch framework",
       "framework":true,
       "name":"elasticsearch",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "dcos",
         "mesos",
@@ -99,7 +99,7 @@
       "description":"A distributed consistent key-value store for shared configuration and service discovery.",
       "framework":true,
       "name":"etcd",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "mesosphere",
         "framework",
@@ -114,7 +114,7 @@
       "description":"ZooKeeper co-process for instance monitoring, backup/recovery, cleanup and visualization.",
       "framework":false,
       "name":"exhibitor",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "zookeeper"
       ],
@@ -127,7 +127,7 @@
       "description":"Hadoop Distributed File System (HDFS), Highly Available",
       "framework":true,
       "name":"hdfs",
-      "promoted":true,
+      "selected":true,
       "tags":[
         "filesystem",
         "hadoop",
@@ -143,7 +143,7 @@
       "description":"Hue Web Interface to Hadoop",
       "framework":false,
       "name":"hue",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "mesosphere",
         "hadoop",
@@ -159,7 +159,7 @@
       "description":"Jenkins is an award-winning, cross-platform, continuous integration and continuous delivery application that increases your productivity. Use Jenkins to build and test your software projects continuously making it easier for developers to integrate changes to the project, and making it easier for users to obtain a fresh build. It also allows you to continuously deliver your software by providing powerful ways to define your build pipelines and integrating with a large number of testing and deployment technologies.",
       "framework":true,
       "name":"jenkins",
-      "promoted":true,
+      "selected":true,
       "tags":[
         "mesosphere",
         "framework",
@@ -181,7 +181,7 @@
       "description":"Apache Kafka running on top of Apache Mesos",
       "framework":true,
       "name":"kafka",
-      "promoted":true,
+      "selected":true,
       "tags":[
         "message",
         "broker",
@@ -197,7 +197,7 @@
       "description":"Kubernetes is an open source system for managing containerized applications across multiple hosts, providing basic mechanisms for deployment, maintenance, and scaling of applications.",
       "framework":true,
       "name":"kubernetes",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "mesosphere",
         "framework",
@@ -214,7 +214,7 @@
       "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
       "framework":true,
       "name":"marathon",
-      "promoted":true,
+      "selected":true,
       "tags":[
         "init",
         "long-running"
@@ -229,7 +229,7 @@
       "description":"HAProxy configured from marathon state",
       "framework":false,
       "name":"marathon-lb",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "loadbalancer",
         "service-discovery",
@@ -247,7 +247,7 @@
       "description":"MemSQL running on Apache Mesos. This framework provides the ability to create and manage a set of MemSQL clusters, each running with the MemSQL Ops management tool.",
       "framework":true,
       "name":"memsql",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "mysql",
         "database",
@@ -262,7 +262,7 @@
       "description":"Redis is the fastest in-memory KV-Cache and Datatstructure store",
       "framework":true,
       "name":"mr-redis",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "mesos",
         "framework",
@@ -278,7 +278,7 @@
       "description":"Your private path to access network resources and services securely: Server service",
       "framework":false,
       "name":"openvpn",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "vpn",
         "remote-access"
@@ -292,7 +292,7 @@
       "description":"Your private path to access network resources and services securely: Admin service.",
       "framework":false,
       "name":"openvpn-admin",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "vpn",
         "remote-access"
@@ -306,7 +306,7 @@
       "description":"Quobyte is a software defined and fault tolerant distributed file system running on commodity hardware.",
       "framework":true,
       "name":"quobyte",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "storage",
         "filesystem",
@@ -321,7 +321,7 @@
       "description":"A distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability.",
       "framework":true,
       "name":"riak",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "mesosphere",
         "framework",
@@ -337,7 +337,7 @@
       "description":"Spark is a fast and general cluster computing system for Big Data",
       "framework":true,
       "name":"spark",
-      "promoted":true,
+      "selected":true,
       "tags":[
         "bigdata",
         "mapreduce",
@@ -354,7 +354,7 @@
       "description":"Spark Notebook package for DCOS",
       "framework":true,
       "name":"spark-notebook",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "spark",
         "notebook",
@@ -375,7 +375,7 @@
       "description":"Storm is a stream processing framework.",
       "framework":true,
       "name":"storm",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "mesosphere",
         "framework",
@@ -390,7 +390,7 @@
       "description":"Swarm is a Docker-native clustering system.",
       "framework":true,
       "name":"swarm",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "mesosphere",
         "framework",
@@ -405,7 +405,7 @@
       "description":"Zeppelin is a web-based notebook that enables interactive data analytics",
       "framework":true,
       "name":"zeppelin",
-      "promoted":false,
+      "selected":false,
       "tags":[
         "nflabs",
         "framework",

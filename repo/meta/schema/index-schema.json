@@ -34,9 +34,9 @@
               "pattern": "^[^\\s]+$"
             }
           },
-          "promoted": {
+          "selected": {
             "type": "boolean",
-            "description": "Flag indicating if the package is promoted in search results",
+            "description": "Flag indicating if the package is selected in search results",
             "default": false
           }
         },
