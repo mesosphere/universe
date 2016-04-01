@@ -98,6 +98,19 @@
       }
     },
     {
+      "currentVersion":"0.0.1",
+      "description":"KDC from heimdal-kdc hosted at mesosphere/kdc",
+      "framework":true,
+      "name":"kdc",
+      "tags":[
+        "kerberos",
+        "security"
+      ],
+      "versions":{
+        "0.0.1":"0"
+      }
+    },
+    {
       "currentVersion":"0.11.1",
       "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
       "framework":true,
