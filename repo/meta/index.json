@@ -258,6 +258,22 @@
       }
     },
     {
+      "currentVersion":"0.0.1",
+      "description":"Redis is the fastest in-memory KV-Cache and Datatstructure store",
+      "framework":true,
+      "name":"mr-redis",
+      "promoted":false,
+      "tags":[
+        "mesos",
+        "framework",
+        "inmemory",
+        "redis"
+      ],
+      "versions":{
+        "0.0.1":"0"
+      }
+    },
+    {
       "currentVersion":"0.0.0-0.1",
       "description":"Your private path to access network resources and services securely: Server service",
       "framework":false,
