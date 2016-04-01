@@ -3,12 +3,6 @@
     "mr-redis": {
       "description": "mr-redis specific configuration properties",
       "properties": {
-        "dns-suffix": {
-          "default": ".marathon.mesos",
-          "description": "This value is appended to the framework-name value to form the canonical DNS name for the redis framework components.",
-          "type": "string",
-          "pattern": "^(?:\\.[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)+$"
-        },
         "framework-name": {
           "default": "mr-redis",
           "description": "The framework name to register with Mesos.",
@@ -35,7 +29,6 @@
         }
       },
       "required": [
-        "dns-suffix",
         "framework-name",
         "cpus",
         "mem",
