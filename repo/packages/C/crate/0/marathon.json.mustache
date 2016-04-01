@@ -22,5 +22,8 @@
       "command": { "value": "curl -f -X GET http://$HOST:$PORT0/" },
       "maxConsecutiveFailures": 3
     }
-  ]
+  ],
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{crate.framework-name}}"
+  }
 }

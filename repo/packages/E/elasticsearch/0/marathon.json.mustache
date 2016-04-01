@@ -47,5 +47,8 @@
     }
   },
   "ports": [{{elasticsearch.port}}],
-  "requirePorts": true
+  "requirePorts": true,
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{elasticsearch.framework-name}}"
+  }
 }
