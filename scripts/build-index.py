@@ -84,7 +84,7 @@ def make_index_entry(package_dir):
             'description':    package_metadata['description'],
             'framework':      is_framework,
             'tags':           package_metadata['tags'],
-            'promoted':       package_metadata.get('promoted', False)
+            'selected':       package_metadata.get('selected', False)
 
         })
         entry['versions'][software_version] = v
