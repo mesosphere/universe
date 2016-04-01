@@ -1,0 +1,15 @@
+{
+  "packagingVersion":"2.0",
+  "name": "kdc",
+  "version": "0.0.1",
+  "scm": "https://github.com/mesosphere/spark-build/tree/sttts-kerberos-test",
+  "maintainer": "support@mesosphere.io",
+  "description": "KDC from heimdal-kdc hosted at mesosphere/kdc",
+  "framework": true,
+  "tags":[
+    "kerberos",
+    "security"
+  ],
+  "preInstallNotes":"This will install KDC Kerberos DCOS Service.",
+  "postUninstallNotes":"Nothing to do"
+}

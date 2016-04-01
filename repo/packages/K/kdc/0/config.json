@@ -1,0 +1,20 @@
+
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "kdc": {
+            "type": "object",
+            "properties": {
+                "docker_image":  {
+                    "description": "The URI of the Spark docker image to use in spark.mesos.executor.docker.image",
+                    "type": "string",
+                    "default": "mesosphere/kdc"
+                }
+            },
+            "required": [
+                "docker_image"
+            ]
+        }
+    }
+}
