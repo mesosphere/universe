@@ -1,0 +1,77 @@
+{
+    "id": "{{spark.framework-name}}",
+    "cpus": {{spark.cpus}},
+    "mem": {{spark.mem}},
+    "instances": {{spark.instances}},
+    "cmd": "/sbin/init.sh",
+    "env": {
+        "SPARK_USER": "{{spark.mesos-user}}",
+        "MESOS_MASTER": "{{mesos.master}}",
+        "ZK": "{{spark.zookeeper}}",
+        "FRAMEWORK_NAME": "{{spark.framework-name}}",
+        "DNS_SUFFIX": "{{spark.dns-suffix}}",
+        "SPARK_DISPATCHER_MESOS_ROLE": "{{spark.mesos-role}}",
+        "SPARK_DAEMON_JAVA_OPTS": "{{spark.dispatcher-java-opts}}",
+{{#spark.ssl.enabled}}
+        "SPARK_SSL_ENABLED": "{{spark.ssl.enabled}}",
+        "SPARK_SSL_KEYSTOREBASE64": "{{spark.ssl.keyStoreBase64}}",
+        "SPARK_SSL_TRUSTSTOREBASE64": "{{spark.ssl.trustStoreBase64}}",
+        "SPARK_SSL_KEYSTOREPASSWORD": "{{spark.ssl.keyStorePassword}}",
+        "SPARK_SSL_KEYPASSWORD": "{{spark.ssl.keyPassword}}",
+        "SPARK_SSL_TRUSTSTOREPASSWORD": "{{spark.ssl.keyStorePassword}}",
+        "SPARK_SSL_PROTOCOL": "{{spark.ssl.protocol}}",
+        "SPARK_SSL_ENABLEDALGORITHMS": "{{spark.ssl.enabledAlgorithms}}",
+{{/spark.ssl.enabled}}
+{{#spark.kerberos.krb5conf}}
+        "SPARK_MESOS_KRB5_CONF_BASE64": "{{spark.kerberos.krb5conf}}",
+{{/spark.kerberos.krb5conf}}
+        "ENABLE_HISTORY_SERVER": "{{spark.history-server.enabled}}",
+        "HISTORY_LOG_DIR": "{{spark.history-server.log-dir}}",
+        "HISTORY_CLEANER_ENABLED": "{{spark.history-server.cleaner-enabled}}",
+        "HISTORY_CLEANER_INTERVAL": "{{spark.history-server.cleaner-interval}}",
+        "HISTORY_CLEANER_MAXAGE": "{{spark.history-server.cleaner-maxage}}"
+    },
+    "ports": [
+        0,
+        0,
+        0,
+        0
+    ],
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.spark_docker}}",
+            "network": "HOST",
+            "forcePullImage": true
+        }
+    },
+    "healthChecks": [
+        {
+{{#spark.ssl.enabled}}
+            "protocol": "COMMAND",
+            "command": { "value": "curl -f -k https://$HOST:$PORT3/" },
+{{/spark.ssl.enabled}}
+{{^spark.ssl.enabled}}
+            "path": "/",
+            "portIndex": 3,
+            "protocol": "HTTP",
+{{/spark.ssl.enabled}}
+            "gracePeriodSeconds": 5,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 10,
+            "maxConsecutiveFailures": 3
+        }
+    ],
+    "labels": {
+        {{#hdfs.config-url}}"SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",{{/hdfs.config-url}}
+        "SPARK_URI": "{{spark.uri}}",
+        "DCOS_SERVICE_NAME": "{{spark.framework-name}}",
+        "DCOS_SERVICE_PORT_INDEX": "4",
+{{#spark.ssl.enabled}}
+        "DCOS_SERVICE_SCHEME": "https"
+{{/spark.ssl.enabled}}
+{{^spark.ssl.enabled}}
+        "DCOS_SERVICE_SCHEME": "http"
+{{/spark.ssl.enabled}}
+    }
+}
