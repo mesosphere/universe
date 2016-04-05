@@ -48,18 +48,6 @@
 					"description": "Broker placement strategy. See documentation. [INSTALL, STAGE]",
 					"type": "string",
 					"default": "INSTALL"
-				},
-				"apiPort": {
-					"id": "http://cassandra/docs/mesosphere.com/service/apiPort",
-					"description": "The port that the service scheduler and executor listen on for API requests.",
-					"type": "integer",
-					"default": 9000
-				},
-				"adminPort": {
-					"id": "http://cassandra/docs/mesosphere.com/service/apiPort",
-					"description": "The port that the service scheduler and executor listen on for health check and admin requests.",
-					"type": "integer",
-					"default": 9001
 				}
 			},
 			"additionalProperties": false,
