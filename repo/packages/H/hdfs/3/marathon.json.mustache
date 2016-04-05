@@ -32,7 +32,8 @@
     "MESOS_HDFS_JOURNALNODE_CPUS":"{{journal-node.cpus}}",
     "MESOS_HDFS_JOURNALNODE_HEAP_SIZE":"{{journal-node.mem}}",
     "MESOS_HDFS_LOG_LEVEL":"{{hdfs.mesos-hdfs-log-level}}",
-    "DFS_BLOCK_ACCESS_TOKEN_ENABLE" : "false",
+    "DFS_BLOCK_ACCESS_TOKEN_ENABLE" : "true",
+    "HADOOP_SECURITY_AUTHENTICATION" : "kerberos",
     "MESOS_HDFS_JRE_URL":"{{resource.assets.uris.jre-tar-gz}}",
     "MESOS_HDFS_JCE_URL":"{{resource.assets.uris.jce-zip}}"
   },
