@@ -37,7 +37,7 @@
 					"description": "The user that the service will run as.",
 					"default": "root"
 				},
-				"placement_strategy": {
+				"placement-strategy": {
 					"id": "http://cassandra/docs/mesosphere.com/service/placement_strategy",
 					"type": "string",
 					"description": "The placement strategy for Cassandra nodes. This should always be NODE.",
