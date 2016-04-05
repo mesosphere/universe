@@ -31,7 +31,8 @@
         }
     ],
     "labels": {
-        {{#hdfs.config-url}}"SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",{{/hdfs.config-url}}
-        "SPARK_URI": "{{spark.uri}}"
+        "DCOS_PACKAGE_FRAMEWORK_NAME": "{{spark.framework-name}}",
+        "SPARK_URI": "{{spark.uri}}"{{#hdfs.config-url}},
+        "SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}"{{/hdfs.config-url}}
     }
 }

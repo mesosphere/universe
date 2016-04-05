@@ -41,7 +41,10 @@
       "timeoutSeconds": 20,
       "maxConsecutiveFailures": 3
     }
-  ]{{#jenkins.pinned-hostname}},
+  ],
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{jenkins.framework-name}}"
+  }{{#jenkins.pinned-hostname}},
   "constraints": [["hostname", "CLUSTER", "{{jenkins.pinned-hostname}}"]]
   {{/jenkins.pinned-hostname}}
 }
