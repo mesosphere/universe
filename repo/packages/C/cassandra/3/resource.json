@@ -1,0 +1,15 @@
+{
+  "assets": {
+    "uris": {
+      "scheduler-zip":"https://s3-us-west-2.amazonaws.com/cassandra-framework-dev/ken/scheduler.zip",
+      "executor-zip":"https://s3-us-west-2.amazonaws.com/cassandra-framework-dev/ken/executor.zip",
+      "jre-tar-gz":"https://s3-us-west-2.amazonaws.com/cassandra-framework-dev/jre/linux/server-jre-8u74-linux-x64.tar.gz",
+      "apache-cassandra-bin-tar-gz":"https://s3-us-west-2.amazonaws.com/cassandra-framework-dev/testing/apache-cassandra-2.2.5-bin.tar.gz"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-large.png"
+  }
+}
