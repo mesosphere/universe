@@ -3,10 +3,10 @@
   "name": "marathon-lb",
   "version": "0.0.5-0.1",
   "scm": "https://github.com/mesosphere/marathon-lb",
-  "description": "HAProxy configured from marathon state",
+  "description": "HAProxy configured using Marathon state",
   "maintainer": "support@mesosphere.io",
   "tags": ["loadbalancer", "service-discovery", "reverse-proxy", "proxy", "haproxy"],
-  "preInstallNotes": "We recommend a minimum of 0.5 CPUs and 256 MB of RAM available for the Marathon Service.",
+  "preInstallNotes": "We recommend a minimum of 0.5 CPUs and 256 MB of RAM available for the Marathon-LB DCOS Service.",
   "postInstallNotes": "Mesosphere-LB DCOS Service has been successfully installed!\nSee https://github.com/mesosphere/marathon-lb for documentation.",
   "postUninstallNotes": "Mesosphere-LB DCOS Service has been uninstalled and will no longer run.",
   "licenses": [
