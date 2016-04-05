@@ -159,12 +159,6 @@
 					"description": "The name of the Cassandra service deployment.",
 					"default": "cassandra"
 				},
-				"version": {
-					"id": "http://cassandra/docs/mesosphere.com/cassandra/version",
-					"type": "string",
-					"description": "The version of the Cassandra application.",
-					"default": "2.2.5"
-				},
 				"jmxPort": {
 					"id": "http://cassandra/docs/mesosphere.com/cassandra/jmxPort",
 					"type": "integer",
@@ -427,7 +421,6 @@
 			},
 			"additionalProperties": false,
 			"required": [
-				"version",
 				"jmxPort",
 				"numTokens",
 				"maxHintWindowInMs",
