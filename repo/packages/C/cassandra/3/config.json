@@ -54,9 +54,8 @@
 			"required": [
 				"name",
 				"user",
-				"placement-strategy",
-				"apiPort",
-				"adminPort"
+				"plan-strategy",
+				"placement-strategy"
 			]
 		},
 		"nodes": {
@@ -69,7 +68,7 @@
 					"type": "integer",
 					"description": "The number of Cassandra nodes in the cluster.",
 					"default": 3
-				},				
+				},
 				"cpus": {
 					"id": "http://cassandra/docs/mesosphere.com/node/cpus",
 					"type": "number",
