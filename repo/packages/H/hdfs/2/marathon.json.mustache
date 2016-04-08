@@ -4,6 +4,9 @@
   "mem":512.0,
   "disk":100,
   "instances":1,
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}"
+  },
   "env":{
     "LD_LIBRARY_PATH":"/opt/mesosphere/lib",
     "MESOS_HDFS_FRAMEWORK_NAME":"{{service.name}}",
