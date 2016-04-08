@@ -127,7 +127,7 @@
         "framework-name" : {
           "description" : "Framework name to register with Mesos.",
           "type" : "string",
-          "default" : "marathon-user"
+          "default" : "marathon-rc-user"
         },
         "ha" : {
           "description" : "Enabled: (Default) Run Marathon in HA mode with leader election. Allows starting an arbitrary number of other Marathons but all need to be started in HA mode. This mode requires a running ZooKeeper Disabled: Run Marathon in single node mode.",
