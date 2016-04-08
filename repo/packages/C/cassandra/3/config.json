@@ -18,13 +18,13 @@
 					"id": "http://cassandra/docs/mesosphere.com/service/role",
 					"type": "string",
 					"description": "The authentication role of the service",
-					"default": ""
+					"default": "cassandra_role"
 				},
 				"principal": {
 					"id": "http://cassandra/docs/mesosphere.com/service/principal",
 					"type": "string",
 					"description": "The authentication principal for the framework.",
-					"default": ""
+					"default": "cassandra_principal"
 				},
 				"secret": {
 					"id": "http://cassandra/docs/mesosphere.com/service/secret",
