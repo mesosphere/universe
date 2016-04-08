@@ -6,12 +6,12 @@
   "mem": 2048,
   "requirePorts": true,
   "ports": [
-    9000, 
+    9000,
     9001
   ],
 "uris": [
-"{{resource.assets.uris.scheduler-zip}}",
-"{{resource.assets.uris.jre-tar-gz}}"
+  "{{resource.assets.uris.scheduler-zip}}",
+  "{{resource.assets.uris.jre-tar-gz}}"
 ],
 "healthChecks": [
     {
@@ -24,7 +24,7 @@
     }
 ],
 "labels": {
-"DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}"
+  "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}"
 },
 "env":{
 "JAVA_HOME":"./jre"
