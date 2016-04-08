@@ -244,6 +244,20 @@
       }
     },
     {
+      "currentVersion":"1.1.0-RC1",
+      "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
+      "framework":true,
+      "name":"marathon-rc",
+      "selected":false,
+      "tags":[
+        "init",
+        "long-running"
+      ],
+      "versions":{
+        "1.1.0-RC1":"0"
+      }
+    },
+    {
       "currentVersion":"0.0.1",
       "description":"MemSQL running on Apache Mesos. This framework provides the ability to create and manage a set of MemSQL clusters, each running with the MemSQL Ops management tool.",
       "framework":true,
