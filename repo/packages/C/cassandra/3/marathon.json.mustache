@@ -15,7 +15,7 @@
 "healthChecks": [
     {
       "protocol": "COMMAND",
-      "command": { "value": "curl -f -X GET http://$HOST:{{service.adminPort}}/admin/healthcheck" },
+      "command": { "value": "curl -f -X GET http://$HOST:9000/admin/healthcheck" },
       "gracePeriodSeconds": 300,
       "intervalSeconds": 60,
       "timeoutSeconds": 60,
@@ -62,8 +62,8 @@
 ,"CASSANDRA_INDEX_SUMMARY_RESIZE_INTERVAL_IN_MINUTES":"{{cassandra.index_summary_resize_interval_in_minutes}}"
 ,"CASSANDRA_TRICKLE_FSYNC":"false"
 ,"CASSANDRA_TRICKLE_FSYNC_INTERVAL_IN_KB":"10240"
-,"CASSANDRA_STORAGE_PORT":"7001"
-,"CASSANDRA_SSL_STORAGE_PORT":""{{cassandra.storage_port}}""
+,"CASSANDRA_STORAGE_PORT":"{{cassandra.storage_port}}"
+,"CASSANDRA_SSL_STORAGE_PORT":"7001"
 ,"CASSANDRA_START_NATIVE_TRANSPORT":"{{cassandra.start_native_transport}}"
 ,"CASSANDRA_NATIVE_TRANSPORT_PORT":"{{cassandra.native_transport_port}}"
 ,"CASSANDRA_START_RPC":"{{cassandra.start_rpc}}"
@@ -110,8 +110,8 @@
 ,"CLUSTER_TASK_MEMORY_MB":"256"
 ,"NODES":"{{nodes.count}}"
 ,"SEED_NODES":"{{nodes.seeds}}"
-,"PLACEMENT_STRATEGY":"{{service.placement-strategy}}"
+,"PLACEMENT_STRATEGY":"{{service.placement_strategy}}"
 ,"PHASE_STRATEGY":"org.apache.mesos.scheduler.plan.DefaultInstallStrategy"
-,"API_PORT":"{{cassandra.api_port}}"
+,"API_PORT":"9000"
 }
 }
