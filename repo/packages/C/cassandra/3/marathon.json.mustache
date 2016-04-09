@@ -6,8 +6,7 @@
   "mem": 2048,
   "requirePorts": true,
   "ports": [
-    9000,
-    9001
+    9000
   ],
 "uris": [
   "{{resource.assets.uris.scheduler-zip}}",
@@ -16,7 +15,7 @@
 "healthChecks": [
     {
       "protocol": "COMMAND",
-      "command": { "value": "curl -f -X GET http://$HOST:{{service.adminPort}}/healthcheck" },
+      "command": { "value": "curl -f -X GET http://$HOST:{{service.adminPort}}/admin/healthcheck" },
       "gracePeriodSeconds": 300,
       "intervalSeconds": 60,
       "timeoutSeconds": 60,
@@ -103,7 +102,6 @@
 ,"EXECUTOR_DISK_MB":"1024"
 ,"EXECUTOR_HEAP_MB":"512"
 ,"EXECUTOR_API_PORT":"9000"
-,"EXECUTOR_ADMIN_PORT":"9001"
 ,"EXECUTOR_JAVA_HOME":"./jre"
 ,"EXECUTOR_JRE_LOCATION":"{{resource.assets.uris.jre-tar-gz}}"
 ,"EXECUTOR_LOCATION":"{{resource.assets.uris.executor-zip}}"
@@ -115,6 +113,5 @@
 ,"PLACEMENT_STRATEGY":"{{service.placement-strategy}}"
 ,"PHASE_STRATEGY":"org.apache.mesos.scheduler.plan.DefaultInstallStrategy"
 ,"API_PORT":"{{cassandra.api_port}}"
-,"ADMIN_PORT":"9001"
 }
 }
