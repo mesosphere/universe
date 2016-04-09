@@ -5,8 +5,13 @@
   "cpus": 0.5,
   "mem": 2048,
   "requirePorts": true,
-  "ports": [
-    9000
+  "portDefinitions": [
+    {
+      "port": 9000,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": {}
+    }
   ],
 "uris": [
   "{{resource.assets.uris.scheduler-zip}}",
@@ -22,8 +27,27 @@
       "maxConsecutiveFailures": 3
     }
 ],
+"readinessChecks": [
+    {
+      "name": "cassandraUpdateProgress",
+      "protocol": "HTTP",
+      "path": "/v1/plan",
+      "portName": "api",
+      "interval": 10000,
+      "timeout": 10000,
+      "httpStatusCodesForReady": [200],
+      "preserveLastResponse": true
+    }
+],
 "labels": {
-  "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}"
+  "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+  "DCOS_MIGRATION_API_VERSION": "v1",
+  "DCOS_MIGRATION_API_PATH": "/v1/plan",
+  "MARATHON_SINGLE_INSTANCE_APP":"true"
+},
+"upgradeStrategy":{
+  "minimumHealthCapacity": 0,
+  "maximumOverCapacity": 0
 },
 "env":{
 "JAVA_HOME":"./jre"
