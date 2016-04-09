@@ -44,7 +44,7 @@
 					"default": "NODE"
 				},
 				"plan_strategy": {
-					"id": "http://cassandra/docs/mesosphere.com/service/plan-strategy",
+					"id": "http://cassandra/docs/mesosphere.com/service/plan_strategy",
 					"description": "Broker placement strategy. See documentation. [INSTALL, STAGE]",
 					"type": "string",
 					"default": "INSTALL"
@@ -54,8 +54,8 @@
 			"required": [
 				"name",
 				"user",
-				"plan-strategy",
-				"placement-strategy"
+				"plan_strategy",
+				"placement_strategy"
 			]
 		},
 		"nodes": {
