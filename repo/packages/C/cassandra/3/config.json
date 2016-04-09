@@ -37,13 +37,13 @@
 					"description": "The user that the service will run as.",
 					"default": "root"
 				},
-				"placement-strategy": {
+				"placement_strategy": {
 					"id": "http://cassandra/docs/mesosphere.com/service/placement_strategy",
 					"type": "string",
 					"description": "The placement strategy for Cassandra nodes. This should always be NODE.",
 					"default": "NODE"
 				},
-				"plan-strategy": {
+				"plan_strategy": {
 					"id": "http://cassandra/docs/mesosphere.com/service/plan-strategy",
 					"description": "Broker placement strategy. See documentation. [INSTALL, STAGE]",
 					"type": "string",
