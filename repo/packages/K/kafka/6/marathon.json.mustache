@@ -5,7 +5,10 @@
   "instances": 1,
   "cmd": "export PATH=$PATH:$MESOS_SANDBOX/jre/bin && ./scheduler/bin/kafka-scheduler server ./scheduler/conf/scheduler.yml",
   "labels": {
-    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{kafka.framework-name}}"
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{kafka.framework-name}}",
+    "DCOS_MIGRATION_API_VERSION": "v1",
+    "DCOS_MIGRATION_API_PATH": "/v1/plan",
+    "MARATHON_SINGLE_INSTANCE_APP":"true"
   },
   "env": {
     "LD_LIBRARY_PATH": "/opt/mesosphere/lib",
@@ -122,5 +125,28 @@
       "maxConsecutiveFailures": 3
     }
   ],
-  "ports": [0]
+  "readinessChecks": [
+      {
+        "name": "cassandraUpdateProgress",
+        "protocol": "HTTP",
+        "path": "/v1/plan",
+        "portName": "api",
+        "interval": 10000,
+        "timeout": 10000,
+        "httpStatusCodesForReady": [200],
+        "preserveLastResponse": true
+      }
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": {}
+    }
+  ]
 }
