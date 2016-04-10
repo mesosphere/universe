@@ -127,7 +127,7 @@
       "description":"Hadoop Distributed File System (HDFS), Highly Available",
       "framework":true,
       "name":"hdfs",
-      "selected":true,
+      "selected":false,
       "tags":[
         "filesystem",
         "hadoop",
@@ -190,23 +190,6 @@
       "versions":{
         "0.9.2.0":"0",
         "0.9.4.0":"3"
-      }
-    },
-    {
-      "currentVersion":"v0.7.2-v1.1.5-alpha",
-      "description":"Kubernetes is an open source system for managing containerized applications across multiple hosts, providing basic mechanisms for deployment, maintenance, and scaling of applications.",
-      "framework":true,
-      "name":"kubernetes",
-      "selected":false,
-      "tags":[
-        "mesosphere",
-        "framework",
-        "pod",
-        "label",
-        "paas"
-      ],
-      "versions":{
-        "v0.7.2-v1.1.5-alpha":"0"
       }
     },
     {
@@ -430,7 +413,7 @@
         "interactive"
       ],
       "versions":{
-        "0.5.6":"0"
+        "0.5.6":"1"
       }
     }
   ],
