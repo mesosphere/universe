@@ -5,8 +5,10 @@
   "mem":128,
   "env":{
     "PRINCIPAL_hdfs":"hdfs@LOCAL:secret",
+    "PRINCIPAL_hdfs_dns":"hdfs/namenode1.hdfs.mesos@LOCAL:secret",
     "PRINCIPAL_tester":"tester@LOCAL:secret",
     "KEYTAB_hdfs":"hdfs@LOCAL:hdfs.keytab",
+    "KEYTAB_hdfs_dns" : "hdfs/namenode1.hdfs.mesos@LOCAL:hdfs_dns.keytab",
     "KEYTAB_tester":"tester@LOCAL:tester.keytab"
   },
   "container":{
