@@ -61,11 +61,6 @@
         "type":"object",
         "additionalProperties":false,
         "properties":{
-          "framework-name":{
-            "type":"string",
-            "description":"Mesos Framework Name",
-            "default":"kafka"
-          },
           "kafka_advertise_host_ip":{
             "description":"Override advertised.host.name with the IP address detected in /opt/mesosphere/detect_ip",
             "type":"boolean",
