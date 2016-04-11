@@ -19,7 +19,6 @@
             "type":"string",
             "default":"INSTALL"
           }
-
         },
         "required":[
           "placement_strategy",
@@ -51,21 +50,16 @@
         },
         "required":[
           "cpus",
-        "mem",
-        "disk",
-        "count"
-          ]
+          "mem",
+          "disk",
+          "count"
+        ]
       },
       "kafka":{
         "description":"Kafka framework configuration properties",
         "type":"object",
         "additionalProperties":false,
         "properties":{
-          "framework-name":{
-            "type":"string",
-            "description":"Mesos Framework Name",
-            "default":"kafka"
-          },
           "kafka_advertise_host_ip":{
             "description":"Override advertised.host.name with the IP address detected in /opt/mesosphere/detect_ip",
             "type":"boolean",

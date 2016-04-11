@@ -1,18 +1,18 @@
 {
-  "id": "{{kafka.service.name}}",
+  "id": "{{service.name}}",
   "cpus": 1.0,
   "mem": 1230,
   "instances": 1,
   "cmd": "export PATH=$PATH:$MESOS_SANDBOX/jre/bin && ./scheduler/bin/kafka-scheduler server ./scheduler/conf/scheduler.yml",
   "labels": {
-    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{kafka.service.name}}",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
     "DCOS_MIGRATION_API_VERSION": "v1",
     "DCOS_MIGRATION_API_PATH": "/v1/plan",
     "MARATHON_SINGLE_INSTANCE_APP":"true"
   },
   "env": {
     "LD_LIBRARY_PATH": "/opt/mesosphere/lib",
-    "FRAMEWORK_NAME": "{{kafka.service.name}}",
+    "FRAMEWORK_NAME": "{{service.name}}",
     "USER": "{{service.user}}",
     "PLACEMENT_STRATEGY": "{{service.placement_strategy}}",
     "PHASE_STRATEGY": "{{service.phase_strategy}}",
@@ -118,7 +118,7 @@
   "healthChecks": [
     {
       "protocol": "COMMAND",
-      "command": { "value": "export PATH=$PATH:$MESOS_SANDBOX/jre/bin && ./kafka_2.10-0.9.0.1/bin/kafka-topics.sh --zookeeper master.mesos:2181/{{kafka.service.name}} --describe --under-replicated-partitions | wc -l | { read count; echo Under replicated partition count = $count; exit $count; }" },
+      "command": { "value": "export PATH=$PATH:$MESOS_SANDBOX/jre/bin && ./kafka_2.10-0.9.0.1/bin/kafka-topics.sh --zookeeper master.mesos:2181/{{service.name}} --describe --under-replicated-partitions | wc -l | { read count; echo Under replicated partition count = $count; exit $count; }" },
       "gracePeriodSeconds": 300,
       "intervalSeconds": 60,
       "timeoutSeconds": 60,
