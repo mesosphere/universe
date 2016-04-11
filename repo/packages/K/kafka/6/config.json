@@ -4,20 +4,20 @@
       "service":{
         "type":"object",
         "properties":{
-          "placement-strategy":{
+          "placement_strategy":{
             "description":"Broker placement strategy. See documentation. [ANY, NODE]",
             "type":"string",
             "default":"NODE"
           },
-          "plan-strategy":{
-            "description":"Broker placement strategy. See documentation. [INSTALL, STAGE]",
+          "phase_strategy":{
+            "description":"Broker rollout strategy. See documentation. [INSTALL, STAGE]",
             "type":"string",
             "default":"INSTALL"
           }
         },
         "required":[
-          "placement-strategy",
-          "plan-strategy"
+          "placement_strategy",
+          "phase_strategy"
         ]
       },
       "brokers":{
