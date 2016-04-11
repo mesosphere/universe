@@ -6,6 +6,6 @@
   "description": "Apache Cassandra running on DCOS",
   "framework": true,
   "tags": ["data", "database", "nosql"],
-  "postInstallNotes": "DCOS Cassandra Service is installing ...",
+  "postInstallNotes": "DCOS Cassandra Service is being installed.",
   "postUninstallNotes": "DCOS Cassandra service has been uninstalled. Please run the framework_cleaner to remove any persistent state if required."
 }
