@@ -6,7 +6,7 @@
   "description": "Apache Kafka running on DCOS",
   "framework": true,
   "tags": ["message", "broker", "pubsub"],
-  "postInstallNotes": "DCOS Kafka Service is installing ...",
+  "postInstallNotes": "DCOS Kafka Service is being installed.",
   "postUninstallNotes": "DCOS Kafka Service has been uninstalled. Please run the framework_cleaner to remove any persistent state if required."
 }
 

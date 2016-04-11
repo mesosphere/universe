@@ -11,7 +11,7 @@
 				"name": {
 					"id": "http://cassandra/docs/mesosphere.com/service/name",
 					"type": "string",
-					"description": "The name of the Cassandra service deployment.",
+					"description": "The name of the Cassandra service instance.",
 					"default": "cassandra"
 				},
 				"user": {
@@ -123,12 +123,6 @@
 			"id": "http://cassandra/docs/mesosphere.com/cassandra",
 			"type": "object",
 			"properties": {
-			    "framework-name": {
-					"id": "http://cassandra/docs/mesosphere.com/cassandra/framework-name",
-					"type": "string",
-					"description": "The name of the Cassandra service deployment.",
-					"default": "cassandra"
-				},
 				"jmx_port": {
 					"id": "http://cassandra/docs/mesosphere.com/cassandra/jmxPort",
 					"type": "integer",

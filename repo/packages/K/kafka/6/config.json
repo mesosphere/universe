@@ -4,6 +4,11 @@
       "service":{
         "type":"object",
         "properties":{
+          "name" : {
+            "description":"The name of the Kafka service instance",
+            "type":"string",
+            "default":"kafka"
+          },
           "placement_strategy":{
             "description":"Broker placement strategy. See documentation. [ANY, NODE]",
             "type":"string",
@@ -14,6 +19,7 @@
             "type":"string",
             "default":"INSTALL"
           }
+
         },
         "required":[
           "placement_strategy",
