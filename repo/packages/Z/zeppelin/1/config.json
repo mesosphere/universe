@@ -12,7 +12,7 @@
                 "zeppelin_java_opts": {
                     "type": "string",
                     "description": "Sets ZEPPELIN_JAVA_OPTS.  You can use this to set arbitrary spark configuration properties (e.g. spark.mesos.uris)",
-                    "default": "-Dspark.mesos.coarse=true"
+                    "default": "-Dspark.mesos.coarse=true -Dspark.mesos.executor.home=/opt/spark/dist"
                 }
             }
         },
