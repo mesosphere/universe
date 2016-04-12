@@ -3,6 +3,15 @@
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
+        "service" : {
+            "type": "object",
+            "properties": {
+                "name" : {
+                    "default" : "kdc",
+                    "type" : "string"
+                }
+            }            
+        },
         "kdc": {
             "type": "object",
             "properties": {
