@@ -357,8 +357,7 @@
           },
           "connections_max_idle_ms":{
             "title":"connections.max.idle.ms",
-            "description":"Idle connections timeout",
-            "description":"the server socket processor threads close the connections that idle more than this",
+            "description":"Idle connections timeout: the server socket processor threads close the connections that idle more than this",
             "type":"integer",
             "default":600000
           },
