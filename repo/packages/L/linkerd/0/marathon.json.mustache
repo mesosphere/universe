@@ -43,10 +43,6 @@
     {{linkerd.admin-port}},
     {{linkerd.routing-port}}
   ],
-  "env": {
-    "FRAMEWORK_NAME":"{{linkerd.framework-name}}",
-    "WEBURI": "http://{{linkerd.framework-name}}{{linkerd.dns-suffix}}:{{linkerd.admin-port}}"
-  },
   "uris": [
     "{{linkerd.config-uri}}/{{linkerd.config-filename}}"
   ],
