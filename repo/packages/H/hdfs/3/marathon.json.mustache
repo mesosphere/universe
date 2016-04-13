@@ -42,17 +42,5 @@
     "{{resource.assets.uris.hdfs-mesos-scheduler}}",
     "{{resource.assets.uris.jre-tar-gz}}",
 	"{{resource.assets.uris.jce-zip}}"
-  ],
-  "healthChecks":[
-    {
-      "protocol":"COMMAND",
-      "command":{
-        "value":"export PATH=$MESOS_DIRECTORY/hdfs-mesos-*/bin:$PATH && cd jre*/ && export JAVA_HOME=$PWD && cd $MESOS_DIRECTORY && timeout 45s hadoop fs -ls hdfs://hdfs/ && rm -rf hdfs-framework-healthcheck && hadoop fs -rm -r -f hdfs://hdfs/hdfs-framework-healthcheck && hadoop fs -mkdir hdfs://hdfs/hdfs-framework-healthcheck && mkdir hdfs-framework-healthcheck && echo \"this is a test\" > hdfs-framework-healthcheck/test1.txt && hadoop fs -put hdfs-framework-healthcheck/test1.txt hdfs://hdfs/hdfs-framework-healthcheck && hadoop fs -get hdfs://hdfs/hdfs-framework-healthcheck/test1.txt hdfs-framework-healthcheck/test2.txt && rm -rf hdfs-framework-healthcheck && hadoop fs -rm -r -f hdfs://hdfs/hdfs-framework-healthcheck"
-      },
-      "gracePeriodSeconds":300,
-      "intervalSeconds":60,
-      "timeoutSeconds":60,
-      "maxConsecutiveFailures":3
-    }
   ]
 }

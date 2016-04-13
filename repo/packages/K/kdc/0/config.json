@@ -1,21 +1,20 @@
-
 {
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
-        "service" : {
+        "service": {
             "type": "object",
             "properties": {
-                "name" : {
-                    "default" : "kdc",
-                    "type" : "string"
+                "name": {
+                    "default": "kdc",
+                    "type": "string"
                 }
-            }            
+            }
         },
         "kdc": {
             "type": "object",
             "properties": {
-                "docker_image":  {
+                "docker_image": {
                     "description": "The URI of the Spark docker image to use in spark.mesos.executor.docker.image",
                     "type": "string",
                     "default": "mesosphere/kdc"
