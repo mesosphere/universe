@@ -5,7 +5,7 @@
   "properties": {
     "linkerd": {
       "type": "object",
-      "required": ["admin-port", "config-filename", "config-uri", "cpus", "dns-suffix", "framework-name", "instances", "mem", "name", "routing-port"],
+      "required": ["admin-port", "config-filename", "config-uri", "cpus", "dns-suffix", "instances", "mem", "name", "routing-port"],
       "properties": {
         "admin-port": {
           "default": 9990,
@@ -34,14 +34,8 @@
           "type": "string",
           "pattern": "^(?:\\.[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)+$"
         },
-        "framework-name": {
-          "default": "linkerd",
-          "description": "The framework name to register with Mesos.",
-          "type": "string",
-          "pattern": "^/?(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$"
-        },
         "instances": {
-          "default": 1,
+          "default": 1000,
           "description": "Number of instances to run.",
           "minimum": 1,
           "type": "integer"

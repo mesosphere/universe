@@ -14,19 +14,19 @@
       "privileged": true,
       "portMappings": [
         {
-          "containerPort": 0,
+          "containerPort": {{namerd.admin-port}},
           "hostPort": {{namerd.admin-port}},
           "servicePort": 0,
           "protocol": "tcp"
         },
         {
-          "containerPort": 0,
+          "containerPort": {{namerd.http-port}},
           "hostPort": {{namerd.http-port}},
           "servicePort": 0,
           "protocol": "tcp"
         },
         {
-          "containerPort": 0,
+          "containerPort": {{namerd.thrift-port}},
           "hostPort": {{namerd.thrift-port}},
           "servicePort": 0,
           "protocol": "tcp"
@@ -58,6 +58,8 @@
     "{{namerd.config-uri}}/{{namerd.config-filename}}"
   ],
   "labels": {
-    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{namerd.framework-name}}"
+    "DCOS_SERVICE_NAME": "{{namerd.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
   }
 }
