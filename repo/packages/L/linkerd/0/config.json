@@ -5,7 +5,7 @@
   "properties": {
     "linkerd": {
       "type": "object",
-      "required": ["admin-port", "config-filename", "config-uri", "cpus", "dns-suffix", "instances", "mem", "name", "routing-port"],
+      "required": ["admin-port", "config-filename", "config-uri", "cpus", "instances", "mem", "name", "routing-port"],
       "properties": {
         "admin-port": {
           "default": 9990,
@@ -28,14 +28,8 @@
           "minimum": 0.25,
           "type": "number"
         },
-        "dns-suffix": {
-          "default": ".marathon.mesos",
-          "description": "This value is appended to the framework-name value to form the canonical DNS name for the linkerd service.",
-          "type": "string",
-          "pattern": "^(?:\\.[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)+$"
-        },
         "instances": {
-          "default": 1000,
+          "default": 1,
           "description": "Number of instances to run.",
           "minimum": 1,
           "type": "integer"

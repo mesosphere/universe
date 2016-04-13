@@ -5,7 +5,7 @@
   "properties": {
     "namerd": {
       "type": "object",
-      "required": ["admin-port", "config-filename", "config-uri", "cpus", "dns-suffix", "http-port", "instances", "mem", "name", "resource-role", "thrift-port"],
+      "required": ["admin-port", "config-filename", "config-uri", "cpus", "http-port", "instances", "mem", "name", "resource-role", "thrift-port"],
       "properties": {
         "admin-port": {
           "default": 9001,
@@ -27,12 +27,6 @@
           "description": "CPU shares to allocate to each namerd instance.",
           "minimum": 0.25,
           "type": "number"
-        },
-        "dns-suffix": {
-          "default": ".marathon.mesos",
-          "description": "This value is appended to the framework-name value to form the canonical DNS name for the namerd service.",
-          "type": "string",
-          "pattern": "^(?:\\.[a-z][a-z0-9]*?(?:-[a-z0-9]+)*)+$"
         },
         "http-port": {
           "default": 4180,
