@@ -6,8 +6,8 @@
   },
   "assets": {
     "uris": {
-      "hdfs-mesos-0-1-8-tgz": "https://downloads.mesosphere.com/hdfs/artifacts/dcos/0.1.8/hdfs-mesos-0.1.8.tgz",
-      "jre-7u76-linux-x64-tar-gz": "https://downloads.mesosphere.com/java/jre-7u76-linux-x64.tar.gz"
+      "hdfs-mesos-0-1-8-tgz": "file:///tmp/dcos-install/hdfs-mesos-0.1.8.tgz",
+      "jre-7u76-linux-x64-tar-gz": "file:///tmp/dcos-install/jre-7u76-linux-x64.tar.gz"
     }
   }
 }
