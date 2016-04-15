@@ -18,6 +18,23 @@
       }
     },
     {
+      "currentVersion":"16.1.1",
+      "description":"Avi Vantage ADC",
+      "framework":false,
+      "name":"avi",
+      "selected":false,
+      "tags":[
+        "loadbalancer",
+        "service-discovery",
+        "reverse-proxy",
+        "adc",
+        "analytics"
+      ],
+      "versions":{
+        "16.1.1":"0"
+      }
+    },
+    {
       "currentVersion":"0.2.0-2",
       "description":"Apache Cassandra running on Apache Mesos",
       "framework":true,
