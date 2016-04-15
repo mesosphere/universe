@@ -100,9 +100,9 @@
               "default": 5054
             },
             "resource-role": {
-                "description": "The accepted resource role (e.g. slave_public or *). By default, this will deploy to any agents with 'slave_public' role.",
+                "description": "The accepted resource role (e.g. slave_public or *). By default, this will deploy to any agents with '*' role.",
                 "type": "string",
-                "default": "slave_public"
+                "default": "*"
             },
             "schannel-port": {
               "description": "Secure-Channel port",
