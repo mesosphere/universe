@@ -49,6 +49,21 @@
       }
     },
     {
+      "currentVersion":"2.0.1-mesos",
+      "description":"Confluent Platform running on DCOS",
+      "framework":true,
+      "name":"confluent",
+      "selected":true,
+      "tags":[
+        "message",
+        "broker",
+        "pubsub"
+      ],
+      "versions":{
+        "2.0.1-mesos":"0"
+      }
+    },
+    {
       "currentVersion":"0.1.0",
       "description":"A Mesos Framework that allows running and resizing one or multiple Crate database clusters.",
       "framework":true,
