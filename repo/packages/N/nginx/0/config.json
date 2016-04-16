@@ -43,6 +43,14 @@
           "description": "Deploy nginx only on nodes with this role.",
           "type": "string"
         },
+        "contentDir": {          
+          "description": "Path of directory, relative to sandbox, containing HTML code.",
+          "type": "string"
+        },
+        "contentUrl": {          
+          "description": "URL of content that needs to be hosted.",
+          "type": "string"
+        },
         "marathon-uri": {
           "default": "http://master.mesos:8080",
           "description": "URI of Marathon instance",
