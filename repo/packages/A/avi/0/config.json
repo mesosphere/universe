@@ -2,16 +2,23 @@
   "$schema": "http://json-schema.org/schema#",
   "type": "object",
   "properties": {
+    "service": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Avi Vantage ADC service name",
+          "type": "string",
+          "default": "avi-vantage"
+        }
+      },
+      "additionalProperties": false,
+      "required": ["name"]
+    },
     "avi": {
       "description": "Avi Vantage specific configuration properties",
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "framework-name": {
-          "description": "Avi Vantage ADC",
-          "type": "string",
-          "default": "avi-vantage"
-        },
         "controller": {
           "description": "Avi Controller specific configuration properties",
           "type": "object",
@@ -119,7 +126,7 @@
               "maximum": 5098
             },
             "tag": {
-              "default": "16.1.1-9019-20160330.183143",
+              "default": "16.2-beta",
               "description": "Tag value of the Avi-Vantage image in the Docker repository.",
               "type": "string"
             }
@@ -191,7 +198,8 @@
     }
   },
   "required": [
-    "mesos",
-    "avi"
+    "service",
+    "avi",
+    "mesos"
   ]
 }

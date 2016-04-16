@@ -1,6 +1,5 @@
 {
-  "id": "{{avi.framework-name}}",
-  "framework-name": "{{avi.framework-name}}",
+  "id": "{{service.name}}",
   "cpus": {{avi.controller.cpus}},
   "mem": {{avi.controller.memory}},
   "disk": {{avi.controller.disk}},
@@ -30,9 +29,11 @@
       "network": "BRIDGE",
       "forcePullImage": {{avi.controller.force-pull}},
       "parameters": [
-        { "key": "label", "value": "{{avi.framework-name}}" }
+        { "key": "label", "value": "{{service.name}}" }
       ],
       "portMappings": [
+        { "hostPort": {{avi.controller.http-port}}, "containerPort": {{avi.controller.http-port}}, "protocol": "tcp" },
+        { "hostPort": {{avi.controller.https-port}}, "containerPort": {{avi.controller.https-port}}, "protocol": "tcp" },
         {{#avi.controller.enable-avidns}}
         { "hostPort": {{avi.controller.dns-port}}, "containerPort": 53, "protocol": "udp" },
         {{/avi.controller.enable-avidns}}
@@ -41,9 +42,7 @@
         {{/avi.controller.enable-ntp}}
         { "hostPort": {{avi.controller.remote-cli-port}}, "containerPort": 5054, "protocol": "tcp" },
         { "hostPort": {{avi.controller.ssh-port}}, "containerPort": {{avi.controller.ssh-port}}, "protocol": "tcp" },
-        { "hostPort": {{avi.controller.schannel-port}}, "containerPort": {{avi.controller.schannel-port}}, "protocol": "tcp" },
-        { "hostPort": {{avi.controller.http-port}}, "containerPort": {{avi.controller.http-port}}, "protocol": "tcp" },
-        { "hostPort": {{avi.controller.https-port}}, "containerPort": {{avi.controller.https-port}}, "protocol": "tcp" }
+        { "hostPort": {{avi.controller.schannel-port}}, "containerPort": {{avi.controller.schannel-port}}, "protocol": "tcp" }
       ]
     },
     "volumes": [
@@ -81,7 +80,10 @@
   ],
 
   "labels": {
-    "AVI_URI": "https://$HOST:{{avi.controller.https-port}}"
+    "proxy": "no",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
   }
 
 }

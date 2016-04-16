@@ -9,7 +9,7 @@
   "tags": ["loadbalancer", "service-discovery", "reverse-proxy", "adc", "analytics"],
   "preInstallNotes": "We recommend a minimum of 4 CPUs/12 GB of RAM available for the Avi Controller Service; and 1 CPU/2 GB RAM for Avi ServiceEngine.",
   "postInstallNotes": "Avi DCOS Service has been successfully installed!\nSee http://kb.avinetworks.com for documentation.",
-  "postUninstallNotes": "Avi DCOS Service has been uninstalled and will no longer run.\nSee http://kb.avinetworks.com on how to cleanup any persisted state (rm -rf /var/lib/controller on slave host).",
+  "postUninstallNotes": "Avi DCOS Service has been uninstalled and will no longer run.\nSee http://kb.avinetworks.com/dcos-avi on how to cleanup persisted state",
   "licenses": [
     {
       "name": "Avi Networks Inc., #Fri-Apr-15-12:28:46-PDT-2016#",
