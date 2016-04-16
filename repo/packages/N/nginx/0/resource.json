@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/320px-Nginx_logo.svg.png",
+    "icon-medium": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/640px-Nginx_logo.svg.png",
+    "icon-large": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/800px-Nginx_logo.svg.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "nginx-docker": "nginx:1.8.1"
+      }
+    }
+  }
+}
