@@ -51,6 +51,11 @@
           "description": "URL of content that needs to be hosted.",
           "type": "string"
         },
+        "bridge": {
+          "default": "false",          
+          "description": "Networking mode for Docker container. By default, it's false and HOST mode networking is used.",
+          "type": "boolean"
+        },
         "marathon-uri": {
           "default": "http://master.mesos:8080",
           "description": "URI of Marathon instance",
