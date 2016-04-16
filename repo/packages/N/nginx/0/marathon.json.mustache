@@ -4,9 +4,7 @@
   "cpus": {{nginx.cpus}},
   "mem": {{nginx.mem}},
   "maintainer": "support@mesosphere.io",
- {{#nginx.contentDir}}
   "cmd": "rm -rf /usr/share/nginx/html && ln -s /mnt/mesos/sandbox/{{nginx.contentDir}} /usr/share/nginx/html && nginx -g daemon off;",   
- {{/nginx.contentDir}}
   "container": {
     "type": "DOCKER",
     "docker": {
