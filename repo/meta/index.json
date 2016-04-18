@@ -209,6 +209,26 @@
       }
     },
     {
+      "currentVersion":"0.3.1-0.1",
+      "description":"A dynamic linker for microservices.",
+      "framework":false,
+      "name":"linkerd",
+      "selected":false,
+      "tags":[
+        "linkerd",
+        "namerd",
+        "buoyant",
+        "loadbalancer",
+        "service-discovery",
+        "proxy",
+        "microservices",
+        "rpc"
+      ],
+      "versions":{
+        "0.3.1-0.1":"0"
+      }
+    },
+    {
       "currentVersion":"0.15.3",
       "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
       "framework":true,
@@ -272,6 +292,26 @@
       ],
       "versions":{
         "0.0.1":"0"
+      }
+    },
+    {
+      "currentVersion":"0.3.1-0.1",
+      "description":"A service for managing name delegation for microservices.",
+      "framework":false,
+      "name":"namerd",
+      "selected":false,
+      "tags":[
+        "linkerd",
+        "namerd",
+        "buoyant",
+        "loadbalancer",
+        "service-discovery",
+        "proxy",
+        "microservices",
+        "rpc"
+      ],
+      "versions":{
+        "0.3.1-0.1":"0"
       }
     },
     {
