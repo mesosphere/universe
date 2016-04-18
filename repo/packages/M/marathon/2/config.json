@@ -89,7 +89,8 @@
         },
         "default-accepted-resource-roles" : {
           "description" : "Default for the defaultAcceptedResourceRoles attribute of all app definitions as a comma-separated list of strings. This defaults to all roles for which this Marathon instance is configured to receive offers.",
-          "type" : "string"
+          "type" : "string",
+          "default" : "*"
         },
         "disable-http" : {
           "description" : "Disable listening for HTTP requests completely. HTTPS is unaffected.",
@@ -229,7 +230,7 @@
           "default" : 1
         },
         "mesos-authentication-principal" : {
-          "description" : "Mesos Authentication Principal.",
+          "description" : "(Default: marathon.framework-name) Mesos Authentication Principal.",
           "type" : "string"
         },
         "mesos-authentication-secret-file" : {
@@ -242,7 +243,7 @@
           "default" : "/mesos"
         },
         "mesos-role" : {
-          "description" : "Mesos role for this framework. If set, Marathon receives resource offers for the specified role in addition to resources with the role designation '*'.",
+          "description" : "(Default: marathon.framework-name) Mesos role for this framework. If set, Marathon receives resource offers for the specified role in addition to resources with the role designation '*'.",
           "type" : "string"
         },
         "mesos-user" : {
