@@ -1,0 +1,31 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{weavescope.app.cpus}},
+  "mem": {{weavescope.app.mem}},
+  "instances": {{weavescope.app.instances}},
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.38708eac9992}}",
+      "forcePullImage": false
+    }
+  },
+  "args": [
+    "--no-probe"
+  ],
+  "ports": [
+    4040
+  ],
+  "requirePorts": true,
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  }
+}
