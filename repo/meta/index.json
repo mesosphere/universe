@@ -244,19 +244,6 @@
       }
     },
     {
-      "currentVersion":"1.8.1",
-      "description":"Nginx for DC/OS",
-      "framework":false,
-      "name":"nginx",
-      "selected":true,
-      "tags":[
-        "nginx"
-      ],
-      "versions":{
-        "1.8.1":"0"
-      }
-    },
-    {
       "currentVersion":"0.0.1",
       "description":"Redis is the fastest in-memory KV-Cache and Datatstructure store",
       "framework":true,
@@ -270,6 +257,21 @@
       ],
       "versions":{
         "0.0.1":"0"
+      }
+    },
+    {
+      "currentVersion":"1.8.1",
+      "description":"Nginx package",
+      "framework":false,
+      "name":"nginx",
+      "selected":false,
+      "tags":[
+        "proxy",
+        "web-server",
+        "cache"
+      ],
+      "versions":{
+        "1.8.1":"0"
       }
     },
     {
