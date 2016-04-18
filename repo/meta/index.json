@@ -9,8 +9,7 @@
       "tags":[
         "arangodb",
         "NoSQL",
-        "database",
-        "framework"
+        "database"
       ],
       "versions":{
         "0.2.1":"0",
@@ -74,7 +73,8 @@
       "tags":[
         "message",
         "broker",
-        "pubsub"
+        "pubsub",
+        "kafka"
       ],
       "versions":{
         "2.0.1-mesos":"0"
@@ -88,7 +88,6 @@
       "selected":false,
       "tags":[
         "database",
-        "distributed",
         "nosql"
       ],
       "versions":{
@@ -116,11 +115,9 @@
       "name":"elasticsearch",
       "selected":false,
       "tags":[
-        "dcos",
-        "mesos",
-        "framework",
-        "elasticsearch",
-        "elastic"
+        "elastic",
+        "monitoring",
+        "debug"
       ],
       "versions":{
         "0.7.0":"0"
@@ -133,9 +130,9 @@
       "name":"etcd",
       "selected":false,
       "tags":[
-        "mesosphere",
-        "framework",
-        "consensus"
+        "consensus",
+        "distributed-coordination",
+        "coordination"
       ],
       "versions":{
         "0.0.2":"0",
@@ -178,7 +175,6 @@
       "name":"hue",
       "selected":false,
       "tags":[
-        "mesosphere",
         "hadoop",
         "filesystem",
         "hdfs"
@@ -194,8 +190,6 @@
       "name":"jenkins",
       "selected":true,
       "tags":[
-        "mesosphere",
-        "framework",
         "continuous-integration",
         "ci",
         "jenkins"
@@ -218,7 +212,8 @@
       "tags":[
         "message",
         "broker",
-        "messaging"
+        "messaging",
+        "IoT"
       ],
       "versions":{
         "0.9.2.0":"0",
@@ -302,8 +297,6 @@
       "name":"mr-redis",
       "selected":false,
       "tags":[
-        "mesos",
-        "framework",
         "inmemory",
         "redis"
       ],
@@ -396,10 +389,9 @@
       "name":"riak",
       "selected":false,
       "tags":[
-        "mesosphere",
-        "framework",
         "database",
-        "riak"
+        "riak",
+        "NoSql"
       ],
       "versions":{
         "0.1.1":"0"
@@ -463,9 +455,7 @@
       "name":"storm",
       "selected":false,
       "tags":[
-        "mesosphere",
-        "framework",
-        "storm"
+        "streaming"
       ],
       "versions":{
         "0.1.0":"0"
@@ -478,8 +468,6 @@
       "name":"swarm",
       "selected":false,
       "tags":[
-        "mesosphere",
-        "framework",
         "docker"
       ],
       "versions":{
@@ -494,7 +482,6 @@
       "selected":false,
       "tags":[
         "nflabs",
-        "framework",
         "bigdata",
         "spark",
         "notebook",
