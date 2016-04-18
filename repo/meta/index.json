@@ -49,6 +49,21 @@
       }
     },
     {
+      "currentVersion":"2.0.1-mesos",
+      "description":"Confluent Platform running on DCOS",
+      "framework":true,
+      "name":"confluent",
+      "selected":true,
+      "tags":[
+        "message",
+        "broker",
+        "pubsub"
+      ],
+      "versions":{
+        "2.0.1-mesos":"0"
+      }
+    },
+    {
       "currentVersion":"0.1.0",
       "description":"A Mesos Framework that allows running and resizing one or multiple Crate database clusters.",
       "framework":true,
@@ -95,7 +110,7 @@
       }
     },
     {
-      "currentVersion":"0.0.2",
+      "currentVersion":"0.0.3",
       "description":"A distributed consistent key-value store for shared configuration and service discovery.",
       "framework":true,
       "name":"etcd",
@@ -106,7 +121,8 @@
         "consensus"
       ],
       "versions":{
-        "0.0.2":"0"
+        "0.0.2":"0",
+        "0.0.3":"1"
       }
     },
     {
@@ -193,6 +209,26 @@
       }
     },
     {
+      "currentVersion":"0.3.1-0.1",
+      "description":"A dynamic linker for microservices.",
+      "framework":false,
+      "name":"linkerd",
+      "selected":false,
+      "tags":[
+        "linkerd",
+        "namerd",
+        "buoyant",
+        "loadbalancer",
+        "service-discovery",
+        "proxy",
+        "microservices",
+        "rpc"
+      ],
+      "versions":{
+        "0.3.1-0.1":"0"
+      }
+    },
+    {
       "currentVersion":"0.15.3",
       "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
       "framework":true,
@@ -208,7 +244,7 @@
       }
     },
     {
-      "currentVersion":"0.0.5-0.1",
+      "currentVersion":"0.0.6-0.1",
       "description":"HAProxy configured using Marathon state",
       "framework":false,
       "name":"marathon-lb",
@@ -223,7 +259,8 @@
       "versions":{
         "0.0.3-0.1":"0",
         "0.0.4-0.1":"1",
-        "0.0.5-0.1":"2"
+        "0.0.5-0.1":"2",
+        "0.0.6-0.1":"3"
       }
     },
     {
@@ -255,6 +292,26 @@
       ],
       "versions":{
         "0.0.1":"0"
+      }
+    },
+    {
+      "currentVersion":"0.3.1-0.1",
+      "description":"A service for managing name delegation for microservices.",
+      "framework":false,
+      "name":"namerd",
+      "selected":false,
+      "tags":[
+        "linkerd",
+        "namerd",
+        "buoyant",
+        "loadbalancer",
+        "service-discovery",
+        "proxy",
+        "microservices",
+        "rpc"
+      ],
+      "versions":{
+        "0.3.1-0.1":"0"
       }
     },
     {
@@ -349,24 +406,22 @@
       }
     },
     {
-      "currentVersion":"0.0.1",
+      "currentVersion":"0.0.2",
       "description":"Spark Notebook package for DCOS",
       "framework":true,
       "name":"spark-notebook",
-      "selected":false,
+      "selected":true,
       "tags":[
         "spark",
         "notebook",
         "spark-notebook",
         "interactive",
         "big-data",
-        "bigdata",
         "apachespark",
-        "datafellas",
         "data-fellas"
       ],
       "versions":{
-        "0.0.1":"0"
+        "0.0.2":"0"
       }
     },
     {
