@@ -1,0 +1,80 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"The name of the OpenLDAP service instance",
+                    "type":"string",
+                    "default":"openldap"
+                }
+            }
+        },
+        "openldap":{
+            "additionalProperties": false,
+            "description": "OpenLDAP service configuration properties",
+            "properties": {
+                "cpus": {
+                    "description": "CPU shares to allocate to each OpenLDAP node.",
+                    "type": "number",
+                    "default": 0.3,
+                    "minimum": 0.3
+                },
+                "mem": {
+                    "description": "Memory to allocate to each OpenLDAP node.",
+                    "type": "number",
+                    "default": 128.0,
+                    "minimum": 128.0
+                },
+                "host_volume": {
+                    "description": "The location of a volume on the host to be used for persisting OpenLDAP data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/openldap`). Note that this path must be the same on all DCOS agents.",
+                    "type": "string",
+                    "default": "/tmp"
+                },
+                "organisation":{
+                    "description": "Organisation name, required.",
+                    "type": "string"
+                },
+                "domain":{
+                    "description": "LDAP domain, required.",
+                    "type": "string"
+                },
+                "admin_password":{
+                    "description": "Administrator password, required.",
+                    "type": "string"
+                },
+                "readonly_user":{
+                    "description": "Option to add a read-only user, required.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "readonly_username":{
+                    "description": "Read-only username, required if readonly user is true.",
+                    "type": "string"
+                },
+                "readonly_password":{
+                    "description": "Read-only user's password, required if readonly user is true.",
+                    "type": "string"
+                },
+                "tls_verify_client":{
+                    "description": "TLS verify client.",
+                    "type": "string",
+                    "default": "never"
+                }
+            },
+            "required": [
+                "cpus",
+                "mem",
+                "host_volume",
+                "organisation",
+                "domain",
+                "admin_password",
+                "readonly_user"
+            ],
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
