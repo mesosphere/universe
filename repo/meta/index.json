@@ -315,6 +315,21 @@
       }
     },
     {
+      "currentVersion":"1.8.1",
+      "description":"Nginx package",
+      "framework":false,
+      "name":"nginx",
+      "selected":false,
+      "tags":[
+        "proxy",
+        "web-server",
+        "cache"
+      ],
+      "versions":{
+        "1.8.1":"0"
+      }
+    },
+    {
       "currentVersion":"0.0.0-0.1",
       "description":"Your private path to access network resources and services securely: Server service",
       "framework":false,
@@ -426,7 +441,7 @@
     },
     {
       "currentVersion":"0.1.0",
-      "description":"Storm is a stream processing framework.",
+      "description":"Apache Storm is a stream processing framework.",
       "framework":true,
       "name":"storm",
       "selected":false,
