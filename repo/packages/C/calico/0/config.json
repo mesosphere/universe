@@ -5,13 +5,13 @@
       "properties": {
         "framework-name": {
           "type": "string",
-          "description": "The name of the framework. Until this is configurable, please do not change this from its default value.",
+          "description": "The name of the framework.",
           "default": "calico"
         },
         "calicoctl-url": {
           "type": "string",
           "description": "The download URL for the calicoctl command line tool.",
-          "default": "https://github.com/projectcalico/calico-containers/releases/download/v0.18.0/calicoctl"
+          "default": "{{resource.assets.uris.calicoctl}}"
         },
         "calico-node-img": {
           "type": "string",

@@ -1,5 +1,5 @@
 {
-  "id": "calico",
+  "id": "{{calico.framework-name}}",
   "container": {
     "type": "DOCKER",
     "network": "HOST",
@@ -38,7 +38,8 @@
     "MESOS_MASTER": "{{mesos.master}}"
   },
   "labels": {
-    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{calico.framework-name}}"
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{calico.framework-name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true"
   },
   "requirePorts":true,
   "ports": [
