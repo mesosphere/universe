@@ -8,21 +8,6 @@
           "description": "The name of the framework.",
           "default": "calico"
         },
-        "calicoctl-url": {
-          "type": "string",
-          "description": "The download URL for the calicoctl command line tool.",
-          "default": "{{resource.assets.uris.calicoctl}}"
-        },
-        "calico-node-img": {
-          "type": "string",
-          "description": "The name of the calico-node Docker image.",
-          "default": "calico/node:v0.18.0"
-        },
-        "calico-libnetwork-img": {
-          "type": "string",
-          "description": "The name of the calico-libnetwork Docker image.",
-          "default": "calico/node-libnetwork:v0.8.0"
-        },
         "allow-agent-update": {
           "type": "boolean",
           "description": "Whether the Calico framework is allowed to reconfigure and restart the Mesos Agent to install netmodules with a Calico plugin.  Note that during restart, the agent will not be available, and tasks running on the agent will be lost.",

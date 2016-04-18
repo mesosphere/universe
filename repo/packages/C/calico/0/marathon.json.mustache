@@ -14,9 +14,9 @@
   "mem": {{calico.mem-limit-framework}},
   "instances": 1,
   "env": {
-    "CALICO_CALICOCTL_URL": "{{calico.calicoctl-url}}",
-    "CALICO_NODE_IMG": "{{calico.calico-node-img}}",
-    "CALICO_LIBNETWORK_IMG": "{{calico.calico-libnetwork-img}}",
+    "CALICO_CALICOCTL_URL": "{{resource.assets.uris.calicoctl}}",
+    "CALICO_NODE_IMG": "{{resource.assets.container.docker.calico-node}}",
+    "CALICO_LIBNETWORK_IMG": "{{resource.assets.container.docker.calico-libnetwork}}",
     {{#calico.allow-agent-update}}"CALICO_ALLOW_AGENT_UPDATE": "true",{{/calico.allow-agent-update}}
     {{#calico.allow-docker-update}}"CALICO_ALLOW_DOCKER_UPDATE": "true",{{/calico.allow-docker-update}}
     "CALICO_MAX_CONCURRENT_RESTARTS": "{{calico.max-concurrent-restarts}}",
