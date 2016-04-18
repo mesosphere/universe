@@ -56,7 +56,7 @@ We can use them within DCOS with:
   E.g. assuming the topic branch is named `topic-branch`:
 
   ```
-  dcos package repo add Developement https://github.com/mesosphere/universe/archive/topic-branch.zip
+  dcos package repo add Development https://github.com/mesosphere/universe/archive/topic-branch.zip
   ```
 
 The pre-commit hook will run [build.sh](scripts/build.sh) before allowing you to commit. This
