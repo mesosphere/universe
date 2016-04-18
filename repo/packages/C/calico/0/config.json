@@ -95,9 +95,6 @@
         }
       },
       "required": [
-        "calicoctl-url",
-        "calico-node-img",
-        "calico-libnetwork-img",
         "allow-agent-update",
         "allow-docker-update",
         "max-concurrent-restarts",
