@@ -6,7 +6,7 @@
   "maintainer": "support@mesosphere.io",
   "description": "Swarm is a Docker-native clustering system.",
   "framework": true,
-  "tags": ["mesosphere", "framework", "docker"],
+  "tags": ["docker"],
   "postInstallNotes": "Swarm is installed in your cluster. Please `eval $(dcos swarm env)` to set DOCKER_HOST environment variable and use your docker client to interact with swarm.",
   "preInstallNotes": "Note that the Docker Swarm DCOS Service is beta and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
   "postUninstallNotes": "The Docker Swarm DCOS Service has been uninstalled and will no longer run.\nNote that any docker container that is launched and still running from swarm will be kept running.",
