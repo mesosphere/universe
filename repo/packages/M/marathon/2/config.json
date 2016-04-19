@@ -2,12 +2,12 @@
   "additionalProperties" : false,
   "description" : "Marathon DCOS Service properties",
   "properties" : {
-    "application" : {
+    "service" : {
       "additionalProperties" : false,
       "description" : "Marathon app configuration properties.",
       "properties" : {
-        "id" : {
-          "description" : "The ID of this Marathon application inside DCOS base Marathon.",
+        "name" : {
+          "description" : "The ID of this Marathon service inside DCOS base Marathon.",
           "type" : "string"
         },
         "cpus" : {
@@ -387,6 +387,6 @@
       "type" : "object"
     }
   },
-  "required" : [ "application", "jvm", "marathon" ],
+  "required" : [ "service", "jvm", "marathon" ],
   "type" : "object"
 }

@@ -1,9 +1,9 @@
 
 {
-  "id": "{{#application.id}}{{application.id}}{{/application.id}}{{^application.id}}{{marathon.framework-name}}{{/application.id}}",
-  "cpus": {{application.cpus}},
-  "mem": {{application.mem}},
-  "instances": {{application.instances}},
+  "id": "{{#service.name}}{{service.name}}{{/service.name}}{{^service.name}}{{marathon.framework-name}}{{/service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": {{service.instances}},
   "constraints": [["hostname", "UNIQUE"]],
   "ports": [
     {{#marathon.http-port}}{{marathon.http-port}}{{/marathon.http-port}}{{^marathon.http-port}}0{{/marathon.http-port}}
@@ -14,7 +14,7 @@
     {{/marathon.ssl-keystore-password}}
     {{/marathon.ssl-keystore-path}}
   ],
-  "uris": {{application.uris}},
+  "uris": {{service.uris}},
   "healthChecks": [
     {
       "gracePeriodSeconds": 120,
