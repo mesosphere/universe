@@ -4,11 +4,11 @@
   "version": "0.1.0",
   "scm": "https://github.com/mesos/storm.git",
   "maintainer": "support@mesosphere.io",
-  "description": "Storm is a stream processing framework.",
+  "description": "Apache Storm is a stream processing framework.",
   "framework": true,
-  "tags": ["mesosphere", "framework", "storm"],
+  "tags": ["streaming"],
   "postInstallNotes": "Storm is installed in your cluster.",
-  "preInstallNotes": "Note that the Docker storm DCOS Service is beta and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
+  "preInstallNotes": "Note that the Apache Storm DCOS Service is beta and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
   "postUninstallNotes": "The Storm DCOS Service has been uninstalled and will no longer run.",
     "licenses": [
     {

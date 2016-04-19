@@ -1,0 +1,55 @@
+{
+  "id": "{{calico.framework-name}}",
+  "container": {
+    "type": "DOCKER",
+    "network": "HOST",
+    "docker": {
+      "image": "{{resource.assets.container.docker.calico-dcos}}",
+      "network": "HOST",
+      "forcePullImage": true
+    }
+  },
+  "args": [],
+  "cpus": {{calico.cpu-limit-framework}},
+  "mem": {{calico.mem-limit-framework}},
+  "instances": 1,
+  "env": {
+    "CALICO_CALICOCTL_URL": "{{resource.assets.uris.calicoctl}}",
+    "CALICO_NODE_IMG": "{{resource.assets.container.docker.calico-node}}",
+    "CALICO_LIBNETWORK_IMG": "{{resource.assets.container.docker.calico-libnetwork}}",
+    {{#calico.allow-agent-update}}"CALICO_ALLOW_AGENT_UPDATE": "true",{{/calico.allow-agent-update}}
+    {{#calico.allow-docker-update}}"CALICO_ALLOW_DOCKER_UPDATE": "true",{{/calico.allow-docker-update}}
+    "CALICO_MAX_CONCURRENT_RESTARTS": "{{calico.max-concurrent-restarts}}",
+    "CALICO_ZK": "{{calico.zk}}",
+    "CALICO_CPU_LIMIT_INSTALL": "{{calico.cpu-limit-install}}",
+    "CALICO_MEM_LIMIT_INSTALL": "{{calico.mem-limit-install}}",
+    "CALICO_CPU_LIMIT_ETCD_PROXY": "{{calico.cpu-limit-etcd-proxy}}",
+    "CALICO_MEM_LIMIT_ETCD_PROXY": "{{calico.mem-limit-etcd-proxy}}",
+    "CALICO_CPU_LIMIT_NODE": "{{calico.cpu-limit-node}}",
+    "CALICO_MEM_LIMIT_NODE": "{{calico.mem-limit-node}}",
+    "CALICO_CPU_LIMIT_LIBNETWORK": "{{calico.cpu-limit-libnetwork}}",
+    "CALICO_MEM_LIMIT_LIBNETWORK": "{{calico.mem-limit-libnetwork}}",
+    "CALICO_STATUS_DNS": "{{calico.status-dns}}",
+    "CALICO_INSTALLER_URL": "{{resource.assets.uris.calico-installer}}",
+    "CALICO_MESOS_PLUGIN": "{{resource.assets.uris.calico-mesos-plugin}}",
+    "ETCD_SRV": "{{etcd.etcd-discovery-url}}",
+    "ETCD_BINARY_URL": "{{resource.assets.uris.etcd}}",
+    "NETMODULES_URL": "{{resource.assets.uris.netmodules-libraries}}",
+    "MESOS_MASTER": "{{mesos.master}}"
+  },
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{calico.framework-name}}"
+  },
+  "requirePorts":true,
+  "ports": [
+    0
+  ],
+  "healthChecks": [{
+    "protocol": "HTTP",
+    "path": "/health",
+    "portIndex": 0,
+    "gracePeriodSeconds": 60,
+    "intervalSeconds": 30,
+    "maxConsecutiveFailures": 0
+  }]
+}
