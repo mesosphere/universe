@@ -69,7 +69,7 @@
       "description":"Confluent Platform running on DCOS",
       "framework":true,
       "name":"confluent",
-      "selected":true,
+      "selected":false,
       "tags":[
         "message",
         "broker",
@@ -434,7 +434,7 @@
       "description":"Spark Notebook package for DCOS",
       "framework":true,
       "name":"spark-notebook",
-      "selected":true,
+      "selected":false,
       "tags":[
         "spark",
         "notebook",
