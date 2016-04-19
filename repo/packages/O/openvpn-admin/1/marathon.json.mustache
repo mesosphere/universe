@@ -1,0 +1,32 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{openvpn-admin.cpus}},
+  "mem": {{openvpn-admin.mem}},
+  "instances": {{openvpn-admin.instances}},
+  "args": [ "admin" ],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.openvpn-admin-docker}}",
+      "forcePullImage": true,
+      "network": "BRIDGE",
+      "portMappings": [{ "containerPort": 5000, "protocol": "tcp" }]
+    }
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 0,
+      "path": "/status",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "timeoutSeconds": 5
+    }
+  ],
+  "ports": [],
+  "env": {
+    "MESOS_CONFIG": "zk://master.mesos:2181/mesos",
+    "FRAMEWORK_NAME": "{{service.name}}"
+  }
+}
