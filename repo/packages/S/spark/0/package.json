@@ -12,7 +12,7 @@
   ],
   "framework": true,
   "version": "1.5.0-multi-roles-v2",
-  "postUninstallNotes": "The Apache Spark DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at http://docs.mesosphere.com/services/spark/#uninstall to clean up any persisted state.",
+  "postUninstallNotes": "The Apache Spark DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at https://docs.mesosphere.com/usage/services/spark/#uninstall to clean up any persisted state.",
   "preInstallNotes": "Note that the Apache Spark DCOS Service is beta and there may be bugs, incomplete features, incorrect documentation or other discrepancies.\nWe recommend a minimum of two nodes with at least 2 CPU and 2GB of RAM available for the Spark Service and running a Spark job.\nNote: The Spark CLI may take up to 5min to download depending on your connection.",
   "licenses": [
     {

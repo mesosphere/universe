@@ -56,7 +56,7 @@ We can use them within DCOS with:
   E.g. assuming the topic branch is named `topic-branch`:
 
   ```
-  dcos package repo add Developement https://github.com/mesosphere/universe/archive/topic-branch.zip
+  dcos package repo add Development https://github.com/mesosphere/universe/archive/topic-branch.zip
   ```
 
 The pre-commit hook will run [build.sh](scripts/build.sh) before allowing you to commit. This
@@ -133,7 +133,7 @@ The required fields are:
 This file describes the configuration properties supported by the package. Each property can
 specify whether or not it is required, a default value, as well as some basic validation.
 
-Users can then [override specific values](https://docs.mesosphere.com/using/cli/packagesyntax/) at
+Users can then [override specific values](https://docs.mesosphere.com/usage/service-config/) at
 installation time by passing an options file to the DCOS CLI.
 
 ```json
