@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "2.0",
+  "name": "vamp",
+  "version": "0.8.5",
+  "tags": ["vamp", "canary", "testing"],
+  "framework": false,
+  "maintainer": "drago@magnetic.io",
+  "description": "Deploy and manage microservices with power and ease.",
+  "scm": "https://github.com/magneticio/vamp",
+  "website": "http://vamp.io",
+  "preInstallNotes":"In order to run Vamp you need to specify few parameters like Elasticsearch URl etc.\nMore detailed information: http://vamp.io/documentation/installation/mesosphere_dcos",
+  "postInstallNotes": "Vamp has been successfully installed!\nSee http://vamp.io for documentation.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/magneticio/vamp/master/LICENSE"
+    }
+  ]
+}
