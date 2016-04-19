@@ -3,17 +3,17 @@
   "properties": {
     "nginx": {
       "properties": {
-        "cpus": {
-          "default": 1,
-          "description": "CPU shares to allocate to each nginx instance.",
-          "minimum": 1,
-          "type": "number"
-        },        
         "instances": {
           "default": 1,
           "description": "Number of instances to run.",
           "minimum": 1,
           "type": "integer"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares to allocate to each nginx instance.",
+          "minimum": 1,
+          "type": "number"
         },
         "mem": {
           "default": 1024.0,
@@ -35,7 +35,7 @@
         },
         "name": {
           "default": "nginx",
-          "description": "Name for this Nginx instance",
+          "description": "Name for this nginx application",
           "type": "string"
         },
         "role": {
@@ -43,23 +43,18 @@
           "description": "Deploy nginx only on nodes with this role.",
           "type": "string"
         },
-        "contentDir": {          
+        "contentDir": {
           "description": "Path of directory, relative to sandbox, containing HTML code.",
           "type": "string"
         },
-        "contentUrl": {          
+        "contentUrl": {
           "description": "URL of content that needs to be hosted.",
           "type": "string"
         },
         "bridge": {
-          "default": false,          
-          "description": "Networking mode for Docker container. By default, it's false and HOST mode networking is used.",
+          "default": false,
+          "description": "Whether to use BRIDGE networking mode for Docker container. By default, this is false and HOST mode networking is used.",
           "type": "boolean"
-        },
-        "marathon-uri": {
-          "default": "http://master.mesos:8080",
-          "description": "URI of Marathon instance",
-          "type": "string"
         }
       },
       "required": ["cpus", "mem", "instances", "name"],
