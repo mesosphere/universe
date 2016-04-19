@@ -128,7 +128,7 @@
           "default" : 604800
         },
         "framework-name" : {
-          "description" : "Framework name to register with Mesos.",
+          "description" : "(Default: service.name) Framework name to register with Mesos.",
           "type" : "string"
         },
         "ha" : {
