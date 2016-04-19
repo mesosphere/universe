@@ -8,7 +8,9 @@
       "properties" : {
         "name" : {
           "description" : "The ID of this Marathon service inside DCOS base Marathon.",
-          "type" : "string"
+          "type" : "string",
+          "default" : "marathon-user",
+          "pattern" : "^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$"
         },
         "cpus" : {
           "default" : 2,
@@ -127,8 +129,7 @@
         },
         "framework-name" : {
           "description" : "Framework name to register with Mesos.",
-          "type" : "string",
-          "default" : "marathon-user"
+          "type" : "string"
         },
         "ha" : {
           "description" : "Enabled: (Default) Run Marathon in HA mode with leader election. Allows starting an arbitrary number of other Marathons but all need to be started in HA mode. This mode requires a running ZooKeeper Disabled: Run Marathon in single node mode.",
@@ -230,7 +231,7 @@
           "default" : 1
         },
         "mesos-authentication-principal" : {
-          "description" : "(Default: marathon.framework-name) Mesos Authentication Principal.",
+          "description" : "(Default: service.name) Mesos Authentication Principal.",
           "type" : "string"
         },
         "mesos-authentication-secret-file" : {
@@ -243,7 +244,7 @@
           "default" : "/mesos"
         },
         "mesos-role" : {
-          "description" : "(Default: marathon.framework-name) Mesos role for this framework. If set, Marathon receives resource offers for the specified role in addition to resources with the role designation '*'.",
+          "description" : "(Default: service.name) Mesos role for this framework. If set, Marathon receives resource offers for the specified role in addition to resources with the role designation '*'.",
           "type" : "string"
         },
         "mesos-user" : {
@@ -383,7 +384,7 @@
           "default" : 10000
         }
       },
-      "required" : [ "master", "framework-name" ],
+      "required" : [ "master" ],
       "type" : "object"
     }
   },
