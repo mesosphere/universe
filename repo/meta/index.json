@@ -34,6 +34,23 @@
       }
     },
     {
+      "currentVersion":"0.1.0",
+      "description":"Calico networking for DCOS.  Calico provides IP-per-task functionality with rich policy.  This framework optionally installs Docker multi-host networking (required for Calico with the Docker containerizer) and Agent network hooks with netmodules (required for Calico with Unified tasks).  Both installations will cause temporary restarts of an Agent causing transient task loss.  The number of agents restarted at the same time is configurable and defaults to a single concurrent restart.  At the moment, only a limited set of DCOS versions and OSes are supported - check the documentation for details.  The framework will still run on unsupported versions, in which case the Agent network hooks will not be installed and Calico networking will only be available with the Docker containerizer.",
+      "framework":true,
+      "name":"calico",
+      "selected":false,
+      "tags":[
+        "calico",
+        "networking",
+        "ip-per-container",
+        "ip-per-task",
+        "policy"
+      ],
+      "versions":{
+        "0.1.0":"0"
+      }
+    },
+    {
       "currentVersion":"0.2.0-2",
       "description":"Apache Cassandra running on Apache Mesos",
       "framework":true,
@@ -241,8 +258,8 @@
       }
     },
     {
-      "currentVersion":"0.15.3",
-      "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
+      "currentVersion":"1.1.1",
+      "description":"A container orchestration platform for Mesos and DCOS.",
       "framework":true,
       "name":"marathon",
       "selected":true,
@@ -252,7 +269,8 @@
       ],
       "versions":{
         "0.11.1":"0",
-        "0.15.3":"1"
+        "0.15.3":"1",
+        "1.1.1":"2"
       }
     },
     {
@@ -302,6 +320,21 @@
       ],
       "versions":{
         "0.0.1":"0"
+      }
+    },
+    {
+      "currentVersion":"5.7.12",
+      "description":"MySQL is the world's most popular open source database. With its proven performance, reliability and ease-of-use, MySQL has become the leading database choice for web-based applications, covering the entire range from personal projects and websites, via e-commerce and information services, all the way to high profile web properties including Facebook, Twitter, YouTube, Yahoo! and many more.",
+      "framework":false,
+      "name":"mysql",
+      "selected":false,
+      "tags":[
+        "database",
+        "mysql",
+        "sql"
+      ],
+      "versions":{
+        "5.7.12":"0"
       }
     },
     {
