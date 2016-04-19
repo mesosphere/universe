@@ -2,13 +2,13 @@
   "packagingVersion": "2.0",
   "name": "vamp",
   "version": "0.8.5",
-  "tags": ["vamp", "canary", "testing"],
+  "tags": ["vamp", "canary", "testing", "autoscaling"],
   "framework": false,
   "maintainer": "drago@magnetic.io",
-  "description": "Deploy and manage microservices with power and ease.",
+  "description": "Canary test/release and autoscaling platform for DCOS",
   "scm": "https://github.com/magneticio/vamp",
   "website": "http://vamp.io",
-  "preInstallNotes":"In order to run Vamp you need to specify few parameters like Elasticsearch URl etc.\nMore detailed information: http://vamp.io/documentation/installation/mesosphere_dcos",
+  "preInstallNotes":"In order to run Vamp you need to specify few parameters like Elasticsearch URl etc.\nMore detailed information can be found here: http://vamp.io/documentation/installation/mesosphere_dcos",
   "postInstallNotes": "Vamp has been successfully installed!\nSee http://vamp.io for documentation.",
   "licenses": [
     {
