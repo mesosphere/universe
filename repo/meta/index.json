@@ -241,8 +241,8 @@
       }
     },
     {
-      "currentVersion":"0.15.3",
-      "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
+      "currentVersion":"1.1.1",
+      "description":"A container orchestration platform for Mesos and DCOS.",
       "framework":true,
       "name":"marathon",
       "selected":true,
@@ -252,7 +252,8 @@
       ],
       "versions":{
         "0.11.1":"0",
-        "0.15.3":"1"
+        "0.15.3":"1",
+        "1.1.1":"2"
       }
     },
     {
