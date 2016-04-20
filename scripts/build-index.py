@@ -102,7 +102,7 @@ def write_pretty_json(path, data):
         fd.write(json.dumps(data,
                             sort_keys=True,
                             separators=(',', ':'),
-                            indent=2))
+                            indent=2) + '\n')
         fd.flush()
         os.fsync(fd)
 

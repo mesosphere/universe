@@ -9,12 +9,45 @@
       "tags":[
         "arangodb",
         "NoSQL",
-        "database",
-        "framework"
+        "database"
       ],
       "versions":{
         "0.2.1":"0",
         "0.3.0":"1"
+      }
+    },
+    {
+      "currentVersion":"16.2-beta",
+      "description":"Avi Vantage ADC",
+      "framework":false,
+      "name":"avi",
+      "selected":false,
+      "tags":[
+        "loadbalancer",
+        "service-discovery",
+        "reverse-proxy",
+        "adc",
+        "analytics"
+      ],
+      "versions":{
+        "16.2-beta":"0"
+      }
+    },
+    {
+      "currentVersion":"0.1.0",
+      "description":"Calico networking for DCOS.  Calico provides IP-per-task functionality with rich policy.  This framework optionally installs Docker multi-host networking (required for Calico with the Docker containerizer) and Agent network hooks with netmodules (required for Calico with Unified tasks).  Both installations will cause temporary restarts of an Agent causing transient task loss.  The number of agents restarted at the same time is configurable and defaults to a single concurrent restart.  At the moment, only a limited set of DCOS versions and OSes are supported - check the documentation for details.  The framework will still run on unsupported versions, in which case the Agent network hooks will not be installed and Calico networking will only be available with the Docker containerizer.",
+      "framework":true,
+      "name":"calico",
+      "selected":false,
+      "tags":[
+        "calico",
+        "networking",
+        "ip-per-container",
+        "ip-per-task",
+        "policy"
+      ],
+      "versions":{
+        "0.1.0":"0"
       }
     },
     {
@@ -53,11 +86,12 @@
       "description":"Confluent Platform running on DCOS",
       "framework":true,
       "name":"confluent",
-      "selected":true,
+      "selected":false,
       "tags":[
         "message",
         "broker",
-        "pubsub"
+        "pubsub",
+        "kafka"
       ],
       "versions":{
         "2.0.1-mesos":"0"
@@ -71,7 +105,6 @@
       "selected":false,
       "tags":[
         "database",
-        "distributed",
         "nosql"
       ],
       "versions":{
@@ -99,11 +132,9 @@
       "name":"elasticsearch",
       "selected":false,
       "tags":[
-        "dcos",
-        "mesos",
-        "framework",
-        "elasticsearch",
-        "elastic"
+        "elastic",
+        "monitoring",
+        "debug"
       ],
       "versions":{
         "0.7.0":"0"
@@ -116,9 +147,9 @@
       "name":"etcd",
       "selected":false,
       "tags":[
-        "mesosphere",
-        "framework",
-        "consensus"
+        "consensus",
+        "distributed-coordination",
+        "coordination"
       ],
       "versions":{
         "0.0.2":"0",
@@ -161,7 +192,6 @@
       "name":"hue",
       "selected":false,
       "tags":[
-        "mesosphere",
         "hadoop",
         "filesystem",
         "hdfs"
@@ -177,8 +207,6 @@
       "name":"jenkins",
       "selected":true,
       "tags":[
-        "mesosphere",
-        "framework",
         "continuous-integration",
         "ci",
         "jenkins"
@@ -201,7 +229,8 @@
       "tags":[
         "message",
         "broker",
-        "messaging"
+        "messaging",
+        "IoT"
       ],
       "versions":{
         "0.9.2.0":"0",
@@ -229,8 +258,8 @@
       }
     },
     {
-      "currentVersion":"0.15.3",
-      "description":"A cluster-wide init and control system for services in cgroups or Docker containers.",
+      "currentVersion":"1.1.1",
+      "description":"A container orchestration platform for Mesos and DCOS.",
       "framework":true,
       "name":"marathon",
       "selected":true,
@@ -240,7 +269,8 @@
       ],
       "versions":{
         "0.11.1":"0",
-        "0.15.3":"1"
+        "0.15.3":"1",
+        "1.1.1":"2"
       }
     },
     {
@@ -285,13 +315,26 @@
       "name":"mr-redis",
       "selected":false,
       "tags":[
-        "mesos",
-        "framework",
         "inmemory",
         "redis"
       ],
       "versions":{
         "0.0.1":"0"
+      }
+    },
+    {
+      "currentVersion":"5.7.12",
+      "description":"MySQL is the world's most popular open source database. With its proven performance, reliability and ease-of-use, MySQL has become the leading database choice for web-based applications, covering the entire range from personal projects and websites, via e-commerce and information services, all the way to high profile web properties including Facebook, Twitter, YouTube, Yahoo! and many more.",
+      "framework":false,
+      "name":"mysql",
+      "selected":false,
+      "tags":[
+        "database",
+        "mysql",
+        "sql"
+      ],
+      "versions":{
+        "5.7.12":"0"
       }
     },
     {
@@ -312,6 +355,21 @@
       ],
       "versions":{
         "0.3.1-0.1":"0"
+      }
+    },
+    {
+      "currentVersion":"1.8.1",
+      "description":"Nginx package",
+      "framework":false,
+      "name":"nginx",
+      "selected":false,
+      "tags":[
+        "proxy",
+        "web-server",
+        "cache"
+      ],
+      "versions":{
+        "1.8.1":"1"
       }
     },
     {
@@ -343,7 +401,7 @@
       }
     },
     {
-      "currentVersion":"1.2",
+      "currentVersion":"1.2.1",
       "description":"Quobyte is a software defined and fault tolerant distributed file system running on commodity hardware.",
       "framework":true,
       "name":"quobyte",
@@ -354,7 +412,8 @@
         "bigdata"
       ],
       "versions":{
-        "1.2":"0"
+        "1.2":"0",
+        "1.2.1":"1"
       }
     },
     {
@@ -364,10 +423,9 @@
       "name":"riak",
       "selected":false,
       "tags":[
-        "mesosphere",
-        "framework",
         "database",
-        "riak"
+        "riak",
+        "NoSql"
       ],
       "versions":{
         "0.1.1":"0"
@@ -410,7 +468,7 @@
       "description":"Spark Notebook package for DCOS",
       "framework":true,
       "name":"spark-notebook",
-      "selected":true,
+      "selected":false,
       "tags":[
         "spark",
         "notebook",
@@ -426,14 +484,12 @@
     },
     {
       "currentVersion":"0.1.0",
-      "description":"Storm is a stream processing framework.",
+      "description":"Apache Storm is a stream processing framework.",
       "framework":true,
       "name":"storm",
       "selected":false,
       "tags":[
-        "mesosphere",
-        "framework",
-        "storm"
+        "streaming"
       ],
       "versions":{
         "0.1.0":"0"
@@ -446,12 +502,40 @@
       "name":"swarm",
       "selected":false,
       "tags":[
-        "mesosphere",
-        "framework",
         "docker"
       ],
       "versions":{
         "0.4.0":"0"
+      }
+    },
+    {
+      "currentVersion":"0.14.0",
+      "description":"Live visualisation, monitoring and management\n\nWeave Scope produces a live interactive map of your containerized services and applications with no coding and no instrumentation",
+      "framework":false,
+      "name":"weavescope",
+      "selected":false,
+      "tags":[
+        "microservices",
+        "visualisation",
+        "monitoring"
+      ],
+      "versions":{
+        "0.14.0":"0"
+      }
+    },
+    {
+      "currentVersion":"0.14.0",
+      "description":"Live visualisation, monitoring and management\n\nWeave Scope produces a live interactive map of your containerized services and applications with no coding and no instrumentation",
+      "framework":false,
+      "name":"weavescope-probe",
+      "selected":false,
+      "tags":[
+        "microservices",
+        "visualisation",
+        "monitoring"
+      ],
+      "versions":{
+        "0.14.0":"0"
       }
     },
     {
@@ -462,7 +546,6 @@
       "selected":false,
       "tags":[
         "nflabs",
-        "framework",
         "bigdata",
         "spark",
         "notebook",
