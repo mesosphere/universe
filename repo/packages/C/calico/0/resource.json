@@ -8,13 +8,13 @@
     "container": {
       "docker": {
         "calico-dcos": "calico/calico-dcos:v0.1.0",
-        "calico-node": "calico/node:v0.18.0",
+        "calico-node": "calico/node:v0.19.0",
         "calico-libnetwork": "calico/node-libnetwork:v0.8.0"
       }
     },
     "uris": {
       "etcd": "https://github.com/coreos/etcd/releases/download/v2.3.1/etcd-v2.3.1-linux-amd64.tar.gz",
-      "calicoctl": "https://github.com/projectcalico/calico-containers/releases/download/v0.18.0/calicoctl",
+      "calicoctl": "https://github.com/projectcalico/calico-containers/releases/download/v0.19.0/calicoctl",
       "calico-installer": "https://github.com/projectcalico/calico-mesos/releases/download/v0.1.5/installer",
       "calico-mesos-plugin": "https://github.com/projectcalico/calico-mesos/releases/download/v0.1.5/calico_mesos",
       "netmodules-libraries": "https://github.com/projectcalico/calico-mesos/releases/download/v0.1.5/netmodules.tar.gz"
