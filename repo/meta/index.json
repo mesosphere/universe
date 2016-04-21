@@ -82,7 +82,7 @@
       }
     },
     {
-      "currentVersion":"2.0.1-mesos",
+      "currentVersion":"1.0.1-2.0.1",
       "description":"Confluent Platform running on DCOS",
       "framework":true,
       "name":"confluent",
@@ -94,6 +94,7 @@
         "kafka"
       ],
       "versions":{
+        "1.0.1-2.0.1":"1",
         "2.0.1-mesos":"0"
       }
     },
@@ -334,7 +335,7 @@
         "sql"
       ],
       "versions":{
-        "5.7.12":"0"
+        "5.7.12":"1"
       }
     },
     {
@@ -401,7 +402,7 @@
       }
     },
     {
-      "currentVersion":"1.2",
+      "currentVersion":"1.2.1",
       "description":"Quobyte is a software defined and fault tolerant distributed file system running on commodity hardware.",
       "framework":true,
       "name":"quobyte",
@@ -412,7 +413,8 @@
         "bigdata"
       ],
       "versions":{
-        "1.2":"0"
+        "1.2":"0",
+        "1.2.1":"1"
       }
     },
     {
