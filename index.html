@@ -29,37 +29,38 @@
       </header>
       <section>
         <h1>
-<a id="mesosphere-universe-" class="anchor" href="#mesosphere-universe-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mesosphere Universe <a href="https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&amp;guest=1"><img src="https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon" alt="Build Status"></a>
+<a id="mesosphere-universe-" class="anchor" href="#mesosphere-universe-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mesosphere Universe <a href="https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&amp;guest=1"><img src="https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon" alt="Build Status"></a>
 </h1>
 
 <p>The DCOS package repository for packages that have been certified by Mesosphere.</p>
 
-<p>Experimental packages can be found in the <a href="https://github.com/mesosphere/multiverse">Multiverse repository</a>.</p>
-
 <h2>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
 
-<p>The <a href="https://docs.mesosphere.com/install/cli/">DCOS CLI</a> comes pre-configured to use the Universe repository.</p>
+<p>The latest <a href="https://mesosphere.com/product/">DCOS</a> comes pre-configured to use the Universe
+repository.</p>
 
-<p>If you would like to add this to your CLI manually:</p>
+<p>If you would like to add this to your DCOS manually:</p>
 
-<pre><code>dcos config prepend package.sources https://github.com/mesosphere/universe/archive/version-1.x.zip
+<pre><code>dcos package repo add Universe https://universe.mesosphere.com/repo
 </code></pre>
 
 <h2>
-<a id="branches" class="anchor" href="#branches" aria-hidden="true"><span class="octicon octicon-link"></span></a>Branches</h2>
+<a id="branches" class="anchor" href="#branches" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Branches</h2>
 
-<p>The default branch for this repository is <code>version-1.x</code>, which reflects the current schema for the Universe. In the future, if the format changes significantly, there will be additional branches.</p>
+<p>The default branch for this repository is <code>version-2.x</code>, which reflects the current schema for the
+Universe. In the future, if the format changes significantly, there will be additional branches.</p>
 
-<p>The <code>cli-tests</code> branch is used for integration testing by the <a href="https://github.com/mesosphere/dcos-cli">DCOS CLI</a> and provides a fixed and well known set of packages to write tests against.</p>
+<p>The <code>cli-tests-*</code> branches are used for integration testing by the <a href="https://github.com/mesosphere/dcos-cli">DCOS CLI</a> and provides a fixed and well known set of packages to write tests against.</p>
 
 <h2>
-<a id="contributing-a-package" class="anchor" href="#contributing-a-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing a Package</h2>
+<a id="contributing-a-package" class="anchor" href="#contributing-a-package" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing a Package</h2>
 
-<p>Interested in making your package or service available to the world? The instructions below will help you set up a local copy of the Universe for development.</p>
+<p>Interested in making your package or service available to the world? The instructions below will
+help you set up a local copy of the Universe for development.</p>
 
 <h3>
-<a id="local-set-up" class="anchor" href="#local-set-up" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local Set Up</h3>
+<a id="development-set-up" class="anchor" href="#development-set-up" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Development Set Up</h3>
 
 <ol>
 <li>
@@ -81,48 +82,57 @@
 </code></pre>
 </li>
 <li>
-<p>To use the local cloned repository from the DCOS CLI for testing your own package:</p>
+<p>To test in DCOS we need to make the packages available to your cluster. We can do this using
+topic or feature branches. Once you have committed your changes and pushed them to a topic branch.
+We can use them within DCOS with:</p>
 
-<pre><code>dcos config prepend package.sources "file:///path/to/universe"
+<pre><code>dcos package repo add Development http://github/path/to/branch/zip
+</code></pre>
+
+<p>E.g. assuming the topic branch is named <code>topic-branch</code>:</p>
+
+<pre><code>dcos package repo add Development https://github.com/mesosphere/universe/archive/topic-branch.zip
 </code></pre>
 </li>
 </ol>
 
-<p>The pre-commit hook will run <a href="scripts/build.sh">build.sh</a> before allowing you to commit. This script validates your package definitions and regenerates the index file. You may need to <code>git add repo/meta/index.json</code> after running it once before you are able to pass validation and commit your changes.</p>
-
-<p>Whenever you make changes locally, be sure to update the CLI's cache to pick them up:</p>
-
-<pre><code>dcos package update
-</code></pre>
+<p>The pre-commit hook will run <a href="scripts/build.sh">build.sh</a> before allowing you to commit. This
+script validates your package definitions and regenerates the index file. You may need to
+<code>git add repo/meta/index.json</code> after running it once before you are able to pass validation and
+commit your changes.</p>
 
 <h3>
-<a id="merging-to-universe" class="anchor" href="#merging-to-universe" aria-hidden="true"><span class="octicon octicon-link"></span></a>Merging to Universe</h3>
+<a id="submit-to-universe" class="anchor" href="#submit-to-universe" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Submit to Universe</h3>
 
-<p>Before merging to Universe, you <strong>must</strong> run build.sh to regenerate the package index. If you have installed the pre-commit hook as above, this will be done automatically on commit.</p>
+<p>Before merging to Universe, you <strong>must</strong> run build.sh to regenerate the package index. If you
+have installed the pre-commit hook as above, this will be done automatically on commit.</p>
 
-<p>Packages in the Universe are required to pass Mesosphere certification. The certification requirements for the <a href="https://github.com/mesosphere/multiverse">Multiverse repository</a> are less strict, which is preferable for alpha or beta quality packages. Full certification requirements are available from <a href="https://docs.mesosphere.com/support/">Mesosphere support</a>.</p>
+<p>Once complete, please submit a pull request against the <code>version-2.x</code> branch with your changes.</p>
 
-<p>Once your package meets these requirements, please submit a pull request against the <code>version-1.x</code> branch with your changes.</p>
+<p>Every pull request opened on this repo will have a set of automated verifications ran against it. 
+These automated verification are reported against the pull request using the GitHub status API. 
+All verifcations must pass in order for a pull request to be eligible for merge.</p>
 
 <h2>
-<a id="package-entries" class="anchor" href="#package-entries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Package entries</h2>
+<a id="package-entries" class="anchor" href="#package-entries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Package entries</h2>
 
 <h3>
-<a id="organization" class="anchor" href="#organization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Organization</h3>
+<a id="organization" class="anchor" href="#organization" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Organization</h3>
 
-<p>Packages are encapsulated in their own directory, with one subdirectory
-for each package version.</p>
+<p>Packages are encapsulated in their own directory, with one subdirectory for each package version.</p>
 
 <pre><code>└── foo
     ├── 0
     │   ├── command.json
     │   ├── config.json
-    │   ├── marathon.json
+    │   ├── marathon.json.mustache
+    │   ├── resource.json
     │   └── package.json
     ├── 1
     │   ├── command.json
     │   ├── config.json
-    │   ├── marathon.json
+    │   ├── marathon.json.mustache
+    │   ├── resource.json
     │   └── package.json
     └── ...
 
@@ -131,13 +141,14 @@ for each package version.</p>
 <p><em>Sample package directory layout.</em></p>
 
 <h3>
-<a id="content" class="anchor" href="#content" aria-hidden="true"><span class="octicon octicon-link"></span></a>Content</h3>
+<a id="content" class="anchor" href="#content" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Content</h3>
 
 <h4>
-<a id="packagejson" class="anchor" href="#packagejson" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>package.json</code>
+<a id="packagejson" class="anchor" href="#packagejson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>package.json</code>
 </h4>
 
 <div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>packagingVersion<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2.0<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1.2.3<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>tags<span class="pl-pds">"</span></span>: [<span class="pl-s"><span class="pl-pds">"</span>mesosphere<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>framework<span class="pl-pds">"</span></span>],
@@ -145,15 +156,6 @@ for each package version.</p>
   <span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Does baz.<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>scm<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>https://github.com/bar/foo.git<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://bar.io/foo<span class="pl-pds">"</span></span>,
-  <span class="pl-s"><span class="pl-pds">"</span>images<span class="pl-pds">"</span></span>: {
-    <span class="pl-s"><span class="pl-pds">"</span>icon-small<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/small.png<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>icon-medium<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/medium.png<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>icon-large<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/large.png<span class="pl-pds">"</span></span>,
-    <span class="pl-s"><span class="pl-pds">"</span>screenshots<span class="pl-pds">"</span></span>: [
-      <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/screen-1.png<span class="pl-pds">"</span></span>,
-      <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/screen-2.png<span class="pl-pds">"</span></span>
-    ]
-  },
   <span class="pl-s"><span class="pl-pds">"</span>postInstallNotes<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Have fun foo-ing and baz-ing!<span class="pl-pds">"</span></span>
 }</pre></div>
 
@@ -162,6 +164,7 @@ for each package version.</p>
 <p>The required fields are:</p>
 
 <ul>
+<li>packagingVersion</li>
 <li>name</li>
 <li>version</li>
 <li>tags</li>
@@ -169,35 +172,15 @@ for each package version.</p>
 <li>description</li>
 </ul>
 
-<p>While <code>images</code> is an optional field, it is highly recommended you include icons
-and screenshots in your package and update the path definitions accordingly.
-Specifications are as follows:</p>
-
-<ul>
-<li>
-<code>icon-small</code>: 48px (w) x 48px (h)</li>
-<li>
-<code>icon-medium</code>: 96px (w) x 96px (h)</li>
-<li>
-<code>icon-large</code>: 256px (w) x 256px (h)</li>
-<li>
-<code>screenshots[...]</code>: 1200px (w) x 675px (h)</li>
-</ul>
-
-<p><strong>NOTE:</strong> To ensure your service icons look beautiful on retina-ready displays,
-please supply 2x versions of all icons. No changes are needed to
-<code>package.json</code> - simply supply an additional icon file with the text <code>@2x</code> in
-the name before the file extension.
-For example, the icon <code>icon-cassandra-small.png</code> would have a retina-ready
-alternate image named <code>icon-cassandra-small@2x.png</code>.</p>
-
 <h4>
-<a id="configjson" class="anchor" href="#configjson" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>config.json</code>
+<a id="configjson" class="anchor" href="#configjson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>config.json</code>
 </h4>
 
-<p>This file describes the configuration properties supported by the package. Each property can specify whether or not it is required, a default value, as well as some basic validation.</p>
+<p>This file describes the configuration properties supported by the package. Each property can
+specify whether or not it is required, a default value, as well as some basic validation.</p>
 
-<p>Users can then <a href="https://docs.mesosphere.com/using/cli/packagesyntax/">override specific values</a> at installation time by passing an options file to the DCOS CLI.</p>
+<p>Users can then <a href="https://docs.mesosphere.com/usage/service-config/">override specific values</a> at
+installation time by passing an options file to the DCOS CLI.</p>
 
 <div class="highlight highlight-source-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>object<span class="pl-pds">"</span></span>,
@@ -222,17 +205,19 @@ alternate image named <code>icon-cassandra-small@2x.png</code>.</p>
 
 <p><em>Sample <code>config.json</code>.</em></p>
 
-<p><code>config.json</code> must be a valid <a href="http://json-schema.org/">JSON Schema</a> file. Check out the <a href="http://json-schema.org/examples.html">JSON Schema examples</a>.</p>
+<p><code>config.json</code> must be a valid <a href="http://json-schema.org/">JSON Schema</a> file. Check out the
+<a href="http://json-schema.org/examples.html">JSON Schema examples</a>.</p>
 
 <h4>
-<a id="marathonjson" class="anchor" href="#marathonjson" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>marathon.json</code>
+<a id="marathonjsonmustache" class="anchor" href="#marathonjsonmustache" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>marathon.json.mustache</code>
 </h4>
 
 <p>This file describes how to run the package as a
 <a href="http://github.com/mesosphere/marathon">Marathon</a> app.</p>
 
-<p>User-supplied metadata (as described in <code>config.json</code>) can be injected
-using <a href="http://mustache.github.io/">moustache template</a> syntax.</p>
+<p>User-supplied metadata (as described in <code>config.json</code>), the defaults from <code>config.json</code> and the
+resource information in <code>resource.json</code> will be injected to the template using
+<a href="http://mustache.github.io/">mustache template</a> syntax.</p>
 
 <div class="highlight highlight-source-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
@@ -243,7 +228,7 @@ using <a href="http://mustache.github.io/">moustache template</a> syntax.</p>
   <span class="pl-s"><span class="pl-pds">"</span>container<span class="pl-pds">"</span></span>: {
     <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>DOCKER<span class="pl-pds">"</span></span>,
     <span class="pl-s"><span class="pl-pds">"</span>docker<span class="pl-pds">"</span></span>: {
-      <span class="pl-s"><span class="pl-pds">"</span>image<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>bar/foo<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>image<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>{{resource.assets.container.docker.foo23b1cfe8e04a}}<span class="pl-pds">"</span></span>,
       <span class="pl-s"><span class="pl-pds">"</span>network<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>BRIDGE<span class="pl-pds">"</span></span>,
       <span class="pl-s"><span class="pl-pds">"</span>portMappings<span class="pl-pds">"</span></span>: [
         {
@@ -257,14 +242,14 @@ using <a href="http://mustache.github.io/">moustache template</a> syntax.</p>
   }
 }</pre></div>
 
-<p><em>Sample <code>marathon.json</code>.</em></p>
+<p><em>Sample <code>marathon.json.mustache</code>.</em></p>
 
 <p>See the
 <a href="https://mesosphere.github.io/marathon/docs/rest-api.html">Marathon API Documentation</a>
 for more detailed instruction on app definitions.</p>
 
 <h4>
-<a id="commandjson" class="anchor" href="#commandjson" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>command.json</code>
+<a id="commandjson" class="anchor" href="#commandjson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>command.json</code>
 </h4>
 
 <p>This file is <strong>optional</strong>. Describes how to install the package's CLI.
@@ -282,14 +267,68 @@ element in the array is a line in the requirements file.</p>
 <p>See the <a href="repo/meta/schema/command-schema.json">Command Schema</a> for a detailed description of
 the schema.</p>
 
-<h3>
-<a id="versioning" class="anchor" href="#versioning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Versioning</h3>
+<h4>
+<a id="resourcejson" class="anchor" href="#resourcejson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>resource.json</code>
+</h4>
 
-<p>The registry specification is versioned separately in the
-file <code>/repo/meta/version.json</code>.</p>
+<p>This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects and
+images) needed to install the application.</p>
 
 <div class="highlight highlight-source-json"><pre>{
-  <span class="pl-s"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>0.1.0-alpha<span class="pl-pds">"</span></span>
+  <span class="pl-s"><span class="pl-pds">"</span>images<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>icon-small<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/small.png<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>icon-medium<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/medium.png<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>icon-large<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/large.png<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>screenshots<span class="pl-pds">"</span></span>: [
+      <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/screen-1.png<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/screen-2.png<span class="pl-pds">"</span></span>
+    ]
+  },
+  <span class="pl-s"><span class="pl-pds">"</span>assets<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>uris<span class="pl-pds">"</span></span>: {
+      <span class="pl-s"><span class="pl-pds">"</span>log4j-properties<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://some.org/foo/log4j.properties<span class="pl-pds">"</span></span>
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>container<span class="pl-pds">"</span></span>: {
+      <span class="pl-s"><span class="pl-pds">"</span>docker<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>23b1cfe8e04a<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>some-org/foo:1.0.0<span class="pl-pds">"</span></span>
+      }
+    }
+  }
+}</pre></div>
+
+<p><em>Sample <code>resource.json</code>.</em></p>
+
+<p>For the Docker image, please use the image ID for the referenced image. You can find this by
+pulling the image locally and running <code>docker images some-org/foo:1.0.0</code>.</p>
+
+<p>While <code>images</code> is an optional field, it is highly recommended you include icons and screenshots
+in your package and update the path definitions accordingly. Specifications are as follows:</p>
+
+<ul>
+<li>
+<code>icon-small</code>: 48px (w) x 48px (h)</li>
+<li>
+<code>icon-medium</code>: 96px (w) x 96px (h)</li>
+<li>
+<code>icon-large</code>: 256px (w) x 256px (h)</li>
+<li>
+<code>screenshots[...]</code>: 1200px (w) x 675px (h)</li>
+</ul>
+
+<p><strong>NOTE:</strong> To ensure your service icons look beautiful on retina-ready displays,
+please supply 2x versions of all icons. No changes are needed to
+<code>package.json</code> - simply supply an additional icon file with the text <code>@2x</code> in
+the name before the file extension.
+For example, the icon <code>icon-cassandra-small.png</code> would have a retina-ready
+alternate image named <code>icon-cassandra-small@2x.png</code>.</p>
+
+<h3>
+<a id="versioning" class="anchor" href="#versioning" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Versioning</h3>
+
+<p>The registry specification is versioned separately in the file <code>/repo/meta/version.json</code>.</p>
+
+<div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2.0.0-rc2<span class="pl-pds">"</span></span>
 }</pre></div>
 
 <p><em>Sample <code>repo/meta/version.json</code>.</em></p>
@@ -298,18 +337,21 @@ file <code>/repo/meta/version.json</code>.</p>
 (typically validated using JSON schema) or expected file organization in the
 <code>repo</code> directory.</p>
 
-<p><em>NOTE: The current version is <code>0.1.0-alpha</code> to facilitate rapid
+<p><em>NOTE: The current version is <code>2.0.0-rc2</code> to facilitate rapid
 iteration.  This version will be fixed and incremented as
 described above as programs that consume the format reach maturity.</em></p>
 
+<p>The packaging version should also be included in the <code>package.json</code> for each package using the
+<code>packagingVersion</code> property.</p>
+
 <h3>
-<a id="validation" class="anchor" href="#validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Validation</h3>
+<a id="validation" class="anchor" href="#validation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Validation</h3>
 
 <p>Package content is validated using <a href="http://json-schema.org">JSON Schema</a>.
 The schema definitions live in <code>/repo/meta/schema</code>.</p>
 
 <h2>
-<a id="directory-structure" class="anchor" href="#directory-structure" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directory Structure</h2>
+<a id="directory-structure" class="anchor" href="#directory-structure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Directory Structure</h2>
 
 <pre><code>├── LICENSE
 ├── README.md
@@ -325,7 +367,7 @@ The schema definitions live in <code>/repo/meta/schema</code>.</p>
 │   │   │   ├── command-schema.json
 │   │   │   ├── config-schema.json
 │   │   │   ├── index-schema.json
-│   │   │   ├── marathon-schema.json
+│   │   │   ├── resource-schema.json
 │   │   │   └── package-schema.json
 │   │   └── version.json
 │   └── packages
@@ -334,7 +376,8 @@ The schema definitions live in <code>/repo/meta/schema</code>.</p>
 │       │   │   ├── 0
 │       │   │   │   ├── command.json
 │       │   │   │   ├── config.json
-│       │   │   │   ├── marathon.json
+│       │   │   │   ├── marathon.json.mustache
+│       │   │   │   ├── resource.json
 │       │   │   │   └── package.json
 │       │   │   └── ...
 │       │   └── ...
@@ -342,7 +385,8 @@ The schema definitions live in <code>/repo/meta/schema</code>.</p>
 │       │   ├── foo
 │       │   │   ├── 0
 │       │   │   │   ├── config.json
-│       │   │   │   ├── marathon.json
+│       │   │   │   ├── marathon.json.mustache
+│       │   │   │   ├── resource.json
 │       │   │   │   └── package.json
 │       │   │   └── ...
 │       │   └── ...
@@ -357,49 +401,32 @@ The schema definitions live in <code>/repo/meta/schema</code>.</p>
 </code></pre>
 
 <h2>
-<a id="sources-and-transfer-protocols" class="anchor" href="#sources-and-transfer-protocols" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sources and Transfer Protocols</h2>
+<a id="sources-and-transfer-protocols" class="anchor" href="#sources-and-transfer-protocols" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sources and Transfer Protocols</h2>
 
-<p>This section describes transfer of package metadata from a universe
-source to a client program.</p>
+<p>This section describes transfer of package metadata from a universe source to a client program.</p>
 
 <pre><code> ┌───────────────┐   ┌────────────────┐
  │public universe│   │private universe│
  └───────────────┘   └────────────────┘
-          git \         / http
+         http \         / http
                \       /
                 \     /
-               ┌──────┐           ┌────────┐
-               │client│-----------│marathon│
-               └──────┘    http   └────────┘
-                  |
-                  |
-            ┌───────────┐
-            │local cache│
-            └───────────┘
+               ┌────┐           ┌────────┐
+               │DCOS│-----------│Marathon│
+               └────┘    http   └────────┘
 </code></pre>
 
 <p><em>Sample (simplified) architecture for a universe client program.</em></p>
 
 <p>Package sources are described as URLs.</p>
 
-<p>Source URLs encode the transfer protocol.
-Recommendations for several transfer protocols follow.</p>
-
-<p><strong>Filesystem</strong></p>
-
-<p>A URL that designates a local directory.<br>
-Example: <code>file:///some/nfs/mount/universe</code></p>
-
-<p><strong>Git</strong></p>
-
-<p>A URL that designates a git repository.<br>
-Example: <code>git://github.com/mesosphere/universe.git</code></p>
+<p>Source URLs encode the transfer protocol. Recommendations for several transfer protocols follow.</p>
 
 <p><strong>HTTP and HTTPS</strong></p>
 
 <p>A URL that designates a
 <a href="http://en.wikipedia.org/wiki/Zip_%28file_format%29">zip</a> file
-accessible over HTTP or HTTPS with media type <code>application/zip</code>.<br>
+accessible over HTTP or HTTPS with media type <code>application/zip</code>.
 Example: <code>http://my.org/files/universe/packages.zip</code></p>
       </section>
       <footer>
