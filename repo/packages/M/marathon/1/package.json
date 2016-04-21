@@ -12,7 +12,7 @@
   } ],
   "tags" : [ "init", "long-running" ],
   "preInstallNotes" : "We recommend a minimum of one node with at least 2 CPU shares and 1GB of RAM available for the Marathon DCOS Service.",
-  "postInstallNotes" : "Marathon DCOS Service has been successfully installed!\n\n\tDocumentation: https://mesosphere.github.io/marathon\n\tIssues: https:/github.com/mesosphere/marathon/issues\n",
+  "postInstallNotes" : "Marathon DCOS Service has been successfully installed!\n\n\tDocumentation: https://mesosphere.github.io/marathon\n\tIssues: https://github.com/mesosphere/marathon/issues\n",
   "postUninstallNotes" : "The Marathon DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at https://docs.mesosphere.com/usage/services/marathon/#uninstall to clean up any persisted state",
   "selected": true
 }
