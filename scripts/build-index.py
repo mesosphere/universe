@@ -36,7 +36,7 @@ def build_index(repo_dir):
     package_dirs = [p for d in os.listdir(packages_dir)
                     for p in os.listdir(os.path.join(packages_dir, d))]
 
-    index_entries = [ make_index_entry(
+    index_entries = [make_index_entry(
         os.path.join(
             repo_dir,
             'repo',
@@ -63,7 +63,9 @@ def make_index_entry(package_dir):
         starts_with_dot = d.startswith('.')
         return is_dir and not starts_with_dot
 
-    package_versions = sorted(filter(is_version_dir, os.listdir(package_dir)))
+    package_versions = sorted(
+        filter(is_version_dir, os.listdir(package_dir)),
+        key=int)
 
     entry = collections.OrderedDict()
     entry['versions'] = collections.OrderedDict()
