@@ -3,6 +3,16 @@
     "vamp":{
       "description":"Vamp specific configuration properties",
       "properties":{
+        "vamp-id":{
+          "default":"vamp",
+          "description":"Marathon Vamp application id.",
+          "type":"string"
+        },
+        "vamp-gateway-agent-id":{
+          "default":"vamp-gateway-agent",
+          "description":"Marathon Vamp Gateway Agent application id.",
+          "type":"string"
+        },
         "memory":{
           "default":"1024",
           "description":"The amount of ram that Mesos should give to Vamp.",
@@ -53,6 +63,8 @@
         }
       },
       "required":[
+        "vamp-id",
+        "vamp-gateway-agent-id",
         "memory",
         "cpu",
         "rest-api-port",
