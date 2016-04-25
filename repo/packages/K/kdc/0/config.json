@@ -23,6 +23,59 @@
             "required": [
                 "docker_image"
             ]
+        },
+        "users": {
+          "type": "object",
+          "properties": {
+              "user1": {
+                  "type": "string",
+                  "default": "hdfs/ip-10-0-3-167.us-west-2.compute.internal@LOCAL:secret"
+              },
+              "user2": {
+                  "type": "string",
+                  "default": "hdfs/ip-10-0-3-168.us-west-2.compute.internal@LOCAL:secret"
+              },
+              "user3": {
+                  "type": "string",
+                  "default": "hdfs/ip-10-0-3-169.us-west-2.compute.internal@LOCAL:secret"
+              },
+              "user4": {
+                  "type": "string",
+                  "default": "HTTP/ip-10-0-3-167.us-west-2.compute.internal@LOCAL:secret"
+              },
+              "user5": {
+                  "type": "string",
+                  "default": "HTTP/ip-10-0-3-168.us-west-2.compute.internal@LOCAL:secret"
+              },
+              "user6": {
+                  "type": "string",
+                  "default": "HTTP/ip-10-0-3-169.us-west-2.compute.internal@LOCAL:secret"
+              },
+              "tab1" : {
+                "type": "string",
+                "default": "hdfs/ip-10-0-3-167.us-west-2.compute.internal@LOCAL:hdfs.keytab"
+              },
+              "tab2" : {
+                "type": "string",
+                "default": "hdfs/ip-10-0-3-168.us-west-2.compute.internal@LOCAL:hdfs.keytab"
+              },
+              "tab3" : {
+                "type": "string",
+                "default": "hdfs/ip-10-0-3-169.us-west-2.compute.internal@LOCAL:hdfs.keytab"
+              },
+              "tab4" : {
+                "type": "string",
+                "default": "HTTP/ip-10-0-3-167.us-west-2.compute.internal@LOCAL:hdfs.keytab"
+              },
+              "tab5" : {
+                "type": "string",
+                "default": "HTTP/ip-10-0-3-168.us-west-2.compute.internal@LOCAL:hdfs.keytab"
+              },
+              "tab6" : {
+                "type": "string",
+                "default": "HTTP/ip-10-0-3-169.us-west-2.compute.internal@LOCAL:hdfs.keytab"
+              }
+          }
         }
     }
 }
