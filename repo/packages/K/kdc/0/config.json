@@ -29,51 +29,51 @@
           "properties": {
               "user1": {
                   "type": "string",
-                  "default": "hdfs/ip-10-0-3-167.us-west-2.compute.internal@LOCAL:secret"
+                  "default": "hdfs/journalnode1.hdfs.mesos@LOCAL:secret"
               },
               "user2": {
                   "type": "string",
-                  "default": "hdfs/ip-10-0-3-168.us-west-2.compute.internal@LOCAL:secret"
+                  "default": "hdfs/namenode1.hdfs.mesos@LOCAL:secret"
               },
               "user3": {
                   "type": "string",
-                  "default": "hdfs/ip-10-0-3-169.us-west-2.compute.internal@LOCAL:secret"
+                  "default": "hdfs/namenode2.hdfs.mesos@LOCAL:secret"
               },
               "user4": {
                   "type": "string",
-                  "default": "HTTP/ip-10-0-3-167.us-west-2.compute.internal@LOCAL:secret"
+                  "default": "HTTP/journalnode1.hdfs.mesos@LOCAL:secret"
               },
               "user5": {
                   "type": "string",
-                  "default": "HTTP/ip-10-0-3-168.us-west-2.compute.internal@LOCAL:secret"
+                  "default": "HTTP/namenode1.hdfs.mesos@LOCAL:secret"
               },
               "user6": {
                   "type": "string",
-                  "default": "HTTP/ip-10-0-3-169.us-west-2.compute.internal@LOCAL:secret"
+                  "default": "HTTP/namenode2.hdfs.mesos@LOCAL:secret"
               },
               "tab1" : {
                 "type": "string",
-                "default": "hdfs/ip-10-0-3-167.us-west-2.compute.internal@LOCAL:hdfs.keytab"
+                "default": "hdfs/journalnode1.hdfs.mesos@LOCAL:hdfs.keytab"
               },
               "tab2" : {
                 "type": "string",
-                "default": "hdfs/ip-10-0-3-168.us-west-2.compute.internal@LOCAL:hdfs.keytab"
+                "default": "hdfs/namenode1.hdfs.mesos@LOCAL:hdfs.keytab"
               },
               "tab3" : {
                 "type": "string",
-                "default": "hdfs/ip-10-0-3-169.us-west-2.compute.internal@LOCAL:hdfs.keytab"
+                "default": "hdfs/namenode2.hdfs.mesos@LOCAL:hdfs.keytab"
               },
               "tab4" : {
                 "type": "string",
-                "default": "HTTP/ip-10-0-3-167.us-west-2.compute.internal@LOCAL:hdfs.keytab"
+                "default": "HTTP/journalnode1.hdfs.mesos@LOCAL:hdfs.keytab"
               },
               "tab5" : {
                 "type": "string",
-                "default": "HTTP/ip-10-0-3-168.us-west-2.compute.internal@LOCAL:hdfs.keytab"
+                "default": "HTTP/namenode1.hdfs.mesos@LOCAL:hdfs.keytab"
               },
               "tab6" : {
                 "type": "string",
-                "default": "HTTP/ip-10-0-3-169.us-west-2.compute.internal@LOCAL:hdfs.keytab"
+                "default": "HTTP/namenode2.hdfs.mesos@LOCAL:hdfs.keytab"
               }
           }
         }
