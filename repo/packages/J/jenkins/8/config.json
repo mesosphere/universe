@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "properties": {
+    "jenkins": {
+      "description": "Jenkins framework configuration properties",
+      "type": "object",
+      "properties": {
+        "framework-name": {
+          "description": "The framework name to register with Mesos.",
+          "type": "string",
+          "default": "jenkins"
+        },
+        "host": {
+            "description": "The host that Jenkins agents will use to connect back to the master.",
+            "type": "string",
+            "default": "$HOST"
+        },
+        "cpus": {
+            "description": "CPU shares to allocate to each Jenkins master.",
+            "type": "number",
+            "default": 1.0,
+            "minimum": 0.1
+        },
+        "mem": {
+            "description": "Memory to allocate to each Jenkins master.",
+            "type": "number",
+            "default": 1024.0,
+            "minimum": 1024.0
+        },
+        "mesos-master": {
+            "description": "URI of this cluster's Mesos master.",
+            "type": "string",
+            "default": "zk://leader.mesos:2181/mesos"
+        },
+        "jvm-opts": {
+            "description": "Optional arguments to pass to the JVM.",
+            "type": "string",
+            "default": "-Xms512m -Xmx512m"
+        },
+        "known-hosts": {
+            "description": "A space-separated list of hosts used to populate the SSH known hosts file on the Jenkins master.",
+            "type": "string",
+            "default": "github.com"
+        },
+        "role": {
+            "description": "The accepted resource roles (e.g. slave_public). By default, this will deploy to any agents with the * role.",
+            "type": "string",
+            "default": "*"
+        },
+        "volume-size": {
+            "description": "Size of persistent volume for Jenkins state.",
+            "type": "number",
+            "default": 10240,
+            "minimum": 1024
+        }
+      },
+      "required": [
+        "framework-name",
+        "host",
+        "cpus",
+        "mem",
+        "mesos-master",
+        "jvm-opts",
+        "known-hosts",
+        "role",
+        "volume-size"
+      ]
+    }
+  },
+  "required": [
+    "jenkins"
+  ]
+}
