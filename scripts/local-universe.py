@@ -35,13 +35,22 @@ def main():
         dest='outfile',
         required=True,
         help='Path to the zipfile to use to store all of the resources')
+    parser.add_argument(
+        '--include',
+        default='',
+        help='Command separated list of packages to include. If this option '
+        'is not specified then all packages are downloaded. E.g. '
+        '--include="marathon,chronos"')
     args = parser.parse_args()
+
+    package_names = [name for name in args.include.split(',') if name != '']
 
     with zipfile.ZipFile(args.outfile, mode='w') as zip_file:
         for url, archive_path in ((url, archive_path)
                                   for package, path in
                                   enumerate_dcos_packages(
-                                      pathlib.Path(args.repository))
+                                      pathlib.Path(args.repository),
+                                      package_names)
                                   for url, archive_path in
                                   enumerate_http_resources(package, path)):
             add_http_resource(zip_file, url, archive_path)
@@ -49,7 +58,8 @@ def main():
         docker_images = [name
                          for _, path in
                          enumerate_dcos_packages(
-                             pathlib.Path(args.repository))
+                             pathlib.Path(args.repository),
+                             package_names)
                          for name in
                          enumerate_docker_images(path)]
 
@@ -59,7 +69,18 @@ def main():
         add_docker_images(zip_file, docker_images, args.sudo)
 
 
-def enumerate_dcos_packages(packages_path):
+def enumerate_dcos_packages(packages_path, package_names):
+    """Enumarate all of the package and revision to include
+
+    :param packages_path: the path to the root of the packages
+    :type pacakges_path: str
+    :param package_names: list of package to include. empty list means all
+                         packages
+    :type package_names: [str]
+    :returns: generator of package name and revision
+    :rtype: gen((str, str))
+    """
+
     for letter_path in packages_path.iterdir():
         assert len(letter_path.name) == 1 and letter_path.name.isupper()
         for package_path in letter_path.iterdir():
@@ -68,7 +89,9 @@ def enumerate_dcos_packages(packages_path):
                 package_path.iterdir(),
                 key=lambda revision: int(revision.name))
 
-            yield (package_path.name, largest_revision)
+            if not package_names or package_path.name in package_names:
+                # Enumerate package if list is empty or package name in list
+                yield (package_path.name, largest_revision)
 
 
 def enumerate_http_resources(package, package_path):
