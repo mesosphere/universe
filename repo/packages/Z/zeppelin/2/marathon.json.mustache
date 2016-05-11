@@ -1,0 +1,54 @@
+{
+  "id": "/zeppelin",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.zeppelin}}",
+      "network": "HOST"
+    },
+    "volumes": [
+    {
+      "containerPath": "/var/lib/zeppelin",
+      "hostPath": "data",
+      "mode": "RW"
+    },
+    {
+      "containerPath": "data",
+      "mode": "RW",
+      "persistent": {
+        "size": 10000
+      }
+    }
+    ]
+  },
+  "healthChecks": [{
+    "protocol": "TCP",
+    "gracePeriodSeconds": 300,
+    "intervalSeconds": 60,
+    "portIndex": 0,
+    "timeoutSeconds": 15,
+    "maxConsecutiveFailures": 3
+  }],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  },
+  "env": {
+    "SPARK_MESOS_EXECUTOR_DOCKER_IMAGE": "{{#spark.executor_docker_image}}{{spark.executor_docker_image}}{{/spark.executor_docker_image}}{{^spark.executor_docker_image}}{{resource.assets.container.docker.spark}}{{/spark.executor_docker_image}}",
+    "SPARK_CORES_MAX": "{{spark.cores_max}}",
+    "SPARK_EXECUTOR_MEMORY": "{{spark.executor_memory}}",
+    "ZEPPELIN_JAVA_OPTS": "{{service.zeppelin_java_opts}}",
+    "ZEPPELIN_NOTEBOOK_DIR": "/var/lib/zeppelin/notebook",
+    "ZEPPELIN_LOG_DIR": "/var/lib/zeppelin/log"
+  },
+  "cmd": "sed \"s#<value>8080</value>#<value>$PORT0</value>#\" < conf/zeppelin-site.xml.template > conf/zeppelin-site.xml && sed -i \"s#<value>-1</value>#<value>$PORT1</value>#\" conf/zeppelin-site.xml && cp -r conf /var/lib/zeppelin && SPARK_HOME_TGZ=$(ls ${MESOS_SANDBOX}/spark-*.tgz) SPARK_HOME=${SPARK_HOME_TGZ%.tgz} bin/zeppelin.sh --config /var/lib/zeppelin/conf start",
+  "ports": [0, 0],
+  "cpus": 1,
+  "mem": 2048.0,
+  "uris": ["{{#spark.uri}}{{spark.uri}}{{/spark.uri}}{{^spark.uri}}{{resource.assets.uris.spark}}{{/spark.uri}}"],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0.5,
+    "maximumOverCapacity": 0
+  }
+}
