@@ -1,0 +1,30 @@
+{
+    "cli": {
+        "binaries": {
+            "darwin": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "VALUE_HERE"
+                        }
+                    ],
+                    "kind": "zip",
+                    "url": "https://zip/file/with/all/binaries/here"
+                }
+            },
+            "linux": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "VALUE_HERE"
+                        }
+                    ],
+                    "kind": "zip",
+                    "url": "https://zip/file/with/all/binaries/here"
+                }
+            }
+        }
+    }
+}
