@@ -1,4 +1,4 @@
-FROM multi
+FROM universe-base
 
 COPY http /usr/share/nginx/html/
 COPY registry /var/lib/registry/
