@@ -33,6 +33,12 @@ def main():
         print("You must first install jsonschema (pip install jsonschema).")
         sys.exit(1)
 
+    # cosmos requires directories to be saved. python does it only sometimes.
+    # Use zip to make sure it works.
+    if not shutil.which("zip"):
+        print("You must first install `zip`.")
+        sys.exit(1)
+
     parser = argparse.ArgumentParser(
         description='This script is able to download the latest artifacts for '
         'all of the packages in the Universe repository into a zipfile. It '
@@ -272,8 +278,8 @@ def build_repository(scripts_dir, repo_dir, dest_dir):
     command = [ "bash", "scripts/build.sh" ]
     subprocess.check_call(command, cwd=str(dest_dir))
 
-    shutil.make_archive(str(dest_dir / ".." / "universe"), 'zip',
-        root_dir=str(dest_dir / '..'), base_dir="universe")
+    command = [ "zip", "-r", "universe", "universe" ]
+    subprocess.check_call(command, cwd=str(dest_dir / ".."))
 
 
 def remove_package(package, base_dir):

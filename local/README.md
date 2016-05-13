@@ -61,11 +61,11 @@
 1. Both nginx and the docker registry get bundled into the same container. This requires building the "universe-base" container before you actually compile the universe container.
 
     ```bash
-    $ make base
+    $ sudo make base
     ```
 
 1. Once you've build the "universe-base" container, you'll be able to create a local-universe one. To keep size and time down, it is common to select only what you'd like to see. By default, `selected` applications are the only ones included. You can pass a list in if you'd like to see something more than that.
 
     ```bash
-    $ make local-universe
+    $ sudo make local-universe
     ```

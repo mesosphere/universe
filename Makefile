@@ -7,15 +7,15 @@ certs:
 		-subj "/CN=master.mesos"
 
 base: clean certs
-	cd docker && sudo docker build -t universe-base -f Dockerfile.base .
+	cd docker && docker build -t universe-base -f Dockerfile.base .
 
 clean:
 	rm -rf docker/certs &&							\
 	rm -f local-universe.tar.gz || 0
 
 local-universe: clean
-	sudo python3 scripts/local-universe.py --repository repo/packages/	\
+	python3 scripts/local-universe.py --repository repo/packages/	\
 		--selected &&							\
-	sudo docker save -o local-universe.tar mesosphere/universe:latest &&	\
-	sudo gzip local-universe.tar
+	docker save -o local-universe.tar mesosphere/universe:latest &&	\
+	gzip local-universe.tar
 
