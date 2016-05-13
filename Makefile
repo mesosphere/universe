@@ -16,6 +16,6 @@ clean:
 local-universe: clean
 	sudo python3 scripts/local-universe.py --repository repo/packages/	\
 		--selected &&							\
-	docker save -o local-universe.tar mesosphere/universe:latest &&		\
+	sudo docker save -o local-universe.tar mesosphere/universe:latest &&	\
 	gzip local-universe.tar
 
