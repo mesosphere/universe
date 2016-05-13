@@ -1,18 +1,37 @@
 #!/usr/bin/env python3
 
 import argparse
+import concurrent.futures
+import contextlib
+import fnmatch
 import json
+import os
 import pathlib
 import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import urllib.parse
 import urllib.request
 import zipfile
 
+HTTP_ROOT = "http://master.mesos:8082/"
+DOCKER_ROOT = "master.mesos:5000"
 
 def main():
+    # Docker writes files into the tempdir as root, you need to be running
+    # the script as root to clean these up successfully.
+    if os.getuid() != 0:
+        print("You must run this as root, please `sudo` first.")
+        sys.exit(1)
+
+    # jsonschema is required by the universe build process, make sure it is
+    # installed before running.
+    if not shutil.which("jsonschema"):
+        print("You must first install jsonschema (pip install jsonschema).")
+        sys.exit(1)
+
     parser = argparse.ArgumentParser(
         description='This script is able to download the latest artifacts for '
         'all of the packages in the Universe repository into a zipfile. It '
@@ -26,50 +45,71 @@ def main():
         required=True,
         help='Path to the top level package directory. E.g. repo/packages')
     parser.add_argument(
-        '--sudo',
-        action='store_true',
-        default=False,
-        help='Set this if sudo is required when executing the Docker CLI.')
-    parser.add_argument(
-        '--out-file',
-        dest='outfile',
-        required=True,
-        help='Path to the zipfile to use to store all of the resources')
-    parser.add_argument(
         '--include',
         default='',
         help='Command separated list of packages to include. If this option '
         'is not specified then all packages are downloaded. E.g. '
         '--include="marathon,chronos"')
+    parser.add_argument(
+        '--selected',
+        action='store_true',
+        default=False,
+        help='Set this to include only selected packages')
     args = parser.parse_args()
 
     package_names = [name for name in args.include.split(',') if name != '']
 
-    with zipfile.ZipFile(args.outfile, mode='w') as zip_file:
-        for url, archive_path in ((url, archive_path)
-                                  for package, path in
-                                  enumerate_dcos_packages(
-                                      pathlib.Path(args.repository),
-                                      package_names)
-                                  for url, archive_path in
-                                  enumerate_http_resources(package, path)):
-            add_http_resource(zip_file, url, archive_path)
+    with tempfile.TemporaryDirectory() as dir_path, \
+            run_docker_registry(dir_path / pathlib.Path("registry")):
 
-        docker_images = [name
-                         for _, path in
-                         enumerate_dcos_packages(
-                             pathlib.Path(args.repository),
-                             package_names)
-                         for name in
-                         enumerate_docker_images(path)]
+        http_artifacts = dir_path / pathlib.Path("http")
+        docker_artifacts = dir_path / pathlib.Path("registry")
+        repo_artifacts = dir_path / pathlib.Path("universe/repo/packages")
 
-        for name in docker_images:
-            download_docker_image(name, args.sudo)
+        os.makedirs(str(http_artifacts))
+        os.makedirs(str(repo_artifacts))
 
-        add_docker_images(zip_file, docker_images, args.sudo)
+        failed_packages = []
+        def handle_package(opts):
+            package, path = opts
+            try:
+                prepare_repository(package, path, pathlib.Path(args.repository),
+                    repo_artifacts)
+
+                for url, archive_path in enumerate_http_resources(package, path):
+                    add_http_resource(http_artifacts, url, archive_path)
+
+                for name in enumerate_docker_images(path):
+                    download_docker_image(name)
+                    upload_docker_image(name)
+            except subprocess.CalledProcessError:
+                print('MISSING ASSETS: {}'.format(package))
+                remove_package(package, dir_path)
+                failed_packages.append(package)
+
+            return package
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+            for package in executor.map(handle_package,
+                    enumerate_dcos_packages(
+                        pathlib.Path(args.repository),
+                        package_names,
+                        args.selected)):
+                print("Completed: {}".format(package))
+
+        build_repository(pathlib.Path(
+            os.path.dirname(os.path.realpath(__file__)), '..', 'scripts'),
+            pathlib.Path(args.repository),
+            pathlib.Path(dir_path, 'universe'))
+
+        build_universe_docker(pathlib.Path(dir_path))
+
+        if failed_packages:
+            print("Errors: {}".format(failed_packages))
+            print("These packages are not included in the image.")
 
 
-def enumerate_dcos_packages(packages_path, package_names):
+def enumerate_dcos_packages(packages_path, package_names, only_selected):
     """Enumarate all of the package and revision to include
 
     :param packages_path: the path to the root of the packages
@@ -77,6 +117,9 @@ def enumerate_dcos_packages(packages_path, package_names):
     :param package_names: list of package to include. empty list means all
                          packages
     :type package_names: [str]
+    :param only_selected: filter the list of packages to only ones that are
+                          selected
+    :type only_selected: boolean
     :returns: generator of package name and revision
     :rtype: gen((str, str))
     """
@@ -89,7 +132,13 @@ def enumerate_dcos_packages(packages_path, package_names):
                 package_path.iterdir(),
                 key=lambda revision: int(revision.name))
 
-            if not package_names or package_path.name in package_names:
+
+            if only_selected:
+                with (largest_revision / 'package.json').open() as json_file:
+                    if json.load(json_file).get('selected', False):
+                        yield (package_path.name, largest_revision)
+
+            elif not package_names or package_path.name in package_names:
                 # Enumerate package if list is empty or package name in list
                 yield (package_path.name, largest_revision)
 
@@ -100,10 +149,10 @@ def enumerate_http_resources(package, package_path):
 
     for name, url in resource.get('images', {}).items():
         if name != 'screenshots':
-            yield url, pathlib.PurePosixPath(package, 'images')
+            yield url, pathlib.Path(package, 'images')
 
     for name, url in resource.get('assets', {}).get('uris', {}).items():
-        yield url, pathlib.PurePosixPath(package, 'uris')
+        yield url, pathlib.Path(package, 'uris')
 
 
 def enumerate_docker_images(package_path):
@@ -115,38 +164,121 @@ def enumerate_docker_images(package_path):
     return (name for _, name in dockers.items())
 
 
-def download_docker_image(name, use_sudo):
+@contextlib.contextmanager
+def run_docker_registry(volume_path):
+    print('Start docker registry.')
+    command = [ 'docker', 'run', '-d', '-p', '5000:5000', '--name',
+        'registry', '-v', '{}:/var/lib/registry'.format(volume_path),
+        'registry:2.4.0']
+
+    subprocess.check_call(command)
+
+    try:
+        yield
+    finally:
+        print('Stopping docker registry.')
+        command = [ 'docker', 'rm', '-f', 'registry']
+        subprocess.call(command)
+
+
+def download_docker_image(name):
     print('Pull docker images: {}'.format(name))
     command = ['docker', 'pull', name]
 
-    command = ['sudo'] + command if use_sudo else command
-    subprocess.call(command)
+    subprocess.check_call(command)
 
 
-def add_http_resource(zip_file, url, dir_path):
-    archive_path = (dir_path /
-                    pathlib.PurePosixPath(urllib.parse.urlparse(url).path).name)
-    print('Adding {} at {} to file zip.'.format(url, archive_path))
-    with urllib.request.urlopen(url) as response:
-        with tempfile.NamedTemporaryFile() as tempFile:
-            shutil.copyfileobj(response, tempFile)
-            tempFile.flush()
-            zip_file.write(tempFile.name, str(archive_path))
+def format_image_name(host, name):
+    # Probably has a hostname at the front, get rid of it.
+    if '.' in name.split(':')[0]:
+        return '{}/{}'.format(host, "/".join(name.split("/")[1:]))
+
+    return '{}/{}'.format(host, name)
+
+def upload_docker_image(name):
+    print('Pushing docker image: {}'.format(name))
+    command = ['docker', 'tag', name,
+        format_image_name('localhost:5000', name)]
+
+    subprocess.check_call(command)
+
+    command = ['docker', 'push', format_image_name('localhost:5000', name)]
+
+    subprocess.check_call(command)
 
 
-def add_docker_images(zip_file, images, use_sudo):
-    print('Saving docker images: {!r}'.format(images))
-    with tempfile.NamedTemporaryFile() as tempFile:
-        command = (
-            ['docker', 'save', '--output={}'.format(tempFile.name)] +
-            images
-        )
+def build_universe_docker(dir_path):
+    print('Building the universe docker container')
+    current_dir = pathlib.Path(
+        os.path.dirname(os.path.realpath(__file__)))
+    shutil.copyfile(
+        str(current_dir / '..' / 'docker' / 'Dockerfile'),
+        str(dir_path / 'Dockerfile'))
 
-        command = ['sudo'] + command if use_sudo else command
+    command = [ 'docker', 'build', '-t',
+        'mesosphere/universe:{:.0f}'.format(time.time()),
+        '-t', 'mesosphere/universe:latest', '.' ]
 
-        subprocess.call(command)
+    subprocess.check_call(command, cwd=str(dir_path))
 
-        zip_file.write(tempFile.name, 'docker-images.tar')
+
+def add_http_resource(dir_path, url, base_path):
+    archive_path = (dir_path / base_path /
+        pathlib.Path(urllib.parse.urlparse(url).path).name)
+    print('Adding {} at {}.'.format(url, archive_path))
+    os.makedirs(str(archive_path.parent), exist_ok=True)
+    urllib.request.urlretrieve(url, str(archive_path))
+
+
+def prepare_repository(package, package_path, source_repo, dest_repo):
+    dest_path = dest_repo / package_path.relative_to(source_repo)
+    shutil.copytree(str(package_path), str(dest_path))
+
+    with (package_path / 'resource.json').open() as source_file, \
+            (dest_path / 'resource.json').open('w') as dest_file:
+        resource = json.load(source_file)
+
+        # Change the root for images (ignore screenshots)
+        resource["images"] = {
+            n: urllib.parse.urljoin(
+                HTTP_ROOT, str(pathlib.PurePath(
+                    package, "images", pathlib.Path(uri).name)))
+            for n,uri in resource.get("images", {}).items() if 'icon' in n}
+
+        # Change the root for asset uris.
+        if 'assets' in resource:
+            resource["assets"]["uris"] = {
+                n: urllib.parse.urljoin(
+                    HTTP_ROOT, str(pathlib.PurePath(
+                        package, "uris", pathlib.Path(uri).name)))
+                for n, uri in resource["assets"].get("uris", {}).items()}
+
+        # Add the local docker repo prefix.
+        if 'container' in resource["assets"]:
+            resource["assets"]["container"]["docker"] = {
+                n: format_image_name(DOCKER_ROOT, image_name)
+                for n, image_name in resource["assets"]["container"].get(
+                    "docker", {}).items() }
+
+        json.dump(resource, dest_file, indent=4)
+
+
+def build_repository(scripts_dir, repo_dir, dest_dir):
+    shutil.copytree(str(scripts_dir), str(dest_dir / "scripts"))
+    shutil.copytree(str(repo_dir / '..' / 'meta'),
+        str(dest_dir / 'repo' / 'meta'))
+
+    command = [ "bash", "scripts/build.sh" ]
+    subprocess.check_call(command, cwd=str(dest_dir))
+
+    shutil.make_archive(str(dest_dir / ".." / "universe"), 'zip',
+        root_dir=str(dest_dir / '..'), base_dir="universe")
+
+
+def remove_package(package, base_dir):
+    for root, dirnames, filenames in os.walk(base_dir):
+        for dirname in fnmatch.filter(dirnames, package):
+            shutil.rmtree(os.path.join(root, dirname))
 
 
 if __name__ == '__main__':

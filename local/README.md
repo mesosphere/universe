@@ -1,0 +1,71 @@
+
+## Using
+
+1. For each of your masters, download the local-universe container to them.
+
+1. Load the container into the local docker instance:
+
+    ```bash
+    $ docker load < local-universe.tar.gz
+    ```
+
+1. Install [docker-compose](https://docs.docker.com/compose/install/)
+
+1. Put `docker-compose.yml` on your host at `/etc/mesosphere/local-universe.yml`.
+
+    ```bash
+    $ cp docker-compose.yml /etc/mesosphere/local-universe.yml
+    ```
+
+1. Add the `dcos-local-universe.service` definition to each of your masters at `/etc/systemd/system/dcos-local-universe.service` and then start it.
+
+    ```bash
+    $ cp dcos-local-universe.service /etc/systemd/system/dcos-local-universe.service
+    $ systemctl daemon-reload
+    $ systemctl start dcos-local-universe
+    ```
+
+1. Remove the built in repositories.
+
+    ```bash
+    $ dcos package repo remove Universe
+    $ dcos package repo remove Universe-1.7
+    ```
+
+1. Add the local repository.
+
+    ```bash
+    $ dcos package repo add local-universe http://master.mesos:8082/universe.zip
+    ```
+
+1. To pull from this new repository, you'll need to setup the docker daemon on every agent to have a valid SSL certificate. To do this, on every agent in your cluster, run the following:
+
+    ```bash
+    $ mkdir -p /etc/docker/certs.d/master.mesos:5000
+    $ curl -o /etc/docker/certs.d/master.mesos:5000/ca.crt http://master.mesos:8082/certs/domain.crt
+    $ systemctl restart docker
+    ```
+
+### FAQ
+
+- The images are broken!
+
+    We host everything from inside your cluster, including the images. They're getting served up by `master.mesos:8082`. If you have connectivity to that IP, you can add it to `/etc/hosts` and get the images working.
+
+- I don't see the package I was looking for!
+
+    By default, we only bundle the `selected` packages. If you'd like to get something else, run the build your own instructions yourself.
+
+## Building Your Own
+
+1. Both nginx and the docker registry get bundled into the same container. This requires building the "universe-base" container before you actually compile the universe container.
+
+    ```bash
+    $ make base
+    ```
+
+1. Once you've build the "universe-base" container, you'll be able to create a local-universe one. To keep size and time down, it is common to select only what you'd like to see. By default, `selected` applications are the only ones included. You can pass a list in if you'd like to see something more than that.
+
+    ```bash
+    $ make local-universe
+    ```
