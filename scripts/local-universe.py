@@ -12,6 +12,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import zipfile
@@ -82,7 +83,7 @@ def main():
                 for name in enumerate_docker_images(path):
                     download_docker_image(name)
                     upload_docker_image(name)
-            except subprocess.CalledProcessError:
+            except (subprocess.CalledProcessError, urllib.error.HTTPError):
                 print('MISSING ASSETS: {}'.format(package))
                 remove_package(package, dir_path)
                 failed_packages.append(package)
