@@ -1,7 +1,7 @@
 
 ## Using
 
-1. For each of your masters, download the local-universe container to them.
+1. For each of your masters, download the [local-universe](https://downloads.mesosphere.com/universe/public/local-universe.tar.gz) container to them.
 
 1. Load the container into the local docker instance:
 
