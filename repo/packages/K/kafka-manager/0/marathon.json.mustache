@@ -1,0 +1,50 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{kafka-manager.cpus}},
+  "mem": {{kafka-manager.mem}},
+  "instances": {{kafka-manager.instances}},
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.kafka-manager-docker}}",
+      "forcePullImage": true,
+      "network": "BRIDGE",
+      "portMappings": [{ "containerPort": 9000, "protocol": "tcp" }]
+    }
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 0,
+      "path": "/",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "timeoutSeconds": 5
+    }
+  ],
+  "ports": [0],
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/",
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 60,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "env": {
+    "ZK_HOSTS": "{{kafka-manager.zk}}",
+    "KM_ARGS": "-Dkafka-manager.base-zk-path=/{{service.name}}"
+    {{#kafka-manager.application_secret}},
+    "APPLICATION_SECRET": "{{kafka-manager.application_secret}}"
+    {{/kafka-manager.application_secret}}
+  },
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  }
+}
