@@ -9,7 +9,13 @@
       "image": "{{resource.assets.container.docker.kafka-manager-docker}}",
       "forcePullImage": true,
       "network": "BRIDGE",
-      "portMappings": [{ "containerPort": 9000, "protocol": "tcp" }]
+      "portMappings": [
+        {
+          "containerPort": 9000,
+          "hostPort": 0,
+          "protocol": "tcp"
+        }
+      ]
     }
   },
   "healthChecks": [
@@ -23,24 +29,10 @@
       "timeoutSeconds": 5
     }
   ],
-  "ports": [0],
-  "healthChecks": [
-    {
-      "protocol": "HTTP",
-      "path": "/",
-      "gracePeriodSeconds": 120,
-      "intervalSeconds": 60,
-      "portIndex": 0,
-      "timeoutSeconds": 30,
-      "maxConsecutiveFailures": 3
-    }
-  ],
   "env": {
     "ZK_HOSTS": "{{kafka-manager.zk}}",
-    "KM_ARGS": "-Dkafka-manager.base-zk-path=/{{service.name}}"
-    {{#kafka-manager.application_secret}},
+    "KM_ARGS": "-Dkafka-manager.base-zk-path=/{{service.name}}",
     "APPLICATION_SECRET": "{{kafka-manager.application_secret}}"
-    {{/kafka-manager.application_secret}}
   },
   "labels": {
     "DCOS_SERVICE_NAME": "{{service.name}}",
