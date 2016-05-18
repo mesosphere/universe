@@ -1,0 +1,24 @@
+{
+  "packagingVersion": "2.0",
+  "framework": false,
+  "name": "mongodb",
+  "version": "3.0.12",
+  "description": "MongoDB is an open-source, document database designed for ease of development and scaling.",
+  "preInstallNotes": "MongoDB requires per default 1 CPU and 1024 MB of RAM. More informations can be found in the Advanced Installation and on the documentation page: https://docs.mongodb.com/manual/",
+  "postInstallNotes": "MongoDB is getting installed.",
+  "postUninstallNotes": "MongoDB is uninstalled successfully.",
+  "website": "https://www.mongodb.com",
+  "scm": "https://github.com/mongodb/mongo",
+  "maintainer": "hello@jan-stabenow.de",
+  "licenses": [
+    {
+      "name": "GNU v3",
+      "url": "https://github.com/mongodb/mongo/blob/master/GNU-AGPL-3.0.txt"
+    },
+    {
+      "name": "Apache v2",
+      "url": "https://github.com/mongodb/mongo/blob/master/APACHE-2.0.txt"
+    }
+  ],
+  "tags": ["mongodb", "database", "NoSQL"]
+}
