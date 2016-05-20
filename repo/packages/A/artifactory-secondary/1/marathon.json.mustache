@@ -12,10 +12,10 @@
        "type": "DOCKER",
        "docker": {
            {{^artifactory-secondary.high-availability.enabled}}
-           "image": "{{resource.assets.container.docker.e183c36bdb4b}}",
+           "image": "{{resource.assets.container.docker.d2284754a53c}}",
            {{/artifactory-secondary.high-availability.enabled}}
            {{#artifactory-secondary.high-availability.enabled}}
-           "image": "{{resource.assets.container.docker.ec3070239279}}",
+           "image": "{{resource.assets.container.docker.5a6b58676c64}}",
            {{/artifactory-secondary.high-availability.enabled}}
            "network": "HOST",
             "forcePullImage":true
