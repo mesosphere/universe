@@ -3,15 +3,15 @@
 
 1. For each of your masters, download the [local-universe](https://downloads.mesosphere.com/universe/public/local-universe.tar.gz) container to them.
 
-1. Load the container into the local docker instance:
+1. Load the container into the local docker instance on each master:
 
     ```bash
     $ docker load < local-universe.tar.gz
     ```
 
-1. Install [docker-compose](https://docs.docker.com/compose/install/)
+1. Install [docker-compose](https://docs.docker.com/compose/install/) on each master
 
-1. Put `docker-compose.yml` on your host at `/etc/mesosphere/local-universe.yml`.
+1. Put `docker-compose.yml` on each master at `/etc/mesosphere/local-universe.yml`.
 
     ```bash
     $ cp docker-compose.yml /etc/mesosphere/local-universe.yml
@@ -25,14 +25,14 @@
     $ systemctl start dcos-local-universe
     ```
 
-1. Remove the built in repositories.
+1. Remove the built in repositories from the host that you have the DCOS-CLI installed on (alternatively, these can be removed from the DCOS UI under System>Repositories).
 
     ```bash
     $ dcos package repo remove Universe
     $ dcos package repo remove Universe-1.7
     ```
 
-1. Add the local repository.
+1. Add the local repository by using the DCOS-CLI.
 
     ```bash
     $ dcos package repo add local-universe http://master.mesos:8082/universe.zip
