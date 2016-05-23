@@ -1,0 +1,13 @@
+[Unit]
+Description=DCOS: Serve the (http) local universe
+After=docker.service
+
+[Service]
+Restart=always
+StartLimitInterval=0
+RestartSec=15
+Type=notify
+NotifyAccess=all
+TimeoutStartSec=120
+TimeoutStopSec=15
+ExecStart=/usr/bin/docker run --rm --name %n -p 5000:5000 -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key mesosphere/universe registry serve /etc/docker/registry/config.yml

@@ -9,20 +9,20 @@
     $ docker load < local-universe.tar.gz
     ```
 
-1. Install [docker-compose](https://docs.docker.com/compose/install/)
-
-1. Put `docker-compose.yml` on your host at `/etc/mesosphere/local-universe.yml`.
+1. Add the [`dcos-local-universe-http.service`](link) definition to each of your masters at `/etc/systemd/system/dcos-local-universe-http.service` and then start it.
 
     ```bash
-    $ cp docker-compose.yml /etc/mesosphere/local-universe.yml
+    $ cp dcos-local-universe-http.service /etc/systemd/system/dcos-local-universe-http.service
+    $ systemctl daemon-reload
+    $ systemctl start dcos-local-universe-http
     ```
 
-1. Add the `dcos-local-universe.service` definition to each of your masters at `/etc/systemd/system/dcos-local-universe.service` and then start it.
+1. Add the [`dcos-local-universe-registry.service`](link) definition to each of your masters at `/etc/systemd/system/dcos-local-universe-registry.service` and then start it.
 
     ```bash
-    $ cp dcos-local-universe.service /etc/systemd/system/dcos-local-universe.service
+    $ cp dcos-local-universe-registry.service /etc/systemd/system/dcos-local-universe-registry.service
     $ systemctl daemon-reload
-    $ systemctl start dcos-local-universe
+    $ systemctl start dcos-local-universe-registry
     ```
 
 1. Remove the built in repositories.
@@ -45,6 +45,8 @@
     $ curl -o /etc/docker/certs.d/master.mesos:5000/ca.crt http://master.mesos:8082/certs/domain.crt
     $ systemctl restart docker
     ```
+
+    Note that you're welcome to use the instructions for insecure registries instead of this step. We don't recommend this.
 
 ### FAQ
 
