@@ -2,13 +2,15 @@
   "additionalProperties" : false,
   "description" : "Marathon DCOS Service properties",
   "properties" : {
-    "application" : {
+    "service" : {
       "additionalProperties" : false,
       "description" : "Marathon app configuration properties.",
       "properties" : {
-        "id" : {
-          "description" : "The ID of this Marathon application inside DCOS base Marathon.",
-          "type" : "string"
+        "name" : {
+          "description" : "The ID of this Marathon service inside DCOS base Marathon.",
+          "type" : "string",
+          "default" : "marathon-user",
+          "pattern" : "^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$"
         },
         "cpus" : {
           "default" : 2,
@@ -89,7 +91,8 @@
         },
         "default-accepted-resource-roles" : {
           "description" : "Default for the defaultAcceptedResourceRoles attribute of all app definitions as a comma-separated list of strings. This defaults to all roles for which this Marathon instance is configured to receive offers.",
-          "type" : "string"
+          "type" : "string",
+          "default" : "*"
         },
         "disable-http" : {
           "description" : "Disable listening for HTTP requests completely. HTTPS is unaffected.",
@@ -120,9 +123,8 @@
           "default" : 604800
         },
         "framework-name" : {
-          "description" : "Framework name to register with Mesos.",
-          "type" : "string",
-          "default" : "marathon-user"
+          "description" : "(Default: service.name) Framework name to register with Mesos.",
+          "type" : "string"
         },
         "ha" : {
           "description" : "Enabled: (Default) Run Marathon in HA mode with leader election. Allows starting an arbitrary number of other Marathons but all need to be started in HA mode. This mode requires a running ZooKeeper Disabled: Run Marathon in single node mode.",
@@ -179,7 +181,7 @@
         "launch-tokens" : {
           "description" : "Launch tokens per interval",
           "type" : "integer",
-          "default" : 100
+          "default" : 1000
         },
         "leader-proxy-connection-timeout" : {
           "description" : "Maximum time, in milliseconds, to wait for connecting to the current Marathon leader from another Marathon instance.",
@@ -224,7 +226,7 @@
           "default" : 1
         },
         "mesos-authentication-principal" : {
-          "description" : "Mesos Authentication Principal.",
+          "description" : "(Default: service.name) Mesos Authentication Principal.",
           "type" : "string"
         },
         "mesos-authentication-secret-file" : {
@@ -237,7 +239,7 @@
           "default" : "/mesos"
         },
         "mesos-role" : {
-          "description" : "Mesos role for this framework. If set, Marathon receives resource offers for the specified role in addition to resources with the role designation '*'.",
+          "description" : "(Default: service.name) Mesos role for this framework. If set, Marathon receives resource offers for the specified role in addition to resources with the role designation '*'.",
           "type" : "string"
         },
         "mesos-user" : {
@@ -245,7 +247,7 @@
           "type" : "string"
         },
         "metrics" : {
-          "description" : "Enabled: (Default) Expose the execution time of service method calls using code instrumentation via the metrics endpoint (/metrics). This might noticeably degrade performance but can help finding performance problems. Disabled: Disable exposing execution time of service method calls using code instrumentation via the metrics endpoing (/metrics). This does not turn off reporting of other metrics.",
+          "description" : "Enabled: (Default) Enable metric measurement of service method calls. Disabled: Disable metric measurement of service method calls.",
           "type" : "boolean",
           "default" : true
         },
@@ -280,7 +282,7 @@
         "reconciliation-interval" : {
           "description" : "This is the length of time, in milliseconds, between task reconciliation operations.",
           "type" : "integer",
-          "default" : 600000
+          "default" : 300000
         },
         "reporter-datadog" : {
           "description" : "URL to dogstatsd agent. e.g. udp://localhost:8125?prefix=marathon-test&tags=marathon&interval=10",
@@ -333,6 +335,21 @@
           "type" : "integer",
           "default" : 300000
         },
+        "task-lost-expunge-gc" : {
+          "description" : "This is the length of time in milliseconds, until a lost task is garbage collected and expunged from the task tracker and task repository.",
+          "type" : "integer",
+          "default" : 86400000
+        },
+        "task-lost-expunge-initial-delay" : {
+          "description" : "This is the length of time, in milliseconds, before Marathon begins to periodically perform task expunge gc operations",
+          "type" : "integer",
+          "default" : 300000
+        },
+        "task-lost-expunge-interval" : {
+          "description" : "This is the length of time in milliseconds, for lost task gc operations.",
+          "type" : "integer",
+          "default" : 3600000
+        },
         "tracing" : {
           "description" : "Enabled: Enable trace logging of service method calls. Disabled: (Default) Disable trace logging of service method calls.",
           "type" : "boolean",
@@ -372,10 +389,10 @@
           "default" : 10000
         }
       },
-      "required" : [ "master", "framework-name" ],
+      "required" : [ "master" ],
       "type" : "object"
     }
   },
-  "required" : [ "application", "jvm", "marathon" ],
+  "required" : [ "service", "jvm", "marathon" ],
   "type" : "object"
 }
