@@ -83,6 +83,23 @@
       }
     },
     {
+      "currentVersion":"0.3.16.3",
+      "description":"Concord running on DCOS",
+      "framework":true,
+      "name":"concord",
+      "selected":false,
+      "tags":[
+        "stream",
+        "concord",
+        "framework",
+        "pubsub",
+        "multi-lang"
+      ],
+      "versions":{
+        "0.3.16.3":"0"
+      }
+    },
+    {
       "currentVersion":"1.0.3-2.0.1",
       "description":"Confluent Platform running on DCOS",
       "framework":true,

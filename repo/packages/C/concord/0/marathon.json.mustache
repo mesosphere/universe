@@ -1,0 +1,27 @@
+{
+  "id": "concord",
+  "cpus": {{concord.cpus}},
+  "mem": {{concord.mem}},
+  "instances": {{concord.instances}},
+  "cmd": "java {{concord.java_options}} $JAVA_OPTS -cp /usr/local/share/concord/concord.jar com.concord.scheduler.Scheduler --listen 0.0.0.0:$PORT0 --advertise-external $(dig +short myip.opendns.com @resolver1.opendns.com) --advertise-internal $(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}') --concord-master {{concord.zookeeper}} --mesos-master {{mesos.master}} --framework-name concord", 
+  "ports": [
+    0
+  ], 
+  "container": {
+    "docker": {
+      "image": "{{resource.assets.container.docker.82f3499d9382}}",
+      "network": "HOST"
+    }, 
+    "type": "DOCKER"
+  }, 
+  "constraints": [
+    [
+      "hostname", 
+      "UNIQUE"
+    ]
+  ],
+  "upgradeStrategy": {
+    "maximumOverCapacity": 0.5, 
+    "minimunHealthCapacity": 0.5
+  }
+}
