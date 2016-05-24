@@ -4,7 +4,7 @@
   "properties": {
     "packagingVersion": {
       "type": "string",
-      "enum": ["2.0"]
+      "enum": ["2.0", "3.0"]
     },
     "name": {
       "type": "string"
@@ -74,6 +74,11 @@
           "url"
         ]
       }
+    },
+    "minDcosReleaseVersion": {
+      "type": "string",
+      "pattern": "^(?:0|[1-9][0-9]*)(?:\\.(?:0|[1-9][0-9]*))*$",
+      "description": "The minimum DC/OS Release Version the package can run on."
     }
   },
   "required": [
