@@ -7,7 +7,4 @@ echo "Building the universe!";
 
 $SCRIPTS_DIR/"0-validate-version.sh";
 $SCRIPTS_DIR/"1-validate-packages.sh";
-$SCRIPTS_DIR/"2-build-index.sh";
-$SCRIPTS_DIR/"3-validate-index.sh";
-$SCRIPTS_DIR/"4-detect-dependency-cycles.sh";
 
