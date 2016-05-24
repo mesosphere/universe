@@ -15,7 +15,7 @@ dcos package repo add Universe https://universe.mesosphere.com/repo
 
 ## Branches
 
-The default branch for this repository is `version-2.x`, which reflects the current schema for the
+The default branch for this repository is `version-3.x`, which reflects the current schema for the
 Universe. In the future, if the format changes significantly, there will be additional branches.
 
 The `cli-tests-*` branches are used for integration testing by the [DC/OS CLI](https://github.com/mesosphere/dcos-cli) and provides a fixed and well known set of packages to write tests against.
@@ -60,20 +60,18 @@ We can use them within DC/OS with:
   ```
 
 The pre-commit hook will run [build.sh](scripts/build.sh) before allowing you to commit. This
-script validates your package definitions and regenerates the index file. You may need to
-`git add repo/meta/index.json` after running it once before you are able to pass validation and
-commit your changes.
+script validates your package definitions.
 
 ### Submit to Universe
 
-Before merging to Universe, you **must** run build.sh to regenerate the package index. If you
+Before merging to Universe, you **must** run build.sh to validate your changes. If you
 have installed the pre-commit hook as above, this will be done automatically on commit.
 
-Once complete, please submit a pull request against the `version-2.x` branch with your changes.
+Once complete, please submit a pull request against the `version-3.x` branch with your changes.
 
 Every pull request opened on this repo will have a set of automated verifications ran against it. 
 These automated verification are reported against the pull request using the GitHub status API. 
-All verifcations must pass in order for a pull request to be eligible for merge.
+All verifications must pass in order for a pull request to be eligible for merge.
 
 ## Package entries
 
@@ -274,7 +272,7 @@ The registry specification is versioned separately in the file `/repo/meta/versi
 
 ```json
 {
-  "version": "2.0.0-rc2"
+  "version": "3.0.0-SNAPSHOT"
 }
 ```
 _Sample `repo/meta/version.json`._
@@ -282,10 +280,6 @@ _Sample `repo/meta/version.json`._
 This version is updated with any change to the required file content
 (typically validated using JSON schema) or expected file organization in the
 `repo` directory.
-
-_NOTE: The current version is `2.0.0-rc2` to facilitate rapid
-iteration.  This version will be fixed and incremented as
-described above as programs that consume the format reach maturity._
 
 The packaging version should also be included in the `package.json` for each package using the
 `packagingVersion` property.
@@ -307,11 +301,9 @@ The schema definitions live in `/repo/meta/schema`.
 │   └── pre-commit
 ├── repo
 │   ├── meta
-│   │   ├── index.json
 │   │   ├── schema
 │   │   │   ├── command-schema.json
 │   │   │   ├── config-schema.json
-│   │   │   ├── index-schema.json
 │   │   │   ├── resource-schema.json
 │   │   │   └── package-schema.json
 │   │   └── version.json
@@ -338,9 +330,6 @@ The schema definitions live in `/repo/meta/schema`.
 │       └── ...
 └── scripts
     ├── 1-validate-packages.sh
-    ├── 2-build-index.sh
-    ├── 3-validate-index.sh
-    ├── 4-detect-dependency-cycles.sh
     ├── build.sh
     └── install-git-hooks.sh
 ```
