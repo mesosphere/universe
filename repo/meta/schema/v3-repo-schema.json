@@ -1,0 +1,239 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+
+  "definitions": {
+
+
+    "dcosReleaseVersion": {
+      "type": "string",
+      "pattern": "^(?:0|[1-9][0-9]*)(?:\\.(?:0|[1-9][0-9]*))*$",
+      "description": "A string representation of a DC/OS Release Version"
+    },
+
+    "url": {
+      "type": "string",
+      "allOf": [
+        { "format": "uri" },
+        { "pattern": "^https?://" }
+      ]
+    },
+
+    "base64String": {
+      "type": "string",
+      "pattern": "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$"
+    },
+
+
+
+    "marathon": {
+      "type": "object",
+      "properties": {
+        "v2AppMustacheTemplate": {
+          "$ref": "#/definitions/base64String"
+        }
+      },
+      "required": [ "v2AppMustacheTemplate" ],
+      "additionalProperties": false
+    },
+
+
+
+    "resource": {
+      "type": "object",
+      "properties": {
+        "assets": {
+          "type": "object",
+          "properties": {
+            "uris": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "container": {
+              "type": "object",
+              "properties": {
+                "docker": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "images": {
+          "type": "object",
+          "properties": {
+            "icon-small": {
+              "type": "string",
+              "description": "PNG icon URL, preferably 48 by 48 pixels."
+            },
+            "icon-medium": {
+              "type": "string",
+              "description": "PNG icon URL, preferably 128 by 128 pixels."
+            },
+            "icon-large": {
+              "type": "string",
+              "description": "PNG icon URL, preferably 256 by 256 pixels."
+            },
+            "screenshots": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "PNG screen URL, preferably 1024 by 1024 pixels."
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+
+
+    "config": {
+      "$ref": "http://json-schema.org/draft-04/schema#"
+    },
+
+
+    "pip": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "title": "Embedded Requirements File",
+      "description": "[Deprecated v3.x] An array of strings representing of the requirements file to use for installing the subcommand for Pip. Each item is interpreted as a line in the requirements file."
+    },
+
+
+
+    "package": {
+      "type": "object",
+      "properties": {
+        "packagingVersion": {
+          "type": "string",
+          "enum": ["2.0", "3.0"]
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "releaseVersion": {
+          "type": "integer",
+          "description": "Corresponds to the revision index from the universe directory structure",
+          "minimum": 0
+        },
+        "scm": {
+          "type": "string"
+        },
+        "maintainer": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "framework": {
+          "type": "boolean",
+          "default": false,
+          "description": "True if this package installs a new Mesos framework."
+        },
+        "preInstallNotes": {
+          "type": "string",
+          "description": "Pre installation notes that would be useful to the user of this package."
+        },
+        "postInstallNotes": {
+          "type": "string",
+          "description": "Post installation notes that would be useful to the user of this package."
+        },
+        "postUninstallNotes": {
+          "type": "string",
+          "description": "Post uninstallation notes that would be useful to the user of this package."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "selected": {
+          "type": "boolean",
+          "description": "Flag indicating if the package is selected in search results",
+          "default": false
+        },
+        "licenses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the license. For example one of [Apache License Version 2.0 | MIT License | BSD License | Proprietary]"
+              },
+              "url": {
+                "$ref": "#/definitions/url",
+                "description": "The URL where the license can be accessed"
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "url"
+            ]
+          }
+        },
+        "minDcosReleaseVersion": {
+          "$ref": "#/definitions/dcosReleaseVersion",
+          "description": "The minimum DC/OS Release Version the package can run on."
+        },
+        "marathon": {
+          "$ref": "#/definitions/marathon"
+        },
+        "resource": {
+          "$ref": "#/definitions/resource"
+        },
+        "config": {
+          "$ref": "#/definitions/config"
+        },
+        "pip": {
+          "$ref": "#/definitions/pip"
+        }
+      },
+      "required": [
+        "packagingVersion",
+        "name",
+        "version",
+        "releaseVersion",
+        "maintainer",
+        "description",
+        "tags"
+      ],
+      "additionalProperties": false
+    }
+
+
+  },
+
+  "type": "object",
+  "properties": {
+    "packages": {
+      "type": "array",
+      "description": "The list of packages in the repo",
+      "items": {
+        "$ref": "#/definitions/package"
+      }
+    }
+  },
+  "required": [
+    "packages"
+  ],
+  "additionalProperties": false
+}
