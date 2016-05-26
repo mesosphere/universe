@@ -25,6 +25,16 @@ def main():
         help='Path to the directory to use to store all universe objects')
     args = parser.parse_args()
 
+    if not args.outdir.is_dir():
+        print('The path in --out-dir [{}] is not a directory. Please create it '
+              'before running this script.'.format(args.outdir))
+        return
+
+    if not args.repository.is_dir():
+        print('The path in --repository [{}] is not a directory.'.format(
+            args.repository))
+        return
+
     universe = {
         'packages': [
             generate_package_from_path(
