@@ -53,7 +53,7 @@ We can use them within DCOS with:
   dcos package repo add Development http://github/path/to/branch/zip
   ```
 
-  E.g. assuming the topic branch is named `topic-branch`:
+  E.g. assuming the topic branch is named `topic-branch` and residing on `https://github.com/mesosphere/universe/tree/topic-branch` (note that the zip representation resides under `archive/topic-branch`):
 
   ```
   dcos package repo add Development https://github.com/mesosphere/universe/archive/topic-branch.zip
