@@ -10,8 +10,8 @@ import sys
 def main():
     parser = argparse.ArgumentParser(
         description='This script generates all of the universe objects from '
-        'the universe repository. TODO: talk about all of the files that get '
-        'generated.')
+        'the universe repository. The files created in --out-dir are: '
+        'universe.json.')
     parser.add_argument(
         '--repository',
         required=True,
@@ -25,8 +25,6 @@ def main():
         help='Path to the directory to use to store all universe objects')
     args = parser.parse_args()
 
-    universe_file_path = args.outdir / 'universe.json'
-
     universe = {
         'packages': [
             generate_package_from_path(
@@ -37,6 +35,8 @@ def main():
             in enumerate_dcos_packages(args.repository)
         ]
     }
+
+    universe_file_path = args.outdir / 'universe.json'
 
     with universe_file_path.open('w') as universe_file:
         json.dump(universe, universe_file)
@@ -153,7 +153,7 @@ def generate_package_from_path(root, package_name, release_version):
         resource=read_resource(path),
         marathon_template=read_marathon_template(path),
         config=read_config(path),
-        command=read_config(path))
+        command=read_command(path))
 
 
 def generate_package(
@@ -187,10 +187,12 @@ def generate_package(
     if resource:
         package['resource'] = resource
     if marathon_template:
-        package['marathon'] = marathon_template
+        package['marathon'] = {
+            'v2AppMustacheTemplate': marathon_template
+        }
     if config:
         package['config'] = config
-    if command and command.get('pip'):
+    if command and 'pip' in command:
         package['pip'] = command['pip']
 
     return package
