@@ -219,7 +219,7 @@ def build_universe_docker(dir_path):
     current_dir = pathlib.Path(
         os.path.dirname(os.path.realpath(__file__)))
     shutil.copyfile(
-        str(current_dir / '..' / 'docker' / 'Dockerfile'),
+        str(current_dir / '..' / 'docker' / 'local-universe' / 'Dockerfile'),
         str(dir_path / 'Dockerfile'))
 
     command = [ 'docker', 'build', '-t',
