@@ -23,7 +23,8 @@ The `cli-tests-*` branches are used for integration testing by the [DC/OS CLI](h
 ## Contributing a Package
 
 Interested in making your package or service available to the world? The instructions below will
-help you set up a local copy of the Universe for development.
+help you set up to build a package and create a Universe Server that can be used to test your new
+package in a running DC/OS cluster.
 
 ### Development Set Up
 
@@ -45,27 +46,40 @@ help you set up a local copy of the Universe for development.
   bash /path/to/universe/scripts/install-git-hooks.sh
   ```
 
-4. To test in DC/OS we need to make the packages available to your cluster. We can do this using
-topic or feature branches. Once you have committed your changes and pushed them to a topic branch.
-We can use them within DC/OS with:
+4. To test in DC/OS we need to make the packages available to your cluster. As of universe version-3.x
+   the Universe now requires a server component to be able to make packages available to multiple
+   versions of DC/OS. To build a docker image of the server run:
+
+  ```bash
+  cd /path/to/universe/docker/server
+  DOCKER_TAG="my-package" ./build.bash
+  ```
+
+  This will create a docker image `universe-server:my-package` and `target/marathon.json` on your
+  local machine which can then be pushed to a registry accessible by your DC/OS cluster.
+
+  To push the docker image to a registry run:
+
+  ```bash
+  DOCKER_TAG="my-package" ./build.bash publish
+  ```
+
+  Now that the image has been pushed to a registry run the following commands on a machine with
+  the DC/OS CLI Installed:
 
   ```
-  dcos package repo add Development http://github/path/to/branch/zip
+  dcos marathon app add target/marathon.json
+  dcos package repo add dev-universe http://universe.marathon.mesos/repo
   ```
 
-  E.g. assuming the topic branch is named `topic-branch` and residing on `https://github.com/mesosphere/universe/tree/topic-branch` (note that the zip representation resides under `archive/topic-branch`):
-
-  ```
-  dcos package repo add Development https://github.com/mesosphere/universe/archive/topic-branch.zip
-  ```
+  Alternatively, all Pull Requests opened for Universe will have their docker image build and published
+  to DockerHub.  Check the status reports os the Pull Request for a link to the docker image build, in
+  the artifacts of the build you can find the `marathon.json` capable of running the universe server.
 
 The pre-commit hook will run [build.sh](scripts/build.sh) before allowing you to commit. This
 script validates your package definitions.
 
 ### Submit to Universe
-
-Before merging to Universe, you **must** run build.sh to validate your changes. If you
-have installed the pre-commit hook as above, this will be done automatically on commit.
 
 Once complete, please submit a pull request against the `version-3.x` branch with your changes.
 
