@@ -110,12 +110,113 @@
 
 
 
-    "package": {
-      "type": "object",
+    "v20Package": {
       "properties": {
         "packagingVersion": {
           "type": "string",
-          "enum": ["2.0", "3.0"]
+          "enum": ["2.0"]
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "releaseVersion": {
+          "type": "integer",
+          "description": "Corresponds to the revision index from the universe directory structure",
+          "minimum": 0
+        },
+        "scm": {
+          "type": "string"
+        },
+        "maintainer": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "framework": {
+          "type": "boolean",
+          "default": false,
+          "description": "True if this package installs a new Mesos framework."
+        },
+        "preInstallNotes": {
+          "type": "string",
+          "description": "Pre installation notes that would be useful to the user of this package."
+        },
+        "postInstallNotes": {
+          "type": "string",
+          "description": "Post installation notes that would be useful to the user of this package."
+        },
+        "postUninstallNotes": {
+          "type": "string",
+          "description": "Post uninstallation notes that would be useful to the user of this package."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "selected": {
+          "type": "boolean",
+          "description": "Flag indicating if the package is selected in search results",
+          "default": false
+        },
+        "licenses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the license. For example one of [Apache License Version 2.0 | MIT License | BSD License | Proprietary]"
+              },
+              "url": {
+                "$ref": "#/definitions/url"
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "url"
+            ]
+          }
+        },
+        "marathon": {
+          "$ref": "#/definitions/marathon"
+        },
+        "resource": {
+          "$ref": "#/definitions/resource"
+        },
+        "config": {
+          "$ref": "#/definitions/config"
+        },
+        "pip": {
+          "$ref": "#/definitions/pip"
+        }
+      },
+      "required": [
+        "packagingVersion",
+        "name",
+        "version",
+        "maintainer",
+        "description",
+        "tags"
+      ],
+      "additionalProperties": false
+    },
+
+    "v30Package": {
+      "properties": {
+        "packagingVersion": {
+          "type": "string",
+          "enum": ["3.0"]
         },
         "name": {
           "type": "string"
@@ -228,7 +329,10 @@
       "type": "array",
       "description": "The list of packages in the repo",
       "items": {
-        "$ref": "#/definitions/package"
+        "oneOf": [
+          { "$ref": "#/definitions/v20Package" },
+          { "$ref": "#/definitions/v30Package" }
+        ]
       }
     }
   },
