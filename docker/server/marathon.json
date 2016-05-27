@@ -1,0 +1,30 @@
+{
+  "id": "/universe",
+  "instances": 1,
+  "cpus": 0.25,
+  "mem": 128,
+  "ports": [80, 443],
+  "requirePorts": true,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "network": "HOST",
+      "image": "mesosphere/universe-server:$tag"
+    },
+    "volumes": []
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 3,
+      "path": "/repo-empty-v3.json",
+      "portIndex": 1,
+      "protocol": "HTTP",
+      "timeoutSeconds": 5
+    }
+  ],
+  "constraints": [
+    ["hostname", "UNIQUE"]
+  ]
+}
