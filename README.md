@@ -140,6 +140,19 @@ The required fields are:
 - maintainer
 - description
 
+###### `.minDcosReleaseVersion`
+
+Introduced in version-3.x, the Universe now supports the ability for packages to define a
+minimum version of DC/OS their package is compatible with. See [DC/OS Release Versions](https://mesosphere.com/releases/)
+for a list of DC/OS Releases and valid values for `.minDcosReleaseVersion`.
+
+The new property `.minDcosReleaseVersion` can be specified for packages adhering to the
+`.packagingVersion` `3.0` schema.
+
+When `.minDcosReleaseVersion` is specified the package will only be made available to DC/OS
+clusters with a DC/OS Release Version greater than or equal to (`>=`) the value specified.
+
+
 #### `config.json`
 
 This file describes the configuration properties supported by the package. Each property can
