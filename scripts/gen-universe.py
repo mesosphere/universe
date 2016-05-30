@@ -2,6 +2,7 @@
 
 import argparse
 import base64
+import itertools
 import json
 import pathlib
 import shutil
@@ -246,39 +247,42 @@ def render_universe_zip(zip_file, packages):
     :rtype: None
     """
 
-    # TODO: What do we need to write?
-    # write universe/repo/meta/index.json?
-    # write universe/repo/meta/version.json?
-
-    currentDir = pathlib.Path('universe')
-
-    create_dir_in_zip(zip_file, currentDir)
-
-    currentDir = currentDir / 'repo'
-    create_dir_in_zip(zip_file, currentDir)
-
-    currentDir = currentDir / 'packages'
-    create_dir_in_zip(zip_file, currentDir)
+    # TODO: write universe/repo/meta/version.json?
 
     packages = sorted(
         packages,
         key=lambda package: (package['name'], package['releaseVersion']))
+
+    root = pathlib.Path('universe')
+
+    create_dir_in_zip(zip_file, root)
+
+    create_dir_in_zip(zip_file, root / 'repo')
+
+    create_dir_in_zip(zip_file, root / 'repo' / 'meta')
+    zip_file.writestr(
+        str(root / 'repo' / 'meta' / 'index.json'),
+        json.dumps(create_index(packages)))
+
+    packagesDir = root / 'repo' / 'packages'
+    create_dir_in_zip(zip_file, packagesDir)
+
 
     currentLetter = ''
     currentPackageName = ''
     for package in packages:
         if currentLetter != package['name'][:1].upper():
             currentLetter = package['name'][:1].upper()
-            create_dir_in_zip(zip_file, currentDir / currentLetter)
+            create_dir_in_zip(zip_file, packagesDir / currentLetter)
 
         if currentPackageName != package['name']:
             currentPackageName = package['name']
             create_dir_in_zip(
                 zip_file,
-                currentDir / currentLetter / currentPackageName)
+                packagesDir / currentLetter / currentPackageName)
 
         package_directory = (
-            currentDir /
+            packagesDir /
             currentLetter /
             currentPackageName /
             str(package['releaseVersion'])
@@ -289,10 +293,30 @@ def render_universe_zip(zip_file, packages):
 
 
 def create_dir_in_zip(zip_file, directory):
+    """Create a directory in a zip file
+
+    :param zip_file: zip file where the directory will get created
+    :type zip_file: zipfile.ZipFile
+    :param directory: path for the directory
+    :type directory: pathlib.Path
+    :rtype: None
+    """
+
     zip_file.writestr(str(directory) + '/', b'')
 
 
 def write_package_in_zip(zip_file, path, package):
+    """Write packages files in the zip file
+
+    :param zip_file: zip file where the files will get created
+    :type zip_file: zipfile.ZipFile
+    :param path: path for the package directory. E.g. universe/repo/packages/M/marathon/0
+    :type path: pathlib.Path
+    :param package: package information dictionary
+    :type package: dict
+    :rtype: None
+    """
+
     package = package.copy()
     package.pop('releaseVersion')
 
@@ -330,6 +354,52 @@ def write_package_in_zip(zip_file, path, package):
     zip_file.writestr(
         str(path / 'package.json'),
         json.dumps(package))
+
+def create_index(packages):
+    """Create an index for all of the packages
+
+    :param packages: list of packages
+    :type packages: [dict]
+    :rtype: dict
+    """
+
+    index = {
+        'version': "2.0.0-rc2",
+        'packages': [
+            create_index_entry(same_packages)
+            for _, same_packages
+            in itertools.groupby(packages, key=lambda package: package['name'])
+        ]
+    }
+
+    return index
+
+
+def create_index_entry(packages):
+    """Create index entry from packages with the same name.
+
+    :param packages: list of packages with the same name
+    :type packages: [dict]
+    :rtype: dict
+    """
+
+    entry = {
+        'versions': {}
+    }
+
+    for package in packages:
+        entry.update({
+            'name': package['name'],
+            'currentVersion': package['version'],
+            'description': package['description'],
+            'framework': package.get('framework', False),
+            'tags': package['tags'],
+            'selected': package.get('selected', False)
+        })
+
+        entry['versions'][package['version']] = package['releaseVersion']
+
+    return entry
 
 
 if __name__ == '__main__':
