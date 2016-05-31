@@ -1,12 +1,12 @@
 # Mesosphere Universe [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)
 
-The DCOS package repository for packages that have been certified by Mesosphere.
+The DC/OS package repository for packages that have been certified by Mesosphere.
 
 Experimental packages can be found in the [Multiverse repository](https://github.com/mesosphere/multiverse).
 
 ## Installation
 
-The [DCOS CLI](https://docs.mesosphere.com/install/cli/) comes pre-configured to use the Universe
+The [DC/OS CLI](https://docs.mesosphere.com/install/cli/) comes pre-configured to use the Universe
 repository.
 
 If you would like to add this to your CLI manually:
@@ -20,7 +20,7 @@ dcos config prepend package.sources https://github.com/mesosphere/universe/archi
 The default branch for this repository is `version-2.x`, which reflects the current schema for the
 Universe. In the future, if the format changes significantly, there will be additional branches.
 
-The `cli-tests-3` branch is used for integration testing by the [DCOS CLI](https://github.com/mesosphere/dcos-cli) and provides a fixed and well known set of packages to write tests against.
+The `cli-tests-3` branch is used for integration testing by the [DC/OS CLI](https://github.com/mesosphere/dcos-cli) and provides a fixed and well known set of packages to write tests against.
 
 ## Contributing a Package
 
@@ -47,7 +47,7 @@ help you set up a local copy of the Universe for development.
   bash /path/to/universe/scripts/install-git-hooks.sh
   ```
 
-4. To use the local cloned repository from the DCOS CLI for testing your own package:
+4. To use the local cloned repository from the DC/OS CLI for testing your own package:
 
   ```
   dcos config prepend package.sources "file:///path/to/universe"
@@ -135,7 +135,7 @@ This file describes the configuration properties supported by the package. Each 
 specify whether or not it is required, a default value, as well as some basic validation.
 
 Users can then [override specific values](https://docs.mesosphere.com/using/cli/packagesyntax/) at
-installation time by passing an options file to the DCOS CLI.
+installation time by passing an options file to the DC/OS CLI.
 
 ```json
 {
