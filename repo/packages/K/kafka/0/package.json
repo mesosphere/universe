@@ -7,9 +7,9 @@
   "description": "Apache Kafka running on top of Apache Mesos",
   "framework": true,
   "tags": ["message", "broker", "messaging"],
-  "preInstallNotes": "This will install Apache Kafka DCOS Service.",
-  "postInstallNotes": "The Apache Kafka DCOS Service is installed:\n  docs   - https://github.com/mesos/kafka\n  issues - https://github.com/mesos/kafka/issues",
-  "postUninstallNotes": "The Apache Kafka DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at http://docs.mesosphere.com/services/kafka/#uninstall to clean up any persisted state",
+  "preInstallNotes": "This will install Apache Kafka DC/OS Service.",
+  "postInstallNotes": "The Apache Kafka DC/OS Service is installed:\n  docs   - https://github.com/mesos/kafka\n  issues - https://github.com/mesos/kafka/issues",
+  "postUninstallNotes": "The Apache Kafka DC/OS Service has been uninstalled and will no longer run.\nPlease follow the instructions at http://docs.mesosphere.com/services/kafka/#uninstall to clean up any persisted state",
   "licenses": [
     {
       "name": "Apache License Version 2.0",

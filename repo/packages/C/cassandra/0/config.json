@@ -181,7 +181,7 @@
               "default": "RAC1"
             },
             "external-dcs": {
-              "description": "Name and URL for another instance of Cassandra DCOS Service",
+              "description": "Name and URL for another instance of Cassandra DC/OS Service",
               "type": "array",
               "additionalProperties": false,
               "items": {
