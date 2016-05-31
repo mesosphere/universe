@@ -52,12 +52,17 @@ def main():
     }
 
     # Render entire universe
-    universe_file_path = args.outdir / 'universe.json'
-    with universe_file_path.open('w') as universe_file:
+    with (args.outdir / 'universe.json').open('w') as universe_file:
         json.dump(universe, universe_file)
 
+    # Render empty json
+    with (args.outdir / 'repo-empty-v3.json').open('w') as universe_file:
+        json.dump({'packages': []}, universe_file)
+
+    # TODO: Render 1.8 json
+    # TODO: Render empty zip universe
+
     # Render zip universe for 1.6.1
-    universe_1_6_1_zip = args.outdir / 'repo-up-to-1.6.1.zip'
     with tempfile.NamedTemporaryFile() as temp_file:
         with zipfile.ZipFile(temp_file, mode='w') as zip_file:
             render_universe_zip(
@@ -65,10 +70,9 @@ def main():
                 filter(filter_1_6_1, universe['packages'])
             )
 
-        shutil.copy(temp_file.name, str(universe_1_6_1_zip))
+        shutil.copy(temp_file.name, str(args.outdir / 'repo-up-to-1.6.1.zip'))
 
     # Render zip universe for 1.7
-    universe_1_7_zip = args.outdir / 'repo-up-to-1.7.zip'
     with tempfile.NamedTemporaryFile() as temp_file:
         with zipfile.ZipFile(temp_file, mode='w') as zip_file:
             render_universe_zip(
@@ -76,7 +80,7 @@ def main():
                 filter(filter_1_6_1, universe['packages'])
             )
 
-        shutil.copy(temp_file.name, str(universe_1_7_zip))
+        shutil.copy(temp_file.name, str(args.outdir / 'repo-up-to-1.7.zip'))
 
 
 def filter_1_6_1(package):
