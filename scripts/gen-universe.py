@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from distutils.version import LooseVersion
 import argparse
 import base64
 import itertools
@@ -50,18 +51,66 @@ def main():
         ]
     }
 
+    # Render entire universe
     universe_file_path = args.outdir / 'universe.json'
-
     with universe_file_path.open('w') as universe_file:
         json.dump(universe, universe_file)
 
-    universe_old_zip = args.outdir / 'universe-1.6.1.zip'
-
+    # Render zip universe for 1.6.1
+    universe_1_6_1_zip = args.outdir / 'repo-up-to-1.6.1.zip'
     with tempfile.NamedTemporaryFile() as temp_file:
         with zipfile.ZipFile(temp_file, mode='w') as zip_file:
-            render_universe_zip(zip_file, universe['packages'])
+            render_universe_zip(
+                zip_file,
+                filter(filter_1_6_1, universe['packages'])
+            )
 
-        shutil.copy(temp_file.name, str(universe_old_zip))
+        shutil.copy(temp_file.name, str(universe_1_6_1_zip))
+
+    # Render zip universe for 1.7
+    universe_1_7_zip = args.outdir / 'repo-up-to-1.7.zip'
+    with tempfile.NamedTemporaryFile() as temp_file:
+        with zipfile.ZipFile(temp_file, mode='w') as zip_file:
+            render_universe_zip(
+                zip_file,
+                filter(filter_1_6_1, universe['packages'])
+            )
+
+        shutil.copy(temp_file.name, str(universe_1_7_zip))
+
+
+def filter_1_6_1(package):
+    """Predicate for checking for 1.6.1 or less packages
+
+    :param package: package dictionary
+    :type package: dict
+    :rtype: bool
+    """
+
+    package_version = LooseVersion(
+        package.get('minDcosReleaseVersion', '0.0')
+    )
+
+    filter_version = LooseVersion("1.6.1")
+
+    return package_version <= filter_version
+
+
+def filter_1_7(package):
+    """Predicate for checking for 1.7 or less packages
+
+    :param package: package dictionary
+    :type package: dict
+    :rtype: bool
+    """
+
+    package_version = LooseVersion(
+        package.get('minDcosReleaseVersion', '0.0')
+    )
+
+    filter_version = LooseVersion("1.7")
+
+    return package_version <= filter_version
 
 
 def package_path(root, package_name, release_version):
@@ -247,8 +296,6 @@ def render_universe_zip(zip_file, packages):
     :rtype: None
     """
 
-    # TODO: write universe/repo/meta/version.json?
-
     packages = sorted(
         packages,
         key=lambda package: (package['name'], package['releaseVersion']))
@@ -266,7 +313,6 @@ def render_universe_zip(zip_file, packages):
 
     packagesDir = root / 'repo' / 'packages'
     create_dir_in_zip(zip_file, packagesDir)
-
 
     currentLetter = ''
     currentPackageName = ''
@@ -310,7 +356,8 @@ def write_package_in_zip(zip_file, path, package):
 
     :param zip_file: zip file where the files will get created
     :type zip_file: zipfile.ZipFile
-    :param path: path for the package directory. E.g. universe/repo/packages/M/marathon/0
+    :param path: path for the package directory. E.g.
+                 universe/repo/packages/M/marathon/0
     :type path: pathlib.Path
     :param package: package information dictionary
     :type package: dict
@@ -354,6 +401,7 @@ def write_package_in_zip(zip_file, path, package):
     zip_file.writestr(
         str(path / 'package.json'),
         json.dumps(package))
+
 
 def create_index(packages):
     """Create an index for all of the packages
