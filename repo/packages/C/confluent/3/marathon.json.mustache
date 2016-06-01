@@ -3,7 +3,7 @@
   "cpus": 1.0,
   "mem": 1230,
   "instances": 1,
-  "cmd": "export PATH=$PATH:$MESOS_SANDBOX/jre/bin && ./scheduler/bin/kafka-scheduler server ./scheduler/conf/scheduler.yml",
+  "cmd": "export PATH=$(ls -d $MESOS_SANDBOX/jre*/bin):$PATH && ./scheduler/bin/kafka-scheduler server ./scheduler/conf/scheduler.yml",
   "labels": {
     "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
     "DCOS_MIGRATION_API_VERSION": "v1",
@@ -20,6 +20,7 @@
     "BROKER_CPUS": "{{brokers.cpus}}",
     "BROKER_MEM": "{{brokers.mem}}",
     "BROKER_DISK": "{{brokers.disk}}",
+    "DISK_TYPE": "{{brokers.disk_type}}",
     "KAFKA_VER_NAME": "kafka_confluent-3.0.0",
     "KAFKA_URI": "{{resource.assets.uris.kafka_tgz}}",
     "OVERRIDER_URI": "{{resource.assets.uris.overrider-zip}}",
@@ -100,6 +101,7 @@
     "KAFKA_OVERRIDE_REQUEST_TIMEOUT_MS": "{{kafka.request_timeout_ms}}",
     "KAFKA_OVERRIDE_LOG_CLEANER_THREADS": "{{kafka.log_cleaner_threads}}",
     "KAFKA_OVERRIDE_QUOTA_PRODUCER_DEFAULT": "{{kafka.quota_producer_default}}",
+    "KAFKA_OVERRIDE_LOG_MESSAGE_FORMAT_VERSION": "{{kafka.log_message_format_version}}",
     "KAFKA_OVERRIDE_LOG_CLEANER_BACKOFF_MS": "{{kafka.log_cleaner_backoff_ms}}",
     "KAFKA_OVERRIDE_CONTROLLED_SHUTDOWN_ENABLE": "{{kafka.controlled_shutdown_enable}}",
     "KAFKA_OVERRIDE_SOCKET_RECEIVE_BUFFER_BYTES": "{{kafka.socket_receive_buffer_bytes}}",
@@ -116,17 +118,18 @@
   ],
   "healthChecks": [
     {
-      "protocol": "COMMAND",
-      "command": { "value": "export PATH=$PATH:$MESOS_SANDBOX/jre/bin && ./kafka_confluent-3.0.0/bin/kafka-topics.sh --zookeeper master.mesos:2181/{{service.name}} --describe --under-replicated-partitions | wc -l | { read count; echo Under replicated partition count = $count; exit $count; }" },
-      "gracePeriodSeconds": 300,
-      "intervalSeconds": 60,
-      "timeoutSeconds": 60,
-      "maxConsecutiveFailures": 3
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 0,
+      "path": "/admin/healthcheck",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "timeoutSeconds": 5
     }
   ],
   "readinessChecks": [
       {
-        "name": "cassandraUpdateProgress",
+        "name": "confluentUpdateProgress",
         "protocol": "HTTP",
         "path": "/v1/plan",
         "portName": "api",
