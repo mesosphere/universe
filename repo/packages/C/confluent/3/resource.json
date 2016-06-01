@@ -1,0 +1,15 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/kafka/assets/jre-8u91-linux-x64.tar.gz",
+      "kafka_tgz": "https://s3-us-west-2.amazonaws.com/confluent-mesos-devel/confluent-3.0.0-mesos.tgz",
+      "scheduler-zip": "https://downloads.mesosphere.com/kafka/assets/1.0.8-0.10.0.0/scheduler.zip",
+      "overrider-zip": "https://downloads.mesosphere.com/kafka/assets/1.0.8-0.10.0.0/overrider.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://s3-us-west-2.amazonaws.com/confluent-mesos-devel/ConfIcon_small.png",
+    "icon-medium": "https://s3-us-west-2.amazonaws.com/confluent-mesos-devel/ConfIcon_medium.png",
+    "icon-large": "https://s3-us-west-2.amazonaws.com/confluent-mesos-devel/ConfIcon_large.png"
+  }
+}
