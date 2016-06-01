@@ -449,7 +449,7 @@ def create_index_entry(packages):
             'selected': package.get('selected', False)
         })
 
-        entry['versions'][package['version']] = package['releaseVersion']
+        entry['versions'][package['version']] = str(package['releaseVersion'])
 
     return entry
 
