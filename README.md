@@ -69,12 +69,13 @@ package in a running DC/OS cluster.
 
   ```
   dcos marathon app add target/marathon.json
-  dcos package repo add dev-universe http://universe.marathon.mesos/repo
+  dcos package repo add --index=0 dev-universe http://universe.marathon.mesos:8085/repo
   ```
 
   Alternatively, all Pull Requests opened for Universe will have their docker image build and published
-  to DockerHub.  Check the status reports os the Pull Request for a link to the docker image build, in
-  the artifacts of the build you can find the `marathon.json` capable of running the universe server.
+  to DockerHub.  Click the details of the "Universe Server Docker image" status report of the Pull Request.
+  In the artifacts tab of the build results you can find `docker/server/marathon.json` which can be used
+  to run the universe server in your cluster.
 
 The pre-commit hook will run [build.sh](scripts/build.sh) before allowing you to commit. This
 script validates your package definitions.
