@@ -24,7 +24,14 @@ function prepare {
   local universeBuildTarget="${DOCKER_SERVER_DIR}/../../target"
 
   if [[ -f ${universeBuildTarget}/repo-empty-v3.json ]]; then
-    cp -r ${DOCKER_SERVER_DIR}/../../target ${DOCKER_SERVER_DIR}
+    mkdir -p ${DOCKER_SERVER_DIR}/target
+    # copy over the build json repos
+    cp -r ${DOCKER_SERVER_DIR}/../../target/repo-*.json ${DOCKER_SERVER_DIR}/target
+    # copy over the build zip repos (only 1.6.1 and 1.7)
+    cp -r ${DOCKER_SERVER_DIR}/../../target/repo-*.zip ${DOCKER_SERVER_DIR}/target
+    # ensure the files are readable by everyone since that is what nginx will evaluate
+    # to determine if 403 should be returned or not.
+    chmod 644 ${DOCKER_SERVER_DIR}/target/*
   else
     err "Please run scripts/build.sh before trying to build universe server"
   fi
