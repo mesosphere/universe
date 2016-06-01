@@ -40,34 +40,35 @@ def main():
             args.repository))
         return
 
-    universe = {
-        'packages': [
-            generate_package_from_path(
-                args.repository,
-                package_name,
-                release_version)
-            for package_name, release_version
-            in enumerate_dcos_packages(args.repository)
-        ]
-    }
+    packages = [
+        generate_package_from_path(
+            args.repository,
+            package_name,
+            release_version)
+        for package_name, release_version
+        in enumerate_dcos_packages(args.repository)
+    ]
 
     # Render entire universe
     with (args.outdir / 'universe.json').open('w') as universe_file:
-        json.dump(universe, universe_file)
+        json.dump({'packages': packages}, universe_file)
 
     # Render empty json
     with (args.outdir / 'repo-empty-v3.json').open('w') as universe_file:
         json.dump({'packages': []}, universe_file)
 
-    # TODO: Render 1.8 json
-    # TODO: Render empty zip universe
+    # Render 1.8 json
+    with (args.outdir / 'repo-up-to-1.8.json').open('w') as universe_file:
+        json.dump(
+            {'packages': list(filter(filter_1_8, packages))},
+            universe_file)
 
     # Render zip universe for 1.6.1
     with tempfile.NamedTemporaryFile() as temp_file:
         with zipfile.ZipFile(temp_file, mode='w') as zip_file:
             render_universe_zip(
                 zip_file,
-                filter(filter_1_6_1, universe['packages'])
+                filter(filter_1_6_1, packages)
             )
 
         shutil.copy(temp_file.name, str(args.outdir / 'repo-up-to-1.6.1.zip'))
@@ -77,7 +78,7 @@ def main():
         with zipfile.ZipFile(temp_file, mode='w') as zip_file:
             render_universe_zip(
                 zip_file,
-                filter(filter_1_6_1, universe['packages'])
+                filter(filter_1_7, packages)
             )
 
         shutil.copy(temp_file.name, str(args.outdir / 'repo-up-to-1.7.zip'))
@@ -113,6 +114,23 @@ def filter_1_7(package):
     )
 
     filter_version = LooseVersion("1.7")
+
+    return package_version <= filter_version
+
+
+def filter_1_8(package):
+    """Predicate for checking for 1.8 or less packages
+
+    :param package: package dictionary
+    :type package: dict
+    :rtype: bool
+    """
+
+    package_version = LooseVersion(
+        package.get('minDcosReleaseVersion', '0.0')
+    )
+
+    filter_version = LooseVersion("1.8")
 
     return package_version <= filter_version
 
