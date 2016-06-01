@@ -3,13 +3,19 @@
   "instances": 1,
   "cpus": 0.25,
   "mem": 128,
-  "ports": [80, 443],
   "requirePorts": true,
   "container": {
     "type": "DOCKER",
     "docker": {
-      "network": "HOST",
-      "image": "mesosphere/universe-server:$tag"
+      "network": "BRIDGE",
+      "image": "mesosphere/universe-server:$tag",
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 8085,
+          "protocol": "tcp"
+        }
+      ]
     },
     "volumes": []
   },
@@ -19,7 +25,7 @@
       "intervalSeconds": 30,
       "maxConsecutiveFailures": 3,
       "path": "/repo-empty-v3.json",
-      "portIndex": 1,
+      "portIndex": 0,
       "protocol": "HTTP",
       "timeoutSeconds": 5
     }
