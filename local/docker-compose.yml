@@ -1,0 +1,15 @@
+nginx:
+  image: mesosphere/universe
+  container_name: universe-http
+  ports:
+    - "8082:80"
+  command: nginx -g "daemon off;"
+registry:
+  image: mesosphere/universe
+  container_name: universe-registry
+  environment:
+      - REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt
+      - REGISTRY_HTTP_TLS_KEY=/certs/domain.key
+  ports:
+    - "5000:5000"
+  command: registry serve /etc/docker/registry/config.yml
