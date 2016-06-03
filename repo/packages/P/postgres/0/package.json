@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "postgres",
+  "version": "9.5-2.2",
+  "tags": ["postgres", "postgresql", "postgis", "database"],
+  "framework": true,
+  "maintainer": "dcos-support@appliedis.com",
+  "description": "DCOS implementation of single-node Postgres 9.5 database server with PostGIS 2.2 extension support and pgtune configuration optimization.",
+  "scm": "https://github.com/AppliedIS/dockerfiles/tree/master/postgis/9.5-2.2",
+  "website": "https://github.com/AppliedIS/dockerfiles",
+  "preInstallNotes":"This DCOS implementation of Postgres is not intended for production workloads as it does not have any support for failover or persistent volumes. It should not be scaled past a single instance as doing so has the potential to corrupt the Postgres data directory.",
+  "postInstallNotes": "Postgres is in the process of starting up and will be accessible within the cluster shortly.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/mesos/elasticsearch/master/LICENSE"
+    }
+  ]
+}
