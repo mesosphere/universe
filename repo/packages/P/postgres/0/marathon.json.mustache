@@ -1,0 +1,47 @@
+{
+  "id": "{{postgres.framework-name}}",
+  "cpus": 1,
+  "mem": {{postgres.memory-mb}},
+  "instances": 1,
+  "constraints": [["hostname", "UNIQUE"]],
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 0,
+      "portIndex": 0,
+      "protocol": "TCP",
+      "timeoutSeconds": 5
+    }
+  ],
+  "env": {
+    "POSTGRES_PASSWORD": "{{postgres.postgres-password}}",
+    "INSTANCE_MEMORY": "{{postgres.memory-mb}}",
+    "CONNECTIONS": "{{postgres.connections}}",
+    "FORCE_PGTUNE": "false"
+  },
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/var/lib/postgresql/data",
+        "hostPath": "{{postgres.host-data-volume}}",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "{{resource.assets.container.docker.postgis}}",
+			"network": "BRIDGE",
+			"portMappings": [{
+				"containerPort": 5432,
+				"hostPort": {{postgres.port}},
+				"servicePort": {{postgres.port}},
+				"protocol": "tcp"
+			}],
+      "forcePullImage": true
+    }
+  },
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{postgres.framework-name}}"
+  }
+}
