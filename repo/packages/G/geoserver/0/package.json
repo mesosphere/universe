@@ -1,0 +1,18 @@
+{
+  "packagingVersion" : "2.0",
+  "name" : "geoserver",
+  "version" : "2.8",
+  "scm" : "https://github.com/appliedis/dcos-geoserver",
+  "maintainer" : "dcos-support@appliedis.com",
+  "description" : "GeoServer 2.8 web application server implementating OGC Web Map Service (WMS), Web Feature Service (WFS), Web Coverage Service (WCS) and Catalog Serivce for the Web (CSW).",
+  "framework" : true,
+  "licenses" : [ {
+    "name" : "Apache License Version 2.0",
+    "url" : "https://github.com/appliedis/dcos-geoserver/blob/master/LICENSE"
+  } ],
+  "tags" : [ "long-running", "geoserver", "gis", "ogc", "wms", "wfs", "csw" ],
+  "preInstallNotes" : "This package and its child packages depend on a shared file system.  It doesn't matter what form this takes (NFS, GlusterFS, Ceph, etc.), but it must be consistent across all DCOS slave nodes.",
+  "postInstallNotes" : "GeoServer has been successfully installed!\nScale up GeoServer instances as needed to meet your demand.\nTo access on the VHOST and PORT specified, you must have marathon-lb installed.",
+  "postUninstallNotes" : "The GeoServer Service has been uninstalled and will no longer run.\nThis does not remove the geoserver-instance marathon app which should also be removed to eliminate any traces of GeoServer from your DCOS cluster.",
+  "selected" : false
+}

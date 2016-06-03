@@ -175,6 +175,25 @@
       }
     },
     {
+      "currentVersion":"2.8",
+      "description":"GeoServer 2.8 web application server implementating OGC Web Map Service (WMS), Web Feature Service (WFS), Web Coverage Service (WCS) and Catalog Serivce for the Web (CSW).",
+      "framework":true,
+      "name":"geoserver",
+      "selected":false,
+      "tags":[
+        "long-running",
+        "geoserver",
+        "gis",
+        "ogc",
+        "wms",
+        "wfs",
+        "csw"
+      ],
+      "versions":{
+        "2.8":"0"
+      }
+    },
+    {
       "currentVersion":"0.1.8",
       "description":"Hadoop Distributed File System (HDFS), Highly Available",
       "framework":true,

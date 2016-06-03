@@ -1,0 +1,51 @@
+{
+	"id": "{{geoserver.framework-name}}",
+	"cpus": 0.1,
+	"mem": 8,
+	"instances": 1,
+	"container": {
+		"type": "DOCKER",
+		"docker": {
+			"image": "{{resource.assets.container.docker.geoserver}}",
+			"network": "BRIDGE",
+			"portMappings": [{
+				"containerPort": 8000,
+				"hostPort": 0,
+				"servicePort": 0,
+				"protocol": "tcp"
+			}],
+			"forcePullImage": true
+		},
+		"volumes": [{
+			"containerPath": "/srv/geoserver",
+			"hostPath": "{{geoserver.data-dir}}",
+			"mode": "RW"
+		}]
+	},
+	"healthChecks": [{
+		"path": "/sync-health/",
+		"portIndex": 0,
+		"protocol": "HTTP",
+		"gracePeriodSeconds": 360,
+		"intervalSeconds": 30,
+		"maxConsecutiveFailures": 3,
+		"timeoutSeconds": 10
+	}],
+	"env": {
+		"HOST_GEOSERVER_DATA_DIR": "{{geoserver.data-dir}}",
+		"HOST_SUPPLEMENTAL_DATA_DIRS": "{{geoserver.supplemental-data-dirs}}",
+		"GOSU_USER": "{{geoserver.data-dir-owner}}",
+		"FRAMEWORK_NAME": "{{geoserver.framework-name}}",
+		"GEOSERVER_INSTANCES": "{{geoserver.instances}}",
+		"GEOSERVER_CPUS": "{{geoserver.cpus}}",
+		"GEOSERVER_MEMORY": "{{geoserver.memory}}",
+		"GEOSERVER_IMAGE": "{{geoserver.docker-image}}",
+		"HAPROXY_VHOST": "{{geoserver.haproxy-vhost}}",
+		"HAPROXY_PORT": "{{geoserver.haproxy-port}}",
+		"POLLING_INTERVAL": "{{sync.polling-interval}}",
+		"FILE_BLACKLIST": "{{sync.file-blacklist}}"
+	},
+	"labels": {
+		"DCOS_PACKAGE_FRAMEWORK_NAME": "{{geoserver.framework-name}}"
+	}
+}
