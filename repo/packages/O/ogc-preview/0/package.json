@@ -1,0 +1,18 @@
+{
+  "packagingVersion" : "2.0",
+  "name" : "ogc-preview",
+  "version" : "0.10.76",
+  "scm" : "https://github.com/AppliedIS/ogc-preview",
+  "maintainer" : "dcos-support@appliedis.com",
+  "description" : "Discover, browse and export data from OGC service layers exposed by way of WMS/WFS service interfaces, with a special focus given to time-enabled data.",
+  "framework" : true,
+  "licenses" : [ {
+    "name" : "Apache License Version 2.0",
+    "url" : "https://raw.githubusercontent.com/AppliedIS/ogc-preview/master/LICENSE"
+  } ],
+  "tags" : [ "long-running", "ogc", "apache" ],
+  "preInstallNotes" : "This package expects an addressable GeoServer running within DCOS. If it is hosted elsewhere, simply update the geoserver hostname and port to the appropriate location.",
+  "postInstallNotes" : "OGC Preview has been successfully installed!\nTo access on the VHOST specified, you must have marathon-lb installed.",
+  "postUninstallNotes" : "OGC Preview has been uninstalled and will no longer run.",
+  "selected" : false
+}

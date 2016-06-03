@@ -1,0 +1,46 @@
+{
+	"id": "{{ogc-preview.framework-name}}",
+	"cpus": 0.5,
+	"mem": 16,
+	"instances": 1,
+	"container": {
+		"type": "DOCKER",
+		"docker": {
+			"image": "{{resource.assets.container.docker.ogc-preview}}",
+			"network": "BRIDGE",
+			"portMappings": [{
+				"containerPort": 80,
+				"hostPort": 0,
+				"servicePort": 0,
+				"protocol": "tcp"
+			}],
+			{{#ogc-preview.config-dir}}
+			"volumes": [{
+				"containerPath": "/usr/local/apache2/htdocs/config",
+				"hostPath": "{{ogc-preview.config-dir}}",
+				"mode": "RO"
+			}],
+			{{/ogc-preview.config-dir}}
+			"forcePullImage": true
+		}
+	},
+	"healthChecks": [{
+		"path": "/",
+		"portIndex": 0,
+		"protocol": "HTTP",
+		"gracePeriodSeconds": 30,
+		"intervalSeconds": 30,
+		"maxConsecutiveFailures": 3,
+		"timeoutSeconds": 10
+	}],
+	"env": {
+		"GEOSERVER_HOSTNAME": "{{geoserver.hostname}}",
+		"GEOSERVER_PORT": "{{geoserver.port}}"
+	},
+	"labels": {
+		"HAPROXY_GROUP": "external",
+		"DCOS_PACKAGE_FRAMEWORK_NAME": "{{ogc-preview.framework-name}}",
+		"HAPROXY_0_VHOST": "{{ogc-preview.haproxy-vhost}}",
+		"HAPROXY_0_PORT": "80"
+	}
+}
