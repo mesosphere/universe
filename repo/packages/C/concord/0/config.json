@@ -18,6 +18,10 @@
       "properties": {
 	"cluster_name": {
 	  "default": "dcos",
+	  "type": "string"
+	},
+	"framework_name": {
+	  "default": "concord",
 	  "description": "Advertised name of the framework",
 	  "type": "string"
 	},
