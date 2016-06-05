@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://storage.googleapis.com/dcos-release/icon-small.png",
+    "icon-medium": "https://storage.googleapis.com/dcos-release/icon-medium.png",
+    "icon-large": "https://storage.googleapis.com/dcos-release/icon-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+	"bfb2a74c4941": "concord/scheduler:0.3.16.4"
+      }
+    }
+  }
+}

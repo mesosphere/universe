@@ -1,0 +1,30 @@
+{
+  "id": "concord",
+  "cpus": {{concord.cpus}},
+  "mem": {{concord.mem}},
+  "instances": {{concord.instances}},
+  "cmd": "java {{concord.java_options}} $JAVA_OPTS -cp /usr/local/share/concord/concord.jar com.concord.scheduler.Scheduler --listen 0.0.0.0:$PORT0 --advertise-external $(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}') --advertise-internal $(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}') --concord-master {{#concord.zookeeper}} {{concord.zookeeper}} {{/concord.zookeeper}} {{^concord.zookeeper}} zk://master.mesos:2181/concord-mesos/{{concord.cluster_name}} {{/concord.zookeeper}} --mesos-master {{mesos.master}} {{#concord.zipkin_broker_addr}} --kafka-path {{concord.zipkin_broker_addr}} {{/concord.zipkin_broker_addr}} --framework-name {{concord.framework_name}}", 
+  "ports": [
+    0
+  ],
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "concord.{{concord.cluster_name}}"
+  },
+  "container": {
+    "docker": {
+      "image": "{{resource.assets.container.docker.bfb2a74c4941}}",
+      "network": "HOST"
+    },
+    "type": "DOCKER"
+  },
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
+  "upgradeStrategy": {
+    "maximumOverCapacity": 0.5,
+    "minimunHealthCapacity": 0.5
+  }
+}
