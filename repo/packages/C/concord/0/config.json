@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "mesos": {
+      "description": "Mesos configuration properties",
+      "type": "object",
+      "properties": {
+	"master": {
+	  "default": "zk://master.mesos:2181/mesos",
+	  "description": "The URL of the mesos master. The format is a comma-delimited list of hosts like this zk://host1:port,host2:port/mesos",
+	  "type": "string"
+	}
+      }
+    },
+    "concord": {
+      "description": "Concord configuration properties",
+      "type": "object",
+      "properties": {
+	"cluster_name": {
+	  "default": "dcos",
+	  "type": "string"
+	},
+	"framework_name": {
+	  "default": "concord",
+	  "description": "Advertised name of the framework",
+	  "type": "string"
+	},
+        "zookeeper": {
+          "description": "The URL of zookeeper for Concord. The format is a comma-delimited list of hosts like this zk://host1:port,host2:port/mesos",
+	  "type": "string"
+        },
+	"zipkin_broker_addr": {
+	  "description": "The address of the kafka broker used to store zipkin traces",
+	  "type": "string"
+	},
+	"java_options": {
+	  "type": "string",
+	  "description": "JVM options for Concord Scheduler",
+	  "default": "-XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/concord_heap_dump.hprof -Dsun.net.inetaddr.ttl=60 -Djava.library.path=/usr/lib -DMESOS_NATIVE_JAVA_LIBRARY=/usr/lib/libmesos.so"
+	},
+	"cpus": {
+	  "type": "integer",
+	  "description": "Amount of CPU shares dedicated to the Scheduler",
+	  "default": 1
+	},
+	"mem": {
+	  "type": "integer",
+	  "description": "Amount of Memory dedicated to the Scheduler",
+	  "default": 1024
+	},
+	"instances": {
+	  "type": "integer",
+	  "description": "Number of Scheduler instances",
+	  "default": 1
+	}
+      }
+    }
+  }
+}
