@@ -22,63 +22,47 @@
           "default": 2048.0,
           "minimum": 1024.0
         },
-        "high-availability": {
-          "description": "High availability mode properties.",
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "description": "Run Artifactory in high availability mode.",
-              "type": "boolean",
-              "default": false
-            },
-            "nodes": {
-              "description": "The number of nodes to run in high availability mode.",
-              "type": "number",
-              "default": 1
-            },
-            "unique-nodes": {
-              "description": "Run nodes on unique hosts.",
-              "type": "boolean",
-              "default": true
-            },
-            "cluster-home": {
-              "description": "The location of a volume on the host to be used for persisting cluster home directory used when running Artifactory in HA mode. The final location will be derived from this value plus the name set in `framework-name` (e.g. `/mnt/host_volume/artifactory`). Note that this path must be the same on all DCOS agents.",
-              "type": "string"
-            },
-            "database": {
-              "description": "High availability database properties.",
-              "type": "object",
-              "properties": {
-                "connection-string": {
-                  "description": "Database connection string.",
-                  "type": "string"
-                },
-                "user": {
-                  "description": "Database username.",
-                  "type": "string"
-                },
-                "password": {
-                  "description": "Database password.",
-                  "type": "string"
-                }
-              }
-            }
-          }
+        "unique-nodes": {
+          "description": "Run nodes on unique hosts.",
+          "type": "boolean",
+          "default": true
+        },
+        "cluster-home": {
+          "description": "The location of a volume on the host to be used for persisting cluster home directory used when running Artifactory in HA mode. The final location will be derived from this value plus the name set in `framework-name` (e.g. `/mnt/host_volume/artifactory`). Note that this path must be the same on all DC/OS agents.",
+          "type": "string"
         },
         "artifactory-home": {
-          "description": "The location of a volume on the host to be used for persisting the Artifactory home directory. The final location will be derived from this value plus the name set in `framework-name` (e.g. `/mnt/host_volume/artifactory`). If high-availability mode is on, this location will also include the Mesos task ID to avoid overlapping. Note that this path must be the same on all DCOS agents.",
+          "description": "The location of a volume on the host to be used for persisting the Artifactory home directory. The final location will be derived from this value plus the name set in `framework-name` (e.g. `/mnt/host_volume/artifactory`). If high-availability mode is on, this location will also include the Mesos task ID to avoid overlapping. Note that this path must be the same on all DC/OS agents.",
           "type": "string",
           "default": "/tmp"
         },
-        "artifactory-primary-license": {
-          "description": "License to for artifactory primary",
-          "type": "string",
-          "default" : "NONE"
+        "database": {
+          "description": "High availability database properties.",
+          "type": "object",
+          "properties": {
+            "connection-string": {
+              "description": "Database connection string.",
+              "type": "string"
+            },
+            "user": {
+              "description": "Database username.",
+              "type": "string"
+            },
+            "password": {
+              "description": "Database password.",
+              "type": "string"
+            }
+          }
         },
-        "artifactory-licenses": {
-          "description": "Licenses to popuplate artifactory nodes",
+        "primary-license": {
+          "description": "Provide one Artifactory HA License which will be used for Artifactory-Primary",
           "type": "string",
-          "default" : "NONE"
+          "default": "NONE"
+        },
+        "licenses": {
+          "description": "Provide Licenses comma separated to be used by Artifactory-Secondary instances",
+          "type": "string",
+          "default": "NONE"
         }
       },
       "required": [

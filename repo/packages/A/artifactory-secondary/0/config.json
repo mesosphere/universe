@@ -22,40 +22,24 @@
           "default": 2048.0,
           "minimum": 1024.0
         },
-        "high-availability": {
-          "description": "High availability mode properties.",
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "description": "Run Artifactory in high availability mode.",
-              "type": "boolean",
-              "default": true
-            },
-            "nodes": {
-              "description": "The number of nodes to run in high availability mode.",
-              "type": "number",
-              "default": 1
-            },
-            "unique-nodes": {
-              "description": "Run nodes on unique hosts.",
-              "type": "boolean",
-              "default": true
-            },
-            "cluster-home": {
-              "description": "The location of a volume on the host to be used for persisting cluster home directory used when running Artifactory in HA mode. The final location will be derived from this value plus the name set in `framework-name` (e.g. `/mnt/host_volume/artifactory`). Note that this path must be the same on all DCOS agents.",
-              "type": "string"
-            }
-          }
+        "nodes": {
+          "description": "The number of nodes to run in high availability mode.",
+          "type": "number",
+          "default": 1
+        },
+        "unique-nodes": {
+          "description": "Run nodes on unique hosts.",
+          "type": "boolean",
+          "default": true
+        },
+        "cluster-home": {
+          "description": "The location of a volume on the host to be used for persisting cluster home directory used when running Artifactory in HA mode. The final location will be derived from this value plus the name set in `framework-name` (e.g. `/mnt/host_volume/artifactory`). Note that this path must be the same on all DC/OS agents.",
+          "type": "string"
         },
         "artifactory-home": {
-          "description": "The location of a volume on the host to be used for persisting the Artifactory home directory. The final location will be derived from this value plus the name set in `framework-name` (e.g. `/mnt/host_volume/artifactory`). If high-availability mode is on, this location will also include the Mesos task ID to avoid overlapping. Note that this path must be the same on all DCOS agents.",
+          "description": "The location of a volume on the host to be used for persisting the Artifactory home directory. The final location will be derived from this value plus the name set in `framework-name` (e.g. `/mnt/host_volume/artifactory`). If high-availability mode is on, this location will also include the Mesos task ID to avoid overlapping. Note that this path must be the same on all DC/OS agents.",
           "type": "string",
           "default": "/tmp"
-        },
-        "artifactory-primary-url": {
-          "description": "URL of Artifacctory primary node to get licenses for artifactory nodes",
-          "type": "string",
-          "default" : "http://artifactory-primary.marathon.mesos:8081/artifactory"
         }
       },
       "required": [

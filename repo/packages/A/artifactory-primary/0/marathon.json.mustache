@@ -1,90 +1,70 @@
 {
-  "id": "{{artifactory-primary.framework-name}}",
-  "cpus": {{artifactory-primary.cpus}},
-  "mem": {{artifactory-primary.mem}},
-  {{^artifactory-primary.high-availability.enabled}}
-  "instances": 1,
-  {{/artifactory-primary.high-availability.enabled}}
-  {{#artifactory-primary.high-availability.enabled}}
-  "instances": {{artifactory-primary.high-availability.nodes}},
-  {{/artifactory-primary.high-availability.enabled}}
-   "container": {
-       "type": "DOCKER",
-       "docker": {
-           {{^artifactory-primary.high-availability.enabled}}
-           "image": "{{resource.assets.container.docker.e183c36bdb4b}}",
-           {{/artifactory-primary.high-availability.enabled}}
-           {{#artifactory-primary.high-availability.enabled}}
-           "image": "{{resource.assets.container.docker.71c42177cf14}}",
-           {{/artifactory-primary.high-availability.enabled}}
-           "network": "HOST",
-            "forcePullImage":true
-       },
-       "volumes": [
-          {{^artifactory-primary.high-availability.enabled}}
-          {
-          "containerPath": "/var/opt/jfrog/artifactory/data",
-          "hostPath": "{{artifactory-primary.artifactory-home}}/{{artifactory-primary.framework-name}}/data",
-          "mode": "RW"
-          },
-          {
-             "containerPath": "/var/opt/jfrog/artifactory/logs",
-             "hostPath": "{{artifactory-primary.artifactory-home}}/{{artifactory-primary.framework-name}}/logs",
-             "mode": "RW"
-          },
-          {
-             "containerPath": "/var/opt/jfrog/artifactory/backup",
-             "hostPath": "{{artifactory-primary.artifactory-home}}/{{artifactory-primary.framework-name}}/backup",
-             "mode": "RW"
-          }
-          {{/artifactory-primary.high-availability.enabled}}
-          {{#artifactory-primary.high-availability.enabled}}
-          {
-             "containerPath": "/var/opt/jfrog/cluster",
-             "hostPath": "{{artifactory-primary.high-availability.cluster-home}}/cluster-home",
-             "mode": "RW"
-          },
-          {
-          "containerPath": "/var/opt/jfrog/artifactory/data",
-          "hostPath": "{{artifactory-primary.high-availability.cluster-home}}/{{artifactory-primary.framework-name}}/data",
-          "mode": "RW"
-          },
-          {
-          "containerPath": "/var/opt/jfrog/artifactory/logs",
-          "hostPath": "{{artifactory-primary.high-availability.cluster-home}}/{{artifactory-primary.framework-name}}/logs",
-          "mode": "RW"
-          },
-          {
-          "containerPath": "/var/opt/jfrog/artifactory/backup",
-          "hostPath": "{{artifactory-primary.high-availability.cluster-home}}/{{artifactory-primary.framework-name}}/backup",
-          "mode": "RW"
-          }
-          {{/artifactory-primary.high-availability.enabled}}
-       ]
-   },
-  "labels": {
-      "HAPROXY_GROUP":"external"
-   },
-   "env": {
-    "DATABASE_CONNECTION_STRING": "{{artifactory-primary.high-availability.database.connection-string}}",
-    "DATABASE_USER":  "{{artifactory-primary.high-availability.database.user}}",
-    "DATABASE_PASSWORD":  "{{artifactory-primary.high-availability.database.password}}",
-    "ART_PRIMARY_LICENSE": "{{artifactory-primary.artifactory-primary-license}}",
-    "ART_LICENSES": "{{artifactory-primary.artifactory-licenses}}"
-   },
-"healthChecks": [
-{
-"protocol": "COMMAND",
-"command": {
-"value": "curl http://$HOST:8081/artifactory/api/system/ping"
-},
-"gracePeriodSeconds": 3,
-"intervalSeconds": 10,
-"timeoutSeconds": 10,
-"maxConsecutiveFailures": 3
-}
-]
-    {{#artifactory-primary.high-availability.unique-nodes}},
-   "constraints": [["hostname", "UNIQUE"]]
-   {{/artifactory-primary.high-availability.unique-nodes}}
+    "id": "{{artifactory-primary.framework-name}}",
+    "cpus": {{artifactory-primary.cpus}},
+    "mem": {{artifactory-primary.mem}},
+    "instances": 1,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.artifactory-ha-primary}}",
+            "network": "HOST"
+        },
+        "volumes": [
+            {
+                "containerPath": "/var/opt/jfrog/cluster",
+                "hostPath": "{{artifactory-primary.cluster-home}}/cluster-home",
+                "mode": "RW"
+            },
+            {
+                "containerPath": "/var/opt/jfrog/artifactory/data",
+                "hostPath": "{{artifactory-primary.artifactory-home}}/{{artifactory-primary.framework-name}}/data",
+                "mode": "RW"
+            },
+            {
+                "containerPath": "/var/opt/jfrog/artifactory/logs",
+                "hostPath": "{{artifactory-primary.artifactory-home}}/{{artifactory-primary.framework-name}}/logs",
+                "mode": "RW"
+            },
+            {
+                "containerPath": "/var/opt/jfrog/artifactory/backup",
+                "hostPath": "{{artifactory-primary.artifactory-home}}/{{artifactory-primary.framework-name}}/backup",
+                "mode": "RW"
+            }
+         ]
+    },
+    "portDefinitions": [
+        {
+            "port": 0,
+            "protocol": "tcp",
+            "name": "instance",
+            "labels": {}
+        },
+        {
+            "port": 0,
+            "protocol": "tcp",
+            "name": "member",
+            "labels": {}
+        }
+        ],
+    "env": {
+            "DATABASE_CONNECTION_STRING": "{{artifactory-primary.database.connection-string}}",
+            "DATABASE_USER":  "{{artifactory-primary.database.user}}",
+            "DATABASE_PASSWORD":  "{{artifactory-primary.database.password}}",
+            "PRIMARY_LICENSE": "{{artifactory-primary.primary-license}}",
+            "LICENSES": "{{artifactory-primary.licenses}}"
+    },
+    "healthChecks": [
+        {
+            "gracePeriodSeconds": 3,
+            "intervalSeconds": 10,
+            "maxConsecutiveFailures": 3,
+            "path": "/artifactory/api/system/ping",
+            "portIndex": 0,
+            "protocol": "HTTP",
+            "timeoutSeconds": 10
+        }
+        ],
+    {{#artifactory-primary.unique-nodes}}
+            "constraints": [["hostname", "UNIQUE"]]
+    {{/artifactory-primary.unique-nodes}}
 }
