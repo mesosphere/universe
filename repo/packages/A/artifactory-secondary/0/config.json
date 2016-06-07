@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "artifactory-secondary": {
+      "description": "Artifactory framework configuration properties",
+      "type": "object",
+      "properties": {
+        "framework-name": {
+          "description": "The framework name to register with Mesos.",
+          "type": "string",
+          "default": "artifactory-secondary"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to each Artifactory master.",
+          "type": "number",
+          "default": 2.0,
+          "minimum": 1.0
+        },
+        "mem": {
+          "description": "Memory to allocate to each Artifactory master.",
+          "type": "number",
+          "default": 2048.0,
+          "minimum": 1024.0
+        },
+        "nodes": {
+          "description": "The number of nodes to run in high availability mode.",
+          "type": "number",
+          "default": 1
+        },
+        "unique-nodes": {
+          "description": "Run nodes on unique hosts.",
+          "type": "boolean",
+          "default": true
+        },
+        "cluster-home": {
+          "description": "The location of a volume on the host to be used for persisting cluster home directory used when running Artifactory in HA mode. The final location will be derived from this value plus the name set in `framework-name` (e.g. `/mnt/host_volume/artifactory`). Note that this path must be the same on all DC/OS agents.",
+          "type": "string"
+        },
+        "artifactory-home": {
+          "description": "The location of a volume on the host to be used for persisting the Artifactory home directory. The final location will be derived from this value plus the name set in `framework-name` (e.g. `/mnt/host_volume/artifactory`). If high-availability mode is on, this location will also include the Mesos task ID to avoid overlapping. Note that this path must be the same on all DC/OS agents.",
+          "type": "string",
+          "default": "/tmp"
+        }
+      },
+      "required": [
+        "framework-name",
+        "cpus",
+        "mem",
+        "artifactory-home"
+      ]
+    }
+  },
+  "required": [
+    "artifactory-secondary"
+  ]
+}
