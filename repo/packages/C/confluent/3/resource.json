@@ -2,15 +2,15 @@
   "assets": {
     "uris": {
       "jre-tar-gz": "https://downloads.mesosphere.io/kafka/assets/jre-8u72-linux-x64.tar.gz",
-      "kafka_tgz": "https://downloads.mesosphere.io/kafka/assets/kafka_2.10-0.9.0.1.tgz",
-      "scheduler-zip": "http://downloads.mesosphere.io/kafka/assets/1.0.8-0.9.0.1/scheduler.zip",
-      "overrider-zip": "http://downloads.mesosphere.io/kafka/assets/1.0.8-0.9.0.1/overrider.zip"
+      "kafka_tgz": "https://s3-us-west-2.amazonaws.com/confluent-mesos-devel/confluent-2.0.1-mesos.tgz",
+      "scheduler-zip": "https://downloads.mesosphere.io/kafka/assets/1.0.2-0.9.0.1/scheduler.zip",
+      "overrider-zip": "https://downloads.mesosphere.io/kafka/assets/1.0.3-0.9.0.1/overrider.zip"
     }
   },
   "images": {
-    "icon-small": "https://d1vubr0evspla.cloudfront.net/img/icon-small.png",
-    "icon-medium": "https://d1vubr0evspla.cloudfront.net/img/icon-medium.png",
-    "icon-large": "https://d1vubr0evspla.cloudfront.net/img/icon-large.png"
+    "icon-small": "https://s3-us-west-2.amazonaws.com/confluent-mesos-devel/ConfIcon_small.png",
+    "icon-medium": "https://s3-us-west-2.amazonaws.com/confluent-mesos-devel/ConfIcon_medium.png",
+    "icon-large": "https://s3-us-west-2.amazonaws.com/confluent-mesos-devel/ConfIcon_large.png"
   },
   "cli":{
     "binaries":{
