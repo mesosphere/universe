@@ -51,8 +51,8 @@
       }
     },
     {
-      "currentVersion":"0.2.0-2",
-      "description":"Apache Cassandra running on Apache Mesos",
+      "currentVersion":"1.0.5a-2.2.5",
+      "description":"Apache Cassandra running on DC/OS",
       "framework":true,
       "name":"cassandra",
       "selected":true,
@@ -63,7 +63,8 @@
       ],
       "versions":{
         "0.2.0-1":"0",
-        "0.2.0-2":"1"
+        "0.2.0-2":"1",
+        "1.0.5a-2.2.5":"2"
       }
     },
     {
