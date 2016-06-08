@@ -99,13 +99,19 @@
     },
 
 
-    "pip": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "title": "Embedded Requirements File",
-      "description": "[Deprecated v3.x] An array of strings representing of the requirements file to use for installing the subcommand for Pip. Each item is interpreted as a line in the requirements file."
+    "command": {
+      "additionalProperties": false,
+      "required": ["pip"],
+      "properties": {
+        "pip": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Embedded Requirements File",
+          "description": "[Deprecated v3.x] An array of strings representing of the requirements file to use for installing the subcommand for Pip. Each item is interpreted as a line in the requirements file."
+        }
+      }
     },
 
 
@@ -197,8 +203,8 @@
         "config": {
           "$ref": "#/definitions/config"
         },
-        "pip": {
-          "$ref": "#/definitions/pip"
+        "command": {
+          "$ref": "#/definitions/command"
         }
       },
       "required": [
@@ -304,8 +310,8 @@
         "config": {
           "$ref": "#/definitions/config"
         },
-        "pip": {
-          "$ref": "#/definitions/pip"
+        "command": {
+          "$ref": "#/definitions/command"
         }
       },
       "required": [

@@ -285,8 +285,7 @@ def generate_package(
         }
     if config:
         package['config'] = config
-    if command and 'pip' in command:
-        package['pip'] = command['pip']
+    package['command'] = command
 
     return package
 
@@ -412,11 +411,11 @@ def write_package_in_zip(zip_file, path, package):
             str(path / 'config.json'),
             json.dumps(config))
 
-    command = package.pop('pip', None)
+    command = package.pop('command', None)
     if command:
         zip_file.writestr(
             str(path / 'command.json'),
-            json.dumps({'pip': command}))
+            json.dumps(command))
 
     # TODO: Make sure that we don't have any extra fields like:
     # minDcosReleaseVersion
