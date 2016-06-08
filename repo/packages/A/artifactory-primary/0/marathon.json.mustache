@@ -14,21 +14,6 @@
                 "containerPath": "/var/opt/jfrog/cluster",
                 "hostPath": "{{artifactory-primary.cluster-home}}/cluster-home",
                 "mode": "RW"
-            },
-            {
-                "containerPath": "/var/opt/jfrog/artifactory/data",
-                "hostPath": "{{artifactory-primary.artifactory-home}}/{{artifactory-primary.framework-name}}/data",
-                "mode": "RW"
-            },
-            {
-                "containerPath": "/var/opt/jfrog/artifactory/logs",
-                "hostPath": "{{artifactory-primary.artifactory-home}}/{{artifactory-primary.framework-name}}/logs",
-                "mode": "RW"
-            },
-            {
-                "containerPath": "/var/opt/jfrog/artifactory/backup",
-                "hostPath": "{{artifactory-primary.artifactory-home}}/{{artifactory-primary.framework-name}}/backup",
-                "mode": "RW"
             }
          ]
     },
@@ -50,8 +35,8 @@
             "DATABASE_CONNECTION_STRING": "{{artifactory-primary.database.connection-string}}",
             "DATABASE_USER":  "{{artifactory-primary.database.user}}",
             "DATABASE_PASSWORD":  "{{artifactory-primary.database.password}}",
-            "PRIMARY_LICENSE": "{{artifactory-primary.primary-license}}",
-            "LICENSES": "{{artifactory-primary.licenses}}"
+            "ART_PRIMARY_LICENSE": "{{artifactory-primary.primary-license}}",
+            "ART_LICENSES": "{{artifactory-primary.licenses}}"
     },
     "healthChecks": [
         {
