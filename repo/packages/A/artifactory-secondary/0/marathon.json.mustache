@@ -14,7 +14,22 @@
                     "containerPath": "/var/opt/jfrog/cluster",
                     "hostPath": "{{artifactory-secondary.cluster-home}}/cluster-home",
                     "mode": "RW"
-                 }
+                 },
+                {
+                    "containerPath": "/var/opt/jfrog/artifactory/logs",
+                    "hostPath": "{{artifactory-secondary.artifactory-home}}/{{artifactory-secondary.framework-name}}/logs",
+                    "mode": "RW"
+                },
+                {
+                    "containerPath": "//var/opt/jfrog/artifactory/data",
+                    "hostPath": "{{artifactory-secondary.artifactory-home}}/{{artifactory-secondary.framework-name}}/data",
+                    "mode": "RW"
+                },
+                {
+                "containerPath": "/var/opt/jfrog/artifactory/backup",
+                "hostPath": "{{artifactory-secondary.artifactory-home}}/{{artifactory-secondary.framework-name}}/backup",
+                "mode": "RW"
+                }
                 ]
             },
     "portDefinitions": [
