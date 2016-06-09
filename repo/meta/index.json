@@ -242,7 +242,7 @@
       }
     },
     {
-      "currentVersion":"0.9.4.0",
+      "currentVersion":"0.9.4.0a",
       "description":"Apache Kafka running on top of Apache Mesos",
       "framework":true,
       "name":"kafka",
@@ -255,7 +255,8 @@
       ],
       "versions":{
         "0.9.2.0":"0",
-        "0.9.4.0":"3"
+        "0.9.4.0":"3",
+        "0.9.4.0a":"4"
       }
     },
     {
