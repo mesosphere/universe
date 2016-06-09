@@ -11,13 +11,13 @@
           "default": "artifactory-primary"
         },
         "cpus": {
-          "description": "CPU shares to allocate to each Artifactory master.",
+          "description": "CPU shares to allocate to Artifactory-Primary instance.",
           "type": "number",
           "default": 2.0,
           "minimum": 1.0
         },
         "mem": {
-          "description": "Memory to allocate to each Artifactory master.",
+          "description": "Memory to allocate to Artifactory-Primary instance.",
           "type": "number",
           "default": 2048.0,
           "minimum": 1024.0
@@ -49,13 +49,8 @@
             }
           }
         },
-        "primary-license": {
-          "description": "Provide one Artifactory HA License which will be used for Artifactory-Primary",
-          "type": "string",
-          "default": "NONE"
-        },
         "licenses": {
-          "description": "Provide Licenses comma separated to be used by Artifactory-Secondary instances",
+          "description": "Provide Licenses comma separated to be used by Artifactory instances",
           "type": "string",
           "default": "NONE"
         }

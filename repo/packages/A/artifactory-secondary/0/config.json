@@ -11,13 +11,13 @@
           "default": "artifactory-secondary"
         },
         "cpus": {
-          "description": "CPU shares to allocate to each Artifactory master.",
+          "description": "CPU shares to allocate to each Artifactory-Secondary instance.",
           "type": "number",
           "default": 2.0,
           "minimum": 1.0
         },
         "mem": {
-          "description": "Memory to allocate to each Artifactory master.",
+          "description": "Memory to allocate to each Artifactory-Secondary instance.",
           "type": "number",
           "default": 2048.0,
           "minimum": 1024.0
