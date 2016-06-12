@@ -29,18 +29,18 @@
           "type":"string"
         },
         "zookeeper-servers":{
-          "default":"master.mesos:2181",
+          "default":"leader.mesos:2181",
           "description":"The ZooKeeper server(s) configuration.",
           "type":"string"
         },
         "mesos-url":{
-          "default":"http://master.mesos:5050",
-          "description":"Mesos master URL.",
+          "default":"http://leader.mesos:5050",
+          "description":"Mesos leading master URL.",
           "type":"string"
         },
         "marathon-url":{
-          "default":"http://master.mesos:8080",
-          "description":"Marathon master URL.",
+          "default":"http://leader.mesos:8080",
+          "description":"Marathon leading master URL.",
           "type":"string"
         },
         "logstash":{
