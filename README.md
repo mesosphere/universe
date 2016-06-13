@@ -1,101 +1,62 @@
-# Mesosphere Universe [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)
+# Mesosphere Universe
 
-The DC/OS package repository for packages that have been certified by Mesosphere.
+| Build | Status |
+|---|---|
+|CI   | [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)|
+| Universe Server | [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_UniverseServer)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_UniverseServer&guest=1)|
+Mesosphere Universe registry of packages made available for DC/OS Clusters.
 
-## Installation
+#### Table of Contents
+* [Universe Purpose](#universe-purpose)
+* [Publish a Package](#publish-a-package-1)
+  * [Creating a Package](#creating-a-package)
+    * [`package.json`](#packagejson)
+      * [`.minDcosReleaseVersion`](#mindcosreleaseversion)
+    * [`config.json`](#configjson)
+    * [`marathon.json.mustache`](#marathonjsonmustache)
+    * [`command.json`](#commandjson)
+    * [`resource.json`](#resourcejson)
+      * [Docker Images](#docker-images)
+      * [Images](#images)
+      * [CLI Resources](#cli-resources)
+  * [Submit your Package](#submit-your-package)
+* [Repository Consumption](#repository-consumption-1)
+  * [Universe Server](#universe-server)
+    * [Build Universe Server locally](#build-universe-server-locally)
+    * [Run Universe Server](#run-universe-server)
+  * [Consumption Protocol](#consumption-protocol)
+  * [Supported DC/OS Versions](#supported-dcos-versions)
 
-The latest [DC/OS](https://mesosphere.com/product/) comes pre-configured to use the Universe
-repository.
+## Universe Purpose
+This git repo facilitates three necessary functions to publish, store and consume packages.
 
-If you would like to add this to your DC/OS manually:
+### Publish a Package
 
+To publish a package to Universe, fork this repo and open a Pull Request. A set of automated builds will be run against
+the Pull Request to ensure the modifications made in the PR leave the Universe well formed.
+See [Creating a Package](#creating-a-package) for details.
+
+### Registry of Packages
+
+The registry of published packages is maintained as the contents of this repo in the `repo/packages` directory. As of
+repository version `3.0` multiple packaging versions are allowed to co-exist in the same repository. Validation of
+packages are coordinated based on the packaging version defined in `package.json`.
+
+### Repository Consumption
+
+In order for published packages to be consumed and installed in a DC/OS Cluster the Universe Server needs to be built
+and run in a location accessible by the DC/OS Cluster. See [Universe Server](#universe-server) for details on
+building the Universe artifacts and Server.
+
+## Publish a Package
+
+### Creating a Package
+
+Each package has its own directory, with one subdirectory for each package revision. Each package revision directory
+contains the set of files necessary to create a consumable package that can be used by a DC/OS Cluster to install
+the package.
 ```
-dcos package repo add Universe https://universe.mesosphere.com/repo
-```
-
-## Branches
-
-The default branch for this repository is `version-3.x`, which reflects the current schema for the
-Universe. In the future, if the format changes significantly, there will be additional branches.
-
-The `cli-tests-*` branches are used for integration testing by the [DC/OS CLI](https://github.com/mesosphere/dcos-cli) and provides a fixed and well known set of packages to write tests against.
-
-## Contributing a Package
-
-Interested in making your package or service available to the world? The instructions below will
-help you set up to build a package and create a Universe Server that can be used to test your new
-package in a running DC/OS cluster.
-
-### Development Set Up
-
-1. Clone the repo (or you may wish to fork it first):
-
-  ```
-  git clone https://github.com/mesosphere/universe.git /path/to/universe
-  ```
-
-2. You may need to install the `jsonschema` Python package if you don't have it:
-
-  ```
-  sudo pip install jsonschema
-  ```
-
-3. Install pre-commit hook:
-
-  ```
-  bash /path/to/universe/scripts/install-git-hooks.sh
-  ```
-
-4. To test in DC/OS we need to make the packages available to your cluster. As of universe version-3.x
-   the Universe now requires a server component to be able to make packages available to multiple
-   versions of DC/OS. To build a docker image of the server run:
-
-  ```bash
-  cd /path/to/universe/docker/server
-  DOCKER_TAG="my-package" ./build.bash
-  ```
-
-  This will create a docker image `universe-server:my-package` and `target/marathon.json` on your
-  local machine which can then be pushed to a registry accessible by your DC/OS cluster.
-
-  To push the docker image to a registry run:
-
-  ```bash
-  DOCKER_TAG="my-package" ./build.bash publish
-  ```
-
-  Now that the image has been pushed to a registry run the following commands on a machine with
-  the DC/OS CLI Installed:
-
-  ```
-  dcos marathon app add target/marathon.json
-  dcos package repo add --index=0 dev-universe http://universe.marathon.mesos:8085/repo
-  ```
-
-  Alternatively, all Pull Requests opened for Universe will have their docker image build and published
-  to DockerHub.  Click the details of the "Universe Server Docker image" status report of the Pull Request.
-  In the artifacts tab of the build results you can find `docker/server/marathon.json` which can be used
-  to run the universe server in your cluster.
-
-The pre-commit hook will run [build.sh](scripts/build.sh) before allowing you to commit. This
-script validates your package definitions.
-
-### Submit to Universe
-
-Once complete, please submit a pull request against the `version-3.x` branch with your changes.
-
-Every pull request opened on this repo will have a set of automated verifications ran against it. 
-These automated verification are reported against the pull request using the GitHub status API. 
-All verifications must pass in order for a pull request to be eligible for merge.
-
-## Package entries
-
-### Organization
-
-Packages are encapsulated in their own directory, with one subdirectory for each package version.
-
-```
-└── foo
+└── repo/package/F/foo
     ├── 0
     │   ├── command.json
     │   ├── config.json
@@ -109,13 +70,22 @@ Packages are encapsulated in their own directory, with one subdirectory for each
     │   ├── resource.json
     │   └── package.json
     └── ...
-
 ```
-_Sample package directory layout._
 
-### Content
 
 #### `package.json`
+|Packaging Version|   |
+|-----------------|---|
+|2.0|required|
+|3.0|required|
+
+Every package in Universe must have a `package.json` file which specifies the high level metadata about the package.
+
+Currently, a package can specify one of two values for `.packagingVersion` either `2.0` or `3.0`; which version is declared
+will dictate which other files are required for the complete package as well as the schema(s) all the files must
+adhere to. Below is a snippet that represents a version `2.0` package.
+See [`repo/meta/schema/package-schema.json`](repo/meta/schema/package-schema.json) for the full json schema outlining
+what properties are available for each corresponding version of a package.
 
 ```json
 {
@@ -127,40 +97,34 @@ _Sample package directory layout._
   "description": "Does baz.",
   "scm": "https://github.com/bar/foo.git",
   "website": "http://bar.io/foo",
+  "framework": true,
   "postInstallNotes": "Have fun foo-ing and baz-ing!"
 }
 ```
-_Sample `package.json`._
-
-The required fields are:
-
-- packagingVersion
-- name
-- version
-- tags
-- maintainer
-- description
 
 ###### `.minDcosReleaseVersion`
+|Packaging Version|   |
+|-----------------|---|
+|2.0|not supported|
+|3.0|optional|
 
-Introduced in version-3.x, the Universe now supports the ability for packages to define a
-minimum version of DC/OS their package is compatible with. See [DC/OS Release Versions](https://mesosphere.com/releases/)
-for a list of DC/OS Releases and valid values for `.minDcosReleaseVersion`.
-
-The new property `.minDcosReleaseVersion` can be specified for packages adhering to the
-`.packagingVersion` `3.0` schema.
-
-When `.minDcosReleaseVersion` is specified the package will only be made available to DC/OS
-clusters with a DC/OS Release Version greater than or equal to (`>=`) the value specified.
-
+Introduced in `packagingVersion` `3.0`, `.minDcosReleaseVersion` can be specified as a property of `package.json`.
+When `.minDcosReleaseVersion` is specified the package will only be made available to DC/OS clusters with a DC/OS
+Release Version greater than or equal to (`>=`) the value specified.
 
 #### `config.json`
+|Packaging Version|   |
+|-----------------|---|
+|2.0|optional|
+|3.0|optional|
 
-This file describes the configuration properties supported by the package. Each property can
-specify whether or not it is required, a default value, as well as some basic validation.
+This file describes the configuration properties supported by the package, represented as a
+[json-schema](http://spacetelescope.github.io/understanding-json-schema/). Each property can specify whether or not it
+is required, a default value, as well as some basic validation.
 
-Users can then [override specific values](https://docs.mesosphere.com/usage/services/config/) at
-installation time by passing an options file to the DC/OS CLI.
+Users can then [override specific values](https://docs.mesosphere.com/1.7/usage/services/config/) at
+installation time by passing an options file to the DC/OS CLI or by setting config values through the
+DC/OS UI (since DC/OS 1.7).
 
 ```json
 {
@@ -184,19 +148,25 @@ installation time by passing an options file to the DC/OS CLI.
   "required": ["foo"]
 }
 ```
-_Sample `config.json`._
 
-`config.json` must be a valid [JSON Schema](http://json-schema.org/) file. Check out the
-[JSON Schema examples](http://json-schema.org/examples.html).
 
 #### `marathon.json.mustache`
+|Packaging Version|   |
+|-----------------|---|
+|2.0|required|
+|3.0|optional|
 
-This file describes how to run the package as a
-[Marathon](http://github.com/mesosphere/marathon) app.
+This file is a [mustache template](http://mustache.github.io/) that when rendered will create a
+[Marathon](http://github.com/mesosphere/marathon) app definition capable of running your service.
 
-User-supplied metadata (as described in `config.json`), the defaults from `config.json` and the
-resource information in `resource.json` will be injected to the template using
-[mustache template](http://mustache.github.io/) syntax.
+Variables in the mustache template will be evaluated from a union object created by merging three objects in the
+following order:
+
+1. Defaults specified in `config.json`
+
+2. User supplied options from either the DC/OS CLI or the DC/OS UI
+
+3. The contents of `resource.json`
 
 ```json
 {
@@ -222,17 +192,22 @@ resource information in `resource.json` will be injected to the template using
   }
 }
 ```
-_Sample `marathon.json.mustache`._
 
 See the
 [Marathon API Documentation](https://mesosphere.github.io/marathon/docs/rest-api.html)
 for more detailed instruction on app definitions.
 
 #### `command.json`
+|Packaging Version|   |
+|-----------------|---|
+|2.0|optional|
+|3.0|optional **[Deprecated]**|
 
-This file is **optional**. Describes how to install the package's CLI.
-Currently the only supported format is a Pip requirements file where each
-element in the array is a line in the requirements file.
+As of `packagingVersion` `3.0`, `command.json` is deprecated in favor of the `.cli` property of `resources.json`.
+See [CLI Resources](#cli-resources) for details.
+
+Describes how to install the package's package's CLI via pip, the Python package manager. This document represents the
+format of a Pip requirements file where each element in the array is a line in the requirements file.
 
 ```json
 {
@@ -241,12 +216,12 @@ element in the array is a line in the requirements file.
   ]
 }
 ```
-_Sample `command.json`._
-
-See the [Command Schema](repo/meta/schema/command-schema.json) for a detailed description of
-the schema.
 
 #### `resource.json`
+|Packaging Version|   |
+|-----------------|---|
+|2.0|optional|
+|3.0|optional|
 
 This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects and
 images) needed to install the application.
@@ -274,13 +249,16 @@ images) needed to install the application.
   }
 }
 ```
-_Sample `resource.json`._
+
+##### Docker Images
 
 For the Docker image, please use the image ID for the referenced image. You can find this by
 pulling the image locally and running `docker images some-org/foo:1.0.0`.
 
+##### Images
+
 While `images` is an optional field, it is highly recommended you include icons and screenshots
-in your package and update the path definitions accordingly. Specifications are as follows:
+in `resource.json` and update the path definitions accordingly. Specifications are as follows:
 
 * `icon-small`: 48px (w) x 48px (h)
 * `icon-medium`: 96px (w) x 96px (h)
@@ -289,103 +267,164 @@ in your package and update the path definitions accordingly. Specifications are 
 
 **NOTE:** To ensure your service icons look beautiful on retina-ready displays,
 please supply 2x versions of all icons. No changes are needed to
-`package.json` - simply supply an additional icon file with the text `@2x` in
+`resource.json` - simply supply an additional icon file with the text `@2x` in
 the name before the file extension.
 For example, the icon `icon-cassandra-small.png` would have a retina-ready
 alternate image named `icon-cassandra-small@2x.png`.
 
-### Versioning
+##### CLI Resources
+|Packaging Version|   |
+|-----------------|---|
+|2.0|not supported|
+|3.0|optional|
 
-The registry specification is versioned separately in the file `/repo/meta/version.json`.
+The new `.cli` property allows for a package to configure native CLI subcommands for several platforms and
+architectures.
 
 ```json
 {
-  "version": "3.0.0-SNAPSHOT"
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[
+            { "algo": "sha256", "value": "..." }
+          ],
+          "kind": "executable",
+          "url":"https://some.org/foo/1.0.0/cli/darwin/dcos-foo"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[
+            { "algo":"sha256", "value":"..." }
+          ],
+          "kind":"executable",
+          "url":"https://some.org/foo/1.0.0/cli/linux/dcos-foo"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[
+            { "algo":"sha256", "value":"..." }
+          ],
+          "kind":"executable",
+          "url":"https://some.org/foo/1.0.0/cli/windows/dcos-foo"
+        }
+      }
+    }
+  }
 }
 ```
-_Sample `repo/meta/version.json`._
 
-This version is updated with any change to the required file content
-(typically validated using JSON schema) or expected file organization in the
-`repo` directory.
+### Submit your Package
 
-The packaging version should also be included in the `package.json` for each package using the
-`packagingVersion` property.
+Developers are invited to publish a package containing their DC/OS Service by submitting a Pull Request targeted at
+the `version-3.x` branch of this repo.
 
-### Validation
+Full Instructions:
 
-Package content is validated using [JSON Schema](http://json-schema.org).
-The schema definitions live in `/repo/meta/schema`.
+1. Fork this repo and clone the fork:
 
-## Directory Structure
+  ```bash
+  git clone https://github.com/<user>/universe.git /path/to/universe
+  ```
+
+2. Ensure that the `jsonschema` command line tool is installed:
+
+  ```bash
+  sudo pip install jsonschema
+  ```
+
+3. Run the verification and build script:
+
+  ```bash
+  scripts/build.sh
+  ```
+
+4. Verify all build steps completed successfully
+5. Submit a pull request against the `version-3.x` branch with your changes. Every pull request opened will have a set
+   of automated verifications run against it. These automated verification are reported against the pull request using
+   the GitHub status API. All verifications must pass in order for a pull request to be eligible for merge.
+
+6. Respond to manual review feedback provided by the DC/OS Community.
+  * Each Pull Request to Universe will also be manually reviewed by a member of the DC/OS Community. To ensure your
+    package is able to be made available to users as quickly as possible be sure to respond to the feedback provided.
+
+
+## Repository Consumption
+
+In order for Universe to be consumed by DC/OS the build process needs to be run to create the Universe Server.
+
+### Universe Server
+
+Universe Server is a new component introduce alongside `packagingVersion` `3.0`. In order for Universe to be able to
+provide packages for many versions of DC/OS at the same time, it is necessary for a server to be responsible for serving
+the correct set of packages to a cluster based on the cluster's version.
+
+All Pull Requests opened for Universe and the `version-3.x` branch will have their Docker image built and published
+to the DockerHub image [`mesosphere/universe-server`](https://hub.docker.com/r/mesosphere/universe-server/).
+In the artifacts tab of the build results you can find `docker/server/marathon.json` which can be used to run the
+Universe Server for testing in your DC/OS cluster.  For each Pull Request, click the details link of the "Universe Server
+Docker image" status report to view the build results.
+
+#### Build Universe Server locally
+
+1. Validate and build the Universe artifacts
+  ```bash
+  scripts/build.sh
+  ```
+
+2. Build the Universe Server Docker image
+  ```bash
+  DOCKER_TAG="my-package" docker/server/build.bash
+  ```
+  This will create a Docker image `universe-server:my-package` and `target/marathon.json` on your local machine
+
+3. If you would like to publish the built Docker image, run
+  ```bash
+  DOCKER_TAG="my-package" docker/server/build.bash publish
+  ```
+
+#### Run Universe Server
+
+Using the `marathon.json` that is created when building Universe Server we can run a Universe Server in our DC/OS
+Cluster which can then be used to install packages.
+
+Run the following commands to configure DC/OS to use the custom Universe Server
+```bash
+dcos marathon app add marathon.json
+dcos package repo add --index=0 dev-universe http://universe.marathon.mesos:8085/repo
+```
+
+
+### Consumption Protocol
+
+A DC/OS Cluster can be configured to point to multiple Universe Servers; each Universe Server will be fetched via
+HTTPS or HTTP. When a DC/OS Cluster attempts to fetch the package set from a Universe Server, the Universe Server
+will provide ONLY those packages which can be run on the cluster.
+
+For example:
+A DC/OS 1.6.1 Cluster will only receive packages with a `minDcosReleaseVersion` less than or equal to (`<=`) `1.6.1`
+in the format the DC/OS Cluster expects.
 
 ```
-├── LICENSE
-├── README.md
-├── docs
-│   ├── best-practices.md
-│   └── contributing.md
-├── hooks
-│   └── pre-commit
-├── repo
-│   ├── meta
-│   │   ├── schema
-│   │   │   ├── command-schema.json
-│   │   │   ├── config-schema.json
-│   │   │   ├── resource-schema.json
-│   │   │   └── package-schema.json
-│   │   └── version.json
-│   └── packages
-│       ├── B
-│       │   ├── bar
-│       │   │   ├── 0
-│       │   │   │   ├── command.json
-│       │   │   │   ├── config.json
-│       │   │   │   ├── marathon.json.mustache
-│       │   │   │   ├── resource.json
-│       │   │   │   └── package.json
-│       │   │   └── ...
-│       │   └── ...
-│       ├── F
-│       │   ├── foo
-│       │   │   ├── 0
-│       │   │   │   ├── config.json
-│       │   │   │   ├── marathon.json.mustache
-│       │   │   │   ├── resource.json
-│       │   │   │   └── package.json
-│       │   │   └── ...
-│       │   └── ...
-│       └── ...
-└── scripts
-    ├── 1-validate-packages.sh
-    ├── build.sh
-    └── install-git-hooks.sh
+ +----------------------+   +-----------------------+
+ │public universe server│   │private universe server│
+ +----------------------+   +-----------------------+
+                http \         / http
+                      \       /
+                       \     /
+                       +-----+           +--------+
+                       │DC/OS│-----------│Marathon│
+                       +-----+    http   +--------+
 ```
 
-## Sources and Transfer Protocols
+### Supported DC/OS Versions
+Currently Universe Server provides support for the following versions of DC/OS
 
-This section describes transfer of package metadata from a universe source to a client program.
-
-```
- ┌───────────────┐   ┌────────────────┐
- │public universe│   │private universe│
- └───────────────┘   └────────────────┘
-         http \         / http
-               \       /
-                \     /
-               ┌─────┐           ┌────────┐
-               │DC/OS│-----------│Marathon│
-               └─────┘    http   └────────┘
-```
-_Sample (simplified) architecture for a universe client program._
-
-Package sources are described as URLs.
-
-Source URLs encode the transfer protocol. Recommendations for several transfer protocols follow.
-
-**HTTP and HTTPS**
-
-A URL that designates a
-[zip](http://en.wikipedia.org/wiki/Zip_%28file_format%29) file
-accessible over HTTP or HTTPS with media type `application/zip`.
-Example: `http://my.org/files/universe/packages.zip`
+| DC/OS Release Version | Support Level |
+|-----------------------|---------------|
+| 1.6.1                 | Full Support  |
+| 1.7                   | Full Support  |
+| 1.8                   | Full Support  |
