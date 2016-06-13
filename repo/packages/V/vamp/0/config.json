@@ -1,0 +1,85 @@
+{
+  "properties":{
+    "vamp":{
+      "description":"Vamp specific configuration properties",
+      "properties":{
+        "vamp-id":{
+          "default":"vamp",
+          "description":"Marathon Vamp application id.",
+          "type":"string"
+        },
+        "vamp-gateway-agent-id":{
+          "default":"vamp-gateway-agent",
+          "description":"Marathon Vamp Gateway Agent application id.",
+          "type":"string"
+        },
+        "memory":{
+          "default":"1024",
+          "description":"The amount of ram that Mesos should give to Vamp.",
+          "type":"string"
+        },
+        "cpu":{
+          "default":"0.5",
+          "description":"The amount of CPU resource to allocate to Vamp instance.",
+          "type":"string"
+        },
+        "rest-api-port":{
+          "default":"9090",
+          "description":"The Rest API and UI port.",
+          "type":"string"
+        },
+        "zookeeper-servers":{
+          "default":"leader.mesos:2181",
+          "description":"The ZooKeeper server(s) configuration.",
+          "type":"string"
+        },
+        "mesos-url":{
+          "default":"http://leader.mesos:5050",
+          "description":"Mesos leading master URL.",
+          "type":"string"
+        },
+        "marathon-url":{
+          "default":"http://leader.mesos:8080",
+          "description":"Marathon leading master URL.",
+          "type":"string"
+        },
+        "logstash":{
+          "description":"Logstash host (IP), e.g.'10.240.0.4'. By default Logstash should listen on 10001 UDP port.",
+          "type":"string"
+        },
+        "elasticsearch-url":{
+          "description":"Elasticsearch URL, e.g. 'http://10.240.0.4:9200'",
+          "type":"string"
+        },
+        "vga-deployment":{
+          "default":true,
+          "description":"Should Vamp Gateway Agent(s) be deployed on all Mesos agents or not.",
+          "type":"boolean"
+        },
+        "force-pull-image":{
+          "default":true,
+          "description":"Force docker to re-pull the image.",
+          "type":"boolean"
+        }
+      },
+      "required":[
+        "vamp-id",
+        "vamp-gateway-agent-id",
+        "memory",
+        "cpu",
+        "rest-api-port",
+        "zookeeper-servers",
+        "mesos-url",
+        "marathon-url",
+        "logstash",
+        "elasticsearch-url",
+        "vga-deployment",
+        "force-pull-image"
+      ],
+      "type":"object"
+    }
+  },
+  "required":[
+    "vamp"
+  ]
+}

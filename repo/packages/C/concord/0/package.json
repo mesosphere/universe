@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "2.0",
+  "name": "concord",
+  "version": "0.3.16.4",
+  "maintainer": "support@concord.io",
+  "description": "High Performance Stream Processing with C++ and Apache Mesos",
+  "selected": false,
+  "framework": true,
+  "website": "http://concord.io",
+  "tags": ["stream", "framework", "pubsub", "multi-lang"],
+  "scm": "https://github.com/concord",
+  "licenses": [
+    {
+      "name": "Terms and Conditions",
+      "url": "http://concord.io/terms-of-service.html"
+    }
+  ],
+  "postInstallNotes": "Concord has been installed.",
+  "postUninstallNotes": "Concord has been uninstalled."
+}
