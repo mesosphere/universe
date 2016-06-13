@@ -1,13 +1,13 @@
 # Mesosphere Universe [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)
 
-The DCOS package repository for packages that have been certified by Mesosphere.
+The DC/OS package repository for packages that have been certified by Mesosphere.
 
 ## Installation
 
-The latest [DCOS](https://mesosphere.com/product/) comes pre-configured to use the Universe
+The latest [DC/OS](https://mesosphere.com/product/) comes pre-configured to use the Universe
 repository.
 
-If you would like to add this to your DCOS manually:
+If you would like to add this to your DC/OS manually:
 
 ```
 dcos package repo add Universe https://universe.mesosphere.com/repo
@@ -18,7 +18,7 @@ dcos package repo add Universe https://universe.mesosphere.com/repo
 The default branch for this repository is `version-2.x`, which reflects the current schema for the
 Universe. In the future, if the format changes significantly, there will be additional branches.
 
-The `cli-tests-*` branches are used for integration testing by the [DCOS CLI](https://github.com/mesosphere/dcos-cli) and provides a fixed and well known set of packages to write tests against.
+The `cli-tests-*` branches are used for integration testing by the [DC/OS CLI](https://github.com/mesosphere/dcos-cli) and provides a fixed and well known set of packages to write tests against.
 
 ## Contributing a Package
 
@@ -45,9 +45,9 @@ help you set up a local copy of the Universe for development.
   bash /path/to/universe/scripts/install-git-hooks.sh
   ```
 
-4. To test in DCOS we need to make the packages available to your cluster. We can do this using
+4. To test in DC/OS we need to make the packages available to your cluster. We can do this using
 topic or feature branches. Once you have committed your changes and pushed them to a topic branch.
-We can use them within DCOS with:
+We can use them within DC/OS with:
 
   ```
   dcos package repo add Development http://github/path/to/branch/zip
@@ -133,8 +133,8 @@ The required fields are:
 This file describes the configuration properties supported by the package. Each property can
 specify whether or not it is required, a default value, as well as some basic validation.
 
-Users can then [override specific values](https://docs.mesosphere.com/usage/service-config/) at
-installation time by passing an options file to the DCOS CLI.
+Users can then [override specific values](https://docs.mesosphere.com/usage/services/config/) at
+installation time by passing an options file to the DC/OS CLI.
 
 ```json
 {
@@ -357,7 +357,7 @@ This section describes transfer of package metadata from a universe source to a 
                \       /
                 \     /
                ┌────┐           ┌────────┐
-               │DCOS│-----------│Marathon│
+               │DC/OS│-----------│Marathon│
                └────┘    http   └────────┘
 ```
 _Sample (simplified) architecture for a universe client program._
