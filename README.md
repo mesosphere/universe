@@ -356,9 +356,9 @@ This section describes transfer of package metadata from a universe source to a 
          http \         / http
                \       /
                 \     /
-               ┌────┐           ┌────────┐
+               ┌─────┐           ┌────────┐
                │DC/OS│-----------│Marathon│
-               └────┘    http   └────────┘
+               └─────┘    http   └────────┘
 ```
 _Sample (simplified) architecture for a universe client program._
 
