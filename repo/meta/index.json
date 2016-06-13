@@ -144,6 +144,21 @@
       }
     },
     {
+      "currentVersion":"0.1.0",
+      "description":"Enterprise only cli subcommands",
+      "framework":false,
+      "name":"enterprise-cli-subcommands",
+      "selected":false,
+      "tags":[
+        "mesosphere",
+        "enterprise",
+        "subcommand"
+      ],
+      "versions":{
+        "0.1.0":"0"
+      }
+    },
+    {
       "currentVersion":"0.0.3",
       "description":"A distributed consistent key-value store for shared configuration and service discovery.",
       "framework":true,
