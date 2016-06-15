@@ -87,6 +87,7 @@
 
 
     "v20resource": {
+      "additionalProperties": false,
       "type": "object",
       "properties": {
         "assets": {
@@ -143,6 +144,7 @@
 
 
     "v30resource": {
+      "additionalProperties": false,
       "type": "object",
       "properties": {
         "assets": {
