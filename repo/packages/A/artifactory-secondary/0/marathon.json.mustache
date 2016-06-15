@@ -45,7 +45,7 @@
             "timeoutSeconds": 10
         }
         ]
-    {{#artifactory-secondary.high-availability.unique-nodes}},
+    {{#artifactory-secondary.unique-nodes}},
         "constraints": [["hostname", "UNIQUE"]]
-    {{/artifactory-secondary.high-availability.unique-nodes}}
+    {{/artifactory-secondary.unique-nodes}}
 }
