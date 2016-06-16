@@ -37,6 +37,14 @@
             "ART_DATABASE_PASSWORD":  "{{artifactory-primary.database.database-password}}",
             "ART_LICENSES": "{{artifactory-primary.artifactory-licenses}}"
     },
+    "labels": {
+            "MARATHON_SINGLE_INSTANCE_APP": "true",
+            "DCOS_PACKAGE_FRAMEWORK_NAME": "{{artifactory-primary.framework-name}}"
+    },
+    "upgradeStrategy":{
+            "minimumHealthCapacity": 0,
+            "maximumOverCapacity": 0
+    },
     "healthChecks": [
         {
             "gracePeriodSeconds": 3,
