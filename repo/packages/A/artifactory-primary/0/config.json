@@ -35,15 +35,15 @@
           "description": "High availability database properties.",
           "type": "object",
           "properties": {
-            "connection-string": {
+            "database-connection-string": {
               "description": "Database connection string.",
               "type": "string"
             },
-            "user": {
+            "database-user": {
               "description": "Database username.",
               "type": "string"
             },
-            "password": {
+            "database-password": {
               "description": "Database password.",
               "type": "string"
             }
