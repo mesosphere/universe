@@ -387,9 +387,15 @@ def write_package_in_zip(zip_file, path, package):
 
     package = package.copy()
     package.pop('releaseVersion')
+    package.pop('minDcosReleaseVersion', None)
+    package['packagingVersion'] = "2.0"
 
     resource = package.pop('resource', None)
     if resource:
+        cli = resource.pop('cli', None)
+        if cli and 'command' in package:
+            print(('WARNING: Removing binary CLI from ({}, {}) without a '
+                  'Python CLI').format(package['name'], package['version']))
         zip_file.writestr(
             str(path / 'resource.json'),
             json.dumps(resource))
@@ -417,8 +423,6 @@ def write_package_in_zip(zip_file, path, package):
             str(path / 'command.json'),
             json.dumps(command))
 
-    # TODO: Make sure that we don't have any extra fields like:
-    # minDcosReleaseVersion
     zip_file.writestr(
         str(path / 'package.json'),
         json.dumps(package))
