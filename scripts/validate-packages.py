@@ -95,9 +95,10 @@ def _validate_revision(given_package, revision, path):
     # Validate that we don't drop information during the conversion
     oldPackage = LooseVersion(
         package_json.get('minDcosReleaseVersion', "1.0")) < LooseVersion("1.8")
-    if oldPackage and 'cli' in resource_json and command_json is None:
-        sys.exit('\tERROR\n\nWill drop CLI information if converted to '
-                 'version 2 package. Please set the minDcosReleaseVerions to '
+    if (oldPackage and resource_json and 'cli' in resource_json and
+        command_json is None):
+        sys.exit('\tERROR\n\nA package with CLI specified in resource.json is '
+                 'only supported when minDcosReleaseVersion is greater than '
                  '1.8.')
 
 def _validate_json(path, schema):
