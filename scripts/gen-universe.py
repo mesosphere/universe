@@ -397,7 +397,7 @@ def write_package_in_zip(zip_file, path, package):
     resource = package.pop('resource', None)
     if resource:
         cli = resource.pop('cli', None)
-        if cli and 'command' in package:
+        if cli and 'command' not in package:
             print(('WARNING: Removing binary CLI from ({}, {}) without a '
                   'Python CLI').format(package['name'], package['version']))
         zip_file.writestr(
