@@ -332,6 +332,10 @@ def render_universe_zip(zip_file, packages):
         str(root / 'repo' / 'meta' / 'index.json'),
         json.dumps(create_index(packages)))
 
+    zip_file.writestr(
+        str(root / 'repo' / 'meta' / 'version.json'),
+        json.dumps({'version': '2.0.0'}))
+
     packagesDir = root / 'repo' / 'packages'
     create_dir_in_zip(zip_file, packagesDir)
 
@@ -437,7 +441,7 @@ def create_index(packages):
     """
 
     index = {
-        'version': "2.0.0-rc2",
+        'version': '2.0.0',
         'packages': [
             create_index_entry(same_packages)
             for _, same_packages
