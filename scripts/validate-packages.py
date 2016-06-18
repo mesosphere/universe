@@ -4,6 +4,7 @@ import json
 import jsonschema
 import os
 import sys
+from distutils.version import LooseVersion
 
 SCRIPTS_DIR = os.path.dirname(os.path.realpath(__file__))
 UNIVERSE_DIR = os.path.join(SCRIPTS_DIR, "..")
@@ -55,9 +56,10 @@ def _validate_revision(given_package, revision, path):
 
     # validate command.json
     command_json_path = os.path.join(path, 'command.json')
+    command_json = None
     if os.path.isfile(command_json_path):
         print("\t\tcommand.json:", end='')
-        _validate_json(command_json_path, COMMAND_JSON_SCHEMA)
+        command_json = _validate_json(command_json_path, COMMAND_JSON_SCHEMA)
         print("\tOK")
 
     # validate config.json
@@ -77,14 +79,27 @@ def _validate_revision(given_package, revision, path):
 
     # validate resource.json
     resource_json_path = os.path.join(path, 'resource.json')
+    resource_json = None
     if os.path.isfile(resource_json_path):
         print("\t\tresource.json:", end='')
         if packaging_version == "2.0":
-            _validate_json(resource_json_path, V2_RESOURCE_JSON_SCHEMA)
+            resource_json = _validate_json(
+                resource_json_path,
+                V2_RESOURCE_JSON_SCHEMA)
         else:
-            _validate_json(resource_json_path, V3_RESOURCE_JSON_SCHEMA)
+            resource_json = _validate_json(
+                resource_json_path,
+                V3_RESOURCE_JSON_SCHEMA)
         print("\tOK")
 
+    # Validate that we don't drop information during the conversion
+    oldPackage = LooseVersion(
+        package_json.get('minDcosReleaseVersion', "1.0")) < LooseVersion("1.8")
+    if (oldPackage and resource_json and 'cli' in resource_json and
+        command_json is None):
+        sys.exit('\tERROR\n\nA package with CLI specified in resource.json is '
+                 'only supported when minDcosReleaseVersion is greater than '
+                 '1.8.')
 
 def _validate_json(path, schema):
         with open(path) as f:

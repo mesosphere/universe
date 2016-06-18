@@ -332,6 +332,10 @@ def render_universe_zip(zip_file, packages):
         str(root / 'repo' / 'meta' / 'index.json'),
         json.dumps(create_index(packages)))
 
+    zip_file.writestr(
+        str(root / 'repo' / 'meta' / 'version.json'),
+        json.dumps({'version': '2.0.0'}))
+
     packagesDir = root / 'repo' / 'packages'
     create_dir_in_zip(zip_file, packagesDir)
 
@@ -387,9 +391,15 @@ def write_package_in_zip(zip_file, path, package):
 
     package = package.copy()
     package.pop('releaseVersion')
+    package.pop('minDcosReleaseVersion', None)
+    package['packagingVersion'] = "2.0"
 
     resource = package.pop('resource', None)
     if resource:
+        cli = resource.pop('cli', None)
+        if cli and 'command' not in package:
+            print(('WARNING: Removing binary CLI from ({}, {}) without a '
+                  'Python CLI').format(package['name'], package['version']))
         zip_file.writestr(
             str(path / 'resource.json'),
             json.dumps(resource))
@@ -417,8 +427,6 @@ def write_package_in_zip(zip_file, path, package):
             str(path / 'command.json'),
             json.dumps(command))
 
-    # TODO: Make sure that we don't have any extra fields like:
-    # minDcosReleaseVersion
     zip_file.writestr(
         str(path / 'package.json'),
         json.dumps(package))
@@ -433,7 +441,7 @@ def create_index(packages):
     """
 
     index = {
-        'version': "2.0.0-rc2",
+        'version': '2.0.0',
         'packages': [
             create_index_entry(same_packages)
             for _, same_packages
