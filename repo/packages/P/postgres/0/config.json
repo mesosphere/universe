@@ -1,0 +1,51 @@
+{
+  "properties":{
+    "postgres":{
+      "description":"Postgres specific configuration properties",
+      "properties":{
+        "framework-name":{
+          "default":"postgres",
+          "description":"The framework name.",
+          "type":"string"
+        },
+        "postgres-password":{
+          "default": "dcospostgres",
+          "description":"Password for postgres superuser. This should be changed! Defaults to dcospostgres.",
+          "type":"string"
+        },
+        "port":{
+          "default": 5432,
+          "description":"The port number of the database server. Defaults to 5432.",
+          "type":"integer"
+        },
+        "memory-mb":{
+          "default": 512,
+          "description":"The amount of memory allocated for the database server in MB. Defaults to 512MB.",
+          "type":"integer"
+        },
+        "connections":{
+          "default": 200,
+          "description":"Number of connections allowed concurrently open. Defaults to 200.",
+          "type":"integer"
+        },
+        "host-data-volume":{
+          "default": "/var/lib/postgres",
+          "description": "Location on slave node of Postgres data directory. For cluster wide persistence this should be a network shared volume and allow ownership to postgres:postgres (995:995). Defaults to /var/lib/postgres.",
+          "type":"string"
+        }
+      },
+      "required":[
+        "framework-name",
+        "postgres-password",
+        "port",
+        "memory-mb",
+        "connections",
+        "host-data-volume"
+      ],
+      "type":"object"
+    }
+  },
+  "required":[
+    "postgres"
+  ]
+}
