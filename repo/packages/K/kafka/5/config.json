@@ -1,0 +1,182 @@
+{
+    "type": "object",
+    "properties": {
+        "kafka": {
+            "description": "Kafka framework configuration properties",
+            "type": "object",
+            "additionalProperties": false,
+
+            "properties": {
+                "app": {
+                    "description": "Marathon app configuration properties",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "cpus": {
+                            "description": "cpu requirements",
+                            "type": "number",
+                            "default": 1.0
+                        },
+                        "mem": {
+                            "description": "mem requirements (this should be approximately 120% of the heap size).",
+                            "type": "integer",
+                            "default": 1230
+                        },
+                        "heap-mb": {
+                            "description": "Heap size for scheduler JVM, in MiB",
+                            "type": "integer",
+                            "default": 1024
+                        },
+                        "instances": {
+                            "description": "app instances",
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    "required": ["cpus", "mem", "instances", "heap-mb"]
+                },
+                "framework-name": {
+                    "type": "string",
+                    "description": "Mesos Framework Name",
+                    "default": "kafka0"
+                },
+                "user": {
+                    "type": "string",
+                    "description": "Mesos user to run tasks",
+                    "default": ""
+                },
+                "secret": {
+                    "type": "string",
+                    "description": "Mesos secret (password)",
+                    "default": ""
+                },
+                "ld-library-path": {
+                  "description": "Library path",
+                  "type": "string",
+                  "default": "/opt/mesosphere/lib"
+                },
+                "broker-count": {
+                  "description": "Broker count",
+                  "type": "integer",
+                  "default": 3
+                },
+                "version_name": {
+                  "description": "Kafka version name",
+                  "type": "string",
+                  "default": "kafka_2.10-0.9.0.0"
+                },
+                "cpus": {
+                  "description": "Broker cpu requirements",
+                  "type": "number",
+                  "default": 1.0 
+                },
+                "mem": {
+                  "description": "Broker mem requirements",
+                  "type": "integer",
+                  "default": 2048 
+                },
+                "disk": {
+                  "description": "Broker disk requirements (only respected with persistent volumes)",
+                  "type": "integer",
+                  "default": 5000
+                },
+                "pv": {
+                  "description": "Whether persistent volumes should be used",
+                  "type": "boolean",
+                  "default": true
+                },
+                "placement-strategy": {
+                  "description": "Broker placement strategy. See documentation. [ANY, NODE]",
+                  "type": "string",
+                  "default": "NODE"
+                },
+                "plan-strategy": {
+                  "description": "Broker placement strategy. See documentation. [INSTALL, STAGE]",
+                  "type": "string",
+                  "default": "INSTALL"
+                },
+                "kafka_advertise_host_ip": {
+                  "description": "Override the advertised.host.name Kafka configuration value with the IP address detected in /opt/mesosphere/detect_ip",
+                  "type": "boolean",
+                  "default": false
+                },
+                "kafka_override_socket_request_max_bytes": {
+                  "description": "Kafka broker socket request max bytes.",
+                  "type": "integer",
+                  "default": 104857600 
+                },
+                "kafka_override_num_io_threads": {
+                  "description": "Kafka broker number of I/O threads.",
+                  "type": "integer",
+                  "default": 8 
+                },
+                "kafka_override_socket_send_buffer_bytes": {
+                  "description": "Kafka broker socket send buffer bytes.",
+                  "type": "integer",
+                  "default": 102400
+                },
+                "kafka_override_log_retention_check_interval_ms": {
+                  "description": "Kafka broker log retention check interval milliseconds.",
+                  "type": "integer",
+                  "default": 300000 
+                },
+                "kafka_override_log_retention_hours": {
+                  "description": "Kafka broker log retention hours.",
+                  "type": "integer",
+                  "default": 168 
+                },
+                "kafka_override_zookeeper_connection_timeout_ms": {
+                  "description": "Kafka broker zookeeper connection timeout milliseconds.",
+                  "type": "integer",
+                  "default": 6000 
+                },
+                "kafka_override_num_recovery_threads_per_data_dir": {
+                  "description": "Kafka broker number of receovery threads per data directory.",
+                  "type": "integer",
+                  "default": 1 
+                },
+                "kafka_override_socket_receive_buffer_bytes": {
+                  "description": "Kafka broker socket receive buffer bytes.",
+                  "type": "integer",
+                  "default": 102400 
+                },
+                "kafka_override_num_network_threads": {
+                  "description": "Kafka broker number of network threads.",
+                  "type": "integer",
+                  "default": 3 
+                },
+                "kafka_override_num_partitions": {
+                  "description": "Kafka broker number of partitions by default.",
+                  "type": "integer",
+                  "default": 1 
+                },
+                "kafka_override_log_segment_bytes": {
+                  "description": "Kafka broker log segment bytes.",
+                  "type": "integer",
+                  "default": 1073741824
+                },
+                "kafka_override_delete_topic_enable": {
+                  "description": "Enable topic deletion.",
+                  "type": "boolean",
+                  "default": false 
+                },
+                "kafka_override_log_cleaner_enable": {
+                  "description": "Kafka broker log cleaner enabled.",
+                  "type": "boolean",
+                  "default": false 
+                },
+                "kafka_override_inter_broker_protocol_version": {
+                  "description": "Kafka broker log cleaner enabled.",
+                  "type": "string",
+                  "default": "0.8.2.2"
+                }
+            },
+            "required": [
+                "app",
+                "framework-name",
+                "user",
+                "secret"
+            ]
+        }
+    }
+}

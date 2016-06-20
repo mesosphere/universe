@@ -1,0 +1,52 @@
+{
+  "id": "{{kafka.framework-name}}",
+  "cpus": {{kafka.app.cpus}},
+  "mem": {{kafka.app.mem}},
+  "instances": {{kafka.app.instances}},
+  "cmd": "export PATH=$PATH:$MESOS_SANDBOX/jre/bin && java -Xmx{{kafka.app.heap-mb}}m -jar kafka-scheduler*.jar",
+  "env": {
+    "LD_LIBRARY_PATH": "{{kafka.ld-library-path}}",
+    "FRAMEWORK_NAME": "{{kafka.framework-name}}",
+    "USER": "{{kafka.user}}",
+    "PLACEMENT_STRATEGY": "{{kafka.placement-strategy}}",
+    "PLAN_STRATEGY": "{{kafka.plan-strategy}}",
+    "BROKER_COUNT": "{{kafka.broker-count}}",
+    "BROKER_CPUS": "{{kafka.cpus}}",
+    "BROKER_MEM": "{{kafka.mem}}",
+    "BROKER_DISK": "{{kafka.disk}}",
+    "BROKER_PV": "{{kafka.pv}}",
+    "KAFKA_VER_NAME": "{{kafka.version_name}}",
+    "KAFKA_URI": "{{resource.assets.uris.kafka_2-10-0-8-2-2-tgz}}",
+    "CONTAINER_HOOK_URI": "{{resource.assets.uris.container-hook-0-1-0-tgz}}",
+    "OVERRIDER_URI": "{{resource.assets.uris.kafka-config-overrider-0-1-0-jar}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-8u72-linux-x64-tar-gz}}",
+    "KAFKA_OVERRIDE_SOCKET_REQUEST_MAX_BYTES": "{{kafka.kafka_override_socket_request_max_bytes}}",
+    "KAFKA_OVERRIDE_NUM_IO_THREADS": "{{kafka.kafka_override_num_io_threads}}",
+    "KAFKA_OVERRIDE_SOCKET_SEND_BUFFER_BYTES": "{{kafka.kafka_override_socket_send_buffer_bytes}}",
+    "KAFKA_OVERRIDE_LOG_RETENTION_CHECK_INTERVAL_MS": "{{kafka.kafka_override_log_retention_check_interval_ms}}",
+    "KAFKA_OVERRIDE_LOG_RETENTION_HOURS": "{{kafka.kafka_override_log_retention_hours}}",
+    "KAFKA_OVERRIDE_ZOOKEEPER_CONNECTION_TIMEOUT_MS": "{{kafka.kafka_override_zookeeper_connection_timeout_ms}}",
+    "KAFKA_OVERRIDE_NUM_RECOVERY_THREADS_PER_DATA_DIR": "{{kafka.kafka_override_num_recovery_threads_per_data_dir}}",
+    "KAFKA_OVERRIDE_SOCKET_RECEIVE_BUFFER_BYTES": "{{kafka.kafka_override_socket_receive_buffer_bytes}}",
+    "KAFKA_OVERRIDE_NUM_NETWORK_THREADS": "{{kafka.kafka_override_num_network_threads}}",
+    "KAFKA_OVERRIDE_NUM_PARTITIONS": "{{kafka.kafka_override_num_partitions}}",
+    "KAFKA_OVERRIDE_LOG_SEGMENT_BYTES": "{{kafka.kafka_override_log_segment_bytes}}",
+    "KAFKA_OVERRIDE_LOG_CLEANER_ENABLE": "{{kafka.kafka_override_log_cleaner_enable}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-8u72-linux-x64-tar-gz}}",
+    "{{resource.assets.uris.kafka-scheduler-0-1-0-jar}}",
+    "{{resource.assets.uris.kafka_2-10-0-8-2-2-tgz}}"
+  ],
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "export PATH=$PATH:$MESOS_SANDBOX/jre/bin && ./kafka_2.10-0.8.2.2/bin/kafka-topics.sh --zookeeper master.mesos:2181/{{kafka.framework-name}} --describe --under-replicated-partitions | wc -l | { read count; echo Under replicated partition count = $count; exit $count; }" },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 60,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "ports": [0]
+}

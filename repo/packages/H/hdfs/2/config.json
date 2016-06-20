@@ -1,0 +1,279 @@
+{
+  "type": "object",
+  "properties": {
+    "hdfs": {
+      "type": "object",
+      "properties": {
+      "custom-config": {
+        "description": "Custom mesos-site.xml (base64 encoded)",
+        "type": "string"
+      },
+      "framework-name": {
+        "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
+        "type": "string",
+        "default": "hdfs"
+      },
+      "framework-version": {
+        "description": "Framework version",
+        "type": "string",
+        "default": "hdfs-mesos-0.1.9"
+      },
+      "cpus": {
+        "default": 0.5,
+        "description": "CPU shares to allocate to each Marathon instance.",
+        "minimum": 0.0,
+        "type": "number"
+      },
+      "mem": {
+        "default": 512.0,
+        "description": "Memory (MB) to allocate to each Marathon task.",
+        "minimum": 512.0,
+        "type": "number"
+      },
+      "instances": {
+        "default": 1,
+        "description": "Number of Marathon instances to run.",
+        "minimum": 0,
+        "type": "integer"
+      },
+      "disk-size": {
+        "default": 100,
+        "description": "Number of Marathon instances to run.",
+        "minimum": 0,
+        "type": "integer"
+      },
+    	"role": {
+      	"description": "Framework role",
+      	"type": "string",
+      	"default": "*"
+      },
+      "jre-version": {
+        "description": "JRE version",
+        "type": "string",
+        "default": "jre1.7.0_76"
+      },
+	  "ha-zookeeper-quorum": {
+		"description": "The zookeeper the HDFS system should use for HA.  The default is the DCOS zookeeper.",
+	     "type": "string",
+	     "default": "master.mesos:2181"
+	  },
+      "dfs-ha-namenodes-hdfs": {
+	    "description": "The zookeeper the HDFS system should use for HA.  The default is the DCOS zookeeper.",
+	    "type": "string",
+	    "default": "nn1,nn2"
+	  }, "dfs-journalnode-edits-dir": {
+  	    "description": "The journalnode default edit directory. This is a default value and can be overriden by the executor.",
+  	    "type": "string",
+  	    "default": "/var/lib/hdfs/data/jn"
+  	  }, "dfs-namenode-name-dir": {
+  	    "description": "The namenode default directory. This is a default value and can be overriden by the executor.",
+  	    "type": "string",
+  	    "default": "/var/lib/hdfs/data/name"
+  	  }, "dfs-datanode-data-dir": {
+  	    "description": "The data default directory. This is a default value and can be overriden by the executor.",
+  	    "type": "string",
+  	    "default": "/var/lib/hdfs/data/data"
+  	  }, "dfs-domain-socket-path": {
+  	    "description": "The default socket path. This is a default value and can be overriden by the executor.",
+  	    "type": "string",
+  	    "default": "/var/run/hadoop-hdfs/dn._PORT"
+  	  }, "dfs-ha-automatic-failover-enabled": {
+  	    "description": "Sets HA mode for HDFS",
+  	    "type": "boolean",
+  	    "default": true
+  	  }, "dfs-client-failover-proxy-provider-hdfs": {
+  	    "description": "Sets the failover provider.",
+  	    "type": "string",
+  	    "default": "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider"
+  	  }, "dfs-ha-fencing-methods": {
+  	    "description": "Sets the HDFS fencing method.",
+  	    "type": "string",
+  	    "default": "shell(/bin/true)"
+  	  }, "dfs-permissions": {
+  	    "description": "Sets the HDFS persmissions.",
+  	    "type": "boolean",
+  	    "default": false
+  	  }, "mesos-hdfs-healthcheck-frequency-ms": {
+  	    "description": "Sets the healthcheck freq.",
+  	    "type": "integer",
+  	    "default": 60000
+  	  }, "mesos-hdfs-healthcheck-waitingperiod-ms": {
+  	    "description": "Sets healthcheck waiting period.",
+  	    "type": "integer",
+  	    "default": 900000
+  	  }, "dfs-datanode-du-reserved": {
+  	    "description": "Sets the HDFS datanode reserved space.",
+  	    "type": "integer",
+  	    "default": 10485760
+  	  }, "dfs-datanode-balance-bandwidthPerSec": {
+  	    "description": "Sets the HDFS datanode balance bandwidth/sec.",
+  	    "type": "integer",
+  	    "default": 41943040
+  	  }, "dfs-namenode-safemode-threshold-pct": {
+  	    "description": "Sets the HDFS namenode safemode threshold percentage.",
+  	    "type": "number",
+  	    "default": 0.90
+  	  }, "dfs-namenode-heartbeat-recheck-interval": {
+  	    "description": "Sets the HDFS namenode heartbeat interval.",
+  	    "type": "integer",
+  	    "default": 60000
+  	  }, "dfs-datanode-handler-count": {
+  	    "description": "Sets the HDFS datanode handler count.",
+  	    "type": "integer",
+  	    "default": 10
+  	  }, "dfs-namenode-handler-count": {
+  	    "description": "Sets the HDFS namenode handler count.",
+  	    "type": "integer",
+  	    "default": 20
+  	  }, "dfs-image-compress": {
+  	    "description": "Compresses images in HDFS.",
+  	    "type": "boolean",
+  	    "default": true
+  	  }, "dfs-image-compression-codec": {
+  	    "description": "Compression codec to use on images in HDFS",
+  	    "type": "string",
+  	    "default": "org.apache.hadoop.io.compress.SnappyCodec"
+  	  }, "dfs-namenode-invalidate-work-pct-per-iteration": {
+  	    "description": "Sets the namenode invalidate work percentage",
+  	    "type": "string",
+  	    "default": "0.35f"
+  	  }, "dfs-namenode-replication-work-multiplier-per-iteration": {
+  	    "description": "Sets the namenode replication work multiplier",
+  	    "type": "integer",
+  	    "default": 4
+  	  }, "dfs-client-read-shortcircuit": {
+  	    "description": "Sets the client read shortcircuit",
+  	    "type": "boolean",
+  	    "default": true
+  	  }, "dfs-client-read-shortcircuit-streams-cache-size": {
+  	    "description": "Sets the client read shortcircuit cache size.",
+  	    "type": "integer",
+  	    "default": 1000
+  	  }, "dfs-client-read-shortcircuit-streams-cache-size-expiry-ms": {
+  	    "description": "Sets the client read shortcircuit cache size expiry",
+  	    "type": "integer",
+  	    "default": 1000
+  	  }, "mesos-hdfs-user": {
+  	    "description": "Framework user.",
+  	    "type": "string",
+  	    "default": "root"
+  	  }, "mesos-hdfs-datanode-exclusive": {
+  	    "description": "Run datanodes on separate nodes.",
+  	    "type": "boolean",
+  	    "default": true
+  	  }, "mesos-hdfs-journalnode-count": {
+  	    "description": "Number of journalnodes to run.",
+  	    "type": "integer",
+  	    "default": 3
+  	  }, "mesos-hdfs-datanode-count": {"description": "Number of datanodes to run.", "type": "integer", "default": 2
+  	  }, "mesos-failover-timeout-sec": {
+  	    "description": "The scheduler failover timeout value.",
+  	    "type": "integer",
+  	    "default": 31449600
+  	  }, "mesos-hdfs-config-server-port": {
+  	    "description": "Port the http server in the scheduler is running at",
+  	    "type": "integer",
+  	    "default": 8765
+  	  }, "mesos-hdfs-config-path": {
+  	    "description": "Relative location of where to place the hdfs-site.xml",
+  	    "type": "string",
+  	    "default": "etc/hadoop/"
+  	  }, "mesos-hdfs-native-hadoop-binaries": {
+  	    "description": "True if hdfs binaries are preinstalled on each node.",
+  	    "type": "boolean",
+  	    "default": true
+  	  }, "mesos-hdfs-framework-mnt-path": {
+  	    "description": "Location of HDFS installation.",
+  	    "type": "string",
+  	    "default": "/opt/mesosphere"
+  	  }, "mesos-hdfs-state-zk": {
+  	    "description": "Zookeeper to be used by the scheduler and executor for state.",
+  	    "type": "string",
+  	    "default": "master.mesos:2181"
+  	  }, "mesos-master-uri": {
+  	    "description": "Zookeeper to be used to discover the mesos master.",
+  	    "type": "string",
+  	    "default": "zk://master.mesos:2181/mesos"
+  	  }, "mesos-hdfs-zkfc-ha-zookeeper-quorum": {
+  	    "description": "Zookeeper to be used for the zkfc.",
+  	    "type": "string",
+  	    "default": "master.mesos:2181"
+  	  }, "mesos-hdfs-mesosdns": {
+  	    "description": "True if using Mesos-DNS",
+  	    "type": "boolean",
+  	    "default": true
+  	  }, "mesos-hdfs-mesosdns-domain": {
+  	    "description": "The domain suffix when using Mesos-DNS.",
+  	    "type": "string",
+  	    "default": "mesos"
+  	  }, "mesos-hdfs-executor-cpus": {
+  	    "description": "The amount of CPU needed by the executor",
+  	    "type": "number",
+  	    "default": 0.5
+  	  }, "mesos-hdfs-jvm-overhead": {
+  	    "description": "The overhead multiplier for the java processes to fit inside the container.",
+  	    "type": "number",
+  	    "default": 1.35
+  	  }, "mesos-hdfs-jvm-opts": {
+  	    "description": "The JVM OPTS to use when launching Java processes",
+  	    "type": "string",
+  	    "default": "-XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+UseTLAB -XX:+AggressiveOpts -XX:+UseCompressedOops -XX:+UseFastEmptyMethods -XX:+UseFastAccessorMethods -Xss256k -XX:+AlwaysPreTouch -XX:+UseParNewGC -Djava-library-path=/usr/lib:/usr/local/lib:lib/native"
+  	  }, "mesos-hdfs-namenode-cpus": {
+  	    "description": "The number of CPUs to allocate for the namenode.",
+  	    "type": "number",
+  	    "default": 1
+  	  }, "mesos-hdfs-journalnode-cpus": {
+  	    "description": "The number of CPUs to allocate for the journalnode.",
+  	    "type": "number",
+  	    "default": 1
+  	  }, "mesos-hdfs-datanode-cpus": {
+  	    "description": "The number of CPUs to allocate for the datanode.",
+  	    "type": "number",
+  	    "default": 1
+  	  }, "mesos-hdfs-hadoop-heap-size": {
+  	    "description": "The amount of heap memory for hadoop processes.",
+  	    "type": "integer",
+  	    "default": 512
+  	  }, "mesos-hdfs-datanode-heap-size": {
+  	    "description": "The amount of heap memory for the datanode.",
+  	    "type": "integer",
+  	    "default": 1024
+  	  }, "mesos-hdfs-namenode-heap-size": {
+  	    "description": "The amount of heap memory for the namenode.",
+  	    "type": "integer",
+  	    "default": 4096
+  	  }, "mesos-hdfs-journalnode-heap-size": {
+  	    "description": "The amount of heap memory for the journalnode.",
+  	    "type": "integer",
+  	    "default": 512
+  	  }, "mesos-hdfs-executor-heap-size": {
+  	    "description": "The amount of heap memory for the executor.",
+  	    "type": "number",
+  	    "default": 256
+  	  }, "mesos-hdfs-log-level": {
+  	    "description": "The log level.",
+  	    "type": "string",
+  	    "default": "INFO"
+	  }, "dfs-namenode-datanode-registration-ip-hostname-check": {
+  	    "type": "boolean",
+  	    "default": false
+	  },
+      "ld-library-path": {
+        "description": "Library path",
+        "type": "string",
+        "default": "/opt/mesosphere/lib"
+      }
+     },
+     "required": [
+       "framework-name",
+       "ld-library-path",
+       "jre-version",
+       "framework-version",
+       "cpus",
+       "mem",
+       "instances",
+       "disk-size"
+     ]
+    }
+  }
+}

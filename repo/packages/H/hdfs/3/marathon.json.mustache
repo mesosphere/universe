@@ -1,0 +1,58 @@
+{
+  "id":"{{service.name}}",
+  "cpus":0.5,
+  "mem":512.0,
+  "disk":100,
+  "instances":1,
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}"
+  },
+  "env":{
+    "LD_LIBRARY_PATH":"/opt/mesosphere/lib",
+    "MESOS_HDFS_FRAMEWORK_NAME":"{{service.name}}",
+    "MESOS_HDFS_ROLE":"{{service.role}}",
+    "MESOS_HDFS_USER":"{{service.user}}",
+    "MESOS_HDFS_PRINCIPAL":"{{service.principal}}",
+    "MESOS_HDFS_PLACEMENT_STRATEGY":"{{service.placement-strategy}}",
+    "MESOS_HDFS_PLAN_STRATEGY":"{{service.plan-strategy}}",
+    "DFS_NAMESERVICE_ID":"hdfs",
+    "DFS_NAMESERVICES":"hdfs",
+    "HA_ZOOKEEPER_QUORUM":"master.mesos:2181",
+    "DFS_DATANODE_BALANCE_BANDWIDTHPERSEC":"{{hdfs.dfs-datanode-balance-bandwidthPerSec}}",
+    "DFS_NAMENODE_SAFEMODE_THRESHOLD__DASH__PCT":"{{hdfs.dfs-namenode-safemode-threshold-pct}}",
+    "DFS_NAMENODE_HEARTBEAT_RECHECK__DASH__INTERVAL":"{{hdfs.dfs-namenode-heartbeat-recheck-interval}}",
+    "DFS_DATANODE_HANDLER_COUNT":"{{hdfs.dfs-datanode-handler-count}}",
+    "DFS_NAMENODE_HANDLER_COUNT":"{{hdfs.dfs-namenode-handler-count}}",
+    "DFS_NAMENODE_INVALIDATE_WORK_PCT_PER_ITERATION":"{{hdfs.dfs-namenode-invalidate-work-pct-per-iteration}}",
+    "DFS_NAMENODE_REPLICATION_WORK_MULTIPLIER_PER_ITERATION":"{{hdfs.dfs-namenode-replication-work-multiplier-per-iteration}}",
+    "MESOS_HDFS_CONFIG_SERVER_PORT":"8765",
+    "MESOS_HDFS_NAMENODE_CPUS":"{{name-node.cpus}}",
+    "MESOS_HDFS_NAMENODE_HEAP_SIZE":"{{name-node.mem}}",
+    "MESOS_HDFS_DATANODE_CPUS":"{{data-node.cpus}}",
+    "MESOS_HDFS_DATANODE_HEAP_SIZE":"{{data-node.mem}}",
+    "MESOS_HDFS_DATANODE_COUNT":"{{data-node.count}}",
+    "MESOS_HDFS_JOURNALNODE_COUNT":"{{journal-node.count}}",
+    "MESOS_HDFS_JOURNALNODE_CPUS":"{{journal-node.cpus}}",
+    "MESOS_HDFS_JOURNALNODE_HEAP_SIZE":"{{journal-node.mem}}",
+    "MESOS_HDFS_LOG_LEVEL":"{{hdfs.mesos-hdfs-log-level}}",
+    "MESOS_HDFS_JRE_VERSION":"{{hdfs.jre-version}}",
+    "MESOS_HDFS_JRE_URL":"{{resource.assets.uris.jre-tar-gz}}"
+  },
+  "cmd":"export JAVA_HOME=$MESOS_DIRECTORY/jre1.7.0_76 && cd hdfs-mesos-0.1.9 && ./bin/hdfs-mesos",
+  "uris":[
+    "{{resource.assets.uris.hdfs-mesos-scheduler}}",
+    "{{resource.assets.uris.jre-tar-gz}}"
+  ],
+  "healthChecks":[
+    {
+      "protocol":"COMMAND",
+      "command":{
+        "value":"export PATH=$MESOS_DIRECTORY/hdfs-mesos-0.1.9/bin:$PATH && export JAVA_HOME=$MESOS_DIRECTORY/jre1.7.0_76 && timeout 45s hadoop fs -ls hdfs://hdfs/ && rm -rf hdfs-framework-healthcheck && hadoop fs -rm -r -f hdfs://hdfs/hdfs-framework-healthcheck && hadoop fs -mkdir hdfs://hdfs/hdfs-framework-healthcheck && mkdir hdfs-framework-healthcheck && echo \"this is a test\" > hdfs-framework-healthcheck/test1.txt && hadoop fs -put hdfs-framework-healthcheck/test1.txt hdfs://hdfs/hdfs-framework-healthcheck && hadoop fs -get hdfs://hdfs/hdfs-framework-healthcheck/test1.txt hdfs-framework-healthcheck/test2.txt && rm -rf hdfs-framework-healthcheck && hadoop fs -rm -r -f hdfs://hdfs/hdfs-framework-healthcheck"
+      },
+      "gracePeriodSeconds":300,
+      "intervalSeconds":60,
+      "timeoutSeconds":60,
+      "maxConsecutiveFailures":3
+    }
+  ]
+}

@@ -1,0 +1,506 @@
+{
+  "type":"object",
+    "properties":{
+      "service":{
+        "type":"object",
+        "properties":{
+          "role":{
+            "default":"*",
+            "type":"string"
+          },
+          "principal":{
+            "default":"",
+            "type":"string"
+          },
+          "secret":{
+            "type":"string",
+            "description":"Mesos secret (password)",
+            "default":""
+          },
+          "user":{
+            "default":"root",
+            "type":"string"
+          },
+          "placement-strategy":{
+            "description":"Broker placement strategy. See documentation. [ANY, NODE]",
+            "type":"string",
+            "default":"NODE"
+          },
+          "plan-strategy":{
+            "description":"Broker placement strategy. See documentation. [INSTALL, STAGE]",
+            "type":"string",
+            "default":"INSTALL"
+          }
+        },
+        "required":[
+          "placement-strategy",
+          "plan-strategy",
+          "role",
+          "principal",
+          "user"
+        ]
+      },
+      "brokers":{
+        "type":"object",
+        "properties":{
+          "cpus":{
+            "description":"Broker cpu requirements",
+            "type":"number",
+            "default":1.0
+          },
+          "mem":{
+            "description":"Broker mem requirements",
+            "type":"integer",
+            "default":2048
+          },
+          "disk":{
+            "description":"Broker disk requirements (only respected with persistent volumes)",
+            "type":"integer",
+            "default":5000
+          },
+          "count":{
+            "type":"number",
+            "default":3
+          }
+        },
+        "required":[
+          "cpus",
+        "mem",
+        "disk",
+        "count"
+          ]
+      },
+      "kafka":{
+        "description":"Kafka framework configuration properties",
+        "type":"object",
+        "additionalProperties":false,
+        "properties":{
+          "framework-name":{
+            "type":"string",
+            "description":"Mesos Framework Name",
+            "default":"kafka"
+          },
+          "kafka_advertise_host_ip":{
+            "description":"Override advertised.host.name with the IP address detected in /opt/mesosphere/detect_ip",
+            "type":"boolean",
+            "default":true
+          },
+          "kafka_override_auto_create_topics_enable":{
+            "description":"Override auto.create.topics.enable: Enable auto creation of topic on the server",
+            "type":"boolean",
+            "default":true
+          },
+          "kafka_override_auto_leader_rebalance_enable":{
+            "description":"Override auto.leader.rebalance.enable: Enables auto leader balancing. A background thread checks and triggers leader balance if required at regular intervals",
+            "type":"boolean",
+            "default":true
+          },
+          "kafka_override_background_threads":{
+            "description":"Override background.threads: The number of threads to use for various background processing tasks",
+            "type":"integer",
+            "default":10
+          },
+          "kafka_override_compression_type":{
+            "description":"Override compression.type: Specify the final compression type for a given topic. This configuration accepts the standard compression codecs ('gzip', 'snappy', lz4). It additionally accepts 'uncompressed' which is equivalent to no compression; and 'producer' which means retain the original compression codec set by the producer.",
+            "type":"string",
+            "default":"producer"
+          },
+          "kafka_override_delete_topic_enable":{
+            "description":"Override delete.topic.enable: Enables delete topic. Delete topic through the admin tool will have no effect if this config is turned off",
+            "type":"boolean",
+            "default":false
+          },
+          "kafka_override_leader_imbalance_check_interval_seconds":{
+            "description":"Override leader.imbalance.check.interval.seconds: The frequency with which the partition rebalance check is triggered by the controller",
+            "type":"integer",
+            "default":300
+          },
+          "kafka_override_leader_imbalance_per_broker_percentage":{
+            "description":"Override leader.imbalance.per.broker.percentage: The ratio of leader imbalance allowed per broker. The controller would trigger a leader balance if it goes above this value per broker. The value is specified in percentage.",
+            "type":"integer",
+            "default":10
+          },
+          "kafka_override_log_flush_interval_messages":{
+            "description":"Override log.flush.interval.messages: The number of messages accumulated on a log partition before messages are flushed to disk",
+            "type":"string",
+            "default":"9223372036854775807"
+          },
+          "kafka_override_log_flush_offset_checkpoint_interval_ms":{
+            "description":"Override log.flush.offset.checkpoint.interval.ms: The frequency with which we update the persistent record of the last flush which acts as the log recovery point",
+            "type":"integer",
+            "default":60000
+          },
+          "kafka_override_log_flush_scheduler_interval_ms":{
+            "description":"Override log.flush.scheduler.interval.ms: The frequency in ms that the log flusher checks whether any log needs to be flushed to disk",
+            "type":"string",
+            "default":"9223372036854775807"
+          },
+          "kafka_override_log_retention_bytes":{
+            "description":"Override log.retention.bytes: The maximum size of the log before deleting it",
+            "type":"string",
+            "default": "-1"
+          },
+          "kafka_override_log_retention_hours":{
+            "description":"Override log.retention.hours: The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property",
+            "type":"integer",
+            "default":168
+          },
+          "kafka_override_log_roll_hours":{
+            "description":"Override log.roll.hours: The maximum time before a new log segment is rolled out (in hours), secondary to log.roll.ms property",
+            "type":"integer",
+            "default":168
+          },
+          "kafka_override_log_roll_jitter_hours":{
+            "description":"Override log.roll.jitter.hours: The maximum jitter to subtract from logRollTimeMillis (in hours), secondary to log.roll.jitter.ms property",
+            "type":"integer",
+            "default":0
+          },
+          "kafka_override_log_segment_bytes":{
+            "description":"Override log.segment.bytes: The maximum size of a single log file",
+            "type":"integer",
+            "default":1073741824
+          },
+          "kafka_override_log_segment_delete_delay_ms":{
+            "description":"Override log.segment.delete.delay.ms: The amount of time to wait before deleting a file from the filesystem",
+            "type":"integer",
+            "default":60000
+          },
+          "kafka_override_message_max_bytes":{
+            "description":"Override message.max.bytes: The maximum size of message that the server can receive",
+            "type":"integer",
+            "default":1000012
+          },
+          "kafka_override_min_insync_replicas":{
+            "description":"Override min.insync.replicas: define the minimum number of replicas in ISR needed to satisfy a produce request with required.acks=-1 (or all)",
+            "type":"integer",
+            "default":1000012
+          },
+          "kafka_override_num_io_threads":{
+            "description":"Override num.io.thread: The number of io threads that the server uses for carrying out network requests",
+            "type":"integer",
+            "default":8
+          },
+          "kafka_override_num_network_threads":{
+            "description":"Override num.network.threads: The number of network threads that the server uses for handling network requests",
+            "type":"integer",
+            "default":3
+          },
+          "kafka_override_num_recovery_threads_per_data_dir":{
+            "description":"Override num.recovery.threads.per.data.dir: The number of threads per data directory to be used for log recovery at startup and flushing at shutdown",
+            "type":"integer",
+            "default":1
+          },
+          "kafka_override_num_replica_fetchers":{
+            "description":"Override num.replica.fetchers: Number of fetcher threads used to replicate messages from a source broker. Increasing this value can increase the degree of I/O parallelism in the follower broker.",
+            "type":"integer",
+            "default":1
+          },
+          "kafka_override_offset_metadata_max_bytes":{
+            "description":"Override offset.metadata.max.bytes: The maximum size for a metadata entry associated with an offset commit",
+            "type":"integer",
+            "default":4096
+          },
+          "kafka_override_offsets_commit_required_acks":{
+            "description":"Override offsets.commit.required.acks: The required acks before the commit can be accepted. In general, the default (-1) should not be overridden",
+            "type":"integer",
+            "default":-1
+          },
+          "kafka_override_offsets_commit_timeout_ms":{
+            "description":"Override offsets.commit.timeout.ms: Offset commit will be delayed until all replicas for the offsets topic receive the commit or this timeout is reached. This is similar to the producer request timeout.",
+            "type":"integer",
+            "default":5000
+          },
+          "kafka_override_offsets_load_buffer_size":{
+            "description":"Override offsets.load.buffer.size: Batch size for reading from the offsets segments when loading offsets into the cache.",
+            "type":"integer",
+            "default":5242880
+          },
+          "kafka_override_offsets_retention_check_interval_ms":{
+            "description":"Override offsets.retention.check.interval.ms: Frequency at which to check for stale offsets",
+            "type":"integer",
+            "default":600000
+          },
+          "kafka_override_offsets_retention_minutes":{
+            "description":"Override offsets.retention.minutes: Log retention window in minutes for offsets topic",
+            "type":"integer",
+            "default":1440
+          },
+          "kafka_override_offsets_topic_compression_codec":{
+            "description":"Override offsets.topic.compression.codec: Compression codec for the offsets topic - compression may be used to achieve 'atomic' commits",
+            "type":"integer",
+            "default":0
+          },
+          "kafka_override_offsets_topic_num_partitions":{
+            "description":"Override offsets.topic.num.partitions: The number of partitions for the offset commit topic (should not change after deployment).",
+            "type":"integer",
+            "default":50
+          },
+          "kafka_override_offsets_topic_replication_factor":{
+            "description":"Override offsets.topic.replication.factor: The replication factor for the offsets topic (set higher to ensure availability). To ensure that the effective replication factor of the offsets topic is the configured value, the number of alive brokers has to be at least the replication factor at the time of the first request for the offsets topic. If not, either the offsets topic creation will fail or it will get a replication factor of min(alive brokers, configured replication factor)",
+            "type":"integer",
+            "default":3
+          },
+          "kafka_override_offsets_topic_segment_bytes":{
+            "description":"Override offsets.topic.segment.bytes: The offsets topic segment bytes should be kept relatively small in order to facilitate faster log compaction and cache loads",
+            "type":"integer",
+            "default":104857600
+          },
+          "kafka_override_queued_max_requests":{
+            "description":"Override queued.max.requests: The number of queued requests allowed before blocking the network threads ",
+            "type":"integer",
+            "default":500
+          },
+          "kafka_override_quota_consumer_default":{
+            "description":"Override quota.consumer.default: Any consumer distinguished by clientId/consumer group will get throttled if it fetches more bytes than this value per-second",
+            "type":"string",
+            "default":"9223372036854775807"
+          },
+          "kafka_override_quota_producer_default":{
+            "description":"Override quota.producer.default: Any producer distinguished by clientId will get throttled if it produces more bytes than this value per-second",
+            "type":"string",
+            "default":"9223372036854775807"
+          },
+          "kafka_override_replica_fetch_max_bytes":{
+            "description":"Override replica.fetch.max.bytes: The number of byes of messages to attempt to fetch",
+            "type":"integer",
+            "default":1048576
+          },
+          "kafka_override_replica_fetch_min_bytes":{
+            "description":"Override replica.fetch.min.bytes: Minimum bytes expected for each fetch response. If not enough bytes, wait up to replicaMaxWaitTimeMs",
+            "type":"integer",
+            "default":1
+          },
+          "kafka_override_replica_fetch_wait_max_ms":{
+            "description":"Override replica.fetch.wait.max.ms: Max wait time for each fetcher request issued by follower replicas. This value should always be less than the replica.lag.time.max.ms at all times to prevent frequent shrinking of ISR for low throughput topics",
+            "type":"integer",
+            "default":500
+          },
+          "kafka_override_replica_high_watermark_checkpoint_interval_ms":{
+            "description":"Override replica.high.watermark.checkpoint.interval.ms: The frequency with which the high watermark is saved out to disk",
+            "type":"integer",
+            "default":5000
+          },
+          "kafka_override_replica_lag_time_max_ms":{
+            "description":"Override replica.lag.time.max.ms: If a follower hasn't sent any fetch requests or hasn't consumed up to the leaders log end offset for at least this time, the leader will remove the follower from isr",
+            "type":"integer",
+            "default":10000
+          },
+          "kafka_override_replica_socket_receive_buffer_bytes":{
+            "description":"Override replica.socket.receive.buffer.bytes: The socket receive buffer for network requests",
+            "type":"integer",
+            "default":65536
+          },
+          "kafka_override_replica_socket_timeout_ms":{
+            "description":"Override replica.socket.timeout.ms: The socket timeout for network requests. Its value should be at least replica.fetch.wait.max.ms",
+            "type":"integer",
+            "default":30000
+          },
+          "kafka_override_request_timeout_ms":{
+            "description":"Override request.timeout.ms: The configuration controls the maximum amount of time the client will wait for the response of a request. If the response is not received before the timeout elapses the client will resend the request if necessary or fail the request if retries are exhausted.",
+            "type":"integer",
+            "default":30000
+          },
+          "kafka_override_socket_receive_buffer_bytes":{
+            "description":"Override socket.receive.buffer.bytes: The SO_RCVBUF buffer of the socket sever sockets",
+            "type":"integer",
+            "default":102400
+          },
+          "kafka_override_socket_request_max_bytes":{
+            "description":"Override socket.request.max.bytes: The maximum number of bytes in a socket request",
+            "type":"integer",
+            "default":104857600
+          },
+          "kafka_override_socket_send_buffer_bytes":{
+            "description":"Override socket.send.buffer.bytes: The SO_SNDBUF buffer of the socket sever sockets",
+            "type":"integer",
+            "default":102400
+          },
+          "kafka_override_unclean_leader_election_enable":{
+            "description":"Override unclean.leader.election.enable: Indicates whether to enable replicas not in the ISR set to be elected as leader as a last resort, even though doing so may result in data loss",
+            "type":"boolean",
+            "default":true
+          },
+          "kafka_override_zookeeper_session_timeout_ms":{
+            "description":"Override zookeeper.session.timeout.ms: Zookeeper session timeout",
+            "type":"integer",
+            "default":6000
+          },
+          "kafka_override_connections_max_idle_ms":{
+            "description":"Override connections.max.idle.ms: Idle connections timeout: the server socket processor threads close the connections that idle more than this",
+            "type":"integer",
+            "default":600000
+          },
+          "kafka_override_controlled_shutdown_enable":{
+            "description":"Override controlled.shutdown.enable: Enable controlled shutdown of the server",
+            "type":"boolean",
+            "default":true
+          },
+          "kafka_override_controlled_shutdown_max_retries":{
+            "description":"Override controlled.shutdown.max.retries: Controlled shutdown can fail for multiple reasons. This determines the number of retries when such failure happens",
+            "type":"integer",
+            "default":3
+          },
+          "kafka_override_controlled_shutdown_retry_backoff_ms":{
+            "description":"Override controlled.shutdown.retry.backoff.ms: Before each retry, the system needs time to recover from the state that caused the previous failure (Controller fail over, replica lag etc). This config determines the amount of time to wait before retrying.",
+            "type":"integer",
+            "default":5000
+          },
+          "kafka_override_controller_socket_timeout_ms":{
+            "description":"Override controller.socket.timeout.ms: The socket timeout for controller-to-broker channels",
+            "type":"integer",
+            "default":30000
+          },
+          "kafka_override_default_replication_factor":{
+            "description":"Override default.replication.factor: Default replication factors for automatically created topics",
+            "type":"integer",
+            "default":1
+          },
+          "kafka_override_fetch_purgatory_purge_interval_requests":{
+            "description":"Override fetch.purgatory.purge.interval.requests: The purge interval (in number of requests) of the fetch request purgatory",
+            "type":"integer",
+            "default":1000
+          },
+          "kafka_override_group_max_session_timeout_ms":{
+            "description":"Override group.max.session.timeout.ms: The maximum allowed session timeout for registered consumers",
+            "type":"integer",
+            "default":30000
+          },
+          "kafka_override_group_min_session_timeout_ms":{
+            "description":"Override group.min.session.timeout.ms: The minimum allowed session timeout for registered consumers",
+            "type":"integer",
+            "default":6000
+          },
+          "kafka_override_inter_broker_protocol_version":{
+            "type":"string",
+            "description":"Override inter.broker.protocol.version: Specify which version of the inter-broker protocol will be used. This is typically bumped after all brokers were upgraded to a new version. Example of some valid values are: 0.8.0, 0.8.1, 0.8.1.1, 0.8.2, 0.8.2.0, 0.8.2.1, 0.9.0.0, 0.9.0.1 Check ApiVersion for the full list.",
+            "default":"0.9.0.1"
+          },
+          "kafka_override_log_cleaner_backoff_ms":{
+            "description":"Override log.cleaner.backoff.ms: The amount of time to sleep when there are no logs to clean",
+            "type":"integer",
+            "default":15000
+          },
+          "kafka_override_log_cleaner_dedupe_buffer_size":{
+            "description":"Override log.cleaner.dedupe.buffer.size: The total memory used for log deduplication across all cleaner threads",
+            "type":"integer",
+            "default":134217728
+          },
+          "kafka_override_log_cleaner_delete_retention_ms":{
+            "description":"Override log.cleaner.delete.retention.ms: How long are delete records retained?",
+            "type":"integer",
+            "default":86400000
+          },
+          "kafka_override_log_cleaner_enable":{
+            "description":"Override log.cleaner.enable: Enable the log cleaner process to run on the server? Should be enabled if using any topics with a cleanup.policy=compact including the internal offsets topic. If disabled those topics will not be compacted and continually grow in size.",
+            "type":"boolean",
+            "default":true
+          },
+          "kafka_override_log_cleaner_io_buffer_load_factor":{
+            "description":"Override log.cleaner.io.buffer.load.factor: Log cleaner dedupe buffer load factor. The percentage full the dedupe buffer can become. A higher value will allow more log to be cleaned at once but will lead to more hash collisions",
+            "type":"number",
+            "default":0.9
+          },
+          "kafka_override_log_cleaner_io_buffer_size":{
+            "description":"Override log.cleaner.io.buffer.size: The total memory used for log cleaner I/O buffers across all cleaner threads",
+            "type":"integer",
+            "default":524288
+          },
+          "kafka_override_log_cleaner_io_max_bytes_per_second":{
+            "description":"Override log.cleaner.io.max.bytes.per.second: The log cleaner will be throttled so that the sum of its read and write i/o will be less than this value on average",
+            "type":"number",
+            "default":1.7976931348623157E308
+          },
+          "kafka_override_log_cleaner_min_cleanable_ratio":{
+            "description":"Override log.cleaner.min.cleanable.ratio: The minimum ratio of dirty log to total log for a log to eligible for cleaning",
+            "type":"number",
+            "default":0.5
+          },
+          "kafka_override_log_cleaner_threads":{
+            "description":"Override log.cleaner.threads: The number of background threads to use for log cleaning",
+            "type":"integer",
+            "default":1
+          },
+          "kafka_override_log_cleanup_policy":{
+            "type":"string",
+            "description":"Override log.cleanup.policy: The default cleanup policy for segments beyond the retention window, must be either 'delete' or 'compact'",
+            "default":"delete"
+          },
+          "kafka_override_log_index_interval_bytes":{
+            "description":"Override log.index.interval.bytes: The interval with which we add an entry to the offset index",
+            "type":"integer",
+            "default":4096
+          },
+          "kafka_override_log_index_size_max_bytes":{
+            "description":"Override log.index.size.max.bytes: The maximum size in bytes of the offset index",
+            "type":"integer",
+            "default":10485760
+          },
+          "kafka_override_log_preallocate":{
+            "description":"Override log.preallocate: Should pre allocate file when create new segment? If you are using Kafka on Windows, you probably need to set it to true.",
+            "type":"boolean",
+            "default":false
+          },
+          "kafka_override_log_retention_check_interval_ms":{
+            "description":"Override log.retention.check.interval.ms: The frequency in milliseconds that the log cleaner checks whether any log is eligible for deletion",
+            "type":"integer",
+            "default":300000
+          },
+          "kafka_override_max_connections_per_ip":{
+            "description":"Override max.connections.per.ip: mum number of connections we allow from each ip address",
+            "type":"integer",
+            "default":2147483647
+          },
+          "kafka_override_max_connections_per_ip_overrides":{
+            "type":"string",
+            "description":"Override max.connections.per.ip.overrides: Per-ip or hostname overrides to the default maximum number of connections",
+            "default":""
+          },
+          "kafka_override_num_partitions":{
+            "description":"Override num.partitions: The default number of log partitions per topic",
+            "type":"integer",
+            "default":1
+          },
+          "kafka_override_producer_purgatory_purge_interval_requests":{
+            "description":"Override producer.purgatory.purge.interval.requests: The purge interval (in number of requests) of the producer request purgatory",
+            "type":"integer",
+            "default":1000
+          },
+          "kafka_override_replica_fetch_backoff_ms":{
+            "description":"Override replica.fetch.backoff.ms: The amount of time to sleep when fetch partition error occurs.",
+            "type":"integer",
+            "default":1000
+          },
+          "kafka_override_reserved_broker_max_id":{
+            "description":"Override reserved.broker.max.id: Max number that can be used for a broker.id",
+            "type":"integer",
+            "default":1000
+          },
+          "kafka_override_metrics_num_samples":{
+            "description":"Override metrics.num.samples: The number of samples maintained to compute metrics.",
+            "type":"integer",
+            "default":2
+          },
+          "kafka_override_metrics_sample_window_ms":{
+            "description":"Override metrics.sample.window.ms: The number of samples maintained to compute metrics.",
+            "type":"integer",
+            "default":30000
+          },
+          "kafka_override_quota_window_num":{
+            "description":"Override quota.window.num: The number of samples to retain in memory",
+            "type":"integer",
+            "default":11
+          },
+          "kafka_override_quota_window_size_seconds":{
+            "description":"Override quota.window.size.seconds: The time span of each sample",
+            "type":"integer",
+            "default":1
+          },
+          "kafka_override_zookeeper_sync_time_ms":{
+            "description":"Override zookeeper.sync.time.ms: How far a ZK follower can be behind a ZK leader",
+            "type":"integer",
+            "default":2000
+          }
+        }
+      }
+    }
+}

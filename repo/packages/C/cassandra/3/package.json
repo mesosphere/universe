@@ -1,0 +1,25 @@
+{
+  "packagingVersion": "3.0",
+  "name": "cassandra",
+  "version": "2.2.5-0.2.0",
+  "scm": "https://github.com/mesosphere/cassandra-mesos.git",
+  "maintainer": "support@mesosphere.io",
+  "description": "Apache Cassandra running on DCOS",
+  "selected": true,
+  "framework": true,
+  "tags": [
+    "data",
+    "database",
+    "nosql"
+  ],
+  "preInstallNotes": "You are about the DCOS Apache Cassandra service. The current Cassandra version is 2.2.5",
+  "postInstallNotes": "Your Cassandra cluster is being deployed.",
+  "postUninstallNotes": "Your Cassandra cluster has been uninstalled. Please run the framework_cleaner to remove any persistent state if required.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/mesosphere/cassandra-mesos/blob/master/LICENSE.txt"
+    }
+  ],
+  "minDcosReleaseVersion": "1.7"
+}

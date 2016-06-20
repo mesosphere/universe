@@ -1,0 +1,17 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://s3-eu-west-1.amazonaws.com/downloads.mesosphere.com/kafka/jre-8u72-linux-x64.tar.gz",
+      "kafka_tgz": "https://s3-eu-west-1.amazonaws.com/downloads.mesosphere.com/kafka/kafka_2.10-0.9.0.1.tgz",
+      "kafka-scheduler-jar": "https://s3-eu-west-1.amazonaws.com/downloads.mesosphere.com/kafka/0_9_0_1__0_2_4/kafka-scheduler-0.2.4-uber.jar",
+      "kafka-config-overrider-jar": "https://s3-eu-west-1.amazonaws.com/downloads.mesosphere.com/kafka/0_9_0_1__0_2_4/kafka-config-overrider-0.2.4-uber.jar",
+      "container-hook-tgz": "https://s3-eu-west-1.amazonaws.com/downloads.mesosphere.com/kafka/0_9_0_1__0_2_4/container-hook-0.2.4.tgz"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-large.png",
+    "screenshots": ["https://d1vubr0evspla.cloudfront.net/img/screen-0-kafka.png"]
+  }
+}
