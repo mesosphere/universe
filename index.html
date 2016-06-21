@@ -29,99 +29,121 @@
       </header>
       <section>
         <h1>
-<a id="mesosphere-universe-" class="anchor" href="#mesosphere-universe-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mesosphere Universe <a href="https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&amp;guest=1"><img src="https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon" alt="Build Status"></a>
-</h1>
+<a id="mesosphere-universe" class="anchor" href="#mesosphere-universe" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mesosphere Universe</h1>
 
-<p>The DCOS package repository for packages that have been certified by Mesosphere.</p>
+<table>
+<thead>
+<tr>
+<th>Build</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CI</td>
+<td><a href="https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&amp;guest=1"><img src="https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon" alt="Build Status"></a></td>
+</tr>
+<tr>
+<td>Universe Server</td>
+<td><a href="https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_UniverseServer&amp;guest=1"><img src="https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_UniverseServer)/statusIcon" alt="Build Status"></a></td>
+</tr>
+</tbody>
+</table>
+
+<p>Mesosphere Universe registry of packages made available for DC/OS Clusters.</p>
+
+<h4>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Table of Contents</h4>
+
+<ul>
+<li><a href="#universe-purpose">Universe Purpose</a></li>
+<li>
+<a href="#publish-a-package-1">Publish a Package</a>
+
+<ul>
+<li>
+<a href="#creating-a-package">Creating a Package</a>
+
+<ul>
+<li>
+<a href="#packagejson"><code>package.json</code></a>
+
+<ul>
+<li><a href="#mindcosreleaseversion"><code>.minDcosReleaseVersion</code></a></li>
+</ul>
+</li>
+<li><a href="#configjson"><code>config.json</code></a></li>
+<li><a href="#marathonjsonmustache"><code>marathon.json.mustache</code></a></li>
+<li><a href="#commandjson"><code>command.json</code></a></li>
+<li>
+<a href="#resourcejson"><code>resource.json</code></a>
+
+<ul>
+<li><a href="#docker-images">Docker Images</a></li>
+<li><a href="#images">Images</a></li>
+<li><a href="#cli-resources">CLI Resources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#submit-your-package">Submit your Package</a></li>
+</ul>
+</li>
+<li>
+<a href="#repository-consumption-1">Repository Consumption</a>
+
+<ul>
+<li>
+<a href="#universe-server">Universe Server</a>
+
+<ul>
+<li><a href="#build-universe-server-locally">Build Universe Server locally</a></li>
+<li><a href="#run-universe-server">Run Universe Server</a></li>
+</ul>
+</li>
+<li><a href="#consumption-protocol">Consumption Protocol</a></li>
+<li><a href="#supported-dcos-versions">Supported DC/OS Versions</a></li>
+</ul>
+</li>
+</ul>
 
 <h2>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+<a id="universe-purpose" class="anchor" href="#universe-purpose" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Universe Purpose</h2>
 
-<p>The latest <a href="https://mesosphere.com/product/">DCOS</a> comes pre-configured to use the Universe
-repository.</p>
-
-<p>If you would like to add this to your DCOS manually:</p>
-
-<pre><code>dcos package repo add Universe https://universe.mesosphere.com/repo
-</code></pre>
-
-<h2>
-<a id="branches" class="anchor" href="#branches" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Branches</h2>
-
-<p>The default branch for this repository is <code>version-2.x</code>, which reflects the current schema for the
-Universe. In the future, if the format changes significantly, there will be additional branches.</p>
-
-<p>The <code>cli-tests-*</code> branches are used for integration testing by the <a href="https://github.com/mesosphere/dcos-cli">DCOS CLI</a> and provides a fixed and well known set of packages to write tests against.</p>
-
-<h2>
-<a id="contributing-a-package" class="anchor" href="#contributing-a-package" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing a Package</h2>
-
-<p>Interested in making your package or service available to the world? The instructions below will
-help you set up a local copy of the Universe for development.</p>
+<p>This git repo facilitates three necessary functions to publish, store and consume packages.</p>
 
 <h3>
-<a id="development-set-up" class="anchor" href="#development-set-up" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Development Set Up</h3>
+<a id="publish-a-package" class="anchor" href="#publish-a-package" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Publish a Package</h3>
 
-<ol>
-<li>
-<p>Clone the repo (or you may wish to fork it first):</p>
-
-<pre><code>git clone https://github.com/mesosphere/universe.git /path/to/universe
-</code></pre>
-</li>
-<li>
-<p>You may need to install the <code>jsonschema</code> Python package if you don't have it:</p>
-
-<pre><code>sudo pip install jsonschema
-</code></pre>
-</li>
-<li>
-<p>Install pre-commit hook:</p>
-
-<pre><code>bash /path/to/universe/scripts/install-git-hooks.sh
-</code></pre>
-</li>
-<li>
-<p>To test in DCOS we need to make the packages available to your cluster. We can do this using
-topic or feature branches. Once you have committed your changes and pushed them to a topic branch.
-We can use them within DCOS with:</p>
-
-<pre><code>dcos package repo add Development http://github/path/to/branch/zip
-</code></pre>
-
-<p>E.g. assuming the topic branch is named <code>topic-branch</code>:</p>
-
-<pre><code>dcos package repo add Development https://github.com/mesosphere/universe/archive/topic-branch.zip
-</code></pre>
-</li>
-</ol>
-
-<p>The pre-commit hook will run <a href="scripts/build.sh">build.sh</a> before allowing you to commit. This
-script validates your package definitions and regenerates the index file. You may need to
-<code>git add repo/meta/index.json</code> after running it once before you are able to pass validation and
-commit your changes.</p>
+<p>To publish a package to Universe, fork this repo and open a Pull Request. A set of automated builds will be run against
+the Pull Request to ensure the modifications made in the PR leave the Universe well formed.
+See <a href="#creating-a-package">Creating a Package</a> for details.</p>
 
 <h3>
-<a id="submit-to-universe" class="anchor" href="#submit-to-universe" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Submit to Universe</h3>
+<a id="registry-of-packages" class="anchor" href="#registry-of-packages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Registry of Packages</h3>
 
-<p>Before merging to Universe, you <strong>must</strong> run build.sh to regenerate the package index. If you
-have installed the pre-commit hook as above, this will be done automatically on commit.</p>
+<p>The registry of published packages is maintained as the contents of this repo in the <code>repo/packages</code> directory. As of
+repository version <code>3.0</code> multiple packaging versions are allowed to co-exist in the same repository. Validation of
+packages are coordinated based on the packaging version defined in <code>package.json</code>.</p>
 
-<p>Once complete, please submit a pull request against the <code>version-2.x</code> branch with your changes.</p>
+<h3>
+<a id="repository-consumption" class="anchor" href="#repository-consumption" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Repository Consumption</h3>
 
-<p>Every pull request opened on this repo will have a set of automated verifications ran against it. 
-These automated verification are reported against the pull request using the GitHub status API. 
-All verifcations must pass in order for a pull request to be eligible for merge.</p>
+<p>In order for published packages to be consumed and installed in a DC/OS Cluster the Universe Server needs to be built
+and run in a location accessible by the DC/OS Cluster. See <a href="#universe-server">Universe Server</a> for details on
+building the Universe artifacts and Server.</p>
 
 <h2>
-<a id="package-entries" class="anchor" href="#package-entries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Package entries</h2>
+<a id="publish-a-package-1" class="anchor" href="#publish-a-package-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Publish a Package</h2>
 
 <h3>
-<a id="organization" class="anchor" href="#organization" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Organization</h3>
+<a id="creating-a-package" class="anchor" href="#creating-a-package" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating a Package</h3>
 
-<p>Packages are encapsulated in their own directory, with one subdirectory for each package version.</p>
+<p>Each package has its own directory, with one subdirectory for each package revision. Each package revision directory
+contains the set of files necessary to create a consumable package that can be used by a DC/OS Cluster to install
+the package.</p>
 
-<pre><code>└── foo
+<pre><code>└── repo/package/F/foo
     ├── 0
     │   ├── command.json
     │   ├── config.json
@@ -135,17 +157,38 @@ All verifcations must pass in order for a pull request to be eligible for merge.
     │   ├── resource.json
     │   └── package.json
     └── ...
-
 </code></pre>
-
-<p><em>Sample package directory layout.</em></p>
-
-<h3>
-<a id="content" class="anchor" href="#content" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Content</h3>
 
 <h4>
 <a id="packagejson" class="anchor" href="#packagejson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>package.json</code>
 </h4>
+
+<table>
+<thead>
+<tr>
+<th>Packaging Version</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.0</td>
+<td>required</td>
+</tr>
+<tr>
+<td>3.0</td>
+<td>required</td>
+</tr>
+</tbody>
+</table>
+
+<p>Every package in Universe must have a <code>package.json</code> file which specifies the high level metadata about the package.</p>
+
+<p>Currently, a package can specify one of two values for <code>.packagingVersion</code> either <code>2.0</code> or <code>3.0</code>; which version is declared
+will dictate which other files are required for the complete package as well as the schema(s) all the files must
+adhere to. Below is a snippet that represents a version <code>2.0</code> package.
+See <a href="repo/meta/schema/package-schema.json"><code>repo/meta/schema/package-schema.json</code></a> for the full json schema outlining
+what properties are available for each corresponding version of a package.</p>
 
 <div class="highlight highlight-source-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>packagingVersion<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2.0<span class="pl-pds">"</span></span>,
@@ -156,31 +199,67 @@ All verifcations must pass in order for a pull request to be eligible for merge.
   <span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Does baz.<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>scm<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>https://github.com/bar/foo.git<span class="pl-pds">"</span></span>,
   <span class="pl-s"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://bar.io/foo<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>framework<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
   <span class="pl-s"><span class="pl-pds">"</span>postInstallNotes<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Have fun foo-ing and baz-ing!<span class="pl-pds">"</span></span>
 }</pre></div>
 
-<p><em>Sample <code>package.json</code>.</em></p>
+<h6>
+<a id="mindcosreleaseversion" class="anchor" href="#mindcosreleaseversion" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>.minDcosReleaseVersion</code>
+</h6>
 
-<p>The required fields are:</p>
+<table>
+<thead>
+<tr>
+<th>Packaging Version</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.0</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>3.0</td>
+<td>optional</td>
+</tr>
+</tbody>
+</table>
 
-<ul>
-<li>packagingVersion</li>
-<li>name</li>
-<li>version</li>
-<li>tags</li>
-<li>maintainer</li>
-<li>description</li>
-</ul>
+<p>Introduced in <code>packagingVersion</code> <code>3.0</code>, <code>.minDcosReleaseVersion</code> can be specified as a property of <code>package.json</code>.
+When <code>.minDcosReleaseVersion</code> is specified the package will only be made available to DC/OS clusters with a DC/OS
+Release Version greater than or equal to (<code>&gt;=</code>) the value specified.</p>
 
 <h4>
 <a id="configjson" class="anchor" href="#configjson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>config.json</code>
 </h4>
 
-<p>This file describes the configuration properties supported by the package. Each property can
-specify whether or not it is required, a default value, as well as some basic validation.</p>
+<table>
+<thead>
+<tr>
+<th>Packaging Version</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.0</td>
+<td>optional</td>
+</tr>
+<tr>
+<td>3.0</td>
+<td>optional</td>
+</tr>
+</tbody>
+</table>
 
-<p>Users can then <a href="https://docs.mesosphere.com/usage/service-config/">override specific values</a> at
-installation time by passing an options file to the DCOS CLI.</p>
+<p>This file describes the configuration properties supported by the package, represented as a
+<a href="http://spacetelescope.github.io/understanding-json-schema/">json-schema</a>. Each property can specify whether or not it
+is required, a default value, as well as some basic validation.</p>
+
+<p>Users can then <a href="https://docs.mesosphere.com/1.7/usage/services/config/">override specific values</a> at
+installation time by passing an options file to the DC/OS CLI or by setting config values through the
+DC/OS UI (since DC/OS 1.7).</p>
 
 <div class="highlight highlight-source-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>object<span class="pl-pds">"</span></span>,
@@ -203,21 +282,40 @@ installation time by passing an options file to the DCOS CLI.</p>
   <span class="pl-s"><span class="pl-pds">"</span>required<span class="pl-pds">"</span></span>: [<span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>]
 }</pre></div>
 
-<p><em>Sample <code>config.json</code>.</em></p>
-
-<p><code>config.json</code> must be a valid <a href="http://json-schema.org/">JSON Schema</a> file. Check out the
-<a href="http://json-schema.org/examples.html">JSON Schema examples</a>.</p>
-
 <h4>
 <a id="marathonjsonmustache" class="anchor" href="#marathonjsonmustache" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>marathon.json.mustache</code>
 </h4>
 
-<p>This file describes how to run the package as a
-<a href="http://github.com/mesosphere/marathon">Marathon</a> app.</p>
+<table>
+<thead>
+<tr>
+<th>Packaging Version</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.0</td>
+<td>required</td>
+</tr>
+<tr>
+<td>3.0</td>
+<td>optional</td>
+</tr>
+</tbody>
+</table>
 
-<p>User-supplied metadata (as described in <code>config.json</code>), the defaults from <code>config.json</code> and the
-resource information in <code>resource.json</code> will be injected to the template using
-<a href="http://mustache.github.io/">mustache template</a> syntax.</p>
+<p>This file is a <a href="http://mustache.github.io/">mustache template</a> that when rendered will create a
+<a href="http://github.com/mesosphere/marathon">Marathon</a> app definition capable of running your service.</p>
+
+<p>Variables in the mustache template will be evaluated from a union object created by merging three objects in the
+following order:</p>
+
+<ol>
+<li><p>Defaults specified in <code>config.json</code></p></li>
+<li><p>User supplied options from either the DC/OS CLI or the DC/OS UI</p></li>
+<li><p>The contents of <code>resource.json</code></p></li>
+</ol>
 
 <div class="highlight highlight-source-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>,
@@ -242,8 +340,6 @@ resource information in <code>resource.json</code> will be injected to the templ
   }
 }</pre></div>
 
-<p><em>Sample <code>marathon.json.mustache</code>.</em></p>
-
 <p>See the
 <a href="https://mesosphere.github.io/marathon/docs/rest-api.html">Marathon API Documentation</a>
 for more detailed instruction on app definitions.</p>
@@ -252,9 +348,31 @@ for more detailed instruction on app definitions.</p>
 <a id="commandjson" class="anchor" href="#commandjson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>command.json</code>
 </h4>
 
-<p>This file is <strong>optional</strong>. Describes how to install the package's CLI.
-Currently the only supported format is a Pip requirements file where each
-element in the array is a line in the requirements file.</p>
+<table>
+<thead>
+<tr>
+<th>Packaging Version</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.0</td>
+<td>optional</td>
+</tr>
+<tr>
+<td>3.0</td>
+<td>optional <strong>[Deprecated]</strong>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p>As of <code>packagingVersion</code> <code>3.0</code>, <code>command.json</code> is deprecated in favor of the <code>.cli</code> property of <code>resources.json</code>.
+See <a href="#cli-resources">CLI Resources</a> for details.</p>
+
+<p>Describes how to install the package's package's CLI via pip, the Python package manager. This document represents the
+format of a Pip requirements file where each element in the array is a line in the requirements file.</p>
 
 <div class="highlight highlight-source-json"><pre>{
   <span class="pl-s"><span class="pl-pds">"</span>pip<span class="pl-pds">"</span></span>: [
@@ -262,14 +380,28 @@ element in the array is a line in the requirements file.</p>
   ]
 }</pre></div>
 
-<p><em>Sample <code>command.json</code>.</em></p>
-
-<p>See the <a href="repo/meta/schema/command-schema.json">Command Schema</a> for a detailed description of
-the schema.</p>
-
 <h4>
 <a id="resourcejson" class="anchor" href="#resourcejson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>resource.json</code>
 </h4>
+
+<table>
+<thead>
+<tr>
+<th>Packaging Version</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.0</td>
+<td>optional</td>
+</tr>
+<tr>
+<td>3.0</td>
+<td>optional</td>
+</tr>
+</tbody>
+</table>
 
 <p>This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects and
 images) needed to install the application.</p>
@@ -296,13 +428,17 @@ images) needed to install the application.</p>
   }
 }</pre></div>
 
-<p><em>Sample <code>resource.json</code>.</em></p>
+<h5>
+<a id="docker-images" class="anchor" href="#docker-images" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Docker Images</h5>
 
 <p>For the Docker image, please use the image ID for the referenced image. You can find this by
 pulling the image locally and running <code>docker images some-org/foo:1.0.0</code>.</p>
 
+<h5>
+<a id="images" class="anchor" href="#images" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Images</h5>
+
 <p>While <code>images</code> is an optional field, it is highly recommended you include icons and screenshots
-in your package and update the path definitions accordingly. Specifications are as follows:</p>
+in <code>resource.json</code> and update the path definitions accordingly. Specifications are as follows:</p>
 
 <ul>
 <li>
@@ -317,117 +453,209 @@ in your package and update the path definitions accordingly. Specifications are 
 
 <p><strong>NOTE:</strong> To ensure your service icons look beautiful on retina-ready displays,
 please supply 2x versions of all icons. No changes are needed to
-<code>package.json</code> - simply supply an additional icon file with the text <code>@2x</code> in
+<code>resource.json</code> - simply supply an additional icon file with the text <code>@2x</code> in
 the name before the file extension.
 For example, the icon <code>icon-cassandra-small.png</code> would have a retina-ready
 alternate image named <code>icon-cassandra-small@2x.png</code>.</p>
 
-<h3>
-<a id="versioning" class="anchor" href="#versioning" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Versioning</h3>
+<h5>
+<a id="cli-resources" class="anchor" href="#cli-resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CLI Resources</h5>
 
-<p>The registry specification is versioned separately in the file <code>/repo/meta/version.json</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Packaging Version</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.0</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>3.0</td>
+<td>optional</td>
+</tr>
+</tbody>
+</table>
+
+<p>The new <code>.cli</code> property allows for a package to configure native CLI subcommands for several platforms and
+architectures.</p>
 
 <div class="highlight highlight-source-json"><pre>{
-  <span class="pl-s"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2.0.0-rc2<span class="pl-pds">"</span></span>
+  <span class="pl-s"><span class="pl-pds">"</span>cli<span class="pl-pds">"</span></span>:{
+    <span class="pl-s"><span class="pl-pds">"</span>binaries<span class="pl-pds">"</span></span>:{
+      <span class="pl-s"><span class="pl-pds">"</span>darwin<span class="pl-pds">"</span></span>:{
+        <span class="pl-s"><span class="pl-pds">"</span>x86-64<span class="pl-pds">"</span></span>:{
+          <span class="pl-s"><span class="pl-pds">"</span>contentHash<span class="pl-pds">"</span></span>:[
+            { <span class="pl-s"><span class="pl-pds">"</span>algo<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>sha256<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>...<span class="pl-pds">"</span></span> }
+          ],
+          <span class="pl-s"><span class="pl-pds">"</span>kind<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>executable<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>url<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>https://some.org/foo/1.0.0/cli/darwin/dcos-foo<span class="pl-pds">"</span></span>
+        }
+      },
+      <span class="pl-s"><span class="pl-pds">"</span>linux<span class="pl-pds">"</span></span>:{
+        <span class="pl-s"><span class="pl-pds">"</span>x86-64<span class="pl-pds">"</span></span>:{
+          <span class="pl-s"><span class="pl-pds">"</span>contentHash<span class="pl-pds">"</span></span>:[
+            { <span class="pl-s"><span class="pl-pds">"</span>algo<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>sha256<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>...<span class="pl-pds">"</span></span> }
+          ],
+          <span class="pl-s"><span class="pl-pds">"</span>kind<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>executable<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>url<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>https://some.org/foo/1.0.0/cli/linux/dcos-foo<span class="pl-pds">"</span></span>
+        }
+      },
+      <span class="pl-s"><span class="pl-pds">"</span>windows<span class="pl-pds">"</span></span>:{
+        <span class="pl-s"><span class="pl-pds">"</span>x86-64<span class="pl-pds">"</span></span>:{
+          <span class="pl-s"><span class="pl-pds">"</span>contentHash<span class="pl-pds">"</span></span>:[
+            { <span class="pl-s"><span class="pl-pds">"</span>algo<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>sha256<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>...<span class="pl-pds">"</span></span> }
+          ],
+          <span class="pl-s"><span class="pl-pds">"</span>kind<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>executable<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>url<span class="pl-pds">"</span></span>:<span class="pl-s"><span class="pl-pds">"</span>https://some.org/foo/1.0.0/cli/windows/dcos-foo<span class="pl-pds">"</span></span>
+        }
+      }
+    }
+  }
 }</pre></div>
 
-<p><em>Sample <code>repo/meta/version.json</code>.</em></p>
+<h3>
+<a id="submit-your-package" class="anchor" href="#submit-your-package" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Submit your Package</h3>
 
-<p>This version is updated with any change to the required file content
-(typically validated using JSON schema) or expected file organization in the
-<code>repo</code> directory.</p>
+<p>Developers are invited to publish a package containing their DC/OS Service by submitting a Pull Request targeted at
+the <code>version-3.x</code> branch of this repo.</p>
 
-<p><em>NOTE: The current version is <code>2.0.0-rc2</code> to facilitate rapid
-iteration.  This version will be fixed and incremented as
-described above as programs that consume the format reach maturity.</em></p>
+<p>Full Instructions:</p>
 
-<p>The packaging version should also be included in the <code>package.json</code> for each package using the
-<code>packagingVersion</code> property.</p>
+<ol>
+<li>
+<p>Fork this repo and clone the fork:</p>
+
+<div class="highlight highlight-source-shell"><pre>git clone https://github.com/<span class="pl-k">&lt;</span>user<span class="pl-k">&gt;</span>/universe.git /path/to/universe</pre></div>
+</li>
+<li>
+<p>Ensure that the <code>jsonschema</code> command line tool is installed:</p>
+
+<div class="highlight highlight-source-shell"><pre>sudo pip install jsonschema</pre></div>
+</li>
+<li>
+<p>Run the verification and build script:</p>
+
+<div class="highlight highlight-source-shell"><pre>scripts/build.sh</pre></div>
+</li>
+<li><p>Verify all build steps completed successfully</p></li>
+<li><p>Submit a pull request against the <code>version-3.x</code> branch with your changes. Every pull request opened will have a set
+of automated verifications run against it. These automated verification are reported against the pull request using
+the GitHub status API. All verifications must pass in order for a pull request to be eligible for merge.</p></li>
+<li>
+<p>Respond to manual review feedback provided by the DC/OS Community.</p>
+
+<ul>
+<li>Each Pull Request to Universe will also be manually reviewed by a member of the DC/OS Community. To ensure your
+package is able to be made available to users as quickly as possible be sure to respond to the feedback provided.</li>
+</ul>
+</li>
+</ol>
+
+<h2>
+<a id="repository-consumption-1" class="anchor" href="#repository-consumption-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Repository Consumption</h2>
+
+<p>In order for Universe to be consumed by DC/OS the build process needs to be run to create the Universe Server.</p>
 
 <h3>
-<a id="validation" class="anchor" href="#validation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Validation</h3>
+<a id="universe-server" class="anchor" href="#universe-server" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Universe Server</h3>
 
-<p>Package content is validated using <a href="http://json-schema.org">JSON Schema</a>.
-The schema definitions live in <code>/repo/meta/schema</code>.</p>
+<p>Universe Server is a new component introduce alongside <code>packagingVersion</code> <code>3.0</code>. In order for Universe to be able to
+provide packages for many versions of DC/OS at the same time, it is necessary for a server to be responsible for serving
+the correct set of packages to a cluster based on the cluster's version.</p>
 
-<h2>
-<a id="directory-structure" class="anchor" href="#directory-structure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Directory Structure</h2>
+<p>All Pull Requests opened for Universe and the <code>version-3.x</code> branch will have their Docker image built and published
+to the DockerHub image <a href="https://hub.docker.com/r/mesosphere/universe-server/"><code>mesosphere/universe-server</code></a>.
+In the artifacts tab of the build results you can find <code>docker/server/marathon.json</code> which can be used to run the
+Universe Server for testing in your DC/OS cluster.  For each Pull Request, click the details link of the "Universe Server
+Docker image" status report to view the build results.</p>
 
-<pre><code>├── LICENSE
-├── README.md
-├── docs
-│   ├── best-practices.md
-│   └── contributing.md
-├── hooks
-│   └── pre-commit
-├── repo
-│   ├── meta
-│   │   ├── index.json
-│   │   ├── schema
-│   │   │   ├── command-schema.json
-│   │   │   ├── config-schema.json
-│   │   │   ├── index-schema.json
-│   │   │   ├── resource-schema.json
-│   │   │   └── package-schema.json
-│   │   └── version.json
-│   └── packages
-│       ├── B
-│       │   ├── bar
-│       │   │   ├── 0
-│       │   │   │   ├── command.json
-│       │   │   │   ├── config.json
-│       │   │   │   ├── marathon.json.mustache
-│       │   │   │   ├── resource.json
-│       │   │   │   └── package.json
-│       │   │   └── ...
-│       │   └── ...
-│       ├── F
-│       │   ├── foo
-│       │   │   ├── 0
-│       │   │   │   ├── config.json
-│       │   │   │   ├── marathon.json.mustache
-│       │   │   │   ├── resource.json
-│       │   │   │   └── package.json
-│       │   │   └── ...
-│       │   └── ...
-│       └── ...
-└── scripts
-    ├── 1-validate-packages.sh
-    ├── 2-build-index.sh
-    ├── 3-validate-index.sh
-    ├── 4-detect-dependency-cycles.sh
-    ├── build.sh
-    └── install-git-hooks.sh
+<h4>
+<a id="build-universe-server-locally" class="anchor" href="#build-universe-server-locally" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build Universe Server locally</h4>
+
+<ol>
+<li>
+<p>Validate and build the Universe artifacts</p>
+
+<div class="highlight highlight-source-shell"><pre>scripts/build.sh</pre></div>
+</li>
+<li>
+<p>Build the Universe Server Docker image</p>
+
+<div class="highlight highlight-source-shell"><pre>DOCKER_TAG=<span class="pl-s"><span class="pl-pds">"</span>my-package<span class="pl-pds">"</span></span> docker/server/build.bash</pre></div>
+
+<p>This will create a Docker image <code>universe-server:my-package</code> and <code>docker/server/target/marathon.json</code> on your local machine</p>
+</li>
+<li>
+<p>If you would like to publish the built Docker image, run</p>
+
+<div class="highlight highlight-source-shell"><pre>DOCKER_TAG=<span class="pl-s"><span class="pl-pds">"</span>my-package<span class="pl-pds">"</span></span> docker/server/build.bash publish</pre></div>
+</li>
+</ol>
+
+<h4>
+<a id="run-universe-server" class="anchor" href="#run-universe-server" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run Universe Server</h4>
+
+<p>Using the <code>marathon.json</code> that is created when building Universe Server we can run a Universe Server in our DC/OS
+Cluster which can then be used to install packages.</p>
+
+<p>Run the following commands to configure DC/OS to use the custom Universe Server</p>
+
+<div class="highlight highlight-source-shell"><pre>dcos marathon app add marathon.json
+dcos package repo add --index=0 dev-universe http://universe.marathon.mesos:8085/repo</pre></div>
+
+<h3>
+<a id="consumption-protocol" class="anchor" href="#consumption-protocol" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Consumption Protocol</h3>
+
+<p>A DC/OS Cluster can be configured to point to multiple Universe Servers; each Universe Server will be fetched via
+HTTPS or HTTP. When a DC/OS Cluster attempts to fetch the package set from a Universe Server, the Universe Server
+will provide ONLY those packages which can be run on the cluster.</p>
+
+<p>For example:
+A DC/OS 1.6.1 Cluster will only receive packages with a <code>minDcosReleaseVersion</code> less than or equal to (<code>&lt;=</code>) <code>1.6.1</code>
+in the format the DC/OS Cluster expects.</p>
+
+<pre><code> +----------------------+   +-----------------------+
+ │public universe server│   │private universe server│
+ +----------------------+   +-----------------------+
+                http \         / http
+                      \       /
+                       \     /
+                       +-----+           +--------+
+                       │DC/OS│-----------│Marathon│
+                       +-----+    http   +--------+
 </code></pre>
 
-<h2>
-<a id="sources-and-transfer-protocols" class="anchor" href="#sources-and-transfer-protocols" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sources and Transfer Protocols</h2>
+<h3>
+<a id="supported-dcos-versions" class="anchor" href="#supported-dcos-versions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Supported DC/OS Versions</h3>
 
-<p>This section describes transfer of package metadata from a universe source to a client program.</p>
+<p>Currently Universe Server provides support for the following versions of DC/OS</p>
 
-<pre><code> ┌───────────────┐   ┌────────────────┐
- │public universe│   │private universe│
- └───────────────┘   └────────────────┘
-         http \         / http
-               \       /
-                \     /
-               ┌────┐           ┌────────┐
-               │DCOS│-----------│Marathon│
-               └────┘    http   └────────┘
-</code></pre>
-
-<p><em>Sample (simplified) architecture for a universe client program.</em></p>
-
-<p>Package sources are described as URLs.</p>
-
-<p>Source URLs encode the transfer protocol. Recommendations for several transfer protocols follow.</p>
-
-<p><strong>HTTP and HTTPS</strong></p>
-
-<p>A URL that designates a
-<a href="http://en.wikipedia.org/wiki/Zip_%28file_format%29">zip</a> file
-accessible over HTTP or HTTPS with media type <code>application/zip</code>.
-Example: <code>http://my.org/files/universe/packages.zip</code></p>
+<table>
+<thead>
+<tr>
+<th>DC/OS Release Version</th>
+<th>Support Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.6.1</td>
+<td>Full Support</td>
+</tr>
+<tr>
+<td>1.7</td>
+<td>Full Support</td>
+</tr>
+<tr>
+<td>1.8</td>
+<td>Full Support</td>
+</tr>
+</tbody>
+</table>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/mesosphere">mesosphere</a></p>
