@@ -1,0 +1,59 @@
+{
+    "properties": {
+        "sysdigcloud": {
+            "description": "Sysdigcloud agent properties",
+            "properties": {
+                "access_key": {
+                    "description": "Your Sysdigcloud Access Key.",
+                    "type": "string"
+                },
+                "add_conf": {
+                    "default": "",
+                    "description": "sysdigcloud agent custom configuration",
+                    "type": "string"
+                },
+                "agent_tags": {
+                    "default": "",
+                    "description": "sysdigcloud agent custom tags",
+                    "type": "string"
+                },
+                "app_id": {
+                    "default": "sysdig-agent",
+                    "description": "Marathon Application ID",
+                    "type": "string"
+                },
+                "collector_endpoint": {
+                    "default": "collector.sysdigcloud.com",
+                    "description": "collector endpoint",
+                    "type": "string"
+                },
+                "cpus": {
+                    "default": 0.05,
+                    "description": "CPU shares to allocate to each sysdigcloud agent task.",
+                    "minimum": 0.05,
+                    "type": "number"
+                },
+                "instances": {
+                    "default": 1,
+                    "description": "Number of sysdigcloud agent instances to run.",
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "mem": {
+                    "default": 500.0,
+                    "description": "Memory (MB) to allocate to each sysdigcloud agent task.",
+                    "minimum": 500.0,
+                    "type": "number"
+                }
+            },
+            "required": [
+                "access_key"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "sysdigcloud"
+    ],
+    "type": "object"
+}

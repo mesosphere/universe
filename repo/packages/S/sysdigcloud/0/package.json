@@ -1,0 +1,16 @@
+{
+    "packagingVersion": "2.0",
+    "description": "Sysdigcloud monitoring",
+    "framework": false,
+    "maintainer": "support@sysdigcloud.com",
+    "name": "sysdigcloud",
+    "postInstallNotes": "Sysdigcloud on DCOS installed successfully.\nYour cluster metrics will be available shortly at https://app.sysdigcloud.com.",
+    "postUninstallNotes": "Sysdigcloud on DCOS is uninstalled successfully.",
+    "preInstallNotes": "Configure your Sysdigcloud Access Key as a package option (sysdigcloud.access_key).\nAlso configure the number of Mesos slaves as an option (sysdigcloud.instances).\nMarathon will ensure that the Sysdigcloud agent runs only once per slave.",
+    "tags": [
+        "sysdigcloud",
+        "monitoring"
+    ],
+    "version": "latest",
+    "website": "https://sysdig.com"
+}
