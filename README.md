@@ -379,7 +379,7 @@ Docker image" status report to view the build results.
   ```bash
   DOCKER_TAG="my-package" docker/server/build.bash
   ```
-  This will create a Docker image `universe-server:my-package` and `target/marathon.json` on your local machine
+  This will create a Docker image `universe-server:my-package` and `docker/server/target/marathon.json` on your local machine
 
 3. If you would like to publish the built Docker image, run
   ```bash
