@@ -23,6 +23,12 @@
         "SPARK_SSL_PROTOCOL": "{{security.ssl.protocol}}",
         "SPARK_SSL_ENABLEDALGORITHMS": "{{security.ssl.enabledAlgorithms}}",
 {{/security.ssl.enabled}}
+{{#security.authn.enabled}}
+        "DCOS_SERVICE_ACCOUNT_CREDENTIAL": "{{security.authn.dcos_service_account_credential_json}}",
+        "MESOS_MODULES": "{{security.authn.module_json}}",
+        "MESOS_AUTHENTICATEE": "{{security.authn.module_name}}",
+        "MESOS_CREDENTIAL": "{{security.authn.mesos_credential}}",
+{{/security.authn.enabled}}
         "ENABLE_HISTORY_SERVER": "{{history-server.enabled}}",
         "HISTORY_LOG_DIR": "{{history-server.log-dir}}",
         "HISTORY_CLEANER_ENABLED": "{{history-server.cleaner-enabled}}",
@@ -39,6 +45,20 @@
     ],
     "container": {
         "type": "DOCKER",
+{{#security.authn.enabled}}
+        "volumes": [
+            {
+                "containerPath": "{{security.authn.opt_mesosphere_dir}}",
+                "hostPath": "{{security.authn.opt_mesosphere_dir}}",
+                "mode": "RO"
+            },
+            {
+              "containerPath": "{{security.authn.dcos_service_account_credential_dir}}",
+              "hostPath": "{{security.authn.dcos_service_account_credential_dir}}",
+              "mode": "RO"
+            }
+        ],
+{{/security.authn.enabled}}
         "docker": {
             "image": "{{resource.assets.container.docker.spark_docker}}",
             "network": "HOST",

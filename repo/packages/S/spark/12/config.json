@@ -156,6 +156,47 @@
                             "type": "string"
                         }
                     }
+                },
+                "authn": {
+                    "description": "Spark authentication configuration properties",
+                    "properties": {
+                        "enabled": {
+                            "default": false,
+                            "description": "Set to true to enable authentication.",
+                            "type": "boolean"
+                        },
+                        "opt_mesosphere_dir": {
+                            "default": "/opt/mesosphere",
+                            "description": "Volume to mount in docker for modules.",
+                            "type": "string"
+                        },
+                        "dcos_service_account_credential_dir": {
+                            "default": "/run/dcos/etc/agent",
+                            "description": "Volume to mount in docker for service-account credential.",
+                            "type": "string"
+                        },
+                        "module_json": {
+                            "default": "file:///opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
+                            "description": "JSON file describing the module within the module_dir.",
+                            "type": "string"
+                        },
+                        "module_name": {
+                            "default": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+                            "description": "Authenticatee module name.",
+                            "type": "string"
+                        },
+                        "dcos_service_account_credential_json": {
+                            "default": "file:///run/dcos/etc/agent/service_account.json",
+                            "description": "File containing DCOS service-account credential.",
+                            "type": "string"
+                        },
+                        "mesos_credential": {
+                            "default": "{\"principal\": \"mesos_agent\", \"secret\": \"dcos_spark\"}",
+                            "description": "Mesos credentials. The secret is not used.",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
                 }
             }
         },
