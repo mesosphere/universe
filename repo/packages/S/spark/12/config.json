@@ -171,7 +171,7 @@
                             "type": "string"
                         },
                         "dcos_service_account_credential_dir": {
-                            "default": "/run/dcos/etc/agent",
+                            "default": "/run/dcos/etc/mesos",
                             "description": "Volume to mount in docker for service-account credential.",
                             "type": "string"
                         },
@@ -186,7 +186,7 @@
                             "type": "string"
                         },
                         "dcos_service_account_credential_json": {
-                            "default": "file:///run/dcos/etc/agent/service_account.json",
+                            "default": "file:///run/dcos/etc/mesos/agent_service_account.json",
                             "description": "File containing DCOS service-account credential.",
                             "type": "string"
                         },
