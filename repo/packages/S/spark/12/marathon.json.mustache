@@ -28,9 +28,9 @@
         "MESOS_MODULES": "{{security.authn.module_json}}",
         "MESOS_AUTHENTICATEE": "{{security.authn.module_name}}",
         "MESOS_CREDENTIAL": "{{security.authn.mesos_credential}}",
-        "SSL_CERT_FILE": "{{authn.ssl_cert_file}}",
-        "SSL_KEY_FILE": "{{authn.ssl_key_file}}",
-        "SSL_CA_DIR": "{{authn.ssl_ca_dir}}",
+        "SSL_CERT_FILE": "{{security.authn.ssl_cert_file}}",
+        "SSL_KEY_FILE": "{{security.authn.ssl_key_file}}",
+        "SSL_CA_DIR": "{{security.authn.ssl_ca_dir}}",
         "SSL_ENABLED": "true",
 {{/security.authn.enabled}}
         "ENABLE_HISTORY_SERVER": "{{history-server.enabled}}",
