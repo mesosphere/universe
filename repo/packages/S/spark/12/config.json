@@ -195,6 +195,11 @@
                             "description": "Mesos credentials. The secret is not used.",
                             "type": "string"
                         },
+                        "ssl_files_dir": {
+                            "default": "/run/dcos/pki",
+                            "description": "Directory containing SSL-related files.",
+                            "type": "string"
+                         },
                         "ssl_cert_file": {
                             "default": "/run/dcos/pki/tls/certs/mesos-slave.crt",
                             "description": "Path to SSL cert file on the host.",
