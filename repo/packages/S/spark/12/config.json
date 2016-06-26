@@ -194,7 +194,22 @@
                             "default": "{\"principal\": \"mesos_agent\", \"secret\": \"dcos_spark\"}",
                             "description": "Mesos credentials. The secret is not used.",
                             "type": "string"
-                        }
+                        },
+                        "ssl_cert_file": {
+                            "default": "/run/dcos/pki/tls/certs/mesos-slave.crt",
+                            "description": "Path to SSL cert file on the host.",
+                            "type": "string"
+                         },
+                         "ssl_key_file": {
+                              "default": "/run/dcos/pki/tls/private/mesos-slave.key",
+                              "description": "Path to SSL key file on the host.",
+                              "type": "string"
+                         },
+                         "ssl_ca_dir": {
+                              "default": "/run/dcos/pki/certs",
+                              "description": "Path to SSL CA directory on the host.",
+                              "type": "string"
+                         }
                     },
                     "type": "object"
                 }
