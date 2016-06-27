@@ -3,13 +3,13 @@
     "cpus": {{service.cpus}},
     "mem": {{service.mem}},
     "cmd": "/sbin/init.sh",
-{{#authn.enabled}}
+{{#security.authn.enabled}}
     "secrets": {
         "serviceCredential": {
-            "source": "{{authn.service_authentication_credential_path}}"
+            "source": "{{security.authn.service_authentication_credential_path}}"
       }
     },
-{{/authn.enabled}}
+{{/security.authn.enabled}}
     "env": {
         "DCOS_SERVICE_NAME": "{{service.name}}",
         "SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",
