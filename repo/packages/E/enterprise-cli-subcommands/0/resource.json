@@ -1,0 +1,30 @@
+{
+    "cli": {
+        "binaries": {
+            "darwin": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "132fb49fec3e69759cde7951dbda6aa11069658a7b50305f23ede984c699fce2"
+                        }
+                    ],
+                    "kind": "executable",
+                    "url": "https://downloads.dcos.io/cli/binaries/darwin/x86-64/0.1.0/dcos-security"
+                }
+            },
+            "linux": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "89df3fb64e82a2db5a7acdfb23134ea120e79985f2d9e0d88410a30b35132a4c"
+                        }
+                    ],
+                    "kind": "executable",
+                    "url": "https://downloads.dcos.io/cli/binaries/linux/x86-64/0.1.0/dcos-security"
+                }
+            }
+        }
+    }
+}
