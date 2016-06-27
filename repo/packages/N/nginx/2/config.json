@@ -44,12 +44,16 @@
           "type": "string"
         },
         "contentDir": {
-          "description": "Path of directory, relative to sandbox, containing HTML code.",
+          "description": "Path of directory, relative to sandbox, containing HTML code. Can NOT be combined with configUrl.",
           "type": "string"
         },
         "contentUrl": {
-          "description": "URL of content that needs to be hosted.",
+          "description": "URL of content that needs to be hosted. Can NOT be combined with configUrl.",
           "type": "string"
+        },
+        "configUrl": {
+            "description": "URL to Nginx configuration that needs to be hosted (e.g., load balancing, reverse proxy, etc). Can NOT be combined with contentUrl or contentDir.",
+            "type": "string"
         },
         "bridge": {
           "default": false,

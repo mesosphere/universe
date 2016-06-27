@@ -6,13 +6,16 @@
   "maintainer": "support@mesosphere.io",
 {{#nginx.contentDir}}
   "cmd": "rm -rf /usr/share/nginx/html && ln -s /mnt/mesos/sandbox/{{nginx.contentDir}} /usr/share/nginx/html && nginx -g 'daemon off;'",
-{{/nginx.contentDir}}   
+{{/nginx.contentDir}}
+{{#nginx.configUrl}}
+  "cmd": "cp /mnt/mesos/sandbox/nginx /etc/nginx/conf.d/. || cp /mnt/mesos/sandbox/*.conf /etc/nginx/conf.d/. && nginx -g 'daemon off;'",
+{{/nginx.configUrl}}
   "container": {
     "type": "DOCKER",
     "docker": {
       "image": "{{resource.assets.container.docker.nginx-docker}}",
     {{#nginx.bridge}}
-      "network": "BRIDGE",    
+      "network": "BRIDGE",
       "portMappings": [
         { "containerPort": 80, "hostPort": 0 },
         { "containerPort": 443, "hostPort": 0 }
@@ -36,8 +39,13 @@
 {{#nginx.contentUrl}}
   "uris":[
     "{{nginx.contentUrl}}"
-  ],  
+  ],
 {{/nginx.contentUrl}}
+{{#nginx.configUrl}}
+  "uris":[
+    "{{nginx.configUrl}}"
+  ],
+{{/nginx.configUrl}}
   "acceptedResourceRoles": [
     "{{nginx.role}}"
   ],
