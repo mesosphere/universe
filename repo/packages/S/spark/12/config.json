@@ -190,11 +190,6 @@
                             "description": "File containing DCOS service-account credential.",
                             "type": "string"
                         },
-                        "mesos_credential": {
-                            "default": "{\"principal\": \"mesos_agent\", \"secret\": \"dcos_spark\"}",
-                            "description": "Mesos credentials. The secret is not used.",
-                            "type": "string"
-                        },
                         "ssl_files_dir": {
                             "default": "/run/dcos/pki",
                             "description": "Directory containing SSL-related files.",
