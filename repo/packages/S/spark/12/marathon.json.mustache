@@ -3,6 +3,13 @@
     "cpus": {{service.cpus}},
     "mem": {{service.mem}},
     "cmd": "/sbin/init.sh",
+{{#authn.enabled}}
+    "secrets": {
+        "serviceCredential": {
+            "source": "{{authn.service_authentication_credential_path}}"
+      }
+    },
+{{/authn.enabled}}
     "env": {
         "DCOS_SERVICE_NAME": "{{service.name}}",
         "SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",
@@ -24,7 +31,7 @@
         "SPARK_SSL_ENABLEDALGORITHMS": "{{security.ssl.enabledAlgorithms}}",
 {{/security.ssl.enabled}}
 {{#security.authn.enabled}}
-        "DCOS_SERVICE_ACCOUNT_CREDENTIAL": "{{security.authn.dcos_service_account_credential_json}}",
+        "DCOS_SERVICE_ACCOUNT_CREDENTIAL": "{ \"secret\": \"serviceCredential\" }",
         "MESOS_MODULES": "file:///opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
         "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
         "SSL_CERT_FILE": "{{security.authn.ssl_cert_file}}",
@@ -59,11 +66,6 @@
                 "containerPath": "/opt/mesosphere",
                 "hostPath": "/opt/mesosphere",
                 "mode": "RO"
-            },
-            {
-              "containerPath": "{{security.authn.dcos_service_account_credential_dir}}",
-              "hostPath": "{{security.authn.dcos_service_account_credential_dir}}",
-              "mode": "RO"
             }
         ],
 {{/security.authn.enabled}}
