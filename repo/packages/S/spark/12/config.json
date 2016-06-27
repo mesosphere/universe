@@ -165,11 +165,6 @@
                             "description": "Set to true to enable authentication.",
                             "type": "boolean"
                         },
-                        "opt_mesosphere_dir": {
-                            "default": "/opt/mesosphere",
-                            "description": "Volume to mount in docker for modules.",
-                            "type": "string"
-                        },
                         "dcos_service_account_credential_dir": {
                             "default": "/run/dcos/etc/mesos",
                             "description": "Volume to mount in docker for service-account credential.",
