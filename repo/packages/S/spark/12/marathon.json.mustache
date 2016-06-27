@@ -31,7 +31,7 @@
         "SPARK_SSL_ENABLEDALGORITHMS": "{{security.ssl.enabledAlgorithms}}",
 {{/security.ssl.enabled}}
 {{#security.authn.enabled}}
-        "DCOS_SERVICE_ACCOUNT_CREDENTIAL": "{ \"secret\": \"serviceCredential\" }",
+        "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
         "MESOS_MODULES": "file:///opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
         "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
         "SSL_CERT_FILE": "{{security.authn.ssl_cert_file}}",
