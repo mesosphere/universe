@@ -175,16 +175,6 @@
                             "description": "Volume to mount in docker for service-account credential.",
                             "type": "string"
                         },
-                        "module_json": {
-                            "default": "file:///opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
-                            "description": "JSON file describing the module within the module_dir.",
-                            "type": "string"
-                        },
-                        "module_name": {
-                            "default": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
-                            "description": "Authenticatee module name.",
-                            "type": "string"
-                        },
                         "dcos_service_account_credential_json": {
                             "default": "file:///run/dcos/etc/mesos/agent_service_account.json",
                             "description": "File containing DCOS service-account credential.",
