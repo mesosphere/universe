@@ -138,20 +138,8 @@
                             "type": "object",
                             "properties": {
                                 "enabled": {
-                                    "default": false,
                                     "type": "boolean"
-                                },
-                                "cert_file": {
-                                    "type": "string",
-                                    "description": "Absolute path to scheduler's cert.  This is required if security.mesos-ssl.enabled is true."
-                                },
-                                "key_file": {
-                                    "type": "string",
-                                    "description": "Absolute path to scheduler's private key.  This is required if security.mesos-ssl.enabled is true."
-                                },
-                                "CA_dir": {
-                                    "type": "string",
-                                    "description": "Absolute path to a directory containing CA certs."
+                                    "default": false,
                                 }
                             }
                         },
@@ -163,11 +151,6 @@
                                     "description": "Whether to enable dcos-oauth.",
                                     "type": "boolean",
                                     "default": false
-                                },
-                                "credentials": {
-                                    "description": "dcos-auth credentials",
-                                    "type": "string",
-                                    "default": "{\"principal\": \"mesos_agent\", \"secret\": \"dcos_spark\"}"
                                 }
                             }
                         }

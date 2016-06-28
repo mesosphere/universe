@@ -31,7 +31,7 @@
         "HISTORY_KRB_PRINCIPAL": "{{history-server.kerberos.principal}}",
         "HISTORY_KRB_KEYTAB": "{{history-server.kerberos.keytab}}",
 {{#security.mesos.authentication.enabled}}
-        "DCOS_SERVICE_ACCOUNT_CREDENTIAL": "file:///run/dcos/etc/mesos/agent_service_account.json",
+        "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
         "MESOS_MODULES": "file:///opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
         "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
 {{/security.mesos.authentication.enabled}}
@@ -42,6 +42,15 @@
 {{/security.mesos.ssl.enabled}}
         "SSL_ENABLED": "{{security.mesos.ssl.enabled}}"
     },
+
+{{#security.mesos.authentication.secret-name}}
+    "secrets": {
+        "serviceCredential": {
+            "source": "{{security.mesos.authentication.secret-name}}"
+        }
+    },
+{{/security.mesos.authentication.secret-name}}
+
     "ports": [
         0,
         0,
