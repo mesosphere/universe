@@ -46,6 +46,24 @@
                     "type": "string",
                     "description": "Spark distribution URI.  The DCOS Spark CLI will fetch this Spark distribution.  This variable has no effect on the Spark distribution running the dispatcher or the drivers.  The Docker image running this Marathon app contains that distribution.",
                     "default": "https://downloads.mesosphere.com/spark/assets/spark-1.6.1-2.tgz"
+                },
+                "volumes": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "containerPath": {
+                                "type": "string"
+                            },
+                            "hostPath": {
+                                "type": "string"
+                            },
+                            "mode": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["containerPath", "hostPath", "mode"]
+                    }
                 }
             }
         },
@@ -108,6 +126,33 @@
                             "description": "Base64 encoded krb5.conf file.  Copied to the drivers and executors so that they may access your KDC.  Also used by the history server.",
                             "type": "string",
                             "default": ""
+                        }
+                    }
+                },
+                "mesos": {
+                    "description": "Mesos scheduler configuration properties.",
+                    "type": "object",
+                    "properties": {
+                        "ssl": {
+                            "description": "Mesos scheduler SSL configuration.",
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                    "default": false,
+                                }
+                            }
+                        },
+                        "authentication": {
+                            "description": "Mesos scheduler dcos-oauth configuration.",
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "description": "Whether to enable dcos-oauth.",
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            }
                         }
                     }
                 },

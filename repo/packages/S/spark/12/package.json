@@ -1,6 +1,6 @@
 {
     "packagingVersion": "2.0",
-    "postInstallNotes": "DC/OS Spark is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/usage/services/spark/\n\tIssues: https://docs.mesosphere.com/support/",
+    "postInstallNotes": "DC/OS Spark is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/spark-1-7/\n\tIssues: https://docs.mesosphere.com/support/",
     "scm": "https://github.com/apache/spark.git",
     "maintainer": "support@mesosphere.io",
     "postUninstallNotes": "The Apache Spark DC/OS Service has been uninstalled and will no longer run.\nPlease follow the instructions at http://docs.mesosphere.com/services/spark/#uninstall to clean up any persisted state.",
@@ -20,5 +20,5 @@
     ],
     "website": "https://docs.mesosphere.com/usage/managing-services/spark/",
     "selected": true,
-    "version": "1.0.0-1.6.1-2"
+    "version": "SNAPSHOT"
 }
