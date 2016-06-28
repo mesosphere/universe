@@ -129,10 +129,9 @@
                             "description": "Mesos scheduler dcos-oauth configuration.",
                             "type": "object",
                             "properties": {
-                                "enabled": {
-                                    "description": "Whether to enable dcos-oauth.",
-                                    "type": "boolean",
-                                    "default": false
+                                "secret_name": {
+                                    "description": "Path to a service-account credential in the secret store. Only needed when DC/OS service authentication is enabled.",
+                                    "type": "string"
                                 }
                             }
                         }
