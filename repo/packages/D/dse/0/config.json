@@ -11,8 +11,8 @@
 				"name": {
 					"id": "http://cassandra/docs/mesosphere.com/service/name",
 					"type": "string",
-					"description": "The name of the Cassandra service instance.",
-					"default": "cassandra"
+					"description": "The name of the DSE Cassandra service instance.",
+					"default": "dse"
 				},
 				"user": {
 					"id": "http://cassandra/docs/mesosphere.com/service/user",
@@ -23,25 +23,25 @@
 				"cpus": {
 					"id": "http://cassandra/docs/mesosphere.com/service/cpus",
 					"type": "number",
-					"description": "The cpu shares used by the Cassandra service scheduler.",
+					"description": "The cpu shares used by the DSE Cassandra service scheduler.",
 					"default": 0.5
 				},
 				"mem": {
 					"id": "http://cassandra/docs/mesosphere.com/service/mem",
 					"type": "integer",
-					"description": "The memory used by the Cassandra service scheduler in Mb.",
+					"description": "The memory used by the DSE Cassandra service scheduler in Mb.",
 					"default": 2048
 				},
 				"heap": {
 					"id": "http://cassandra/docs/mesosphere.com/service/heap",
 					"type": "integer",
-					"description": "The JVM heap used by the Cassandra service scheduler in Mb.",
+					"description": "The JVM heap used by the DSE Cassandra service scheduler in Mb.",
 					"default": 1024
 				},
 				"api_port" : {
 					"id": "http://cassandra/docs/mesosphere.com/service/api_port",
 					"type": "integer",
-					"description": "The port that the Cassandra service API will accept on.",
+					"description": "The port that the DSE Cassandra service API will accept on.",
 					"default": 9000
 				},
 				"placement_strategy": {
