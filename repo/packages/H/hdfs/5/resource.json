@@ -1,0 +1,15 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-large.png"
+  },
+  "assets": {
+    "uris": {
+      "scheduler-zip": "https://s3-us-west-2.amazonaws.com/hdfs-dev/authn/scheduler.zip",
+      "executor-zip": "https://s3-us-west-2.amazonaws.com/hdfs-dev/authn/executor.zip",
+      "jre-tar-gz": "https://s3-us-west-2.amazonaws.com/hdfs-dev/authn/jre-8u91-linux-x64.tar.gz",
+      "hadoop-tar-gz": "https://s3-us-west-2.amazonaws.com/hdfs-dev/authn/hadoop-2.6.0-cdh5.7.1-dcos.tar.gz"
+    }
+  }
+}
