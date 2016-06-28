@@ -173,8 +173,8 @@
       "description": "Configuration related to running a single instance version of GitLab. If high availability is enabled, these settings will be ignored.",
       "type": "object",
       "properties": {
-        "persistent-volumes": {
-          "description": "Persistent volumes configuration (only used if external volumes are disabled). Persistent volumes are created on one machine and Marathon will attempt to re-launch the task on the same machine. Note that if the machine is lost, your data may also be lost.",
+        "local-volumes": {
+          "description": "Local persistent volumes configuration (only used if external persistent volumes are disabled). Local persistent volumes are created on one machine and Marathon will attempt to re-launch the task on the same machine. Note that if the machine is lost, your data may also be lost.",
           "type": "object",
           "properties": {
             "config-size": {
@@ -194,7 +194,7 @@
           ]
         },
         "external-volumes": {
-          "description": "External volumes configuration. External volumes are a DC/OS feature that allow your data to be migrated with your task.",
+          "description": "External persistent volumes configuration. External persistent volumes are a DC/OS feature that allow your data to be migrated with your task.",
           "type": "object",
           "properties": {
             "enabled": {
@@ -209,7 +209,7 @@
         }
       },
       "required": [
-        "persistent-volumes",
+        "local-volumes",
         "external-volumes"
       ]
     },

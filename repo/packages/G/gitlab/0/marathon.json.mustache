@@ -61,7 +61,7 @@
                "containerPath": "config",
                "mode": "RW",
                "persistent": {
-                  "size": {{single-node.persistent-volumes.config-size}}
+                  "size": {{single-node.local-volumes.config-size}}
                }
            },
            {
@@ -73,7 +73,7 @@
                "containerPath": "data",
                "mode": "RW",
                "persistent": {
-                  "size": {{single-node.persistent-volumes.data-size}}
+                  "size": {{single-node.local-volumes.data-size}}
                }
            }
            {{/single-node.external-volumes.enabled}}
