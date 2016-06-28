@@ -30,11 +30,11 @@
         "HISTORY_CLEANER_MAXAGE": "{{history-server.cleaner-maxage}}",
         "HISTORY_KRB_PRINCIPAL": "{{history-server.kerberos.principal}}",
         "HISTORY_KRB_KEYTAB": "{{history-server.kerberos.keytab}}",
-{{#security.mesos.authentication.enabled}}
+{{#security.mesos.authentication.service_account_secret_name}}
         "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
         "MESOS_MODULES": "file:///opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
         "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
-{{/security.mesos.authentication.enabled}}
+{{/security.mesos.authentication.service_account_secret_name}}
 {{#security.mesos.ssl.enabled}}
         "SSL_CERT_FILE": "/run/dcos/pki/tls/certs/mesos-slave.crt",
         "SSL_KEY_FILE": "/run/dcos/pki/tls/private/mesos-slave.key",
@@ -43,13 +43,14 @@
         "SSL_ENABLED": "{{security.mesos.ssl.enabled}}"
     },
 
-{{#security.mesos.authentication.secret-name}}
+{{#security.mesos.authentication.service_account_secret_name}}
     "secrets": {
         "serviceCredential": {
-            "source": "{{security.mesos.authentication.secret-name}}"
+            "source":
+            "{{security.mesos.authentication.service_account_secret_name}}"
         }
     },
-{{/security.mesos.authentication.secret-name}}
+{{/security.mesos.authentication.service_account_secret_name}}
 
     "ports": [
         0,
@@ -70,7 +71,7 @@
                 "containerPath": "/run/dcos/pki/",
                 "mode": "RO"
             }
-{{#security.mesos.authentication.enabled}}
+{{#security.mesos.authentication.service_account_secret_name}}
             ,
             {
                 "hostPath": "/opt/mesosphere/",
@@ -82,7 +83,7 @@
                 "containerPath": "/run/dcos/etc/mesos/",
                 "mode": "RO"
             }
-{{/security.mesos.authentication.enabled}}
+{{/security.mesos.authentication.service_account_secret_name}}
         ]
     },
     "healthChecks": [
