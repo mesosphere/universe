@@ -165,7 +165,7 @@
                             "description": "Set to true to enable authentication.",
                             "type": "boolean"
                         },
-                        "service_authentication_credential_path": {
+                        "service_account_secret_name": {
                             "default": "",
                             "description": "Path to a service-account credential in the secret store. Only needed when DC/OS service authentication is enabled.",
                             "type": "string"
