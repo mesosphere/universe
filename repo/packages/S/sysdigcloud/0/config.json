@@ -1,20 +1,20 @@
 {
     "properties": {
         "sysdigcloud": {
-            "description": "Sysdigcloud agent properties",
+            "description": "Sysdig Cloud for DC/OS settings",
             "properties": {
                 "access_key": {
-                    "description": "Your Sysdigcloud Access Key.",
+                    "description": "Your Sysdig Cloud Access Key (found in your Settings in the Sysdig Cloud app)",
                     "type": "string"
                 },
                 "add_conf": {
                     "default": "",
-                    "description": "sysdigcloud agent custom configuration",
+                    "description": "Sysdig Cloud agent custom configuration",
                     "type": "string"
                 },
                 "agent_tags": {
                     "default": "",
-                    "description": "sysdigcloud agent custom tags",
+                    "description": "Comma-separated list of custom tags (eg. environment:production,cluster:mesos-dcos)",
                     "type": "string"
                 },
                 "app_id": {
@@ -24,24 +24,24 @@
                 },
                 "collector_endpoint": {
                     "default": "collector.sysdigcloud.com",
-                    "description": "collector endpoint",
+                    "description": "Collector endpoint - only modify if you are running Sysdig Enterprise On-premise.",
                     "type": "string"
                 },
                 "cpus": {
                     "default": 0.05,
-                    "description": "CPU shares to allocate to each sysdigcloud agent task.",
+                    "description": "CPU (%) to allocate to each Sysdig Cloud agent task.",
                     "minimum": 0.05,
                     "type": "number"
                 },
                 "instances": {
                     "default": 1,
-                    "description": "Number of sysdigcloud agent instances to run.",
+                    "description": "Number of Sysdig Cloud agent containers to deploy (should be >= number of nodes in your cluster.",
                     "minimum": 1,
                     "type": "integer"
                 },
                 "mem": {
                     "default": 500.0,
-                    "description": "Memory (MB) to allocate to each sysdigcloud agent task.",
+                    "description": "Memory (MB) to allocate to each Sysdig Cloud agent task.",
                     "minimum": 500.0,
                     "type": "number"
                 }
