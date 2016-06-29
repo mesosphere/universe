@@ -1,6 +1,7 @@
 {
   "id": "/{{service.name}}",
   "cmd": "./scheduler/bin/hdfs-scheduler server ./scheduler/conf/scheduler.yml",
+  "user": "nobody",
   "instances": 1,
   "cpus": {{service.cpus}},
   "mem": {{service.mem}},
@@ -71,6 +72,7 @@
 ,"SERVICE_NAME":"{{service.name}}"
 ,"SERVICE_ROLE":"{{service.role}}"
 ,"SERVICE_PRINCIPAL":"{{service.principal}}"
+,"SERVICE_USER":"nobody"
 ,"HDFS_NAME_NODE_CPUS":"{{name_node.cpus}}"
 ,"HDFS_NAME_MEMORY_MB":"{{name_node.mem}}"
 ,"HDFS_NAME_NODE_HEAP_MB":"{{name_node.heap}}"
