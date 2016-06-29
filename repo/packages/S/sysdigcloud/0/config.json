@@ -29,7 +29,7 @@
                 },
                 "cpus": {
                     "default": 0.05,
-                    "description": "CPU (%) to allocate to each Sysdig Cloud agent task.",
+                    "description": "CPU (shares) to allocate to each Sysdig Cloud agent task.",
                     "minimum": 0.05,
                     "type": "number"
                 },
