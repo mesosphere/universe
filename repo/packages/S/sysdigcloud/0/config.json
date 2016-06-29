@@ -9,12 +9,12 @@
                 },
                 "add_conf": {
                     "default": "",
-                    "description": "Sysdig Cloud agent custom configuration",
+                    "description": "Optional: custom config passed to Sysdig container through ADDITIONAL_CONF env variable. Must be valid yaml. See docs for more info.",
                     "type": "string"
                 },
                 "agent_tags": {
                     "default": "",
-                    "description": "Comma-separated list of custom tags (eg. environment:production,cluster:mesos-dcos)",
+                    "description": "Optional: comma-separated list of custom tags - eg. environment:production,cluster:mesos-dcos",
                     "type": "string"
                 },
                 "app_id": {
@@ -24,24 +24,24 @@
                 },
                 "collector_endpoint": {
                     "default": "collector.sysdigcloud.com",
-                    "description": "Collector endpoint - only modify if you are running Sysdig Enterprise On-premise.",
+                    "description": "Collector endpoint - only modify if you are running Sysdig Enterprise On-premise",
                     "type": "string"
                 },
                 "cpus": {
                     "default": 0.05,
-                    "description": "CPU (shares) to allocate to each Sysdig Cloud agent task.",
+                    "description": "CPU (shares) to allocate to each Sysdig Cloud agent task",
                     "minimum": 0.05,
                     "type": "number"
                 },
                 "instances": {
                     "default": 1,
-                    "description": "Number of Sysdig Cloud agent containers to deploy (should be >= number of nodes in your cluster.",
+                    "description": "Number of Sysdig Cloud agent containers to deploy (ie. the number of nodes in your cluster)",
                     "minimum": 1,
                     "type": "integer"
                 },
                 "mem": {
                     "default": 500.0,
-                    "description": "Memory (MB) to allocate to each Sysdig Cloud agent task.",
+                    "description": "Memory (MB) to allocate to each Sysdig Cloud agent task",
                     "minimum": 500.0,
                     "type": "number"
                 }
