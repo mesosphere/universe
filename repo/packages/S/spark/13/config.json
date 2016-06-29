@@ -111,6 +111,32 @@
                         }
                     }
                 },
+                "mesos": {
+                    "description": "Mesos scheduler configuration properties.",
+                    "type": "object",
+                    "properties": {
+                        "ssl": {
+                            "description": "Mesos scheduler SSL configuration.",
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            }
+                        },
+                        "authentication": {
+                            "description": "Mesos scheduler dcos-oauth configuration.",
+                            "type": "object",
+                            "properties": {
+                                "secret_name": {
+                                    "description": "Path to a service-account credential in the secret store. Only needed when DC/OS service authentication is enabled.",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
                 "ssl": {
                     "description": "Spark SSL certificates and private key configuration.",
                     "type": "object",
