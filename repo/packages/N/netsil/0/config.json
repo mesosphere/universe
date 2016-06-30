@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "netsil": {
+      "description": "Netsil configuration properties",
+      "properties": {
+        "name": {
+          "default": "netsil",
+          "description": "Name for netsil",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 4.0,
+          "description": "CPU to allocate to each instance of netsil.",
+          "minimum": 4.0,
+          "type": "number"
+        },
+        "mem": {
+          "default": 4096,
+          "description": "Memory (MB) to allocate to each instance of netsil.",
+          "minimum": 4096,
+          "type": "integer"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of instances of netsil to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "role": {
+          "default": "slave_public",
+          "description": "Deploy netsil only on nodes with this role. For DC/OS, use the 'slave_public' role to deploy on a publc slave node.",
+          "type": "string"
+        },
+        "https_port": {
+          "default": 443,
+          "description": "The HTTPS port used to access Netsil.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "infra_stats_port": {
+          "default": 2001,
+          "description": "The port for infrastructure stats collection.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "traffic_stats_port": {
+          "default": 2003,
+          "description": "The port for traffic collection.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "version_number": {
+          "default": "0.2.26",
+          "description": "The version of netsil to use.",
+          "type": "string"
+        }
+      },
+      "required": ["name", "cpus", "mem", "instances", "https_port", "infra_stats_port", "traffic_stats_port"],
+      "type": "object"
+    }
+  }
+}
