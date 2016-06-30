@@ -35,7 +35,7 @@
 1. Add the local repository by using the DCOS-CLI.
 
     ```bash
-    $ dcos package repo add local-universe http://master.mesos:8082/universe.zip
+    $ dcos package repo add local-universe http://master.mesos:8082/repo
     ```
 
 1. To pull from this new repository, you'll need to setup the docker daemon on every agent to have a valid SSL certificate. To do this, on every agent in your cluster, run the following:

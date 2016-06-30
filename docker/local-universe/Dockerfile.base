@@ -24,6 +24,7 @@ COPY certs /certs
 COPY certs/domain.crt /usr/share/nginx/html/certs/domain.crt
 
 COPY registry-config.yml /etc/docker/registry/config.yml
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80 443 5000
 
