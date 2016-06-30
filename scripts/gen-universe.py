@@ -11,7 +11,6 @@ import sys
 import tempfile
 import zipfile
 
-
 def main():
     parser = argparse.ArgumentParser(
         description='This script generates all of the universe objects from '
