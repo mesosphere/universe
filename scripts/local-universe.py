@@ -109,6 +109,7 @@ def main():
             pathlib.Path(args.repository),
             pathlib.Path(dir_path, 'universe'))
 
+
         build_universe_docker(pathlib.Path(dir_path))
 
         if failed_packages:
@@ -277,9 +278,6 @@ def build_repository(scripts_dir, repo_dir, dest_dir):
 
     command = [ "bash", "scripts/build.sh" ]
     subprocess.check_call(command, cwd=str(dest_dir))
-
-    command = [ "zip", "-r", "universe", "universe" ]
-    subprocess.check_call(command, cwd=str(dest_dir / ".."))
 
 
 def remove_package(package, base_dir):
