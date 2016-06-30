@@ -63,6 +63,14 @@
         "docker": {
             "image": "{{resource.assets.container.docker.spark_docker}}",
             "network": "HOST",
+{{#service.user}}
+            "parameters": [
+               {
+                 "key": "user",
+                 "value": "{{service.user}}"
+               }
+            ],
+{{/service.user}}
             "forcePullImage": true
         },
         "volumes": [
