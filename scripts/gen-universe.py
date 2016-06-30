@@ -3,6 +3,7 @@
 from distutils.version import LooseVersion
 import argparse
 import base64
+import collections
 import itertools
 import json
 import pathlib
@@ -10,6 +11,7 @@ import shutil
 import sys
 import tempfile
 import zipfile
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -208,7 +210,11 @@ def read_config(path):
 
     if path.is_file():
         with path.open() as file_object:
-            return json.load(file_object)
+            # Load config file into a OrderedDict to preserve order
+            return json.load(
+                file_object,
+                object_pairs_hook=collections.OrderedDict
+            )
 
 
 def read_command(path):
