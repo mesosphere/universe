@@ -118,11 +118,13 @@
         "DCOS_SERVICE_SCHEME": "http"
 {{/security.ssl.enabled}}
     },
+{{#service.user}}
+    "user": "{{service.user}}",
+{{/service.user}}
     "uris": [
     {{#hdfs.config-url}}
     "{{hdfs.config-url}}/hdfs-site.xml",
     "{{hdfs.config-url}}/core-site.xml"
     {{/hdfs.config-url}}
-    ],
-    "user": "nobody"
+    ]
 }
