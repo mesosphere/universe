@@ -1,6 +1,6 @@
-FROM registry:2.4.0
+FROM registry:2.4.1
 
-ENV NGINX_VERSION 1.10.0-1~jessie
+ENV NGINX_VERSION 1.10.1-1~jessie
 
 RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62 \
   && echo "deb http://nginx.org/packages/debian/ jessie nginx" >> /etc/apt/sources.list \
@@ -24,6 +24,7 @@ COPY certs /certs
 COPY certs/domain.crt /usr/share/nginx/html/certs/domain.crt
 
 COPY registry-config.yml /etc/docker/registry/config.yml
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80 443 5000
 
