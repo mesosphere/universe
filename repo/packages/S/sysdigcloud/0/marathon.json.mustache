@@ -4,6 +4,12 @@
     "constraints": [["hostname", "UNIQUE"]],
     "mem": {{sysdigcloud.mem}},
     "instances": {{sysdigcloud.instances}},
+    "env": {
+        "ACCESS_KEY": "{sysdigcloud.access_key}}",
+        "COLLECTOR": "{{sysdigcloud.collector_endpoint}}",
+        "TAGS": "{sysdigcloud.agent_tags}}",
+        "ADDITIONAL_CONF": "{{sysdigcloud.add_conf}}"
+    },
     "container": {
         "type": "DOCKER",
         "docker": {
@@ -13,18 +19,6 @@
             "parameters": [
                 {
                     "key": "name", "value": "sysdig-agent"
-                },
-                {
-                    "key": "env", "value": "ACCESS_KEY={{sysdigcloud.access_key}}"
-                },
-                {
-                    "key": "env", "value": "COLLECTOR={{sysdigcloud.collector_endpoint}}"
-                },
-                {
-                    "key": "env", "value": "TAGS={{sysdigcloud.agent_tags}}"
-                },
-                {
-                    "key": "env", "value": "ADDITIONAL_CONF={{sysdigcloud.add_conf}}"
                 }
             ]
         },
