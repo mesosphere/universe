@@ -18,18 +18,18 @@
 					"id": "http://cassandra/docs/mesosphere.com/service/user",
 					"type": "string",
 					"description": "The user that the service will run as.",
-                    "default": "root"
-                },
-                "principal": {
-                    "description": "The principal for the Cassandra service instance.",
-                    "type": "string",
-                    "default": "cassandra-principal"
-                },
-                "secret_name": {
-                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
-                    "type": "string",
-                    "default": ""
-                },
+					"default": "root"
+				},
+				"principal": {
+					"description": "The principal for the Cassandra service instance.",
+					"type": "string",
+					"default": "cassandra-principal"
+				},
+				"secret_name": {
+					"description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+					"type": "string",
+					"default": ""
+				},
 				"cpus": {
 					"id": "http://cassandra/docs/mesosphere.com/service/cpus",
 					"type": "number",
