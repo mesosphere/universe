@@ -15,8 +15,8 @@ clean:
 	rm -f local-universe.tar.gz || 0
 
 local-universe: clean
-	python3 $(REPO_BASE_DIR)/scripts/local-universe.py --repository $(REPO_BASE_DIR)/repo/packages/	\
+	python3 $(REPO_BASE_DIR)/scripts/local-universe.py			\
+		--repository $(REPO_BASE_DIR)/repo/packages/	\
 		--selected &&							\
-	docker save -o local-universe.tar mesosphere/universe:latest &&	\
+	docker save -o local-universe.tar mesosphere/universe:latest &&		\
 	gzip local-universe.tar
-

@@ -1,0 +1,532 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"id": "http://cassandra/docs/mesosphere.com",
+	"type": "object",
+	"properties": {
+		"service": {
+			"id": "http://cassandra/docs/mesosphere.com/service",
+			"type": "object",
+			"description": "DC/OS service configuration properties",
+			"properties": {
+				"name": {
+					"id": "http://cassandra/docs/mesosphere.com/service/name",
+					"type": "string",
+					"description": "The name of the Cassandra service instance.",
+					"default": "cassandra"
+				},
+				"user": {
+					"id": "http://cassandra/docs/mesosphere.com/service/user",
+					"type": "string",
+					"description": "The user that the service will run as.",
+					"default": "root"
+				},
+				"cpus": {
+					"id": "http://cassandra/docs/mesosphere.com/service/cpus",
+					"type": "number",
+					"description": "The cpu shares used by the Cassandra service scheduler.",
+					"default": 0.5
+				},
+				"mem": {
+					"id": "http://cassandra/docs/mesosphere.com/service/mem",
+					"type": "integer",
+					"description": "The memory used by the Cassandra service scheduler in Mb.",
+					"default": 2048
+				},
+				"heap": {
+					"id": "http://cassandra/docs/mesosphere.com/service/heap",
+					"type": "integer",
+					"description": "The JVM heap used by the Cassandra service scheduler in Mb.",
+					"default": 1024
+				},
+				"api_port" : {
+					"id": "http://cassandra/docs/mesosphere.com/service/api_port",
+					"type": "integer",
+					"description": "The port that the Cassandra service API will accept on.",
+					"default": 9000
+				},
+				"placement_strategy": {
+					"id": "http://cassandra/docs/mesosphere.com/service/placement_strategy",
+					"type": "string",
+					"description": "The placement strategy for Cassandra nodes. This should always be NODE.",
+					"default": "NODE"
+				}
+			},
+			"additionalProperties": false,
+			"required": [
+				"name",
+				"user",
+				"cpus",
+				"mem",
+				"heap",
+				"api_port",
+				"placement_strategy"
+			]
+		},
+		"nodes": {
+			"id": "http://cassandra/docs/mesosphere.com/node",
+			"type": "object",
+			"description": "Cassandra node configuration properties",
+			"properties": {
+				"count": {
+					"id": "http://cassandra/docs/mesosphere.com/node/count",
+					"type": "integer",
+					"description": "The number of Cassandra nodes in the cluster.",
+					"default": 3
+				},
+				"cpus": {
+					"id": "http://cassandra/docs/mesosphere.com/node/cpus",
+					"type": "number",
+					"description": "The number of cpu shares allocated to the Cassandra process.",
+					"default": 0.5
+				},
+				"mem": {
+					"id": "http://cassandra/docs/mesosphere.com/node/mem",
+					"type": "integer",
+					"description": "The amount of memory, in MB, allocated to the Cassandra process.",
+					"default": 4096
+				},
+				"disk": {
+					"id": "http://cassandra/docs/mesosphere.com/node/disk",
+					"type": "integer",
+					"description": "The amount of disk, in MB, allocated to the Cassandra process.",
+					"default": 10240
+				},
+				"disk_type": {
+					"id": "http://cassandra/docs/mesosphere.com/node/diskType",
+					"type": "string",
+					"description": "Disk type to be used for storing Cassandra data. See documentation. [ROOT, MOUNT]",
+					"default": "ROOT"
+				},
+				"heap": {
+					"id": "http://cassandra/docs/mesosphere.com/node/heap",
+					"type": "object",
+					"description": "The Cassandra process JVM heap configuration object.",
+					"properties": {
+						"size": {
+							"id": "http://cassandra/docs/mesosphere.com/node/heap/size",
+							"type": "integer",
+							"description": "The amount of JVM heap, in MB, allocated to the Cassandra process.",
+							"default": 2048
+						},
+						"new": {
+							"id": "http://cassandra/docs/mesosphere.com/node/heap/new",
+							"type": "integer",
+							"description": "The amount of JVM new generation heap, in MB, allocated to the Cassandra process.",
+							"default": 100
+						}
+					},
+					"additionalProperties": false,
+					"required": [
+						"size",
+						"new"
+					]
+
+				},
+				"seeds": {
+					"id": "http://cassandra/docs/mesosphere.com/node/seeds",
+					"type": "integer",
+					"description": "The number of Cassandra seed nodes in the cluster",
+					"default": 2
+				}
+			},
+			"additionalProperties": false,
+			"required": [
+				"cpus",
+				"mem",
+				"disk",
+				"heap",
+				"count",
+				"seeds"
+			]
+		},
+		"cassandra": {
+			"id": "http://cassandra/docs/mesosphere.com/cassandra",
+			"description": "Cassandra service configuration properties",
+			"type": "object",
+			"properties": {
+				"jmx_port": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/jmxPort",
+					"type": "integer",
+					"description": "The JMX port that will be used to interface with the Cassandra application.",
+					"default": 7199
+				},
+				"num_tokens": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/numTokens",
+					"type": "integer",
+					"description": "The number of tokens assigned to each node.",
+					"default": 256
+				},
+				"hinted_handoff_enabled": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/hintedHandoffEnabled",
+					"type": "boolean",
+					"description": "If true, hinted handoff is enabled for the cluster.",
+					"default": true
+				},
+				"max_hint_window_in_ms": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/maxHintWindowInMs",
+					"type": "integer",
+					"description": "The maximum amount of time, in ms, that hints are generates hints for an unresponsive node.",
+					"default": 10800000
+				},
+				"hinted_handoff_throttle_in_kb": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/hintedHandoffThrottleInKb",
+					"type": "integer",
+					"description": "The maximum throttle per delivery thread in kilobytes per second.",
+					"default": 1024
+				},
+				"max_hints_delivery_threads": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/maxHintsDeliveryThreads",
+					"type": "integer",
+					"description": "The maximum number of delivery threads for hinted handoff.",
+					"default": 2
+				},
+				"batchlog_replay_throttle_in_kb": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/batchlogReplayThrottleInKb",
+					"type": "integer",
+					"description": "The total throttle for log replay in Kpbs.",
+					"default": 1024
+				},
+				"partitioner": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/partitioner",
+					"type": "string",
+					"description": "The partitioner used to distribute rows across the cluster. Murmur3Partitioner is the recommended setting. RandomPartitioner and ByteOrderedPartitioner are supported for legacy applications.",
+					"default": "org.apache.cassandra.dht.Murmur3Partitioner"
+				},
+				"key_cache_save_period": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/keyCacheSavePeriod",
+					"type": "integer",
+					"description": "The duration in seconds that keys are saved in cache. Saved caches greatly improve cold-start speeds and has relatively little effect on I/O.",
+					"default": 14400
+				},
+				"row_cache_size_in_mb": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/rowCacheSizeInMb",
+					"type": "integer",
+					"description": "Maximum size of the row cache in memory. Row cache can save more time than key_cache_size_in_mb, but is space-intensive because it contains the entire row. Use the row cache only for hot rows or static rows. 0 disables the row cache.",
+					"default": 0
+				},
+				"row_cache_save_period": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/rowCacheSavePeriod",
+					"type": "integer",
+					"description": "Duration in seconds that rows are saved in cache. 0 disables caching.",
+					"default": 0
+				},
+				"commitlog_sync_period_in_ms": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/commitlogSyncPeriodInMs",
+					"type": "integer",
+					"description": "The number of milliseconds between disk fsync calls.",
+					"default": 10000
+				},
+				"commitlog_segment_size_in_mb": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/commitlogSegmentSizeInMb",
+					"type": "integer",
+					"description": "The size of each commit log segment in Mb.",
+					"default": 32
+				},
+				"concurrent_reads": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/concurrentReads",
+					"type": "integer",
+					"description": "For workloads with more data than can fit in memory, the bottleneck is reads fetching data from disk. Setting to (16 times the number of drives) allows operations to queue low enough in the stack so that the OS and drives can reorder them.",
+					"default": 16
+				},
+				"concurrent_writes": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/concurrentWrites",
+					"type": "integer",
+					"description": "Writes in Cassandra are rarely I/O bound, so the ideal number of concurrent writes depends on the number of CPU cores in your system. The recommended value is 8 times the number of cpu cores.",
+					"default": 32
+				},
+				"concurrent_counter_writes": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/concurrentCounterWrites",
+					"type": "integer",
+					"description": "Counter writes read the current values before incrementing and writing them back. The recommended value is (16 times the number of drives) .",
+					"default": 16
+				},
+				"memtable_allocation_type": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/memtableAllocationType",
+					"type": "string",
+					"description": "The type of allocations for the Cassandra memtable. heap_buffers keep all data on the JVM heap. offheap_buffers may reduce heap utilization for large string or binary values. offheap_objects may improve heap size for small integers or UUIDs as well. Both off heap options will increase read latency.",
+					"default": "heap_buffers"
+				},
+				"index_summary_resize_interval_in_minutes": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/indexSummaryResizeIntervalInMinutes",
+					"type": "integer",
+					"description": "How frequently index summaries should be re-sampled in minutes. This is done periodically to redistribute memory from the fixed-size pool to SSTables proportional their recent read rates.",
+					"default": 60
+				},
+				"storage_port": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/storagePort",
+					"type": "integer",
+					"description": "The port for inter-node communication.",
+					"default": 7000
+				},
+				"start_native_transport": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/startNativeTransport",
+					"type": "boolean",
+					"description": "If true CQL is enabled.",
+					"default": true
+				},
+				"native_transport_port": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/nativeTransportPort",
+					"type": "integer",
+					"description": "The port for CQL communication.",
+					"default": 9042
+				},
+				"start_rpc": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/startRpc",
+					"type": "boolean",
+					"description": "If true Thrift RPC is enable. This is deprecated by may be necessary for legacy applications.",
+					"default": false
+				},
+				"rpc_port": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/rpcPort",
+					"type": "integer",
+					"description": "The port for Thrift RPC communication.",
+					"default": 9160
+				},
+				"rpc_keepalive": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/rpcKeepalive",
+					"type": "boolean",
+					"description": "Enables or TCP keepalive for RPC connections.",
+					"default": true
+				},
+				"thrift_framed_transport_size_in_mb": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/thriftFramedTransportSizeInMb",
+					"type": "integer",
+					"description": "Frame size (maximum field length) for Thrift.",
+					"default": 15
+				},
+				"tombstone_warn_threshold": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/tombstoneWarnThreshold",
+					"type": "integer",
+					"description": "The maximum number of tombstones a query can scan before warning.",
+					"default": 1000
+				},
+				"tombstone_failure_threshold": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/tombstoneFailureThreshold",
+					"type": "integer",
+					"description": "The maximum number of tombstones a query can scan before aborting.",
+					"default": 100000
+				},
+				"column_index_size_in_kb": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/columnIndexSizeInKb",
+					"type": "integer",
+					"description": "The granularity of the index of rows within a partition. For huge rows, decrease this setting to improve seek time. If you use key cache, be careful not to make this setting too large because key cache will be overwhelmed.",
+					"default": 64
+				},
+				"batch_size_warn_threshold_in_kb": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/batchSizeWarnThresholdInKb",
+					"type": "integer",
+					"description": "Warn the operator on a batch size exceeding this value in kilobytes. Caution should be taken on increasing the size of this threshold as it can lead to node instability.",
+					"default": 5
+				},
+				"batch_size_fail_threshold_in_kb": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/batchSizeFailThresholdInKb",
+					"type": "integer",
+					"description": "Fail batch sizes exceeding this value in kilobytes. Caution should be taken on increasing the size of this threshold as it can lead to node instability.",
+					"default": 50
+				},
+				"compaction_throughput_mb_per_sec": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/compactionThroughputMbPerSec",
+					"type": "integer",
+					"description": "Throttles compaction to the specified total throughput across the node. Compaction frequency varies with direct proportion to write throughput and is necessary to limit the SSTable size. The recommended value is 16 to 32 times the rate of write throughput (in MB/second).",
+					"default": 16
+				},
+				"sstable_preemptive_open_interval_in_mb": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/sstablePreemptiveOpenIntervalInMb",
+					"type": "integer",
+					"description": "When compacting, the replacement opens SSTables before they are completely written and uses in place of the prior SSTables for any range previously written. This setting helps to smoothly transfer reads between the SSTables by reducing page cache churn and keeps hot rows hot.",
+					"default": 50
+				},
+				"read_request_timeout_in_ms": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/readRequestTimeoutInMs",
+					"type": "integer",
+					"description": "The time that the coordinator waits for read operations to complete in ms.",
+					"default": 5000
+				},
+				"range_request_timeout_in_ms": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/rangeRequestTimeoutInMs",
+					"type": "integer",
+					"description": "The time that the coordinator waits for range scans complete in ms.",
+					"default": 10000
+				},
+				"write_request_timeout_in_ms": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/writeRequestTimeoutInMs",
+					"type": "integer",
+					"description": "The time that the coordinator waits for write operations to complete in ms.",
+					"default": 2000
+				},
+				"counter_write_request_timeout_in_ms": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/counterWriteRequestTimeoutInMs",
+					"type": "integer",
+					"description": "The time that the coordinator waits for counter write operations to complete in ms.",
+					"default": 5000
+				},
+				"cas_contention_timeout_in_ms": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/casContentionTimeoutInMs",
+					"type": "integer",
+					"description": "The time for which the coordinator will retry CAS operations on the same row in ms.",
+					"default": 1000
+				},
+				"truncate_request_timeout_in_ms": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/truncateRequestTimeoutInMs",
+					"type": "integer",
+					"description": "The time that the coordinator waits for truncate operations to complete in ms.",
+
+					"default": 60000
+				},
+				"request_timeout_in_ms": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/requestTimeoutInMs",
+					"type": "integer",
+					"description": "The default timeout for all other requests in ms.",
+					"default": 10000
+				},
+				"dynamic_snitch_update_interval_in_ms": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/dynamicSnitchUpdateIntervalInMs",
+					"type": "integer",
+					"description": "The time, in ms, the snitch will wait before updating node scores.",
+					"default": 100
+				},
+				"dynamic_snitch_reset_interval_in_ms": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/dynamicSnitchResetIntervalInMs",
+					"type": "integer",
+					"description": "The time, in ms, the snitch will wait before resetting node scores allowing bad nodes to recover.",
+					"default": 600000
+				},
+				"dynamic_snitch_badness_threshold": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/dynamicSnitchBadnessThreshold",
+					"type": "number",
+					"description": "Sets the performance threshold for dynamically routing client requests away from a poorly performing node.",
+					"default": 0.1
+				},
+				"internode_compression": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/internodeCompression",
+					"type": "string",
+					"description": "Controls whether traffic between nodes is compressed. all compresses all traffic. none compresses no traffic. dc compresses between datacenters.",
+					"default": "all"
+				}
+			},
+			"additionalProperties": false,
+			"required": [
+				"jmx_port",
+				"num_tokens",
+				"max_hint_window_in_ms",
+				"hinted_handoff_enabled",
+				"hinted_handoff_throttle_in_kb",
+				"max_hints_delivery_threads",
+				"batchlog_replay_throttle_in_kb",
+				"partitioner",
+				"key_cache_save_period",
+				"row_cache_size_in_mb",
+				"row_cache_save_period",
+				"commitlog_sync_period_in_ms",
+				"commitlog_segment_size_in_mb",
+				"concurrent_reads",
+				"concurrent_writes",
+				"concurrent_counter_writes",
+				"memtable_allocation_type",
+				"index_summary_resize_interval_in_minutes",
+				"storage_port",
+				"start_native_transport",
+				"native_transport_port",
+				"start_rpc",
+				"rpc_port",
+				"rpc_keepalive",
+				"thrift_framed_transport_size_in_mb",
+				"tombstone_warn_threshold",
+				"tombstone_failure_threshold",
+				"column_index_size_in_kb",
+				"batch_size_warn_threshold_in_kb",
+				"batch_size_fail_threshold_in_kb",
+				"compaction_throughput_mb_per_sec",
+				"sstable_preemptive_open_interval_in_mb",
+				"read_request_timeout_in_ms",
+				"range_request_timeout_in_ms",
+				"write_request_timeout_in_ms",
+				"counter_write_request_timeout_in_ms",
+				"cas_contention_timeout_in_ms",
+				"truncate_request_timeout_in_ms",
+				"request_timeout_in_ms",
+				"dynamic_snitch_update_interval_in_ms",
+				"dynamic_snitch_reset_interval_in_ms",
+				"dynamic_snitch_badness_threshold",
+				"internode_compression"
+			]
+		},
+		"executor": {
+			"id": "http://cassandra/docs/mesosphere.com/executor",
+			"type": "object",
+			"description": "The Cassandra service executor configuration object.",
+			"properties": {
+				"cpus": {
+					"id": "http://cassandra/docs/mesosphere.com/executor/cpus",
+					"type": "number",
+					"description": "The cpu shares used by the Cassandra service executor.",
+					"default": 0.5
+				},
+				"mem": {
+					"id": "http://cassandra/docs/mesosphere.com/executor/mem",
+					"type": "integer",
+					"description": "The memory used by the Cassandra service executor in Mb.",
+					"default": 1024
+				},
+				"heap": {
+					"id": "http://cassandra/docs/mesosphere.com/executor/heap",
+					"type": "integer",
+					"description": "The JVM heap used by the Cassandra service executor in Mb.",
+					"default": 768
+				},
+				"disk": {
+					"id": "http://cassandra/docs/mesosphere.com/executor/heap",
+					"type": "integer",
+					"description": "The amount of disk used by the Cassandra service executor in Mb.",
+					"default": 1024
+				},
+				"api_port" : {
+					"id": "http://cassandra/docs/mesosphere.com/executor/api_port",
+					"type": "integer",
+					"description": "The port that the Cassandra executor API will accept on.",
+					"default": 9001
+				}
+			},
+			"additionalProperties": false,
+			"required": [
+				"cpus",
+				"mem",
+				"heap",
+				"disk",
+				"api_port"
+			]
+		},
+		"task": {
+			"id": "http://cassandra/docs/mesosphere.com/task",
+			"type": "object",
+			"description": "The Cassandra service cluster task configuration object.",
+			"properties": {
+				"cpus": {
+					"id": "http://cassandra/docs/mesosphere.com/task/cpus",
+					"type": "number",
+					"description": "The cpu shares used by the Cassandra service cluster tasks.",
+					"default": 0.5
+				},
+				"mem": {
+					"id": "http://cassandra/docs/mesosphere.com/executor/mem",
+					"type": "integer",
+					"description": "The memory used by the Cassandra cluster tasks in Mb.",
+					"default": 256
+				}
+			},
+			"additionalProperties": false,
+			"required": [
+				"cpus",
+				"mem"
+			]
+		}
+	},
+	"additionalProperties": false,
+	"required": [
+		"service",
+		"nodes",
+		"cassandra",
+		"executor",
+		"task"
+	]
+}
