@@ -7,7 +7,7 @@ function globals {
 }; globals
 
 DOCKER_TAG=${DOCKER_TAG:-"dev"}
-DOCKER_IMAGE=${DOCKER_IMAGE:-"universe-server"}
+DOCKER_IMAGE=${DOCKER_IMAGE:-"mesosphere/universe-server"}
 DOCKER_IMAGE_AND_TAG="${DOCKER_IMAGE}:${DOCKER_TAG}"
 
 DOCKER_SERVER_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
