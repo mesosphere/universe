@@ -44,7 +44,12 @@ function gzipJsonFiles {(
 
   for f in $(ls -1 *.json); do
     msg "GZipping $f"
-    gzip -f -k "${f}"
+
+    # Alpine Linux does not support gzip -k
+    cp "${f}" "${f}.tmp"
+    gzip -f "${f}"
+    mv "${f}.tmp" "${f}"
+
     sizeOrig=$(stat -c "%s" "${f}")
     sizeGZip=$(stat -c "%s" "${f}.gz")
     msg "GZipped $f [${sizeOrig} B -> ${sizeGZip} B]"
