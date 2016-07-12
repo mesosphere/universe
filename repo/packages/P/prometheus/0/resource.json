@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-prometheus-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-prometheus-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-prometheus-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "prometheus-docker": "mesosphere/prometheus:0.19.1-6"
+      }
+    }
+  }
+}

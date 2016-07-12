@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "properties": {
+    "prometheus": {
+      "type": "object",
+      "description": "Prometheus Server specific properties",
+      "properties": {
+        "name": {
+          "default": "prometheus/server",
+          "description": "Name for this Prometheus instance",
+          "type": "string"
+        },
+        "instances": {
+          "type": "number",
+          "description": "Number of instances",
+          "default": 1
+        },
+        "cpus": {
+          "type": "number",
+          "description": "CPU requirements",
+          "default": 0.5
+        },
+        "mem": {
+          "type": "number",
+          "description": "Memory requirements",
+          "default": 2048
+        },
+        "node-exporter-srv": {
+          "default": "_node-exporter.prometheus._tcp.marathon.mesos",
+          "description": "SRV Name of the Prometheus Node Exporter",
+          "type": "string"
+        },
+        "volume-size": {
+          "type": "number",
+          "description": "Storage Volume Size (MiB)",
+          "default": 1024
+        },
+        "healthcheck-grace-period-seconds": {
+          "type": "number",
+          "description": "Healthcheck grace period (sec)",
+          "default": 300
+        },
+        "healthcheck-interval-seconds": {
+          "type": "number",
+          "description": "Healthcheck interval (sec)",
+          "default": 60
+        },
+        "healthcheck-timeout-seconds": {
+          "type": "number",
+          "description": "Healthcheck timeout (sec)",
+          "default": 20
+        },
+        "healthcheck-max-consecutive-failures": {
+          "type": "number",
+          "description": "Healthcheck max consecutive failures",
+          "default": 5
+        }
+      },
+      "required": [
+        "instances",
+        "cpus",
+        "mem",
+        "healthcheck-grace-period-seconds",
+        "healthcheck-interval-seconds",
+        "healthcheck-timeout-seconds",
+        "healthcheck-max-consecutive-failures"
+      ]
+    }
+  }
+}

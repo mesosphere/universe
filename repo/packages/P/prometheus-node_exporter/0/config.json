@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "properties": {
+    "prometheus-node_exporter": {
+      "type": "object",
+      "description": "Prometheus Node Exporter specific properties",
+      "properties": {
+        "name": {
+          "default": "prometheus/node-exporter",
+          "description": "Name for this Node Exporter instance",
+          "type": "string"
+        },
+        "instances": {
+          "type": "number",
+          "description": "Number of instances",
+          "default": 1
+        },
+        "cpus": {
+          "type": "number",
+          "description": "CPU requirements",
+          "default": 0.01
+        },
+        "mem": {
+          "type": "number",
+          "description": "Memory requirements",
+          "default": 256
+        },
+        "healthcheck-grace-period-seconds": {
+          "type": "number",
+          "description": "Healthcheck grace period (sec)",
+          "default": 300
+        },
+        "healthcheck-interval-seconds": {
+          "type": "number",
+          "description": "Healthcheck interval (sec)",
+          "default": 60
+        },
+        "healthcheck-timeout-seconds": {
+          "type": "number",
+          "description": "Healthcheck timeout (sec)",
+          "default": 20
+        },
+        "healthcheck-max-consecutive-failures": {
+          "type": "number",
+          "description": "Healthcheck max consecutive failures",
+          "default": 5
+        }
+      },
+      "required": [
+        "instances",
+        "cpus",
+        "mem",
+        "healthcheck-grace-period-seconds",
+        "healthcheck-interval-seconds",
+        "healthcheck-timeout-seconds",
+        "healthcheck-max-consecutive-failures"
+      ]
+    }
+  }
+}

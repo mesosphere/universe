@@ -1,0 +1,49 @@
+{
+  "id": "{{prometheus.name}}",
+  "instances": {{prometheus.instances}},
+  "cpus": {{prometheus.cpus}},
+  "mem": {{prometheus.mem}},
+  "ports": [0],
+  "env": {
+    "NODE_EXPORTER_SRV": "{{prometheus.node-exporter-srv}}"
+  },
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "prometheus",
+        "persistent": {
+          "size": {{prometheus.volume-size}}
+        },
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "{{resource.assets.container.docker.prometheus-docker}}",
+      "forcePullImage": true,
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+            "containerPort": 9090,
+            "hostPort": 0,
+            "protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "residency": {
+    "taskLostBehavior": "WAIT_FOREVER"
+  },
+  "healthChecks": [
+    {
+      "path": "/metrics",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "gracePeriodSeconds": {{prometheus.healthcheck-grace-period-seconds}},
+      "intervalSeconds": {{prometheus.healthcheck-interval-seconds}},
+      "timeoutSeconds": {{prometheus.healthcheck-timeout-seconds}},
+      "maxConsecutiveFailures": {{prometheus.healthcheck-max-consecutive-failures}},
+      "ignoreHttp1xx": false
+    }
+  ]
+}

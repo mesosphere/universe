@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "2.0",
+  "name": "prometheus-node_exporter",
+  "version": "0.12.0-2",
+  "framework": false,
+  "tags": ["prometheus", "node_exporter", "monitoring"],
+  "maintainer": "lukas@mesosphere.io",
+  "description": "Prometheus exporter for machine metrics.",
+  "scm": "https://github.com/prometheus/node_exporter.git",
+  "website": "https://prometheus.io/",
+  "postInstallNotes": "Thank you for installing Prometheus Node Exporter on Mesos.",
+  "preInstallNotes": "The Prometheus Node Exporter should have at least 256MB of RAM and 0.01 CPUs to perform successfully.",
+  "postUninstallNotes": "The Prometheus Node Exporter has been uninstalled and will no longer run.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/prometheus/node_exporter/master/LICENSE"
+    }
+  ]
+}
