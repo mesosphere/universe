@@ -5,13 +5,17 @@
   "description": "Netsil is the monitoring and analytics product for API and microservices driven applications. Auto-discovered topology map of your services enables you to find and fix failures fast. Listen to your APIs, see your apps.",
   "maintainer": "support@netsil.com",
   "tags": ["netsil", "monitoring", "microservices"],
-  "preInstallNotes": "We recommend having 4 CPUs and 4 GB of memory available for Netsil. You will also want to install Netsil on a public slave node, which you can mediate through the 'role' field of your installation configuration. After installation, from your DCOS setup, find the public ip of the slave node where you installed Netsil. You can then access Netsil at https://<public-ip-of-netsil-slave-node>. Finally, you will need to install the netsil-collectors package, which feeds network and infrastructure data to Netsil for monitoring.",
-  "postInstallNotes": "Netsil is installed!",
+  "preInstallNotes": "We recommend using 4 CPUs and 4 GB of memory for Netsil. You will also need to install the netsil-collectors package, which feeds network and infrastructure data to Netsil for monitoring.",
+  "postInstallNotes": "Netsil is installed! Go to https://<your_dcos_url>/service/netsil to access Netsil.",
   "postUninstallNotes": "Netsil is uninstalled successfully.",
   "licenses": [
     {
-      "name": "MIT License",
-      "url": "https://raw.githubusercontent.com/netsil/docs/master/licenses/MIT/LICENSE"
+      "name": "Netsil License",
+      "url": "https://raw.githubusercontent.com/netsil/docs/master/licenses/license.txt"
+    },
+    {
+      "name": "Netsil Third Party Licenses",
+      "url": "https://raw.githubusercontent.com/netsil/docs/master/licenses/THIRD_PARTY_LICENSES.txt"
     }
   ]
 }

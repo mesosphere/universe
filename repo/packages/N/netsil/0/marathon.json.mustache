@@ -5,6 +5,43 @@
   "instances": {{netsil.instances}},
   "container": {
     "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "user_persistence_data",
+        "mode":"RW",
+        "persistent": {
+          "size": 50
+        }
+      },
+      {
+        "containerPath": "/opt/netsil/lite/user-persistence/data",
+        "hostPath": "user_persistence_data",
+        "mode":"RW"
+      },
+      {
+        "containerPath": "es_data",
+        "mode":"RW",
+        "persistent": {
+          "size": 1000
+        }
+      },
+      {
+        "containerPath": "/opt/netsil/lite/elasticsearch/data",
+        "hostPath": "es_data",
+        "mode":"RW"
+      },
+      {
+        "containerPath": "redis_data",
+        "persistent": {
+          "size": 1000
+        }
+      }
+      {
+        "containerPath": "/var/lib/redis",
+        "hostPath": "redis_data",
+        "mode":"RW"
+      }
+    ],
     "docker": {
       "image": "{{resource.assets.container.docker.netsil}}:{{netsil.build_branch}}-{{netsil.version_number}}",
       "forcePullImage": false,
@@ -48,6 +85,13 @@
   "acceptedResourceRoles": [
     "{{netsil.role}}"
   ],
+  "residency": {
+    "taskLostBehavior": "WAIT_FOREVER"
+  },
+  "upgradeStrategy": {
+    "maximumOverCapacity": 0,
+    "minimumHealthCapacity": 0
+  },
   "labels": {
     "DCOS_SERVICE_NAME": "{{netsil.name}}",
     "DCOS_SERVICE_SCHEME": "http",

@@ -12,7 +12,7 @@
         "cpus": {
           "default": 4.0,
           "description": "CPU to allocate to each instance of netsil.",
-          "minimum": 4.0,
+          "minimum": 2.0,
           "type": "number"
         },
         "mem": {
@@ -33,8 +33,8 @@
           "type": "string"
         },
         "role": {
-          "default": "slave_public",
-          "description": "Deploy netsil only on nodes with this role. For DC/OS, use the 'slave_public' role to deploy on a publc slave node.",
+          "default": "*",
+          "description": "Deploy netsil only on nodes with this role.",
           "type": "string"
         },
         "https_port": {
