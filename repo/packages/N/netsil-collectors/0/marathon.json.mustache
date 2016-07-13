@@ -10,7 +10,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "{{resource.assets.container.docker.netsil-collectors}}:stable-{{netsil-collectors.version_number}}",
+      "image": "{{resource.assets.container.docker.netsil-collectors}}:{{netsil-collectors.build_branch}}-{{netsil-collectors.version_number}}",
       "network": "HOST",
       "privileged": true,
       "parameters": [],

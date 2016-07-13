@@ -6,12 +6,12 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "{{resource.assets.container.docker.netsil}}:stable-{{netsil.version_number}}",
+      "image": "{{resource.assets.container.docker.netsil}}:{{netsil.build_branch}}-{{netsil.version_number}}",
       "forcePullImage": false,
       "network": "BRIDGE",    
       "portMappings": [
           {
-              "containerPort": 443,
+              "containerPort": 80,
               "hostPort": {{netsil.https_port}},
               "protocol": "tcp"
           },
@@ -28,14 +28,21 @@
       ]
     }
   },
-  "args": ["/root/start.sh", "no-build", "netsil-lite"],
+  "args": [
+    "/tini",
+    "-g",
+    "--",
+    "/root/start.sh", 
+    "no-build", 
+    "netsil-lite"
+  ],
   "env": {
     "PRODUCT_FLAVOR": "Lite",
     "DEPLOY_ENV": "marathon",
     "BUILD_ENV": "production",
     "NODEJS_ENV": "NODE_ENV=production",
     "EVENT_TYPES": "alert,comment,event,notification",
-    "NETSIL_BUILD_BRANCH": "stable",
+    "NETSIL_BUILD_BRANCH": "{{netsil.build_branch}}",
     "NETSIL_VERSION_NUMBER": "{{netsil.version_number}}"
   },
   "acceptedResourceRoles": [

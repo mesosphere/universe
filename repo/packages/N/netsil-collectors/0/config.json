@@ -27,6 +27,11 @@
           "minimum": 1,
           "type": "integer"
         },
+        "build_branch": {
+          "default": "stable",
+          "description": "Build branch to use.",
+          "type": "string"
+        },
         "role": {
           "default": "slave_public",
           "description": "Deploy the collectors on nodes with this role. For DC/OS, use the 'slave_public' role to deploy on a publc slave node.",
@@ -55,7 +60,7 @@
           "type": "string"
         }
       },
-      "required": ["name", "cpus", "mem", "instances", "infra_stats_port", "traffic_stats_port"],
+      "required": ["name", "cpus", "mem", "instances", "build_branch", "infra_stats_port", "traffic_stats_port"],
       "type": "object"
     }
   }
