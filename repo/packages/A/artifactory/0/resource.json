@@ -1,0 +1,16 @@
+{
+    "images": {
+        "icon-small": "https://raw.githubusercontent.com/jainishshah17/Images/master/jfrog_sml.png",
+        "icon-medium": "https://raw.githubusercontent.com/jainishshah17/Images/master/jfrog_med.png",
+        "icon-large": "https://raw.githubusercontent.com/jainishshah17/Images/master/jfrog_lrg.png"
+    },
+    "assets": {
+        "container": {
+            "docker": {
+                "artifactory-pro": "jainishshah17/artifactory:latest",
+                "artifactory-ha-primary": "jfrog-docker-reg2.bintray.io/jfrog/artifactory-ha-primary:4.8.2",
+                "artifactory-ha-secondary": "jfrog-docker-reg2.bintray.io/jfrog/artifactory-ha-secondary:4.8.2"
+            }
+        }
+    }
+}
