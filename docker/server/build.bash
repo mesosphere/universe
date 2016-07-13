@@ -50,8 +50,17 @@ function gzipJsonFiles {(
     gzip -f "${f}"
     mv "${f}.tmp" "${f}"
 
-    sizeOrig=$(stat -c "%s" "${f}")
-    sizeGZip=$(stat -c "%s" "${f}.gz")
+    sizeOrig=0
+    sizeGZip=0
+
+    if [[ `uname` == 'Darwin' ]]; then
+      sizeOrig=$(stat -f "%z" "${f}")
+      sizeGZip=$(stat -f "%z" "${f}.gz")
+    else
+      sizeOrig=$(stat -c "%s" "${f}")
+      sizeGZip=$(stat -c "%s" "${f}.gz")
+    fi
+
     msg "GZipped $f [${sizeOrig} B -> ${sizeGZip} B]"
 
     if [ ${sizeOrig} -le ${sizeGZip} ]; then
