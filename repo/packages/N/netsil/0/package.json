@@ -2,11 +2,11 @@
   "packagingVersion": "3.0",
   "name": "netsil",
   "version": "0.2.26",
-  "description": "Netsil is the monitoring and analytics product for API and microservices driven applications. Auto-discovered topology map of your services enables you to find and fix failures fast. Listen to your APIs, see your apps.",
+  "description": "Netsil is the monitoring and analytics product for API and microservices-driven applications.\n\nAn auto-discovered topology map of your services lets you find and fix failures fast.\n\nListen to your APIs, see your apps.",
   "maintainer": "support@netsil.com",
   "tags": ["netsil", "monitoring", "microservices"],
-  "preInstallNotes": "We recommend using 4 CPUs and 4 GB of memory for Netsil. You will also need to install the netsil-collectors package, which feeds network and infrastructure data to Netsil for monitoring.",
-  "postInstallNotes": "Netsil is installed! Go to https://<your_dcos_url>/service/netsil to access Netsil.",
+  "preInstallNotes": "We recommend using 4 CPUs and 4 GB of memory for Netsil.\n\nYou will also need to install the `netsil-collectors` package, which feeds network and infrastructure data to Netsil for monitoring.",
+  "postInstallNotes": "Netsil is installed!\n\nGo to `https://<your_dcos_url>/service/netsil` to access Netsil.\n\nAlso remember to install the `netsil-collectors` package.",
   "postUninstallNotes": "Netsil is uninstalled successfully.",
   "licenses": [
     {
