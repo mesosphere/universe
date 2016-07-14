@@ -32,9 +32,9 @@
           "description": "Build branch to use.",
           "type": "string"
         },
-        "roles": {
+        "role": {
           "default": "*",
-          "description": "Deploy the collectors on nodes with thes roles.",
+          "description": "Deploy the collectors on nodes with this role.",
           "type": "string"
         },
         "netsil_host": {
