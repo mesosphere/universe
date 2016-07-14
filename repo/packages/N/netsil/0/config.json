@@ -12,13 +12,19 @@
         "cpus": {
           "default": 4.0,
           "description": "CPU to allocate to each instance of netsil.",
-          "minimum": 2.0,
+          "minimum": 4.0,
           "type": "number"
         },
         "mem": {
-          "default": 4096,
+          "default": 12288,
           "description": "Memory (MB) to allocate to each instance of netsil.",
-          "minimum": 4096,
+          "minimum": 12288,
+          "type": "integer"
+        },
+        "disk": {
+          "default": 25600,
+          "description": "Disk space (MB) to allocate to each instance of netsil.",
+          "minimum": 25600,
           "type": "integer"
         },
         "instances": {
