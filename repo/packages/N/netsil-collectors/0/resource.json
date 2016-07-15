@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/docs.netsil.com/logos/netsilsquare-48x48.png",
+    "icon-medium": "https://s3.amazonaws.com/docs.netsil.com/logos/netsilsquare-96x96.png",
+    "icon-large": "https://s3.amazonaws.com/docs.netsil.com/logos/netsilsquare-256x256.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "netsil-collectors": "netsil/collectors"
+      }
+    }
+  }
+}
