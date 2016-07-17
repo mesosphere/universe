@@ -7,7 +7,7 @@ function globals {
 }; globals
 
 DOCKER_TAG=${DOCKER_TAG:-"dev"}
-DOCKER_IMAGE=${DOCKER_IMAGE:-"universe-server"}
+DOCKER_IMAGE=${DOCKER_IMAGE:-"mesosphere/universe-server"}
 DOCKER_IMAGE_AND_TAG="${DOCKER_IMAGE}:${DOCKER_TAG}"
 
 DOCKER_SERVER_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -44,9 +44,23 @@ function gzipJsonFiles {(
 
   for f in $(ls -1 *.json); do
     msg "GZipping $f"
-    gzip -f -k "${f}"
-    sizeOrig=$(stat -c "%s" "${f}")
-    sizeGZip=$(stat -c "%s" "${f}.gz")
+
+    # Alpine Linux does not support gzip -k
+    cp "${f}" "${f}.tmp"
+    gzip -f "${f}"
+    mv "${f}.tmp" "${f}"
+
+    sizeOrig=0
+    sizeGZip=0
+
+    if [[ `uname` == 'Darwin' ]]; then
+      sizeOrig=$(stat -f "%z" "${f}")
+      sizeGZip=$(stat -f "%z" "${f}.gz")
+    else
+      sizeOrig=$(stat -c "%s" "${f}")
+      sizeGZip=$(stat -c "%s" "${f}.gz")
+    fi
+
     msg "GZipped $f [${sizeOrig} B -> ${sizeGZip} B]"
 
     if [ ${sizeOrig} -le ${sizeGZip} ]; then

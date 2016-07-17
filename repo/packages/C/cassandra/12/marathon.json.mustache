@@ -50,29 +50,12 @@
   "minimumHealthCapacity": 0,
   "maximumOverCapacity": 0
 },
-{{#service.secret_name}}
-"secrets": {
-  "serviceCredential": {
-    "source": "{{service.secret_name}}"
-  }
-},
-{{/service.secret_name}}
 "env":{
-{{#service.secret_name}}
-"DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
-"MESOS_MODULES": "file:///opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
-"MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
-"SSL_CERT_FILE": "/run/dcos/pki/tls/certs/scheduler.crt",
-"SSL_KEY_FILE": "/run/dcos/pki/tls/private/scheduler.key",
-"SSL_CA_FILE": "/run/dcos/pki/CA/certs/ca.crt",
-"SSL_ENABLED": "true",
-{{/service.secret_name}}
 "JAVA_HOME":"./jre"
 ,"JAVA_OPTS":"-Xmx{{service.heap}}M"
 ,"FRAMEWORK_NAME":"{{service.name}}"
-,"FRAMEWORK_PRINCIPAL": "{{service.principal}}"
 ,"FRAMEWORK_VERSION":"1.0.0"
-,"CASSANDRA_VERSION":"2.2.5"
+,"CASSANDRA_VERSION":"3.0.7"
 ,"CASSANDRA_CPUS":"{{nodes.cpus}}"
 ,"CASSANDRA_MEMORY_MB":"{{nodes.mem}}"
 ,"CASSANDRA_DISK_MB":"{{nodes.disk}}"
