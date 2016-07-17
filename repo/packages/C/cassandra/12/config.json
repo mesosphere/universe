@@ -113,12 +113,20 @@
 							"type": "integer",
 							"description": "The amount of JVM new generation heap, in MB, allocated to the Cassandra process.",
 							"default": 100
+						},
+						"gc" : {
+							"id": "http://cassandra/docs/mesosphere.com/node/heap/gc",
+							"type": "string",
+							"enum": [ "G1", "CMS" ],
+							"description": "The Garbage collector for JVM (Either G1 or CMS).",
+							"default": "CMS"
 						}
 					},
 					"additionalProperties": false,
 					"required": [
 						"size",
-						"new"
+						"new",
+						"gc"
 					]
 
 				},
