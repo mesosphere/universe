@@ -1,0 +1,54 @@
+{
+    "assets": {
+        "container": {
+            "docker": {
+                "spark_docker": "mesosphere/spark:1.0.1-1.6.1-2"
+            }
+        }
+    },
+    "images": {
+        "icon-medium": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-medium.png",
+        "icon-small": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-small.png",
+        "icon-large": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-large.png"
+    },
+    "cli":{
+        "binaries":{
+            "darwin":{
+                "x86-64":{
+                    "contentHash":[
+                        {
+                            "algo": "sha256",
+                            "value": "b9271779b2aab0679a34a406a2888b34030f769686a8acf5e6ebe1d67f6b042f"
+                        }
+                    ],
+                    "kind": "executable",
+                    "url":"https://downloads.mesosphere.com/spark/assets/cli/0.5.18/darwin-x86-64/dcos-spark"
+                }
+            },
+            "linux":{
+                "x86-64":{
+                    "contentHash":[
+                        {
+                            "algo":"sha256",
+                            "value":"e69d22ae9436855f6b2133fe7211907315f642c1886e4effcc8029c71d8b0834"
+                        }
+                    ],
+                    "kind":"executable",
+                    "url":"https://downloads.mesosphere.com/spark/assets/cli/0.5.18/linux-x86-64/dcos-spark"
+                }
+            },
+            "windows":{
+                "x86-64":{
+                    "contentHash":[
+                        {
+                            "algo":"sha256",
+                            "value":"9b9fdabf5127fa6b014712fdb5ab2cf161d10016fc016675831e129009a37708"
+                        }
+                    ],
+                    "kind":"executable",
+                    "url":"https://downloads.mesosphere.com/spark/assets/cli/0.5.18/windows-x86-64/dcos-spark.exe"
+                }
+            }
+        }
+    }
+}
