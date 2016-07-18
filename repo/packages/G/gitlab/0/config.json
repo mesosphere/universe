@@ -8,7 +8,7 @@
         "name": {
           "description": "The name of this DC/OS service.",
           "type": "string",
-          "default": "gitlab-ce"
+          "default": "gitlab"
         },
         "cpus": {
           "description": "CPU shares to allocate to GitLab.",
