@@ -1,0 +1,86 @@
+{
+    "id": "{{service.name}}",
+    "cpus": {{service.cpus}},
+    "mem": {{service.mem}},
+    "cmd": "/sbin/init.sh",
+    "env": {
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",
+        "SPARK_USER": "{{service.user}}",
+        "SPARK_DISPATCHER_MESOS_ROLE": "{{service.role}}",
+        "SPARK_DISPATCHER_MESOS_PRINCIPAL": "{{service.principal}}",
+        "SPARK_DISPATCHER_MESOS_SECRET": "{{service.secret}}",
+{{#security.kerberos.krb5conf}}
+        "SPARK_MESOS_KRB5_CONF_BASE64": "{{security.kerberos.krb5conf}}",
+{{/security.kerberos.krb5conf}}
+{{#security.ssl.enabled}}
+        "SPARK_SSL_ENABLED": "{{security.ssl.enabled}}",
+        "SPARK_SSL_KEYSTOREBASE64": "{{security.ssl.keyStoreBase64}}",
+        "SPARK_SSL_TRUSTSTOREBASE64": "{{security.ssl.trustStoreBase64}}",
+        "SPARK_SSL_KEYSTOREPASSWORD": "{{security.ssl.keyStorePassword}}",
+        "SPARK_SSL_KEYPASSWORD": "{{security.ssl.keyPassword}}",
+        "SPARK_SSL_TRUSTSTOREPASSWORD": "{{security.ssl.keyStorePassword}}",
+        "SPARK_SSL_PROTOCOL": "{{security.ssl.protocol}}",
+        "SPARK_SSL_ENABLEDALGORITHMS": "{{security.ssl.enabledAlgorithms}}",
+{{/security.ssl.enabled}}
+        "ENABLE_HISTORY_SERVER": "{{history-server.enabled}}",
+        "HISTORY_LOG_DIR": "{{history-server.log-dir}}",
+        "HISTORY_CLEANER_ENABLED": "{{history-server.cleaner-enabled}}",
+        "HISTORY_CLEANER_INTERVAL": "{{history-server.cleaner-interval}}",
+        "HISTORY_CLEANER_MAXAGE": "{{history-server.cleaner-maxage}}",
+        "HISTORY_KRB_PRINCIPAL": "{{history-server.kerberos.principal}}",
+        "HISTORY_KRB_KEYTAB": "{{history-server.kerberos.keytab}}"
+    },
+    "ports": [
+        0,
+        0,
+        0,
+        0
+    ],
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.spark_docker}}",
+            "network": "HOST",
+            "forcePullImage": true
+        }
+    },
+    "healthChecks": [
+        {
+{{#security.ssl.enabled}}
+            "protocol": "COMMAND",
+            "command": { "value": "curl -f -k https://$HOST:$PORT3/" },
+{{/security.ssl.enabled}}
+{{^security.ssl.enabled}}
+            "path": "/",
+            "portIndex": 3,
+            "protocol": "HTTP",
+{{/security.ssl.enabled}}
+            "gracePeriodSeconds": 5,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 10,
+            "maxConsecutiveFailures": 3
+        }
+    ],
+    "labels": {
+{{#hdfs.config-url}}
+        "SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",
+{{/hdfs.config-url}}
+        "SPARK_URI": "{{service.spark-dist-uri}}",
+        "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "DCOS_SERVICE_PORT_INDEX": "3",
+{{#security.ssl.enabled}}
+        "DCOS_SERVICE_SCHEME": "https"
+{{/security.ssl.enabled}}
+{{^security.ssl.enabled}}
+        "DCOS_SERVICE_SCHEME": "http"
+{{/security.ssl.enabled}}
+    },
+    "uris": [
+    {{#hdfs.config-url}}
+    "{{hdfs.config-url}}/hdfs-site.xml",
+    "{{hdfs.config-url}}/core-site.xml"
+    {{/hdfs.config-url}}
+    ]
+}
