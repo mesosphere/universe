@@ -109,7 +109,6 @@ def main():
             pathlib.Path(args.repository),
             pathlib.Path(dir_path, 'universe'))
 
-
         build_universe_docker(pathlib.Path(dir_path))
 
         if failed_packages:
@@ -161,6 +160,14 @@ def enumerate_http_resources(package, package_path):
 
     for name, url in resource.get('assets', {}).get('uris', {}).items():
         yield url, pathlib.Path(package, 'uris')
+
+    command_path = (package_path / 'command.json')
+    if command_path.exists():
+        with command_path.open() as json_file:
+            commands = json.load(json_file)
+
+        for url in commands.get("pip", []):
+            yield url, pathlib.Path(package, 'commands')
 
 
 def enumerate_docker_images(package_path):
@@ -269,6 +276,22 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
                     "docker", {}).items() }
 
         json.dump(resource, dest_file, indent=4)
+
+    command_path = (package_path / 'command.json')
+    if not command_path.exists():
+        return
+
+    with command_path.open() as source_file, \
+            (dest_path / 'command.json').open('w') as dest_file:
+        command = json.load(source_file)
+
+        command['pip'] = [
+            urllib.parse.urljoin(
+                HTTP_ROOT, str(pathlib.PurePath(
+                    package, "commands", pathlib.Path(uri).name)))
+            for uri in command.get("pip", [])
+        ]
+        json.dump(command, dest_file, indent=4)
 
 
 def build_repository(scripts_dir, repo_dir, dest_dir):
