@@ -3,9 +3,7 @@
   "cpus": {{netsil-collectors.cpus}},
   "mem": {{netsil-collectors.mem}},
   "instances": {{netsil-collectors.instances}},
-  "acceptedResourceRoles": [
-    "{{netsil-collectors.role}}"
-  ],
+  "acceptedResourceRoles": ["*", "slave_public"],
   "container": {
     "type": "DOCKER",
     "docker": {
