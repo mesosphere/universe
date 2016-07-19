@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-kibana-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-kibana-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-kibana-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "kibana": "kibana:4.5.3"
+      }
+    }
+  }
+}
