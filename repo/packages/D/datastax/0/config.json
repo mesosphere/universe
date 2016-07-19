@@ -38,7 +38,7 @@
 					"description": "The JVM heap used by the DSE Cassandra service scheduler in Mb.",
 					"default": 1024
 				},
-				"api_port" : {
+				"api_port": {
 					"id": "http://cassandra/docs/mesosphere.com/service/api_port",
 					"type": "integer",
 					"description": "The port that the DSE Cassandra service API will accept on.",
@@ -113,12 +113,20 @@
 							"type": "integer",
 							"description": "The amount of JVM new generation heap, in MB, allocated to the Cassandra process.",
 							"default": 100
+						},
+						"gc": {
+							"id": "http://cassandra/docs/mesosphere.com/node/heap/gc",
+							"type": "string",
+							"enum": ["G1", "CMS"],
+							"description": "The Garbage collector for JVM (Either G1 or CMS).",
+							"default": "CMS"
 						}
 					},
 					"additionalProperties": false,
 					"required": [
 						"size",
-						"new"
+						"new",
+						"gc"
 					]
 
 				},
@@ -402,6 +410,30 @@
 					"type": "string",
 					"description": "Controls whether traffic between nodes is compressed. all compresses all traffic. none compresses no traffic. dc compresses between datacenters.",
 					"default": "all"
+				},
+				"max_hints_file_size_in_mb": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/max_hints_file_size_in_mb",
+					"type": "integer",
+					"description": "The maximum size of the hints file in Mb.",
+					"default": 128
+				},
+				"hints_flush_period_in_ms": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/hints_flush_period_in_ms",
+					"type": "integer",
+					"description": "The time, in ms, for the period in which hints are flushed to disk.",
+					"default": 10000
+				},
+				"concurrent_materialized_view_writes": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/concurrent_materialized_view_writes",
+					"type": "integer",
+					"description": "The maximum number of concurrent writes to materialized views.",
+					"default": 32
+				},
+				"commitlog_total_space_in_mb": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/commitlog_total_space_in_mb",
+					"type": "integer",
+					"description": "The total size of the commit log in Mb.",
+					"default": 8192
 				}
 			},
 			"additionalProperties": false,
@@ -448,7 +480,252 @@
 				"dynamic_snitch_update_interval_in_ms",
 				"dynamic_snitch_reset_interval_in_ms",
 				"dynamic_snitch_badness_threshold",
-				"internode_compression"
+				"internode_compression",
+				"max_hints_file_size_in_mb",
+				"hints_flush_period_in_ms",
+				"concurrent_materialized_view_writes",
+				"commitlog_total_space_in_mb"
+			]
+		},
+		"dse": {
+			"type": "object",
+			"description": "DataStax specific configuration",
+			"properties": {
+				"use_dse_role_manager": {
+					"type": "boolean",
+					"description": "If true the DSE Role manager is used.",
+					"default": false
+				},
+				"transitional_mode": {
+					"type": "string",
+					"enum": ["disabled", "normal", "strict"],
+					"description": "The transitional_mode option allows DSE authentication and authorization to operate in a transitional mode during setup of authorization in a cluster.",
+					"default": "disabled"
+				},
+				"authentication_options": {
+					"type": "object",
+					"description": "DataStax authentication options.",
+					"properties": {
+						"enabled": {
+							"type": "boolean",
+							"description": "If true the DSE Authentication manager is used.",
+							"default": false
+						},
+						"default_scheme": {
+							"type": "string",
+							"enum": ["kerberos", "internal"],
+							"description": "The default scheme for authentication. Note that internal will be enabled as an alternate.",
+							"default": "kerberos"
+						},
+						"scheme_permissions": {
+							"type": "boolean",
+							"description": "If true than scheme permissions must be granted on a per role basis.",
+							"default": true
+						},
+						"allow_digest_with_kerberos": {
+							"type": "boolean",
+							"description": "If true than message digest authentication is also allowed for Kerberos auth.",
+							"default": true
+						},
+						"plain_text_without_ssl": {
+							"type": "string",
+							"description": "The action taken when plain text auth request are sent over an unencrypted channel.",
+							"enum": ["allow", "warn", "block"],
+							"default": "warn"
+						}
+					},
+					"required": [
+						"enabled",
+						"default_scheme",
+						"scheme_permissions",
+						"allow_digest_with_kerberos",
+						"plain_text_without_ssl"
+					]
+				},
+				"authorization_options": {
+					"type": "object",
+					"description": "DataStax authorization options.",
+					"properties": {
+						"enabled": {
+							"type": "boolean",
+							"description": "If true DataStax authorization will be used.",
+							"default": false
+						}
+					},
+					"required": [
+						"enabled"
+					]
+				},
+				"kerberos_options": {
+					"type": "object",
+					"description": "Kerberos configuration options. These will be ignored unless Kerberos is selected for authentication and DSE authentication is enabled.",
+					"properties": {
+						"keytab": {
+							"type": "string",
+							"description": "The name of the keytab file pointed to by the ketab_location property in the executor configuration object.",
+							"default": "dse.keytab"
+						},
+						"service_principal": {
+							"type": "string",
+							"description": "The Kerberos service principal for DSE natice connections.",
+							"default": "dse/_HOST@REALM"
+						},
+						"http_principal": {
+							"type": "string",
+							"description": "The Kerberos service principal for HTTP connections.",
+							"default": "HTTP/_HOST@REALM"
+						},
+						"qop": {
+							"type": "string",
+							"description": "The quality of protection for authentication. Note that auth-conf is currently not supported due to a lack of SSL support.",
+							"enum": ["auth", "auth-int"],
+							"default": "auth"
+						}
+					},
+					"required": [
+						"keytab",
+						"service_principal",
+						"http_principal",
+						"qop"
+					]
+				},
+				"node_health_options": {
+					"type": "object",
+					"description": "Node health estimation options.",
+					"properties": {
+						"refresh_rate_ms": {
+							"type": "integer",
+							"description": "The refresh rate for node health estimation.",
+							"default": 60000
+						},
+						"uptime_ramp_up_period_seconds": {
+							"type": "integer",
+							"description": "The amount of continuous uptime required for the node to reach the maximum uptime score.",
+							"default": 86400
+						},
+						"dropped_mutation_window_minutes": {
+							"type": "integer",
+							"description": "The window in the past over which the rate of dropped mutations affects the node health score.",
+							"default": 30
+						}
+					},
+					"required": [
+						"refresh_rate_ms",
+						"uptime_ramp_up_period_seconds",
+						"dropped_mutation_window_minutes"
+					]
+				},
+				"lease_metrics_options": {
+					"type": "object",
+					"description": "Lease subsystem metric options.",
+					"properties": {
+						"enabled": {
+							"type": "boolean",
+							"description": "If true lease metrics are enabled.",
+							"default": false
+						},
+						"ttl_seconds": {
+							"type": "integer",
+							"description": "The length of time the lease holder log persists.",
+							"default": 604800
+						}
+					},
+					"required": [
+						"enabled",
+						"ttl_seconds"
+					]
+				},
+				"audit_logging_options": {
+					"type": "object",
+					"description": "Audit logging configuration options.",
+					"properties": {
+						"enabled": {
+							"type": "boolean",
+							"description": "If ture, audit logging is enabled",
+							"default": false
+						},
+						"logger": {
+							"type": "string",
+							"description": "The audit logger implementation class.",
+							"default": "SLF4JAuditWriter"
+						},
+						"retention_time": {
+							"type": "integer",
+							"description": "The retention time for audit logs. Note, 0 indicates forever.",
+							"default": 0
+						},
+						"cassandra_audit_writer_options": {
+							"type": "object",
+							"description": "Logger configuration object.",
+							"properties": {
+								"mode": {
+									"type": "string",
+									"description": "The mode of the logger. sync will block request for auditing.",
+									"enum": ["sync", "async"],
+									"default": "sync"
+								},
+								"batch_size": {
+									"type": "integer",
+									"description": "The batch size for audit log writes. Only used in async.",
+									"default": 50
+								},
+								"flush_time": {
+									"type": "integer",
+									"description": "The flush time for audit log writes. Only used in async.",
+									"default": 500
+								},
+								"queue_size": {
+									"type": "integer",
+									"description": "The size of the queue feeding the asynchronous audit log writer threads.Only used in async.",
+									"default": 10000
+								},
+								"write_consistency": {
+									"type": "string",
+									"description": " The consistency level used to write audit events",
+									"default": "QUORUM"
+								}
+							},
+							"required": [
+								"mode",
+								"batch_size",
+								"flush_time",
+								"queue_size",
+								"write_consistency"
+							]
+						}
+					},
+					"required": [
+						"enabled",
+						"logger",
+						"retention_time",
+						"cassandra_audit_writer_options"
+					]
+				},
+				"internode_messaging_options": {
+					"type": "object",
+					"description": "DSE messaging options.",
+					"properties": {
+						"port": {
+							"type": "integer",
+							"description": "The port for internode communication.",
+							"default": 8609
+						}
+					},
+					"required": [
+						"port"
+					]
+				}
+			},
+			"required": [
+				"use_dse_role_manager",
+				"transitional_mode",
+				"authentication_options",
+				"authorization_options",
+				"kerberos_options",
+				"node_health_options",
+				"lease_metrics_options",
+				"audit_logging_options",
+				"internode_messaging_options"
 			]
 		},
 		"executor": {
@@ -480,11 +757,16 @@
 					"description": "The amount of disk used by the Cassandra service executor in Mb.",
 					"default": 1024
 				},
-				"api_port" : {
+				"api_port": {
 					"id": "http://cassandra/docs/mesosphere.com/executor/api_port",
 					"type": "integer",
 					"description": "The port that the Cassandra executor API will accept on.",
 					"default": 9001
+				},
+				"keytab_location": {
+					"id": "http://cassandra/docs/mesosphere.com/executor/keytab_location",
+					"type": "string",
+					"description": "Location."
 				}
 			},
 			"additionalProperties": false,
@@ -526,6 +808,7 @@
 		"service",
 		"nodes",
 		"cassandra",
+		"dse",
 		"executor",
 		"task"
 	]
