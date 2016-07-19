@@ -771,7 +771,7 @@
 				"keytab_location": {
 					"id": "http://cassandra/docs/mesosphere.com/executor/keytab_location",
 					"type": "string",
-					"description": "Location."
+					"description": "URL for the keytab file to use if Kerberos is enabled."
 				}
 			},
 			"additionalProperties": false,
