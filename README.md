@@ -112,6 +112,8 @@ Introduced in `packagingVersion` `3.0`, `.minDcosReleaseVersion` can be specifie
 When `.minDcosReleaseVersion` is specified the package will only be made available to DC/OS clusters with a DC/OS
 Release Version greater than or equal to (`>=`) the value specified.
 
+For example, `"minDcosReleaseVersion" : "1.8"` will prevent the package from being installed on clusters older than DC/OS 1.8.
+
 #### `config.json`
 |Packaging Version|   |
 |-----------------|---|
