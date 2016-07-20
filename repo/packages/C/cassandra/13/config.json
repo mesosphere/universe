@@ -25,11 +25,6 @@
 					"type": "string",
 					"default": "cassandra-principal"
 				},
-				"secret_name": {
-					"description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
-					"type": "string",
-					"default": ""
-				},
 				"cpus": {
 					"id": "http://cassandra/docs/mesosphere.com/service/cpus",
 					"type": "number",
@@ -123,12 +118,20 @@
 							"type": "integer",
 							"description": "The amount of JVM new generation heap, in MB, allocated to the Cassandra process.",
 							"default": 100
+						},
+						"gc" : {
+							"id": "http://cassandra/docs/mesosphere.com/node/heap/gc",
+							"type": "string",
+							"enum": [ "G1", "CMS" ],
+							"description": "The Garbage collector for JVM (Either G1 or CMS).",
+							"default": "CMS"
 						}
 					},
 					"additionalProperties": false,
 					"required": [
 						"size",
-						"new"
+						"new",
+						"gc"
 					]
 
 				},
@@ -412,6 +415,30 @@
 					"type": "string",
 					"description": "Controls whether traffic between nodes is compressed. all compresses all traffic. none compresses no traffic. dc compresses between datacenters.",
 					"default": "all"
+				},
+				"max_hints_file_size_in_mb": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/max_hints_file_size_in_mb",
+					"type": "integer",
+					"description": "The maximum size of the hints file in Mb.",
+					"default": 128
+				},
+				"hints_flush_period_in_ms": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/hints_flush_period_in_ms",
+					"type": "integer",
+					"description": "The time, in ms, for the period in which hints are flushed to disk.",
+					"default": 10000
+				},
+				"concurrent_materialized_view_writes": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/concurrent_materialized_view_writes",
+					"type": "integer",
+					"description": "The maximum number of concurrent writes to materialized views.",
+					"default": 32
+				},
+				"commitlog_total_space_in_mb": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/commitlog_total_space_in_mb",
+					"type": "integer",
+					"description": "The total size of the commit log in Mb.",
+					"default": 8192
 				}
 			},
 			"additionalProperties": false,
@@ -458,7 +485,11 @@
 				"dynamic_snitch_update_interval_in_ms",
 				"dynamic_snitch_reset_interval_in_ms",
 				"dynamic_snitch_badness_threshold",
-				"internode_compression"
+				"internode_compression",
+				"max_hints_file_size_in_mb",
+				"hints_flush_period_in_ms",
+				"concurrent_materialized_view_writes",
+				"commitlog_total_space_in_mb"
 			]
 		},
 		"executor": {
