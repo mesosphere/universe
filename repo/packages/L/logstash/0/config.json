@@ -1,0 +1,74 @@
+{
+  "properties":{
+    "logstash":{
+      "description":"Logstash specific configuration properties",
+      "properties":{
+        "cpu":{
+          "default":"0.1",
+          "description":"The amount of CPU resources to allocate to each Logstash instance.",
+          "type":"string"
+        },
+        "mem":{
+          "default":"512",
+          "description":"The amount of CPU resources to allocate to each Logstash instance.",
+          "type":"string"
+        },
+        "instances":{
+          "default":"3",
+          "description":"The number of Logstash instances.",
+          "type":"string"
+        },
+        "force-pull-image":{
+          "default":false,
+          "description":"Forces docker to re-pull the image.",
+          "type":"boolean"
+        },
+        "config-string":{
+          "default":"input { syslog { port=> 10514 } } output { elasticsearch { hosts => 'elasticsearch-executor.elasticsearch.mesos:1025' } }",
+          "description":"Configuration string (specify uri instead to pull a tar.gz of a conf.d directory from an HTTP endpoint).",
+          "type":"string"
+        },
+        "workers":{
+          "default":"1",
+          "description":"Sets the number of pipeline workers to run.",
+          "type":"string"
+        },
+        "batch-size":{
+          "default":"125",
+          "description":"Size of batches the pipeline is to work in.",
+          "type":"string"
+        },
+        "batch-delay":{
+          "default":"5",
+          "description":"DELAY_IN_MS When creating pipeline batches, how long to wait while polling.",
+          "type":"string"
+        },
+        "loglevel":{
+          "default":"verbose",
+          "description":"Logging level.",
+          "type":"string"
+        },
+        "ports":{
+          "default": [
+            "10514"
+          ]
+        },
+        "framework-name":{
+          "default":"logstash",
+          "description":"Framework name.",
+          "type":"string"
+        }
+      },
+      "required":[
+        "cpu",
+        "mem",
+        "instances",
+        "framework-name"
+      ],
+      "type":"object"
+    }
+  },
+  "required":[
+    "logstash"
+  ]
+}
