@@ -1,0 +1,61 @@
+{
+  "properties":{
+    "kibana":{
+      "description":"Kibana specific configuration properties",
+      "properties":{
+        "cpu":{
+          "default":"0.1",
+          "description":"The amount of CPU resources to allocate to each Kibana instance.",
+          "type":"string"
+        },
+        "mem":{
+          "default":"512",
+          "description":"The amount of CPU resources to allocate to each Kibana instance.",
+          "type":"string"
+        },
+        "instances":{
+          "default":"3",
+          "description":"The number of Kibana instances.",
+          "type":"string"
+        },
+        "verbose":{
+          "default":false,
+          "description":"Enable verbose logging.",
+          "type":"boolean"
+        },
+        "framework-name":{
+          "default":"kibana",
+          "description":"The framework name.",
+          "type":"string"
+        },
+        "elasticsearch-url":{
+          "default":"http://elasticsearch-executor.elasticsearch.mesos:1025",
+          "description":"Elasticsearch URL.",
+          "type":"string"
+        },
+        "force-pull-image":{
+          "default":false,
+          "description":"Forces docker to re-pull the image.",
+          "type":"boolean"
+        },
+        "port":{
+          "default":"5601",
+          "description":"Port to listen on.",
+          "type":"string"
+        }
+      },
+      "required":[
+        "cpu",
+        "mem",
+        "instances",
+        "framework-name",
+        "elasticsearch-url",
+        "port"
+      ],
+      "type":"object"
+    }
+  },
+  "required":[
+    "kibana"
+  ]
+}
