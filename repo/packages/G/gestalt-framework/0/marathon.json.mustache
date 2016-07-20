@@ -1,0 +1,56 @@
+{
+  "id": "{{service.name}}",
+  "maintainer": "support@galacticfog.com",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.gestalt-dcos}}",
+      "network": "HOST",
+      "forcePullImage": true
+    }
+  },
+  "env": {
+    "JVM_OPTS": "-Xms{{jvm.heap-min}}m -Xmx{{jvm.heap-max}}m",
+    "GESTALT_DATA_IMG": "{{resource.assets.container.docker.gestalt-data}}",
+    "GESTALT_RABBIT_IMG": "{{resource.assets.container.docker.gestalt-rabbit}}",
+    "GESTALT_KONG_IMG": "{{resource.assets.container.docker.gestalt-kong}}",
+    "GESTALT_SECURITY_IMG": "{{resource.assets.container.docker.gestalt-security}}",
+    "GESTALT_META_IMG": "{{resource.assets.container.docker.gestalt-meta}}",
+    "GESTALT_POLICY_IMG": "{{resource.assets.container.docker.gestalt-policy}}",
+    "GESTALT_LAMBDA_IMG": "{{resource.assets.container.docker.gestalt-lambda}}",
+    "GESTALT_API_GATEWAY_IMG": "{{resource.assets.container.docker.gestalt-api-gateway}}",
+    "GESTALT_API_PROXY_IMG": "{{resource.assets.container.docker.gestalt-api-proxy}}",
+    "GESTALT_UI_IMG": "{{resource.assets.container.docker.gestalt-ui}}"
+  },
+  "cmd": "LIBPROCESS_PORT=$PORT1 && ./bin/gestalt-dcos -Dhttp.port=$PORT0 -Dmesos.master={{service.mesos-master}} -Dmarathon.url={{service.marathon-url}} -Dscheduler.name={{service.name}} -Dservice.vip={{service.vip}} -Dmarathon.app-group={{service.name}}-tasks -Dsecurity.username={{security.admin-username}} -Dsecurity.password=\"{{security.admin-password}}\" {{#security.api-key}}-Dsecurity.key={{security.api-key}}{{/security.api-key}} {{#security.api-secret}}-Dsecurity.secret=\"{{security.api-secret}}\"{{/security.api-secret}} {{#service.tld}}-Dmarathon.tld={{service.tld}}{{/service.tld}} {{#database.hostname}}-Ddatabase.hostname={{database.hostname}}{{/database.hostname}} {{#database.port}}-Ddatabase.port={{database.port}}{{/database.port}} {{#database.prefix}}-Ddatabase.prefix={{database.prefix}}{{/database.prefix}} -Ddatabase.username={{database.username}} -Ddatabase.password=\"{{database.password}}\" -Ddatabase.provision={{database.provision}} {{#database.provisioned-size}}-Ddatabase.provisioned-size={{database.provisioned-size}}{{/database.provisioned-size}}",
+  "cpus": {{service.cpu-limit-framework}},
+  "mem": {{service.mem-limit-framework}},
+  "instances": 1,
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}"
+  },
+  "requirePorts":true,
+  "ports": [
+    {{#service.port}}
+      {{service.port}}
+    {{/service.port}}
+    {{^service.port}}
+      0
+    {{/service.port}}
+    ,
+    0
+  ],
+  {{#service.role}}
+     "acceptedResourceRoles": [
+       "{{service.role}}"
+     ],
+  {{/service.role}}
+  "healthChecks": [{
+    "protocol": "HTTP",
+    "path": "/_gfhealth",
+    "portIndex": 0,
+    "gracePeriodSeconds": 60,
+    "intervalSeconds": 30,
+    "maxConsecutiveFailures": 0
+  }]
+}

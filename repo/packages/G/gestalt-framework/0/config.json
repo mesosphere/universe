@@ -1,0 +1,165 @@
+{
+  "properties": {
+    "service": {
+      "description": "Gestalt framework-wide configuration properties",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the framework scheduler inside the base Marathon.",
+          "default": "gestalt-framework",
+          "pattern" : "^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$"
+        },
+        "mesos-master": {
+          "type": "string",
+          "description": "The address for the Mesos master.",
+          "default": "master.mesos:5050"
+        },
+        "marathon-url": {
+          "type": "string",
+          "description": "The URL for accessing Marathon.",
+          "default": "http://marathon.mesos:8080"
+        },
+        "tld": {
+          "type": "string",
+          "description": "Top-level domain for creating marathon-lb virtual hosts for framework services."
+        },
+        "vip": {
+          "type": "string",
+          "description": "VIP to which gestalt-framework services are bound. Must not already be in use.",
+          "default": "10.10.10.10",
+          "pattern" : "^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "cpu-limit-framework": {
+          "default": 0.5,
+          "description": "The CPU shares for the Gestalt framework.",
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "mem-limit-framework": {
+          "default": 1536,
+          "description": "Memory limit (MB) for the Gestalt framework.",
+          "minimum": 256,
+          "type": "integer"
+        },
+        "port": {
+          "description": "Bound port (random if blank).",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32000
+        },
+        "role": {
+          "description": "Deploy gestalt-framework-scheduler only on nodes with this role.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "mesos-master",
+        "vip",
+        "marathon-url",
+        "cpu-limit-framework",
+        "mem-limit-framework"
+      ],
+      "type": "object"
+    },
+    "database" : {
+      "description": "database configuration properties",
+      "properties": {
+        "provision": {
+          "type": "boolean",
+          "description": "Provision a database server for use by the framework services. Otherwise, requires a pre-existing database server.",
+          "default": true
+        },
+        "provisioned-size": {
+          "type": "integer",
+          "description": "When provisioning the database, size for the persistent volume in MB.",
+          "default": 100
+        },
+        "hostname": {
+          "type": "string",
+          "description": "The hostname for the database (only if pre-existing)."
+        },
+        "port": {
+          "type": "integer",
+          "description": "The port for the database (only if pre-existing).",
+          "minimum": 1,
+          "maximum": 32000
+        },
+        "username": {
+          "type": "string",
+          "description": "The username for the database (provisioned or pre-existing)",
+          "default": "gestaltdev"
+        },
+        "password": {
+          "type": "string",
+          "description": "The password for the database (provisioned or pre-existing)",
+          "default": "letmein"
+        },
+        "prefix": {
+          "type": "string",
+          "description": "A prefix for database names for the database (only if pre-existing)",
+          "default": "gestalt-"
+        }
+      },
+      "required": [
+        "provision",
+        "username",
+        "password",
+        "prefix"
+      ],
+      "type": "object"
+    },
+    "security" : {
+      "description": "gestalt-security configuration properties",
+      "properties": {
+        "admin-username": {
+          "type": "string",
+          "description": "The username for the bootstrapped admin account.",
+          "default": "gestalt-admin"
+        },
+        "admin-password": {
+          "type": "string",
+          "description": "The password for the bootstrapped admin account (leave blank for none/no-login).",
+          "default": "letmein"
+        },
+        "api-key": {
+          "type": "string",
+          "description": "Admin API key, required if security is already initialized."
+        },
+        "api-secret": {
+          "type": "string",
+          "description": "Admin API secret, required if security is already initialized."
+        }
+      },
+      "required": [
+        "admin-username",
+        "admin-password"
+      ],
+      "type": "object"
+    },
+    "jvm" : {
+      "additionalProperties" : false,
+      "description" : "JVM configuration properties",
+      "properties" : {
+        "heap-min" : {
+          "default" : 256,
+          "description" : "Memory (MB) start size for the JVM heap. This number should be be less or equals than the heap-max.",
+          "minimum" : 0,
+          "type" : "integer"
+        },
+        "heap-max" : {
+          "default" : 1024,
+          "description" : "Memory (MB) max size for the JVM heap. This number should be less than the memory allocated to the gestalt-framework instance (General rule: 50%).",
+          "minimum" : 0,
+          "type" : "integer"
+        }
+      },
+      "required" : [ "heap-min", "heap-max" ],
+      "type" : "object"
+    }
+  },
+  "required": [
+    "service", "database", "security", "jvm"
+  ],
+  "type": "object"
+}
