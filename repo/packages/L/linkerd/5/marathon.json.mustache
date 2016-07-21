@@ -1,0 +1,54 @@
+{
+  "id": "{{linkerd.name}}",
+  "instances": {{linkerd.instances}},
+  "cpus": {{linkerd.cpus}},
+  "mem": {{linkerd.mem}},
+  "acceptedResourceRoles": [{{{linkerd.resource-roles}}}],
+  "constraints": [["hostname", "UNIQUE"]],
+  "maintainer": "hello@buoyant.io",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.linkerd-docker}}",
+      "network": "BRIDGE",
+      "privileged": true,
+      "portMappings": [
+        {
+          "containerPort": {{linkerd.admin-port}},
+          "hostPort": {{linkerd.admin-port}},
+          "servicePort": 0,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": {{linkerd.routing-port}},
+          "hostPort": {{linkerd.routing-port}},
+          "servicePort": 0,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/admin/ping"
+    }
+  ],
+  "args": [
+    "/mnt/mesos/sandbox/{{linkerd.config-filename}}"
+  ],
+  "requirePorts":true,
+  "ports": [
+    {{linkerd.admin-port}},
+    {{linkerd.routing-port}}
+  ],
+  "uris": [
+    "{{linkerd.config-uri}}/{{linkerd.config-filename}}"
+  ],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{linkerd.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  }
+}
