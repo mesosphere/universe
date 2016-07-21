@@ -1,0 +1,53 @@
+{
+  "id": "{{netsil-collectors.name}}",
+  "cpus": {{netsil-collectors.cpus}},
+  "mem": {{netsil-collectors.mem}},
+  "instances": {{netsil-collectors.instances}},
+  "acceptedResourceRoles": ["*", "slave_public"],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.netsil-collectors}}:{{netsil-collectors.build_branch}}-{{netsil-collectors.version_number}}",
+      "network": "HOST",
+      "privileged": true,
+      "parameters": [],
+      "forcePullImage": false
+    },
+    "volumes": [
+      {
+        "containerPath": "/var/run/docker.sock",
+        "hostPath": "/var/run/docker.sock",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/host/proc/",
+        "hostPath": "/proc/",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/host/sys/fs/cgroup",
+        "hostPath": "/sys/fs/cgroup/",
+        "mode": "RO"
+      }
+    ]
+  },
+  "env": {
+    "NETSIL_SP_HOST": "{{netsil-collectors.netsil_host}}",
+    "NETSIL_DD_PORT": "{{netsil-collectors.infra_stats_port}}",
+    "NETSIL_SP_PORT": "{{netsil-collectors.traffic_stats_port}}",
+    "TC_INTERFACE": "any",
+    "NODAEMON": "true",
+    "API_KEY": "netsil_api_key"
+  },
+  "args": [
+    "/opt/netsil/collectors/start.sh",
+    "all"
+  ],
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ]
+}
+
