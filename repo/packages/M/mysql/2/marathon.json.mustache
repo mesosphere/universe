@@ -4,8 +4,14 @@
     "mem": {{mysql.mem}},
     "instances": {{mysql.instances}},
     "env": {
-        "MYSQL_ROOT_PASSWORD": "{{mysql.root_password}}",
+        {{#mysql.database.name}}
         "MYSQL_DATABASE": "{{mysql.database}}",
+        {{#mysql.database.username}}
+        "MYSQL_USER": "{{mysql.database.username}}",
+        "MYSQL_PASSWORD": "{{mysql.database.password}}",
+        {{/mysql.database.username}}
+        {{/mysql.database.name}}
+        "MYSQL_ROOT_PASSWORD": "{{mysql.root_password}}",
         "MYSQL_CONTEXT": "/service/{{service.name}}"
     },
     "container": {
