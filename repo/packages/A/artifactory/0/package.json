@@ -6,7 +6,7 @@
     "scm": "https://github.com/JfrogDev/artifactory-mesos.git",
     "maintainer": "soleng-team@jfrog.com",
     "website": "https://jfrog.com",
-    "framework": true,
+    "framework": false,
     "description": "As the first, and only, universal Artifact Repository Manager on the market, JFrog Artifactory fully supports software packages created by any language or technology.",
     "tags": ["mesosphere", "framework", "artifacts", "artifactory"],
     "preInstallNotes": "If you wish to use Artifactory High Availability, you need to ensure the `cluster-home` directory is visible and writable to all the Artifactory cluster nodes in your system (e.g. using NFS storage).",
