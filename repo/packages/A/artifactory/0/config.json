@@ -6,7 +6,7 @@
       "type": "object",
       "properties": {
         "name": {
-          "description": "The name of this DC/OS service.  If running in high-availability mode, -primary or -secondary will be appended to this name.",
+          "description": "The name of this DC/OS service.  If running in high-availability mode and this is a secondary node, -secondary will be appended to this name.",
           "type": "string",
           "default": "artifactory"
         },
