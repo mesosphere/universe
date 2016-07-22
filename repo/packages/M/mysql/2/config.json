@@ -28,6 +28,11 @@
           "default": 1024.0,
           "minimum": 1024.0
         },
+        "bridge": {
+          "default": true,
+          "description": "Whether to use BRIDGE networking mode for Docker container. By default, this is false and HOST mode networking is used.",
+          "type": "boolean"
+        },
         "instances": {
           "default": 1.0,
           "description": "Number of instances we should have running by mesos.",
@@ -65,6 +70,7 @@
       "required": [
         "cpus",
         "mem",
+        "bridge",
         "instances",
         "host_volume",
         "root_password"

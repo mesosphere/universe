@@ -5,7 +5,7 @@
     "instances": {{mysql.instances}},
     "env": {
         {{#mysql.database.name}}
-        "MYSQL_DATABASE": "{{mysql.database}}",
+        "MYSQL_DATABASE": "{{mysql.database.name}}",
         {{#mysql.database.username}}
         "MYSQL_USER": "{{mysql.database.username}}",
         "MYSQL_PASSWORD": "{{mysql.database.password}}",
@@ -19,14 +19,17 @@
         "docker": {
             "image": "{{resource.assets.container.docker.mysql-docker}}",
             "forcePullImage": true,
+            {{#mysql.bridge}}
             "network": "BRIDGE",
-            "portMappings": [
-            {
+            "portMappings": [{
                 "containerPort": 3306,
                 "hostPort": 0,
                 "protocol": "tcp"
-            }
-            ]
+            }]
+            {{/mysql.bridge}}
+            {{^mysql.bridge}}
+            "network": "HOST"
+            {{/mysql.bridge}}
         },
         "volumes": [
         {
@@ -36,6 +39,17 @@
         }
         ]
     },
+    {{^mysql.bridge}}
+    "portDefinitions": [
+    {
+            "port": 3306,
+            "protocol": "tcp",
+            "name": "mysql",
+            "labels": {}
+    }
+    ],
+    "requirePorts": true,
+    {{/mysql.bridge}}
     "healthChecks": [
     {
         "protocol": "TCP",
