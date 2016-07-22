@@ -1,0 +1,46 @@
+{
+    "id": "/{{service.name}}",
+    "cpus": {{service.cpus}},
+    "mem": {{service.mem}},
+    "instances": {{service.instances}},
+    "constraints": [[ "hostname", "UNIQUE"]],
+    "acceptedResourceRoles": [
+        "slave_public"
+    ],
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.artifactory-lb}}",
+            {{#service.bridge}}
+            "network": "BRIDGE",
+            "portMappings": [{
+                    "containerPort": 80,
+                    "hostPort": 0
+                },
+                {
+                    "containerPort": 443,
+                    "hostPort": 0
+                }],
+            {{/service.bridge}}
+            {{^service.bridge}}
+            "network": "HOST",
+            {{/service.bridge}}
+        }
+    },
+    "env": {
+        "ART_SERVICE_NAME": "{{artifactory.name}}",
+        "ART_LOGIN": "{{artifactory.user}}",
+        "ART_PASSWORD": "{{artifactory.password}}"
+    },
+    "healthChecks": [{
+        "protocol": "COMMAND",
+        "command": {
+            "value": "curl http://$HOST:$PORT0/health"
+        },
+        "gracePeriodSeconds": 300,
+        "intervalSeconds": 60,
+        "timeoutSeconds": 20,
+        "maxConsecutiveFailures": 3,
+        "ignoreHttp1xx": false
+    }]
+}

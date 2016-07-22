@@ -1,0 +1,75 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "Artifactory-lb service properties",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of this DC/OS service.",
+          "type": "string",
+          "default": "artifactory-lb"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to this instance.",
+          "type": "number",
+          "default": 1.0,
+          "minimum": 0.5
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "mem": {
+          "description": "Memory to allocate to this instance.",
+          "type": "number",
+          "default": 1024.0,
+          "minimum": 512.0
+        },
+        "bridge": {
+          "default": false,
+          "description": "Whether to use BRIDGE networking mode for Docker container. By default, this is false and HOST mode networking is used.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem",
+        "bridge"
+      ]
+    },
+    "artifactory": {
+      "description": "Artifactory-lb service properties",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The DC/OS service name of the Artifactory server to route requests to.",
+          "type": "string",
+          "default": "artifactory"
+        },
+        "user": {
+          "description": "Username to use when fetching reverse proxy configuration from Artifactory.",
+          "type": "string",
+          "default": "admin"
+        },
+        "password": {
+          "description": "Password to use when fetching reverse proxy configuration from Artifactory.",
+          "type": "string",
+          "default": "password"
+        }
+      },
+      "required": [
+        "name",
+        "user",
+        "password"
+      ]
+    }
+  },
+  "required": [
+    "service",
+    "artifactory"
+  ]
+}

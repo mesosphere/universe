@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "2.0",
+  "name": "artifactory-lb",
+  "version": "4.8.2",
+  "scm": "https://github.com/JfrogDev/artifactory-mesos.git",
+  "maintainer": "soleng-team@jfrog.com",
+  "website": "https://jfrog.com",
+  "framework": false,
+  "description": "Load Balancer for JFrog Artifactory Pro and High Availability.",
+  "tags": ["mesosphere", "artifacts", "artifactory","artifactory-lb"],
+  "preInstallNotes": "Make sure you have running Artifactory Pro or Artifactory High Availability.",
+  "postInstallNotes": "Artifactory-lb has been installed.",
+  "postUninstallNotes": "Artifactory-lb has been uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/JfrogDev/artifactory-mesos/blob/master/LICENSE"
+    }
+  ]
+}
