@@ -1,0 +1,96 @@
+{
+    "type": "object",
+    "properties": {
+        "service": {
+            "description": "Configuration properties for the Jenkins service for DC/OS.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "The name of the service to display in the DC/OS dashboard.",
+                    "type": "string",
+                    "default": "jenkins"
+                },
+                "cpus": {
+                    "description": "CPU shares to allocate to each Jenkins master.",
+                    "type": "number",
+                    "default": 1.0,
+                    "minimum": 0.1
+                },
+                "mem": {
+                    "description": "Memory (in MB) to allocate to each Jenkins master.",
+                    "type": "number",
+                    "default": 2048.0,
+                    "minimum": 2048.0
+                }
+            }
+        },
+        "storage": {
+            "description": "Storage-related configuration properties for Jenkins on DC/OS.",
+            "type": "object",
+            "properties": {
+                "host-volume": {
+                    "description": "The location of a volume on the host to be used for persisting Jenkins configuration and build data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/jenkins`). Note that this path must be the same on all DCOS agents.",
+                    "type": "string",
+                    "default": "/tmp"
+                },
+                "pinned-hostname": {
+                    "description": "An optional DCOS agent hostname to run this Jenkins instance on (e.g. 10.0.0.1).",
+                    "type" : "string"
+                }
+            }
+        },
+        "networking": {
+            "description": "Networking-related configuration properties for Jenkins on DC/OS.",
+            "type": "object",
+            "properties": {
+                "known-hosts": {
+                    "description": "A space-separated list of hosts used to populate the SSH known hosts file on the Jenkins master.",
+                    "type": "string",
+                    "default": "github.com"
+                },
+                "virtual-host": {
+                    "description": "The virtual host address to configure for integration with Marathon-lb.",
+                    "type": "string"
+                },
+                "https-redirect": {
+                    "description": "Whether Marathon-lb should redirect HTTP traffic to HTTPS. This requires 'virtual-host' to be set. By default, this is false.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "root-url": {
+                    "description": "The web address of the Jenkins installation (e.g. http://jenkins.example.com). This is used by Jenkins to refer to itself when creating links in emails, chat notifications, etc.",
+                    "type": "string"
+                }
+            }
+        },
+        "advanced": {
+            "description": "Advanced configuration properties for the Jenkins service. Under normal circumstances, you shouldn't need to modify these values.",
+            "type": "object",
+            "properties": {
+                "mesos-master": {
+                    "description": "URL of this cluster's Mesos master.",
+                    "type": "string",
+                    "default": "zk://leader.mesos:2181/mesos"
+                },
+                "jvm-opts": {
+                    "description": "Optional arguments to pass to the JVM.",
+                    "type": "string",
+                    "default": "-Xms1024m -Xmx1024m"
+                },
+                "role": {
+                    "description": "The accepted resource roles (e.g. slave_public). By default, this will deploy to any agents with the * role.",
+                    "type": "string",
+                    "default": "*"
+                },
+                "docker-image": {
+                    "description": "The Docker image to use for the Jenkins service. By default, this package will use the Jenkins image in the Mesosphere organization on Docker Hub, which you must be authenticated against. Otherwise, specify the host, image, and tag for the Jenkins image on your private Docker Registry.",
+                    "type": "string"
+                },
+                "docker-credentials-uri": {
+                    "description": "An optional URI to be fetched and extracted that contains docker credentials (e.g. file:///etc/docker/docker.tar.gz).",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
