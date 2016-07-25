@@ -4,9 +4,6 @@
     "mem": {{service.mem}},
     "instances": {{service.instances}},
     "constraints": [[ "hostname", "UNIQUE"]],
-    "acceptedResourceRoles": [
-        "slave_public"
-    ],
     "container": {
         "type": "DOCKER",
         "docker": {
@@ -42,5 +39,10 @@
         "timeoutSeconds": 20,
         "maxConsecutiveFailures": 3,
         "ignoreHttp1xx": false
+    }],
+    "labels": [{
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "DCOS_SERVICE_PROTOCOL": "https",
+        "DCOS_SERVICE_PORT_INDEX": "1"
     }]
 }
