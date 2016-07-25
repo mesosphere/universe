@@ -2,7 +2,7 @@
     "id": "{{service.name}}",
     "cpus": {{mysql.cpus}},
     "mem": {{mysql.mem}},
-    "instances": {{mysql.instances}},
+    "instances": 1,
     "env": {
         {{#mysql.database.name}}
         "MYSQL_DATABASE": "{{mysql.database.name}}",
@@ -64,6 +64,11 @@
     "labels": {
         "DCOS_SERVICE_NAME": "{{service.name}}",
         "DCOS_SERVICE_SCHEME": "http",
-        "DCOS_SERVICE_PORT_INDEX": "0"
+        "DCOS_SERVICE_PORT_INDEX": "0",
+        "MARATHON_SINGLE_INSTANCE_APP":"true"
+    },
+    "upgradeStrategy":{
+        "minimumHealthCapacity": 0,
+        "maximumOverCapacity": 0
     }
 }

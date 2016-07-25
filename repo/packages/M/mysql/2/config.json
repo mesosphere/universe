@@ -33,12 +33,6 @@
           "description": "Whether to use BRIDGE networking mode for Docker container. By default, this is false and HOST mode networking is used.",
           "type": "boolean"
         },
-        "instances": {
-          "default": 1.0,
-          "description": "Number of instances we should have running by mesos.",
-          "minimum": 1.0,
-          "type": "number"
-        },
         "host_volume": {
           "description": "The location of a volume on the host to be used for persisting MySQL data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/mysql`). Note that this path must be the same on all DCOS agents.",
           "type": "string",
@@ -71,7 +65,6 @@
         "cpus",
         "mem",
         "bridge",
-        "instances",
         "host_volume",
         "root_password"
       ],
