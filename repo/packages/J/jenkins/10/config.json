@@ -83,7 +83,7 @@
                     "default": "*"
                 },
                 "docker-image": {
-                    "description": "The Docker image to use for the Jenkins service. By default, this package will use the Velocity image in the Mesosphere organization on Docker Hub, which you must be authenticated against. Otherwise, specify the host, image, and tag for the Velocity image on your private Docker Registry.",
+                    "description": "The Docker image to use for the Jenkins service. By default, this package will use the Jenkins image in the Mesosphere organization on Docker Hub, which you must be authenticated against. Otherwise, specify the host, image, and tag for the Jenkins image on your private Docker Registry.",
                     "type": "string"
                 },
                 "docker-credentials-uri": {
