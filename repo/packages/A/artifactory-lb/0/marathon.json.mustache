@@ -49,7 +49,7 @@
     "labels": {
         "DCOS_SERVICE_NAME": "{{service.name}}",
         {{#service.ssl.enabled}}
-        "DCOS_SERVICE_PROTOCOL": "https",
+        "DCOS_SERVICE_SCHEME": "https",
         "DCOS_SERVICE_PORT_INDEX": "1"
         {{/service.ssl.enabled}}
         {{^service.ssl.enabled}}
