@@ -24,6 +24,12 @@
             {{/service.bridge}}
         }
     },
+    {{#service.ssl.enabled}}
+    "fetch": [
+        { "uri": "{{artifactory.ssl.ssl_key_path}}" },
+        { "uri": "{{artifactory.ssl.ssl_cert_path}}" }
+    ],
+    {{/service.ssl.enabled}}
     "env": {
         "ART_SERVICE_NAME": "{{artifactory.name}}",
         "ART_LOGIN": "{{artifactory.user}}",
@@ -42,7 +48,13 @@
     }],
     "labels": {
         "DCOS_SERVICE_NAME": "{{service.name}}",
+        {{#service.ssl.enabled}}
         "DCOS_SERVICE_PROTOCOL": "https",
         "DCOS_SERVICE_PORT_INDEX": "1"
+        {{/service.ssl.enabled}}
+        {{^service.ssl.enabled}}
+        "DCOS_SERVICE_PROTOCOL": "http",
+        "DCOS_SERVICE_PORT_INDEX": "0"
+        {{/service.ssl.enabled}}
     }
 }

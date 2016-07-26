@@ -32,6 +32,30 @@
           "default": false,
           "description": "Whether to use BRIDGE networking mode for Docker container. By default, this is false and HOST mode networking is used.",
           "type": "boolean"
+        },
+        "ssl": {
+          "description": "Whether or not to use custom SSL certificates. If selected, fetches SSL certificate and key from provided URIs.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "If enabled, use provided URIs to fetch SSL certificate and key",
+              "type": "boolean",
+              "default": false
+            },
+            "ssl_key_path": {
+              "description": "URI to a key file. This can be hosted over HTTP(S) or a path to a local file.",
+              "type": "string",
+              "default": "http://www.example.com/example.key"
+            },
+            "ssl_cert_path": {
+              "description": "URI to a certificate file. This can be hosted over HTTP(S) or a path to a local file",
+              "type": "string",
+              "default": "http://www.example.com/example.crt"
+            }
+          },
+          "required": [
+            "enabled"
+          ]
         }
       },
       "required": [
