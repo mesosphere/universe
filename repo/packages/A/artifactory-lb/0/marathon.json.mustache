@@ -48,17 +48,18 @@
         "ART_LOGIN": "{{artifactory.user}}",
         "ART_PASSWORD": "{{artifactory.password}}"
     },
-    "healthChecks": [{
-        "protocol": "COMMAND",
-        "command": {
-            "value": "curl http://$HOST:$PORT0/health"
-        },
-        "gracePeriodSeconds": 300,
-        "intervalSeconds": 60,
-        "timeoutSeconds": 20,
-        "maxConsecutiveFailures": 3,
-        "ignoreHttp1xx": false
-    }],
+    "healthChecks": [
+    {
+      "path": "/",
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+    ],
     "labels": {
         "DCOS_SERVICE_NAME": "{{service.name}}",
         {{#service.ssl.enabled}}
