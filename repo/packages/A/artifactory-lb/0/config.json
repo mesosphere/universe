@@ -29,8 +29,8 @@
           "minimum": 512.0
         },
         "bridge": {
-          "default": false,
-          "description": "Whether to use BRIDGE networking mode for Docker container. By default, this is false and HOST mode networking is used.",
+          "default": true,
+          "description": "Whether to use bridge networking mode for Docker container. By default, this is true and bridge mode networking is used.",
           "type": "boolean"
         },
         "ssl": {

@@ -26,10 +26,23 @@
     },
     {{#service.ssl.enabled}}
     "fetch": [
-        { "uri": "{{artifactory.ssl.ssl_key_path}}" },
-        { "uri": "{{artifactory.ssl.ssl_cert_path}}" }
+        { "uri": "{{service.ssl.ssl_key_path}}" },
+        { "uri": "{{service.ssl.ssl_cert_path}}" }
     ],
     {{/service.ssl.enabled}}
+    {{^service.bridge}}
+    "portDefinitions": [{
+        "port": 80,
+        "protocol": "tcp",
+        "name": "artifactory-lb-http"
+    },
+    {
+        "port": 443,
+        "protocol": "tcp",
+        "name": "artifactory-lb-https"
+    }],
+    "requirePorts": true,
+    {{/service.bridge}}
     "env": {
         "ART_SERVICE_NAME": "{{artifactory.name}}",
         "ART_LOGIN": "{{artifactory.user}}",
