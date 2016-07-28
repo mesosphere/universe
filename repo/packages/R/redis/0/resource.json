@@ -8,10 +8,8 @@
    ]
  },
  "assets": {
-   "container": {
-     "docker": {
-       "8d81cd6f6c5e": "redis:3.0.7"
-     }
+   "uris": {
+     "redis": "http://s3-eu-west-1.amazonaws.com/redis-server-3.2.2"
    }
  }
 }

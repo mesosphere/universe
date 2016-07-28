@@ -3,21 +3,9 @@
  "instances": 1,
  "cpus": 0.2,
  "mem": 400,
- "container": {
-   "type": "DOCKER",
-   "docker": {
-     "image": "{{resource.assets.container.docker.8d81cd6f6c5e}}",
-     "network": "BRIDGE",
-     "portMappings": [
-       {
-       "containerPort": 6379,
-       "servicePort" : 0,
-       "hostPort": 0,
-       "protocol": "tcp"
-       }
-     ]
-   }
- },
+ "ports": [0],
+ "cmd": "chmod u+x redis-server-3.2.2 ./redis-server-3.2.2 --port $PORT0"
+ "uris": ["{{resource.assets.uris.redis}}""]
  "healthChecks": [
    {
    "protocol": "TCP",
