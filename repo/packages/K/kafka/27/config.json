@@ -468,7 +468,7 @@
             "title":"group.max.session.timeout.ms",
             "description":"The maximum allowed session timeout for registered consumers",
             "type":"integer",
-            "default":30000
+            "default":300000
           },
           "group_min_session_timeout_ms":{
             "title":"group.min.session.timeout.ms",
