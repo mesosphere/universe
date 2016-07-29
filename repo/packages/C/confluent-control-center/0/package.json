@@ -1,0 +1,18 @@
+{
+  "packagingVersion": "2.0",
+  "name": "confluent-control-center",
+  "version": "0.9.0-3.0.0",
+  "scm": "https://github.com/confluentinc/control-center",
+  "description": "confluent-control-center package",
+  "maintainer": "partner-support@confluent.io",
+  "tags": ["kafka", "confluent", "schema", "registry"],
+  "preInstallNotes": "Preparing to install confluent-control-center",
+  "postInstallNotes": "confluent-control-center has been installed.",
+  "postUninstallNotes": "confluent-control-center was uninstalled successfully.",
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://raw.githubusercontent.com/confluentinc/control-center/master/LICENSE"
+    }
+  ]
+}
