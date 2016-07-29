@@ -1,0 +1,46 @@
+{
+  "assets": {
+    "uris": {
+      "scheduler-zip":"https://downloads.mesosphere.com/cassandra/assets/1.0.13-2.2.5/scheduler.zip",
+      "executor-zip":"https://downloads.mesosphere.com/cassandra/assets/1.0.13-2.2.5/executor.zip",
+      "jre-tar-gz":"https://downloads.mesosphere.com/cassandra/assets/1.0.13-2.2.5/server-jre-8u74-linux-x64.tar.gz",
+      "apache-cassandra-bin-tar-gz":"https://downloads.mesosphere.com/cassandra/assets/1.0.13-2.2.5/apache-cassandra-2.2.5-bin-dcos.tar.gz"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-large.png"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[
+            { "algo": "sha256", "value": "d1817e6f33056c84cb0eb9e82685fcf8a8e86a51da6b991eba9ad215d7481923" }
+          ],
+          "kind": "executable",
+          "url":"https://downloads.mesosphere.io/cassandra/assets/1.0.13-2.2.5/cli/darwin-x86-64/dcos-cassandra"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[
+            { "algo":"sha256", "value":"bdf3feeebde67355768dd0b0d1771bce63a8d6bb952aa642e59f74c6f57f62e9" }
+          ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.io/cassandra/assets/1.0.13-2.2.5/cli/linux-x86-64/dcos-cassandra"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[
+            { "algo":"sha256", "value":"6ab72aad37a3a8c10eadaa7d6a30516c5b9303293303ec71b16fed455bdc7de5" }
+          ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.io/cassandra/assets/1.0.13-2.2.5/cli/windows-x86-64/dcos-cassandra.exe"
+        }
+      }
+    }
+  }
+}
