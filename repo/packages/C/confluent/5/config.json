@@ -8,7 +8,7 @@
           "name" : {
             "description":"The name of the Confluent Platform service instance",
             "type":"string",
-            "default":"confluent"
+            "default":"confluent-kafka"
           },
           "principal": {
             "description": "The principal for the Kafka service instance.",
