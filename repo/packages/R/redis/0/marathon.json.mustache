@@ -1,0 +1,19 @@
+{
+ "id": "redis",
+ "instances": 1,
+ "cpus": 0.2,
+ "mem": 400,
+ "ports": [0],
+ "cmd": "chmod u+x redis-server-3.2.2 ./redis-server-3.2.2 --port $PORT0",
+ "uris": ["{{resource.assets.uris.redis}}""],
+ "healthChecks": [
+   {
+   "protocol": "TCP",
+   "gracePeriodSeconds": 60,
+   "intervalSeconds": 5,
+   "portIndex": 0,
+   "timeoutSeconds": 5,
+   "maxConsecutiveFailures": 3
+   }
+ ]
+}
