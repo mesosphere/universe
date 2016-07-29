@@ -1,0 +1,12 @@
+{
+  "packagingVersion": "3.0",
+  "name": "confluent-kafka",
+  "version": "1.1.8-3.0.0",
+  "maintainer": "support@confluent.io",
+  "description": "Apacke Kafka by Confluent",
+  "selected": true,
+  "framework": true,
+  "tags": ["message", "broker", "pubsub", "kafka"],
+  "postInstallNotes": "The Confluent Platform is being installed.",
+  "postUninstallNotes": "The Confluent Platform has been uninstalled. Please run the framework_cleaner to remove any persistent state if required."
+}
