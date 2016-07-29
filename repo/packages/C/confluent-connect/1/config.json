@@ -43,7 +43,7 @@
           "type": "string"
         },
         "bootstrap-servers": {
-          "default": "broker-0.confluent.mesos:9092",
+          "default": "broker.confluent.l4lb.thisdcos.directory:9092",
           "description": "Bootstrap servers for target Kafka cluster. Format is comma-separated list of <host>:<port>",
 
           "type": "string"

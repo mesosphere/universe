@@ -32,7 +32,7 @@
           "type": "string"
         },
         "bootstrap-servers": {
-          "default": "broker-0.confluent.mesos:9092",
+          "default": "broker.confluent.l4lb.thisdcos.directory:9092",
           "description": "Seed list of brokers to which this instance will attach.  Format is comma-separated list of <broker>:<port>",
           "type": "string"
         },
