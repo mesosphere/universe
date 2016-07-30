@@ -125,6 +125,7 @@
 ],
 "env": {
 {{#high-availability.enabled}}
+    "ART_NETWORK": "{{high-availability.network}}",
     {{^high-availability.secondary.enabled}}
     "ART_LICENSES": "{{high-availability.licenses}}",
     "ART_DATABASE_CONNECTION_STRING": "{{high-availability.database.connection-string}}",
