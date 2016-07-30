@@ -38,7 +38,7 @@
           "type": "object",
           "properties": {
             "artifactory-home-size": {
-              "description": "Size of the cluster-home volume in MiB.",
+              "description": "Size of the artifactory-home volume in MiB.",
               "type": "integer",
               "default": 5120
             }
