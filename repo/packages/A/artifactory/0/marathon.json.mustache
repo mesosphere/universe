@@ -113,12 +113,15 @@
 "port": 0,
 "protocol": "tcp",
 "name": "instance"
-},
+}
+{{#high-availability.enabled}}
+,
 {
 "port": 0,
 "protocol": "tcp",
 "name": "member"
 }
+{{/high-availability.enabled}}
 ],
 "env": {
 {{#high-availability.enabled}}
