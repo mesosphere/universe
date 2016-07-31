@@ -1,0 +1,17 @@
+{
+  "packagingVersion": "3.0",
+  "name": "datastax",
+  "version": "1.0.13-5.0.0",
+  "maintainer": "support@mesosphere.io",
+  "description": "DataStax Enterprise",
+  "selected": true,
+  "framework": true,
+  "tags": [
+    "data",
+    "database",
+    "nosql"
+  ],
+  "postInstallNotes": "DataStax Enterprise is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/usage/services/cassandra/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DataStax Enterprise has been uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/usage/services/cassandra/#uninstall to remove any persistent state if required.",
+  "minDcosReleaseVersion": "1.8"
+}
