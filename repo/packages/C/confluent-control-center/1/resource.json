@@ -1,0 +1,14 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "confluent-docker": "dbtucker/cp-control-center:3.0.0"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://s3-us-west-2.amazonaws.com/confluent-mesos-devel/ConfIcon_small.png",
+    "icon-medium": "https://s3-us-west-2.amazonaws.com/confluent-mesos-devel/ConfIcon_medium.png",
+    "icon-large": "https://s3-us-west-2.amazonaws.com/confluent-mesos-devel/ConfIcon_large.png"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "id": "/{{control-center.name}}",
+  "instances": {{control-center.instances}},
+  "cpus": {{control-center.cpus}},
+  "mem": {{control-center.mem}},
+  "maintainer": "partner-support@confluent.io", 
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.confluent-docker}}",
+	  "forcePullImage": true,
+      "network": "BRIDGE",    
+      "portMappings": [
+        { "containerPort": 9021, "hostPort": 0 }
+      ]
+    }
+  },
+  "env": {
+    "BOOTSTRAP_SERVERS": "{{control-center.bootstrap-servers}}",
+    "CONTROL_CENTER_CONFLUENT_CONTROLCENTER_CONNECT_CLUSTER": "{{control-center.confluent-controlcenter-connect-cluster}}",
+    "CONTROL_CENTER_CONFLUENT_CONTROLCENTER_INTERNAL_TOPICS_PARTITIONS": "{{control-center.confluent-controlcenter-internal-topics-partitions}}",
+    "CONTROL_CENTER_CONFLUENT_CONTROLCENTER_INTERNAL_TOPICS_REPLICATION": "{{control-center.confluent-controlcenter-internal-topics-replication}}",
+    "CONTROL_CENTER_CONFLUENT_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS": "{{control-center.confluent-monitoring-interceptor-topic-partitions}}",
+    "CONTROL_CENTER_CONFLUENT_MONITORYING_INTERCEPTOR_TOPIC_REPLICATION": "{{control-center.confluent-monitoring-interceptor-topic-replication}}",
+    "CONTROL_CENTER_REPLICATION_FACTOR": "{{control-center.confluent-controlcenter-internal-topics-replication}}",
+    "ZOOKEEPER_CONNECT": "{{control-center.zookeeper-connect}}"
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/",
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+	  "ignoreHttp1xx": false
+	}
+  ],
+  "acceptedResourceRoles": [
+    "{{control-center.role}}"
+  ],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{control-center.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  }
+}
