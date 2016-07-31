@@ -11,8 +11,8 @@
 				"name": {
 					"id": "http://cassandra/docs/mesosphere.com/service/name",
 					"type": "string",
-					"description": "The name of the DSE Cassandra service instance.",
-					"default": "datastax"
+					"description": "The name of the DSE service instance.",
+					"default": "dse"
 				},
 				"user": {
 					"id": "http://cassandra/docs/mesosphere.com/service/user",
@@ -23,7 +23,7 @@
 				"principal": {
 					"description": "The principal for the service instance.",
 					"type": "string",
-					"default": "datastax-principal"
+					"default": "dse-principal"
 				},
 				"cpus": {
 					"id": "http://cassandra/docs/mesosphere.com/service/cpus",
