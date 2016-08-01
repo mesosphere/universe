@@ -63,6 +63,22 @@
                 }
             }
         },
+        "security": {
+            "description": "Security configuration properties for Jenkins on DC/OS.",
+            "type": "object",
+            "properties": {
+                "strict-mode": {
+                    "description": "Enabled if Enterprise DC/OS is provisioned using the 'strict' security mode flag. When enabled, tasks run as the user specified below.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "strict-mode-user": {
+                    "description": "In strict mode, tasks will run as this user. The 'strict' security mode does not permit running tasks as root. By default, the user 'nobody' is used. Ensure that this user exists on each of the agents in your DC/OS cluster.",
+                    "type": "string",
+                    "default": "nobody"
+                }
+            }
+        },
         "advanced": {
             "description": "Advanced configuration properties for the Jenkins service. Under normal circumstances, you shouldn't need to modify these values.",
             "type": "object",
