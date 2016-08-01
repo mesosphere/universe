@@ -13,7 +13,7 @@
           "principal": {
             "description": "The principal for the Kafka service instance.",
             "type": "string",
-            "default": "kafka-principal"
+            "default": "confluent-kafka-principal"
           },
           "secret_name": {
             "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
