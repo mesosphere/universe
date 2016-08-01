@@ -44,7 +44,7 @@
           "type": "string"
         },
         "kafkastore-connection-url": {
-          "default": "leader.mesos:2181/confluent",
+          "default": "master.mesos:2181/dcos-service-confluent-kafka",
           "description": "Zookeeper Connect string for service cluster. Format is comma-separated list of <zk-host>:<zkport>/<kservice>",
           "type": "string"
         }
