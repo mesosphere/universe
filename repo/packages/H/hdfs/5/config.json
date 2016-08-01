@@ -18,13 +18,13 @@
 					"id": "http://hdfs/dcos/mesosphere.com/service/role",
 					"type": "string",
 					"description": "The role of the HDFS service instance.",
-					"default": "hdfs"
+					"default": "hdfs-role"
 				},
 				"principal": {
 					"id": "http://hdfs/dcos/mesosphere.com/service/principal",
 					"type": "string",
 					"description": "The principal for the HDFS service instance.",
-					"default": "hdfs"
+					"default": "hdfs-principal"
 				},
 				"secret_name": {
 					"type": "string",
