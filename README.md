@@ -393,12 +393,19 @@ Docker image" status report to view the build results.
 Using the `marathon.json` that is created when building Universe Server we can run a Universe Server in our DC/OS
 Cluster which can then be used to install packages.
 
-Run the following commands to configure DC/OS to use the custom Universe Server
+Run the following commands to configure DC/OS to use the custom Universe Server (DC/OS 1.8+):
+
 ```bash
 dcos marathon app add marathon.json
 dcos package repo add --index=0 dev-universe http://universe.marathon.mesos:8085/repo
 ```
 
+For DC/OS 1.7, a different URL must be used:
+
+```bash
+dcos marathon app add marathon.json
+dcos package repo add --index=0 dev-universe http://universe.marathon.mesos:8085/repo-1.7
+```
 
 ### Consumption Protocol
 
