@@ -113,15 +113,19 @@
 "port": 0,
 "protocol": "tcp",
 "name": "instance"
-},
+}
+{{#high-availability.enabled}}
+,
 {
 "port": 0,
 "protocol": "tcp",
 "name": "member"
 }
+{{/high-availability.enabled}}
 ],
 "env": {
 {{#high-availability.enabled}}
+    "ART_NETWORK": "{{high-availability.network}}",
     {{^high-availability.secondary.enabled}}
     "ART_LICENSES": "{{high-availability.licenses}}",
     "ART_DATABASE_CONNECTION_STRING": "{{high-availability.database.connection-string}}",
@@ -158,7 +162,7 @@
 {{/high-availability.enabled}}
 "healthChecks": [
 {
-"gracePeriodSeconds": 3,
+"gracePeriodSeconds": 120,
 "intervalSeconds": 10,
 "maxConsecutiveFailures": 3,
 "path": "/artifactory/api/system/ping",

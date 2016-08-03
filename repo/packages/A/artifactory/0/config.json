@@ -38,7 +38,7 @@
           "type": "object",
           "properties": {
             "artifactory-home-size": {
-              "description": "Size of the cluster-home volume in MiB.",
+              "description": "Size of the artifactory-home volume in MiB.",
               "type": "integer",
               "default": 5120
             }
@@ -113,6 +113,10 @@
           "description": "Provide comma separated licenses to be used by all Artifactory instances.",
           "type": "string",
           "default": "NONE"
+        },
+        "network": {
+          "description": "The network on which the Artifactory instances will communicate, in CIDR notation. For example: 192.168.65.0/24",
+          "type": "string"
         },
         "database": {
           "description": "Database properties.",
