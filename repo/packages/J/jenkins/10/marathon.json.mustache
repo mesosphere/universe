@@ -3,7 +3,8 @@
   "cpus": {{service.cpus}},
   "mem": {{service.mem}},
   "instances": 1,
-  "env": {
+  "env": {  
+      "JENKINS_AGENT_ROLE": "{{#roles.jenkins-agent-role}}{{roles.jenkins-agent-role}}{{/roles.jenkins-agent-role}}{{^roles.jenkins-agent-role}}*{{/roles.jenkins-agent-role}}",
       "JENKINS_FRAMEWORK_NAME": "{{service.name}}",
       "JENKINS_CONTEXT": "/service/{{service.name}}",
       "JENKINS_MESOS_MASTER": "{{advanced.mesos-master}}",
@@ -47,7 +48,7 @@
           "extract": true
       }
    ],{{/advanced.docker-credentials-uri}}
-   "acceptedResourceRoles": [ "{{advanced.role}}" ],
+   "acceptedResourceRoles": [ "{{roles.jenkins-master-role}}" ],
    "healthChecks": [
     {
       "path": "/service/{{service.name}}",
