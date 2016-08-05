@@ -59,19 +59,19 @@
   "uris": [ "{{marathon-lb.template-url}}" ],
   {{/marathon-lb.template-url}}
   "env": {
-    {{#service.secret_name}}
+    {{#marathon-lb.secret_name}}
     "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
-    {{/service.secret_name}}
+    {{/marathon-lb.secret_name}}
     "HAPROXY_SSL_CERT": "{{marathon-lb.ssl-cert}}",
     "HAPROXY_SYSCTL_PARAMS": "{{marathon-lb.sysctl-params}}"
   },
-  {{#service.secret_name}}
+  {{#marathon-lb.secret_name}}
   "secrets": {
     "serviceCredential": {
-      "source": "{{service.secret_name}}"
+      "source": "{{marathon-lb.secret_name}}"
     }
   },
-  {{/service.secret_name}}
+  {{/marathon-lb.secret_name}}
   "ports": [
   {{#marathon-lb.bind-http-https}}
     80,
