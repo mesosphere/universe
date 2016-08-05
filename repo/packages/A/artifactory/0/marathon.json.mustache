@@ -1,0 +1,174 @@
+{
+"id": "{{service.name}}{{#high-availability.enabled}}{{#high-availability.secondary.enabled}}-secondary{{/high-availability.secondary.enabled}}{{/high-availability.enabled}}",
+"cpus": {{service.cpus}},
+"mem": {{service.mem}},
+{{^high-availability.enabled}}
+    "instances": 1,
+{{/high-availability.enabled}}
+{{#high-availability.enabled}}
+    {{^high-availability.secondary.enabled}}
+        "instances": 1,
+    {{/high-availability.secondary.enabled}}
+    {{#high-availability.secondary.enabled}}
+        "instances": {{high-availability.secondary.nodes}},
+    {{/high-availability.secondary.enabled}}
+{{/high-availability.enabled}}
+"container": {
+"type": "DOCKER",
+"docker": {
+{{^high-availability.enabled}}
+    "image": "{{resource.assets.container.docker.artifactory-pro}}",
+{{/high-availability.enabled}}
+{{#high-availability.enabled}}
+    {{^high-availability.secondary.enabled}}
+        "image": "{{resource.assets.container.docker.artifactory-ha-primary}}",
+    {{/high-availability.secondary.enabled}}
+    {{#high-availability.secondary.enabled}}
+        "image": "{{resource.assets.container.docker.artifactory-ha-secondary}}",
+    {{/high-availability.secondary.enabled}}
+{{/high-availability.enabled}}
+"network": "HOST"
+},
+"volumes": [
+{{^high-availability.enabled}}
+    {{#pro.external-volumes.enabled}}
+        {
+        "containerPath": "/var/opt/jfrog/artifactory/logs",
+        "external": {
+        "name": "{{service.name}}-logs",
+        "provider": "dvdi",
+        "options": { "dvdi/driver": "rexray" }
+        },
+        "mode": "RW"
+        },
+        {
+        "containerPath": "/var/opt/jfrog/artifactory/etc",
+        "external": {
+        "name": "{{service.name}}-etc",
+        "provider": "dvdi",
+        "options": { "dvdi/driver": "rexray" }
+        },
+        "mode": "RW"
+        },
+        {
+        "containerPath": "/var/opt/jfrog/artifactory/data",
+        "external": {
+        "name": "{{service.name}}-data",
+        "provider": "dvdi",
+        "options": { "dvdi/driver": "rexray" }
+        },
+        "mode": "RW"
+        }
+    {{/pro.external-volumes.enabled}}
+    {{^pro.external-volumes.enabled}}
+        {
+        "containerPath": "/var/opt/jfrog/artifactory/logs",
+        "hostPath": "artifactory-logs",
+        "mode": "RW"
+        },
+        {
+        "containerPath": "artifactory-logs",
+        "mode": "RW",
+        "persistent": {
+        "size": {{pro.local-volumes.artifactory-home-size}}
+        }
+        },
+        {
+        "containerPath": "/var/opt/jfrog/artifactory/data",
+        "hostPath": "artifactory-data",
+        "mode": "RW"
+        },
+        {
+        "containerPath": "artifactory-data",
+        "mode": "RW",
+        "persistent": {
+        "size": {{pro.local-volumes.artifactory-home-size}}
+        }
+        },
+        {
+        "containerPath": "/var/opt/jfrog/artifactory/etc",
+        "hostPath": "artifactory-etc",
+        "mode": "RW"
+        },
+        {
+        "containerPath": "artifactory-etc",
+        "mode": "RW",
+        "persistent": {
+        "size": {{pro.local-volumes.artifactory-home-size}}
+        }
+        }
+    {{/pro.external-volumes.enabled}}
+{{/high-availability.enabled}}
+{{#high-availability.enabled}}
+    {
+    "containerPath": "/var/opt/jfrog/cluster",
+    "hostPath": "{{high-availability.cluster-home}}/cluster-home",
+    "mode": "RW"
+    }
+{{/high-availability.enabled}}
+]
+},
+"portDefinitions": [
+{
+"port": 0,
+"protocol": "tcp",
+"name": "instance"
+}
+{{#high-availability.enabled}}
+,
+{
+"port": 0,
+"protocol": "tcp",
+"name": "member"
+}
+{{/high-availability.enabled}}
+],
+"env": {
+{{#high-availability.enabled}}
+    "ART_NETWORK": "{{high-availability.network}}",
+    {{^high-availability.secondary.enabled}}
+    "ART_LICENSES": "{{high-availability.licenses}}",
+    "ART_DATABASE_CONNECTION_STRING": "{{high-availability.database.connection-string}}",
+    "ART_DATABASE_USER":  "{{high-availability.database.user}}",
+    "ART_DATABASE_PASSWORD":  "{{high-availability.database.password}}"
+    {{/high-availability.secondary.enabled}}
+    {{#high-availability.secondary.enabled}}
+        "ART_API_KEY": "{{high-availability.secondary.api-key}}"
+    {{/high-availability.secondary.enabled}}
+{{/high-availability.enabled}}
+{{^high-availability.enabled}}
+    "ART_LICENSE": "{{pro.license}}",
+    "ART_DATABASE_CONNECTION_STRING": "{{pro.database.connection-string}}",
+    "ART_DATABASE_USER":  "{{pro.database.user}}",
+    "ART_DATABASE_PASSWORD":  "{{pro.database.password}}"
+{{/high-availability.enabled}}
+},
+"labels": {
+{{^high-availability.secondary.enabled}}
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+{{/high-availability.secondary.enabled}}
+"DCOS_SERVICE_NAME": "{{service.name}}"
+},
+{{^high-availability.secondary.enabled}}
+    "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+    },
+{{/high-availability.secondary.enabled}}
+{{#high-availability.enabled}}
+    {{#high-availability.secondary.unique-nodes}}
+        "constraints": [["hostname", "UNIQUE"]],
+    {{/high-availability.secondary.unique-nodes}}
+{{/high-availability.enabled}}
+"healthChecks": [
+{
+"gracePeriodSeconds": 120,
+"intervalSeconds": 10,
+"maxConsecutiveFailures": 3,
+"path": "/artifactory/api/system/ping",
+"portIndex": 0,
+"protocol": "HTTP",
+"timeoutSeconds": 10
+}
+]
+}
