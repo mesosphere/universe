@@ -81,6 +81,11 @@
           "default": "http://master.mesos:8080",
           "description": "URI of Marathon instance",
           "type": "string"
+        },
+        "secret_name": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
         }
       },
       "required": ["cpus", "mem", "haproxy-group", "instances", "name"],
