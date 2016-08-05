@@ -1,0 +1,29 @@
+{
+  "service": {
+    "name": "artifactory",
+    "cpus": 1,
+    "mem": 1024
+  },
+  "database": {
+    "connection-string": "jdbc:mysql://artifactory-mysql.marathon.mesos:3306/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true",
+    "user": "root",
+    "password": "jfrogmesos"
+  },
+  "pro": {
+    "local-volumes": {
+      "artifactory-home-size": 5120
+    },
+    "external-volumes": {
+      "enabled": false
+    }
+  },
+  "high-availability": {
+    "enabled": true,
+    "cluster-home": "/tmp/artifactory/",
+    "licenses": "NONE",
+    "secondary": {
+      "enabled": true,
+      "unique-nodes": false
+    }
+  }
+}
