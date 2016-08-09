@@ -52,6 +52,12 @@
           "type": "integer",
           "default": 22222,
           "minimum": 1024
+        },
+        "registry-port": {
+          "description": "The port that docker clients will connect to against the virtual-host.",
+          "type": "integer",
+          "default": 50000,
+          "minimum": 1024
         }
       }
     },
