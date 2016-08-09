@@ -1,0 +1,80 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "env": {
+      "JENKINS_FRAMEWORK_NAME": "{{service.name}}",
+      "JENKINS_CONTEXT": "/service/{{service.name}}",
+      "JENKINS_MESOS_MASTER": "{{advanced.mesos-master}}",
+      {{#networking.root-url}}
+      "JENKINS_ROOT_URL": "{{networking.root-url}}",
+      {{/networking.root-url}}
+      "JVM_OPTS": "{{advanced.jvm-opts}}",
+      "LD_LIBRARY_PATH": "/opt/mesosphere/lib",
+      "SSH_KNOWN_HOSTS": "{{networking.known-hosts}}"
+  },
+  "ports": [0, 0],
+  "container": {
+       "type": "DOCKER",
+       "docker": {
+       {{#advanced.docker-image}}
+           "image": "{{advanced.docker-image}}",
+       {{/advanced.docker-image}}
+       {{^advanced.docker-image}}
+           "image": "{{resource.assets.container.docker.jenkins-100-16513}}",
+       {{/advanced.docker-image}}
+           "network" : "HOST"
+       },
+       "volumes": [
+           {
+               "containerPath": "/var/jenkins_home",
+               "hostPath": "{{storage.host-volume}}/{{service.name}}",
+               "mode": "RW"
+           },
+           {
+               "containerPath": "/opt/mesosphere",
+               "hostPath": "/opt/mesosphere",
+               "mode": "RO"
+           }
+       ]
+   },
+   {{#advanced.docker-credentials-uri}}
+   "fetch": [
+      {
+          "uri": "{{advanced.docker-credentials-uri}}",
+          "executable": false,
+          "extract": true
+      }
+   ],{{/advanced.docker-credentials-uri}}
+   "acceptedResourceRoles": [ "{{advanced.role}}" ],
+   "healthChecks": [
+    {
+      "path": "/service/{{service.name}}",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "labels": {
+    {{#networking.virtual-host}}
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_VHOST":"{{networking.virtual-host}}",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "{{networking.https-redirect}}",
+    {{/networking.virtual-host}}
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_SERVICE_NAME" : "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX"  : "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }{{#storage.pinned-hostname}},
+  "constraints": [["hostname", "CLUSTER", "{{storage.pinned-hostname}}"]]
+  {{/storage.pinned-hostname}}
+}
