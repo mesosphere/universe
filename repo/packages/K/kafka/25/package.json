@@ -1,0 +1,12 @@
+{
+  "packagingVersion": "3.0",
+  "name": "kafka",
+  "version": "1.1.6-0.10.0.0",
+  "maintainer": "support@mesosphere.io",
+  "description": "Apache Kafka running on DC/OS",
+  "selected": true,
+  "framework": true,
+  "tags": ["message", "broker", "pubsub"],
+  "postInstallNotes": "DC/OS Kafka Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/usage/services/kafka/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS Kafka Service has been uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/usage/services/kafka/#uninstall to remove any persistent state if required."
+}

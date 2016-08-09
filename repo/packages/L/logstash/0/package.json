@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "3.0",
+  "name": "logstash",
+  "version": "2.3.4",
+  "framework": false,
+  "tags": ["logstash", "monitoring", "logging", "elk"],
+  "maintainer": "akaplan@mesosphere.com",
+  "description": "DCOS implementation of the Logstash.",
+  "scm": "https://github.com/elastic/logstash.git",
+  "website": "https://github.com/elastic/logstash",
+  "preInstallNotes":"Logstash on DC/OS is in alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
+  "postInstallNotes": "Logstash is staging. Check the DC/OS UI for status.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/elastic/logstash/master/LICENSE"
+    }
+  ]
+}

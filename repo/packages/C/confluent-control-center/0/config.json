@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "control-center": {
+      "properties": {
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares to allocate to each control-center instance.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 2048.0,
+          "description": "Memory (MB) to allocate to each control-center task.",
+          "minimum": 1024.0,
+          "type": "number"
+        },
+        "name": {
+          "default": "control-center",
+          "description": "Name for this control-center application",
+          "type": "string"
+        },
+        "role": {
+          "default": "*",
+          "description": "Deploy control-center only on nodes with this role.",
+          "type": "string"
+        },
+        "bootstrap-servers": {
+          "default": "broker-0.confluent.mesos:9092",
+          "description": "Seed list of brokers to which this instance will attach.  Format is comma-separated list of <broker>:<port>",
+          "type": "string"
+        },
+        "confluent-controlcenter-connect-cluster": {
+          "default": "8.0.8.3:8083",
+          "description": "Kafka Connect Workers to which this instance will deploy connectors.  Format is comma-separated list of <broker>:<port>; default is the expected VIP of the confluent-connect service",
+          "type": "string"
+        },
+        "confluent-controlcenter-internal-topics-partitions": {
+          "default": "3",
+          "description": "Parition count for internal control-center kafka topics",
+          "type": "number"
+        },
+        "confluent-controlcenter-internal-topics-replication": {
+          "default": "2",
+          "description": "Replication factor for internal control-center kafka topics",
+          "type": "number"
+        },
+        "confluent-monitoring-interceptor-topic-partitions": {
+          "default": "3",
+          "description": "Parition count for kafka topics used to store data from the interceptor classes",
+          "type": "number"
+        },
+        "confluent-monitoring-interceptor-topic-replication": {
+          "default": "2",
+          "description": "Replication factor for kafka topics used to store data from the interceptor classes",
+          "type": "number"
+        },
+        "zookeeper-connect": {
+          "default": "leader.mesos:2181/confluent",
+          "description": "Zookeeper Connect string for service cluster. Format is comma-separated list of <zk-host>:<zkport>/<kservice>",
+          "type": "string"
+        }
+      },
+      "required": ["cpus", "mem", "instances", "name"],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

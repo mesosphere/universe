@@ -1,0 +1,26 @@
+{
+  "packagingVersion": "3.0",
+  "name": "artifactory-lb",
+  "version": "4.8.2",
+  "minDcosReleaseVersion": "1.8",
+  "scm": "https://github.com/JfrogDev/artifactory-dcos.git",
+  "maintainer": "soleng-team@jfrog.com",
+  "website": "https://jfrog.com",
+  "framework": false,
+  "description": "Load Balancer for JFrog Artifactory.",
+  "tags": [
+    "mesosphere",
+    "artifacts",
+    "artifactory",
+    "artifactory-lb"
+  ],
+  "preInstallNotes": "Make sure you have a running instance of Artifactory.",
+  "postInstallNotes": "Artifactory-lb has been installed.",
+  "postUninstallNotes": "Artifactory-lb has been uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/JfrogDev/artifactory-dcos/blob/master/LICENSE"
+    }
+  ]
+}

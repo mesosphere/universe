@@ -1,0 +1,23 @@
+{
+  "packagingVersion": "2.0",
+  "name": "gestalt-framework",
+  "version": "0.1.0",
+  "tags": ["gestalt-framework", "orchestration", "lambda"],
+  "description": "The Gestalt Framework is a solution for building enterprise-grade cloud-native applications using containers and lambdas.",
+  "scm": "https://github.com/GalacticFog/gestalt-dcos.git",
+  "website": "http://www.galacticfog.com/get-started",
+  "preInstallNotes": "http://www.galacticfog.com/get-started",
+  "postInstallNotes": "The Gestalt Framework is now running on your server.",
+  "maintainer": "team@galacticfog.com",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/GalacticFog/gestalt-dcos/blob/develop/LICENSE"
+    },
+    {
+      "name": "Commercial",
+      "url": "http://www.galacticfog.com/contact"
+    }
+  ],
+  "framework": true
+}

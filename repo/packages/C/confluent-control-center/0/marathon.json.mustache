@@ -1,0 +1,46 @@
+{
+  "id": "/{{control-center.name}}",
+  "instances": {{control-center.instances}},
+  "cpus": {{control-center.cpus}},
+  "mem": {{control-center.mem}},
+  "maintainer": "partner-support@confluent.io", 
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.confluent-docker}}",
+      "network": "BRIDGE",    
+      "portMappings": [
+        { "containerPort": 9021, "hostPort": 0 }
+      ]
+    }
+  },
+  "env": {
+    "CC_BOOTSTRAP_SERVERS": "{{control-center.bootstrap-servers}}",
+    "CC_CONFLUENT_CONTROLCENTER_CONNECT_CLUSTER": "{{control-center.confluent-controlcenter-connect-cluster}}",
+    "CC_CONFLUENT_CONTROLCENTER_INTERNAL_TOPICS_PARTITIONS": "{{control-center.confluent-controlcenter-internal-topics-partitions}}",
+    "CC_CONFLUENT_CONTROLCENTER_INTERNAL_TOPICS_REPLICATION": "{{control-center.confluent-controlcenter-internal-topics-replication}}",
+    "CC_CONFLUENT_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS": "{{control-center.confluent-monitoring-interceptor-topic-partitions}}",
+    "CC_CONFLUENT_MONITORYING_INTERCEPTOR_TOPIC_REPLICATION": "{{control-center.confluent-monitoring-interceptor-topic-replication}}",
+    "CC_ZOOKEEPER_CONNECT": "{{control-center.zookeeper-connect}}"
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/",
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+	  "ignoreHttp1xx": false
+	}
+  ],
+  "acceptedResourceRoles": [
+    "{{control-center.role}}"
+  ],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{control-center.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  }
+}
