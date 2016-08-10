@@ -21,12 +21,17 @@
           "type": "number",
           "default": 2048.0,
           "minimum": 1024.0
+        },
+        "licenses":{
+          "description": "License for Artifactory Pro or comma separated licenses for Artifactory High Availability.",
+          "type": "string"
         }
       },
       "required": [
         "name",
         "cpus",
-        "mem"
+        "mem",
+        "licenses"
       ]
     },
     "pro": {
@@ -46,11 +51,6 @@
           "required": [
             "artifactory-home-size"
           ]
-        },
-        "license":{
-          "description": "License for Artifactory Pro",
-          "type": "string",
-          "default": "NONE"
         },
         "database": {
           "description": "Database properties.",
@@ -89,7 +89,6 @@
         }
       },
       "required": [
-        "license",
         "database",
         "local-volumes",
         "external-volumes"
@@ -108,11 +107,6 @@
           "description": "The location of a volume on the host to be used for persisting cluster home directory used when running Artifactory in HA mode. Note that this path must be the same on all DC/OS agents that are running Artifactory.",
           "type": "string",
           "default": "/tmp/artifactory/"
-        },
-        "licenses": {
-          "description": "Provide comma separated licenses to be used by all Artifactory instances.",
-          "type": "string",
-          "default": "NONE"
         },
         "network": {
           "description": "The network on which the Artifactory instances will communicate, in CIDR notation. For example: 192.168.65.0/24",
@@ -167,8 +161,7 @@
       },
       "required": [
         "enabled",
-        "database",
-        "licenses"
+        "database"
       ]
     }
   },
