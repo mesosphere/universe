@@ -1,5 +1,5 @@
 {
-  "id": "{{ecr-login.appId}}",
+  "id": "{{ecr-login.app_id}}",
   "cpus": {{ecr-login.cpus}},
   "mem": {{ecr-login.mem}},
   "instances": {{ecr-login.instances}},
@@ -11,36 +11,36 @@
       "network": "HOST",
       "forcePullImage": false,
       "privileged": false
-    }
+    },
+    "volumes": [
+      {
+        "hostPath": "{{ecr-login.host_directory}}",
+        "containerPath": "{{ecr-login.host_directory}}",
+        "mode": "RW"
+      }
+    ]
   },
   "env": {
-    "AWS_DEFAULT_REGION": "{{ecr-login.registryRegion}}",
-    "REGION": "{{ecr-login.registryRegion}}",
-    "REGISTRIES": "{{ecr-login.registryAccounts}}",
-    "FILE_LOCATION": "{{ecr-login.hostDirectory}}/{{ecr-login.dockercfgFileName}}",
-    "INTERVAL": "{{ecr-login.hostDirectory}}/{{ecr-login.refreshInterval}}",
-    {{#ecr-login.awsAccessKey}}
-    "AWS_ACCESS_KEY_ID": {{ecr-login.awsAccessKey}},
-    {{/ecr-login.awsAccessKey}}
-    {{#ecr-login.awsSecretAccessKey}}
-    "AWS_ACCESS_KEY_ID": {{ecr-login.awsSecretAccessKey}}
-    {{/ecr-login.awsSecretAccessKey}},
-    {{#ecr-login.awsSessionToken}}
-    "AWS_ACCESS_KEY_ID": {{ecr-login.awsSessionToken}}
-    {{/ecr-login.awsSessionToken}}
+    {{#ecr-login.aws_access_key}}
+      "AWS_ACCESS_KEY_ID": "{{ecr-login.aws_access_key}}",
+    {{/ecr-login.aws_access_key}}
+    {{#ecr-login.aws_secret_access_key}}
+      "AWS_SECRET_ACCESS_KEY": "{{ecr-login.aws_secret_access_key}}",
+    {{/ecr-login.aws_secret_access_key}}
+    {{#ecr-login.aws_session_token}}
+      "AWS_SESSION_TOKEN": "{{ecr-login.aws_session_token}}",
+    {{/ecr-login.aws_session_token}}
+    "AWS_DEFAULT_REGION": "{{ecr-login.registry_region}}",
+    "REGION": "{{ecr-login.registry_region}}",
+    "REGISTRIES": "{{ecr-login.registry_accounts}}",
+    "FILE_LOCATION": "{{ecr-login.host_directory}}/{{ecr-login.dockercfg_filename}}",
+    "INTERVAL": "{{ecr-login.refresh_interval}}"
   },
-  "volumes": [
-    {
-      "hostPath": "{{ecr-login.hostDirectory}}",
-      "containerPath": "{{ecr-login.hostDirectory}}",
-      "mode": "RW"
-    }
-  ],
   "healthChecks": [
     {
       "protocol": "COMMAND",
-      "command": { "value": "if [[ $(expr $(date +%s) - $(date +%s -r {{ecr-login.hostDirectory}}/{{ecr-login.dockercfgFileName}})) -gt 10 ]]; then exit 1; else exit 0; fi" },
-      "gracePeriodSeconds": 300,
+      "command": { "value": "if [[ $(expr $(date +%s) - $(date +%s -r {{ecr-login.host_directory}}/{{ecr-login.dockercfg_filename}})) -gt {{ecr-login.refresh_interval}} ]]; then exit 1; else exit 0; fi" },
+      "gracePeriodSeconds": 60,
       "intervalSeconds": 60,
       "timeoutSeconds": 20,
       "maxConsecutiveFailures": 2
