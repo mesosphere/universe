@@ -4,6 +4,7 @@
   "mem": {{service.mem}},
   "instances": 1,
   "env": {
+      "JENKINS_AGENT_USER": "{{#security.strict-mode}}{{security.strict-mode-user}}{{/security.strict-mode}}{{^security.strict-mode}}root{{/security.strict-mode}}",
       "JENKINS_FRAMEWORK_NAME": "{{service.name}}",
       "JENKINS_CONTEXT": "/service/{{service.name}}",
       "JENKINS_MESOS_MASTER": "{{advanced.mesos-master}}",
