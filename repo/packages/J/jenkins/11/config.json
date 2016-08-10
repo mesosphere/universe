@@ -63,6 +63,38 @@
                 }
             }
         },
+        "roles": {
+            "description": "Role configuration properties for Jenkins on DC/OS.",
+            "type": "object",
+            "properties": {
+                "jenkins-master-role": {
+                    "description": "The accepted resource roles that the Jenkins master itself runs as using Marathon. By default, this will deploy to any agents with the * role. For example, to deploy to a public DC/OS agent, set this to 'slave_public'.",
+                    "type": "string",
+                    "default": "*"
+                },
+                "jenkins-agent-role": {
+                    "description": "The role passed to the internal Jenkins configuration that denotes which resources to launch Jenkins agents on.",
+                    "type": "string",
+                    "default": "*"
+                  }
+              }
+          },
+        "security": {
+            "description": "Security configuration properties for Jenkins on DC/OS.",
+            "type": "object",
+            "properties": {
+                "strict-mode": {
+                    "description": "Enabled if Enterprise DC/OS is provisioned using the 'strict' security mode flag. When enabled, tasks run as the user specified below.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "strict-mode-user": {
+                    "description": "In strict mode, tasks will run as this user. The 'strict' security mode does not permit running tasks as root. By default, the user 'nobody' is used. Ensure that this user exists on each of the agents in your DC/OS cluster.",
+                    "type": "string",
+                    "default": "nobody"
+                }
+            }
+        },
         "advanced": {
             "description": "Advanced configuration properties for the Jenkins service. Under normal circumstances, you shouldn't need to modify these values.",
             "type": "object",
@@ -76,11 +108,6 @@
                     "description": "Optional arguments to pass to the JVM.",
                     "type": "string",
                     "default": "-Xms1024m -Xmx1024m"
-                },
-                "role": {
-                    "description": "The accepted resource roles (e.g. slave_public). By default, this will deploy to any agents with the * role.",
-                    "type": "string",
-                    "default": "*"
                 },
                 "docker-image": {
                     "description": "The Docker image to use for the Jenkins service. By default, this package will use the Jenkins image in the Mesosphere organization on Docker Hub, which you must be authenticated against. Otherwise, specify the host, image, and tag for the Jenkins image on your private Docker Registry.",
