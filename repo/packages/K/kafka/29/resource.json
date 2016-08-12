@@ -1,0 +1,41 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://s3-us-west-2.amazonaws.com/infinity-artifacts/kafka/jre-8u91-linux-x64.tar.gz",
+      "kafka_tgz": "https://s3-us-west-2.amazonaws.com/infinity-artifacts/kafka/kafka_2.11-0.10.0.0.tgz",
+      "scheduler-zip": "https://downloads.mesosphere.com/kafka/assets/0.0.0-test/scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/kafka/assets/0.0.0-test/executor.zip",
+      "overrider-zip": "https://downloads.mesosphere.com/kafka/assets/0.0.0-test/overrider.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-large.png"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"964b61ef095eadcda6ef315aa6ef25a2d793bc078a5c2008e0edd125a28c09a7" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/kafka/assets/0.0.0-test/dcos-kafka-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"4cc1bdd00fcb205fb8b7c588de80f5f902bd30f3149ca081dfa0bdae5da122a3" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/kafka/assets/0.0.0-test/dcos-kafka-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"d97258303a1c7ef5493016f9cbb6551a66b0bdbb37858370511d260445b93fbc" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/kafka/assets/0.0.0-test/dcos-kafka.exe"
+        }
+      }
+    }
+  }
+}
