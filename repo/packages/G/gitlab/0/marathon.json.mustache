@@ -19,18 +19,8 @@
            ]
        },
        "volumes": [
-           {
-               "containerPath": "/var/opt/gitlab",
-               "hostPath": "{{service.host-volume}}/{{service.name}}/opt",
-               "mode": "RW"
-           },
-           {
-               "containerPath": "/var/log/gitlab",
-               "hostPath": "{{service.host-volume}}/{{service.name}}/log",
-               "mode": "RW"
-           },
            {{^single-node.external-volumes.enabled}}
-            {
+           {
                "containerPath": "/etc/gitlab",
                "hostPath": "{{service.host-volume}}/{{service.name}}/config",
                "mode": "RW"
@@ -42,6 +32,16 @@
            }
            {{/single-node.external-volumes.enabled}}
            {{#single-node.external-volumes.enabled}}
+           {
+               "containerPath": "/var/opt/gitlab",
+               "hostPath": "{{service.host-volume}}/{{service.name}}/opt",
+               "mode": "RW"
+           },
+           {
+               "containerPath": "/var/log/gitlab",
+               "hostPath": "{{service.host-volume}}/{{service.name}}/log",
+               "mode": "RW"
+           },
            {
                "containerPath": "/etc/gitlab",
                "external": {
