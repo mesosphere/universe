@@ -254,11 +254,12 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
         resource = json.load(source_file)
 
         # Change the root for images (ignore screenshots)
-        resource["images"] = {
-            n: urllib.parse.urljoin(
-                HTTP_ROOT, str(pathlib.PurePath(
-                    package, "images", pathlib.Path(uri).name)))
-            for n,uri in resource.get("images", {}).items() if 'icon' in n}
+        if 'images' in resource:
+            resource["images"] = {
+                n: urllib.parse.urljoin(
+                    HTTP_ROOT, str(pathlib.PurePath(
+                        package, "images", pathlib.Path(uri).name)))
+                for n,uri in resource.get("images", {}).items() if 'icon' in n}
 
         # Change the root for asset uris.
         if 'assets' in resource:
