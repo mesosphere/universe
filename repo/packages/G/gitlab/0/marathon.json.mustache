@@ -19,19 +19,28 @@
            ]
        },
        "volumes": [
-           {{#high-availability.enabled}}
+           {
+               "containerPath": "/var/opt/gitlab",
+               "hostPath": "{{service.host-volume}}/{{service.name}}/opt",
+               "mode": "RW"
+           },
+           {
+               "containerPath": "/var/log/gitlab",
+               "hostPath": "{{service.host-volume}}/{{service.name}}/log",
+               "mode": "RW"
+           },
+           {{^single-node.external-volumes.enabled}}
             {
                "containerPath": "/etc/gitlab",
-               "hostPath": "{{high-availability.host-volume}}/{{service.name}}/config",
+               "hostPath": "{{service.host-volume}}/{{service.name}}/config",
                "mode": "RW"
            },
            {
                "containerPath": "/gitlab-data",
-               "hostPath": "{{high-availability.host-volume}}/{{service.name}}/data",
+               "hostPath": "{{service.host-volume}}/{{service.name}}/data",
                "mode": "RW"
            }
-           {{/high-availability.enabled}}
-           {{^high-availability.enabled}}
+           {{/single-node.external-volumes.enabled}}
            {{#single-node.external-volumes.enabled}}
            {
                "containerPath": "/etc/gitlab",
@@ -52,33 +61,6 @@
                "mode": "RW"
            }
            {{/single-node.external-volumes.enabled}}
-           {{^single-node.external-volumes.enabled}}
-           {
-               "containerPath": "/etc/gitlab",
-               "hostPath": "config",
-               "mode": "RW"
-           },
-           {
-               "containerPath": "config",
-               "mode": "RW",
-               "persistent": {
-                  "size": {{single-node.local-volumes.config-size}}
-               }
-           },
-           {
-               "containerPath": "/gitlab-data",
-               "hostPath": "data",
-               "mode": "RW"
-           },
-           {
-               "containerPath": "data",
-               "mode": "RW",
-               "persistent": {
-                  "size": {{single-node.local-volumes.data-size}}
-               }
-           }
-           {{/single-node.external-volumes.enabled}}
-           {{/high-availability.enabled}}
        ]
    },
    "acceptedResourceRoles": [ "{{service.role}}" ],
@@ -106,5 +88,7 @@
   "upgradeStrategy":{
     "minimumHealthCapacity": 0,
     "maximumOverCapacity": 0
-  }
+  }{{^high-availability.enabled}}{{^single-node.external-volumes.enabled}},
+  "constraints": [["hostname", "CLUSTER", "{{single-node.local-volumes.pinned-hostname}}"]]
+  {{/single-node.external-volumes.enabled}}{{/high-availability.enabled}}
 }

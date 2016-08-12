@@ -26,12 +26,18 @@
           "default": "*",
           "description": "Deploy GitLab only on nodes with this role.",
           "type": "string"
+        },
+        "host-volume": {
+          "description": "The location of a volume on the host to be used for persisting GitLab configuration and data. This directory MUST be mounted on all DC/OS agents if deploying GitLab in highly available configuration.",
+          "type": "string",
+          "default": "/srv/gitlab"
         }
       },
       "required": [
         "name",
         "cpus",
-        "mem"
+        "mem",
+        "host-volume"
       ]
     },
     "routing": {
@@ -133,11 +139,6 @@
           "type": "boolean",
           "default": false
         },
-        "host-volume": {
-          "description": "The location of a volume on the host to be used for persisting GitLab configuration and data. This directory MUST be mounted on all DC/OS agents.",
-          "type": "string",
-          "default": "/srv/gitlab"
-        },
         "postgres": {
           "description": "Postgres connection properties",
           "type": "object",
@@ -180,24 +181,14 @@
       "type": "object",
       "properties": {
         "local-volumes": {
-          "description": "Local persistent volumes configuration (only used if external persistent volumes are disabled). Local persistent volumes are created on one machine and Marathon will attempt to re-launch the task on the same machine. Note that if the machine is lost, your data may also be lost.",
+          "description": "Local volumes configuration (only used if external persistent volumes are disabled). Local volumes are created on the machine with the hostname specified and Marathon will attempt to re-launch the task on the same machine. Note that if the machine is lost, your data may also be lost.",
           "type": "object",
           "properties": {
-            "config-size": {
-              "description": "Size of the configuration volume in MiB.",
-              "type": "integer",
-              "default": 512
-            },
-            "data-size": {
-              "description": "Size of data volume in MiB.",
-              "type": "integer",
-              "default": 10000
+            "pinned-hostname": {
+                "description": "An optional DC/OS agent hostname to run this GitLab instance on (e.g. 10.0.0.1). If this is not specified then the task may relaunch on another node than the one it originally ran on.",
+                "type" : "string"
             }
-          },
-          "required": [
-            "config-size",
-            "data-size"
-          ]
+          }
         },
         "external-volumes": {
           "description": "External persistent volumes configuration. External persistent volumes are a DC/OS feature that allow your data to be migrated with your task.",
