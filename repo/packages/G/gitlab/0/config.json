@@ -28,16 +28,22 @@
           "type": "string"
         },
         "host-volume": {
-          "description": "The location of a volume on the host to be used for persisting GitLab configuration and data. This directory MUST be mounted on all DC/OS agents if deploying GitLab in highly available configuration.",
+          "description": "The location of a volume on the host to be used for persisting GitLab configuration and data.",
           "type": "string",
           "default": "/srv/gitlab"
+        },
+        "host-shared-volume": {
+          "description": "The location of a volume on the host to be used for persisting shared GitLab configuration and data. This directory MUST be mounted on all DC/OS agents if deploying GitLab in highly available configuration.",
+          "type": "string",
+          "default": "/srv/gitlab-data"
         }
       },
       "required": [
         "name",
         "cpus",
         "mem",
-        "host-volume"
+        "host-volume",
+        "host-shared-volume"
       ]
     },
     "routing": {
