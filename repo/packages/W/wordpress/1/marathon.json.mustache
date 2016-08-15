@@ -16,7 +16,10 @@
        "type": "DOCKER",
        "docker": {
            "image": "{{resource.assets.container.docker.wordpress-100-453apache}}",
-           "network" : "HOST"
+           "network": "BRIDGE",
+           "portMappings": [
+              { "containerPort": 80, "hostPort": 0 }
+          ]
        },
        "volumes": [
            {
@@ -25,10 +28,7 @@
                "mode": "RW"
            }
        ],
-       "network": "BRIDGE",
-       "portMappings": [
-          { "containerPort": 80, "hostPort": 0 }
-        ]
+
    },
    "healthChecks": [
     {
