@@ -7,8 +7,10 @@
       "WORDPRESS_DB_HOST": "{{database.host}}",
       "WORDPRESS_DB_NAME": "{{database.name}}",
       "WORDPRESS_DB_USER": "{{database.user}}",
-      "WORDPRESS_DB_PASSWORD": "{{database.password}}",
+      "WORDPRESS_DB_PASSWORD": "{{database.password}}"
+      {{#database.table-prefix}},
       "WORDPRESS_TABLE_PREFIX": "{{database.table-prefix}}"
+      {{/database.table-prefix}}
   },
   "container": {
        "type": "DOCKER",
