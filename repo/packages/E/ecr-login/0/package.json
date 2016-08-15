@@ -1,0 +1,15 @@
+{
+    "packagingVersion": "3.0",
+    "description": "AWS ECR login utility",
+    "framework": false,
+    "maintainer": "fuller@adobe.com",
+    "name": "ecr-login",
+    "postInstallNotes": "ECR login on DCOS successfully installed.\nYou can now begin pulling from this registry.",
+    "postUninstallNotes": "ECR login on DCOS successfully uninstalled.\nDocker auths may still persist in your .dockercfg file.",
+    "preInstallNotes": "Pass the AWS account number and region as package options.\nMake sure the Mesos agent's IAM role (or the provided credentials) allows logging into the ECR specified.\nMarathon will make sure that the ECR login agent runs only once per slave.",
+    "tags": [
+        "ecr",
+        "aws"
+    ],
+    "version": "1.0.0"
+}
