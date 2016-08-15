@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-wordpress-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-wordpress-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-wordpress-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "wordpress-100-453apache": "wordpress:4.5.3-apache"
+      }
+    }
+  }
+}

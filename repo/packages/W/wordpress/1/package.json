@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "3.0",
+  "name": "wordpress",
+  "version": "1.0.0-4.5.3-apache",
+  "minDcosReleaseVersion": "1.8",
+  "scm": "https://github.com/docker-library/wordpress.git",
+  "maintainer": "support@mesosphere.io",
+  "website": "https://wordpress.com/",
+  "framework": true,
+  "description": "WordPress is a free and open source blogging tool and a content management system (CMS) based on PHP and MySQL.",
+  "tags": ["blog", "cms", "website"],
+  "preInstallNotes": "",
+  "postInstallNotes": "WordPress has been installed.",
+  "postUninstallNotes": "WordPress has been uninstalled.",
+  "licenses": [
+    {
+      "name": "GPLv2",
+      "url": "https://wordpress.org/about/license/"
+    }
+  ],
+  "selected": false
+}
