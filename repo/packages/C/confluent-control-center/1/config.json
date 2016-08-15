@@ -42,22 +42,22 @@
           "type": "string"
         },
         "confluent-controlcenter-internal-topics-partitions": {
-          "default": "3",
+          "default": 3,
           "description": "Parition count for internal control-center kafka topics",
           "type": "number"
         },
         "confluent-controlcenter-internal-topics-replication": {
-          "default": "2",
+          "default": 2,
           "description": "Replication factor for internal control-center kafka topics",
           "type": "number"
         },
         "confluent-monitoring-interceptor-topic-partitions": {
-          "default": "3",
+          "default": 3,
           "description": "Parition count for kafka topics used to store data from the interceptor classes",
           "type": "number"
         },
         "confluent-monitoring-interceptor-topic-replication": {
-          "default": "2",
+          "default": 2,
           "description": "Replication factor for kafka topics used to store data from the interceptor classes",
           "type": "number"
         },
