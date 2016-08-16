@@ -1,0 +1,21 @@
+{
+    "packagingVersion": "2.0",
+    "name": "gerrit",
+    "version": "0.1.0-2.12.3",
+    "scm": "https://github.com/mesosphere/gerrit-dcos",
+    "maintainer": "support@mesosphere.io",
+    "website": "https://gerritcodereview.com",
+    "framework": true,
+    "description": "Gerrit provides web based code review and repository management for the Git version control system.",
+    "tags": ["gerrit", "codereview", "git", "devtools"],
+    "preInstallNotes": "Pre-install note: Gerrit requires an external database. Please ensure a database is available to this Gerrit instance, and that it has been configured either in the DC/OS UI or the DC/OS CLI prior to proceeding.",
+    "postInstallNotes": "Gerrit has been installed.",
+    "postUninstallNotes": "Gerrit has been uninstalled. Note that any data persisted to an external database remains intact. Please manually remove that data from the database if you wish to do so.",
+    "licenses": [
+        {
+            "name": "Apache License Version 2.0",
+            "url": "https://github.com/mesosphere/gerrit-dcos/blob/master/LICENSE"
+        }
+    ],
+    "selected": false
+}

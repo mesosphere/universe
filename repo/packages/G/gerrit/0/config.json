@@ -1,0 +1,811 @@
+{
+    "type": "object",
+    "properties": {
+        "service": {
+            "description": "Configuration properties for the Gerrit service for DC/OS.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "The name of the service to display in the DC/OS dashboard.",
+                    "type": "string",
+                    "default": "gerrit"
+                },
+                "cpus": {
+                    "description": "CPU shares to allocate to each Gerrit instance.",
+                    "type": "number",
+                    "default": 2.0,
+                    "minimum": 2.0
+                },
+                "mem": {
+                    "description": "Memory (in MB) to allocate to each Gerrit instance. If you modify this value, you may also want to modify container.heapLimit.",
+                    "type": "number",
+                    "default": 4096.0,
+                    "minimum": 4096.0
+                },
+                "basePath": {
+                    "description": "Local filesystem directory holding all Git repositories that Gerrit knows about and can process changes for. A project entity in Gerrit maps to a local Git repository by creating the path string `${basePath}/${project_name}.git`.",
+                    "type": "string"
+                },
+                "canonicalWebUrl": {
+                    "description": "The default URL for Gerrit to be accessed through.",
+                    "type": "string"
+                },
+                "canonicalGitUrl": {
+                    "description": "Optional base URL for repositories available over the anonymous git protocol.",
+                    "type": "string"
+                },
+                "editGpgKeys": {
+                    "description": "If enabled and server-side signed push validation is also enabled, enable the REST API endpoints and web UI for editing GPG keys. If disabled, GPG keys can only be added by administrators with direct git access to All-Users.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "installCommitMsgHookCommand": {
+                    "description": "Optional command to install the `commit-msg` hook.",
+                    "type": "string"
+                },
+                "gitHttpUrl": {
+                    "description": "Optional base URL for repositories available over the HTTP protocol.",
+                    "type": "string"
+                },
+                "reportBugUrl": {
+                    "description": "URL to direct users to when they need to report a bug.",
+                    "type": "string"
+                },
+                "reportBugText": {
+                    "description": "Text to be displayed in the link to the bug report URL.",
+                    "type": "string",
+                    "default": "Report Bug"
+                },
+                "disableReverseDnsLookup": {
+                    "description": "Disables reverse DNS lookup during computing ref log entry for identified user.",
+                    "type": "boolean",
+                    "default": false
+                }
+            }
+        },
+        "accounts": {
+            "description": "Properties that control Gerrit accounts.",
+            "type": "object",
+            "properties": {
+                "visibility": {
+                    "description": "Controls visibility of other users' dashboard pages and completion suggestions to web users.",
+                    "type": "string",
+                    "default": "ALL"
+                }
+            }
+        },
+        "auth": {
+            "description": "Properties that control Gerrit authentication.",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "description": "The type of user authentication employed by Gerrit.",
+                    "type": "string",
+                    "default": "OpenID"
+                },
+                "allowedOpenID": {
+                    "description": "List of permitted OpenID providers.",
+                    "type": "string",
+                    "default": "http:// https://"
+                },
+                "trustedOpenID": {
+                    "description": "List of trusted OpenID providers.",
+                    "type": "string",
+                    "default": "http:// https://"
+                },
+                "openIdDomain": {
+                    "description": "List of allowed OpenID email address domains.",
+                    "type": "string"
+                },
+                "maxOpenIdSessionAge": {
+                    "description": "Time in seconds before an OpenID provider must force the user to authenticate themselves again before authentication to this Gerrit server.",
+                    "type": "string",
+                    "default": "-1"
+                },
+                "openIdSsoUrl": {
+                    "description": "The SSO entry point URL. The 'Sign In' link will send users directly to this URL.",
+                    "type": "string"
+                },
+                "httpHeader": {
+                    "description": "HTTP header to trust the username from, or unset to select HTTP basic or digest authentication.",
+                    "type": "string"
+                },
+                "httpDisplaynameHeader": {
+                    "description": "HTTP header to retrieve the user’s display name from.",
+                    "type": "string"
+                },
+                "httpEmailHeader": {
+                    "description": "HTTP header to retrieve the user’s e-mail from.",
+                    "type": "string"
+                },
+                "httpExternalIdHeader": {
+                    "description": "HTTP header to retrieve the user’s external identification token.",
+                    "type": "string"
+                },
+                "loginUrl": {
+                    "description": "URL to redirect a browser to after the end-user has clicked on the login link in the upper right corner.",
+                    "type": "string"
+                },
+                "loginText": {
+                    "description": "Text displayed in the loginUrl link.",
+                    "type": "string"
+                },
+                "registerPageUrl": {
+                    "description": "URL of the registration page to use when a new user logs in to Gerrit for the first time.",
+                    "type": "string"
+                },
+                "logoutUrl": {
+                    "description": "URL to redirect a browser to after the end-user has clicked on the 'Sign Out' link in the upper right corner.",
+                    "type": "string"
+                },
+                "registerUrl": {
+                    "description": "Target for the 'Register' link in the upper right corner.",
+                    "type": "string"
+                },
+                "registerText": {
+                    "description": "Text for the 'Register' link in the upper right corner.",
+                    "type": "string"
+                },
+                "editFullNameUrl": {
+                    "description": "Target for the 'Edit' button when the user is allowed to edit their full name.",
+                    "type": "string"
+                },
+                "httpPasswordUrl": {
+                    "description": "Target for the 'Obtain Password' link.",
+                    "type": "string"
+                },
+                "cookiePath": {
+                    "description": "Sets 'path attribute of the authentication cookie.",
+                    "type": "string"
+                },
+                "cookieSecure": {
+                    "description": "Sets 'secure' flag of the authentication cookie. If true, cookies will be transmitted only over HTTPS protocol.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "emailFormat": {
+                    "description": "Optional format string to construct user email addresses out of user login names.",
+                    "type": "string"
+                },
+                "contributorAgreements": {
+                    "description": "Controls whether or not the contributor agreement features are enabled for the Gerrit site. If enabled a user must complete a contributor agreement before they can upload changes.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "gitBasicAuth": {
+                    "description": "If true then Git over HTTP and HTTP/S traffic is authenticated using standard BasicAuth and the credentials are validated against the randomly generated HTTP password or against LDAP when it is configured as Gerrit Web UI authentication method.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "userNameToLowerCase": {
+                    "description": "If set the username that is received to authenticate a git operation is converted to lower case for looking up the user account in Gerrit.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "enableRunAs": {
+                    "description": "If true HTTP REST APIs will accept the X-Gerrit-RunAs HTTP request header from any users granted the Run As capability.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "allowRegisterNewEmail": {
+                    "description": "Whether users are allowed to register new email addresses.",
+                    "type": "boolean",
+                    "default": true
+                }
+            }
+        },
+        "container": {
+            "description": "Properties that control the JVM running Gerrit.",
+            "type": "object",
+            "properties": {
+                "heapLimit": {
+                    "description": "Maximum heap size of the Java process running Gerrit (aka `-Xmx`). Common unit suffixes (`k`, `m`, or `g`) are required.",
+                    "type": "string",
+                    "default": "2g"
+                },
+                "javaOptions": {
+                    "description": "Additional options to pass along to the Java runtime.",
+                    "type": "string"
+                },
+                "daemonOpt": {
+                    "description": "Additional options to pass to the Gerrit daemon.",
+                    "type": "string"
+                },
+                "slave": {
+                    "description": "Used on Gerrit slave installations. If set to true the Gerrit JVM is called with the `--slave` switch, enabling slave mode. If no value is set (or any other value), Gerrit defaults to master mode.",
+                    "type": "boolean",
+                    "default": false
+                }
+            }
+        },
+        "database": {
+            "description": "The database section configures where Gerrit stores its metadata records about user accounts and change reviews.",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "description": "Type of database server to connect to. If set this value will be used to automatically create correct database.driver and database.url values to open the connection.",
+                    "type": "string"
+                },
+                "hostname": {
+                    "description": "Hostname of the database server.",
+                    "type": "string"
+                },
+                "port": {
+                    "description": "Port number of the database server. Defaults to the default port of the server named by database.type.",
+                    "type": "number"
+                },
+                "database": {
+                    "description": "The name of the database on the server (PostgreSQL, MySQL) or the path to the database (H2).",
+                    "type": "string"
+                },
+                "username": {
+                    "description": "Username to connect to the database server as.",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "Password to authenticate to the database server with.",
+                    "type": "string"
+                },
+                "driver": {
+                    "description": "Name of the JDBC driver class to connect to the database with. Setting this usually isn’t necessary as it can be derived from database.type or database.url for any supported database.",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "JDBC URL for the database. Setting this variable usually isn’t necessary as it can be constructed from the all of the above properties.",
+                    "type": "string"
+                },
+                "connectionPool": {
+                    "description": "If true, use connection pooling for database connections. Otherwise, a new database connection is opened for each request.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "poolLimit": {
+                    "description": "Maximum number of open database connections.",
+                    "type": "number",
+                    "default": 8,
+                    "minimum": 1
+                },
+                "poolMinIdle": {
+                    "description": "Minimum number of connections to keep idle in the pool.",
+                    "type": "number",
+                    "default": 4,
+                    "minimum": 1
+                },
+                "poolMaxIdle": {
+                    "description": "Maximum number of connections to keep idle in the pool. If there are more idle connections, connections will be closed instead of being returned back to the pool.",
+                    "type": "number",
+                    "default": 4,
+                    "minimum": 1
+                },
+                "poolMaxWait": {
+                    "description": "Maximum amount of time a request processing thread will wait to acquire a database connection from the pool. If no connection is released within this time period, the processing thread will abort its current operations and return an error to the client.",
+                    "type": "string",
+                    "default": "30s"
+                }
+            }
+        },
+        "gitweb": {
+            "description": "Gerrit can forward requests to either an internally managed gitweb (which allows Gerrit to enforce some access controls), or to an externally managed gitweb (where the web server manages access). See <https://gerrit-documentation.storage.googleapis.com/Documentation/2.12.3/config-gitweb.html>",
+            "type": "object",
+            "properties": {
+                "cgi": {
+                    "description": "Path to the locally installed `gitweb.cgi` executable. This CGI will be called by Gerrit Code Review when the URL `/gitweb` is accessed. Project level access controls are enforced prior to calling the CGI. Defaults to `/usr/lib/cgi-bin/gitweb.cgi` if `gitweb.url` is not set.",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "Optional URL of an affiliated gitweb service. Defines the web location where a `gitweb.cgi` is installed to browse `gerrit.basePath` and the repositories it contains. Gerrit appends any necessary query arguments onto the end of this URL. For example, `?p=$project.git;h=$commit`",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Optional type of affiliated gitweb service. This allows using alternatives to gitweb, such as cgit. If set to disabled there is no gitweb hyperlinking support. Valid values are `gitweb`, `cgit`, `disabled` or `custom`.",
+                    "type": "string"
+                },
+                "revision": {
+                    "description": "Optional pattern to use for constructing the gitweb URL when pointing at a specific commit when custom is used above. Valid replacements are `${project}` for the project name in Gerrit and `${commit}` for the SHA1 hash for the commit.",
+                    "type": "string"
+                },
+                "project": {
+                    "description": "Optional pattern to use for constructing the gitweb URL when pointing at a specific project when custom is used above. Valid replacements are ${project} for the project name in Gerrit.",
+                    "type": "string"
+                },
+                "branch": {
+                    "description": "Optional pattern to use for constructing the gitweb URL when pointing at a specific branch when custom is used above. Valid replacements are `${project}` for the project name in Gerrit and `${branch}` for the name of the branch.",
+                    "type": "string"
+                },
+                "roottree": {
+                    "description": "Optional pattern to use for constructing the gitweb URL when pointing at the contents of the root tree in a specific commit when custom is used above. Valid replacements are `${project}` for the project name in Gerrit and `${commit}` for the SHA1 hash for the commit.",
+                    "type": "string"
+                },
+                "file": {
+                    "description": "Optional pattern to use for constructing the gitweb URL when pointing at the contents of a file in a specific commit when custom is used above. Valid replacements are `${project}` for the project name in Gerrit, `${file}` for the file name and `${commit}` for the SHA1 hash for the commit.",
+                    "type": "string"
+                },
+                "filehistory": {
+                    "description": "Optional pattern to use for constructing the gitweb URL when pointing at the history of a file in a specific branch when custom is used above. Valid replacements are `${project}` for the project name in Gerrit, `${file}` for the file name and `${branch}` for the name of the branch.",
+                    "type": "string"
+                },
+                "linkname": {
+                    "description": "Optional setting for modifying the link name presented to the user in the Gerrit web-UI.",
+                    "type": "string",
+                    "default": "gitweb"
+                },
+                "pathSeparator": {
+                    "description": "Optional character to substitute the standard path separator (slash) in project names and branch names.",
+                    "type": "string"
+                },
+                "urlEncode": {
+                    "description": "Whether or not Gerrit should encode the generated viewer URL.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "linkDrafts": {
+                    "description": "Whether or not Gerrit should provide links to gitweb on draft patch sets.",
+                    "type": "boolean",
+                    "default": true
+                }
+            }
+        },
+        "http": {
+            "description": "Configure Gerrit HTTP settings, such as specifying a proxy server.",
+            "type": "object",
+            "properties": {
+                "proxy": {
+                    "description": "URL of the proxy server when making outgoing HTTP connections for OpenID login transactions. Syntax should be http://hostname:port",
+                    "type": "string"
+                },
+                "proxyUsername": {
+                    "description": "Optional username to authenticate to the HTTP proxy with.",
+                    "type": "string"
+                },
+                "proxyPassword": {
+                    "description": "Optional password to authenticate to the HTTP proxy with.",
+                    "type": "string"
+                },
+                "addUserAsRequestAttribute": {
+                    "description": "If true, `User` attribute will be added to the request attributes so it can be accessed outside the request scope.",
+                    "type": "boolean",
+                    "default": true
+                }
+            }
+        },
+        "httpd": {
+            "description": "The httpd section configures the embedded servlet container.",
+            "type": "object",
+            "properties": {
+                "listenUrl": {
+                    "description": "Specifies the URLs the internal HTTP daemon should listen for connections on.",
+                    "type": "string",
+                    "default": "http://*:8080"
+                },
+                "reuseAddress": {
+                    "description": "If true, permits the daemon to bind to the port even if the port is already in use. If false, the daemon ensures the port is not in use before starting. Busy sites may need to set this to true to permit fast restarts.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "requestHeaderSize": {
+                    "description": "Size, in bytes, of the buffer used to parse the HTTP headers of an incoming HTTP request. The entire request headers, including any cookies sent by the browser, must fit within this buffer, otherwise the server aborts with the response '413 Request Entity Too Large'.",
+                    "type": "number",
+                    "default": 16384,
+                    "minimum": 16384
+                },
+                "sslCrl": {
+                    "description": "Path of the certificate revocation list file in PEM format. This crl file is optional, and available for `CLIENT_SSL_CERT_LDAP` authentication.",
+                    "type": "string"
+                },
+                "sslKeyStore": {
+                    "description": "Path of the Java keystore containing the server’s SSL certificate and private key. This keystore is required for `https://` in URL.",
+                    "type": "string"
+                },
+                "sslKeyPassword": {
+                    "description": "Password used to decrypt the private portion of the sslKeyStore. Java keystores require a password, even if the administrator doesn’t want to enable one.",
+                    "type": "string"
+                },
+                "requestLog": {
+                    "description": "Enable (or disable) the `$site_path'/logs/httpd_log` request log. If enabled, an NCSA combined log format request log file is written out by the internal HTTP daemon.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "acceptorThreads": {
+                    "description": "Number of worker threads dedicated to accepting new incoming TCP connections and allocating them connection-specific resources.",
+                    "type": "number",
+                    "default": 2,
+                    "minimum": 1
+                },
+                "minThreads": {
+                    "description": "Minimum number of spare threads to keep in the worker thread pool. This number must be at least 1 larger than `httpd.acceptorThreads` multiplied by the number of `httpd.listenUrls` configured.",
+                    "type": "number",
+                    "default": 5,
+                    "minimum": 2
+                },
+                "maxThreads": {
+                    "description": "Maximum number of threads to permit in the worker thread pool.",
+                    "type": "number",
+                    "default": 25
+                },
+                "maxQueued": {
+                    "description": "Maximum number of client connections which can enter the worker thread pool waiting for a worker thread to become available. `0` sets the queue size to the `Integer.MAX_VALUE`.",
+                    "type": "number",
+                    "default": 200
+                },
+                "maxWait": {
+                    "description": "Maximum amount of time a client will wait for an available thread to handle a project clone, fetch or push request over the smart HTTP transport.",
+                    "type": "string",
+                    "default": "5 minutes"
+                },
+                "registerMBeans": {
+                    "description": "Enable (or disable) registration of Jetty MBeans for Java JMX.",
+                    "type": "boolean",
+                    "default": false
+                }
+            }
+        },
+        "ldap": {
+            "description": "LDAP integration is only enabled if `auth.type` is set to `HTTP_LDAP`, `LDAP` or `CLIENT_SSL_CERT_LDAP`. See <https://gerrit-documentation.storage.googleapis.com/Documentation/2.12.3/config-gerrit.html#ldap>",
+            "type": "object",
+            "properties": {
+                "server": {
+                    "description": "URL of the organization’s LDAP server to query for user information and group membership from. Must be of the form `ldap://host` or `ldaps://host` to bind with either a plaintext or SSL connection.",
+                    "type": "string"
+                },
+                "sslVerify": {
+                    "description": "If `false` and `ldap.server` is an `ldaps://` style URL, Gerrit will not verify the server certificate when it connects to perform a query.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "groupsVisibleToAll": {
+                    "description": "If true, LDAP groups are visible to all registered users.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "username": {
+                    "description": "(Optional) Username to bind to the LDAP server with. If not set, an anonymous connection to the LDAP server is attempted.",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "(Optional) Password for the user identified by ldap.username. If not set, an anonymous (or passwordless) connection to the LDAP server is attempted.",
+                    "type": "string"
+                },
+                "referral": {
+                    "description": "(Optional) How an LDAP referral should be handled if it is encountered during directory traversal. Set to follow to automatically follow any referrals, or ignore to ignore the referrals.",
+                    "type": "string",
+                    "default": "ignore"
+                },
+                "readTimeout": {
+                    "description": "(Optional) The read timeout for an LDAP operation. The value is in the usual time-unit format like `1 s`, `100 ms`, etc... A timeout can be used to avoid blocking all of the SSH command start threads in case the LDAP server becomes slow.",
+                    "type": "string",
+                    "default": "30 s"
+                },
+                "accountBase": {
+                    "description": "Root of the tree containing all user accounts. This is typically of the form `ou=people,dc=example,dc=com`",
+                    "type": "string"
+                },
+                "accountScope": {
+                    "description": "Scope of the search performed for accounts. Must be one of: `one`, `sub`, `subtree`, `base`, `object`.",
+                    "type": "string",
+                    "default": "subtree"
+                },
+                "accountPattern": {
+                    "description": "Query pattern to use when searching for a user account. This may be any valid LDAP query expression, including the standard `&` and `|` operators. Default is `(uid=${username})` for RFC 2307 servers, and `(&(objectClass=user)(sAMAccountName=${username}))` for Active Directory.",
+                    "type": "string",
+                    "default": "(uid=${username})"
+                },
+                "accountFullName": {
+                    "description": "(Optional) Name of an attribute on the user account object which contains the initial value for the user’s full name field in Gerrit. Typically this is the displayName property in LDAP, but could also be legalName or cn. Default is `displayName` for RFC 2307 servers, and `${givenName} ${sn}` for Active Directory.",
+                    "type": "string",
+                    "default": "displayName"
+                },
+                "accountEmailAddress": {
+                    "description": "(Optional) Name of an attribute on the user account object which contains the user’s Internet email address, as defined by this LDAP server. Attribute values may be concatenated with literal strings, for example to set the email address to the lowercase form of `sAMAccountName` followed by a constant domain name, use `${sAMAccountName.toLowerCase}@example.com`.",
+                    "type": "string",
+                    "default": "mail"
+                },
+                "accountSshUserName": {
+                    "description": "(Optional) Name of an attribute on the user account object which contains the initial value for the user’s SSH username field in Gerrit. Typically this is the `uid` property in LDAP, but could also be `cn`. Administrators should prefer to match the attribute corresponding to the user’s workstation username, as this is what SSH clients will default to. Attribute values may also be forced to lowercase, or to uppercase in an expression. For example, `${sAMAccountName.toLowerCase}` will force the value of `sAMAccountName`, if defined, to be all lowercase. The suffix `.toUpperCase` can be used for the other direction. The suffix `.localPart` can be used to split attribute values of the form `user@example.com` and return only the left hand side, for example `${userPrincipalName.localPart}` would provide only `user`. If set, users will be unable to modify their SSH username field, as Gerrit will populate it only from the LDAP data. Default is `uid` for RFC 2307 servers, and `${sAMAccountName.toLowerCase}` for Active Directory.",
+                    "type": "string",
+                    "default": "uid"
+                },
+                "accountMemberField": {
+                    "description": "(Optional) Name of an attribute on the user account object which contains the groups the user is part of. Typically used for Active Directory servers. Default is unset for RFC 2307 servers (disabled) and `memberOf` for Active Directory.",
+                    "type": "string"
+                },
+                "fetchMemberOfEagerly": {
+                    "description": "(Optional) Whether to fetch the memberOf account attribute on login. Setups which use LDAP for user authentication but don’t make use of the LDAP groups may benefit from setting this option to false as this will result in a much faster LDAP login. Default is unset for RFC 2307 servers (disabled) and true for Active Directory.",
+                    "type": "boolean"
+                },
+                "groupBase": {
+                    "description": "Root of the tree containing all group objects. This is typically of the form `ou=groups,dc=example,dc=com`.",
+                    "type": "string"
+                },
+                "groupScope": {
+                    "description": "Scope of the search performed for group objects. Must be one of: `one`, `sub`, `subtree`, `base`, `object`.",
+                    "type": "string",
+                    "default": "subtree"
+                },
+                "groupPattern": {
+                    "description": "Query pattern used when searching for an LDAP group to connect to a Gerrit group. This may be any valid LDAP query expression, including the standard `&` and `|` operators. The variable `${groupname}` is replaced with the search term supplied by the group owner. Default is `(cn=${groupname})` for RFC 2307, and `(&(objectClass=group)(cn=${groupname}))` for Active Directory.",
+                    "type": "string",
+                    "default": "(cn=${groupname})"
+                },
+                "groupMemberPattern": {
+                    "description": "Query pattern to use when searching for the groups that a user account is currently a member of. This may be any valid LDAP query expression, including the standard `&` and `|` operators. If `auth.type` is `HTTP_LDAP` then the variable `${username}` is replaced with a parameter set to the username that was supplied by the HTTP server. Other variables appearing in the pattern, such as `${fooBarAttribute}`, are replaced with the value of the corresponding attribute (in this case, `fooBarAttribute`) as read from the user’s account object matched under `ldap.accountBase`. Attributes such as `${dn}` or `${uidNumber}` may be useful. Default is `(|(memberUid=${username})(gidNumber=${gidNumber}))` for RFC 2307, and unset (disabled) for Active Directory.",
+                    "type": "string",
+                    "default": "(|(memberUid=${username})(gidNumber=${gidNumber}))"
+                },
+                "groupName": {
+                    "description": "(Optional) Name of the attribute on the group object which contains the value to use as the group name in Gerrit. Typically the attribute name is `cn` for RFC 2307 and Active Directory servers. For other servers the attribute name may differ, for example `apple-group-realname` on Apple MacOS X Server. It is also possible to specify a literal string containing a pattern of attribute values. For example to create a Gerrit group name consisting of LDAP group name and group ID, use the pattern `${cn} (${gidNumber})`.",
+                    "type": "string",
+                    "default": "cn"
+                },
+                "localUsernameToLowerCase": {
+                    "description": "Converts the local username, that is used to login into the Gerrit Web UI, to lower case before doing the LDAP authentication. By setting this parameter to true, a case insensitive login to the Gerrit Web UI can be achieved.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "useConnectionPooling": {
+                    "description": "(Optional) Enable the LDAP connection pooling or not. Once LDAP connection pooling is enabled by setting the ldap.useConnectionPooling configuration property to true, the connection pool can be configured using JVM system properties as explained in the Java SE Documentation. For standalone Gerrit (running with the embedded Jetty), JVM system properties are specified in the `container` section.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "connectTimeout": {
+                    "description": "(Optional) Timeout period for establishment of an LDAP connection.",
+                    "type": "string",
+                    "default": "30 s"
+                }
+            }
+        },
+        "receive": {
+            "description": "This section is used to configure behavior of the `receive-pack` handler, which responds to `git push` requests.",
+            "type": "object",
+            "properties": {
+                "allowGroup": {
+                    "description": "Name of the groups of users that are allowed to execute 'receive-pack' on the server. One or more groups can be set. If no groups are added, any user will be allowed to execute 'receive-pack' on the server.",
+                    "type": "string"
+                },
+                "threadPoolSize": {
+                    "description": "Maximum size of the thread pool in which the change data in received packs is processed.",
+                    "type": "number",
+                    "default": 2
+                }
+            }
+        },
+        "sendemail": {
+            "description": "This section is used to configure how Gerrit sends emails.",
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "description": "If false Gerrit will not send email messages, for any reason, and all other properties of section sendemail are ignored.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "connectTimeout": {
+                    "description": "The connection timeout of opening a socket connected to a remote SMTP server.",
+                    "type": "string",
+                    "default": "30 sec"
+                },
+                "threadPoolSize": {
+                    "description": "Maximum size of thread pool in which the review comments notifications are sent out asynchronously.",
+                    "type": "number",
+                    "default": 1,
+                    "minimum": 1
+                },
+                "from": {
+                    "description": "Designates what name and address Gerrit will place in the `From` field of any generated email messages. The supported values are: `USER`, `MIXED`, `SERVER`, `Code Review <review@example.com>`",
+                    "type": "string",
+                    "default": "MIXED"
+                },
+                "smtpServer": {
+                    "description": "Hostname (or IP address) of a SMTP server that will relay messages generated by Gerrit to end users.",
+                    "type": "string"
+                },
+                "smtpServerPort": {
+                    "description": "Port number of the SMTP server in `sendemail.smtpserver`",
+                    "type": "number",
+                    "default": 25
+                },
+                "smtpEncryption": {
+                    "description": "Specify the encryption to use, either `ssl` or `tls`.",
+                    "type": "string",
+                    "default": "none"
+                },
+                "sslVerify": {
+                    "description": "If false and sendemail.smtpEncryption is 'ssl' or 'tls', Gerrit will not verify the server certificate when it connects to send an email message.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "smtpUser": {
+                    "description": "User name to authenticate with, if required for relay.",
+                    "type": "string"
+                },
+                "smtpPass": {
+                    "description": "Password for the account named by `sendemail.smtpUser`.",
+                    "type": "string"
+                },
+                "allowrcpt": {
+                    "description": "If present, each value adds one entry to the whitelist of email addresses that Gerrit can send email to. If set to a complete email address, that one address is added to the white list. If set to a domain name, any address at that domain can receive email from Gerrit. By default, unset, permitting delivery to any email address.",
+                    "type": "string"
+                },
+                "includeDiff": {
+                    "description": "If true, new change emails and merged change emails from Gerrit will include the complete unified diff of the change. Variable maxmimumDiffSize places an upper limit on how large the email can get when this option is enabled.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "maximumDiffSize": {
+                    "description": "Largest size of unified diff output to include in an email. When the diff exceeds this size the file paths will be listed instead. Standard byte unit suffixes are supported.",
+                    "type": "string"
+                }
+            }
+        },
+        "sshd": {
+            "description": "This section is used to configure the behavior of the SSH daemon.",
+            "type": "object",
+            "properties": {
+                "enableCompression": {
+                    "description": "In the general case, we want to disable transparent compression, since the majority of our data transfer is highly compressed Git pack files and we cannot make them any smaller than they already are. However, if there are CPU in abundance and the server is reachable through slow networks, gits with huge amount of refs can benefit from SSH-compression since git does not compress the ref announcement during handshake.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "listenAddress": {
+                    "description": "Specifies the local addresses the internal SSHD should listen for connections on. To disable the internal SSHD, set `listenAddress` to `off`.",
+                    "type": "string",
+                    "default": "*:29418"
+                },
+                "advertisedAddress": {
+                    "description": "Specifies the addresses clients should be told to connect to. This may differ from `sshd.listenAddress` if a firewall based port redirector is being used, making Gerrit appear to answer on port 22. By default, `sshd.listenAddress`.",
+                    "type": "string"
+                },
+                "tcpKeepAlive": {
+                    "description": "If true, enables TCP keepalive messages to the other side, so the daemon can terminate connections if the peer disappears.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "threads": {
+                    "description": "Number of threads to use when executing SSH command requests. If additional requests are received while all threads are busy they are queued and serviced in a first-come-first-served order.",
+                    "type": "number",
+                    "default": 3
+                },
+                "batchThreads": {
+                    "description": "Number of threads to allocate for SSH command requests from non-interactive users. If equals to 0, then all non-interactive requests are executed in the same queue as interactive requests.",
+                    "type": "number",
+                    "default": 2
+                },
+                "streamThreads": {
+                    "description": "Number of threads to use when formatting events to asynchronous streaming clients. Event formatting is multiplexed onto this thread pool by a simple FIFO scheduling system.",
+                    "type": "number",
+                    "default": 3
+                },
+                "commandStartThreads": {
+                    "description": "Number of threads used to parse a command line submitted by a client over SSH for execution, create the internal data structures used by that command, and schedule it for execution on another thread.",
+                    "type": "number",
+                    "default": 2
+                },
+                "maxAuthTries": {
+                    "description": "Maximum number of authentication attempts before the server disconnects the client.",
+                    "type": "number",
+                    "default": 6
+                },
+                "loginGraceTime": {
+                    "description": "Time in seconds that a client has to authenticate before the server automatically terminates their connection.",
+                    "type": "string",
+                    "default": "2 minutes"
+                },
+                "idleTimeout": {
+                    "description": "Time in seconds after which the server automatically terminates idle connections (or 0 to disable closing of idle connections).",
+                    "type": "string",
+                    "default": "0"
+                },
+                "maxConnectionsPerUser": {
+                    "description": "Maximum number of concurrent SSH sessions that a user account may open at one time. This is the number of distinct SSH logins that each user may have active at one time, and is not related to the number of commands a user may issue over a single connection. If set to 0, there is no limit.",
+                    "type": "number",
+                    "default": 64
+                },
+                "cipher": {
+                    "description": "Available ciphers. To permit multiple ciphers, specify multiple `sshd.cipher` keys in the configuration file, one cipher name per key. Cipher names starting with `+` are enabled in addition to the default ciphers, cipher names starting with `-` are removed from the default cipher set. Supported ciphers: `aes128-cbc`, `aes128-cbc`, `aes256-cbc`, `blowfish-cbc`, `3des-cbc`, `none`. By default, all supported ciphers except `none` are available.",
+                    "type": "string"
+                },
+                "mac": {
+                    "description": "Available MAC (message authentication code) algorithms. To permit multiple algorithms, specify multiple `sshd.mac` keys in the configuration file, one MAC per key. MAC names starting with `+` are enabled in addition to the default MACs, MAC names starting with `-` are removed from the default MACs. Supported MACs: `hmac-md5`, `hmac-md5-96`, `hmac-sha1`, `hmac-sha1-96`, `hmac-sha2-256`, `hmac-sha2-512`. By default, all supported MACs are available.",
+                    "type": "string"
+                },
+                "requestLog": {
+                    "description": "Enable (or disable) the `$site_path'/logs/sshd_log` request log. If enabled, a request log file is written out by the SSH daemon.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "rekeyBytesLimit": {
+                    "description": "The SSH daemon will issue a rekeying after a certain amount of data. This configuration option allows you to tweak that setting.",
+                    "type": "number",
+                    "default": 1073741824,
+                    "minimum": 32
+                },
+                "rekeyTimeLimit": {
+                    "description": "The SSH daemon will issue a rekeying after a certain amount of time. This configuration option allows you to tweak that setting.",
+                    "type": "string",
+                    "default": "1h"
+                }
+            }
+        },
+        "theme": {
+            "description": "This section is used to control the appearance of the Gerrit web interface.",
+            "type": "object",
+            "properties": {
+                "backgroundColor": {
+                    "description": "Background color for the page, and major data tables like the all open changes table or the account dashboard.",
+                    "type": "string",
+                    "default": "FFFFFF"
+                },
+                "topMenuColor": {
+                    "description": "This is the color of the main menu bar at the top of the page.",
+                    "type": "string",
+                    "default": "FFFFFF"
+                },
+                "textColor": {
+                    "description": "Text color for the page, and major data tables like the all open changes table or the account dashboard.",
+                    "type": "string",
+                    "default": "353535"
+                },
+                "trimColor": {
+                    "description": "Primary color used as a background color behind text. This is the color of the main menu bar at the top, of table headers, and of major UI areas that we want to offset from other portions of the page.",
+                    "type": "string",
+                    "default": "EEEEEE"
+                },
+                "selectionColor": {
+                    "description": "Background color used within a trimColor area to denote the currently selected tab, or the background color used in a table to denote the currently selected row.",
+                    "type": "string",
+                    "default": "D8EDF9"
+                },
+                "changeTableOutdatedColor": {
+                    "description": "Background color used for patch outdated messages.",
+                    "type": "string",
+                    "default": "F08080"
+                },
+                "tableOddRowColor": {
+                    "description": "Background color for tables such as lists of open reviews for odd rows. This is so you can have a different color for odd and even rows of the table.",
+                    "type": "string"
+                },
+                "tableEvenRowColor": {
+                    "description": "Background color for tables such as lists of open reviews for even rows. This is so you can have a different color for odd and even rows of the table.",
+                    "type": "string"
+                }
+            }
+        },
+        "user": {
+            "description": "This section controls the user name and email that Gerrit uses when creating new Git commits.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Name that Gerrit calls itself in Git when it creates a new Git commit, such as a merge during change submission.",
+                    "type": "string",
+                    "default": "Gerrit Code Review"
+                },
+                "email": {
+                    "description": "Email address that Gerrit refers to itself as when it creates a new Git commit, such as a merge commit during change submission.",
+                    "type": "string"
+                },
+                "anonymousCoward": {
+                    "description": "Username that is displayed in the Gerrit Web UI and in e-mail notifications if the full name of the user is not set.",
+                    "type": "string",
+                    "default": "Anonymous Coward"
+                }
+            }
+        },
+        "advanced": {
+            "description": "Advanced configuration properties for the Gerrit service. Under normal circumstances, you shouldn't need to modify these values.",
+            "type": "object",
+            "properties": {
+                "role": {
+                    "description": "The accepted resource roles (e.g. slave_public). By default, this will deploy to any agents with the * role.",
+                    "type": "string",
+                    "default": "*"
+                },
+                "docker-image": {
+                    "description": "The Docker image to use for the Gerrit service. By default, this package will use the Jenkins image in the Mesosphere organization on Docker Hub. Otherwise, specify the host, image, and tag for the Gerrit image on your private Docker Registry.",
+                    "type": "string"
+                },
+                "docker-credentials-uri": {
+                    "description": "An optional URI to be fetched and extracted that contains docker credentials (e.g. file:///etc/docker/docker.tar.gz).",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
