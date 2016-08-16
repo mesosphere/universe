@@ -52,16 +52,30 @@
           "type": "string"
         },
         "configUrl": {
-            "description": "URL to Nginx configuration that needs to be hosted (e.g., load balancing, reverse proxy, etc). Can NOT be combined with contentUrl or contentDir.",
-            "type": "string"
+          "description": "URL to Nginx configuration that needs to be hosted (e.g., load balancing, reverse proxy, etc). Can NOT be combined with contentUrl or contentDir.",
+          "type": "string"
         },
         "bridge": {
           "default": false,
           "description": "Whether to use BRIDGE networking mode for Docker container. By default, this is false and HOST mode networking is used.",
           "type": "boolean"
+        },
+        "virtual-host": {
+          "description": "The virtual host address to configure for integration with Marathon-lb.",
+          "type": "string"
+        },
+        "https-redirect": {
+          "description": "Whether Marathon-lb should redirect HTTP traffic to HTTPS. This requires 'virtual-host' to be set. By default, this is false.",
+          "type": "boolean",
+          "default": false
         }
       },
-      "required": ["cpus", "mem", "instances", "name"],
+      "required": [
+        "cpus",
+        "mem",
+        "instances",
+        "name"
+      ],
       "type": "object"
     }
   },
