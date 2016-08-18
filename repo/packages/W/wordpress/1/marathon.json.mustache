@@ -1,0 +1,60 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "env": {
+      "WORDPRESS_DB_HOST": "{{database.host}}",
+      "WORDPRESS_DB_NAME": "{{database.name}}",
+      "WORDPRESS_DB_USER": "{{database.user}}",
+      "WORDPRESS_DB_PASSWORD": "{{database.password}}"
+      {{#database.table-prefix}},
+      "WORDPRESS_TABLE_PREFIX": "{{database.table-prefix}}"
+      {{/database.table-prefix}}
+  },
+  "container": {
+       "type": "DOCKER",
+       "docker": {
+           "image": "{{resource.assets.container.docker.wordpress-100-453apache}}",
+           "network": "BRIDGE",
+           "portMappings": [
+              { "containerPort": 80, "hostPort": 0 }
+          ]
+       },
+       "volumes": [
+           {
+               "containerPath": "/var/www/html",
+               "hostPath": "{{storage.host-volume}}/{{service.name}}",
+               "mode": "RW"
+           }
+       ]
+   },
+   "healthChecks": [
+    {
+      "path": "/",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "labels": {
+    {{#networking.virtual-host}}
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_VHOST":"{{networking.virtual-host}}",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "{{networking.https-redirect}}",
+    {{/networking.virtual-host}}
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME" : "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX"  : "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }{{#storage.pinned-hostname}},
+  "constraints": [["hostname", "CLUSTER", "{{storage.pinned-hostname}}"]]
+  {{/storage.pinned-hostname}}
+}

@@ -1,0 +1,106 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "Configuration properties for the Wordpress service for DC/OS.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of the service to display in the DC/OS dashboard.",
+          "type": "string",
+          "default": "wordpress"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to this WordPress instance.",
+          "type": "number",
+          "default": 0.5,
+          "minimum": 0.1
+        },
+        "mem": {
+          "description": "Memory (in MB) to allocate to this WordPress instance.",
+          "type": "number",
+          "default": 512.0,
+          "minimum": 256.0
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem"
+      ]
+    },
+    "database": {
+      "description": "MySQL database properties.",
+      "type": "object",
+      "properties": {
+        "host": {
+          "description": "Database host name and port (e.g. 1.2.3.4:3306).",
+          "type": "string",
+          "default": "mysql.marathon.mesos:3306"
+        },
+        "name": {
+          "description": "Database name.",
+          "type": "string",
+          "default": "wordpress"
+        },
+        "user": {
+          "description": "Database username.",
+          "type": "string",
+          "default": "wordpress"
+        },
+        "password": {
+          "description": "Database password.",
+          "type": "string",
+          "default": "wordpress"
+        },
+        "table-prefix": {
+          "description": "Database table prefix (only set this when you need to override the default table prefix in wp-config.php).",
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "host",
+        "name",
+        "user",
+        "password"
+      ]
+    },
+    "networking": {
+      "description": "Networking-related configuration properties for WordPress on DC/OS.",
+      "type": "object",
+      "properties": {
+        "virtual-host": {
+          "description": "The virtual host address to configure for integration with Marathon-lb.",
+          "type": "string"
+        },
+        "https-redirect": {
+          "description": "Whether Marathon-lb should redirect HTTP traffic to HTTPS. This requires 'virtual-host' to be set. By default, this is false.",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "storage": {
+      "description": "Storage-related configuration properties for WordPress on DC/OS.",
+      "type": "object",
+      "properties": {
+        "host-volume": {
+          "description": "The location of a volume on the host to be used for persisting WordPress files. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/wordpress`). Note that this path must be the same on all DC/OS agents unless you are using a pinned-hostname (below).",
+          "type": "string",
+          "default": "/tmp"
+        },
+        "pinned-hostname": {
+          "description": "An optional DC/OS agent hostname to run this WordPress instance on (e.g. 10.0.0.1).",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "service",
+    "database",
+    "networking",
+    "storage"
+  ]
+}

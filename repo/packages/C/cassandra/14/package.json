@@ -1,0 +1,17 @@
+{
+  "description": "Apache Cassandra running on DC/OS",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.7",
+  "name": "cassandra",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS Cassandra has been successfully installed!\n\n\tDocumentation: https://docs.mesosphere.com/usage/services/cassandra/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS Cassandra service has been uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/usage/services/cassandra/uninstall to remove any persistent state if required.",
+  "selected": true,
+  "tags": [
+    "data",
+    "database",
+    "nosql"
+  ],
+  "version": "1.0.14-3.0.7"
+}
