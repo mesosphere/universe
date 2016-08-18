@@ -22,12 +22,12 @@
         },
         "host_directory": {
           "default": "/home/core",
-          "description": "The host disk location where the Docker config will be saved.",
+          "description": "The host disk location where the Docker config will be saved. This will be mounted in the container.",
           "type": "string"
         },
         "dockercfg_filename": {
-          "default": ".dockercfg",
-          "description": "The Docker config file name. Default: .dockercfg",
+          "default": ".docker/config.json",
+          "description": "The Docker config path and file name within the host directory. Default: .docker/config.json",
           "type": "string"
         },
         "aws_access_key": {
