@@ -1,0 +1,73 @@
+{
+    "id": "{{service.name}}",
+    "cpus": {{mariadb.cpus}},
+    "mem": {{mariadb.mem}},
+    "instances": 1,
+    "env": {
+        {{#mariadb.database.name}}
+        "MARIADB_DATABASE": "{{mariadb.database.name}}",
+        {{#mariadb.database.username}}
+        "MARIADB_USER": "{{mariadb.database.username}}",
+        "MARIADB_PASSWORD": "{{mariadb.database.password}}",
+        {{/mariadb.database.username}}
+        {{/mariadb.database.name}}
+        "MARIADB_ROOT_PASSWORD": "{{mariadb.root_password}}"
+    },
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.mariadb-docker}}",
+            "forcePullImage": true,
+            {{#mariadb.bridge}}
+            "network": "BRIDGE",
+            "portMappings": [{
+                "containerPort": 3306,
+                "hostPort": 0,
+                "protocol": "tcp"
+            }]
+            {{/mariadb.bridge}}
+            {{^mariadb.bridge}}
+            "network": "HOST"
+            {{/mariadb.bridge}}
+        },
+        "volumes": [
+        {
+            "containerPath": "/bitnami/mariadb",
+            "hostPath": "{{mariadb.host_volume}}/{{service.name}}",
+            "mode": "RW"
+        }
+        ]
+    },
+    {{^mariadb.bridge}}
+    "portDefinitions": [
+    {
+            "port": 3306,
+            "protocol": "tcp",
+            "name": "mysql",
+            "labels": {}
+    }
+    ],
+    "requirePorts": true,
+    {{/mariadb.bridge}}
+    "healthChecks": [
+    {
+        "protocol": "TCP",
+        "portIndex": 0,
+        "gracePeriodSeconds": 300,
+        "intervalSeconds": 60,
+        "timeoutSeconds": 20,
+        "maxConsecutiveFailures": 3,
+        "ignoreHttp1xx": false
+    }
+    ],
+    "labels": {
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "DCOS_SERVICE_SCHEME": "http",
+        "DCOS_SERVICE_PORT_INDEX": "0",
+        "MARATHON_SINGLE_INSTANCE_APP":"true"
+    },
+    "upgradeStrategy":{
+        "minimumHealthCapacity": 0,
+        "maximumOverCapacity": 0
+    }
+}
