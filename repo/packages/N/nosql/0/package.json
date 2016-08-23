@@ -1,0 +1,20 @@
+{
+ "packagingVersion": "2.0",
+ "name": "redis",
+ "version": "0.0.1",
+ "scm": "https://github.com/antirez/redis",
+ "maintainer": "your@email.com",
+ "description": "Just Redis",
+ "framework": false,
+ "tags": ["mesosphere", "service", "redis"],
+ "licenses": [
+   {
+     "name": "BSD",
+     "url": "http://redis.io/topics/license"
+   }
+ ],
+ "website": "http://redis.io",
+ "postInstallNotes": "Redis installed!",
+ "preInstallNotes": "Read this message before installing please",
+ "postUninstallNotes": "Thank you for using Redis"
+}
