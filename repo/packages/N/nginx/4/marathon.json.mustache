@@ -50,6 +50,11 @@
     "{{nginx.role}}"
   ],
   "labels": {
+    {{#nginx.virtual-host}}
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_VHOST":"{{nginx.virtual-host}}",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "{{nginx.https-redirect}}",
+    {{/nginx.virtual-host}}
     "DCOS_SERVICE_NAME": "{{nginx.name}}",
     "DCOS_SERVICE_SCHEME": "http",
     "DCOS_SERVICE_PORT_INDEX": "0"
