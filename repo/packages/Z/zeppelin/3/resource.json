@@ -1,0 +1,18 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/zeppelin/assets/icon-service-zeppelin-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/zeppelin/assets/icon-service-zeppelin-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/zeppelin/assets/icon-service-zeppelin-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "zeppelin": "mesosphere/zeppelin:0.5.6-3",
+        "spark": "mesosphere/spark:1.6.0"
+      }
+    },
+    "uris": {
+      "spark": "https://downloads.mesosphere.io/spark/assets/spark-1.6.0.tgz"
+    }
+  }
+}
