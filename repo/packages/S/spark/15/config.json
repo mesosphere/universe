@@ -45,7 +45,7 @@
                 "spark-dist-uri": {
                     "type": "string",
                     "description": "Spark distribution URI.  The DCOS Spark CLI will fetch this Spark distribution.  This variable has no effect on the Spark distribution running the dispatcher or the drivers.  The Docker image running this Marathon app contains that distribution.",
-                    "default": "https://downloads.mesosphere.com/spark/assets/spark-1.6.1-2.tgz"
+                    "default": "https://downloads.mesosphere.com/spark/assets/spark-1.6.2.tgz"
                 }
             }
         },
