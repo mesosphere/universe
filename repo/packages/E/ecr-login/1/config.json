@@ -22,12 +22,7 @@
         },
         "host_directory": {
           "default": "/home/core",
-          "description": "The host disk location where the Docker config will be saved. This will be mounted in the container.",
-          "type": "string"
-        },
-        "dockercfg_filename": {
-          "default": ".docker/config.json",
-          "description": "The Docker config path and file name within the host directory. Default: .docker/config.json",
+          "description": "The host disk location where the Docker configs will be saved. This will be mounted in the container.",
           "type": "string"
         },
         "aws_access_key": {
@@ -68,7 +63,8 @@
       },
       "required": [
         "registry_accounts",
-        "registry_region"
+        "registry_region",
+        "host_directory"
       ],
       "type": "object"
     }
