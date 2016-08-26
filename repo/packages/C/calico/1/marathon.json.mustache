@@ -1,0 +1,82 @@
+{
+  "id": "{{calico.framework-name}}",
+  "container": {
+    "type": "DOCKER",
+    "network": "HOST",
+    "docker": {
+      "network": "HOST",
+      "forcePullImage": true,
+      "image":
+        {{! If resource-overrides.framework-image is set, use it as the framework image. }}
+        {{#resource-overrides.framework-image}}
+          "{{resource-overrides.framework-image}}"
+        {{/resource-overrides.framework-image}}
+
+        {{! If its not set, default to the one in resources.json }}
+        {{^resource-overrides.framework-image}}
+          "{{resource.assets.container.docker.calico-dcos}}"
+        {{/resource-overrides.framework-image}}
+    }
+  },
+  "args": [],
+  "cpus": {{calico.cpu-limit-framework}},
+  "mem": {{calico.mem-limit-framework}},
+  "instances": 1,
+  "env": {
+    "CALICO_NODE_IMG":
+    {{! If resource-overrides.node-image is set, use it as the node-image. }}
+    {{#resource-overrides.node-image}}
+      "{{resource-overrides.node-image}}",
+    {{/resource-overrides.node-image}}
+    {{! Otherwise, default to the node-image in resources.json }}
+    {{^resource-overrides.node-image}}
+      "{{resource.assets.container.docker.calico-node}}",
+    {{/resource-overrides.node-image}}
+
+    "CALICO_INSTALLER_URL":
+      {{! If resource-overrides.installer-url is set, use it as the installer url. }}
+      {{#resource-overrides.installer-url}}
+        "{{resource-overrides.installer-url}}",
+      {{/resource-overrides.installer-url}}
+      {{! Otherwise, default to the one in resources.json }}
+      {{^resource-overrides.installer-url}}
+        "{{resource.assets.uris.calico-installer}}",
+      {{/resource-overrides.installer-url}}
+
+    "CALICO_LIBNETWORK_IMG": "{{resource.assets.container.docker.calico-libnetwork}}",
+    {{#calico.allow-docker-update}}"CALICO_ALLOW_DOCKER_UPDATE": "true",{{/calico.allow-docker-update}}
+    "CALICO_MAX_CONCURRENT_RESTARTS": "{{calico.max-concurrent-restarts}}",
+    "CALICO_ZK": "{{calico.zk}}",
+    "CALICO_CPU_LIMIT_INSTALL": "{{calico.cpu-limit-install}}",
+    "CALICO_MEM_LIMIT_INSTALL": "{{calico.mem-limit-install}}",
+    "CALICO_CPU_LIMIT_ETCD_PROXY": "{{calico.cpu-limit-etcd-proxy}}",
+    "CALICO_MEM_LIMIT_ETCD_PROXY": "{{calico.mem-limit-etcd-proxy}}",
+    "CALICO_CPU_LIMIT_NODE": "{{calico.cpu-limit-node}}",
+    "CALICO_MEM_LIMIT_NODE": "{{calico.mem-limit-node}}",
+    "CALICO_CPU_LIMIT_LIBNETWORK": "{{calico.cpu-limit-libnetwork}}",
+    "CALICO_MEM_LIMIT_LIBNETWORK": "{{calico.mem-limit-libnetwork}}",
+    "CALICO_STATUS_DNS": "{{calico.status-dns}}",
+    "ETCD_SRV": "{{etcd.etcd-discovery-url}}",
+    "ETCD_BINARY_URL": "{{resource.assets.uris.etcd}}",
+    "MESOS_MASTER": "{{mesos.master}}",
+    "MESOS_CNI_PLUGINS_DIR": "{{mesos.cni-plugins-dir}}",
+    "MESOS_CNI_CONFIG_DIR": "{{mesos.cni-config-dir}}",
+    "CALICO_CNI_BINARY_URL": "{{resource.assets.uris.calico-cni}}",
+    "CALICO_CNI_IPAM_BINARY_URL": "{{resource.assets.uris.calico-ipam}}"
+  },
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{calico.framework-name}}"
+  },
+  "requirePorts":true,
+  "ports": [
+    0
+  ],
+  "healthChecks": [{
+    "protocol": "HTTP",
+    "path": "/health",
+    "portIndex": 0,
+    "gracePeriodSeconds": 60,
+    "intervalSeconds": 30,
+    "maxConsecutiveFailures": 0
+  }]
+}
