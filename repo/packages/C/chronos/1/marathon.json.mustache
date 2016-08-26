@@ -1,0 +1,38 @@
+{
+  "id": "{{chronos.id}}",
+  "instances": {{chronos.instances}},
+  "cpus": {{chronos.cpus}},
+  "cmd": "chronos run_jar --master {{mesos.master}} --zk_hosts {{chronos.zk-hosts}} --http_port $PORT0 --mesos_framework_name {{chronos.framework-name}} --hostname {{chronos.hostname}} {{#chronos.assets-path}} --assets_path {{chronos.assets_path}} {{/chronos.assets-path}} {{#chronos.cassandra-consistency}} --cassandra_consistency {{chronos.cassandra-consistency}} {{/chronos.cassandra-consistency}} {{#chronos.cassandra-contact-points}} --cassandra_contact_points {{chronos.cassandra-contact-points}} {{/chronos.cassandra-contact-points}} {{#chronos.cassandra-keyspace}} --cassandra_keyspace {{chronos.cassandra-keyspace}} {{/chronos.cassandra-keyspace}} {{#chronos.cassandra-port}} --cassandra_port {{chronos.cassandra-port}} {{/chronos.cassandra-port}} {{#chronos.cassandra-table}} --cassandra_table {{chronos.cassandra-table}} {{/chronos.cassandra-table}} {{#chronos.cassandra-ttl}} --cassandra_ttl {{chronos.cassandra-ttl}} {{/chronos.cassandra-ttl}} {{#chronos.cluster-name}} --cluster_name {{chronos.cluster-name}} {{/chronos.cluster-name}} {{#chronos.decline-offer-duration}} --decline_offer_duration {{chronos.decline-offer-duration}} {{/chronos.decline-offer-duration}} {{#chronos.disable-after-failures}} --disable_after_failures {{chronos.disable-after-failures}} {{/chronos.disable-after-failures}} {{#chronos.failover-timeout}} --failover_timeout {{chronos.failover-timeout}} {{/chronos.failover-timeout}} {{#chronos.failure-retry}} --failure_retry {{chronos.failure-retry}} {{/chronos.failure-retry}} {{#chronos.graphite-group-prefix}} --graphite_group_prefix {{chronos.graphite-group-prefix}} {{/chronos.graphite-group-prefix}} {{#chronos.graphite-host-port}} --graphite_host_port {{chronos.graphite-host-port}} {{/chronos.graphite-host-port}} {{#chronos.graphite-reporting-interval}} --graphite_reporting_interval {{chronos.graphite-reporting-interval}} {{/chronos.graphite-reporting-interval}} {{#chronos.http-credentials}} --http_credentials {{chronos.http-credentials}} {{/chronos.http-credentials}} {{#chronos.http-realm}} --http_realm {{chronos.http-realm}} {{/chronos.http-realm}} {{#chronos.leader-max-idle-time}} --leader_max_idle_time {{chronos.leader-max-idle-time}} {{/chronos.leader-max-idle-time}} {{#chronos.mail-from}} --mail_from {{chronos.mail-from}} {{/chronos.mail-from}} {{#chronos.mail-password}} --mail_password {{chronos.mail-password}} {{/chronos.mail-password}} {{#chronos.mail-server}} --mail_server {{chronos.mail-server}} {{/chronos.mail-server}} {{#chronos.mail-ssl}} --mail_ssl {{chronos.mail-ssl}} {{/chronos.mail-ssl}} {{#chronos.mail-user}} --mail_user {{chronos.mail-user}} {{/chronos.mail-user}} {{#chronos.mesos-checkpoint}} --mesos_checkpoint {{chronos.mesos-checkpoint}} {{/chronos.mesos-checkpoint}} {{#chronos.mesos-role}} --mesos_role {{chronos.mesos-role}} {{/chronos.mesos-role}} {{#chronos.mesos-task-cpu}} --mesos_task_cpu {{chronos.mesos-task-cpu}} {{/chronos.mesos-task-cpu}} {{#chronos.mesos-task-disk}} --mesos_task_disk {{chronos.mesos-task-disk}} {{/chronos.mesos-task-disk}} {{#chronos.mesos-task-mem}} --mesos_task_mem {{chronos.mesos-task-mem}} {{/chronos.mesos-task-mem}} {{#chronos.min-revive-offers-interval}} --min_revive_offers_interval {{chronos.min-revive-offers-interval}} {{/chronos.min-revive-offers-interval}} {{#chronos.raven-dsn}} --raven_dsn {{chronos.raven-dsn}} {{/chronos.raven-dsn}} {{#chronos.reconciliation-interval}} --reconciliation_interval {{chronos.reconciliation-interval}} {{/chronos.reconciliation-interval}} {{#chronos.revive-offers-for-new-jobs}} --revive_offers_for_new_jobs {{/chronos.revive-offers-for-new-jobs}} {{#chronos.schedule-horizon}} --schedule_horizon {{chronos.schedule-horizon}} {{/chronos.schedule-horizon}} {{#chronos.slack-channel}} --slack_channel {{chronos.slack-channel}} {{/chronos.slack-channel}} {{#chronos.slack-token}} --slack_token {{chronos.slack-token}} {{/chronos.slack-token}} {{#chronos.slack-url}} --slack_url {{chronos.slack-url}} {{/chronos.slack-url}} {{#chronos.task-epsilon}} --task_epsilon {{chronos.task-epsilon}} {{/chronos.task-epsilon}} {{#chronos.user}} --user {{chronos.user}} {{/chronos.user}} {{#chronos.webui-url}} --webui_url {{chronos.webui-url}} {{/chronos.webui-url}} {{#chronos.zk-path}} --zk_path {{chronos.zk-path}} {{/chronos.zk-path}} {{#chronos.zk-timeout}} --zk_timeout {{chronos.zk-timeout}} {{/chronos.zk-timeout}}",
+  "mem": {{chronos.mem}},
+  "ports": [
+    0
+  ],
+  "disk": 0.0,
+  "env": {
+    "NO_OP": ""
+
+    {{#chronos.http-credentials}}
+    , "MESOSPHERE_HTTP_CREDENTIALS": "{{chronos.http-credentials}}"
+    {{/chronos.http-credentials}}
+
+  },
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.99852a4a1a6e}}",
+      "network": "HOST"
+    }
+  },
+  "healthChecks": [
+    {
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 2,
+      "path": "/",
+      "portIndex": 0,
+      "protocol": "HTTP"
+    }
+  ],
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{chronos.framework-name}}"
+  }
+}
