@@ -1,0 +1,38 @@
+{
+    "id": "{{omsdocker.app_id}}",
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.image}}",
+            "parameters": [
+                {
+                    "key": "name", "value": "omsagent"
+                },
+                {
+                    "key": "env", "value": "WSID={{omsdeocker.wsid}}"
+                },
+                {
+                    "key": "env", "value": "KEY={{omsdeocker.wskey}}"
+                },
+                {
+                    "key": "log-driver", "value": "none"
+                },
+                {
+                    "key": "restart", "value": "always"
+                }
+            ],
+            "privileged": true,
+            "portMappings": [
+                { "hostPort": 25224, "containerPort": 25224, "protocol": "udp" },
+                { "hostPort": 25224, "containerPort": 25224, "protocol": "tcp" }
+            ]
+        },
+        "volumes": [
+            {
+                "containerPath": "/var/run/docker.sock",
+                "hostPath": "/var/run/docker.sock",
+                "mode": "RW"
+            }
+        ]
+    }
+}

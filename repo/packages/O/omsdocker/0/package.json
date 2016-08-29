@@ -1,0 +1,20 @@
+{
+ "packagingVersion": "1.0",
+ "name": "omsdocker",
+ "version": "1.0.0",
+ "scm": "https://github.com/Microsoft/OMS-docker",
+ "maintainer": "omscontainers@microsoft.com",
+ "description": "OMS Docker",
+ "framework": false,
+ "tags": ["mesosphere", "omsdocker"],
+ "licenses": [
+   {
+     "name": "LICENSE",
+     "url": "https://github.com/Microsoft/OMS-docker/blob/master/LICENSE"
+   }
+ ],
+ "website": "http://microsoft.com",
+ "postInstallNotes": "OMS Docker is successfully installed.",
+ "preInstallNotes": "Pass your workspace ID and Key as a package option (omsdocker.wsid) & (omsdocker.wskey).",
+ "postUninstallNotes": "OMS Docker is successfully uninstalled.\n.",
+}
