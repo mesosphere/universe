@@ -1,8 +1,8 @@
 {
- "packagingVersion": "1.0",
+ "packagingVersion": "2.0",
  "name": "omsdocker",
  "version": "1.0.0",
- "scm": "https://github.com/Microsoft/OMS-docker",
+ "scm": "git@github.com:Microsoft/OMS-docker.git",
  "maintainer": "omscontainers@microsoft.com",
  "description": "OMS Docker",
  "framework": false,
@@ -13,8 +13,8 @@
      "url": "https://github.com/Microsoft/OMS-docker/blob/master/LICENSE"
    }
  ],
- "website": "http://microsoft.com",
+ "website": "https://github.com/Microsoft/OMS-docker",
  "postInstallNotes": "OMS Docker is successfully installed.",
  "preInstallNotes": "Pass your workspace ID and Key as a package option (omsdocker.wsid) & (omsdocker.wskey).",
- "postUninstallNotes": "OMS Docker is successfully uninstalled.\n."
+ "postUninstallNotes": "OMS Docker is successfully uninstalled."
 }
