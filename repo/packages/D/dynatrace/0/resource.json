@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://www.dynatrace.com/images/brand/android-chrome-48x48.png",
+    "icon-medium": "https://www.dynatrace.com/images/brand/android-chrome-96x96.png",
+    "icon-large": "https://www.dynatrace.com/images/brand/dynatrace-signet.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "agent": "dynatrace/oneagent:latest"
+      }
+    }
+  }
+}
