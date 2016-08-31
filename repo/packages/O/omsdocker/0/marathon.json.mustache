@@ -34,5 +34,20 @@
                 "mode": "RW"
             }
         ]
-    }
+    },
+    "cpus": {{omsdocker.cpus}},
+    "mem": {{omsdocker.mem}},
+    "instances": {{omsdocker.instances}},
+    "healthChecks": [
+        {
+            "path": "/",
+            "portIndex": 1,
+            "protocol": "HTTP",
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3,
+            "ignoreHttp1xx": false
+        }
+    ]
 }
