@@ -8,4 +8,9 @@ StartLimitInterval=0
 RestartSec=15
 TimeoutStartSec=120
 TimeoutStopSec=15
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
 ExecStart=/usr/bin/docker run --rm --name %n -p 5000:5000 -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key mesosphere/universe registry serve /etc/docker/registry/config.yml
+
+[Install]
+WantedBy=multi-user.target
