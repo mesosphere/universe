@@ -8,13 +8,13 @@
     "type": "DOCKER",
     "docker": {
       "image": "{{resource.assets.container.docker.image}}:{{registry.docker-tag}}",
-	  "forcePullImage": true,
+      "forcePullImage": true,
       "network": "BRIDGE",    
       "portMappings": [ {
           "containerPort": 8081,
           "hostPort": 0,
           "protocol": "tcp",
-    	  "labels": {
+          "labels": {
             "VIP_0": "{{registry.name}}:8081"
           }
       } ]
@@ -41,8 +41,8 @@
       "intervalSeconds": 60,
       "timeoutSeconds": 20,
       "maxConsecutiveFailures": 3,
-	  "ignoreHttp1xx": false
-	}
+      "ignoreHttp1xx": false
+    }
   ],
   "acceptedResourceRoles": [
     "{{registry.role}}"
