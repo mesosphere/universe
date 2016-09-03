@@ -9,7 +9,7 @@
     $ docker load < local-universe.tar.gz
     ```
 
-1. Add the [`dcos-local-universe-http.service`](link) definition to each of your masters at `/etc/systemd/system/dcos-local-universe-http.service` and then start it.
+1. Add the [`dcos-local-universe-http.service`](dcos-local-universe-http.service) definition to each of your masters at `/etc/systemd/system/dcos-local-universe-http.service` and then start it.
 
     ```bash
     $ cp dcos-local-universe-http.service /etc/systemd/system/dcos-local-universe-http.service
@@ -17,7 +17,7 @@
     $ systemctl start dcos-local-universe-http
     ```
 
-1. Add the [`dcos-local-universe-registry.service`](link) definition to each of your masters at `/etc/systemd/system/dcos-local-universe-registry.service` and then start it.
+1. Add the [`dcos-local-universe-registry.service`](dcos-local-universe-registry.service) definition to each of your masters at `/etc/systemd/system/dcos-local-universe-registry.service` and then start it.
 
     ```bash
     $ cp dcos-local-universe-registry.service /etc/systemd/system/dcos-local-universe-registry.service
