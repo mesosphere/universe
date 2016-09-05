@@ -25,5 +25,8 @@
         "LOG_LEVEL": "{{marathon-slack.log_level}}",
         {{/marathon-slack.log_level}}
         "SLACK_WEBHOOK_URL": "{{marathon-slack.slack_webhook_url}}"
+    },
+    "labels":{
+        "MARATHON_SINGLE_INSTANCE_APP": "true"
     }
 }
