@@ -2,7 +2,7 @@
   "assets": {
     "container": {
       "docker": {
-        "image": "dbtucker/cp-kafka-rest"
+        "image": "confluentinc/cp-kafka-rest:3.0.1"
       }
     }
   },

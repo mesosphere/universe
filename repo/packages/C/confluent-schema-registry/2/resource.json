@@ -2,7 +2,7 @@
   "assets": {
     "container": {
       "docker": {
-        "image": "dbtucker/cp-schema-registry"
+        "image": "confluentinc/cp-schema-registry:3.0.1"
       }
     }
   },

@@ -65,11 +65,6 @@
           "default": "master.mesos:2181/dcos-service-confluent-kafka",
           "description": "Zookeeper Connect string for service cluster. Format is comma-separated list of <zk-host>:<zkport>/<kservice>",
           "type": "string"
-        },
-        "docker-tag": {
-          "default": "3.0.1",
-          "description": "Desired version of the standard docker image to deploy.   This should align with the Kafka cluster to which the service will connect.  Supported values are '3.0.0', 3.0.1', and 'latest'",
-          "type": "string"
         }
       },
       "required": ["cpus", "mem", "instances", "name"],
