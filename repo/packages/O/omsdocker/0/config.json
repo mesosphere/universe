@@ -1,24 +1,23 @@
 {
-    "type": "object",
     "properties": {
-        "ruxit": {
-            "description": "Dynatrace Ruxit configuration properties",
+        "omsdocker": {
+            "description": "OMS Docker specific configuration properties",
             "properties": {
-                "environment": {
-                    "description": "Dynatrace Ruxit environment ID",
+                "wsid": {
+                    "description": "Your workspace ID.",
                     "type": "string"
                 },
-                "token": {
-                    "description": "Dynatrace Ruxit environment token",
+                "wskey": {
+                    "description": "Your workspace Key.",
                     "type": "string"
                 },
                 "app_id": {
-                    "default": "dynatrace-ruxit",
-                    "description": "Marathon Application ID",
+                    "default": "oms-docker",
+                    "description": "OMS Docker Application ID",
                     "type": "string"
                 },
                 "cpus": {
-                    "default": 0.1,
+                    "default": 0.05,
                     "description": "CPU shares to allocate to each Marathon instance.",
                     "minimum": 0.0,
                     "type": "number"
@@ -37,13 +36,11 @@
                 }
             },
             "required": [
-                "environment",
-                "token"
+                "wsid",
+                "wskey"
             ],
             "type": "object"
         }
     },
-    "required": [
-        "ruxit"
-    ]
+    "type": "object"
 }

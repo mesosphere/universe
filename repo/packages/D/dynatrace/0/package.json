@@ -1,0 +1,19 @@
+{
+    "packagingVersion": "3.0",
+    "name": "dynatrace",
+    "version": "latest",
+    "tags": [ "dynatrace", "apm", "monitoring" ],
+    "description": "Dynatrace is cloud-native monitoring for highly dynamic container and cluster environments. Dynatrace allows you to better optimize your container deployments and memory allocations by using real-time usage data. Dynatrace is the only solution capable of automatically pinpointing application and infrastructure issues in seconds using artificial intelligence",
+    "maintainer": "alois.mayr@dynatrace.com",
+    "framework": false,
+    "licenses": [
+        {
+            "name": "MIT License",
+            "url": "https://github.com/Dynatrace/Dynatrace-Docker/blob/master/LICENSE"
+        }
+    ],
+    "postInstallNotes": "Dynatrace has been installed on DC/OS Mesos agents.\nLog in to your Dynatrace account at https://login.dynatrace.com and monitor your DC/OS cluster. You will shorty see your cluster and container insights in Dynatrace.",
+    "postUninstallNotes": "Dynatrace has been uninstalled from your Mesos agents and will no longer run.",
+    "preInstallNotes": "Pass your environment ID (dynatrace.environment), token (dynatrace.token), and connection endpoint (dynatrace.server) as package options.\nPlease note the connection endpoint (dynatrace.server) of Dynatrace SaaS is https://{replace_with_your_environmentID}.live.dynatrace.com.\nIn case you are running Dynatrace Managed you can find the Managed endpoint in your UI.\nAlso pass the number of Mesos agents as an option (dynatrace.instances) and Marathon will make sure that the Dynatrace OneAgent runs on every Mesos agent.\nBy default Marathon will allcoate 0.1 CPU and 400m memory per Dynatrace OneAgent task.",
+    "website": "https://dynatrace.com"
+}

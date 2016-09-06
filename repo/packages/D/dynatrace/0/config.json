@@ -1,0 +1,54 @@
+{
+    "type": "object",
+    "properties": {
+        "dynatrace": {
+            "description": "Dynatrace configuration properties",
+            "properties": {
+                "environment": {
+                    "description": "Dynatrace environment ID",
+                    "type": "string"
+                },
+                "token": {
+                    "description": "Dynatrace token",
+                    "type": "string"
+                },
+                "server": {
+                    "description": "Dynatrace server",
+                    "type": "string"
+                },
+                "app_id": {
+                    "default": "dynatrace-oneagent",
+                    "description": "Marathon Application ID",
+                    "type": "string"
+                },
+                "cpus": {
+                    "default": 0.1,
+                    "description": "CPU shares to allocate to each Dynatrace OneAgent task",
+                    "minimum": 0.1,
+                    "type": "number"
+                },
+                "instances": {
+                    "default": 1,
+                    "description": "Number of nodes in your cluster",
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "mem": {
+                    "default": 400.0,
+                    "description": "Memory (MB) to allocate to each Dynatrace OneAgent task.",
+                    "minimum": 400.0,
+                    "type": "number"
+                }
+            },
+            "required": [
+                "environment",
+                "token",
+                "server"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "dynatrace"
+    ]
+}
