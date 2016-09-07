@@ -1,0 +1,80 @@
+{
+  "type":"object",
+    "properties":{
+      "service":{
+        "type":"object",
+        "description": "DC/OS service configuration properties",
+        "properties":{
+          "name" : {
+            "description":"The name of the reference framework instance",
+            "type":"string",
+            "default":"my-service"
+          }
+        }
+      },
+      "metadata":{
+        "description":"Node configuration properties",
+        "type":"object",
+        "properties":{
+          "cpus":{
+            "description":"Node cpu requirements",
+            "type":"number",
+            "default":1.0
+          },
+          "mem":{
+            "description":"Node mem requirements",
+            "type":"integer",
+            "default":512
+          },
+          "disk":{
+            "description":"Broker disk requirements (only respected with persistent volumes)",
+            "type":"integer",
+            "default":1500
+          },
+          "count":{
+            "description":"Number of nodes to run",
+            "type":"number",
+            "default":1
+          }
+        },
+        "required":[
+          "cpus",
+          "mem",
+          "disk",
+          "count"
+        ]
+      },
+      "data":{
+        "description":"Node configuration properties",
+        "type":"object",
+        "properties":{
+          "cpus":{
+            "description":"Node cpu requirements",
+            "type":"number",
+            "default":0.2
+          },
+          "mem":{
+            "description":"Node mem requirements",
+            "type":"integer",
+            "default":512
+          },
+          "disk":{
+            "description":"Broker disk requirements (only respected with persistent volumes)",
+            "type":"integer",
+            "default":1500
+          },
+          "count":{
+            "description":"Number of nodes to run",
+            "type":"number",
+            "default":1
+          }
+        },
+        "required":[
+          "cpus",
+          "mem",
+          "disk",
+          "count"
+        ]
+      }
+    }
+}
