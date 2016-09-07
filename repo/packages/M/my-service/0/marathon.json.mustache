@@ -1,0 +1,44 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1230,
+  "instances": 1,
+  "cmd": "export PATH=$(ls -d $MESOS_SANDBOX/jre*/bin):$PATH && env &&./scheduler/bin/reference-scheduler",
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_MIGRATION_API_VERSION": "v1",
+    "DCOS_MIGRATION_API_PATH": "/v1/plan",
+    "MARATHON_SINGLE_INSTANCE_APP":"true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "env": {
+    "LD_LIBRARY_PATH": "/opt/mesosphere/lib",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "METADATA_COUNT": "{{metadata.count}}",
+    "METADATA_CPU": "{{metadata.cpus}}",
+    "METADATA_MEM": "{{metadata.mem}}",
+    "METADATA_DISK": "{{metadata.disk}}",
+    "DATA_COUNT": "{{data.count}}",
+    "DATA_CPU": "{{data.cpus}}",
+    "DATA_MEM": "{{data.mem}}",
+    "DATA_DISK": "{{data.disk}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": {}
+    }
+  ]
+}

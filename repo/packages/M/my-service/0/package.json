@@ -1,0 +1,12 @@
+{
+  "packagingVersion": "2.0",
+  "name": "my-service",
+  "version": "1",
+  "maintainer": "support@mesosphere.io",
+  "description": "An example implementation of a stateful service using the DC/OS SDK",
+  "selected": false,
+  "framework": true,
+  "tags": ["example"],
+  "postInstallNotes": "my-service post install notes.",
+  "postUninstallNotes": "my-service post uninstall notes"
+}

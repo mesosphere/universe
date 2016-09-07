@@ -1,0 +1,13 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://s3-us-west-2.amazonaws.com/infinity-artifacts/kafka/jre-8u91-linux-x64.tar.gz",
+      "scheduler-zip": "{{artifact-dir}}/scheduler.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://github.com/dcos/dcos-ui/raw/master/src/img/services/icon-service-default-small.png",
+    "icon-medium": "https://github.com/dcos/dcos-ui/raw/master/src/img/services/icon-service-default-medium.png",
+    "icon-large": "https://github.com/dcos/dcos-ui/raw/master/src/img/services/icon-service-default-large.png"
+  }
+}
