@@ -2,8 +2,8 @@
   "assets": {
     "container": {
       "docker": {
-        "controller": "avinetworks/controller",
-        "serviceengine": "avinetworks/se"
+        "controller": "avinetworks/controller:16.2.2-9040-20160902.150936",
+        "serviceengine": "avinetworks/se:16.2.2-9040-20160902.150936"
       }
     }
   },

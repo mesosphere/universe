@@ -132,16 +132,14 @@
             },
             "tag": {
               "description": "Tag value of the Avi-Vantage image in the Docker repository.",
-              "type": "string",
-              "default": "latest"
+              "type": "string"
             }
           },
           "required": [
             "cpus",
             "memory",
             "disk",
-            "https-port",
-            "tag"
+            "https-port"
           ]
         },
         "serviceengine": {

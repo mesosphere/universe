@@ -36,7 +36,12 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "{{resource.assets.container.docker.controller}}:{{avi.controller.tag}}",
+      {{#avi.controller.tag}}
+      "image": "avinetworks/controller:{{avi.controller.tag}}",
+      {{/avi.controller.tag}}
+      {{^avi.controller.tag}}
+      "image": "{{resource.assets.container.docker.controller}}",
+      {{/avi.controller.tag}}
       "privileged": true,
       "network": "BRIDGE",
       "forcePullImage": {{avi.controller.force-pull}},
