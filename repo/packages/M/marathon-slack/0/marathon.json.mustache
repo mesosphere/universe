@@ -1,0 +1,32 @@
+{
+    "id": "/marathon-slack",
+    "cpus": {{marathon-slack.cpus}},
+    "mem": {{marathon-slack.mem}},
+    "disk": 0,
+    "instances": {{marathon-slack.instances}},
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.marathon-slack}}",
+            "network": "HOST",
+            "privileged": false,
+            "parameters": [],
+            "forcePullImage": true
+        }
+    },
+    "env": {
+        {{#marathon-slack.slack_channel}}
+        "SLACK_CHANNEL": "{{marathon-slack.slack_channel}}",
+        {{/marathon-slack.slack_channel}}
+        {{#marathon-slack.event_types}}
+        "EVENT_TYPES": "{{marathon-slack.event_types}}",
+        {{/marathon-slack.event_types}}
+        {{#marathon-slack.log_level}}
+        "LOG_LEVEL": "{{marathon-slack.log_level}}",
+        {{/marathon-slack.log_level}}
+        "SLACK_WEBHOOK_URL": "{{marathon-slack.slack_webhook_url}}"
+    },
+    "labels":{
+        "MARATHON_SINGLE_INSTANCE_APP": "true"
+    }
+}
