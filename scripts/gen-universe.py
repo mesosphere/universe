@@ -32,8 +32,8 @@ def main():
     args = parser.parse_args()
 
     if not args.outdir.is_dir():
-        print('The path in --out-dir [{}] is not a directory. Please create it '
-              'before running this script.'.format(args.outdir))
+        print('The path in --out-dir [{}] is not a directory. Please create it'
+              ' before running this script.'.format(args.outdir))
         return
 
     if not args.repository.is_dir():
@@ -58,38 +58,84 @@ def main():
     with (args.outdir / 'repo-empty-v3.json').open('w') as universe_file:
         json.dump({'packages': []}, universe_file)
 
-    # Render 1.8 json
-    with (args.outdir / 'repo-up-to-1.8.json').open('w') as universe_file:
+    # create universe-by-version files for `dcos_versions`
+    dcos_versions = ["1.6.1", "1.7", "1.8", "1.9", "1.10"]
+    [render_universe_by_version(
+        args.outdir, packages, version) for version in dcos_versions]
+
+
+def render_universe_by_version(outdir, packages, version):
+    """Render universe packages for `version`. Zip files for versions < 1.8,
+    and json files for version >= 1.8
+
+    :param outdir: Path to the directory to use to store all universe objects
+    :type outdir: str
+    :param package: package dictionary
+    :type package: dict
+    :param version: DC/OS version
+    :type version: str
+    :rtype: None
+    """
+
+    if LooseVersion(version) < LooseVersion("1.8"):
+        render_zip_universe_by_version(outdir, packages, version)
+    else:
+        render_json_by_version(outdir, packages, version)
+
+
+def render_json_by_version(outdir, packages, version):
+    """Render json file for `version`
+
+    :param outdir: Path to the directory to use to store all universe objects
+    :type outdir: str
+    :param package: package dictionary
+    :type package: dict
+    :param version: DC/OS version
+    :type version: str
+    :rtype: None
+    """
+
+    json_file_name = 'repo-up-to-{}.json'.format(version)
+    with (outdir / json_file_name).open('w') as universe_file:
         json.dump(
-            {'packages': list(filter(filter_1_8, packages))},
+            {'packages': list(filter(
+                lambda package: filter_by_version(package, version), packages)
+                )},
             universe_file)
 
-    # Render zip universe for 1.6.1
+
+def render_zip_universe_by_version(outdir, packages, version):
+    """Render zip universe for `version`
+
+    :param outdir: Path to the directory to use to store all universe objects
+    :type outdir: str
+    :param package: package dictionary
+    :type package: dict
+    :param version: DC/OS version
+    :type version: str
+    :rtype: None
+    """
+
     with tempfile.NamedTemporaryFile() as temp_file:
         with zipfile.ZipFile(temp_file, mode='w') as zip_file:
             render_universe_zip(
                 zip_file,
-                filter(filter_1_6_1, packages)
+                filter(
+                    lambda package: filter_by_version(package, version),
+                    packages)
             )
 
-        shutil.copy(temp_file.name, str(args.outdir / 'repo-up-to-1.6.1.zip'))
-
-    # Render zip universe for 1.7
-    with tempfile.NamedTemporaryFile() as temp_file:
-        with zipfile.ZipFile(temp_file, mode='w') as zip_file:
-            render_universe_zip(
-                zip_file,
-                filter(filter_1_7, packages)
-            )
-
-        shutil.copy(temp_file.name, str(args.outdir / 'repo-up-to-1.7.zip'))
+        zip_name = 'repo-up-to-{}.zip'.format(version)
+        shutil.copy(temp_file.name, str(outdir / zip_name))
 
 
-def filter_1_6_1(package):
-    """Predicate for checking for 1.6.1 or less packages
+def filter_by_version(package, version):
+    """Prediate for checking for packages of version `version` or less
 
     :param package: package dictionary
     :type package: dict
+    :param version: DC/OS version
+    :type version: str
     :rtype: bool
     """
 
@@ -97,41 +143,7 @@ def filter_1_6_1(package):
         package.get('minDcosReleaseVersion', '0.0')
     )
 
-    filter_version = LooseVersion("1.6.1")
-
-    return package_version <= filter_version
-
-
-def filter_1_7(package):
-    """Predicate for checking for 1.7 or less packages
-
-    :param package: package dictionary
-    :type package: dict
-    :rtype: bool
-    """
-
-    package_version = LooseVersion(
-        package.get('minDcosReleaseVersion', '0.0')
-    )
-
-    filter_version = LooseVersion("1.7")
-
-    return package_version <= filter_version
-
-
-def filter_1_8(package):
-    """Predicate for checking for 1.8 or less packages
-
-    :param package: package dictionary
-    :type package: dict
-    :rtype: bool
-    """
-
-    package_version = LooseVersion(
-        package.get('minDcosReleaseVersion', '0.0')
-    )
-
-    filter_version = LooseVersion("1.8")
+    filter_version = LooseVersion(version)
 
     return package_version <= filter_version
 
