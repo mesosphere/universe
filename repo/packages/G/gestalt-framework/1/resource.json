@@ -1,0 +1,31 @@
+{
+  "images": {
+    "icon-large": "https://s3.amazonaws.com/gfi.misc/Gestalt-Icon-Large.png",
+    "icon-medium": "https://s3.amazonaws.com/gfi.misc/Gestalt-Icon-Medium.png",
+    "icon-small": "https://s3.amazonaws.com/gfi.misc/Gestalt-Icon-Small.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "gestalt-dcos": "galacticfog/gestalt-dcos:latest",
+        "api-gateway": "galacticfog/gestalt-api-gateway:dcos-latest",
+        "api-proxy": "galacticfog/gestalt-api-proxy:dcos-latest",
+        "data": "galacticfog/gestalt-data:dcos-latest",
+        "kong": "galacticfog/kong:dcos-latest",
+        "lambda": "galacticfog/gestalt-lambda:dcos-latest",
+        "meta": "galacticfog/gestalt-meta:dcos-latest",
+        "policy": "galacticfog/gestalt-policy:dcos-latest",
+        "rabbit": "galacticfog/rabbit:dcos-latest",
+        "security": "galacticfog/gestalt-security:dcos-latest",
+        "ui": "galacticfog/gestalt-ui:dcos-latest",
+        "lambda-ruby-executor": "galacticfog/lambda-ruby-executor:dcos-latest",
+        "lambda-javascript-executor": "galacticfog/lambda-javascript-executor:dcos-latest",
+        "lambda-golang-executor": "galacticfog/lambda-golang-executor:dcos-latest",
+        "lambda-python-executor": "galacticfog/lambda-python-executor:dcos-latest",
+        "lambda-java-executor": "galacticfog/lambda-java-executor:dcos-latest",
+        "lambda-dotnet-executor": "galacticfog/lambda-dotnet-executor:dcos-latest"
+      }
+    },
+    "uris": {}
+  }
+}
