@@ -60,7 +60,8 @@
                 },
                 "config_password":{
                     "description": "Allows password protected access to the dn=config branch. This helps to reconfigure the server without interruption. Defaults to 'password' ",
-                    "type": "string"
+                    "type": "string",
+                    "default": "password"
                 },
                 "additional_schemas":{
                     "description": "Loads additional schemas provided in the slapd package.",
