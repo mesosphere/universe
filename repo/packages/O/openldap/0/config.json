@@ -56,7 +56,7 @@
                 "organization":{
                     "description": "Organization name.",
                     "type": "string",
-		    "default: "example"
+		    "default": "example"
                 },
                 "config_password":{
                     "description": "Allows password protected access to the dn=config branch. This helps to reconfigure the server without interruption. Defaults to 'password' ",
