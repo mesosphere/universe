@@ -11,8 +11,8 @@
     "ldap",
     "directory"
   ],
-  "preInstallNotes": "OpenLDAP requires at least 0.3 CPU and 128MB of RAM.\nWARNING: OpenLDAP on DCOS is currently in ALPHA. There may be bugs, incomplete\nfeatures, incorrect documentation, or other discrepancies.\n\nIf you didn't provide a value for `host_volume` in the CLI,\nYOUR DATA WILL NOT BE SAVED IN ANY WAY.\n",
-  "postInstallNotes": "OpenLDAP has been installed.\nDefault login DN: admin.example.org\nDefault password: admin",
+  "preInstallNotes": "In order for LDAP service to start successfully it requires atleast 0.3 CPU and 128MB of RAM including ports. WARNING: OpenLDAP on DCOS is currently in ALPHA. There may be bugs, incomplete\nfeatures, incorrect documentation, or other discrepancies.\n\nIf you didn't provide a value for `host_volume` in the CLI,\nYOUR DATA WILL NOT BE SAVED IN ANY WAY.\n",
+  "postInstallNotes": "OpenLDAP has been installed.",
   "postUninstallNotes": "OpenLDAP has been uninstalled. Note that any data persisted to a NFS share still exists and will need to be manually removed.",
   "licenses": [
     {
