@@ -85,11 +85,6 @@
                     "description": "Port number to be used for clear communication",
                     "type": "number",
                     "default": 10389
-                },
-                "port_ssl":{
-                    "description": "Port number to be used for secure communication",
-                    "type": "number",
-                    "default": 10636
                 }
             },
             "required": [

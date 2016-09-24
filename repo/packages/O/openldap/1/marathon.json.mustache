@@ -28,16 +28,6 @@
           "labels": {
             "VIP_0": "/{{service.name}}:389"
           }
-        },
-        {
-          "containerPort": 636,
-          "hostPort": {{openldap.port_ssl}},
-          "servicePort": {{openldap.port_ssl}},
-          "protocol": "tcp",
-          "name": "{{service.name}}-ssl",
-          "labels": {
-            "VIP_1": "/{{service.name}}-ssl:636"
-          }
         }
       ]
     }
