@@ -1,0 +1,97 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"The name of the OpenLDAP service instance",
+                    "type":"string",
+                    "default":"openldap"
+                }
+            }
+        },
+        "openldap":{
+            "type": "object",
+            "description": "OpenLDAP service configuration properties",
+            "properties": {
+                "name": {
+                    "description": "Package name.",
+                    "type": "string",
+                    "default": "openldap"
+                },
+                "version": {
+                    "description": "Package version.",
+                    "type": "string",
+                    "default": "2.4.40"
+                },
+                "cpus": {
+                    "description": "CPU shares to allocate to each OpenLDAP node.",
+                    "type": "number",
+                    "default": 0.3,
+                    "minimum": 0.3
+                },
+                "mem": {
+                    "description": "Memory to allocate to each OpenLDAP node.",
+                    "type": "number",
+                    "default": 128.0,
+                    "minimum": 128.0
+                },
+                "admin_password":{
+                    "description": "Administrator password. Defaults to 'admin'.",
+                    "type": "string",
+                    "default": "admin"
+                },
+                "domain":{
+                    "description": "LDAP domain. Defaults to example.org",
+                    "type": "string",
+                    "default": "example.org"
+                },
+                "host_volume": {
+                    "description": "The location of a volume on the host to be used for persisting OpenLDAP data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/openldap`). Note that this path must be the same on all DCOS agents. Required.",
+                    "type": "string",
+                    "default": "/tmp"
+                },
+                "organization":{
+                    "description": "Organization name.",
+                    "type": "string",
+                    "default": "example"
+                },
+                "config_password":{
+                    "description": "Allows password protected access to the dn=config branch. This helps to reconfigure the server without interruption. Defaults to 'password'",
+                    "type": "string",
+                    "default": "password"
+                },
+                "additional_schemas":{
+                    "description": "Loads additional schemas provided in the slapd package.",
+                    "type": "string"
+                },
+                "additional_modules":{
+                    "description": "Comma-separated list of modules to load.",
+                    "type": "string"
+                },
+                "force_reconfigure":{
+                    "description": "Reconfigure the service after the image has been initialized. Defaults to FALSE",
+                    "type": "boolean",
+                    "default": false
+                },
+                "virtual_host":{
+                    "description": "Virtual Host URL to be used in the external load balancer. Modify as per your installation.",
+                    "type": "string",
+                    "default": "ldap.example.org"
+                },
+                "port":{
+                    "description": "Port number to be used for clear communication",
+                    "type": "number",
+                    "default": 10389
+                }
+            },
+            "required": [
+                "name",
+                "cpus",
+                "mem"
+            ]
+        }
+    }
+}
