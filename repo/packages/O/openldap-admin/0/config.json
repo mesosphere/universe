@@ -48,11 +48,6 @@
                     "type": "number",
                     "default": 389
                 },
-                "port":{
-                    "description": "The port number to be used in the Load Balancer for external clear web traffic. Defaults to 11389.",
-                    "type": "number",
-                    "default": 11389
-                },
                 "virtual_host":{
                     "description": "Virtual host to be used to publish the UI",
                     "type": "string",
