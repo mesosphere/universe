@@ -15,9 +15,18 @@
     "docker": {
       "image": "{{resource.assets.container.docker.postgresql-docker}}",
       "forcePullImage": false,
+      {{#postgresql.persistence}}
+      "volumes": [{
+        "containerPath": "/var/lib/postgresql/data",
+        "hostPath": "{{postgresql.host_volume}}/{{postgresql.name}}/{{postgresql.pgdata}}",
+        "persistent": {
+        "size": "{{postgresql.volume_size}}",
+          },
+        "mode": "RW"
+      }],
+      {{/postgresql.persistence}}
       "network": "BRIDGE",
-      "portMappings": [
-        {
+      "portMappings": [{
           "containerPort": 5432,
           "hostPort": 0,
           "servicePort": {{postgresql.port_external}},
@@ -25,31 +34,18 @@
           "name": "{{service.name}}",
           "labels": {
             "VIP_0": "/{{service.name}}:{{postgresql.port}}"
-          }
-        }
-      ]
-    }
+            }
+      }]
+    },      
   },
   "healthChecks": [
     {
-      "protocol": "COMMAND",
-      "command": {
-        "value": "ps -Aef | grep postgres"
-      },
+      "protocol": "TCP",
       "gracePeriodSeconds": 300,
       "intervalSeconds": 60,
       "timeoutSeconds": 20,
-      "maxConsecutiveFailures": 3
-    }
-  ],
-  "volumes": [
-    {
-      "containerPath": "/var/lib/postgresql/data",
-      "hostPath": "{{postgresql.host_volume}}/{{postgresql.name}}/{{postgresql.pgdata}}",
-      "persistent": {
-         "size": "{{postgresql.volume_size}}",
-      },
-      "mode": "RW"
+      "maxConsecutiveFailures": 3,
+      "portIndex": 0
     }
   ],
   "labels": {
