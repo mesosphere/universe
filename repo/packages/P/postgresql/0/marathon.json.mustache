@@ -46,7 +46,9 @@
     {
       "containerPath": "/var/lib/postgresql/data",
       "hostPath": "{{postgresql.host_volume}}/{{postgresql.name}}/{{postgresql.pgdata}}",
-      "size": "{{postgresql.volume_size}}",
+      "persistent": {
+         "size": "{{postgresql.volume_size}}",
+      },
       "mode": "RW"
     }
   ],

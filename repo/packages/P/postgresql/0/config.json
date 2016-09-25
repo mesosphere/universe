@@ -54,9 +54,9 @@
                     "default": "/tmp"
                 },
                 "volume_size": {
-                    "description": "If a new volume is to be created, this controls its size in MBs. Defaults to 100MBs",
+                    "description": "If a new volume is to be created, this controls its size in MBs. Defaults to 64MBs",
                     "type": "number",
-                    "default": 100
+                    "default": 64
                 },
                 "pgdata": {
                     "description": "Location of the database files.",
