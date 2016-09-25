@@ -61,12 +61,11 @@
                 "dbname":{
                     "description": "Name for the default database that is created when the image is first started.",
                     "type": "string",
-                    "default": "defaultdb"
+                    "default": "admin"
                 },
                 "initdbargs":{
                     "description": "Arguments to send to postgres initdb. The value is a space separated string of arguments as postgres initdb would expect them.",
                     "type": "string",
-                    "default": "defaultdb"
                 },
                 "virtual_host":{
                     "description": "Virtual Host URL to be used in the external load balancer. Modify as per your installation.",
