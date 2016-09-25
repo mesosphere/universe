@@ -28,22 +28,20 @@
       }]
     }      
   },
-  "healthChecks": [
-    {
+  "healthChecks": [{
       "protocol": "TCP",
       "gracePeriodSeconds": 300,
       "intervalSeconds": 60,
       "timeoutSeconds": 20,
       "maxConsecutiveFailures": 3,
       "portIndex": 0
-    }
-  ],
+  }],
   "volumes": [{
     "containerPath": "/var/lib/postgresql/data",
-    "hostPath": "{{postgresql.host_volume}}/{{postgresql.name}}/{{postgresql.pgdata}}",
+    "hostPath": "{{postgresql.host_volume}}/{{postgresql.pgdata}}",
     {{#postgresql.persistence}}
     "persistent": {
-    "size": "{{postgresql.volume_size}}"
+      "size": "{{postgresql.volume_size}}"
     },
     {{/postgresql.persistence}}
     "mode": "RW"
