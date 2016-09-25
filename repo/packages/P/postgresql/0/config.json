@@ -38,46 +38,51 @@
                     "default": 256.0,
                     "minimum": 256.0
                 },
-                "user":{
+                "user": {
                     "description": "Postgres user.",
                     "type": "string",
                     "default": "admin"
                 },
-                "password":{
+                "password": {
                     "description": "Postgres password.",
                     "type": "string",
                     "default": "password"
                 },
                 "host_volume": {
-                    "description": "The location of a volume on the host to be used for persisting PostgreSQL data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/postgresql`). Note that this path must be the same on all DCOS agents.",
+                    "description": "The location of a volume on the host to be used for persisting PostgreSQL data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/postgresql`). This can be a mounted NFS drive. Note that this path must be the same on all DCOS agents.",
                     "type": "string",
                     "default": "/tmp"
                 },
-                "pgdata":{
+                "volume_size": {
+                    "description": "If a new volume is to be created, this controls its size in MBs. Defaults to 100MBs",
+                    "type": "number",
+                    "default": 100
+                },
+                "pgdata": {
                     "description": "Location of the database files.",
                     "type": "string",
                     "default": "pgdata"
                 },
-                "dbname":{
+                "dbname": {
                     "description": "Name for the default database that is created when the image is first started.",
                     "type": "string",
                     "default": "admin"
                 },
-                "initdbargs":{
+                "initdbargs": {
                     "description": "Arguments to send to postgres initdb. The value is a space separated string of arguments as postgres initdb would expect them.",
-                    "type": "string",
+                    "type": "string"
                 },
-                "virtual_host":{
+                "virtual_host": {
                     "description": "Virtual Host URL to be used in the external load balancer. Modify as per your installation.",
                     "type": "string",
                     "default": "postgresql.example.org"
                 },
-                "port":{
+                "port": {
                     "description": "Port number to be used for clear communication",
                     "type": "number",
                     "default": 5432
                 },
-                "port_external":{
+                "port_external": {
                     "description": "Port number to be used for clear communication in the external load balancer",
                     "type": "number",
                     "default": 15432
