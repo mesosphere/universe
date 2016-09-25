@@ -15,16 +15,16 @@
     "docker": {
       "image": "{{resource.assets.container.docker.postgresql-docker}}",
       "forcePullImage": false,
-      {{#postgresql.persistence}}
       "volumes": [{
         "containerPath": "/var/lib/postgresql/data",
         "hostPath": "{{postgresql.host_volume}}/{{postgresql.name}}/{{postgresql.pgdata}}",
+        {{#postgresql.persistence}}
         "persistent": {
         "size": "{{postgresql.volume_size}}",
-          },
+        },
+        {{/postgresql.persistence}}
         "mode": "RW"
       }],
-      {{/postgresql.persistence}}
       "network": "BRIDGE",
       "portMappings": [{
           "containerPort": 5432,
@@ -34,7 +34,7 @@
           "name": "{{service.name}}",
           "labels": {
             "VIP_0": "/{{service.name}}:{{postgresql.port}}"
-            }
+          }
       }]
     },      
   },
