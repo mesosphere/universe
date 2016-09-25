@@ -37,7 +37,7 @@
       "portIndex": 0
   }],
   "volumes": [{
-    "containerPath": "/var/lib/postgresql/data",
+    "containerPath": "var/lib/postgresql/data",
     "hostPath": "{{postgresql.host_volume}}/{{postgresql.pgdata}}",
     {{#postgresql.persistence}}
     "persistent": {
