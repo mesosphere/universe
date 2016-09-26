@@ -50,7 +50,7 @@
           "containerPort": 389,
           "hostPort": 0,
           {{#networking.external_access}}
-          "servicePort": {{openldap.port}},
+          "servicePort": {{networking.port_external}},
           {{/networking.external_access}}
           "protocol": "tcp",
           "name": "{{service.name}}",
