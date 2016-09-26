@@ -1,0 +1,80 @@
+{
+  "properties": {
+    "ecr-login": {
+      "description": "ECR login configuration properties",
+      "properties": {
+        "registry_accounts": {
+          "description": "The AWS account numbers where the ECR registries are located. Space-delimited, max of 10 accounts.",
+          "type": "string",
+          "pattern": "^[0-9 ]{12,132}$"
+        },
+        "registry_region": {
+          "default": "us-east-1",
+          "description": "The AWS account region where the ECR registry is located.",
+          "type": "string",
+          "pattern": "^[a-z0-9-]{5,25}$"
+        },
+        "refresh_interval": {
+          "default": 21600,
+          "description": "The number of seconds to pause between Docker logins. AWS requires a refresh every 12 hours, so set below. Default: 6 hours (21600 seconds)",
+          "minimum": 60,
+          "type": "integer"
+        },
+        "host_directory": {
+          "default": "/home/core",
+          "description": "The host disk location where the Docker config will be saved. This will be mounted in the container.",
+          "type": "string"
+        },
+        "dockercfg_filename": {
+          "default": ".docker/config.json",
+          "description": "The Docker config path and file name within the host directory. Default: .docker/config.json",
+          "type": "string"
+        },
+        "aws_access_key": {
+          "description": "AWS access key with permissions to log into ECR. Optional on EC2 if an IAM role is defined.",
+          "type": "string"
+        },
+        "aws_secret_access_key": {
+          "description": "AWS secret access key with permissions to log into ECR. Optional on EC2 if an IAM role is defined.",
+          "type": "string"
+        },
+        "aws_session_token": {
+          "description": "AWS session token with permissions to log into ECR. Optional on EC2 if an IAM role is defined or if permanent keys are used.",
+          "type": "string"
+        },
+        "app_id": {
+          "default": "ecr-login",
+          "description": "Marathon Application ID",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 0.01,
+          "description": "CPU shares to allocate to each Marathon instance.",
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of Marathon instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "mem": {
+          "default": 64.0,
+          "description": "Memory (MB) to allocate to each Marathon task.",
+          "minimum": 64.0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "registry_accounts",
+        "registry_region"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "ecr-login"
+  ],
+  "type": "object"
+}

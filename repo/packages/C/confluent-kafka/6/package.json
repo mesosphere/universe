@@ -1,0 +1,13 @@
+{
+  "packagingVersion": "3.0",
+  "name": "confluent-kafka",
+  "version": "1.1.10-3.0.0",
+  "minDcosReleaseVersion": "1.8",
+  "maintainer": "partner-support@confluent.io",
+  "description": "Apache Kafka by Confluent",
+  "selected": true,
+  "framework": true,
+  "tags": ["message", "broker", "pubsub", "kafka"],
+  "postInstallNotes": "Apache Kafka by Confluent is being installed.",
+  "postUninstallNotes": "Apache Kafka by Confluent has been uninstalled. Please run the framework_cleaner to remove any persistent state if required."
+}

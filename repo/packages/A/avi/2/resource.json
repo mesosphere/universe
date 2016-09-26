@@ -1,0 +1,23 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "controller": "avinetworks/controller:16.2.2-9040-20160902.150936",
+        "serviceengine": "avinetworks/se:16.2.2-9040-20160902.150936"
+      }
+    }
+  },
+
+  "images": {
+    "icon-small": "https://s3-us-west-2.amazonaws.com/dcos/avi-small.png",
+    "icon-medium": "https://s3-us-west-2.amazonaws.com/dcos/avi-medium.jpg",
+    "icon-large": "https://s3-us-west-2.amazonaws.com/dcos/avi-high.jpg",
+    "screenshots": [
+    	"https://s3-us-west-2.amazonaws.com/dcos/security.png",
+    	"https://s3-us-west-2.amazonaws.com/dcos/selfservice.png",
+    	"https://s3-us-west-2.amazonaws.com/dcos/healthscore.png",
+    	"https://s3-us-west-2.amazonaws.com/dcos/analytics.png"
+    ]
+  }
+}
+

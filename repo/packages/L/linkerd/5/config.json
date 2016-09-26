@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "required": ["linkerd"],
+  "properties": {
+    "linkerd": {
+      "type": "object",
+      "required": ["admin-port", "cpus", "instances", "mem", "resource-roles", "routing-port"],
+      "properties": {
+        "admin-port": {
+          "default": 9990,
+          "description": "Admin port. Provides an administrative UI for this instance.",
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 0.25,
+          "description": "CPU shares to allocate to each linkerd instance.",
+          "minimum": 0.25,
+          "type": "number"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "mem": {
+          "default": 256.0,
+          "description": "Memory (MB) to allocate to each linkerd task.",
+          "minimum": 256.0,
+          "type": "number"
+        },
+        "resource-roles": {
+          "default": "\"*\", \"slave_public\"",
+          "description": "The accepted resource roles (e.g. slave_public). By default, this will deploy to any agents with the \"*\" or \"slave_public\" roles.",
+          "type": "string"
+        },
+        "routing-port": {
+          "default": 4140,
+          "description": "Routing port.",
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

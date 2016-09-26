@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "2.0",
+  "name": "openldap-admin",
+  "version": "0.2",
+  "scm": "https://github.com/dinkel/docker-phpldapadmin",
+  "maintainer": "support@mesosphere.io",
+  "website": "http://phpldapadmin.sourceforge.net/wiki/index.php/Main_Page",
+  "description": "phpLDAPadmin is a web-based LDAP client. It provides easy, anywhere-accessible, multi-language administration for your LDAP server.\n\nThis DC/OS package is ready to be used alongside the DC/OS `openldap` package. Other LDAP servers may work, but haven't been tested.",
+  "tags": [
+    "ldap",
+    "directory"
+    ],
+  "preInstallNotes": "Open LDAP Admin requires at least 0.1 CPU and 128MB of RAM.\n\nWARNING: OpenLDAP Admin on DCOS is currently in ALPHA. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nThis package will automatically connecto to an existing DC/OS `openldap` package through an automated Virtual IP.\n\nThis package is accessible through the DC/OS `Services` tab. It will also create an entry in the DC/OS external load balancer for accessing the UI in port `11389` from outside the cluster. Access the UI at `http://your_DCOS_URL/services/openldapadmin` or at `http://your_public_node_ip:11389`.",
+  "postInstallNotes": "OpenLDAP Admin has been installed.\n\nYou can now access the UI at `http://your_DCOS_URL/services/openldapadmin` or at `http://your_public_node_ip:11389`\n\nDC/OS openldap default Login DN: `cn=admin,dc=example,dc=org`\nDefault password: `admin`",
+  "postUninstallNotes": "OpenLDAP Admin has been uninstalled. Note that any data persisted to a NFS share still exists and will need to be manually removed.",
+  "licenses": [
+    {
+      "name": "MIT License",
+      "url": "https://raw.githubusercontent.com/dinkel/docker-phpldapadmin/master/LICENSE"
+    }
+  ]
+}

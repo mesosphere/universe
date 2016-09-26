@@ -1,0 +1,56 @@
+{
+  "properties": {
+    "marathon-slack": {
+      "description": "The marathon-slack for DC/OS settings",
+      "properties": {
+        "slack_webhook_url": {
+          "description": "The Slack Webhook URL to send the notifications to.",
+          "type": "string"
+        },
+        "slack_channel": {
+          "default": "#marathon",
+          "description": "Optional: The Slack channel to send the message to.",
+          "type": "string"
+        },
+        "event_types": {
+          "default": "deployment_info,deployment_success,deployment_failed",
+          "description": "Optional: Comma-separated list of event types to notify upon - eg. deployment_info,deployment_success,deployment_failed. See https://github.com/tobilg/marathon-slack#event-types",
+          "type": "string"
+        },
+        "log_level": {
+          "default": "info",
+          "description": "Optional: The log level for the log file output. Can be either error, debug or info.",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 0.1,
+          "description": "CPU (shares) to allocate to the marathon-slack task",
+          "maximum": 1.0,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of marathon-slack instances running on DC/OS",
+          "minimum": 1,
+          "maximum": 1,
+          "type": "integer"
+        },
+        "mem": {
+          "default": 128.0,
+          "description": "Memory (MB) to allocate to the marathon-slack task",
+          "minimum": 512.0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "slack_webhook_url"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "marathon-slack"
+  ],
+  "type": "object"
+}
