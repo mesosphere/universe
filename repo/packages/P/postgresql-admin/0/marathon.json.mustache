@@ -57,7 +57,7 @@
         "mode": "RW"
         },
         {
-          "containerPath": "{{storage.run_dir}}",
+          "containerPath": "{{storage.lock_dir}}",
           {{^storage.persistence}}
           "hostPath": "{{storage.host_volume}}/{{storage.lock_dir}}",
           {{/storage.persistence}}
