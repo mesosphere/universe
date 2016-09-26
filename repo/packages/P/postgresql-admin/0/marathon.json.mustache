@@ -21,7 +21,7 @@
         "type": "DOCKER",
         "volumes": [
         {
-          "containerPath": "{{storage.document_root}}",
+          "containerPath": "/{{storage.document_root}}",
           {{^storage.persistence}}
           "hostPath": "{{storage.host_volume}}/{{storage.document_root}}",
           {{/storage.persistence}}
@@ -33,7 +33,7 @@
         "mode": "RW"
         },
         {
-          "containerPath": "{{storage.log_dir}}",
+          "containerPath": "/{{storage.log_dir}}",
           {{^storage.persistence}}
           "hostPath": "{{storage.host_volume}}/{{storage.log_dir}}",
           {{/storage.persistence}}
@@ -45,7 +45,7 @@
         "mode": "RW"
         },
         {
-          "containerPath": "{{storage.run_dir}}",
+          "containerPath": "/{{storage.run_dir}}",
           {{^storage.persistence}}
           "hostPath": "{{storage.host_volume}}/{{storage.run_dir}}",
           {{/storage.persistence}}
@@ -57,7 +57,7 @@
         "mode": "RW"
         },
         {
-          "containerPath": "{{storage.lock_dir}}",
+          "containerPath": "/{{storage.lock_dir}}",
           {{^storage.persistence}}
           "hostPath": "{{storage.host_volume}}/{{storage.lock_dir}}",
           {{/storage.persistence}}
