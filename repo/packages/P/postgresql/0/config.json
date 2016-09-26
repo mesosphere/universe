@@ -94,7 +94,7 @@
                     "type": "number",
                     "default": 5432
                 },
-                "external_access": {
+                "create_vip": {
                     "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to FALSE. Please note that this connection would be UNENCRYPTED.",
                     "type": "boolean",
                     "default": false                    
