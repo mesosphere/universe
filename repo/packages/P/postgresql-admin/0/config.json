@@ -1,0 +1,100 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"The name of the postgresql Admin service instance",
+                    "type":"string",
+                    "default":"postgresql-admin"
+                }
+            }
+        },
+        "postgresql-admin":{
+            "type": "object",
+            "description": "postgresql admin service configuration properties",
+            "properties": {
+                "name": {
+                    "description": "Package name.",
+                    "type": "string",
+                    "default": "postgresql-admin"
+                },
+                "cpus": {
+                    "description": "CPU shares to allocate to each postgresql node.",
+                    "type": "number",
+                    "default": 0.1,
+                    "minimum": 0.1
+                },
+                "mem": {
+                    "description": "Memory to allocate to each postgresql node.",
+                    "type": "number",
+                    "default": 128.0,
+                    "minimum": 128.0
+                },
+                "defaultdb": {
+                    "description": "Default database. Defaults to 'admin'.",
+                    "type": "string",
+                    "default": "admin"
+                }
+            },
+            "required": [
+                "cpus",
+                "mem"
+            ]
+        },
+        "networking":{
+            "type": "object",
+            "description": "postgresql admin networking configuration properties",
+            "properties": {
+                "postgres_host":{
+                    "description": "The name of the postgresql instance to connect to.",
+                    "type": "string",
+                    "default": "postgresql"
+                },
+                "postgres_host_port":{
+                    "description": "The port where the postgresql server is listening on. Defaults to 5432",
+                    "type": "number",
+                    "default": 5432
+                },
+                "virtual_host": {
+                    "description": "Virtual Host URL to be used in the external load balancer. Modify as per your installation.",
+                    "type": "string",
+                    "default": "postgresql.example.org"
+                },
+                "port_external": {
+                    "description": "Port number to be used for clear communication in the external load balancer",
+                    "type": "number",
+                    "default": 15432
+                }
+            }
+        },
+        "webserver":{
+            "type": "object",
+            "description": "postgresql admin web server configuration properties",
+            "properties": {
+                "name":{
+                    "description": "The name of the web server process that displays the UI.",
+                    "type": "string",
+                    "default": "localhost"
+                },
+                "server_admin":{
+                    "description": "Username of the server admin. Defaults to admin@localhost",
+                    "type": "string",
+                    "default": "admin@localhost"
+                },
+                "run_user":{
+                    "description": "User that the web server runs under",
+                    "type": "string",
+                    "default": "www-data"
+                },
+                "run_group":{
+                    "description": "Group that the web server runs under",
+                    "type": "string",
+                    "default": "www-data"
+                }
+            }
+        }
+    }
+}
