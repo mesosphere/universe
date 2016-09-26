@@ -116,7 +116,7 @@
                 "port_external": {
                     "description": "For external access, the port number to be used for clear communication in the external load balancer",
                     "type": "number",
-                    "default": 11389
+                    "default": 10389
                 },
                 "virtual_host": {
                     "description": "For external access, virtual Host URL to be used in the external load balancer. Modify as per your installation.",
