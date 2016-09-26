@@ -5,8 +5,8 @@
     "instances": 1,
     "env": {
         "POSTGRES_HOST": "{{networking.postgres_host}}.marathon.l4lb.thisdcos.directory",
-        "POSTGRES_PORT": "{{networking.postgres_host_port}}",
-        "POSTGRES_DEFAULTDB": "{{postgresql-admin.defaultdb}},
+        "POSTGRES_PORT": {{networking.postgres_host_port}},
+        "POSTGRES_DEFAULTDB": "{{postgresql-admin.defaultdb}}",
         "APACHE_SERVERNAME": "{{webserver.name}}",
         "APACHE_SERVERADMIN": "{{webserver.server_admin}}",
         "APACHE_DOCUMENTROOT": "/var/www",
