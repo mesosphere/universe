@@ -92,22 +92,22 @@
                 "document_root": {
                     "description": "Path to the web document root inside the container",
                     "type": "string",
-                    "default": "www_dir"
+                    "default": "www0"
                 },
                 "log_dir": {
                     "description": "Path to the log directory inside the container",
                     "type": "string",
-                    "default": "log_dir"
+                    "default": "log0"
                 },
                 "run_dir": {
                     "description": "Path to the run directory inside the container",
                     "type": "string",
-                    "default": "run_dir"
+                    "default": "run0"
                 },
                 "lock_dir": {
                     "description": "Path to the lock directory inside the container",
                     "type": "string",
-                    "default": "lock_dir"
+                    "default": "lock0"
                 }
             }
         },
