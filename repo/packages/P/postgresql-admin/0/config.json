@@ -92,22 +92,22 @@
                 "document_root": {
                     "description": "Path to the web document root inside the container",
                     "type": "string",
-                    "default": "www0"
+                    "default": "pgadmin-www"
                 },
                 "log_dir": {
                     "description": "Path to the log directory inside the container",
                     "type": "string",
-                    "default": "log0"
+                    "default": "pgadmin-log"
                 },
                 "run_dir": {
                     "description": "Path to the run directory inside the container",
                     "type": "string",
-                    "default": "run0"
+                    "default": "pgadmin-run"
                 },
                 "lock_dir": {
                     "description": "Path to the lock directory inside the container",
                     "type": "string",
-                    "default": "lock0"
+                    "default": "pgadmin-lock"
                 }
             }
         },
