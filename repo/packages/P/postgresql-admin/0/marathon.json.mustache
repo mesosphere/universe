@@ -9,21 +9,21 @@
         "POSTGRES_DEFAULTDB": "{{postgresql-admin.defaultdb}}",
         "APACHE_SERVERNAME": "{{webserver.name}}",
         "APACHE_SERVERADMIN": "{{webserver.server_admin}}",
-        "APACHE_DOCUMENTROOT": "{{storage.documentroot}}",
+        "APACHE_DOCUMENTROOT": "/{{storage.document_root}}",
         "APACHE_RUN_USER": "{{webserver.run_user}}",
         "APACHE_RUN_GROUP": "{{webserver.run_group}}",
-        "APACHE_LOG_DIR": "{{storage.logdir}}",
-        "APACHE_PID_FILE": "{{storage.rundir}}/apache2.pid",
-        "APACHE_RUN_DIR": "{{storage.rundir}",
-        "APACHE_LOCK_DIR": "{{storage.lockdir}}"
+        "APACHE_LOG_DIR": "/{{storage.log_dir}}",
+        "APACHE_PID_FILE": "/{{storage.run_dir}}/apache2.pid",
+        "APACHE_RUN_DIR": "/{{storage.run_dir}",
+        "APACHE_LOCK_DIR": "/{{storage.lock_dir}}"
     },
     "container": {
         "type": "DOCKER",
         "volumes": [
         {
-          "containerPath": "{{storage.documentroot}}",
+          "containerPath": "{{storage.document_root}}",
           {{^storage.persistence}}
-          "hostPath": "{{storage.host_volume}}/{{storage.documentroot}}",
+          "hostPath": "{{storage.host_volume}}/{{storage.document_root}}",
           {{/storage.persistence}}
           {{#storage.persistence}}
           "persistent": {
@@ -33,9 +33,9 @@
         "mode": "RW"
         },
         {
-          "containerPath": "{{storage.logdir}}",
+          "containerPath": "{{storage.log_dir}}",
           {{^storage.persistence}}
-          "hostPath": "{{storage.host_volume}}/{{storage.logdir}}",
+          "hostPath": "{{storage.host_volume}}/{{storage.log_dir}}",
           {{/storage.persistence}}
           {{#storage.persistence}}
           "persistent": {
@@ -45,9 +45,9 @@
         "mode": "RW"
         },
         {
-          "containerPath": "{{storage.rundir}}",
+          "containerPath": "{{storage.run_dir}}",
           {{^storage.persistence}}
-          "hostPath": "{{storage.host_volume}}/{{storage.rundir}}",
+          "hostPath": "{{storage.host_volume}}/{{storage.run_dir}}",
           {{/storage.persistence}}
           {{#storage.persistence}}
           "persistent": {
