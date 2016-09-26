@@ -48,7 +48,7 @@
             "type": "object",
             "description": "PostgreSQL admin networking configuration properties",
             "properties": {
-                "postgres_host":{
+                "postgres_location":{
                     "description": "The name of the postgresql instance to connect to.",
                     "type": "string",
                     "default": "postgresql"
@@ -63,7 +63,7 @@
                     "type": "boolean",
                     "default": false                    
                 }, 
-                "port_external": {
+                "port_vip": {
                     "description": "For external access, port number to be used for clear communication in the external load balancer",
                     "type": "number",
                     "default": 15433
