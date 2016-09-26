@@ -19,7 +19,7 @@
       {{/postgresql.persistence}}
       {{#postgresql.persistence}}
       "persistent": {
-        "size": "{{postgresql.volume_size}}"
+        "size": {{postgresql.volume_size}}
       },
       {{/postgresql.persistence}}
       "mode": "RW"
