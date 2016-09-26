@@ -16,9 +16,9 @@
     "type": "DOCKER",
     "volumes": [
       {
-        "containerPath": "/var/lib/ldap",
+        "containerPath": "var",
         {{^storage.persistence}}
-        "hostPath": "{{storage.host_volume}}/{{openldap.name}}/var_lib_ldap",
+        "hostPath": "{{storage.host_volume}}/{{openldap.name}}/var",
         {{/storage.persistence}}
         {{#storage.persistence}}
         "persistent": {
@@ -28,9 +28,9 @@
         "mode": "RW"
       },
       {
-        "containerPath": "/etc/ldap",
+        "containerPath": "etc",
         {{^storage.persistence}}
-        "hostPath": "{{storage.host_volume}}/{{openldap.name}}/etc_ldap",
+        "hostPath": "{{storage.host_volume}}/{{openldap.name}}/etc",
         {{/storage.persistence}}
         {{#storage.persistence}}
         "persistent": {
