@@ -4,71 +4,11 @@
     "mem": {{postgresql-admin.mem}},
     "instances": 1,
     "env": {
-        "POSTGRES_HOST": "{{networking.postgres_host}}.marathon.l4lb.thisdcos.directory",
-        "POSTGRES_PORT": "{{networking.postgres_host_port}}",
-        "POSTGRES_DEFAULTDB": "{{postgresql-admin.defaultdb}}",
-        "APACHE_SERVERNAME": "{{webserver.name}}",
-        "APACHE_SERVERADMIN": "{{webserver.server_admin}}",
-        "APACHE_DOCUMENTROOT": "/{{storage.document_root}}",
-        "APACHE_RUN_USER": "{{webserver.run_user}}",
-        "APACHE_RUN_GROUP": "{{webserver.run_group}}",
-        "APACHE_LOG_DIR": "/{{storage.log_dir}}",
-        "APACHE_PID_FILE": "/{{storage.run_dir}}/apache2.pid",
-        "APACHE_RUN_DIR": "/{{storage.run_dir}",
-        "APACHE_LOCK_DIR": "/{{storage.lock_dir}}"
+        "DB_HOST": "{{networking.postgres_host}}.marathon.l4lb.thisdcos.directory",
+        "DB_PORT": "{{networking.postgres_host_port}}"
     },
     "container": {
         "type": "DOCKER",
-        "volumes": [
-        {
-          "containerPath": "/{{storage.document_root}}",
-          {{^storage.persistence}}
-          "hostPath": "{{storage.host_volume}}/{{storage.document_root}}",
-          {{/storage.persistence}}
-          {{#storage.persistence}}
-          "persistent": {
-            "size": {{storage.volume_size}}
-          },
-          {{/storage.persistence}}
-        "mode": "RW"
-        },
-        {
-          "containerPath": "/{{storage.log_dir}}",
-          {{^storage.persistence}}
-          "hostPath": "{{storage.host_volume}}/{{storage.log_dir}}",
-          {{/storage.persistence}}
-          {{#storage.persistence}}
-          "persistent": {
-            "size": {{storage.volume_size}}
-          },
-          {{/storage.persistence}}
-        "mode": "RW"
-        },
-        {
-          "containerPath": "/{{storage.run_dir}}",
-          {{^storage.persistence}}
-          "hostPath": "{{storage.host_volume}}/{{storage.run_dir}}",
-          {{/storage.persistence}}
-          {{#storage.persistence}}
-          "persistent": {
-            "size": {{storage.volume_size}}
-          },
-          {{/storage.persistence}}
-        "mode": "RW"
-        },
-        {
-          "containerPath": "/{{storage.lock_dir}}",
-          {{^storage.persistence}}
-          "hostPath": "{{storage.host_volume}}/{{storage.lock_dir}}",
-          {{/storage.persistence}}
-          {{#storage.persistence}}
-          "persistent": {
-            "size": {{storage.volume_size}}
-          },
-          {{/storage.persistence}}
-        "mode": "RW"
-        }
-        ],
         "docker": {
             "image": "{{resource.assets.container.docker.postgresql-admin-docker}}",
             "forcePullImage": false,

@@ -68,73 +68,7 @@
                     "type": "number",
                     "default": 15433
                 }
-            }
-        },
-        "storage": {
-            "type": "object",
-            "description": "PostgreSQL admin storage configuration properties",
-            "properties":{    
-                "persistence": {
-                    "description": "Enable or disable data persistence. If enabled, requires configuration of a valid host_volume.",
-                    "type": "boolean",
-                    "default": false                    
-                },
-                "host_volume": {
-                    "description": "The location of a volume on the host to be used for persisting data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/postgresql-admin`). This can be a mounted NFS drive. Note that this path must be the same on all DCOS agents.",
-                    "type": "string",
-                    "default": "/tmp"
-                },
-                "volume_size": {
-                    "description": "If a new volume is to be created, this controls its size in MBs. Defaults to 64MBs",
-                    "type": "number",
-                    "default": 64
-                },
-                "document_root": {
-                    "description": "Path to the web document root inside the container",
-                    "type": "string",
-                    "default": "pgadmin-www"
-                },
-                "log_dir": {
-                    "description": "Path to the log directory inside the container",
-                    "type": "string",
-                    "default": "pgadmin-log"
-                },
-                "run_dir": {
-                    "description": "Path to the run directory inside the container",
-                    "type": "string",
-                    "default": "pgadmin-run"
-                },
-                "lock_dir": {
-                    "description": "Path to the lock directory inside the container",
-                    "type": "string",
-                    "default": "pgadmin-lock"
-                }
-            }
-        },
-        "webserver":{
-            "type": "object",
-            "description": "postgresql admin web server configuration properties",
-            "properties": {
-                "name":{
-                    "description": "The name of the web server process that displays the UI.",
-                    "type": "string",
-                    "default": "localhost"
-                },
-                "server_admin":{
-                    "description": "Username of the server admin. Defaults to admin@localhost",
-                    "type": "string",
-                    "default": "admin@localhost"
-                },
-                "run_user":{
-                    "description": "User that the web server runs under",
-                    "type": "string",
-                    "default": "www-data"
-                },
-                "run_group":{
-                    "description": "Group that the web server runs under",
-                    "type": "string",
-                    "default": "www-data"
-                }
+                
             }
         }
     }
