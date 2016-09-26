@@ -92,22 +92,22 @@
                 "document_root": {
                     "description": "Path to the web document root inside the container",
                     "type": "string",
-                    "default": "/var/www"
+                    "default": "/www"
                 },
                 "log_dir": {
                     "description": "Path to the log directory inside the container",
                     "type": "string",
-                    "default": "/var/web/log/apache2"
+                    "default": "/log"
                 },
                 "run_dir": {
                     "description": "Path to the run directory inside the container",
                     "type": "string",
-                    "default": "/var/run/apache2"
+                    "default": "/run"
                 },
                 "lock_dir": {
                     "description": "Path to the lock directory inside the container",
                     "type": "string",
-                    "default": "/var/lock/apache2"
+                    "default": "/lock"
                 }
             }
         },
