@@ -14,6 +14,33 @@
   },
   "container": {
     "type": "DOCKER",
+    "volumes": [
+    {
+      "containerPath": "/var/lib/ldap",
+      {{^storage.persistence}}
+      "hostPath": "{{storage.host_volume}}/{{openldap.name}}/ldap",
+      {{/storage.persistence}}
+      {{#storage.persistence}}
+      "persistent": {
+        "size": {{storage.ldap_volume_size}}
+      },
+      {{/storage.persistence}}
+      "mode": "RW"
+    },
+    {
+      "containerPath": "/etc/ldap/slapd.d",
+      {{^storage.persistence}}
+      "hostPath": "{{storage.host_volume}}/{{openldap.name}}/slapd.d",
+      {{/storage.persistence}}
+      {{#storage.persistence}}
+      "persistent": {
+        "size": {{storage.slapd_volume_size}}
+      },
+      {{/storage.persistence}}
+      "mode": "RW"
+    },
+
+    ],
     "docker": {
       "image": "{{resource.assets.container.docker.openldap-docker}}",
       "forcePullImage": false,
@@ -22,11 +49,13 @@
         {
           "containerPort": 389,
           "hostPort": 0,
+          {{#networking.external_access}}
           "servicePort": {{openldap.port}},
+          {{/networking.external_access}}
           "protocol": "tcp",
           "name": "{{service.name}}",
           "labels": {
-            "VIP_0": "/{{service.name}}:389"
+            "VIP_0": "/{{service.name}}:{{networking.port}}"
           }
         }
       ]
@@ -34,13 +63,11 @@
   },
   "healthChecks": [
     {
-      "protocol": "COMMAND",
-      "command": {
-        "value": "ps -Aef | grep slapd"
-      },
+      "protocol": "TCP",
+      "portIndex": 0,
       "gracePeriodSeconds": 300,
       "intervalSeconds": 60,
-      "timeoutSeconds": 20,
+      "timeoutSeconds": 10,
       "maxConsecutiveFailures": 3
     }
   ],
@@ -50,22 +77,15 @@
       "UNIQUE"
     ]
   ],
-  "volumes": [
-    {
-      "containerPath": "/var/lib/ldap",
-      "hostPath": "{{openldap.host_volume}}/{{openldap.name}}/ldap",
-      "mode": "RW"
-    },
-    {
-      "containerPath": "/etc/ldap/slapd.d",
-      "hostPath": "{{openldap.host_volume}}/{{openldap.name}}/slapd.d",
-      "mode": "RW"
-    }
-  ],
   "labels": {
     "DCOS_SERVICE_NAME": "{{service.name}}",
+    {{#networking.external_access}}
     "HAPROXY_0_VHOST": "{{openldap.virtual_host}}",
     "HAPROXY_GROUP": "external",
+    {{/networking.external_access}}
+    "DCOS_PACKAGE_NAME": "{{openldap.name}}",
+    "DCOS_PACKAGE_VERSION": "0.3",
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false",
     "DCOS_PACKAGE_FRAMEWORK_NAME": "{{openldap.name}}"
   }
 }
