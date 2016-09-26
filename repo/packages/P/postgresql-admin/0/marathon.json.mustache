@@ -9,13 +9,13 @@
         "POSTGRES_DEFAULTDB": "{{postgresql-admin.defaultdb}}",
         "APACHE_SERVERNAME": "{{webserver.name}}",
         "APACHE_SERVERADMIN": "{{webserver.server_admin}}",
-        "APACHE_DOCUMENTROOT": "/var/www",
+        "APACHE_DOCUMENTROOT": "{{storage.document_root}}",
         "APACHE_RUN_USER": "{{webserver.run_user}}",
         "APACHE_RUN_GROUP": "{{webserver.run_group}}",
-        "APACHE_LOG_DIR": "/var/web/log/apache2",
-        "APACHE_PID_FILE": "/var/run/apache2.pid",
-        "APACHE_RUN_DIR": "/var/run/apache2",
-        "APACHE_LOCK_DIR": "/var/lock/apache2"
+        "APACHE_LOG_DIR": "{{storage.log_dir}}",
+        "APACHE_PID_FILE": "{{storage.run_dir}}/apache2.pid",
+        "APACHE_RUN_DIR": "{{storage.run_dir}}",
+        "APACHE_LOCK_DIR": "{{storage.log_dir}}"
     },
     "container": {
         "type": "DOCKER",
