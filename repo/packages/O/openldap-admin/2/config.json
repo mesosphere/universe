@@ -1,0 +1,74 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"The name of the OpenLDAP-admin service instance",
+                    "type":"string",
+                    "default":"openldap-admin"
+                }
+            }
+        },
+        "openldap-admin":{
+            "type": "object",
+            "description": "OpenLDAP-admin service configuration properties",
+            "properties": {
+                "name": {
+                    "description": "Package name.",
+                    "type": "string",
+                    "default": "openldap-admin"
+                },
+                "cpus": {
+                    "description": "CPU shares to allocate to each OpenLDAP node.",
+                    "type": "number",
+                    "default": 0.1,
+                    "minimum": 0.1
+                },
+                "mem": {
+                    "description": "Memory to allocate to each OpenLDAP node.",
+                    "type": "number",
+                    "default": 128.0,
+                    "minimum": 128.0
+                }
+            },
+            "required": [
+                "cpus",
+                "mem"
+            ]
+        },
+        "networking":{
+            "type": "object",
+            "description": "OpenLDAP-admin networking configuration properties",
+            "properties": {
+                "ldap_host":{
+                    "description": "The name of the OpenLDAP instance to connect to.",
+                    "type": "string",
+                    "default": "openldap"
+                },
+                "port_ldap_server":{
+                    "description": "The port where the OpenLDAP server is listening on. Defaults to 389. Must be the same port used in the corresponding OpenLDAP service.",
+                    "type": "number",
+                    "default": 389
+                },
+                "external_access": {
+                    "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to FALSE",
+                    "type": "boolean",
+                    "default": false                    
+                },   
+                "port_external":{
+                    "description": "For external access, port number to be used for clear communication in the external load balancer",
+                    "type": "number",
+                    "default": 11389
+                },
+                "virtual_host":{
+                    "description": "For external access, virtual Host URL to be used in the external load balancer.",
+                    "type": "string",
+                    "default": "phpldapadmin.example.org"
+                }
+            }
+        }
+    }
+}
