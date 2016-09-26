@@ -46,7 +46,7 @@
         },
         "networking":{
             "type": "object",
-            "description": "postgresql admin networking configuration properties",
+            "description": "PostgreSQL admin networking configuration properties",
             "properties": {
                 "postgres_host":{
                     "description": "The name of the postgresql instance to connect to.",
@@ -67,6 +67,47 @@
                     "description": "Port number to be used for clear communication in the external load balancer",
                     "type": "number",
                     "default": 15432
+                }
+            }
+        },
+        "storage": {
+            "type": "object",
+            "description": "PostgreSQL admin storage configuration properties",
+            "properties":{    
+                "persistence": {
+                    "description": "Enable or disable data persistence. If enabled, requires configuration of a valid host_volume.",
+                    "type": "boolean",
+                    "default": false                    
+                },
+                "host_volume": {
+                    "description": "The location of a volume on the host to be used for persisting data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/postgresql-admin`). This can be a mounted NFS drive. Note that this path must be the same on all DCOS agents.",
+                    "type": "string",
+                    "default": "/tmp"
+                },
+                "volume_size": {
+                    "description": "If a new volume is to be created, this controls its size in MBs. Defaults to 64MBs",
+                    "type": "number",
+                    "default": 64
+                },
+                "document_root": {
+                    "description": "Path to the web document root inside the container",
+                    "type": "string",
+                    "default": "/var/www"
+                },
+                "log_dir": {
+                    "description": "Path to the log directory inside the container",
+                    "type": "string",
+                    "default": "/var/web/log/apache2"
+                },
+                "run_dir": {
+                    "description": "Path to the run directory inside the container",
+                    "type": "string",
+                    "default": "/var/run/apache2"
+                },
+                "lock_dir": {
+                    "description": "Path to the lock directory inside the container",
+                    "type": "string",
+                    "default": "/var/lock/apache2"
                 }
             }
         },
