@@ -12,7 +12,7 @@
     "database",
     "admin"
     ],
-  "preInstallNotes": "PostgreSQL Admin requires at least 0.1 CPU and 128MB of RAM.\n\nWARNING: PostgreSQL Admin on DCOS is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nThis package will automatically connect to an existing DC/OS `postgresql` package through an automated Virtual IP.\n\nThis package is accessible through the DC/OS `Services` tab. It will also create an entry in the DC/OS external load balancer for accessing the UI from outside the cluster, by default in port `15432`. Access the UI at `http://your_DCOS_URL/services/PostgreSQLadmin` or at `http://your_public_node_ip:15432`.",
+  "preInstallNotes": "PostgreSQL Admin requires at least 0.2 CPU and 256MB of RAM.\n\nWARNING: PostgreSQL Admin on DCOS is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nThis package will automatically connect to an existing DC/OS `postgresql` package through an automated Virtual IP.\n\nThis package is accessible through the DC/OS `Services` tab. It will also create an entry in the DC/OS external load balancer for accessing the UI from outside the cluster, by default in port `15432`. Access the UI at `http://your_DCOS_URL/services/PostgreSQLadmin` or at `http://your_public_node_ip:15432`.",
   "postInstallNotes": "PostgreSQL Admin has been installed.\n\nYou can now access the UI at `http://your_DCOS_URL/services/PostgreSQLadmin` or at `http://your_public_node_ip:15432`\n\nDC/OS PostgreSQL default Login: `admin@localhost`\nDefault password: `admin`",
   "postUninstallNotes": "PostgreSQL Admin has been uninstalled.",
   "licenses": [

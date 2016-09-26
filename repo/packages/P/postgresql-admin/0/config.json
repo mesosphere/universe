@@ -24,14 +24,14 @@
                 "cpus": {
                     "description": "CPU shares to allocate to each postgresql node.",
                     "type": "number",
-                    "default": 0.1,
-                    "minimum": 0.1
+                    "default": 0.2,
+                    "minimum": 0.2
                 },
                 "mem": {
                     "description": "Memory to allocate to each postgresql node.",
                     "type": "number",
-                    "default": 128.0,
-                    "minimum": 128.0
+                    "default": 256.0,
+                    "minimum": 256.0
                 },
                 "defaultdb": {
                     "description": "Default database. Defaults to 'admin'.",
