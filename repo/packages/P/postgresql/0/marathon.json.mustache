@@ -6,22 +6,22 @@
   "env": {
     "POSTGRES_PASSWORD": "{{postgresql.password}}",
     "POSTGRES_USER": "{{postgresql.user}}",
-    "POSTGRES_PGDATA": "{{postgresql.pgdata}}",
+    "POSTGRES_PGDATA": "{{storage.pgdata}}",
     "POSTGRES_DB": "{{postgresql.dbname}}",
     "POSTGRES_INITDB_ARGS": "{{postgresql.initdbargs}}"
   },
   "container": {
     "type": "DOCKER",
     "volumes": [{
-      "containerPath": "{{postgresql.pgdata}}",
-      {{^postgresql.persistence}}
-      "hostPath": "{{postgresql.host_volume}}/{{postgresql.pgdata}}",
-      {{/postgresql.persistence}}
-      {{#postgresql.persistence}}
+      "containerPath": "{{storage.pgdata}}",
+      {{^storage.persistence}}
+      "hostPath": "{{storage.host_volume}}/{{storage.pgdata}}",
+      {{/storage.persistence}}
+      {{#storage.persistence}}
       "persistent": {
-        "size": {{postgresql.volume_size}}
+        "size": {{storage.volume_size}}
       },
-      {{/postgresql.persistence}}
+      {{/storage.persistence}}
       "mode": "RW"
     }],
     "docker": {
@@ -31,11 +31,11 @@
       "portMappings": [{
           "containerPort": 5432,
           "hostPort": 0,
-          "servicePort": {{postgresql.port_external}},
+          "servicePort": {{networking.port_external}},
           "protocol": "tcp",
           "name": "{{service.name}}",
           "labels": {
-            "VIP_0": "/{{service.name}}:{{postgresql.port}}"
+            "VIP_0": "/{{service.name}}:{{networking.port}}"
           }
       }]
     }      
@@ -51,7 +51,7 @@
 
   "labels": {
     "DCOS_SERVICE_NAME": "{{service.name}}",
-    "HAPROXY_0_VHOST": "{{postgresql.virtual_host}}",
+    "HAPROXY_0_VHOST": "{{networking.virtual_host}}",
     "HAPROXY_GROUP": "external",
     "DCOS_PACKAGE_FRAMEWORK_NAME": "{{postgresql.name}}"
   }

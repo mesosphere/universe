@@ -48,6 +48,26 @@
                     "type": "string",
                     "default": "password"
                 },
+                "dbname": {
+                    "description": "Name for the default database that is created when the image is first started.",
+                    "type": "string",
+                    "default": "admin"
+                },
+                "initdbargs": {
+                    "description": "Arguments to send to postgres initdb. The value is a space separated string of arguments as postgres initdb would expect them.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "cpus",
+                "mem"
+            ]
+        },
+        "storage": {
+            "type": "object",
+            "description": "PostgreSQL storage configuration properties",
+            "properties":{    
                 "persistence": {
                     "description": "Enable or disable data persistence. If enabled, requires configuration of a valid host_volume.",
                     "type": "boolean",
@@ -67,16 +87,13 @@
                     "description": "Location of the database files.",
                     "type": "string",
                     "default": "pgdata"
-                },
-                "dbname": {
-                    "description": "Name for the default database that is created when the image is first started.",
-                    "type": "string",
-                    "default": "admin"
-                },
-                "initdbargs": {
-                    "description": "Arguments to send to postgres initdb. The value is a space separated string of arguments as postgres initdb would expect them.",
-                    "type": "string"
-                },
+                }
+            }
+        },
+        "networking": {
+            "type": "object",
+            "description": "PostgreSQL networking configuration properties",
+            "properties": {    
                 "virtual_host": {
                     "description": "Virtual Host URL to be used in the external load balancer. Modify as per your installation.",
                     "type": "string",
@@ -92,12 +109,7 @@
                     "type": "number",
                     "default": 15432
                 }
-            },
-            "required": [
-                "name",
-                "cpus",
-                "mem"
-            ]
+            }
         }
     }
 }
