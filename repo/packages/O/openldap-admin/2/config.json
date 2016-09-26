@@ -6,7 +6,7 @@
             "description": "DC/OS service configuration properties",
             "properties":{
                 "name" : {
-                    "description":"The name of the OpenLDAP Admin service instance",
+                    "description":"The name of the OpenLDAP-admin service instance",
                     "type":"string",
                     "default":"openldap-admin"
                 }
@@ -14,7 +14,7 @@
         },
         "openldap-admin":{
             "type": "object",
-            "description": "OpenLDAP Admin service configuration properties",
+            "description": "OpenLDAP-admin service configuration properties",
             "properties": {
                 "name": {
                     "description": "Package name.",
@@ -32,32 +32,43 @@
                     "type": "number",
                     "default": 128.0,
                     "minimum": 128.0
-                },
-                "ldap_host":{
-                    "description": "The name of the OpenLDAP instance to connect to.",
-                    "type": "string",
-                    "default": "openldap"
-                },
-                "ldap_host_port":{
-                    "description": "The port where the OpenLDAP server is listening on. Defaults to 389",
-                    "type": "number",
-                    "default": 389
-                },
-                "port":{
-                    "description": "Port number to be used for external clear web traffic",
-                    "type": "number",
-                    "default": 11389
-                },
-                "virtual_host":{
-                    "description": "Virtual host to be used to publish the UI",
-                    "type": "string",
-                    "default": "phpldapadmin.example.org"
                 }
             },
             "required": [
                 "cpus",
                 "mem"
             ]
+        },
+        "networking":{
+            "type": "object",
+            "description": "OpenLDAP-admin networking configuration properties",
+            "properties": {
+                "ldap_host":{
+                    "description": "The name of the OpenLDAP instance to connect to.",
+                    "type": "string",
+                    "default": "openldap"
+                },
+                "port_ldap_server":{
+                    "description": "The port where the OpenLDAP server is listening on. Defaults to 389. Must be the same port used in the corresponding OpenLDAP service.",
+                    "type": "number",
+                    "default": 389
+                },
+                "external_access": {
+                    "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to FALSE",
+                    "type": "boolean",
+                    "default": false                    
+                },   
+                "port_external":{
+                    "description": "For external access, port number to be used for clear communication in the external load balancer",
+                    "type": "number",
+                    "default": 11389
+                },
+                "virtual_host":{
+                    "description": "For external access, virtual Host URL to be used in the external load balancer.",
+                    "type": "string",
+                    "default": "phpldapadmin.example.org"
+                }
+            }
         }
     }
 }
