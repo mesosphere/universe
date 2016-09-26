@@ -14,7 +14,9 @@
     "type": "DOCKER",
     "volumes": [{
       "containerPath": "{{postgresql.pgdata}}",
+      {{^postgresql.persistence}}
       "hostPath": "{{postgresql.host_volume}}/{{postgresql.pgdata}}",
+      {{/postgresql.persistence}}
       {{#postgresql.persistence}}
       "persistent": {
         "size": "{{postgresql.volume_size}}"
