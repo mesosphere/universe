@@ -18,7 +18,7 @@
       {
         "containerPath": "/var/lib/ldap",
         {{^storage.persistence}}
-        "hostPath": "{{storage.host_volume}}/{{openldap.name}}/ldap",
+        "hostPath": "{{storage.host_volume}}/{{openldap.name}}/var_lib_ldap",
         {{/storage.persistence}}
         {{#storage.persistence}}
         "persistent": {
@@ -28,9 +28,9 @@
         "mode": "RW"
       },
       {
-        "containerPath": "/etc/ldap/slapd.d",
+        "containerPath": "/etc/ldap",
         {{^storage.persistence}}
-        "hostPath": "{{storage.host_volume}}/{{openldap.name}}/slapd.d",
+        "hostPath": "{{storage.host_volume}}/{{openldap.name}}/etc_ldap",
         {{/storage.persistence}}
         {{#storage.persistence}}
         "persistent": {
