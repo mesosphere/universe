@@ -32,7 +32,7 @@
           "containerPort": 5432,
           "hostPort": 0,
           {{#networking.external_access}}
-          "servicePort": {{networking.port_external}},
+          "servicePort": {{networking.port_vip}},
           {{/networking.external_access}}
           "protocol": "tcp",
           "name": "{{service.name}}",

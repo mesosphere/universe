@@ -99,7 +99,7 @@
                     "type": "boolean",
                     "default": false                    
                 },  
-                "port_external": {
+                "port_vip": {
                     "description": "For external access, port number to be used for clear communication in the external load balancer",
                     "type": "number",
                     "default": 15432
