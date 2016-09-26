@@ -15,31 +15,30 @@
   "container": {
     "type": "DOCKER",
     "volumes": [
-    {
-      "containerPath": "/var/lib/ldap",
-      {{^storage.persistence}}
-      "hostPath": "{{storage.host_volume}}/{{openldap.name}}/ldap",
-      {{/storage.persistence}}
-      {{#storage.persistence}}
-      "persistent": {
-        "size": {{storage.ldap_volume_size}}
+      {
+        "containerPath": "/var/lib/ldap",
+        {{^storage.persistence}}
+        "hostPath": "{{storage.host_volume}}/{{openldap.name}}/ldap",
+        {{/storage.persistence}}
+        {{#storage.persistence}}
+        "persistent": {
+          "size": {{storage.ldap_volume_size}}
+        },
+        {{/storage.persistence}}
+        "mode": "RW"
       },
-      {{/storage.persistence}}
-      "mode": "RW"
-    },
-    {
-      "containerPath": "/etc/ldap/slapd.d",
-      {{^storage.persistence}}
-      "hostPath": "{{storage.host_volume}}/{{openldap.name}}/slapd.d",
-      {{/storage.persistence}}
-      {{#storage.persistence}}
-      "persistent": {
-        "size": {{storage.slapd_volume_size}}
-      },
-      {{/storage.persistence}}
-      "mode": "RW"
-    },
-
+      {
+        "containerPath": "/etc/ldap/slapd.d",
+        {{^storage.persistence}}
+        "hostPath": "{{storage.host_volume}}/{{openldap.name}}/slapd.d",
+        {{/storage.persistence}}
+        {{#storage.persistence}}
+        "persistent": {
+          "size": {{storage.slapd_volume_size}}
+        },
+        {{/storage.persistence}}
+        "mode": "RW"
+      }
     ],
     "docker": {
       "image": "{{resource.assets.container.docker.openldap-docker}}",
