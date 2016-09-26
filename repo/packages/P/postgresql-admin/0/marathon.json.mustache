@@ -17,7 +17,10 @@
             {
                 "containerPort": 80,
                 "hostPort": 0,
-                "servicePort": {{networking.port_external}}
+                {{#networking.external_access}}
+                "servicePort": {{networking.port_external}},
+                {{/networking.external_access}}
+                "protocol": "tcp"
             }
             ]
         }
@@ -26,7 +29,8 @@
         {
             "protocol": "HTTP",
             "path": "/",
-            "portIndex": 0,    
+            "portIndex": 0,
+
             "gracePeriodSeconds": 300,
             "intervalSeconds": 60,
             "timeoutSeconds": 20,
@@ -40,8 +44,10 @@
         "DCOS_PACKAGE_NAME": "{{postgresql-admin.name}}",
         "DCOS_PACKAGE_VERSION": "0.1",
         "DCOS_PACKAGE_IS_FRAMEWORK": "false",
+        {{#networking.external_access}}
         "HAPROXY_GROUP": "external",
         "HAPROXY_0_VHOST": "{{networking.virtual_host}}",
+        {{/networking.external_access}}        
         "DCOS_PACKAGE_FRAMEWORK_NAME": "{{postgresql-admin.name}}"
     }
 }

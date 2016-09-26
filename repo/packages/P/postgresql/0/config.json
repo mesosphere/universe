@@ -89,20 +89,25 @@
             "type": "object",
             "description": "PostgreSQL networking configuration properties",
             "properties": {    
-                "virtual_host": {
-                    "description": "Virtual Host URL to be used in the external load balancer. Modify as per your installation.",
-                    "type": "string",
-                    "default": "postgresql.example.org"
-                },
                 "port": {
                     "description": "Port number to be used for clear communication",
                     "type": "number",
                     "default": 5432
                 },
+                "external_access": {
+                    "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to FALSE. Please note that this connection would be UNENCRYPTED.",
+                    "type": "boolean",
+                    "default": false                    
+                },  
                 "port_external": {
-                    "description": "Port number to be used for clear communication in the external load balancer",
+                    "description": "For external access, port number to be used for clear communication in the external load balancer",
                     "type": "number",
                     "default": 15432
+                },
+                "virtual_host": {
+                    "description": "For external access, Virtual Host URL to be used in the external load balancer. Modify as per your installation.",
+                    "type": "string",
+                    "default": "postgresql.example.org"
                 }
             }
         }
