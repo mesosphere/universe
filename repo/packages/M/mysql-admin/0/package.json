@@ -1,0 +1,23 @@
+{
+  "packagingVersion": "3.0",
+  "name": "mysql-admin",
+  "version": "0.1",
+  "scm": "https://github.com/phpmyadmin/docker",
+  "maintainer": "support@mesosphere.io",
+  "website": "https://www.phpmyadmin.net/",
+  "description": "phpMyAdmin is a free software tool written in PHP, intended to handle the administration of MySQL over the Web. phpMyAdmin supports a wide range of operations on MySQL and MariaDB.\n\nThis DC/OS package is ready to be used alongside the DC/OS `mysql` package. Other MySQL servers may work, but haven't been tested.",
+  "tags": [
+    "mysql",
+    "database",
+    "admin"
+    ],
+  "preInstallNotes": "MySQL Admin requires at least 0.2 CPU and 256MB of RAM.\n\nWARNING: MySQL Admin on DCOS is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nThis package will automatically connect to an existing DC/OS `mysql` package through an automated Virtual IP.\n\nThis package is accessible through the DC/OS `Services` tab. If the `external_access`is enabled on installation, it will also create an entry in the DC/OS external load balancer for accessing the UI from outside the cluster, by default in port `13306`. Access the UI at `http://your_DCOS_URL/services/mysql-admin` or at `http://your_public_node_ip:13306` if `external_access` is enabled",
+  "postInstallNotes": "MySQL Admin has been installed.\n\nYou can now access the UI at `http://your_DCOS_URL/services/mysql-admin` or at `http://your_public_node_ip:13306` if you selected `external_access` on installation.\n\nDC/OS MySQL default Login: `admin`\nDefault password: `password`",
+  "postUninstallNotes": "MySQL Admin has been uninstalled.",
+  "licenses": [
+    {
+      "name": "GNU GPL License",
+      "url": "https://raw.githubusercontent.com/phpmyadmin/docker/master/LICENSE"
+    }
+  ]
+}
