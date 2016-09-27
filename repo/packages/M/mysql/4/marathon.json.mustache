@@ -27,8 +27,6 @@
         }
         ],
         "docker": {
-            "image": "{{resource.assets.container.docker.mysql-docker}}",
-            "forcePullImage": true,
             {{#networking.bridge}}
             "network": "BRIDGE",
             "portMappings": [{
@@ -42,12 +40,12 @@
                 "labels": {
                     "VIP_0": "/{{service.name}}:{{networking.port}}"
                 }
-            }]
+            }],
             {{/networking.bridge}}
             {{^networking.bridge}}
-            "network": "HOST"
+            "network": "HOST",
             {{/networking.bridge}}
-
+            "image": "{{resource.assets.container.docker.mysql-docker}}"
         }
     },
     {{^networking.bridge}}
