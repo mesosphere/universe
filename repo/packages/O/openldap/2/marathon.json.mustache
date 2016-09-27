@@ -77,12 +77,12 @@
     ]
   ],
   "labels": {
-    "DCOS_SERVICE_NAME": "{{openldap.name}}",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_PACKAGE_NAME": "{{openldap.name}}",
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false",
     {{#networking.external_access.enable}}
     "HAPROXY_GROUP": "external",
     {{/networking.external_access.enable}}
-    "DCOS_PACKAGE_NAME": "{{service.name}}",
-    "DCOS_PACKAGE_VERSION": "0.3",
-    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+    "DCOS_PACKAGE_VERSION": "0.3"
   }
 }
