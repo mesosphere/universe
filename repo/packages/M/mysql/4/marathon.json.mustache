@@ -24,12 +24,12 @@
       {{/storage.persistence.enable}}
       "mode": "RW"
     }],
-      "docker": {
-        "image": "{{resource.assets.container.docker.mysql-docker}}",
-        "forcePullImage": false,
-        "network": "BRIDGE",
-        "portMappings": [{
-          "containerPort": 3306,
+    "docker": {
+      "image": "{{resource.assets.container.docker.mysql-docker}}",
+      "forcePullImage": false,
+      "network": "BRIDGE",
+      "portMappings": [{
+        "containerPort": 3306,
           "hostPort": 0,
           {{#networking.external_access.enable}}
           "servicePort": {{networking.external_access.external_port}},
@@ -39,8 +39,8 @@
           "labels": {
             "VIP_0": "/{{service.name}}:{{networking.port}}"
           }
-        }]
-      }
+      }]
+    }
   },
   "healthChecks": [{
     "protocol": "TCP",
