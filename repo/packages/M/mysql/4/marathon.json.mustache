@@ -17,7 +17,7 @@
       {{^storage.persistence.enable}}
       "hostPath": "{{storage.host_volume}}/{{service.name}}",
       {{/storage.persistence.enable}}
-      {{#storage.persistence.enable}}          
+      {{#storage.persistence.enable}}
       "persistent": {
         "size": {{storage.persistence.volume_size}}
       },
