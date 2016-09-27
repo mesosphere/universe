@@ -62,7 +62,7 @@
                     "type": "string"
                 },
                 "force_reconfigure":{
-                    "description": "Reconfigure the service after the image has been initialized. Defaults to FALSE",
+                    "description": "Reconfigure the service after the image has been initialized.",
                     "type": "boolean",
                     "default": false
                 }
@@ -78,7 +78,7 @@
             "description": "OpenLDAP storage configuration properties",
             "properties":{              
                 "host_volume": {
-                    "description": "The location of a volume on the host to be used for persisting OpenLDAP data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/openldap`). Note that this path must be the same on all DCOS agents. Required.",
+                    "description": "The location of a volume on the host to be used for persisting OpenLDAP data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/openldap`). Note that this path must be the same on all DCOS agents.",
                     "type": "string",
                     "default": "/tmp"
                 },
@@ -119,7 +119,7 @@
                     "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
                     "properties": {    
                         "enable": {
-                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to FALSE.",
+                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
                             "type": "boolean",
                             "default": false                    
                         },
