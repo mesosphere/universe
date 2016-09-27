@@ -13,15 +13,8 @@
     "container": {
         "type": "DOCKER",
         "volumes": [{
-            "containerPath": "var",
-            {{^storage.persistence.enable}}
-            "hostPath": "{{storage.host_volume}}/{{service.name}}",
-            {{/storage.persistence.enable}}
-            {{#storage.persistence.enable}}
-            "persistent": {
-                "size": {{storage.persistence.volume_size}}
-            },
-            {{/storage.persistence.enable}}           
+            "containerPath": "/var/lib/mysql",
+            "hostPath": "{{storage.host_volume}}/{{service.name}}",    
             "mode": "RW"
         }],
         "docker": {
@@ -31,9 +24,6 @@
             "portMappings": [{
                 "containerPort": 3306,
                 "hostPort": 0,
-                {{#networking.external_access.enable}}
-                "servicePort": {{networking.external_access.external_port}},
-                {{/networking.external_access.enable}}                
                 "protocol": "tcp",
                 "name": "{{service.name}}",
                 "labels": {
