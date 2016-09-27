@@ -78,7 +78,7 @@
                     "description": "Enable persistent storage.",
                     "properties": {    
                        "enable": {
-                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to FALSE. Please note that this connection would be UNENCRYPTED.",
+                            "description": "Enable or disable persistent storage.",
                             "type": "boolean",
                             "default": false                    
                         },
