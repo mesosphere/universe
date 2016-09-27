@@ -14,14 +14,14 @@
     "type": "DOCKER",
     "volumes": [{
       "containerPath": "{{storage.pgdata}}",
-      {{^storage.persistence}}
+      {{^storage.persistence.enable}}
       "hostPath": "{{storage.host_volume}}/{{storage.pgdata}}",
-      {{/storage.persistence}}
-      {{#storage.persistence}}
+      {{/storage.persistence.enable}}
+      {{#storage.persistence.enable}}
       "persistent": {
-        "size": {{storage.volume_size}}
+        "size": {{storage.persistence.volume_size}}
       },
-      {{/storage.persistence}}
+      {{/storage.persistence.enable}}
       "mode": "RW"
     }],
     "docker": {
@@ -31,9 +31,9 @@
       "portMappings": [{
           "containerPort": 5432,
           "hostPort": 0,
-          {{#networking.create_vip}}
-          "servicePort": {{networking.port_vip}},
-          {{/networking.create_vip}}
+          {{#networking.external_access.enable}}
+          "servicePort": {{networking.external_port}},
+          {{/networking.external_access.enable}}
           "protocol": "tcp",
           "name": "{{service.name}}",
           "labels": {
@@ -53,10 +53,9 @@
 
   "labels": {
     "DCOS_SERVICE_NAME": "{{service.name}}",
-    {{#networking.create_vip}}
-    "HAPROXY_0_VHOST": "{{networking.virtual_host}}",
+    {{#networking.external_access.enable}}
     "HAPROXY_GROUP": "external",
-    {{/networking.create_vip}}
+    {{/networking.external_access.enable}}
     "DCOS_PACKAGE_VERSION": "0.1",
     "DCOS_PACKAGE_IS_FRAMEWORK": "false"
   }
