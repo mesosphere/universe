@@ -6,7 +6,7 @@
             "description": "DC/OS service configuration properties",
             "properties":{
                 "name" : {
-                    "description":"The name of the PostgreSQL service instance",
+                    "description":"Name of this package.",
                     "type":"string",
                     "default":"postgresql"
                 }
@@ -17,7 +17,7 @@
             "description": "PostgreSQL service configuration properties",
             "properties": {
                 "name": {
-                    "description": "Package name.",
+                    "description": "Name of this service instance.",
                     "type": "string",
                     "default": "postgresql"
                 },
