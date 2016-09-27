@@ -4,8 +4,8 @@
     "mem": {{openldap-admin.mem}},
     "instances": 1,
     "env": {
-        "LDAP_SERVER_HOST": "{{networking.ldap_host}}.marathon.l4lb.thisdcos.directory",
-        "LDAP_SERVER_PORT": "{{networking.port_ldap_server}}"
+        "LDAP_SERVER_HOST": "{{networking.ldap_location}}.marathon.l4lb.thisdcos.directory",
+        "LDAP_SERVER_PORT": "{{networking.ldap_port}}"
     },
     "container": {
         "type": "DOCKER",
@@ -17,9 +17,9 @@
             {
                 "containerPort": 80,
                 "hostPort": 0,
-                {{#networking.external_access}}
-                "servicePort": {{networking.port_external}},
-                {{/networking.external_access}}
+                {{#networking.external_access.enable}}
+                "servicePort": {{networking.external_access.external_port}},
+                {{/networking.external_access.enable}}
                 "protocol": "tcp"
             }
             ]
@@ -37,16 +37,16 @@
         }
     ],
     "labels": {
-        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "DCOS_SERVICE_NAME": "{{openldap-admin.name}}",
         "DCOS_SERVICE_SCHEME": "http",
         "DCOS_SERVICE_PORT_INDEX": "0",
         "DCOS_PACKAGE_NAME": "{{openldap-admin.name}}",
         "DCOS_PACKAGE_VERSION": "0.3",
         "DCOS_PACKAGE_IS_FRAMEWORK": "false",
-        {{#networking.external_access}}
+        {{#networking.external_access.enable}}
         "HAPROXY_GROUP": "external",
         "HAPROXY_0_VHOST": "{{networking.virtual_host}}",
-        {{/networking.external_access}}
-        "DCOS_PACKAGE_FRAMEWORK_NAME": "{{openldap-admin.name}}"
+        {{/networking.external_access.enable}}
+        "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}"
     }
 }

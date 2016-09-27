@@ -48,8 +48,8 @@
                     "type": "string",
                     "default": "openldap"
                 },
-                "ldap_host_port":{
-                    "description": "The port where the OpenLDAP server is listening on. Defaults to 389. Must be the same port used in the corresponding OpenLDAP service.",
+                "ldap_port":{
+                    "description": "The port where the DC/OS OpenLDAP instance is listening on. Defaults to 389.",
                     "type": "number",
                     "default": 389
                 },
@@ -68,7 +68,7 @@
                             "default": 11389
                         },
                         "virtual_host":{
-                            "description": "For external access, virtual Host URL to be used in the external load balancer.",
+                            "description": "Virtual Host URL to be used in the external Marathon-LB load balancer.",
                             "type": "string",
                             "default": "phpldapadmin.example.org"
                         }
