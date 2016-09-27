@@ -1,0 +1,22 @@
+{
+  "images": {
+    "icon-small": "http://www.projectcalico.org/wp-content/uploads/2016/04/Calico-logo-felix-only-transparent-48-48.png",
+    "icon-medium": "http://www.projectcalico.org/wp-content/uploads/2016/04/Calico-logo-felix-only-transparent-96-96.png",
+    "icon-large": "http://www.projectcalico.org/wp-content/uploads/2016/04/Calico-logo-felix-only-transparent-256-256.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "calico-dcos": "calico/calico-dcos:v0.3.1",
+        "calico-node": "calico/node:v0.22.0",
+        "calico-libnetwork": "calico/node-libnetwork:v0.9.0"
+      }
+    },
+    "uris": {
+      "etcd": "https://github.com/coreos/etcd/releases/download/v2.3.1/etcd-v2.3.1-linux-amd64.tar.gz",
+      "calico-cni": "https://github.com/projectcalico/calico-cni/releases/download/v1.4.1/calico",
+      "calico-ipam": "https://github.com/projectcalico/calico-cni/releases/download/v1.4.1/calico-ipam",
+      "calico-installer": "https://github.com/projectcalico/calico-dcos/releases/download/v0.3.1/installer"
+    }
+  }
+}
