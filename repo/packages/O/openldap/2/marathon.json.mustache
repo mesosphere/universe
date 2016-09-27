@@ -17,26 +17,26 @@
     "volumes": [
       {
         "containerPath": "var",
-        {{^storage.persistence}}
+        {{^storage.persistence.enable}}
         "hostPath": "{{storage.host_volume}}/{{openldap.name}}/var",
-        {{/storage.persistence}}
-        {{#storage.persistence}}
+        {{/storage.persistence.enable}}
+        {{#storage.persistence.enable}}
         "persistent": {
-          "size": {{storage.ldap_volume_size}}
+          "size": {{storage.persistence.ldap_volume_size}}
         },
-        {{/storage.persistence}}
+        {{/storage.persistence.enable}}
         "mode": "RW"
       },
       {
         "containerPath": "etc",
-        {{^storage.persistence}}
+        {{^storage.persistence.enable}}
         "hostPath": "{{storage.host_volume}}/{{openldap.name}}/etc",
-        {{/storage.persistence}}
-        {{#storage.persistence}}
+        {{/storage.persistence.enable}}
+        {{#storage.persistence.enable}}
         "persistent": {
-          "size": {{storage.slapd_volume_size}}
+          "size": {{storage.persistence.slapd_volume_size}}
         },
-        {{/storage.persistence}}
+        {{/storage.persistence.enable}}
         "mode": "RW"
       }
     ],
@@ -48,9 +48,9 @@
         {
           "containerPort": 389,
           "hostPort": 0,
-          {{#networking.external_access}}
-          "servicePort": {{networking.port_external}},
-          {{/networking.external_access}}
+          {{#networking.external_access.enable}}
+          "servicePort": {{networking.external_access.external_port}},
+          {{/networking.external_access.enable}}
           "protocol": "tcp",
           "name": "{{service.name}}",
           "labels": {
@@ -77,14 +77,12 @@
     ]
   ],
   "labels": {
-    "DCOS_SERVICE_NAME": "{{service.name}}",
-    {{#networking.external_access}}
-    "HAPROXY_0_VHOST": "{{openldap.virtual_host}}",
+    "DCOS_SERVICE_NAME": "{{openldap.name}}",
+    {{#networking.external_access.enable}}
     "HAPROXY_GROUP": "external",
-    {{/networking.external_access}}
-    "DCOS_PACKAGE_NAME": "{{openldap.name}}",
+    {{/networking.external_access.enable}}
+    "DCOS_PACKAGE_NAME": "{{service.name}}",
     "DCOS_PACKAGE_VERSION": "0.3",
-    "DCOS_PACKAGE_IS_FRAMEWORK": "false",
-    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{openldap.name}}"
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
   }
 }

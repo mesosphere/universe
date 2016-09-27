@@ -6,7 +6,7 @@
             "description": "DC/OS service configuration properties",
             "properties":{
                 "name" : {
-                    "description":"The name of the OpenLDAP service instance",
+                    "description":"Package name.",
                     "type":"string",
                     "default":"openldap"
                 }
@@ -17,7 +17,7 @@
             "description": "OpenLDAP service configuration properties",
             "properties": {
                 "name": {
-                    "description": "Package name.",
+                    "description": "Name of this OpenLDAP service instance.",
                     "type": "string",
                     "default": "openldap"
                 },
@@ -76,26 +76,32 @@
         "storage": {
             "type": "object",
             "description": "OpenLDAP storage configuration properties",
-            "properties":{    
-                "persistence": {
-                    "description": "Enable or disable data persistence. If enabled, requires configuration of a valid host_volume.",
-                    "type": "boolean",
-                    "default": false                    
-                },            
+            "properties":{              
                 "host_volume": {
                     "description": "The location of a volume on the host to be used for persisting OpenLDAP data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/openldap`). Note that this path must be the same on all DCOS agents. Required.",
                     "type": "string",
                     "default": "/tmp"
                 },
-                "ldap_volume_size": {
-                    "description": "If a new volume is to be created for the LDAP database, this controls its size in MBs. Defaults to 64MBs",
-                    "type": "number",
-                    "default": 256
-                },
-                "slapd_volume_size": {
-                    "description": "If a new volume is to be created for internal storage of the SLAPD daemon, this controls its size in MBs. Defaults to 64MBs",
-                    "type": "number",
-                    "default": 64
+                "persistence": {
+                    "type": "object",
+                    "description": "Enable persistent storage.",
+                    "properties": {    
+                       "enable": {
+                            "description": "Enable or disable data persistence.",
+                            "type": "boolean",
+                            "default": false                    
+                        },
+                        "ldap_volume_size": {
+                            "description": "Size in MBs of the volume to be created for the LDAP database",
+                            "type": "number",
+                            "default": 256
+                        },
+                        "slapd_volume_size": {
+                            "description": "Size in MBs of the volume to be created for internal storage of the SLAPD daemon.",
+                            "type": "number",
+                            "default": 64
+                        }
+                    }
                 }
             }
         },
@@ -104,26 +110,26 @@
             "description": "OpenLDAP networking configuration properties",
             "properties": {    
                 "port": {
-                    "description": "Port number to be used for clear communication inside the cluster. DO NOT MODIFY if using in conjunction the DC/OS openldap-admin package",
+                    "description": "Port number to be used for clear communication internally to the cluster.",
                     "type": "number",
                     "default": 389
                 },
                 "external_access": {
-                    "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to FALSE",
-                    "type": "boolean",
-                    "default": false                    
-                },   
-                "port_external": {
-                    "description": "For external access, the port number to be used for clear communication in the external load balancer",
-                    "type": "number",
-                    "default": 10389
-                },
-                "virtual_host": {
-                    "description": "For external access, virtual Host URL to be used in the external load balancer. Modify as per your installation.",
-                    "type": "string",
-                    "default": "openldap.example.org"
-                }
-  
+                    "type": "object",
+                    "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+                    "properties": {    
+                        "enable": {
+                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to FALSE.",
+                            "type": "boolean",
+                            "default": false                    
+                        },
+                        "external_port": {
+                            "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+                            "type": "number",
+                            "default": 10389
+                        }
+                    }
+                }                
             }
         }   
     }
