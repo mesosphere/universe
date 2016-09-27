@@ -6,7 +6,7 @@
   "scm": "https://github.com/minio/minio.git",
   "maintainer": "support@mesosphere.io",
   "website": "https://www.minio.io",
-  "framework": true,
+  "framework": false,
   "description": "Minio is an object storage server compatible with Amazon S3. It is best suited for storign unstructured data such as photos, videos, log files, backups and container / VM images.",
   "tags": ["data", "storage", "filesystem"],
   "preInstallNotes": "Installing Minio.",
