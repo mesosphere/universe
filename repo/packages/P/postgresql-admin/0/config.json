@@ -6,7 +6,7 @@
             "description": "DC/OS service configuration properties",
             "properties":{
                 "name" : {
-                    "description":"The name of the postgresql Admin service instance",
+                    "description":"Name of this package.",
                     "type":"string",
                     "default":"postgresql-admin"
                 }
@@ -17,7 +17,7 @@
             "description": "postgresql admin service configuration properties",
             "properties": {
                 "name": {
-                    "description": "Package name.",
+                    "description": "Name of this service instance.",
                     "type": "string",
                     "default": "postgresql-admin"
                 },
