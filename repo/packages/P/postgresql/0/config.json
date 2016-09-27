@@ -102,7 +102,7 @@
                 },
                 "external_access": {
                     "type": "object",
-                    "description": "Enable access from outside the cluster through Marathon-LB.",
+                    "description": "Enable access from outside the cluster through Marathon-LB. NOTE: this connection is UNENCRYPTED.",
                     "properties": {    
                         "enable": {
                             "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to FALSE. Please note that this connection would be UNENCRYPTED.",
