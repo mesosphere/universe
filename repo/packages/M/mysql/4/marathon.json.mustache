@@ -13,7 +13,7 @@
     "container": {
         "type": "DOCKER",
         "volumes": [{
-            "containerPath": "/var/lib/mysql",
+            "containerPath": "var",
             {{^storage.persistence.enable}}
             "hostPath": "{{storage.host_volume}}/{{service.name}}",
             {{/storage.persistence.enable}}
@@ -44,11 +44,11 @@
     },
     "healthChecks": [{
         "protocol": "TCP",
-        "portIndex": 0,
         "gracePeriodSeconds": 300,
         "intervalSeconds": 60,
         "timeoutSeconds": 20,
-        "maxConsecutiveFailures": 3
+        "maxConsecutiveFailures": 3,
+        "portIndex": 0
     }],
     "labels": {
         "DCOS_PACKAGE_VERSION": "0.2",
@@ -57,9 +57,5 @@
         "HAPROXY_GROUP": "external",
         {{/networking.external_access.enable}},
         "DCOS_PACKAGE_IS_FRAMEWORK": "false"
-    },
-    "upgradeStrategy":{
-        "minimumHealthCapacity": 0,
-        "maximumOverCapacity": 0
     }
 }
