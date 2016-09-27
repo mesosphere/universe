@@ -70,7 +70,7 @@
                         "external_port": {
                             "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
                             "type": "number",
-                            "default": 15432
+                            "default": 15433
                         },
                         "virtual_host": {
                             "description": "For external access, Virtual Host URL to be used in the external load balancer.",
