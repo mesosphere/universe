@@ -38,11 +38,6 @@
       "type": "object",
       "description": "MySQL database configuration properties",
       "properties":{
-        "create_new": {
-          "description": "Optionally create a new MySQL database.",
-          "type": "boolean",
-          "default": true
-        },
         "name": {
           "description": "The name of a database to be created on startup.",
           "type": "string",
