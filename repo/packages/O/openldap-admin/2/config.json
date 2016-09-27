@@ -43,31 +43,37 @@
             "type": "object",
             "description": "OpenLDAP-admin networking configuration properties",
             "properties": {
-                "ldap_host":{
-                    "description": "The name of the OpenLDAP instance to connect to.",
+                "ldap_location":{
+                    "description": "The name of the DC/OS OpenLDAP instance to connect to.",
                     "type": "string",
                     "default": "openldap"
                 },
-                "port_ldap_server":{
+                "ldap_host_port":{
                     "description": "The port where the OpenLDAP server is listening on. Defaults to 389. Must be the same port used in the corresponding OpenLDAP service.",
                     "type": "number",
                     "default": 389
                 },
                 "external_access": {
-                    "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to FALSE",
-                    "type": "boolean",
-                    "default": false                    
-                },   
-                "port_external":{
-                    "description": "For external access, port number to be used for clear communication in the external load balancer",
-                    "type": "number",
-                    "default": 11389
-                },
-                "virtual_host":{
-                    "description": "For external access, virtual Host URL to be used in the external load balancer.",
-                    "type": "string",
-                    "default": "phpldapadmin.example.org"
-                }
+                    "type": "object",
+                    "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+                    "properties": {    
+                        "enable": {
+                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to FALSE.",
+                            "type": "boolean",
+                            "default": false                    
+                        },
+                        "external_port": {
+                            "description": "Port number to be used in the external Marathon-LB load balancer",
+                            "type": "number",
+                            "default": 11389
+                        },
+                        "virtual_host":{
+                            "description": "For external access, virtual Host URL to be used in the external load balancer.",
+                            "type": "string",
+                            "default": "phpldapadmin.example.org"
+                        }
+                    }
+                }    
             }
         }
     }
