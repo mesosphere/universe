@@ -6,7 +6,7 @@
             "description": "DC/OS service configuration properties",
             "properties":{
                 "name" : {
-                    "description":"Name of this package.",
+                    "description":"Name of this service instance.",
                     "type":"string",
                     "default":"openldap"
                 }
@@ -16,11 +16,6 @@
             "type": "object",
             "description": "OpenLDAP service configuration properties",
             "properties": {
-                "name": {
-                    "description": "Name of this service instance.",
-                    "type": "string",
-                    "default": "openldap"
-                },
                 "cpus": {
                     "description": "CPU shares to allocate to each OpenLDAP node.",
                     "type": "number",
@@ -68,7 +63,6 @@
                 }
             },
             "required": [
-                "name",
                 "cpus",
                 "mem"
             ]

@@ -37,15 +37,14 @@
         }
     ],
     "labels": {
+        "DCOS_PACKAGE_VERSION": "0.3",
         "DCOS_SERVICE_NAME": "{{service.name}}",
-        "DCOS_PACKAGE_NAME": "{{openldap-admin.name}}",
-        "DCOS_PACKAGE_IS_FRAMEWORK": "false",
         "DCOS_SERVICE_SCHEME": "http",
         "DCOS_SERVICE_PORT_INDEX": "0",
         {{#networking.external_access.enable}}
         "HAPROXY_GROUP": "external",
         "HAPROXY_0_VHOST": "{{networking.external_access.virtual_host}}",
         {{/networking.external_access.enable}}
-        "DCOS_PACKAGE_VERSION": "0.3"
+        "DCOS_PACKAGE_IS_FRAMEWORK": "false"
     }
 }
