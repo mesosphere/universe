@@ -6,7 +6,7 @@
             "description": "DC/OS service configuration properties",
             "properties":{
                 "name" : {
-                    "description":"Package name.",
+                    "description":"Name of this package.",
                     "type":"string",
                     "default":"openldap"
                 }
@@ -17,7 +17,7 @@
             "description": "OpenLDAP service configuration properties",
             "properties": {
                 "name": {
-                    "description": "Name of this OpenLDAP service instance.",
+                    "description": "Name of this service instance.",
                     "type": "string",
                     "default": "openldap"
                 },
