@@ -6,7 +6,7 @@
             "description": "DC/OS service configuration properties",
             "properties":{
                 "name" : {
-                    "description":"Name of this package.",
+                    "description":"Name of this service instance.",
                     "type":"string",
                     "default":"postgresql-admin"
                 }
@@ -16,11 +16,6 @@
             "type": "object",
             "description": "postgresql admin service configuration properties",
             "properties": {
-                "name": {
-                    "description": "Name of this service instance.",
-                    "type": "string",
-                    "default": "postgresql-admin"
-                },
                 "cpus": {
                     "description": "CPU shares to allocate to each postgresql node.",
                     "type": "number",
