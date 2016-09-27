@@ -25,8 +25,8 @@
         "mem": {
           "description": "Memory to allocate to each MySQL node.",
           "type": "number",
-          "default": 1024.0,
-          "minimum": 1024.0
+          "default": 512.0,
+          "minimum": 512.0
         }
       },
       "required": [
@@ -97,7 +97,7 @@
           "type": "boolean"
         },
         "port": {
-          "description": "Port number to be used for clear communication internally to the cluster.",
+          "description": "Port number to be used for clear communication internally to the cluster. Currently unused and fixed to be 3306.",
           "type": "number",
           "default": 3306
         },

@@ -12,8 +12,7 @@
     },
     "container": {
         "type": "DOCKER",
-        "volumes": [
-        {
+        "volumes": [{
             "containerPath": "/var/lib/mysql",
             {{^storage.persistence.enable}}
             "hostPath": "{{storage.host_volume}}/{{service.name}}",
@@ -24,10 +23,10 @@
             },
             {{/storage.persistence.enable}}           
             "mode": "RW"
-        }
-        ],
+        }],
         "docker": {
-            {{#networking.bridge}}
+            "image": "{{resource.assets.container.docker.mysql-docker}}",
+            "forcePullImage": false,
             "network": "BRIDGE",
             "portMappings": [{
                 "containerPort": 3306,
@@ -40,42 +39,18 @@
                 "labels": {
                     "VIP_0": "/{{service.name}}:{{networking.port}}"
                 }
-            }],
-            {{/networking.bridge}}
-            {{^networking.bridge}}
-            "network": "HOST",
-            {{/networking.bridge}}
-            "image": "{{resource.assets.container.docker.mysql-docker}}"
+            }]
         }
     },
-    {{^networking.bridge}}
-    "portDefinitions": [
-    {
-            "port": 3306,
-            "protocol": "tcp",
-            "name": "mysql",
-            "labels": {
-                "VIP_0": "/{{service.name}}:{{networking.port}}"
-                }
-    }
-    ],
-    "requirePorts": true,
-    {{/networking.bridge}}
-    "healthChecks": [
-    {
+    "healthChecks": [{
         "protocol": "TCP",
-        {{#networking.bridge}}
         "portIndex": 0,
-        {{/networking.bridge}}
-        {{^networking.bridge}}
         "port": 3306
-        {{/networking.bridge}}
         "gracePeriodSeconds": 300,
         "intervalSeconds": 60,
         "timeoutSeconds": 20,
         "maxConsecutiveFailures": 3
-    }
-    ],
+    }],
     "labels": {
         "DCOS_PACKAGE_VERSION": "0.2",
         "DCOS_SERVICE_NAME": "{{service.name}}",
