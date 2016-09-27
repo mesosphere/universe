@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://a.fsdn.com/allura/p/ldapnis2rfc2307bis/icon",
+    "icon-medium": "https://cdn6.aptoide.com/imgs/6/6/f/66f13d86b96187885e665f5634df7bfa.png",
+    "icon-large": "http://tecdistro.com/wp-content/uploads/2016/02/ldap.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "openldap-admin-docker": "dinkel/phpldapadmin:latest"
+      }
+    }
+  }
+}
