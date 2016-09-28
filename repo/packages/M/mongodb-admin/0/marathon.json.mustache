@@ -3,11 +3,12 @@
     "cpus": {{mongodb-admin.cpus}},
     "mem": {{mongodb-admin.mem}},
     "instances": 1,
+    {{#auth.enable}}
     "env": {
         "MONGOCLIENT_AUTH": "{{auth.username}}",
         "MONGOCLIENT_PASSWORD": "{{auth.password}}",
-        "DB_PORT": "{{networking.postgres_host_port}}"
     },
+    {{/auth.enable}}
     "container": {
         "type": "DOCKER",
         "docker": {
