@@ -36,6 +36,14 @@
       "network": "BRIDGE",
       "portMappings": [
       {
+        "containerPort": 28017,
+          "hostPort": 0,
+          {{#networking.external_ui_access.enable}}
+          "servicePort": {{networking.external_ui_access.external_port}},
+          {{/networking.external_ui_access.enable}}
+          "protocol": "tcp"
+      },     
+      {
         "containerPort": 27017,
           "hostPort": 0,
           {{#networking.external_access.enable}}
@@ -46,21 +54,15 @@
           "labels": {
             "VIP_0": "/{{service.name}}:{{networking.port}}"
           }
-      },
-      {
-        "containerPort": 28017,
-          "hostPort": 0,
-          {{#networking.external_ui_access.enable}}
-          "servicePort": {{networking.external_ui_access.external_port}},
-          {{/networking.external_ui_access.enable}}
-          "protocol": "tcp"
-      }      
+      } 
       ]
     }
   },
   "healthChecks": [
   {
-    "protocol": "TCP",
+    "protocol": "HTTP",
+    "IgnoreHttp1xx": "false",
+    "path": "/",
     "gracePeriodSeconds": 300,
     "intervalSeconds": 60,
     "timeoutSeconds": 20,
@@ -68,9 +70,7 @@
     "portIndex": 0
   },
   {
-    "protocol": "HTTP",
-    "IgnoreHttp1xx": "false",
-    "path": "/",
+    "protocol": "TCP",
     "gracePeriodSeconds": 300,
     "intervalSeconds": 60,
     "timeoutSeconds": 20,
@@ -82,7 +82,7 @@
     "DCOS_PACKAGE_VERSION": "0.1",
     "DCOS_SERVICE_NAME": "{{service.name}}",
     "DCOS_SERVICE_SCHEME": "http",
-    "DCOS_SERVICE_PORT_INDEX": "1",
+    "DCOS_SERVICE_PORT_INDEX": "0",
     {{#networking.external_access.enable}}
     "HAPROXY_GROUP": "external",
     {{#networking.external_ui_access.enable}}  
