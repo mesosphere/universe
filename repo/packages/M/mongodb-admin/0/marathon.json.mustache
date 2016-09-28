@@ -20,19 +20,17 @@
         "docker": {
             "image": "{{resource.assets.container.docker.mongodb-admin-docker}}",
             "forcePullImage": false,
-            "network": "BRIDGE",
-            "portMappings": [
-            {
-                "containerPort": 1234,
-                "hostPort": 0,
-                {{#networking.external_access.enable}}
-                "servicePort": {{networking.external_access.external_port}},
-                {{/networking.external_access.enable}}
-                "protocol": "tcp"
-            }
-            ]
+            "network": "HOST"
         }
     },
+    "portDefinitions": [
+    {
+        {{#networking.external_access.enable}}
+        "servicePort": {{networking.external_access.external_port}},
+        {{/networking.external_access.enable}}
+        "protocol": "tcp"
+    }
+    ],
     "healthChecks": [
         {
             "protocol": "HTTP",
