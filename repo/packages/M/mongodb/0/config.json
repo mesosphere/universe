@@ -3,10 +3,10 @@
   "properties": {
     "service": {
       "type": "object",
-      "description": "DC/OS service configuration properties",
+      "description": "DC/OS service configuration properties.",
       "properties": {
         "name": {
-          "description": "Name of this service instance",
+          "description": "Name of this service instance.",
           "type": "string",
           "default": "mongodb"
         }
@@ -14,7 +14,7 @@
     },
     "mongodb": {
       "type": "object",
-      "description": "MongoDB service configuration properties",
+      "description": "MongoDB service configuration properties.",
       "properties": {
         "cpus": {
           "description": "CPU shares to allocate to this MongoDB node.",
@@ -36,7 +36,7 @@
     },
     "database": {
       "type": "object",
-      "description": "MongoDB database configuration properties",
+      "description": "MongoDB database configuration properties.",
       "properties":{
         "name": {
           "description": "The name of a database to be created on startup.",
@@ -62,7 +62,7 @@
     },
     "storage": {
       "type": "object",
-      "description": "MongoDB storage configuration properties",
+      "description": "MongoDB storage configuration properties.",
       "properties":{  
         "use_storage_engine": {
           "type": "object",
@@ -74,7 +74,7 @@
                 "default": false                    
               },
               "storage_engine": {
-                "description": "Specific storage engine to be used",
+                "description": "Specific storage engine to be used.",
                 "type": "string",
                 "default": "mmapv1"
               }
@@ -143,7 +143,7 @@
                 "default": 28017
               }
             }
-        },
+        }
       }      
     }
   }
