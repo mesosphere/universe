@@ -141,6 +141,11 @@
                 "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
                 "type": "number",
                 "default": 28017
+              },
+              "virtual_host": {
+                "description": "For external access, Virtual Host URL to be used in the external load balancer.",
+                "type": "string",
+                "default": "mongodb.example.org"
               }
             }
         }
