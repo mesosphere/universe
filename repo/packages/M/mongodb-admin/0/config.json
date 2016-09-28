@@ -19,14 +19,14 @@
                 "cpus": {
                     "description": "CPU shares to allocate to this mongodb-admin instance.",
                     "type": "number",
-                    "default": 0.2,
-                    "minimum": 0.2
+                    "default": 1,
+                    "minimum": 0.5
                 },
                 "mem": {
                     "description": "Memory to allocate to this mongodb-admin instance.",
                     "type": "number",
-                    "default": 256.0,
-                    "minimum": 256.0
+                    "default": 1024.0,
+                    "minimum": 512.0
                 }
             },
             "required": [
