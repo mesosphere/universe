@@ -5,7 +5,7 @@
   "instances": 1,
   "env": {
     {{^database.status_ui_auth}}
-    "AUTH": "no"
+    "AUTH": "no",
     {{/database.status_ui_auth}}
     "MONGODB_DATABASE": "{{database.name}}",
     "MONGODB_PASS": "{{database.password}}",
