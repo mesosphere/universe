@@ -1,0 +1,18 @@
+{
+  "images": {
+    "icon-small": "http://www.file-extensions.org/imgs/app-icon/48/8854/mongodb-icon.png",
+    "icon-medium": "http://www.sudops.com/wp-content/uploads/2014/02/mongodb-96x96.png",
+    "icon-large": "http://1.bp.blogspot.com/-FagQLEI_Zhc/VnAzE9L8e3I/AAAAAAAAAFk/DWPqvL0ZXo8/s320/mongodb.jpg",
+    "screenshots": [
+      "http://myphotos.mypclinuxos.com/images/Archie/mongoexpress_1.jpg",
+      "http://i.imgur.com/DOi3b.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "mongodb-admin-docker": "mongo-express:0.31.0"
+      }
+    }
+  }
+}
