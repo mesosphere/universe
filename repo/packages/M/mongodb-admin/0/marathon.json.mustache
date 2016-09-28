@@ -25,7 +25,7 @@
         "type": "DOCKER",
         "volumes": [{
             "containerPath": "/",
-            "hostPath": "{{storage.host_volume}}/{{service.name}}", 
+            "hostPath": "{{mongodb-admin.host_volume}}/{{service.name}}", 
             "mode": "RW"
         }],
         "docker": {
@@ -56,7 +56,7 @@
         }
     ],
     "labels": {
-        "DCOS_PACKAGE_VERSION": "0.30.0-0.1",
+        "DCOS_PACKAGE_VERSION": "0.31.0-0.1",
         "DCOS_SERVICE_NAME": "{{service.name}}",
         "DCOS_SERVICE_SCHEME": "http",
         "DCOS_SERVICE_PORT_INDEX": "0",
