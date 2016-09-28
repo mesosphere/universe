@@ -1,0 +1,54 @@
+{
+    "assets": {
+        "container": {
+            "docker": {
+                "spark_docker": "mesosphere/spark:test9"
+            }
+        }
+    },
+    "cli": {
+        "binaries": {
+            "darwin": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "c27a50d32b14dbf1fb2bc49d1a0727aa2a2d7c590a53942f32da73fc14f8c37f"
+                        }
+                    ],
+                    "kind": "executable",
+                    "url": "https://downloads.mesosphere.com/spark/assets/test11/dcos-spark-darwin"
+                }
+            },
+            "linux": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "0bc397d71b5d42d930e24a63aab627a57ca0a896791c6b23ed34136ca0f9ca5a"
+                        }
+                    ],
+                    "kind": "executable",
+                    "url": "https://downloads.mesosphere.com/spark/assets/test11/dcos-spark-linux"
+                }
+            },
+            "windows": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "56a519135d60dc3ecfb3b4a1ae9e0297f57a788d311dbda3a4d55a85926315a0"
+                        }
+                    ],
+                    "kind": "executable",
+                    "url": "https://downloads.mesosphere.com/spark/assets/test11/dcos-spark.exe"
+                }
+            }
+        }
+    },
+    "images": {
+        "icon-large": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-large.png",
+        "icon-medium": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-medium.png",
+        "icon-small": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-small.png"
+    }
+}
