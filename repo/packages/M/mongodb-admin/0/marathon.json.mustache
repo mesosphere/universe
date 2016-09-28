@@ -19,6 +19,7 @@
         "type": "DOCKER",
         "volumes": [{
             "containerPath": "var",
+            "hostPath": "{{storage.host_volume}}/{{service.name}}",
             "mode": "RW"
         }],
         "docker": {
