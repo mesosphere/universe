@@ -7,7 +7,7 @@
     "MONGODB_DATABASE": "{{database.name}}",
     "MONGODB_PASS": "{{database.password}}",
     {{#storage.use_storage_engine.enable}}
-    "STORAGE_ENGINE": {{storage.use_storage_engine.storage_engine}}
+    "STORAGE_ENGINE": {{storage.use_storage_engine.storage_engine}},
     {{/storage.use_storage_engine.enable}}
     "MONGODB_USER": "{{database.username}}"
   },
