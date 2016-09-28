@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "mongodb",
+  "version": "3.2-0.1",
+  "scm": "https://github.com/tutumcloud/tutum-docker-mongodb",
+  "maintainer": "support@mesosphere.io",
+  "website": "https://www.mongodb.com",
+  "description": "MongoDB is an open-source, document database designed for ease of development and scaling.",
+  "tags": ["database", "mongo", "mongodb", "nosql"],
+  "preInstallNotes": "In order for MySQL service to start successfully it requires atleast 0.5 CPU and 1024MB of RAM. WARNING: MongDB on DCOS is currently EXPERIMENTAL. There may be bugs, incomplete\nfeatures, incorrect documentation, or other discrepancies.\n\nThis package can create local persistent volumes for the database files to survive across restarts or failures. The parameter `host_volume` controls the path in the host in which these volumes will be created, which can be an NFS-mounted share. If you didn't provide a value for `host_volume` on installation,\nYOUR DATA WILL NOT BE SAVED IN ANY WAY.\n \n\nThis DC/OS MongoDB package creates a named Virtual IP for other services in the cluster to access the service in the format `mongodb.marathon.l4lb.thisdcos.directory:27017` (where `mongodb` would be the package instance name used for installation).\nIf the `external_access` installation option is selected, it also creates an entry in the External Load Balancer for accessing the service from outside of the cluster on port `27017` by default.\nIf the `external_ui_access` installation option is selected, it also creates an entry in the External Load Balancer for accessing the status UI web page from outside of the cluster on port `28017` by default.",
+  "postInstallNotes": "MongoDB has been installed.\n Default Login `admin`\nDefault password: `password`",
+  "postUninstallNotes": "MongoDB has been uninstalled. Note that any data persisted to a NFS share still exists and will need to be manually removed.",
+  "licenses": [
+    {
+      "name": "GNU Affero General Public License",
+      "url": "http://www.gnu.org/licenses/agpl.html"
+    }
+  ]
+}

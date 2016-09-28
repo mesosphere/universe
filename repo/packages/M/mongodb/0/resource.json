@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "http://www.file-extensions.org/imgs/app-icon/48/8854/mongodb-icon.png",
+    "icon-medium": "http://www.sudops.com/wp-content/uploads/2014/02/mongodb-96x96.png",
+    "icon-large": "http://slamdata.com/wp-content/uploads/2015/10/mongodb-logo-png-just-icon.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "mysql-docker": "tutum/mongodb:3.2
+      }
+    }
+  }
+}

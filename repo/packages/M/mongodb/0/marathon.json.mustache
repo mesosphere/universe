@@ -1,0 +1,89 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{mongodb.cpus}},
+  "mem": {{mongodb.mem}},
+  "instances": 1,
+  "env": {
+    "MONGODB_DATABASE": "{{database.name}}",
+    {{#database.disable_password}}
+    "MONGODB_PASS": "{{database.password}}",
+    {{/database.disable_password}}
+    {{^database.disable_password}}
+    "AUTH": "no",
+    {{/database.disable_password}}
+    {{#storage.use_storage_engine.enable}}
+    "STORAGE_ENGINE": {{storage.use_storage_engine.storage_engine}}
+    {{/storage.use_storage_engine.enable}}
+    "MONGODB_USER": "{{database.username}}"
+  },
+  "container": {
+    "type": "DOCKER",
+    "volumes": [{
+      "containerPath": "var",
+      {{^storage.persistence.enable}}
+      "hostPath": "{{storage.host_volume}}/{{service.name}}",
+      {{/storage.persistence.enable}}
+      {{#storage.persistence.enable}}
+      "persistent": {
+        "size": {{storage.persistence.volume_size}}
+      },
+      {{/storage.persistence.enable}}
+      "mode": "RW"
+    }],
+    "docker": {
+      "image": "{{resource.assets.container.docker.mongodb-docker}}",
+      "forcePullImage": false,
+      "network": "BRIDGE",
+      "portMappings": [
+      {
+        "containerPort": 27017,
+          "hostPort": 0,
+          {{#networking.external_access.enable}}
+          "servicePort": {{networking.external_access.external_port}},
+          {{/networking.external_access.enable}}
+          "protocol": "tcp",
+          "name": "{{service.name}}",
+          "labels": {
+            "VIP_0": "/{{service.name}}:{{networking.port}}"
+          }
+      },
+      {
+        "containerPort": 28017,
+          "hostPort": 0,
+          {{#networking.external_ui_access.enable}}
+          "servicePort": {{networking.external_ui_access.external_port}},
+          {{/networking.external_access.enable}}
+          "protocol": "tcp"
+      }      
+      ]
+    }
+  },
+  "healthChecks": [
+  {
+    "protocol": "TCP",
+    "gracePeriodSeconds": 300,
+    "intervalSeconds": 60,
+    "timeoutSeconds": 20,
+    "maxConsecutiveFailures": 3,
+    "portIndex": 0
+  },
+  {
+    "protocol": "HTTP",
+    "IgnoreHttp1xx": "false",
+    "path": "/",
+    "gracePeriodSeconds": 300,
+    "intervalSeconds": 60,
+    "timeoutSeconds": 20,
+    "maxConsecutiveFailures": 3,
+    "portIndex": 1
+  }
+  ],
+  "labels": {
+    "DCOS_PACKAGE_VERSION": "0.1",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    {{#networking.external_access.enable}}
+    "HAPROXY_GROUP": "external",
+    {{/networking.external_access.enable}}
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  }
+}
