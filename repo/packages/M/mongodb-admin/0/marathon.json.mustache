@@ -3,7 +3,6 @@
     "cpus": {{mongodb-admin.cpus}},
     "mem": {{mongodb-admin.mem}},
     "instances": 1,
-  
     "env": {
         {{#auth.enable}}
         "PASSWORD": "{{auth.password}}",
@@ -14,7 +13,6 @@
         "DB_HOST": "{{database.db_location}}.marathon.l4lb.thisdcos.directory",
         "DB_PORT": "{{database.db_port}}"             
     },
-
     "container": {
         "type": "DOCKER",
         "volumes": [{
@@ -31,30 +29,27 @@
     "portDefinitions": [
     {
         {{#networking.external_access.enable}}
-        "servicePort": {{networking.external_access.external_port}},
+        "port": {{networking.external_access.external_port}},
         {{/networking.external_access.enable}}
         "protocol": "tcp"
     }
     ],
     "healthChecks": [
         {
-            "protocol": "TCP",
+            "protocol": "HTTP",
+            "path": "/",
             "portIndex": 0,
-            "gracePeriodSeconds": 400,
-            "intervalSeconds": 60,
-            "timeoutSeconds": 20,
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 30,
+            "timeoutSeconds": 10,
             "maxConsecutiveFailures": 3
         }
     ],
     "labels": {
         "DCOS_PACKAGE_VERSION": "0.0.20-0.1",
         "DCOS_SERVICE_NAME": "{{service.name}}",
-        "DCOS_SERVICE_SCHEME": "http",
-        "DCOS_SERVICE_PORT_INDEX": "0",
-        {{#networking.external_access.enable}}
         "HAPROXY_GROUP": "external",
-        "HAPROXY_0_VHOST": "{{networking.external_access.virtual_host}}",
-        {{/networking.external_access.enable}}        
+        "HAPROXY_0_VHOST": "{{networking.external_access.virtual_host}}",     
         "DCOS_PACKAGE_IS_FRAMEWORK": "false"
     }
 }
