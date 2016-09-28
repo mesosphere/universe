@@ -1,29 +1,38 @@
 {
     "id": "{{service.name}}",
-    "cpus": {{minio.cpus}},
-    "mem": {{minio.mem}},
+    "cpus": {{service.cpus}},
+    "mem": {{service.mem}},
     "instances": 1,
+    "env": {
+        "ACCESS_KEY": "{{credentials.access_key}}",
+        "SECRET_ACCESS": "{{credentials.secret_key}}",
+        "region": "{{credentials.region}}"
+    },
     "container": {
         "type": "DOCKER",
         "docker": {
-            "image": "{{resource.assets.container.docker.minio-docker}}",
-            "forcePullImage": false,
+            "image": "{{resource.assets.container.docker.minio-docker-RELEASE.2016-09-11T17-42-18Z}}",
             "network": "BRIDGE",
             "portMappings": [
                { "containerPort": 80, "hostPort": 0 }
            ]
         },
         "volumes": [
+           {{^storage.external-volumes.enabled}}
             {
-                "containerPath": "/mnt/export/minio1:/export",
-                "hostPath": "{{storage.host-volume}}",
+                "containerPath": "/export",
+                "hostPath": "{{storage.local-volumes.host-volume}}/{{service.name}}/data",
                 "mode": "RW"
             },
             {
-              "containerPath": "/mnt/config/minio1:/root/.minio",
-              "hostPath": "{{storage.config}}",
+              "containerPath": "/root/.minio",
+              "hostPath": "{{storage.local-volumes.host-volume}}/{{service.name}}/config",
               "mode": "RW"
             }
+            {{/storage.external-volumes.enabled}}
+            {{#storage.external-volumes.enabled}}
+            {{/storage.external-volumes.enabled}}
+
         ]
     },
     "healthChecks": [
@@ -39,17 +48,20 @@
         }
     ],
     "labels": {
-        "DCOS_SERVICE_NAME": "{{service.name}}",
-        "DCOS_SERVICE_SCHEME": "http",
-        "DCOS_SERVICE_PORT_INDEX": "0",
-        "DCOS_PACKAGE_NAME": "{{minio.name}}",
-        "DCOS_PACKAGE_VERSION": "0.0.1",
-        "DCOS_PACKAGE_IS_FRAMEWORK": "false",
         {{#networking.virtual-host}}
         "HAPROXY_GROUP":"external",
         "HAPROXY_0_VHOST":"{{networking.virtual-host}}",
         "HAPROXY_0_REDIRECT_TO_HTTPS": "{{networking.https-redirect}}",
         {{/networking.virtual-host}}
-        "DCOS_PACKAGE_FRAMEWORK_NAME": "{{minio.name}}"
-    }
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "DCOS_SERVICE_SCHEME": "http",
+        "DCOS_SERVICE_PORT_INDEX": "0",
+        "MARATHON_SINGLE_INSTANCE_APP": "true",
+    },
+    "upgradeStrategy":{
+      "minimumHealthCapacity": 0,
+      "maximumOverCapacity": 0
+    }{{#storage.local-volumes.pinned-hostname}},
+    "constraints": [["hostname", "CLUSTER", "{{storage.local-volumes.pinned-hostname}}"]]
+    {{/storage.local-volumes.pinned-hostname}}
 }
