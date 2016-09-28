@@ -19,14 +19,14 @@
                 "cpus": {
                     "description": "CPU shares to allocate to this mongodb-admin instance.",
                     "type": "number",
-                    "default": 1,
-                    "minimum": 0.5
+                    "default": 0.3,
+                    "minimum": 0.3
                 },
                 "mem": {
                     "description": "Memory to allocate to this mongodb-admin instance.",
                     "type": "number",
-                    "default": 1024.0,
-                    "minimum": 512.0
+                    "default": 256.0,
+                    "minimum": 256.0
                 },
                 "host_volume": {
                 "description": "The location of a volume on the host to be used for persisting  data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/mongodb-admin`). This can be a mounted NFS drive. Note that this path must be the same on all DC/OS agents.",
