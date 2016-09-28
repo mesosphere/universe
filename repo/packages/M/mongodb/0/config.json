@@ -53,8 +53,8 @@
           "type": "string",
           "default": "password"
         },
-        "status_page_auth": {
-          "description:": "Enable authentication to the status web UI",
+        "status_ui_auth": {
+          "description": "Enable authentication to the status web UI",
           "type": "boolean",
           "default": false
         }

@@ -4,9 +4,9 @@
   "mem": {{mongodb.mem}},
   "instances": 1,
   "env": {
-    {{^database.auth}}
+    {{^database.status_ui_auth}}
     "AUTH": "no",
-    {{/database.auth}}
+    {{/database.status_ui_auth}}
     "MONGODB_DATABASE": "{{database.name}}",
     "MONGODB_PASS": "{{database.password}}",
     {{#storage.use_storage_engine.enable}}
