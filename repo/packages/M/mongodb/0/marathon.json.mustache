@@ -31,14 +31,6 @@
       "network": "BRIDGE",
       "portMappings": [
       {
-        "containerPort": 28017,
-          "hostPort": 0,
-          {{#networking.external_ui_access.enable}}
-          "servicePort": {{networking.external_ui_access.external_ui_port}},
-          {{/networking.external_ui_access.enable}}
-          "protocol": "tcp"
-      },     
-      {
         "containerPort": 27017,
           "hostPort": 0,
           {{#networking.external_access.enable}}
@@ -49,7 +41,15 @@
           "labels": {
             "VIP_0": "/{{service.name}}:{{networking.port}}"
           }
-      } 
+      },
+      {
+        "containerPort": 28017,
+          "hostPort": 0,
+          {{#networking.external_ui_access.enable}}
+          "servicePort": {{networking.external_ui_access.external_ui_port}},
+          {{/networking.external_ui_access.enable}}
+          "protocol": "tcp"
+      }
       ]
     }
   },
@@ -60,7 +60,7 @@
     "intervalSeconds": 60,
     "timeoutSeconds": 20,
     "maxConsecutiveFailures": 3,
-    "portIndex": 1
+    "portIndex": 0
   }
   ],
   "labels": {
