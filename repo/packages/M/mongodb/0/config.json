@@ -52,11 +52,6 @@
           "description": "The password for a user to be created with superuser access to this database only.",
           "type": "string",
           "default": "password"
-        },
-        "disable_password":{
-          "description": "Run MongoDB without a password.",
-          "type": "boolean",
-          "default": false                    
         }
       }
     },
@@ -137,7 +132,7 @@
                 "type": "boolean",
                 "default": false                    
               },
-              "external_port": {
+              "external_ui_port": {
                 "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
                 "type": "number",
                 "default": 28017
