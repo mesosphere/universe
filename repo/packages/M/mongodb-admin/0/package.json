@@ -8,7 +8,7 @@
   "website": "https://github.com/mongo-DB Admin/mongo-DB Admin",
   "description": "Web-based MongoDB admin interface written with Node.js, DB Admin and Bootstrap3.",
   "tags": ["admin", "database", "mongo", "mongodb", "nosql"],
-  "preInstallNotes": "In order for MongoDB Admin service to start successfully it requires atleast 0.3 CPU and 256MB of RAM. WARNING: MongoDB Admin on DCOS is currently EXPERIMENTAL. There may be bugs, incomplete\nfeatures, incorrect documentation, or other discrepancies.\nIf the `external_access` installation option is selected, this package creates an entry in the External Load Balancer for accessing the service from outside of the cluster on port `27018` by default.",
+  "preInstallNotes": "In order for MongoDB Admin service to start successfully it requires atleast 0.3 CPU and 256MB of RAM. WARNING: MongoDB Admin on DCOS is currently EXPERIMENTAL. There may be bugs, incomplete\nfeatures, incorrect documentation, or other discrepancies.\nIf the `external_access` installation option is selected, this package creates an entry in the External Load Balancer for accessing the service from outside of the cluster on port `27018` by default.\n\nSecurity Notice: JSON documents are parsed through a javascript virtual machine, so the web interface can be used for executing malicious javascript on a server. mongodb-admin should only be used privately for development purposes.",
   "postInstallNotes": "MongoDB Admin has been installed.\n Default Login `admin`\nDefault password: `password`",
   "postUninstallNotes": "MongoDB Admin has been uninstalled.",
   "licenses": [

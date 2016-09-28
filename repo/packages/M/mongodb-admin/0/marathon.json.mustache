@@ -23,6 +23,11 @@
     },
     "container": {
         "type": "DOCKER",
+        "volumes": [{
+            "containerPath": "",
+            "hostPath": "{{storage.host_volume}}/{{service.name}}", 
+            "mode": "RW"
+        }],
         "docker": {
             "image": "{{resource.assets.container.docker.mongodb-admin-docker}}",
             "forcePullImage": false,
@@ -44,7 +49,6 @@
             "protocol": "HTTP",
             "path": "/",
             "portIndex": 0,
-
             "gracePeriodSeconds": 300,
             "intervalSeconds": 60,
             "timeoutSeconds": 20,
