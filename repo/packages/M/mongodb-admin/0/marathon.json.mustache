@@ -8,9 +8,9 @@
         {{#auth.enable}}
         "PASSWORD": "{{auth.password}}"
         {{/auth.enable}}
-        "CONN_NAME": "{{database.db_locaation}}.marathon.l4lb.thisdcos.directory:{{database.db_port}}",
-        "DB_USERNAME": "{{auth.db_username}}",
-        "DB_PASSWORD": "{{auth.db_password}}", 
+        "CONN_NAME": "{{database.db_location}}.marathon.l4lb.thisdcos.directory:{{database.db_port}}",
+        "DB_USERNAME": "{{database.db_username}}",
+        "DB_PASSWORD": "{{database.db_password}}", 
         "DB_HOST": "{{database.db_location}}.marathon.l4lb.thisdcos.directory",
         "DB_PORT": "{{database.db_port}}",              
     },
