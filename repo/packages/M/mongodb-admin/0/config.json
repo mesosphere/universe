@@ -34,6 +34,26 @@
                 "mem"
             ]
         },
+        "auth":{
+            "type": "object",
+            "description": "mongodb-admin credentials.",
+            "properties": {
+                "enable":{
+                    "description": "enable mongo-admin authentication on login.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "username":{
+                    "description": "mongo-admin web username.",
+                    "type": "string",
+                    "default": "user"
+                },
+                "password":{
+                    "description": "mongo-admin web password.",
+                    "type": "string",
+                    "default": "password"
+                }
+        },
         "networking":{
             "type": "object",
             "description": "mongodb admin networking configuration properties",

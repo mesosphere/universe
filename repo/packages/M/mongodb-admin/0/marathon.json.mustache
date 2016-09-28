@@ -4,6 +4,9 @@
     "mem": {{mongodb-admin.mem}},
     "instances": 1,
     "env": {
+        "MONGOCLIENT_AUTH": "{{auth.username}}",
+        "MONGOCLIENT_PASSWORD": "{{auth.password}}",
+        "DB_PORT": "{{networking.postgres_host_port}}"
     },
     "container": {
         "type": "DOCKER",
@@ -13,7 +16,7 @@
             "network": "BRIDGE",
             "portMappings": [
             {
-                "containerPort": 80,
+                "containerPort": 3000,
                 "hostPort": 0,
                 {{#networking.external_access.enable}}
                 "servicePort": {{networking.external_access.external_port}},
@@ -26,7 +29,7 @@
     "healthChecks": [
         {
             "protocol": "HTTP",
-            "path": "/",
+            "path": "/healthcheck",
             "portIndex": 0,
             "gracePeriodSeconds": 300,
             "intervalSeconds": 60,
