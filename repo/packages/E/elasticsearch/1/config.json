@@ -42,6 +42,11 @@
           "description":"Forces docker to re-pull the image.",
           "type":"boolean"
         },
+        "docker-image":{
+          "default":"elasticsearch:latest",
+          "description":"The elasticsearch docker image to use",
+          "type":"string"
+        },
         "executor":{
           "properties":{
             "ram":{
