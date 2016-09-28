@@ -3,31 +3,10 @@
     "cpus": {{mongodb-admin.cpus}},
     "mem": {{mongodb-admin.mem}},
     "instances": 1,
-    "env": {
-        "ME_CONFIG_BASICAUTH_USERNAME": "{{auth.username}}",
-        "ME_CONFIG_BASICAUTH_PASSWORD": "{{auth.password}}",
-        "ME_CONFIG_MONGODB_ENABLE_ADMIN": "{{auth.enable_admin}}",
-        "ME_CONFIG_MONGODB_ADMINUSERNAME": "{{auth.admin_username}}",
-        "ME_CONFIG_MONGODB_ADMINPASSWORD": "{{auth.admin_password}}",
-        "ME_CONFIG_MONGODB_PORT": "{{networking.mongodb_host_port}}",
-        "ME_CONFIG_MONGODB_SERVER": "{{networking.mongodb_location}}.marathon.l4lb.thisdcos.directory",
-        "ME_CONFIG_OPTIONS_EDITORTHEME": "{{mongodb-admin.editor_theme}}",
-        "ME_CONFIG_REQUEST_SIZE": "{{networking.request_size}}",
-        "ME_CONFIG_SITE_BASEURL": "{{networking.base_url}}",
-        "ME_CONFIG_SITE_COOKIESECRET": "{{networking.cookie_secret}}",
-        "ME_CONFIG_SITE_SESSIONSECRET": "{{networking.session_secret}}",  
-        "ME_CONFIG_SITE_SSL_ENABLED": "false",   
-        "ME_CONFIG_MONGODB_AUTH_DATABASE": "{{auth.db_auth.auth_database}}",
-        "ME_CONFIG_MONGODB_AUTH_USERNAME": "{{auth.db_auth.auth_username}}",
-        "ME_CONFIG_MONGODB_AUTH_PASSWORD": "{{auth.db_auth.auth_password}}"
+    "env": 
     },
     "container": {
         "type": "DOCKER",
-        "volumes": [{
-            "containerPath": "var",
-            "hostPath": "{{mongodb-admin.host_volume}}/{{service.name}}", 
-            "mode": "RW"
-        }],
         "docker": {
             "image": "{{resource.assets.container.docker.mongodb-admin-docker}}",
             "forcePullImage": false,
@@ -56,7 +35,7 @@
         }
     ],
     "labels": {
-        "DCOS_PACKAGE_VERSION": "0.31.0-0.1",
+        "DCOS_PACKAGE_VERSION": "1.2.2-0.1",
         "DCOS_SERVICE_NAME": "{{service.name}}",
         "DCOS_SERVICE_SCHEME": "http",
         "DCOS_SERVICE_PORT_INDEX": "0",

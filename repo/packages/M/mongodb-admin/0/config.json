@@ -27,21 +27,6 @@
                     "type": "number",
                     "default": 256.0,
                     "minimum": 256.0
-                },
-                "defaultdb": {
-                    "description": "Default database.",
-                    "type": "string",
-                    "default": "defaultdb"
-                },
-                "editor_theme": {
-                    "description": "mongo-express editor color theme (http://codemirror.net/demo/theme.html).",
-                    "type": "string",
-                    "default": "default"
-                },
-                "host_volume": {
-                    "description": "The location of a volume on the host to be used for persisting MongoDB data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/mongodb-admin`). This can be a mounted NFS drive. Note that this path must be the same on all DC/OS agents.",
-                        "type": "string",
-                        "default": "/tmp"
                 }
             },
             "required": [
@@ -49,77 +34,10 @@
                 "mem"
             ]
         },
-        "auth":{
-            "type": "object",
-            "description": "mongodb-admin credentials.",
-            "properties": {
-                "username":{
-                    "description": "mongo-admin web username.",
-                    "type": "string",
-                    "default": "user"
-                },
-                "password":{
-                    "description": "mongo-admin web password.",
-                    "type": "string",
-                    "default": "password"
-                },
-                "admin_username":{
-                    "description": "MongoDB admin username.",
-                    "type": "string",
-                    "default": "admin"
-                },
-                "admin_password":{
-                    "description": "MongoDB admin password.",
-                    "type": "string",
-                    "default": "password"
-                },
-                "admin_username":{
-                    "description": "MongoDB admin password.",
-                    "type": "string",
-                    "default": "password"
-                },
-                "enable_admin":{
-                    "description": "Enable admin access to all databases.",
-                    "type": "string",
-                    "default": "true"
-                },
-                "db_auth":{
-                    "type": "object",
-                    "description": "If `enable_admin` is FALSE, credentials to the database.",
-                    "properties": {
-                        "auth_database":{
-                            "description": "Database name.",
-                            "type": "string",
-                            "default": "defaultdb"
-                        },      
-                        "auth_username":{
-                            "description": "Database username.",
-                            "type": "string",
-                            "default": "admin"
-                        },
-                        "auth_password":{
-                            "description": "Database name.",
-                            "type": "string",
-                            "default": "defaultdb"
-                        }
-                    }
-                }
-            }
-        },
         "networking":{
             "type": "object",
             "description": "mongodb admin networking configuration properties",
             "properties": {
-                "mongodb_location":{
-                    "description": "The name of the DC/OS mongodb instance to connect to.",
-                    "type": "string",
-                    "default": "mongodb"
-                },
-                "mongodb_host_port":{
-                    "description": "The port where the mongodb instance is listening on.",
-                    "type": "number",
-                    "default": 27017
-                },
                 "external_access": {
                     "type": "object",
                     "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
@@ -140,26 +58,6 @@
                             "default": "mongodb-admin.example.org"
                         }
                     }
-                },
-                "request_size":{
-                    "description": "Maximum payload size. CRUD operations above this size will fail in (https://www.npmjs.com/package/body-parser).",
-                    "type": "string",
-                    "default": "100kb"
-                },
-                "base_url":{
-                    "description": "Set the baseUrl to ease mounting at a subdirectory. Remember to include a leading and trailing slash.",
-                    "type": "string",
-                    "default": "/"
-                },
-                "cookie_secret":{
-                    "description": "String used by [cookie-parser middleware](https://www.npmjs.com/package/cookie-parser) to sign cookies.",
-                    "type": "string",
-                    "default": "cookiesecret"
-                },                
-                "session_secret":{
-                    "description": "String used to sign the session ID cookie by [express-session middleware](https://www.npmjs.com/package/express-session).",
-                    "type": "string",
-                    "default": "sessionsecret"
                 }  
             }
         }
