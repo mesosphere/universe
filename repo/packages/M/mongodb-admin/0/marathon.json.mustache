@@ -17,6 +17,10 @@
 
     "container": {
         "type": "DOCKER",
+        "volumes": [{
+            "containerPath": "var",
+            "mode": "RW"
+        }],
         "docker": {
             "image": "{{resource.assets.container.docker.mongodb-admin-docker}}",
             "forcePullImage": false,
