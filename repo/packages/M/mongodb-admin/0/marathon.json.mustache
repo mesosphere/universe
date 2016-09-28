@@ -3,12 +3,18 @@
     "cpus": {{mongodb-admin.cpus}},
     "mem": {{mongodb-admin.mem}},
     "instances": 1,
-    {{#auth.enable}}
+  
     "env": {
-        "MONGOCLIENT_AUTH": "{{auth.username}}",
-        "MONGOCLIENT_PASSWORD": "{{auth.password}}",
+        {{#auth.enable}}
+        "PASSWORD": "{{auth.password}}"
+        {{/auth.enable}}
+        "CONN_NAME": "{{database.db_locaation}}.marathon.l4lb.thisdcos.directory:{{database.db_port}}",
+        "DB_USERNAME": "{{auth.db_username}}",
+        "DB_PASSWORD": "{{auth.db_password}}", 
+        "DB_HOST": "{{database.db_location}}.marathon.l4lb.thisdcos.directory",
+        "DB_PORT": "{{database.db_port}}",              
     },
-    {{/auth.enable}}
+
     "container": {
         "type": "DOCKER",
         "docker": {
@@ -17,7 +23,7 @@
             "network": "BRIDGE",
             "portMappings": [
             {
-                "containerPort": 3000,
+                "containerPort": 1234,
                 "hostPort": 0,
                 {{#networking.external_access.enable}}
                 "servicePort": {{networking.external_access.external_port}},
@@ -39,7 +45,7 @@
         }
     ],
     "labels": {
-        "DCOS_PACKAGE_VERSION": "1.2.2-0.1",
+        "DCOS_PACKAGE_VERSION": "0.0.20-0.1",
         "DCOS_SERVICE_NAME": "{{service.name}}",
         "DCOS_SERVICE_SCHEME": "http",
         "DCOS_SERVICE_PORT_INDEX": "0",

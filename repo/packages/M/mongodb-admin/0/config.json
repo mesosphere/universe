@@ -39,22 +39,43 @@
             "description": "mongodb-admin credentials.",
             "properties": {
                 "enable":{
-                    "description": "enable mongo-admin authentication on login.",
+                    "description": "enable mongodb-admin authentication on login.",
                     "type": "boolean",
                     "default": false
                 },
-                "username":{
-                    "description": "mongo-admin web username.",
-                    "type": "string",
-                    "default": "user"
-                },
                 "password":{
-                    "description": "mongo-admin web password.",
+                    "description": "mongodb-admin web password.",
                     "type": "string",
                     "default": "password"
                 }
             }
         },
+        "database":{
+            "type": "object",
+            "description": "mongodb database connection.",
+            "properties": {
+                "db_username":{
+                    "description": "The username for the database connection.",
+                    "type": "string",
+                    "default": "admin"
+                },
+                "db_password":{
+                    "description": "The password fot the database user.",
+                    "type": "string",
+                    "default": "password"
+                },
+                "db_location":{
+                    "description": "The name of the database location to connect to.",
+                    "type": "string",
+                    "default": "mongodb"
+                },
+                "db_port":{
+                    "description": "The port where the database is listening on in the location above.",
+                    "type": "string",
+                    "default": "27017"
+                }
+            }
+        },     
         "networking":{
             "type": "object",
             "description": "mongodb admin networking configuration properties",
