@@ -29,7 +29,7 @@
             "network": "BRIDGE",
             "portMappings": [
             {
-                "containerPort": "80",
+                "containerPort": 80,
                 "hostPort": 0,
                 {{#networking.external_access.enable}}
                 "servicePort": {{networking.external_access.external_port}},
