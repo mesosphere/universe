@@ -41,7 +41,7 @@
                 "enable":{
                     "description": "enable mongodb-admin authentication on login.",
                     "type": "boolean",
-                    "default": false
+                    "default": true
                 },
                 "password":{
                     "description": "mongodb-admin web password.",
