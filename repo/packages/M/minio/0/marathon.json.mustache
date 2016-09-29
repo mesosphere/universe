@@ -3,18 +3,13 @@
     "cpus": {{service.cpus}},
     "mem": {{service.mem}},
     "instances": 1,
-    "env": {
-        "ACCESS_KEY": "{{credentials.access_key}}",
-        "SECRET_ACCESS": "{{credentials.secret_key}}",
-        "region": "{{credentials.region}}"
-    },
     "container": {
         "type": "DOCKER",
         "docker": {
             "image": "{{resource.assets.container.docker.minio-docker-RELEASE.2016-09-11T17-42-18Z}}",
             "network": "BRIDGE",
             "portMappings": [
-               { "containerPort": 80, "hostPort": 0 }
+               { "containerPort": 9000, "hostPort": 0 }
            ]
         },
         "volumes": [
