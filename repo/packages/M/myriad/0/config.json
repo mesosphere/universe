@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "myriad": {
+      "description": "Myriad framework configuration properties",
+      "type": "object",
+      "properties": {
+        "framework-name": {
+          "description": "The framework name to register with Mesos.",
+          "type": "string",
+          "default": "myriad"
+        }
+      },
+      "required": [
+        "framework-name"
+      ]
+    }
+  },
+  "required": [
+    "myriad"
+  ]
+}

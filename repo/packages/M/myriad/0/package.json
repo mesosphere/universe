@@ -1,0 +1,18 @@
+{
+  "packagingVersion" : "2.0",
+  "name" : "myriad",
+  "version" : "0.0.1",
+  "scm" : "https://github.com/apache/incubator-myriad",
+  "maintainer" : "dev@myriad.incubator.apache.org",
+  "description" : "Apache Myriad (incubating) installs, manages, and scales Hadoop/YARN on Mesos",
+  "framework" : true,
+  "licenses" : [ {
+    "name" : "Apache License Version 2.0",
+    "url" : "https://github.com/mesosphere/marathon/blob/master/LICENSE"
+  } ],
+  "tags" : [ "hadoop", "yarn", "myriad" ],
+  "preInstallNotes" : "You are about to install Hadoop/YARN on DC/OS with the Apache Myriad service.",
+  "postInstallNotes" : "Your Myriad cluster is being deployed.",
+  "postUninstallNotes" : "Your Myriad cluster has been uninstalled. Please run the framework_cleaner to remove any persistent state if required.",
+  "selected" : false
+}
