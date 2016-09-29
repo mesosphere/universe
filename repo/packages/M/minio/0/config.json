@@ -32,6 +32,12 @@
       "type": "object",
       "description": "Minio service configuration properties",
       "properties": {
+        "region": {
+          "default": "us-east-1",
+          "description": "The account region where Minio data is located",
+          "type": "string",
+          "pattern": "^[a-z0-9-]{5,25}$"
+        },
         "access_key": {
           "description": "Access key that can be used to log into Minio Server",
           "type": "string"
@@ -40,7 +46,12 @@
           "description": "Secret access key that can be used to log into Minio Server",
           "type": "string"
         }
-      }
+      },
+      "required": [
+        "region",
+        "access_key",
+        "secret_key"
+      ]
     },
     "storage": {
       "type": "object",
