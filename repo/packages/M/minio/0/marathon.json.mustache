@@ -3,11 +3,6 @@
     "cpus": {{service.cpus}},
     "mem": {{service.mem}},
     "instances": 1,
-    "env": {
-        "ACCESS_KEY": "{{credentials.access_key}}",
-        "SECRET_ACCESS": "{{credentials.secret_key}}",
-        "region": "{{credentials.region}}"
-    },
     "container": {
         "type": "DOCKER",
         "docker": {

@@ -28,26 +28,6 @@
         "mem"
       ]
     },
-    "credentials": {
-      "type": "object",
-      "description": "Minio service configuration properties",
-      "properties": {
-        "region": {
-          "default": "us-east-1",
-          "description": "The account region where Minio data is located",
-          "type": "string",
-          "pattern": "^[a-z0-9-]{5,25}$"
-        },
-        "access_key": {
-          "description": "Access key that can be used to log into Minio Server",
-          "type": "string"
-        },
-        "secret_key": {
-          "description": "Secret access key that can be used to log into Minio Server",
-          "type": "string"
-        }
-      }
-    },
     "storage": {
       "type": "object",
       "description": "Storage configuration for Minio's application and config on DC/OS",
