@@ -17,13 +17,13 @@
       "description": "MongoDB service configuration properties.",
       "properties": {
         "cpus": {
-          "description": "CPU shares to allocate to this MongoDB node.",
+          "description": "CPU shares to allocate to each service instance.",
           "type": "number",
           "default": 0.5,
           "minimum": 0.5
         },
         "mem": {
-          "description": "Memory to allocate to this MongoDB node.",
+          "description": "Memory to allocate to each service instance.",
           "type": "number",
           "default": 1024.0,
           "minimum": 512.0
@@ -64,27 +64,6 @@
       "type": "object",
       "description": "MongoDB storage configuration properties.",
       "properties":{  
-        "use_storage_engine": {
-          "type": "object",
-          "description": "Use a specific storage engine.",
-            "properties": {    
-              "enable": {
-                "description": "Enable or disable using a specific storage engine.",
-                "type": "boolean",
-                "default": false                    
-              },
-              "storage_engine": {
-                "description": "Specific storage engine to be used.",
-                "type": "string",
-                "default": "mmapv1"
-              }
-            }
-        },    
-        "host_volume": {
-          "description": "The location of a volume on the host to be used for persisting MongoDB data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/mongodb`). This can be a mounted NFS drive. Note that this path must be the same on all DC/OS agents.",
-          "type": "string",
-          "default": "/tmp"
-        },
         "persistence": {
           "type": "object",
           "description": "Enable persistent storage.",
@@ -100,6 +79,27 @@
               "default": 2048
             }
           }
+        },   
+        "host_volume": {
+          "description": "If using non-persistent volumes (local volumes), this sets the location of a volume on the host to be used for the service. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/service_name`). This can be a mounted NFS drive. Note that this path must be the same on all DC/OS agents. NOTE: if you don't change the default /tmp value, YOUR DATA WILL NOT BE SAVED IN ANY WAY.",
+          "type": "string",
+          "default": "/tmp"
+        },
+        "use_storage_engine": {
+          "type": "object",
+          "description": "Use a specific storage engine.",
+            "properties": {    
+              "enable": {
+                "description": "Enable or disable using a specific storage engine.",
+                "type": "boolean",
+                "default": false                    
+              },
+              "storage_engine": {
+                "description": "Specific storage engine to be used.",
+                "type": "string",
+                "default": "mmapv1"
+              }
+            }
         }
       }
     },
@@ -114,7 +114,7 @@
         },
         "external_access": {
           "type": "object",
-          "description": "Enable access to the database from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+          "description": "Enable access to the service from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
             "properties": {    
               "enable": {
                 "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
@@ -137,7 +137,7 @@
                 "type": "boolean",
                 "default": false                    
               },
-              "external_ui_port": {
+              "external_ui_access_port": {
                 "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
                 "type": "number",
                 "default": 28017
