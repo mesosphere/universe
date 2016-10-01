@@ -8,9 +8,9 @@
   "website": "https://github.com/mrvautin/adminMongo",
   "description": "A Web user interface to administer MongoDB databases built using Express.",
   "tags": ["admin", "database", "mongoclient", "mongo", "mongodb", "nosql"],
-  "preInstallNotes": "WARNING: MongoDB Admin on DCOS is currently EXPERIMENTAL. There may be bugs, incomplete\nfeatures, incorrect documentation, or other discrepancies.\nIf the `external_access` installation option is selected, this package creates an entry in the External Load Balancer for accessing the service from outside of the cluster on port `27018` by default.\n\nSecurity Notice: JSON documents are parsed through a javascript virtual machine, so the web interface can be used for executing malicious javascript on a server. MongoDB Admin should only be used privately for development purposes.\n\nIn order to use in conjunction with the DC/OS mongodb package, please connect to the server `mongodb.marathon.l4lb.thisdcos.directory'",
-  "postInstallNotes": "MongoDB Admin has been installed.\n\nYou can now access the UI at `http://your_public_node_ip:27018`.\n\nDC/OS MongoDB default Login: `admin`\nDefault password: `password`\n\nLogin to the application and create a connection with the format `mongodb://admin:password@mongodb.marathon.l4lb.thisdcos.directory:27017`",
-  "postUninstallNotes": "MongoDB Admin has been uninstalled.",
+"preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\n```Advanced Installation options notes```\n\nnetworking / *external_access*: create an entry in Marathon-LB for accessing the service from outside of the cluster\n\nnetworking / *external_access_port*: port to be used in Marathon-LB for accessing the service.",
+"postInstallNotes": "Service installed.\n\nDefault login: `admin`/`password`.",
+"postUninstallNotes": "Service uninstalled.",
   "licenses": [
     {
       "name": "MIT License",

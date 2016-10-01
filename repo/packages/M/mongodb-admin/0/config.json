@@ -94,7 +94,7 @@
                             "type": "boolean",
                             "default": true                    
                         },
-                        "external_port": {
+                        "external_access_port": {
                             "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
                             "type": "number",
                             "default": 27018
