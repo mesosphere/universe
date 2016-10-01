@@ -74,7 +74,7 @@
               "default": false                    
             },
             "volume_size": {
-              "description": "If a new volume is to be created, this controls its size in MBs. Defaults to 64MBs",
+              "description": "If a new volume is to be created, this controls its size in MBs.",
               "type": "number",
               "default": 256
             }
@@ -95,13 +95,18 @@
           "description": "Port number to be used for clear communication internally to the cluster. Currently unused and fixed to be 3306.",
           "type": "number",
           "default": 3306
+        },  
+        "host_mode": {
+            "description": "Enable or disable host networking mode. NOTE: this requires the default port to be available on the target host. This also forces to have a single instance per node.",
+            "type": "boolean",
+            "default": false                    
         },
         "external_access": {
           "type": "object",
           "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
             "properties": {    
               "enable": {
-                "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to FALSE.",
+                "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
                 "type": "boolean",
                 "default": false                    
               },
