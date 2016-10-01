@@ -62,6 +62,7 @@
     }
   ],
   "requirePorts": true,
+  "constraints": [["hostname", "UNIQUE"]],
   {{/networking.host_mode}}
   "healthChecks": [{
     "protocol": "TCP",
