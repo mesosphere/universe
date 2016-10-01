@@ -27,7 +27,7 @@
     "docker": {
       "image": "{{resource.assets.container.docker.mysql-docker}}",
       {{#networking.host_mode}}
-      "network": "HOST",
+      "network": "HOST"
       {{/networking.host_mode}}            
       {{^networking.host_mode}}
       "network": "BRIDGE",
