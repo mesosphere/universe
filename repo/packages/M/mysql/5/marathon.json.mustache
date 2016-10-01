@@ -48,8 +48,7 @@
     }
   },
   {{#networking.host_mode}}
-  "portDefinitions": [
-    {
+  "portDefinitions": [{
       "protocol": "tcp",
       "port": 3306,
       "name": "{{service.name}}",
@@ -59,20 +58,22 @@
       "labels": {
         "VIP_0": "/{{service.name}}:{{networking.port}}"
       }
-    }
-  ],
+    }],
   "requirePorts": true,
   "constraints": [["hostname", "UNIQUE"]],
   {{/networking.host_mode}}
   "healthChecks": [{
     "protocol": "TCP",
+    {{#networking.host_mode}}
+    "port": 3306,
+    {{/networking.host_mode}}
+    {{^networking.host_mode}}
+    "portIndex": 0,
+    {{/networking.host_mode}}    
     "gracePeriodSeconds": 300,
     "intervalSeconds": 60,
     "timeoutSeconds": 20,
-    "maxConsecutiveFailures": 3,
-    {{^networking.host_mode}}
-    "portIndex": 0
-    {{/networking.host_mode}}
+    "maxConsecutiveFailures": 3
   }],
   "labels": {
     "DCOS_PACKAGE_VERSION": "5.7.12-0.3",
