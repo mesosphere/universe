@@ -26,7 +26,6 @@
     }],
     "docker": {
       "image": "{{resource.assets.container.docker.mysql-docker}}",
-      "forcePullImage": false,
       {{#networking.host_mode}}
       "network": "HOST",      
       {{/networking.host_mode}}            
@@ -34,17 +33,18 @@
       "network": "BRIDGE",
       "portMappings": [{
         "containerPort": 3306,
-          "hostPort": 0,
-          {{#networking.external_access.enable}}
-          "servicePort": {{networking.external_access.external_access_port}},
-          {{/networking.external_access.enable}}
-          "protocol": "tcp",
-          "name": "{{service.name}}",
-          "labels": {
-            "VIP_0": "/{{service.name}}:{{networking.port}}"
-          }
-      }]
-      {{/networking.host_mode}}      
+        "hostPort": 0,
+        {{#networking.external_access.enable}}
+        "servicePort": {{networking.external_access.external_access_port}},
+        {{/networking.external_access.enable}}
+        "protocol": "tcp",
+        "name": "{{service.name}}",
+        "labels": {
+          "VIP_0": "/{{service.name}}:{{networking.port}}"
+        }
+        {{/networking.host_mode}}
+        "forcePullImage": false  
+      }]    
     }
   },
   {{#networking.host_mode}}
