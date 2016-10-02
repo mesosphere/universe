@@ -37,7 +37,7 @@
         "containerPort": 27017,
           "hostPort": 0,
           {{#networking.external_access.enable}}
-          "servicePort": {{networking.external_access.external_port}},
+          "servicePort": {{networking.external_access.external_access_port}},
           {{/networking.external_access.enable}}
           "protocol": "tcp",
           "name": "{{service.name}}",
