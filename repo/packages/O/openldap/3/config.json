@@ -115,7 +115,7 @@
                     "default": 389
                 },
                 "host_mode": {
-                    "description": "Enable or disable host networking mode. NOTE: this requires the default port to be available on the target host. This also forces to have a single instance per node.",
+                    "description": "Enable or disable host networking mode. NOTE: this requires the default port to be available on the target host **THIS IS CURRENTLY NOT THE CASE IN A DEFAULT DC/OS INSTALLATION**. This also forces to have a single instance per node.",
                     "type": "boolean",
                     "default": false                    
                 },
