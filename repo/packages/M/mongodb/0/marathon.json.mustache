@@ -54,6 +54,7 @@
           {{#networking.external_ui_access.enable}}
           "servicePort": {{networking.external_ui_access.external_ui_access_port}},
           {{/networking.external_ui_access.enable}}
+          "name": "{{service.name}}-ui",
           "protocol": "tcp"
         }
       ],
@@ -85,7 +86,8 @@
   "requirePorts": true,
   "constraints": [["hostname", "UNIQUE"]],
   {{/networking.host_mode}}
-  "healthChecks": [{
+  "healthChecks": [
+    {
     "protocol": "TCP",
     {{#networking.host_mode}}
     "port": 27017,
@@ -97,7 +99,8 @@
     "intervalSeconds": 60,
     "timeoutSeconds": 20,
     "maxConsecutiveFailures": 3
-  }],
+    }
+  ],
   "labels": {
     "DCOS_PACKAGE_VERSION": "3.2-0.1",
     "DCOS_SERVICE_NAME": "{{service.name}}",
@@ -112,7 +115,7 @@
     {{/networking.external_access.enable}}
     "DCOS_PACKAGE_IS_FRAMEWORK": "false"
   },
-  "upgradeStrategy":{
+  "upgradeStrategy": {
     "minimumHealthCapacity": 0,
     "maximumOverCapacity": 0
   }
