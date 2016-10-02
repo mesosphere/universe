@@ -1,0 +1,19 @@
+{
+  "images": {
+    "icon-small": "http://enitedinternational.com/img/icons/icon/mysql-icon.png",
+    "icon-medium": "http://www.ebexsoft.com/images/icons/mysql.jpg",
+    "icon-large": "http://michaelglesenkamp.com/images/icons/icon-mysql.jpg",
+   "screenshots": [
+     "https://upload.wikimedia.org/wikipedia/commons/6/66/PhpMyAdmin_screenshot_new.png",
+     "http://i1-linux.softpedia-static.com/screenshots/phpMyAdmin_2.png",
+     "https://www.phpmyadmin.net/static/images/screenshots/monitor.png"
+   ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "mysql-admin-docker": "phpmyadmin/phpmyadmin:4.6.4-1"
+      }
+    }
+  }
+}

@@ -17,13 +17,13 @@
             "description": "mysql-admin service configuration properties",
             "properties": {
                 "cpus": {
-                    "description": "CPU shares to allocate to this mysql-admin instance.",
+                    "description": "CPU shares to allocate to each service instance.",
                     "type": "number",
                     "default": 0.2,
                     "minimum": 0.2
                 },
                 "mem": {
-                    "description": "Memory to allocate to this mysql-admin instance.",
+                    "description":  "Memory to allocate to each service instance.",
                     "type": "number",
                     "default": 256.0,
                     "minimum": 256.0
@@ -49,7 +49,7 @@
                     "default": "mysql"
                 },
                 "mysql_host_port":{
-                    "description": "The port where the mysql instance is listening on. Defaults to 3306",
+                    "description": "The port where the mysql instance is listening on.",
                     "type": "number",
                     "default": 3306
                 },
@@ -62,7 +62,7 @@
                             "type": "boolean",
                             "default": false                    
                         },
-                        "external_port": {
+                        "external_access_port": {
                             "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
                             "type": "number",
                             "default": 13307
