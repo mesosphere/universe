@@ -1,0 +1,21 @@
+{
+  "packagingVersion": "3.0",
+  "name": "openldap-admin",
+  "version": "1.2.2-0.4",
+  "scm": "https://github.com/dinkel/docker-phpldapadmin",
+  "maintainer": "support@mesosphere.io",
+  "website": "http://phpldapadmin.sourceforge.net/wiki/index.php/Main_Page",
+  "description": "phpLDAPadmin is a web-based LDAP client. It provides easy, anywhere-accessible, multi-language administration for your LDAP server.\n\nThis DC/OS package is ready to be used alongside the DC/OS `openldap` package. Other LDAP servers may work, but haven't been tested.",
+  "tags": [
+    "ldap",
+    "directory"
+    ],
+  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\n```Advanced Installation options notes```\n\nnetworking / *external_access*: create an entry in Marathon-LB for accessing the service from outside of the cluster\n\nnetworking / *external_access_port*: port to be used in Marathon-LB for accessing the service.",
+  "postInstallNotes": "Service installed.\n\nIt is recommended to access this service through the endpoint created in Marathon-LB.\n\nDefault login: `cn=admin,dc=example,dc=org`/`password`.",
+  "licenses": [
+    {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  ]
+}
