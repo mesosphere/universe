@@ -30,11 +30,14 @@
     }],
     "docker": {
       "image": "{{resource.assets.container.docker.mongodb-docker}}",
-      "forcePullImage": false,
+      {{#networking.host_mode}}
+      "network": "HOST",
+      {{/networking.host_mode}}            
+      {{^networking.host_mode}}
       "network": "BRIDGE",
       "portMappings": [
-      {
-        "containerPort": 27017,
+        {
+          "containerPort": 27017,
           "hostPort": 0,
           {{#networking.external_access.enable}}
           "servicePort": {{networking.external_access.external_access_port}},
@@ -43,27 +46,57 @@
           "name": "{{service.name}}",
           "labels": {
             "VIP_0": "/{{service.name}}:{{networking.port}}"
-          }
-      },
-      {
-        "containerPort": 28017,
+        },
+        {
+          "containerPort": 28017,
           "hostPort": 0,
           {{#networking.external_ui_access.enable}}
           "servicePort": {{networking.external_ui_access.external_ui_access_port}},
           {{/networking.external_ui_access.enable}}
           "protocol": "tcp"
-      }
-      ]
+        }
+      ],
+      {{/networking.host_mode}}
+      "forcePullImage": false
     }
   },
+  {{#networking.host_mode}}
+  "portDefinitions": [
+    {
+      "port": 27017,
+      {{#networking.external_access.enable}}
+      "servicePort": {{networking.external_access.external_access_port}},
+      {{/networking.external_access.enable}}
+      "name": "{{service.name}}",
+      "labels": {
+        "VIP_0": "/{{service.name}}:{{networking.port}}"
+      },
+      "protocol": "tcp"
+    },
+    {
+      "port": 28017,
+      {{#networking.external_ui_access.enable}}
+      "servicePort": {{networking.external_access.external_ui_access_port}},
+      {{/networking.external_ui_access.enable}}
+      "protocol": "tcp"
+    }    
+  ],
+  "requirePorts": true,
+  "constraints": [["hostname", "UNIQUE"]],
+  {{/networking.host_mode}}
   "healthChecks": [
   {
     "protocol": "TCP",
+    {{#networking.host_mode}}
+    "port": 27017,
+    {{/networking.host_mode}}
+    {{^networking.host_mode}}
+    "portIndex": 0,
+    {{/networking.host_mode}}   
     "gracePeriodSeconds": 300,
     "intervalSeconds": 60,
     "timeoutSeconds": 20,
-    "maxConsecutiveFailures": 3,
-    "portIndex": 0
+    "maxConsecutiveFailures": 3
   }
   ],
   "labels": {
