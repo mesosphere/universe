@@ -46,6 +46,7 @@
           "name": "{{service.name}}",
           "labels": {
             "VIP_0": "/{{service.name}}:{{networking.port}}"
+          }
         },
         {
           "containerPort": 28017,
@@ -63,29 +64,28 @@
   {{#networking.host_mode}}
   "portDefinitions": [
     {
-      "port": 27017,
       {{#networking.external_access.enable}}
       "servicePort": {{networking.external_access.external_access_port}},
       {{/networking.external_access.enable}}
+      "port": 27017,
+      "protocol": "tcp",
       "name": "{{service.name}}",
       "labels": {
         "VIP_0": "/{{service.name}}:{{networking.port}}"
-      },
-      "protocol": "tcp"
+      }
     },
     {
-      "port": 28017,
       {{#networking.external_ui_access.enable}}
       "servicePort": {{networking.external_access.external_ui_access_port}},
       {{/networking.external_ui_access.enable}}
+      "port": 28017,
       "protocol": "tcp"
-    }    
+    }
   ],
   "requirePorts": true,
   "constraints": [["hostname", "UNIQUE"]],
   {{/networking.host_mode}}
-  "healthChecks": [
-  {
+  "healthChecks": [{
     "protocol": "TCP",
     {{#networking.host_mode}}
     "port": 27017,
@@ -97,8 +97,7 @@
     "intervalSeconds": 60,
     "timeoutSeconds": 20,
     "maxConsecutiveFailures": 3
-  }
-  ],
+  }],
   "labels": {
     "DCOS_PACKAGE_VERSION": "3.2-0.1",
     "DCOS_SERVICE_NAME": "{{service.name}}",
