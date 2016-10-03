@@ -15,7 +15,7 @@
                     "default": "msoms",
                     "description": "OMS Agent Application ID",
                     "type": "string"
-                }
+                },
                 "instances": {
                     "default": 1,
                     "description": "Number of Marathon instances to run.",
