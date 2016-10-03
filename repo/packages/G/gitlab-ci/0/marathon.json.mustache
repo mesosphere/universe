@@ -13,6 +13,7 @@
        "type": "DOCKER",
        "docker": {
            "image": "{{resource.assets.container.docker.gitlab-runner}}",
+           "privileged": true,
            "network" : "HOST"
        }
    },
