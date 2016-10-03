@@ -63,7 +63,7 @@
           "description": "Configuration properties for this GitLab CI runner.",
           "type": "object",
           "properties": {
-            "name": {
+            "executor": {
               "description": "The default executor to use for this GitLab CI runner.",
               "type": "string",
               "default": "docker"
@@ -75,7 +75,7 @@
             }
           },
           "required": [
-            "name",
+            "executor",
             "registration-token"
           ]
         }
