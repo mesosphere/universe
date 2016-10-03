@@ -4,10 +4,10 @@
   "mem": {{service.mem}},
   "instances": {{service.instances}},
   "env": {
-    "GITLAB_SERVICE_NAME" : {{gitlab.service.name}},
-    "REGISTRATION_TOKEN" : {{gitlab.service.registration-token}},
-    "RUNNER_EXECUTOR" : {{gitlab.runner.executor}},
-    "RUNNER_CONCURRENT_BUILDS" : {{gitlab.runner.concurrent-builds}}
+    "GITLAB_SERVICE_NAME" : "{{gitlab.service.name}}",
+    "REGISTRATION_TOKEN" : "{{gitlab.service.registration-token}}",
+    "RUNNER_EXECUTOR" : "{{gitlab.runner.executor}}",
+    "RUNNER_CONCURRENT_BUILDS" : "{{gitlab.runner.concurrent-builds}}"
   },
   "container": {
        "type": "DOCKER",
