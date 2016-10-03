@@ -1,0 +1,48 @@
+{
+  "id": "{{omsagent.app_id}}",
+  "cmd": null,
+  "cpus": 1,
+  "mem": 256,
+  "disk": 0,
+  "instances": {{omsagent.instances}},
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/var/run/docker.sock",
+        "hostPath": "/var/run/docker.sock",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 25225,
+          "hostPort": 25225,
+          "protocol": "tcp",
+          "labels": {}
+        }
+      ],
+      "privileged": true,
+      "parameters": [
+        {
+          "key": "name",
+          "value": "omsagent"
+        },
+        {
+          "key": "restart",
+          "value": "always"
+        }
+      ],
+      "forcePullImage": false
+    }
+  },
+  "env": {
+    "WSID": "{{omsagent.wsid}}",
+    "KEY": "{{omsagent.wskey}}"
+  },
+  "labels": {},
+  "healthChecks": []
+}
