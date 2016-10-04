@@ -4,6 +4,7 @@ from distutils.version import LooseVersion
 import argparse
 import base64
 import collections
+import copy
 import itertools
 import json
 import pathlib
@@ -406,7 +407,7 @@ def write_package_in_zip(zip_file, path, package):
     :rtype: None
     """
 
-    package = package.copy()
+    package = copy.deepcopy(package)
     package.pop('releaseVersion')
     package.pop('minDcosReleaseVersion', None)
     package['packagingVersion'] = "2.0"
