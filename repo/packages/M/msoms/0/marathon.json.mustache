@@ -1,10 +1,9 @@
 {
-  "id": "{{omsagent.app_id}}",
-  "cmd": null,
+  "id": "{{msoms.app_id}}",
   "cpus": 1,
   "mem": 256,
   "disk": 0,
-  "instances": {{omsagent.instances}},
+  "instances": {{msoms.instances}},
   "container": {
     "type": "DOCKER",
     "volumes": [
@@ -35,14 +34,11 @@
           "key": "restart",
           "value": "always"
         }
-      ],
-      "forcePullImage": false
+      ]
     }
   },
   "env": {
-    "WSID": "{{omsagent.wsid}}",
-    "KEY": "{{omsagent.wskey}}"
-  },
-  "labels": {},
-  "healthChecks": []
+    "WSID": "{{msoms.wsid}}",
+    "KEY": "{{msoms.wskey}}"
+  }
 }

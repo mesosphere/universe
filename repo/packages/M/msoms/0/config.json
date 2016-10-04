@@ -1,7 +1,7 @@
 {
     "properties": {
-        "omsagent": {
-            "description": "OMS Agent specific configuration properties",
+        "msoms": {
+            "description": "OMS specific configuration properties",
             "properties": {
                 "wsid": {
                     "description": "Your workspace ID.",
@@ -13,7 +13,7 @@
                 },
                 "app_id": {
                     "default": "msoms",
-                    "description": "OMS Agent Application ID",
+                    "description": "OMS Application ID",
                     "type": "string"
                 },
                 "instances": {
