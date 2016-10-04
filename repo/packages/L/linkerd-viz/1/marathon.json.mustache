@@ -1,0 +1,44 @@
+{
+  "id": "linkerd-viz",
+  "instances": 1,
+  "cpus": {{linkerd-viz.cpus}},
+  "mem": {{linkerd-viz.mem}},
+  "acceptedResourceRoles": [ "{{linkerd-viz.resource-role}}" ],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.linkerd-viz-docker}}",
+      "network": "HOST",
+      "privileged": true
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/"
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": {{linkerd-viz.stats-port}},
+      "protocol": "tcp",
+      "name": "stats"
+    },
+    {
+      "port": {{linkerd-viz.public-port}},
+      "protocol": "tcp",
+      "name": "public"
+    }
+  ],
+  "requirePorts": true,
+  "env": {
+    "PUBLIC_PORT": "{{linkerd-viz.public-port}}",
+    "STATS_PORT": "{{linkerd-viz.stats-port}}"
+  },
+  "labels": {
+    "DCOS_SERVICE_NAME": "linkerd-viz",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "1"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "images": {
+    "icon-small": "https://linkerd.io/images/dcos/linkerd-viz-logo-small.png",
+    "icon-medium": "https://linkerd.io/images/dcos/linkerd-viz-logo-medium.png",
+    "icon-large": "https://linkerd.io/images/dcos/linkerd-viz-logo-large.png",
+    "screenshots": [
+      "https://linkerd.io/images/dcos/linkerd-viz-screenshot.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "linkerd-viz-docker": "buoyantio/linkerd-dcos-viz:0.0.4"
+      }
+    }
+  }
+}
