@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "required": ["linkerd-viz"],
+  "properties": {
+    "linkerd-viz": {
+      "type": "object",
+      "required": ["cpus", "mem", "public-port", "resource-role", "stats-port"],
+      "properties": {
+        "cpus": {
+          "default": 1.0,
+          "description": "CPU shares to allocate to linkerd-viz.",
+          "minimum": 1.0,
+          "type": "number"
+        },
+        "mem": {
+          "default":512.0,
+          "description": "Memory (MB) to allocate to linkerd-viz.",
+          "minimum": 512.0,
+          "type": "number"
+        },
+        "public-port": {
+          "default": 3000,
+          "description": "Public port. The port to access the linkerd-viz dashboard.",
+          "type": "integer"
+        },
+        "resource-role": {
+          "default": "slave_public",
+          "description": "The accepted resource role. By default, this will deploy to an agent with the \"slave_public\" role.",
+          "type": "string"
+        },
+        "stats-port": {
+          "default": 9090,
+          "description": "Stats port. The port gives the dashboard access to the backend stats server.",
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

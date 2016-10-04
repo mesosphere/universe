@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "3.0",
+  "name": "calico",
+  "version": "0.3.1",
+  "tags": ["calico", "networking", "ip-per-container", "ip-per-task", "policy"],
+  "description": "Calico networking for DC/OS.  Calico provides IP-per-task functionality with rich policy.  This Universe Package simplifies the installation of Calico and its dependencies on a stock DC/OS cluster. It is configurable such that it assumes Calico's dependencies are installed, and merely serves to ensure calico's core processes are running. By default, it configures Docker with multi-host networking (required to use Calico with the Docker Containerizer), and reboots each Agent to pick up Calico's CNI configuration (required for Calico with Unified tasks). Both of these steps will cause temporary restarts of an Agent causing transient task loss. A more stable approach to Calico in DC/OS will have users performing these steps manually, and disabling them in the Universe Package. At the moment, only a limited set of DC/OS versions and OSes are supported - check the documentation for details.  The framework will still run on unsupported versions, in which case the Agent network hooks will not be installed and Calico networking will only be available with the Docker containerizer.",
+  "scm": "https://github.com/projectcalico/calico-containers.git",
+  "website": "https://projectcalico.org",
+  "preInstallNotes": "Before installing Calico, ensure the DC/OS etcd package is installed (if not using own etcd server). Note: this scheduler may makes permament changes to all Agents and Docker Daemons in the cluster. Calico's DC/OS installation framework is currently in beta.",
+  "postInstallNotes": "Calico services are now running on your cluster. Follow the Calico DC/OS guide available at https://github.com/projectcalico/calico-containers/blob/master/docs/mesos/dcos.md",
+  "maintainer": "rob@projectcalico.org",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/projectcalico/calico-containers/master/LICENSE"
+    }
+  ],
+  "framework": true
+}

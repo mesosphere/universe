@@ -1,0 +1,24 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "openldap",
+  "version": "0.3",
+  "scm": "https://github.com/dinkel/docker-openldap",
+  "maintainer": "support@mesosphere.io",
+  "website": "http://www.openldap.org/",
+  "description": "OpenLDAP Software is an open source implementation of the Lightweight Directory Access Protocol.",
+  "framework": true,
+  "tags": [
+    "ldap",
+    "directory"
+  ],
+  "preInstallNotes": "OpenLDAP requires at least 0.3 CPU and 128MB of RAM.\n\nWARNING: OpenLDAP on DCOS is currently EXPERIMENTAL. There may be bugs, incomplete\nfeatures, incorrect documentation, or other discrepancies.\n\nIf you didn't provide a value for `host_volume` when installing the package,\nYOUR DATA WILL NOT BE SAVED IN ANY WAY.\n\nThis DC/OS OpenLDAP package creates a named Virtual IP for other services in the cluster to access the service in the format `openldap.marathon.l4lb.thisdcos.directory:389` (where `openldap` would be the package name used for installation). If the installation option `external_access` is marked, it also creates an entry in the External Load Balancer for accessing the service from outside of the cluster on port `10389`. Please note this connection is unencrypted.\n\n You can administer this service easily installing the DC/OS `openldap-admin` package.",
+  "postInstallNotes": "OpenLDAP has been installed.\n Default Login DN: `cn=admin,dc=example,dc=org`\nDefault password: `admin`",
+  "postUninstallNotes": "OpenLDAP has been uninstalled. Note that any data persisted to a NFS share still exists and will need to be manually removed.",
+  "licenses": [
+    {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  ]
+}

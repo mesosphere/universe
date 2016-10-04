@@ -1,0 +1,130 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"Name of this service instance.",
+                    "type":"string",
+                    "default":"openldap"
+                }
+            }
+        },
+        "openldap":{
+            "type": "object",
+            "description": "OpenLDAP service configuration properties",
+            "properties": {
+                "cpus": {
+                    "description": "CPU shares to allocate to each OpenLDAP node.",
+                    "type": "number",
+                    "default": 0.3,
+                    "minimum": 0.3
+                },
+                "mem": {
+                    "description": "Memory to allocate to each OpenLDAP node.",
+                    "type": "number",
+                    "default": 128.0,
+                    "minimum": 128.0
+                },
+                "admin_password":{
+                    "description": "Administrator password. Defaults to 'admin'.",
+                    "type": "string",
+                    "default": "admin"
+                },
+                "domain":{
+                    "description": "LDAP domain. Defaults to example.org",
+                    "type": "string",
+                    "default": "example.org"
+                },
+                "organization":{
+                    "description": "Organization name.",
+                    "type": "string",
+                    "default": "example"
+                },
+                "config_password":{
+                    "description": "Allows password protected access to the dn=config branch. This helps to reconfigure the server without interruption. Defaults to 'password'",
+                    "type": "string",
+                    "default": "password"
+                },
+                "additional_schemas":{
+                    "description": "Loads additional schemas provided in the slapd package.",
+                    "type": "string"
+                },
+                "additional_modules":{
+                    "description": "Comma-separated list of modules to load.",
+                    "type": "string"
+                },
+                "force_reconfigure":{
+                    "description": "Reconfigure the service after the image has been initialized.",
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "required": [
+                "cpus",
+                "mem"
+            ]
+        },
+        "storage": {
+            "type": "object",
+            "description": "OpenLDAP storage configuration properties",
+            "properties":{              
+                "host_volume": {
+                    "description": "The location of a volume on the host to be used for persisting OpenLDAP data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/openldap`). Note that this path must be the same on all DCOS agents.",
+                    "type": "string",
+                    "default": "/tmp"
+                },
+                "persistence": {
+                    "type": "object",
+                    "description": "Enable persistent storage.",
+                    "properties": {    
+                       "enable": {
+                            "description": "Enable or disable data persistence.",
+                            "type": "boolean",
+                            "default": false                    
+                        },
+                        "ldap_volume_size": {
+                            "description": "Size in MBs of the volume to be created for the LDAP database",
+                            "type": "number",
+                            "default": 256
+                        },
+                        "slapd_volume_size": {
+                            "description": "Size in MBs of the volume to be created for internal storage of the SLAPD daemon.",
+                            "type": "number",
+                            "default": 64
+                        }
+                    }
+                }
+            }
+        },
+        "networking": {
+            "type": "object",
+            "description": "OpenLDAP networking configuration properties",
+            "properties": {    
+                "port": {
+                    "description": "Port number to be used for clear communication internally to the cluster.",
+                    "type": "number",
+                    "default": 389
+                },
+                "external_access": {
+                    "type": "object",
+                    "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+                    "properties": {    
+                        "enable": {
+                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+                            "type": "boolean",
+                            "default": false                    
+                        },
+                        "external_port": {
+                            "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+                            "type": "number",
+                            "default": 10389
+                        }
+                    }
+                }                
+            }
+        }   
+    }
+}

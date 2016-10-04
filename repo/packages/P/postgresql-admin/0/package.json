@@ -1,0 +1,24 @@
+{
+  "packagingVersion": "3.0",
+  "name": "postgresql-admin",
+  "version": "0.1",
+  "scm": "https://github.com/jacksoncage/dockerfiles/tree/master/phppgadmin",
+  "maintainer": "support@mesosphere.io",
+  "website": "http://phppgadmin.sourceforge.net/doku.php",
+  "description": "PhpPgAdmin is a web-based administration tool for PostgreSQL. It is perfect for PostgreSQL DBAs, newbies, and hosting services.\n\nThis DC/OS package is ready to be used alongside the DC/OS `postgresql` package. Other PostgreSQL servers may work, but haven't been tested.",
+  "tags": [
+    "postgres",
+    "postgresql",
+    "database",
+    "admin"
+    ],
+  "preInstallNotes": "PostgreSQL Admin requires at least 0.2 CPU and 256MB of RAM.\n\nWARNING: PostgreSQL Admin on DCOS is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nThis package will automatically connect to an existing DC/OS `postgresql` package through an automated Virtual IP.\n\nThis package is accessible through the DC/OS `Services` tab. If the `external_access`is enabled on installation, it will also create an entry in the DC/OS external load balancer for accessing the UI from outside the cluster, by default in port `15433`. Access the UI at `http://your_DCOS_URL/services/postgresql-admin` or at `http://your_public_node_ip:15433` if `external_access` is enabled",
+  "postInstallNotes": "PostgreSQL Admin has been installed.\n\nYou can now access the UI at `http://your_DCOS_URL/services/PostgreSQLadmin` or at `http://your_public_node_ip:15433` if you selected `external_access` on installation.\n\nDC/OS PostgreSQL default Login: `admin`\nDefault password: `password`",
+  "postUninstallNotes": "PostgreSQL Admin has been uninstalled.",
+  "licenses": [
+    {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  ]
+}

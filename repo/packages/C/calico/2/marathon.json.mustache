@@ -1,0 +1,95 @@
+{
+  "id": "{{Framework Settings.framework-name}}",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "network": "HOST",
+      "forcePullImage": true,
+      "image":
+        {{! If Framework Settings.override-framework-image is set, use it as the framework image. }}
+        {{#Framework Settings.override-framework-image}}
+          "{{Framework Settings.override-framework-image}}"
+        {{/Framework Settings.override-framework-image}}
+
+        {{! If its not set, default to the one in resources.json }}
+        {{^Framework Settings.override-framework-image}}
+          "{{resource.assets.container.docker.calico-dcos}}"
+        {{/Framework Settings.override-framework-image}}
+    }
+  },
+  "args": [],
+  "cpus": {{Framework Settings.cpu-limit}},
+  "mem": {{Framework Settings.mem-limit}},
+  "instances": 1,
+  "env": {
+    "CALICO_INSTALLER_URL":
+      {{! If Framework Settings.override-installer-url is set, use it as the installer url. }}
+      {{#Framework Settings.override-installer-url}}
+        "{{Framework Settings.override-installer-url}}",
+      {{/Framework Settings.override-installer-url}}
+      {{! Otherwise, default to the one in resources.json }}
+      {{^Framework Settings.override-installer-url}}
+        "{{resource.assets.uris.calico-installer}}",
+      {{/Framework Settings.override-installer-url}}
+
+    "MESOS_MASTER": "{{Framework Settings.master}}",
+    "CALICO_MAX_CONCURRENT_RESTARTS": "{{Framework Settings.max-concurrent-restarts}}",
+    "CALICO_ZK": "{{Framework Settings.zk}}",
+    "CALICO_STATUS_DNS": "{{Framework Settings.status-dns}}",
+
+    "CALICO_ALLOW_DOCKER_UPDATE": "{{Configure Docker Cluster-Store.enable}}",
+    "CALICO_CPU_LIMIT_INSTALL_DOCKER": "{{Configure Docker Cluster-Store.cpu-limit}}",
+    "CALICO_MEM_LIMIT_INSTALL_DOCKER": "{{Configure Docker Cluster-Store.mem-limit}}",
+    "DOCKER_CLUSTER_STORE": "{{Configure Docker Cluster-Store.override-docker-cluster-store}}",
+
+    "CALICO_ENABLE_RUN_ETCD_PROXY": "{{Etcd Settings.run-proxy}}",
+    "ETCD_SRV": "{{Etcd Settings.etcd-discovery-url}}",
+    "CALICO_CPU_LIMIT_ETCD_PROXY": "{{Etcd Settings.cpu-limit}}",
+    "CALICO_MEM_LIMIT_ETCD_PROXY": "{{Etcd Settings.mem-limit}}",
+    "ETCD_BINARY_URL": "{{resource.assets.uris.etcd}}",
+
+
+    "CALICO_ENABLE_INSTALL_CNI": "{{Install CNI.enable}}",
+    "MESOS_CNI_PLUGINS_DIR": "{{Install CNI.cni-plugins-dir}}",
+    "MESOS_CNI_CONFIG_DIR": "{{Install CNI.cni-config-dir}}",
+    "CALICO_CPU_LIMIT_INSTALL_CNI": "{{Install CNI.cpu-limit}}",
+    "CALICO_MEM_LIMIT_INSTALL_CNI": "{{Install CNI.mem-limit}}",
+    "CALICO_CNI_BINARY_URL": "{{resource.assets.uris.calico-cni}}",
+    "CALICO_CNI_IPAM_BINARY_URL": "{{resource.assets.uris.calico-ipam}}",
+
+
+    "CALICO_ENABLE_RUN_NODE": "{{Run Calico-Node.enable}}",
+    "ETCD_ENDPOINTS": "{{Etcd Settings.etcd-endpoints}}",
+    "CALICO_CPU_LIMIT_NODE": "{{Run Calico-Node.cpu-limit}}",
+    "CALICO_MEM_LIMIT_NODE": "{{Run Calico-Node.mem-limit}}",
+    "CALICO_NODE_IMG":
+    {{! If resource-overrides.node-image is set, use it as the node-image. }}
+    {{#Run Calico-Node.override-node-image}}
+      "{{Run Calico-Node.override-node-image}}",
+    {{/Run Calico-Node.override-node-image}}
+    {{! Otherwise, default to the node-image in resources.json }}
+    {{^Run Calico-Node.override-node-image}}
+      "{{resource.assets.container.docker.calico-node}}",
+    {{/Run Calico-Node.override-node-image}}
+
+    "CALICO_ENABLE_RUN_LIBNETWORK": "{{Run Calico-Libnetwork.enable}}",
+    "CALICO_CPU_LIMIT_LIBNETWORK": "{{Run Calico-Libnetwork.cpu-limit}}",
+    "CALICO_MEM_LIMIT_LIBNETWORK": "{{Run Calico-Libnetwork.mem-limit}}",
+    "CALICO_LIBNETWORK_IMG": "{{resource.assets.container.docker.calico-libnetwork}}"
+  },
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{Framework Settings.framework-name}}"
+  },
+  "requirePorts":true,
+  "ports": [
+    0
+  ],
+  "healthChecks": [{
+    "protocol": "HTTP",
+    "path": "/health",
+    "portIndex": 0,
+    "gracePeriodSeconds": 60,
+    "intervalSeconds": 30,
+    "maxConsecutiveFailures": 0
+  }]
+}

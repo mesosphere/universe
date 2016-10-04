@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "mysql",
+  "version": "0.2",
+  "scm": "https://github.com/mysql/mysql-server.git",
+  "maintainer": "support@mesosphere.io",
+  "website": "https://mysql-ci.org",
+  "description": "MySQL is the world's most popular open source database. With its proven performance, reliability and ease-of-use, MySQL has become the leading database choice for web-based applications, covering the entire range from personal projects and websites, via e-commerce and information services, all the way to high profile web properties including Facebook, Twitter, YouTube, Yahoo! and many more.",
+  "tags": ["database", "mysql", "sql"],
+  "preInstallNotes": "In order for MySQL service to start successfully it requires atleast 0.3 CPU and 512MB of RAM. WARNING: MySQL on DCOS is currently EXPERIMENTAL. There may be bugs, incomplete\nfeatures, incorrect documentation, or other discrepancies.\n\nIf you didn't provide a value for `host_volume` in the CLI,\nYOUR DATA WILL NOT BE SAVED IN ANY WAY.\nThis package can create local persistent volumes for the database files to survive across restarts or failures. The parameter `host_volume` controls the path in the host in which these volumes will be created, which can be an NFS-mounted share. This path defaults to /tmp, so if you didn't provide a value for `host_volume` when installing the package,\nYOUR DATA WILL NOT BE SAVED IN ANY WAY.\n\nThis DC/OS MySQL package creates a named Virtual IP for other services in the cluster to access the service in the format `mysql.marathon.l4lb.thisdcos.directory:3306` (where `mysql` would be the package instance name used for installation).\nIf the `external_access` installation option is selected, it also creates an entry in the External Load Balancer for accessing the service from outside of the cluster on port `13306` by default.\n\n You can administer this service easily installing the DC/OS `mysql-admin` package.",
+  "postInstallNotes": "MySQL has been installed.\n Default Login `admin`\nDefault password: `password`",
+  "postUninstallNotes": "MySQL has been uninstalled. Note that any data persisted to a NFS share still exists and will need to be manually removed.",
+  "licenses": [
+    {
+      "name": "GNU GENERAL PUBLIC LICENSE",
+      "url": "https://github.com/mysql/mysql-server/blob/5.7/COPYING"
+    }
+  ]
+}

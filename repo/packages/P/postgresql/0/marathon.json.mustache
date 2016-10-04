@@ -1,0 +1,61 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{postgresql.cpus}},
+  "mem": {{postgresql.mem}},
+  "instances": 1,
+  "env": {
+    "POSTGRES_PASSWORD": "{{postgresql.password}}",
+    "POSTGRES_USER": "{{postgresql.user}}",
+    "POSTGRES_PGDATA": "{{storage.pgdata}}",
+    "POSTGRES_DB": "{{postgresql.dbname}}",
+    "POSTGRES_INITDB_ARGS": "{{postgresql.initdbargs}}"
+  },
+  "container": {
+    "type": "DOCKER",
+    "volumes": [{
+      "containerPath": "{{storage.pgdata}}",
+      {{^storage.persistence.enable}}
+      "hostPath": "{{storage.host_volume}}/{{storage.pgdata}}",
+      {{/storage.persistence.enable}}
+      {{#storage.persistence.enable}}
+      "persistent": {
+        "size": {{storage.persistence.volume_size}}
+      },
+      {{/storage.persistence.enable}}
+      "mode": "RW"
+    }],
+    "docker": {
+      "image": "{{resource.assets.container.docker.postgresql-docker}}",
+      "forcePullImage": false,
+      "network": "BRIDGE",
+      "portMappings": [{
+          "containerPort": 5432,
+          "hostPort": 0,
+          {{#networking.external_access.enable}}
+          "servicePort": {{networking.external_access.external_port}},
+          {{/networking.external_access.enable}}
+          "protocol": "tcp",
+          "name": "{{service.name}}",
+          "labels": {
+            "VIP_0": "/{{service.name}}:{{networking.port}}"
+          }
+      }]
+    }      
+  },
+  "healthChecks": [{
+      "protocol": "TCP",
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "portIndex": 0
+  }],
+  "labels": {
+    "DCOS_PACKAGE_VERSION": "0.1",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    {{#networking.external_access.enable}}
+    "HAPROXY_GROUP": "external",
+    {{/networking.external_access.enable}}
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  }
+}
