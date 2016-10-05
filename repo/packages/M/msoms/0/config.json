@@ -1,7 +1,7 @@
 {
     "properties": {
-        "omsdocker": {
-            "description": "OMS Docker specific configuration properties",
+        "msoms": {
+            "description": "OMS specific configuration properties",
             "properties": {
                 "wsid": {
                     "description": "Your workspace ID.",
@@ -12,27 +12,15 @@
                     "type": "string"
                 },
                 "app_id": {
-                    "default": "oms-docker",
-                    "description": "OMS Docker Application ID",
+                    "default": "msoms",
+                    "description": "OMS Application ID",
                     "type": "string"
-                },
-                "cpus": {
-                    "default": 0.05,
-                    "description": "CPU shares to allocate to each Marathon instance.",
-                    "minimum": 0.0,
-                    "type": "number"
                 },
                 "instances": {
                     "default": 1,
                     "description": "Number of Marathon instances to run.",
                     "minimum": 1,
                     "type": "integer"
-                },
-                "mem": {
-                    "default": 128.0,
-                    "description": "Memory (MB) to allocate to each Marathon task.",
-                    "minimum": 128.0,
-                    "type": "number"
                 }
             },
             "required": [
