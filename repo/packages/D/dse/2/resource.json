@@ -1,0 +1,40 @@
+{
+  "assets": {
+    "uris": {
+      "scheduler-zip":"https://downloads.mesosphere.com/dse/assets/1.0.16-5.0.2/scheduler.zip",
+      "executor-zip":"https://downloads.mesosphere.com/dse/assets/1.0.16-5.0.2/executor.zip",
+      "jre-tar-gz":"https://downloads.mesosphere.com/datastax/assets/server-jre-8u74-linux-x64.tar.gz",
+      "apache-cassandra-bin-tar-gz":"https://downloads.mesosphere.io/cassandra/assets/dse-5.0.2-bin-dcos.tar.gz"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/datastax/assets/48x48.png",
+    "icon-medium": "https://downloads.mesosphere.com/datastax/assets/96x96.png",
+    "icon-large": "https://downloads.mesosphere.com/datastax/assets/256x256.png"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"1e196d41453204c28e1f45c9fe310583b274ef414e5620373bfe312fa3e9a51e" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/dse/assets/1.0.16-5.0.2/dcos-cassandra-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"616cf27827f9d250265638342ab92816ae8cc43379346b3647e7570ca3e78b14" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/dse/assets/1.0.16-5.0.2/dcos-cassandra-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"c30daa0cde1367bfbf5d023dad68ce3ba8000bace5b56a22d279711df9c9540e" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/dse/assets/1.0.16-5.0.2/dcos-cassandra.exe"
+        }
+      }
+    }
+  }
+}
