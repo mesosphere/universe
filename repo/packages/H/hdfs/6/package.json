@@ -1,0 +1,23 @@
+{
+  "description": "Hadoop Distributed File System (HDFS), Highly Available",
+  "framework": true,
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/mesosphere/hdfs/blob/master/LICENSE"
+    }
+  ],
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.7",
+  "name": "hdfs",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS HDFS Service is being installed.\n\n\tDocumentation: https://github.com/mesosphere/hdfs\n\tIssues: https://github.com/mesosphere/hdfs/issues",
+  "postUninstallNotes": "DC/OS HDFS Service has been uninstalled.\nPlease follow the instructions at http://docs.mesosphere.com/services/hdfs/uninstall to remove any persistent state if required.",
+  "preInstallNotes": "In order for HDFS to start successfully, it requires a minimum of five nodes; each with at least 2 CPU shares and 8GB of RAM available for use by the HDFS Service.\nNote that the service is alpha and there may be bugs, including possible data loss, incomplete features, incorrect documentation or other discrepancies.",
+  "tags": [
+    "filesystem",
+    "hadoop",
+    "analytics"
+  ],
+  "version": "0.9.1-2.6.0"
+}
