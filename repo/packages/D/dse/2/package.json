@@ -1,0 +1,17 @@
+{
+  "description": "DSE running on DCOS",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.7",
+  "name": "dse",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DCOS DSE has been successfully installed!\n\n\tDocumentation: https://docs.mesosphere.com/usage/services/cassandra/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DCOS DSE service has been uninstalled. Please run the framework_cleaner to remove any persistent state if required.",
+  "selected": true,
+  "tags": [
+    "data",
+    "database",
+    "nosql"
+  ],
+  "version": "1.0.16-5.0.2"
+}
