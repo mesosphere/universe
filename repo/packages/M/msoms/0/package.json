@@ -6,7 +6,10 @@
  "maintainer": "omscontainers@microsoft.com",
  "description": "Microsoft Operations Management Suite(MS OMS) – Container Solution provides real-time analytics for operational data (Performance, Inventory) and monitoring for Docker Containers.",
  "framework": false,
- "tags": ["msoms"],
+ "tags": [
+   "msoms",
+   "Microsoft"
+ ],
  "licenses": [
    {
      "name": "LICENSE",
@@ -15,6 +18,6 @@
  ],
  "website": "https://github.com/Microsoft/OMS-docker",
  "postInstallNotes": "OMS is successfully installed.",
- "preInstallNotes": "Pass your workspace ID and Key.",
+ "preInstallNotes": "Pass your OMS workspace ID and Primary Key. For more information about how to capture the OMS workspace ID and Primary Key go here 'https://azure.microsoft.com/en-us/documentation/articles/log-analytics-linux-agents'",
  "postUninstallNotes": "OMS is successfully uninstalled."
 }
