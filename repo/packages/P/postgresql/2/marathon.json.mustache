@@ -16,6 +16,8 @@
       {{^storage.persistence.enable}}
       "containerPath": "{{storage.pgdata}}",
       "hostPath": "{{storage.host_volume}}/{{storage.pgdata}}",
+      {{/storage.persistence.enable}}
+      {{#storage.persistence.enable}}
       {{^storage.persistence.external.enable}}
       "containerPath": "{{storage.pgdata}}",
       "persistent": {
