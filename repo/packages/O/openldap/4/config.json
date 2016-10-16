@@ -113,7 +113,7 @@
                                     "volume_name": {
                                         "description": "Name that your volume driver uses to look up your external volume. When your task is staged on an agent, the volume driver queries the storage service for a volume with this name. If one does not exist, it is created implicitly. Otherwise, the existing volume is reused.",
                                         "type": "string",
-                                        "default": "mysql"
+                                        "default": "openldap"
                                     },
                                     "provider": {
                                         "description": "Provider of the external persistent volume. The default value should be correct for most use cases.",
