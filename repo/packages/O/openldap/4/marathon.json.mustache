@@ -30,7 +30,7 @@
         {{#storage.persistence.external.enable}}
         "containerPath": "/var",
         "external": {
-          "name": "{{storage.persistence.external.volume_name}}",
+          "name": "{{storage.persistence.external.volume_name}}var",
           "provider": "{{storage.persistence.external.provider}}",
           "options": { "dvdi/driver": "{{storage.persistence.external.driver}}" }
         },
@@ -52,7 +52,7 @@
         {{#storage.persistence.external.enable}}
         "containerPath": "/etc",
         "external": {
-          "name": "{{storage.persistence.external.volume_name}}",
+          "name": "{{storage.persistence.external.volume_name}}etc",
           "provider": "{{storage.persistence.external.provider}}",
           "options": { "dvdi/driver": "{{storage.persistence.external.driver}}" }
         },
