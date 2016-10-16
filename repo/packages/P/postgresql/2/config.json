@@ -62,7 +62,7 @@
         "storage": {
             "type": "object",
             "description": "PostgreSQL storage configuration properties",
-            "properties":{
+            "properties": {
                 "host_volume": {
                     "description": "If using non-persistent volumes (local volumes), this sets the location of a volume on the host to be used for the service. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/service_name`). This can be a mounted NFS drive. Note that this path must be the same on all DC/OS agents. NOTE: if you don't change the default /tmp value, YOUR DATA WILL NOT BE SAVED IN ANY WAY.",
                     "type": "string",
@@ -71,7 +71,7 @@
                 "pgdata": {
                     "description": "Location of the database files.",
                     "type": "string",
-                            "default": "pgdata"
+                    "default": "pgdata"
                 },    
                 "persistence": {
                     "type": "object",
@@ -90,31 +90,31 @@
                         "external": {
                             "type": "object",
                             "description": "External persistent storage properties",
-                                "properties":{   
-                                    "enable": {
-                                        "description": "Enable or disable external persistent storage. The `persistence` option must also be selected. Please note that for these to work, your DC/OS cluster MUST have been installed with the right options in `config.yaml`. Also, please note this requires a working  configuration file for the driver (e.g. `rexray.yaml`).",
-                                        "type": "boolean",
-                                        "default": false                    
-                                    },
-                                    "volume_name": {
-                                        "description": "Name that your volume driver uses to look up your external volume. When your task is staged on an agent, the volume driver queries the storage service for a volume with this name. If one does not exist, it is created implicitly. Otherwise, the existing volume is reused.",
-                                        "type": "string",
-                                        "default": "mysql"
-                                    },
-                                    "provider": {
-                                        "description": "Provider of the external persistent volume. The default value should be correct for most use cases.",
-                                        "type": "string",
-                                        "default": "dvdi"
-                                    },
-                                    "driver": {
-                                        "description": "Volume driver to use for storage. The default value should be correct for most use cases.",
-                                        "type": "string",
-                                        "default": "rexray"
-                                    }
+                            "properties":{   
+                                "enable": {
+                                    "description": "Enable or disable external persistent storage. The `persistence` option must also be selected. Please note that for these to work, your DC/OS cluster MUST have been installed with the right options in `config.yaml`. Also, please note this requires a working  configuration file for the driver (e.g. `rexray.yaml`).",
+                                    "type": "boolean",
+                                    "default": false                    
+                                },
+                                "volume_name": {
+                                    "description": "Name that your volume driver uses to look up your external volume. When your task is staged on an agent, the volume driver queries the storage service for a volume with this name. If one does not exist, it is created implicitly. Otherwise, the existing volume is reused.",
+                                    "type": "string",
+                                    "default": "mysql"
+                                },
+                                "provider": {
+                                    "description": "Provider of the external persistent volume. The default value should be correct for most use cases.",
+                                    "type": "string",
+                                    "default": "dvdi"
+                                },
+                                "driver": {
+                                    "description": "Volume driver to use for storage. The default value should be correct for most use cases.",
+                                    "type": "string",
+                                    "default": "rexray"
                                 }
+                            }
                         }
+                    }
                 }
-
             }
         },
         "networking": {
