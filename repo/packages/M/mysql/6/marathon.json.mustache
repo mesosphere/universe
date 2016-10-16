@@ -13,6 +13,7 @@
   "container": {
     "type": "DOCKER",
     "volumes": [{
+      "containerPath": "var",
       {{^storage.persistence.enable}}
       "hostPath": "{{storage.host_volume}}/{{service.name}}",
       {{/storage.persistence.enable}}
@@ -28,10 +29,8 @@
         "provider": "{{storage.persistence.external.provider}}",
         "options": {
           "dvdi/driver": "{{storage.persistence.external.driver}}"
-        },
+      },
       {{/storage.persistence.external.enable}}
-      "containerPath": "var"
-      }
       {{/storage.persistence.enable}}
       "mode": "RW"
     }],
