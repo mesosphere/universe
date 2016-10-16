@@ -1,0 +1,75 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"Name of this service instance.",
+                    "type":"string",
+                    "default":"openldap-admin"
+                }
+            }
+        },
+        "openldap-admin":{
+            "type": "object",
+            "description": "OpenLDAP-admin service configuration properties",
+            "properties": {
+                "cpus": {
+                    "description": "CPU shares to allocate to each OpenLDAP node.",
+                    "type": "number",
+                    "default": 0.2,
+                    "minimum": 0.1
+                },
+                "mem": {
+                    "description": "Memory to allocate to each OpenLDAP node.",
+                    "type": "number",
+                    "default": 256.0,
+                    "minimum": 128.0
+                }
+            },
+            "required": [
+                "cpus",
+                "mem"
+            ]
+        },
+        "networking":{
+            "type": "object",
+            "description": "OpenLDAP-admin networking configuration properties",
+            "properties": {
+                "ldap_location":{
+                    "description": "The name of the DC/OS OpenLDAP instance to connect to.",
+                    "type": "string",
+                    "default": "openldap"
+                },
+                "ldap_port":{
+                    "description": "The port where the DC/OS OpenLDAP instance is listening on.",
+                    "type": "number",
+                    "default": 389
+                },
+                "external_access": {
+                    "type": "object",
+                    "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+                    "properties": {    
+                        "enable": {
+                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+                            "type": "boolean",
+                            "default": false                    
+                        },
+                        "external_access_port": {
+                            "description": "Port number to be used in the external Marathon-LB load balancer",
+                            "type": "number",
+                            "default": 11389
+                        },
+                        "virtual_host":{
+                            "description": "Virtual Host URL to be used in the external Marathon-LB load balancer.",
+                            "type": "string",
+                            "default": "phpldapadmin.example.org"
+                        }
+                    }
+                }    
+            }
+        }
+    }
+}
