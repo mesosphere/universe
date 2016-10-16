@@ -1,0 +1,14 @@
+  {
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-openldap-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-openldap-medium.png",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-openldap-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "openldap-docker": "dinkel/openldap:2.4.40"
+      }
+    }
+  }
+}

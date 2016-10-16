@@ -1,0 +1,167 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"Name of this service instance.",
+                    "type":"string",
+                    "default":"openldap"
+                }
+            }
+        },
+        "openldap":{
+            "type": "object",
+            "description": "OpenLDAP service configuration properties",
+            "properties": {
+                "cpus": {
+                    "description": "CPU shares to allocate to each service instance.",
+                    "type": "number",
+                    "default": 0.3,
+                    "minimum": 0.3
+                },
+                "mem": {
+                    "description": "Memory to allocate to each service instance.",
+                    "type": "number",
+                    "default": 256.0,
+                    "minimum": 128.0
+                }
+            },
+            "required": [
+                "cpus",
+                "mem"
+            ]
+        },
+        "database": {
+            "type": "object",
+            "description": "OpenLDAP database configuration properties",
+            "properties":{
+                "admin_password":{
+                    "description": "Administrator password.",
+                    "type": "string",
+                    "default": "password"
+                },
+                "domain":{
+                    "description": "LDAP domain.",
+                    "type": "string",
+                    "default": "example.org"
+                },
+                "organization":{
+                    "description": "Organization name.",
+                    "type": "string",
+                    "default": "example"
+                },
+                "config_password":{
+                    "description": "Allows password protected access to the dn=config branch. This helps to reconfigure the server without interruption.",
+                    "type": "string",
+                    "default": "password"
+                },
+                "additional_schemas":{
+                    "description": "Loads additional schemas provided in the slapd package.",
+                    "type": "string"
+                },
+                "additional_modules":{
+                    "description": "Comma-separated list of modules to load.",
+                    "type": "string"
+                },
+                "force_reconfigure":{
+                    "description": "Reconfigure the service after the image has been initialized.",
+                    "type": "boolean",
+                    "default": false
+                }
+            }
+        },
+        "storage": {
+            "type": "object",
+            "description": "OpenLDAP storage configuration properties",
+            "properties":{
+                "host_volume": {
+                    "description": "If using non-persistent volumes (local volumes), this sets the location of a volume on the host to be used for the service. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/service_name`). This can be a mounted NFS drive. Note that this path must be the same on all DC/OS agents. NOTE: if you don't change the default /tmp value, YOUR DATA WILL NOT BE SAVED IN ANY WAY.",
+                    "type": "string",
+                    "default": "/tmp"
+                },  
+                "persistence": {
+                    "type": "object",
+                    "description": "Enable persistent storage.",
+                    "properties": {    
+                       "enable": {
+                            "description": "Enable or disable data persistence.",
+                            "type": "boolean",
+                            "default": false                    
+                        },
+                        "ldap_volume_size": {
+                            "description": "Size in MBs of the volume to be created for the LDAP database",
+                            "type": "number",
+                            "default": 256
+                        },
+                        "slapd_volume_size": {
+                            "description": "Size in MBs of the volume to be created for internal storage of the SLAPD daemon.",
+                            "type": "number",
+                            "default": 64
+                        },
+                        "external": {
+                            "type": "object",
+                            "description": "External persistent storage properties",
+                                "properties":{   
+                                    "enable": {
+                                        "description": "Enable or disable external persistent storage. The `persistence` option must also be selected. Please note that for these to work, your DC/OS cluster MUST have been installed with the right options in `config.yaml`. Also, please note this requires a working  configuration file for the driver (e.g. `rexray.yaml`).",
+                                        "type": "boolean",
+                                        "default": false                    
+                                    },
+                                    "volume_name": {
+                                        "description": "Name that your volume driver uses to look up your external volume. When your task is staged on an agent, the volume driver queries the storage service for a volume with this name. If one does not exist, it is created implicitly. Otherwise, the existing volume is reused.",
+                                        "type": "string",
+                                        "default": "openldap"
+                                    },
+                                    "provider": {
+                                        "description": "Provider of the external persistent volume. The default value should be correct for most use cases.",
+                                        "type": "string",
+                                        "default": "dvdi"
+                                    },
+                                    "driver": {
+                                        "description": "Volume driver to use for storage. The default value should be correct for most use cases.",
+                                        "type": "string",
+                                        "default": "rexray"
+                                    }
+                                }
+                        }                        
+                    }
+                }
+            }
+        },
+        "networking": {
+            "type": "object",
+            "description": "OpenLDAP networking configuration properties",
+            "properties": {    
+                "port": {
+                    "description": "Port number to be used for clear communication internally to the cluster.",
+                    "type": "number",
+                    "default": 389
+                },
+                "host_mode": {
+                    "description": "Enable or disable host networking mode. NOTE: this requires the default port to be available on the target host **THIS IS CURRENTLY NOT THE CASE IN A DEFAULT DC/OS INSTALLATION**. This also forces to have a single instance per node.",
+                    "type": "boolean",
+                    "default": false                    
+                },
+                "external_access": {
+                    "type": "object",
+                    "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+                    "properties": {    
+                        "enable": {
+                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+                            "type": "boolean",
+                            "default": false                    
+                        },
+                        "external_access_port": {
+                            "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+                            "type": "number",
+                            "default": 10389
+                        }
+                    }
+                }                
+            }
+        }   
+    }
+}
