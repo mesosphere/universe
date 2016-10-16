@@ -28,9 +28,7 @@
         "name": "{{storage.persistence.external.volume_name}}",
         "provider": "{{storage.persistence.external.provider}}",
         "size": {{storage.persistence.volume_size}},
-        "options": {
-          "dvdi/driver": "{{storage.persistence.external.driver}}"
-        }
+        "options": { "dvdi/driver": "{{storage.persistence.external.driver}}" }
       },
       {{/storage.persistence.external.enable}}
       {{/storage.persistence.enable}}
