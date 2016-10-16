@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "mongodb",
+  "version": "3.2-0.2",
+  "scm": "https://github.com/tutumcloud/tutum-docker-mongodb",
+  "maintainer": "support@mesosphere.io",
+  "website": "https://www.mongodb.com",
+  "description": "MongoDB is an open-source, document database designed for ease of development and scaling.",
+  "tags": ["database", "mongo", "mongodb", "nosql"],
+  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\n```Advanced Installation options```\n\nstorage / *persistence*: create local persistent volumes for internal storage files to survive across restarts or failures.\n\nstorage / persistence / *external*: create external persistent volumes. This allows to use an external storage system such as Amazon EBS, OpenStack Cinder, EMC Isilon, EMC ScaleIO, EMC XtremIO, EMC VMAX and Google Compute Engine persistent storage. *NOTE*: To use external volumes with DC/OS, you MUST enable them during CLI or Advanced installation.\n\nstorage / *host_volume*:  if persistence is not selected, this package can use a local volume in the host for storage, like a local directory or an NFS mount. The parameter *host_volume* controls the path in the host in which these volumes will be created, which MUST be the same on all nodes of the cluster.\n\nNOTE: If you didn't select persistence in the storage section, or provided a valid value for *host_volume* on installation,\nYOUR DATA WILL NOT BE SAVED IN ANY WAY.\n\nnetworking / *port*: This DC/OS service can be accessed from any other application through a NAMED VIP in the format *`service_name.marathon.l4lb.thisdcos.directory:port`*. Check status of the VIP in the *Network* tab of the DC/OS Dashboard (Enterprise DC/OS only).\n\nnetworking / *external_access*: create an entry in Marathon-LB for accessing the service from outside of the cluster\n\nnetworking / *external_access_port*: port to be used in Marathon-LB for accessing the service.\n\nnetworking / *external_ui_access*: create an entry in Marathon-LB for accessing the status UI web page",
+"postInstallNotes": "Service installed.\n\nDefault credentials: `admin`/`password`.",
+"postUninstallNotes": "Service uninstalled. Note that any persisting data still exists and will need to be manually removed.",
+  "licenses": [
+    {
+      "name": "GNU Affero General Public License",
+      "url": "http://www.gnu.org/licenses/agpl.html"
+    }
+  ]
+}
