@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/mysql/assets/mysql-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/mysql/assets/mysql-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/mysql/assets/mysql-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "mysql-docker": "mysql:5.7.12"
+      }
+    }
+  }
+}

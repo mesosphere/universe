@@ -1,0 +1,23 @@
+{
+  "packagingVersion": "3.0",
+  "name": "mysql-admin",
+  "version": "4.6.4-0.2",
+  "scm": "https://github.com/phpmyadmin/docker",
+  "maintainer": "support@mesosphere.io",
+  "website": "https://www.phpmyadmin.net/",
+  "description": "phpMyAdmin is a free software tool written in PHP, intended to handle the administration of MySQL over the Web. phpMyAdmin supports a wide range of operations on MySQL and MariaDB.\n\nThis DC/OS package is ready to be used alongside the DC/OS `mysql` package. Other MySQL servers may work, but haven't been tested.",
+  "tags": [
+    "mysql",
+    "database",
+    "admin"
+    ],
+  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\n```Advanced Installation options notes```\n\nnetworking / *external_access*: create an entry in Marathon-LB for accessing the service from outside of the cluster\n\nnetworking / *external_access_port*: port to be used in Marathon-LB for accessing the service.",
+  "postInstallNotes": "Service installed.\n\nIt is recommended to access this service through the endpoint created in Marathon-LB.\n\nDefault login: `admin`/`password`.",
+  "postInstallNotes": "Service installed.\n\nIt is recommended to access this service through the endpoint created in Marathon-LB.\n\nDefault login: `admin`/`password`.\n\nDefault database `defaultdb`",
+  "licenses": [
+    {
+      "name": "GNU GPL License",
+      "url": "https://raw.githubusercontent.com/phpmyadmin/docker/master/LICENSE"
+    }
+  ]
+}
