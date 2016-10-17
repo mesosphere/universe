@@ -1,0 +1,19 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-mongodb-admin-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-mongodb-admin-medium.png",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-mongodb-admin-large.jpg",
+    "screenshots": [
+      "https://raw.githubusercontent.com/mrvautin/mrvautin.github.io/master/images/adminMongo/adminMongo_collectionview.png",
+      "https://raw.githubusercontent.com/mrvautin/mrvautin.github.io/master/images/adminMongo/adminMongo_dbview.png",
+      "https://raw.githubusercontent.com/mrvautin/mrvautin.github.io/master/images/adminMongo/adminMongo_connections.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "mongodb-admin-docker": "mrvautin/adminmongo:latest"
+      }
+    }
+  }
+}
