@@ -10,7 +10,7 @@
           "type": "string"
         },
         "cpus": {
-          "default": 0.2,
+          "default": 0.1,
           "description": "CPU to allocate to each instance of the collectors.",
           "minimum": 0.1,
           "type": "number"
@@ -50,7 +50,7 @@
           "type": "integer"
         },
         "version_number": {
-          "default": "0.2.29",
+          "default": "1.0.0",
           "description": "The version of netsil to use.",
           "type": "string"
         }

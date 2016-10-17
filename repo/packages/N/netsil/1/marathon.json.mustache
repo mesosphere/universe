@@ -11,7 +11,7 @@
         "containerPath": "user_persistence_data",
         "mode":"RW",
         "persistent": {
-          "size": 50
+          "size": 250
         }
       },
       {
@@ -27,7 +27,7 @@
         }
       },
       {
-        "containerPath": "/opt/netsil/lite/elasticsearch/data",
+        "containerPath": "/usr/share/elasticsearch/data",
         "hostPath": "es_data",
         "mode":"RW"
       },
@@ -50,7 +50,7 @@
       "network": "BRIDGE",    
       "portMappings": [
           {
-              "containerPort": 80,
+              "containerPort": 8081,
               "hostPort": {{netsil.https_port}},
               "protocol": "tcp"
           },
@@ -68,12 +68,7 @@
     }
   },
   "args": [
-    "/tini",
-    "-g",
-    "--",
-    "/root/start.sh", 
-    "no-build", 
-    "netsil-lite"
+    "/root/startup.sh"
   ],
   "env": {
     "PRODUCT_FLAVOR": "Lite",

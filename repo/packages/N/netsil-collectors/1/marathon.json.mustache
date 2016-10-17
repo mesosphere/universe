@@ -33,16 +33,10 @@
   },
   "env": {
     "NETSIL_SP_HOST": "{{netsil-collectors.netsil_host}}",
-    "NETSIL_DD_PORT": "{{netsil-collectors.infra_stats_port}}",
-    "NETSIL_SP_PORT": "{{netsil-collectors.traffic_stats_port}}",
-    "TC_INTERFACE": "any",
-    "NODAEMON": "true",
-    "API_KEY": "netsil_api_key"
+    "NETSIL_TRAFFIC_PORT": "{{netsil-collectors.traffic_stats_port}}",
+    "NETSIL_INFRA_PORT": "{{netsil-collectors.infra_stats_port}}",
+    "DEPLOY_ENV": "docker"
   },
-  "args": [
-    "/opt/netsil/collectors/start.sh",
-    "all"
-  ],
   "constraints": [
     [
       "hostname",
