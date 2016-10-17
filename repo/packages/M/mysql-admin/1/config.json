@@ -1,0 +1,80 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"Name of this service instance.",
+                    "type":"string",
+                    "default":"mysql-admin"
+                }
+            }
+        },
+        "mysql-admin":{
+            "type": "object",
+            "description": "mysql-admin service configuration properties",
+            "properties": {
+                "cpus": {
+                    "description": "CPU shares to allocate to each service instance.",
+                    "type": "number",
+                    "default": 0.2,
+                    "minimum": 0.2
+                },
+                "mem": {
+                    "description":  "Memory to allocate to each service instance.",
+                    "type": "number",
+                    "default": 256.0,
+                    "minimum": 256.0
+                },
+                "defaultdb": {
+                    "description": "Default database. Defaults to 'defaultb'.",
+                    "type": "string",
+                    "default": "defaultdb"
+                }
+            },
+            "required": [
+                "cpus",
+                "mem"
+            ]
+        },
+        "networking":{
+            "type": "object",
+            "description": "MySQL admin networking configuration properties",
+            "properties": {
+                "mysql_location":{
+                    "description": "The name of the DC/OS mysql instance to connect to.",
+                    "type": "string",
+                    "default": "mysql"
+                },
+                "mysql_host_port":{
+                    "description": "The port where the mysql instance is listening on.",
+                    "type": "number",
+                    "default": 3306
+                },
+                "external_access": {
+                    "type": "object",
+                    "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+                    "properties": {    
+                        "enable": {
+                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+                            "type": "boolean",
+                            "default": false                    
+                        },
+                        "external_access_port": {
+                            "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+                            "type": "number",
+                            "default": 13307
+                        },
+                        "virtual_host": {
+                            "description": "For external access, Virtual Host URL to be used in the external load balancer.",
+                            "type": "string",
+                            "default": "mysql-admin.example.org"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
