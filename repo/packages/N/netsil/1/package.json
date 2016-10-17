@@ -1,0 +1,21 @@
+{
+  "packagingVersion": "3.0",
+  "name": "netsil",
+  "version": "1.0.0",
+  "description": "Netsil is the observability and analytics company for modern cloud applications. Netsil’s Application Operations Center (AOC) helps SREs and DevOps improve the resilience and performance of API and microservices driven production applications.\n\n At the heart of the AOC is an auto-discovered service topology, which is rendered from live service interaction analysis. It allows practitioners to visualize their service dependencies and operational metrics and work collaboratively across teams. \n\n This enables effective application monitoring, capacity planning, incident response, and deploy management.",
+  "maintainer": "support@netsil.com",
+  "tags": ["netsil", "monitoring", "microservices"],
+  "preInstallNotes": "We recommend using 4 CPUs and 12 GB of memory for Netsil.\n\nYou will also need to install the `netsil-collectors` package, which feeds network and infrastructure data to Netsil for monitoring.\n\nAfter installation, go to `https://<dcos_url>/service/netsil` to access Netsil.\n\nYour dcos_url is the URL you initially used to access your DCOS cluster.",
+  "postInstallNotes": "Netsil is installing!\n\nIn a few moments, go to `https://<dcos_url>/service/netsil` to access Netsil.\n\nYour dcos_url is the URL you initially used to access your DCOS cluster\n\nAlso remember to install the `netsil-collectors` package.",
+  "postUninstallNotes": "Netsil is uninstalled successfully.",
+  "licenses": [
+    {
+      "name": "Netsil License",
+      "url": "https://raw.githubusercontent.com/netsil/docs/master/licenses/license.txt"
+    },
+    {
+      "name": "Netsil Third Party Licenses",
+      "url": "https://raw.githubusercontent.com/netsil/docs/master/licenses/THIRD_PARTY_LICENSES.txt"
+    }
+  ]
+}
