@@ -1,0 +1,24 @@
+{
+  "packagingVersion": "3.0",
+  "name": "postgresql-admin",
+  "version": "5.1-0.2",
+  "scm": "https://github.com/jacksoncage/dockerfiles/tree/master/phppgadmin",
+  "maintainer": "support@mesosphere.io",
+  "website": "http://phppgadmin.sourceforge.net/doku.php",
+  "description": "PhpPgAdmin is a web-based administration tool for PostgreSQL. It is perfect for PostgreSQL DBAs, newbies, and hosting services.\n\nThis DC/OS package is ready to be used alongside the DC/OS `postgresql` package. Other PostgreSQL servers may work, but haven't been tested.",
+  "tags": [
+    "postgres",
+    "postgresql",
+    "database",
+    "admin"
+    ],
+   "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\n```Advanced Installation options notes```\n\nnetworking / *external_access*: create an entry in Marathon-LB for accessing the service from outside of the cluster\n\nnetworking / *external_access_port*: port to be used in Marathon-LB for accessing the service.",
+  "postInstallNotes": "Service installed.\n\nIt is recommended to access this service through the endpoint created in Marathon-LB.\n\nDefault login: `admin`/`password`.",
+  "postInstallNotes": "Service installed.\n\nIt is recommended to access this service through the endpoint created in Marathon-LB.\n\nDefault login: `admin`/`password`.\n\nDefault database `defaultdb`",
+  "licenses": [
+    {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  ]
+}
