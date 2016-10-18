@@ -1,0 +1,31 @@
+{
+    "id": "{{service.name}}",
+    "cpus": {{openldap-admin.cpus}},
+    "mem": {{openldap-admin.mem}},
+    "instances": 1,
+    "env": {
+        "PHPLDAPADMIN_LDAP_HOSTS": "{{openldap-admin.ldap_hosts}}",
+        "PHPLDAPADMIN_HTTPS": "{{openldap-admin.https}}",
+        "PHPLDAPADMIN_LDAP_CLIENT_TLS": "{{openldap-admin.client_tls}}"
+    },
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.openldap-admin-docker}}",
+            "forcePullImage": true,
+            "network": "BRIDGE",
+            "portMappings": [
+            {
+                "containerPort": 443,
+                "hostPort": 0,
+                "protocol": "tcp"
+            }
+            ]
+        }
+    },
+    "labels": {
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "DCOS_SERVICE_SCHEME": "http",
+        "DCOS_SERVICE_PORT_INDEX": "0"
+    }
+}

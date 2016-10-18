@@ -1,0 +1,50 @@
+{
+    "id": "{{service.name}}",
+    "cpus": {{openldap.cpus}},
+    "mem": {{openldap.mem}},
+    "instances": 1,
+    "env": {
+        "LDAP_ORGANISATION": "{{openldap.organisation}}",
+        "LDAP_DOMAIN": "{{openldap.domain}}",
+        "LDAP_ADMIN_PASSWORD": "{{openldap.admin_password}}",
+        "LDAP_READONLY_USER": "{{openldap.readonly_user}}",
+        "LDAP_READONLY_USER_USERNAME": "{{openldap.readonly_username}}",
+        "LDAP_READONLY_USER_PASSWORD": "{{openldap.readonly_password}}",
+        "LDAP_TLS_VERIFY_CLIENT": "{{openldap.tls_verify_client}}"
+    },
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.openldap-docker}}",
+            "forcePullImage": true,
+            "network": "BRIDGE",
+            "portMappings": [
+            {
+                "containerPort": 389,
+                "hostPort": 389,
+                "protocol": "tcp"
+            },
+            {
+                "containerPort": 636,
+                "hostPort": 636,
+                "protocol": "tcp"
+            }
+            ]
+        },
+        "volumes": [
+        {
+            "containerPath": "/var/lib/ldap",
+            "hostPath": "{{openldap.host_volume}}/{{service.name}}/ldap",
+            "mode": "RW"
+        },
+        {
+            "containerPath": "/etc/ldap/slapd.d",
+            "hostPath": "{{openldap.host_volume}}/{{service.name}}/slapd.d",
+            "mode": "RW"
+        }
+        ]
+    },
+    "labels": {
+        "DCOS_SERVICE_NAME": "{{service.name}}"
+    }
+}

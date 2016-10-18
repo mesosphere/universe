@@ -1,0 +1,55 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"The name of the OpenLDAP Admin service instance",
+                    "type":"string",
+                    "default":"openldap-admin"
+                }
+            }
+        },
+        "openldap-admin":{
+            "additionalProperties": false,
+            "description": "OpenLDAP Admin service configuration properties",
+            "properties": {
+                "cpus": {
+                    "description": "CPU shares to allocate to each OpenLDAP node.",
+                    "type": "number",
+                    "default": 0.1,
+                    "minimum": 0.1
+                },
+                "mem": {
+                    "description": "Memory to allocate to each OpenLDAP node.",
+                    "type": "number",
+                    "default": 128.0,
+                    "minimum": 128.0
+                },
+                "ldap_hosts":{
+                    "description": "Set LDAP Admin server config.",
+                    "type": "string"
+                },
+                "https":{
+                    "description": "Use Apache SSL config.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "client_tls":{
+                    "description": "Enable LDAP client TLS config.",
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "required": [
+                "cpus",
+                "mem",
+                "ldap_hosts"
+            ],
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
