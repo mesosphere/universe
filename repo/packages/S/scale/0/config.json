@@ -1,0 +1,100 @@
+{
+  "properties": {
+    "scale": {
+      "properties": {
+        "framework-name": {
+          "type": "string",
+          "description": "The name of the framework. MUST BE LOWERCASE!",
+          "default": "scale"
+        },
+        "vhost-name": {
+          "type": "string",
+          "description": "Virtual Hostname for Marathon-LB webserver exposure outside cluster.",
+          "default": "scale.marathon.slave.mesos"
+        },
+        "docker-creds": {
+          "default": "",
+          "description": "URI to .dockercfg file with Docker credentials for retrieving private images.",
+          "type": "string"
+        }
+      },
+      "required": ["framework-name"],
+      "type": "object"
+    },
+    "logging":{
+      "properties":{
+        "logstash-address": {
+          "type": "string",
+          "description": "Address for logstash service. When left empty logstash will deployed into the cluster."
+        },
+        "elasticsearch-urls": {
+          "description": "ElasticSearch URL's for Scale. Note: Not needed if you use DCOS ElasticSearch package.",
+          "type": "string"
+        }
+      }
+    },
+    "webserver":{
+      "properties":{
+        "cpu": {
+          "description": "Allocation of CPU resources for Scale web server.",
+          "type": "integer",
+          "default": 1
+        },
+        "memory": {
+          "description": "Allocation of Memory (MiB) resources for Scale web server.",
+          "type": "integer",
+          "default": 2048
+        }
+      }
+    },
+    "dcos":{
+      "properties":{
+        "dcos-user": {
+          "default": "",
+          "description": "DCOS User for automation of supporting containers. This is only needed if DCOS Enterprise is installed.",
+          "type": "string"
+        },
+        "dcos-pass": {
+          "default": "",
+          "description": "DCOS Password for automation of supporting containers. This is only needed if DCOS Enterprise is installed.",
+          "type": "string"
+        },
+        "dcos-oauth-token": {
+          "default": "",
+          "description": "DCOS OAuth token for automation of supporting containers. This is only needed if OAuth is enabled.",
+          "type": "string"
+        }
+      }
+    },
+    "db": {
+      "properties":{
+        "db-host": {
+          "type": "string",
+          "description": "Hostname to the database server. When left empty a sample database will be deployed. THIS DEFAULT SHOULD NEVER BE USED FOR PRODUCTION!",
+          "default": ""
+        },
+        "db-name": {
+          "type": "string",
+          "description": "DB Name. This database must have the postgis extension already installed.",
+          "default": "scale"
+        },
+        "db-port": {
+          "type": "string",
+          "description": "DB Port",
+          "default": "5432"
+        },
+        "db-user": {
+          "type": "string",
+          "description": "DB User",
+          "default": "scale"
+        },
+        "db-pass": {
+          "type": "string",
+          "description": "DB Pass",
+          "default": "scale"
+        }
+      }
+    }
+  },
+  "type": "object"
+}
