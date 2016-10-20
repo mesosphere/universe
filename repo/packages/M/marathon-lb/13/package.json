@@ -6,7 +6,7 @@
   "description": "HAProxy configured using Marathon state",
   "maintainer": "support@mesosphere.io",
   "tags": ["loadbalancer", "service-discovery", "reverse-proxy", "proxy", "haproxy"],
-  "preInstallNotes": "We recommend a minimum of 0.5 CPUs and 256 MB of RAM available for the Marathon-LB DCOS Service.",
+  "preInstallNotes": "We recommend a minimum of 0.5 CPUs and 256 MB of RAM available for the Marathon-LB DCOS Service.\n\n*NOTE*: ```Enterprise Edition``` DC/OS requires setting up the Service Account in all security modes. \nFollow these instructions to setup a Service Account: https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/service-auth/mlb-auth/",
   "postInstallNotes": "Marathon-lb DC/OS Service has been successfully installed!\nSee https://github.com/mesosphere/marathon-lb for documentation.",
   "postUninstallNotes": "Marathon-lb DC/OS Service has been uninstalled and will no longer run.",
   "licenses": [
