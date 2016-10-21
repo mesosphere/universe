@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "mongodb-admin",
+  "version": "0.0.20-0.2",
+  "scm": "https://github.com/mrvautin/adminMongo",
+  "maintainer": "support@mesosphere.io",
+  "website": "https://github.com/mrvautin/adminMongo",
+  "description": "A Web user interface to administer MongoDB databases built using Express.",
+  "tags": ["admin", "database", "mongoclient", "mongo", "mongodb", "nosql"],
+"preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\n```Advanced Installation options notes```\n\nnetworking / *external_access*: create an entry in Marathon-LB for accessing the service from outside of the cluster\n\nnetworking / *external_access_port*: port to be used in Marathon-LB for accessing the service.",
+"postInstallNotes": "Service installed.\n\nAccess this service through the endpoint created in Marathon-LB.\n\nDefault login: `admin`/`password`.\n\nDefault DC/OS MongoDB connection string (copy-paste into *add connection* box): `mongodb://mongodb.marathon.l4lb.thisdcos.directory:27017`",
+"postUninstallNotes": "Service uninstalled.",
+  "licenses": [
+    {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  ]
+}

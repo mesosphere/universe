@@ -1,0 +1,102 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{mysql.cpus}},
+  "mem": {{mysql.mem}},
+  "instances": 1,
+  "env": {
+    "MYSQL_DATABASE": "{{database.name}}",
+    "MYSQL_USER": "{{database.username}}",
+    "MYSQL_PASSWORD": "{{database.password}}",
+    "MYSQL_ROOT_PASSWORD": "{{database.root_password}}",
+    "MYSQL_CONTEXT": "/service/{{service.name}}"
+  },
+  "container": {
+    "type": "DOCKER",
+    "volumes": [{
+      {{^storage.persistence.enable}}
+      "containerPath": "var",
+      "hostPath": "{{storage.host_volume}}/{{service.name}}",
+      {{/storage.persistence.enable}}
+      {{#storage.persistence.enable}}
+      {{^storage.persistence.external.enable}}
+      "containerPath": "var",
+      "persistent": {
+        "size": {{storage.persistence.volume_size}}
+      },
+      {{/storage.persistence.external.enable}}
+      {{#storage.persistence.external.enable}}
+      "containerPath": "/var/lib/mysql",
+      "external": {
+        "name": "{{storage.persistence.external.volume_name}}",
+        "provider": "{{storage.persistence.external.provider}}",
+        "options": { "dvdi/driver": "{{storage.persistence.external.driver}}" }
+      },
+      {{/storage.persistence.external.enable}}
+      {{/storage.persistence.enable}}
+      "mode": "RW"
+    }],
+    "docker": {
+      "image": "{{resource.assets.container.docker.mysql-docker}}",
+      {{#networking.host_mode}}
+      "network": "HOST",
+      {{/networking.host_mode}}            
+      {{^networking.host_mode}}
+      "network": "BRIDGE",
+      "portMappings": [{
+        "containerPort": 3306,
+        "hostPort": 0,
+        {{#networking.external_access.enable}}
+        "servicePort": {{networking.external_access.external_access_port}},
+        {{/networking.external_access.enable}}
+        "protocol": "tcp",
+        "name": "{{service.name}}",
+        "labels": {
+          "VIP_0": "/{{service.name}}:{{networking.port}}"
+        }
+      }],
+      {{/networking.host_mode}}
+      "forcePullImage": false
+    }
+  },
+  {{#networking.host_mode}}
+  "portDefinitions": [{
+      "protocol": "tcp",
+      "port": 3306,
+      "name": "{{service.name}}",
+      {{#networking.external_access.enable}}
+      "servicePort": {{networking.external_access.external_access_port}},
+      {{/networking.external_access.enable}}
+      "labels": {
+        "VIP_0": "/{{service.name}}:{{networking.port}}"
+      }
+  }],
+  "requirePorts": true,
+  "constraints": [["hostname", "UNIQUE"]],
+  {{/networking.host_mode}}
+  "healthChecks": [{
+    "protocol": "TCP",
+    {{#networking.host_mode}}
+    "port": 3306,
+    {{/networking.host_mode}}
+    {{^networking.host_mode}}
+    "portIndex": 0,
+    {{/networking.host_mode}}    
+    "gracePeriodSeconds": 300,
+    "intervalSeconds": 60,
+    "timeoutSeconds": 20,
+    "maxConsecutiveFailures": 3
+  }],
+  "labels": {
+    "DCOS_PACKAGE_VERSION": "5.7.12-0.3",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    {{#networking.external_access.enable}}
+    "HAPROXY_GROUP": "external",
+    {{/networking.external_access.enable}}
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}

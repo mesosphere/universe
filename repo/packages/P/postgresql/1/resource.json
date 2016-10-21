@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-postgresql-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-postgresql-medium.png",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-postgresql-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "postgresql-docker": "postgres:9.6"
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "packagingVersion": "3.0",
+  "name": "netsil-collectors",
+  "version": "1.0.0",
+  "description": "The collectors package for Netsil.",
+  "maintainer": "support@netsil.com",
+  "tags": ["netsil", "monitoring", "microservices", "collectors"],
+  "preInstallNotes": "You may want to change the 'instances' field to control how many collectors you wish to install.\n\nFor instance, you may want one collector for every server you wish to monitor.\n\nIn addition, you may need to change the 'role' field to control on which nodes to install the collectors.",
+  "postInstallNotes": "Netsil collectors are installed!",
+  "postUninstallNotes": "Netsil collectors are uninstalled successfully.",
+  "licenses": [
+    {
+      "name": "Netsil License",
+      "url": "https://raw.githubusercontent.com/netsil/docs/master/licenses/license.txt"
+    },
+    {
+      "name": "Netsil Third Party Licenses",
+      "url": "https://raw.githubusercontent.com/netsil/docs/master/licenses/THIRD_PARTY_LICENSES.txt"
+    }
+  ]
+}
