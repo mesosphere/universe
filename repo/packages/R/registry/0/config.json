@@ -28,15 +28,25 @@
 					"default": 512.0,
 					"minimum": 512.0
 				},
-				"http_tls_certificate_secret_name": {
-					"description":  "Name of a DC/OS secret that holds the HTTP TLS certificate.",
+				"http_tls_certificate_key_download_ip": {
+					"description":  "IP address of the host to download the HTTP TLS certificate and key from (e.g. the IP of your bootstrap server).",
 					"type": "string",
-					"default": "registry-certificate"
+					"default": "127.0.0.1"
 				},
-				"http_tls_key_secret_name": {
-					"description":  "Name of a DC/OS secret that holds the HTTP TLS key.",
+				"http_tls_certificate_key_download_port": {
+					"description":  "TCP port of the host to download the HTTP TLS certificate and key from (i.e. the port where the server is listening on).",
 					"type": "string",
-					"default": "registry-key"
+					"default": "80"
+				},					
+				"http_tls_certificate_filename": {
+					"description":  "Name of the file holding the HTTP TLS certificate to download from the host with the IP address configured in http_tls_certificate_key_download_ip.",
+					"type": "string",
+					"default": "domain.crt"
+				},
+				"http_tls_key_filename": {
+					"description":  "Name of the file holding the HTTP TLS key to download from the host with the IP address configured in http_tls_certificate_key_download_ip.",
+					"type": "string",
+					"default": "domain.key"
 				},
 				"search_backend": {
 					"description":  "Search backend to be used.",

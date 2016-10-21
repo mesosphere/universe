@@ -6,13 +6,13 @@
   "env": {
     "STORAGE_PATH": "{{registry.storage_path}}",
     "SEARCH_BACKEND": "{{registry.search_backend}}",
-    "REGISTRY_HTTP_TLS_CERTIFICATE": { "secret": "my_secret_certificate" },
-    "REGISTRY_HTTP_TLS_KEY": { "secret": "my_secret_key" }
+    "REGISTRY_HTTP_TLS_CERTIFICATE": /{{http_tls_certificate_filename}},
+    "REGISTRY_HTTP_TLS_KEY": /{{http_tls_key_filename}}
   },
-  "secrets":{
-    "my_secret_certificate":{ "source": "{{registry.http_tls_certificate_secret_name}}" },
-    "my_secret_key":{ "source": "{{registry.http_tls_key_secret_name}}" }    
-  },
+  "uris": [
+      "http://{{http_tls_certificate_key_download_ip}}:{{http_tls_certificate_key_download_port}}/{{http_tls_certificate_filename}}",
+      "http://{{http_tls_certificate_key_download_ip}}:{{http_tls_certificate_key_download_port}}/{{http_tls_key_filename}}"
+  ],
   "container": {
     "type": "DOCKER",
     "volumes": [{
