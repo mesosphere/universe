@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "networking": {
+      "description": "Configuration options for Koding's networking",
+      "type": "object",
+      "properties": {
+        "node": {
+          "description": "Which node to install Koding on",
+          "type": "string",
+          "default": "10.0.0.1"
+        },
+        "hostname": {
+          "description": "The DNS name you intend to host your Koding instance at",
+          "type": "string",
+          "default": "koding.yourcompany.com"
+        },
+        "virtual-host": {
+          "description": "The virtual host address to configure for integration with Marathon-lb.",
+          "type": "string"
+        },
+        "https-redirect": {
+          "description": "Whether Marathon-lb should redirect HTTP traffic to HTTPS. This requires 'virtual-host' to be set. By default, this is false.",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "hostname",
+        "virtual-host",
+        "https-redirect"
+      ]
+    }
+  }
+}
