@@ -44,12 +44,12 @@
             "description": "MySQL admin networking configuration properties",
             "properties": {
                 "mysql_location":{
-                    "description": "The name of the DC/OS mysql instance to connect to.",
+                    "description": "The name of the DC/OS MySQL instance to connect to.",
                     "type": "string",
                     "default": "mysql"
                 },
                 "mysql_host_port":{
-                    "description": "The port where the mysql instance is listening on. Defaults to 3306",
+                    "description": "The port where the MySQL instance is listening on. Defaults to 3306",
                     "type": "number",
                     "default": 3306
                 },
