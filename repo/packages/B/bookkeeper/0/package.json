@@ -1,0 +1,20 @@
+{
+ "packagingVersion": "3.0",
+ "name": "bookkeeper",
+ "version": "4.3.4",
+ "scm": "https://github.com/twitter/bookkeeper",
+ "maintainer": "jia.zhai@emc.com",
+ "description": "bookkeeper",
+ "framework": false,
+ "tags": ["mesosphere", "service", "bookkeeper"],
+ "licenses": [
+   {
+     "name": "BSD",
+     "url": "http://www.apache.org/licenses/"
+   }
+ ],
+ "website":  "http://bookkeeper.apache.org",
+ "postInstallNotes": "bookkeeper on DCOS installed successfully!",
+ "preInstallNotes": "Be sure zk could access by master.mesos:2181, and bk will use port:3181",
+ "postUninstallNotes": "Thank you for using bookkeeper"
+}

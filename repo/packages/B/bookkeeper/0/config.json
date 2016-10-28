@@ -1,0 +1,48 @@
+{
+    "properties": {
+        "bookkeeper": {
+            "description": "bookkeeper specific configuration properties",
+            "properties": {
+                "app_id": {
+                    "default": "bookies",
+                    "description": "Marathon Application ID",
+                    "type": "string"
+                },
+                "cpus": {
+                    "default": 1,
+                    "description": "CPU shares to allocate to each Marathon instance.",
+                    "minimum": 1,
+                    "type": "number"
+                },
+                "instances": {
+                    "default": 1,
+                    "description": "Number of Marathon instances to run.",
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "mem": {
+                    "default": 1024.0,
+                    "description": "Memory (MB) to allocate to each Marathon task.",
+                    "minimum": 512.0,
+                    "type": "number"
+                },
+                "service_port": {
+                    "default": 3181,
+                    "description": "service port, config file contains in docker",
+                    "type": "integer"
+                },
+                "stats_port": {
+                    "default": 9001,
+                    "description": "stats at port codahaleStatsHttpPort",
+                    "type": "integer"
+                }
+            },
+            
+            "type": "object"
+        }
+    },
+    "required": [
+        "bookkeeper"
+    ],
+    "type": "object"
+}
