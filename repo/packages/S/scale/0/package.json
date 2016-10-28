@@ -2,8 +2,8 @@
   "packagingVersion": "3.0",
   "minDcosReleaseVersion": "1.7",
   "scm": "https://github.com/ngageoint/scale.git",
-  "postInstallNotes": "The Scale DCOS Service has been successfully installed!\n\n\tDocumentation: https://ngageoint.github.io/scale/\n\tIssues: https://github.com/ngageoint/scale/issues",
-  "maintainer": "http://www.nga.mil",
+  "maintainer": "scale@nga.mil",
+  "website": "https://ngageoint.github.io/scale",
   "name": "scale",
   "tags": [
     "bigdata",
@@ -14,9 +14,10 @@
     "geospatial"
   ],
   "framework": true,
-  "version": "4.0.0",
+  "version": "4.0.0-0.0.1",
+  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nWe recommend a minimum of three nodes with at least 4 CPU and 6GB of RAM available for the Scale services and running Scale jobs.\n\nBy default, Elasticsearch package *must* be running within your DCOS cluster. If you wish to use an externally hosted Elasticsearch cluster, specify one or more of the nodes in comma delimited format in the SCALE_ELASTICSEARCH_URLS variable. For quick-start purposes, Scale is bootstrapped with a Postgres database. This should *NEVER* be used for production purposes as it offers no underlying storage persistence. It can be replaced with an externally hosted Postgres by setting DB_HOST and associated settings appropriately.\n\nIf you are running DCOS 1.8 Enterprise Edition or higher, you will need to set the DCOS_OAUTH_TOKEN in the DCOS section of the Advanced Settings. This value can be found within the dcos.toml file under in the dcos_acs_token value on a system with an authenticated DCOS CLI.",
+  "postInstallNotes": "The Scale DCOS Service has been successfully installed!\n\n\tDocumentation: https://ngageoint.github.io/scale/\n\tIssues: https://github.com/ngageoint/scale/issues",
   "postUninstallNotes": "The Scale Scheduler has been uninstalled and will no longer run. You may need to remove supporting services - scale-logstash, scale-webserver and scale-db.",
-  "preInstallNotes": "We recommend a minimum of three nodes with at least 4 CPU and 6GB of RAM available for the Scale services and running Scale jobs.\n\nElasticsearch is assumed to be running within your DCOS cluster. If you wish to use an externally hosted Elasticsearch cluster, specify one or more of the nodes in comma delimited format in the SCALE_ELASTICSEARCH_URLS variable. For quick-start purposes, Scale is bootstrapped with a Postgres database. This should NEVER be used for production purposes as it offers no underlying storage persistence. It can be replaced with an externally hosted Postgres by setting DB_HOST and associated settings appropriately.\n\nIf you are running DCOS 1.8 Enterprise Edition or higher, you will need to set the DCOS_OAUTH_TOKEN in the DCOS section of the Advanced Settings. This value can be found within the dcos.toml file under in the dcos_acs_token value on a system with an authenticated DCOS CLI.",
   "licenses": [
     {
       "url": "https://github.com/ngageoint/scale/blob/master/LICENSE",

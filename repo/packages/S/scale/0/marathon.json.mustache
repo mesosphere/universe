@@ -1,5 +1,5 @@
 {
-    "id": "/{{scale.framework-name}}",
+    "id": "/{{scale.name}}",
     "cpus": 1.0,
     "mem": 1024.0,
     "instances": 1,
@@ -21,15 +21,15 @@
         "maxConsecutiveFailures": 3
     }],
     "labels":{
-      "DCOS_PACKAGE_FRAMEWORK_NAME": "{{scale.framework-name}}"
+      "DCOS_PACKAGE_FRAMEWORK_NAME": "{{scale.name}}"
     },
     "env": {
-      {{#scale.docker-creds}}
+      {{#scale.docker-credentials}}
       "CONFIG_URI": "{{scale.docker-creds}}",
       {{/scale.docker-creds}}
       "DB_DOCKER_IMAGE": "{{resource.assets.container.docker.db}}",
       "DCOS_OAUTH_TOKEN": "{{dcos.dcos-oauth-token}}",
-      "DCOS_PACKAGE_FRAMEWORK_NAME": "{{scale.framework-name}}",
+      "DCOS_PACKAGE_FRAMEWORK_NAME": "{{scale.name}}",
       "DCOS_PASS": "{{dcos.dcos-pass}}",
       "DCOS_USER": "{{dcos.dcos-user}}",
       "DEPLOY_WEBSERVER": "true",
@@ -42,7 +42,7 @@
       "SCALE_DB_USER": "{{db.db-user}}",
       "SCALE_ELASTICSEARCH_URLS": "{{logging.elasticsearch-urls}}",
       "SCALE_LOGGING_ADDRESS": "{{logging.logstash-address}}",
-      "SCALE_VHOST": "{{scale.vhost-name}}",
+      "SCALE_VHOST": "{{scale.virtual-host}}",
       "SCALE_WEBSERVER_CPU": "{{webserver.cpu}}",
       "SCALE_WEBSERVER_MEMORY": "{{webserver.memory}}"
     },

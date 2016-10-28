@@ -1,16 +1,16 @@
 {
-  "assets": {
-    "container": {
-      "docker": {
-         "scale": "docker.io/geoint/scale:4.0.0",
-         "db": "docker.io/mdillon/postgis:9.5",
-         "logstash": "docker.io/geoint/logstash-elastic-ha:4.0.0"
-      }
-    }
-  },
   "images": {
     "icon-small": "https://raw.githubusercontent.com/ngageoint/scale/gh-pages/demo/images/icon-service-scale-small.png",
     "icon-medium": "https://raw.githubusercontent.com/ngageoint/scale/gh-pages/demo/images/icon-service-scale-medium.png",
     "icon-large": "https://raw.githubusercontent.com/ngageoint/scale/gh-pages/demo/images/icon-service-scale-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+         "scale": "geoint/scale:4.0.0",
+         "db": "mdillon/postgis:9.5",
+         "logstash": "geoint/logstash-elastic-ha:4.0.0"
+      }
+    }
   }
 }
