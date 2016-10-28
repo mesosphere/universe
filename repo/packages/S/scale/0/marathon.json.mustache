@@ -25,8 +25,8 @@
     },
     "env": {
       {{#scale.docker-credentials}}
-      "CONFIG_URI": "{{scale.docker-creds}}",
-      {{/scale.docker-creds}}
+      "CONFIG_URI": "{{scale.docker-credentials}}",
+      {{/scale.docker-credentials}}
       "DB_DOCKER_IMAGE": "{{resource.assets.container.docker.db}}",
       "DCOS_OAUTH_TOKEN": "{{dcos.dcos-oauth-token}}",
       "DCOS_PACKAGE_FRAMEWORK_NAME": "{{scale.name}}",
@@ -49,9 +49,9 @@
     "args": [
     "scale_scheduler"
     ]
-    {{#scale.docker-creds}},
+    {{#scale.docker-credentials}},
     "uris": [
-      "{{scale.docker-creds}}"
+      "{{scale.docker-credentials}}"
     ]
-    {{/scale.docker-creds}}
+    {{/scale.docker-credentials}}
 }
