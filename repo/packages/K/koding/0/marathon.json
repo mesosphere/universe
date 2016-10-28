@@ -1,0 +1,86 @@
+{
+  "id": "{{service.name}}",
+  "cmd": null,
+  "cpus": {{koding.cpus}},
+  "instances": 1,
+  "mem": {{koding.mem}},
+  "disk": 20000,
+  "args": [
+    "-",
+    "--host",
+    "koding.marathon.mesos:$PORT0",
+    "--hostname",
+    "{{networking.hostname}}"
+  ],
+  "container": {
+    "docker": {
+      "image": "{{resource.assets.container.docker.koding}}",
+      "volumes": [
+        {
+          "containerPath": "/var/lib/mongodb",
+          "hostPath": "/tmp/koding/mongodb",
+          "mode": "RW"
+        },
+        {
+          "containerPath": "/var/lib/postgresql/9.3/main",
+          "hostPath": "/tmp/koding/postgres",
+          "mode": "RW"
+        }
+      ],
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 8090,
+          "hostPort": 0,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "kodingmongodb",
+        "mode": "RW",
+        "persistent": {
+          "type": "root",
+          "size": 5000
+        }
+      },
+      {
+        "containerPath": "kodingpostgres",
+        "mode": "RW",
+        "persistent": {
+          "type": "root",
+          "size": 5000
+        }
+      },
+      {
+        "containerPath": "/var/lib/mongodb",
+        "hostPath": "kodingmongodb",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/var/lib/postgresql",
+        "hostPath": "kodingpostgres",
+        "mode": "RW"
+      }
+    ]
+
+  },
+  "requirePorts": true,
+  "constraints": [
+    [
+      "hostname",
+      "CLUSTER",
+      "{{networking.node}}"
+    ]
+  ],
+  "labels":{
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_VHOST":"{{networking.virtual-host}}",
+    "HAPROXY_0_HTTP_FRONTEND_ACL": "  acl host_{cleanedUpHostname} hdr_end(host) -i {hostname}\n  use_backend {backend} if host_{cleanedUpHostname}",
+    "HAPROXY_0_HTTPS_FRONTEND_ACL": "  use_backend {backend} if {{ ssl_fc_sni -m end .{hostname} }}",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "{{networking.https-redirect}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true"
+  }
+}
