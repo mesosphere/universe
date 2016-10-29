@@ -29,9 +29,8 @@
 					"minimum": 512.0
 				},
 				"http_tls_certificate_key_download_ip": {
-					"description":  "IP address of the host to download the HTTP TLS certificate and key from (e.g. the IP of your bootstrap server).",
+					"description":  "IP address of the host to download the HTTP TLS certificate and key from.",
 					"type": "string",
-					"default": "127.0.0.1"
 				},
 				"http_tls_certificate_key_download_port": {
 					"description":  "TCP port of the host to download the HTTP TLS certificate and key from (i.e. the port where the server is listening on).",
@@ -82,7 +81,8 @@
 			},
 			"required": [
 				"cpus",
-				"mem"
+				"mem",
+				"http_tls_certificate_key_download_ip"
 			]
 		},
 		"storage": {
