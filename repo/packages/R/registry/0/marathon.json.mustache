@@ -17,7 +17,7 @@
     "type": "DOCKER",
     "volumes": [{
       {{^storage.persistence.enable}}
-      "containerPath": "var",
+      "containerPath": "/var/lib/registry",
       "hostPath": "{{storage.host_volume_registry}}/{{service.name}}",
       {{/storage.persistence.enable}}
       {{#storage.persistence.enable}}
