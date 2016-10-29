@@ -30,7 +30,7 @@
 				},
 				"http_tls_certificate_key_download_ip": {
 					"description":  "IP address of the host to download the HTTP TLS certificate and key from.",
-					"type": "string",
+					"type": "string"
 				},
 				"http_tls_certificate_key_download_port": {
 					"description":  "TCP port of the host to download the HTTP TLS certificate and key from (i.e. the port where the server is listening on).",
