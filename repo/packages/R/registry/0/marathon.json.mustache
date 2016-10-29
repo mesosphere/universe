@@ -10,8 +10,8 @@
     "REGISTRY_HTTP_TLS_KEY": "$MESOS_SANDBOX/{{registry.http_tls_key_filename}}"
   },
   "uris": [
-      "http://{{registry.http_tls_certificate_key_download_ip}}:{{registry.http_tls_download_port}}/{{registry.http_tls_certificate_filename}}",
-      "http://{{registry.http_tls_certificate_key_download_ip}}:{{registry.http_tls_download_port}}/{{registry.http_tls_key_filename}}"
+      "http://{{registry.http_tls_certificate_key_download_ip}}:{{registry.http_tls_certificate_key_download_port}}/{{registry.http_tls_certificate_filename}}",
+      "http://{{registry.http_tls_certificate_key_download_ip}}:{{http_tls_certificate_key_download_port}}/{{registry.http_tls_key_filename}}"
   ],
   "container": {
     "type": "DOCKER",
