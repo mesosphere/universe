@@ -6,8 +6,8 @@
   "env": {
     "STORAGE_PATH": "{{registry.storage_path}}",
     "SEARCH_BACKEND": "{{registry.search_backend}}",
-    "REGISTRY_HTTP_TLS_CERTIFICATE": "{{registry.http_tls_certificate_filename}}",
-    "REGISTRY_HTTP_TLS_KEY": "{{registry.http_tls_key_filename}}"
+    "REGISTRY_HTTP_TLS_CERTIFICATE": "/{{registry.http_tls_certificate_filename}}",
+    "REGISTRY_HTTP_TLS_KEY": "/{{registry.http_tls_key_filename}}"
   },
   "uris": [
       "http://{{registry.http_tls_download_ip}}:{{registry.http_tls_download_port}}/{{registry.http_tls_certificate_filename}}",
