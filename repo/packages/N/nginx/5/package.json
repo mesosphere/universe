@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "2.0",
+  "name": "nginx",
+  "framework": false,
+  "description": "nginx is a high performance HTTP and reverse proxy server.",
+  "version": "1.10.2",
+  "scm": "http://hg.nginx.org/nginx/",
+  "maintainer": "containers@bitnami.com",
+  "tags": ["proxy", "web-server", "cache", "reverse-proxy"],
+  "preInstallNotes": "Preparing to install nginx.",
+  "postInstallNotes": "Nginx has been installed.",
+  "postUninstallNotes": "Nginx was uninstalled successfully.",
+  "licenses": [
+    {
+      "name": "BSD like",
+      "url": "http://nginx.org/LICENSE"
+    }
+  ]
+}
