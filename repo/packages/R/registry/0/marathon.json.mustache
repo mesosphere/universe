@@ -19,7 +19,7 @@
   {{/security.enable}}
   {{^security.enable}}
   "args": [
-    "-d",
+    "--daemon",
     "--insecure-docker-registry", "{{service.name}}.marathon.l4lb.thisdcos.directory:{{networking.port}}" 
   ],
   {{/security.enable}}
