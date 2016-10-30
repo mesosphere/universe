@@ -69,7 +69,7 @@
 			"type": "object",
 			"description": "registry security configuration properties",
 			"properties":{
-				"enabled": {
+				"enable": {
 					"description":  "Enable secure registry.",
 					"type": "boolean",
 					"default": false
