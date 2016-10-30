@@ -19,33 +19,14 @@
 				"cpus": {
 					"description": "CPU shares to allocate to each service instance.",
 					"type": "number",
-					"default": 0.3,
-					"minimum": 0.3
+					"default": 0.2,
+					"minimum": 0.2
 				},
 				"mem": {
 					"description":  "Memory to allocate to each service instance.",
 					"type": "number",
-					"default": 512.0,
-					"minimum": 512.0
-				},
-				"http_tls_download_ip": {
-					"description":  "IP address of the host to download the HTTP TLS certificate and key from.",
-					"type": "string"
-				},
-				"http_tls_download_port": {
-					"description":  "TCP port of the host to download the HTTP TLS certificate and key from (i.e. the port where the server is listening on).",
-					"type": "string",
-					"default": "80"
-				},					
-				"http_tls_certificate_filename": {
-					"description":  "Name of the file holding the HTTP TLS certificate to download from the host with the IP address configured in http_tls_download_ip.",
-					"type": "string",
-					"default": "domain.crt"
-				},
-				"http_tls_key_filename": {
-					"description":  "Name of the file holding the HTTP TLS key to download from the host with the IP address configured in http_tls_download_ip.",
-					"type": "string",
-					"default": "domain.key"
+					"default": 256.0,
+					"minimum": 256.0
 				},
 				"search_backend": {
 					"description":  "Search backend to be used.",
@@ -81,9 +62,38 @@
 			},
 			"required": [
 				"cpus",
-				"mem",
-				"http_tls_download_ip"
+				"mem"
 			]
+		},
+		"security": {
+			"type": "object",
+			"description": "registry security configuration properties",
+			"properties":{
+				"enabled": {
+					"description":  "Enable secure registry.",
+					"type": "boolean",
+					"default": false
+				},
+				"http_tls_download_ip": {
+					"description":  "IP address of the host to download the HTTP TLS certificate and key from.",
+					"type": "string"
+				},
+				"http_tls_download_port": {
+					"description":  "TCP port of the host to download the HTTP TLS certificate and key from (i.e. the port where the server is listening on).",
+					"type": "string",
+					"default": "80"
+				},					
+				"http_tls_certificate_filename": {
+					"description":  "Name of the file holding the HTTP TLS certificate to download from the host with the IP address configured in http_tls_download_ip.",
+					"type": "string",
+					"default": "domain.crt"
+				},
+				"http_tls_key_filename": {
+					"description":  "Name of the file holding the HTTP TLS key to download from the host with the IP address configured in http_tls_download_ip.",
+					"type": "string",
+					"default": "domain.key"
+				}
+			}
 		},
 		"storage": {
 			"type": "object",
@@ -148,7 +158,7 @@
 			"description": "registry networking configuration properties",
 			"properties": {    
 				"port": {
-					"description": "Port number to be used for clear communication internally to the cluster. Currently unused and fixed to be 3306.",
+					"description": "Port number to be used for clear communication internally to the cluster.",
 					"type": "number",
 					"default": 5000
 				},  
