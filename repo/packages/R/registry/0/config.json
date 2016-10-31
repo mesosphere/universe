@@ -75,11 +75,11 @@
 					"default": false
 				},
 				"http_tls_download_ip": {
-					"description":  "IP address of the host to download the HTTP TLS certificate and key from.",
+					"description":  "IP address of the host to download the HTTP TLS certificate and key from. Files need to be in the root subdirectory of the server.",
 					"type": "string"
 				},
 				"http_tls_download_port": {
-					"description":  "TCP port of the host to download the HTTP TLS certificate and key from (i.e. the port where the server is listening on).",
+					"description":  "TCP port of the host to download the HTTP TLS certificate and key from (i.e. the port where the server is listening on). Files need to be in the root subdirectory of the server.",
 					"type": "string",
 					"default": "80"
 				},					
