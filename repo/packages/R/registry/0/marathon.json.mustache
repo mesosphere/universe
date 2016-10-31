@@ -17,12 +17,6 @@
       "http://{{security.http_tls_download_ip}}:{{security.http_tls_download_port}}/{{security.http_tls_key_filename}}"
   ],
   {{/security.enable}}
-  {{^security.enable}}
-  "args": [
-    "--daemon",
-    "--insecure-docker-registry", "{{service.name}}.marathon.l4lb.thisdcos.directory:{{networking.port}}" 
-  ],
-  {{/security.enable}}
   "container": {
     "type": "DOCKER",
     "volumes": [{
