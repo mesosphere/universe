@@ -44,7 +44,8 @@
         "hostPath": "{{storage.host_volume}}/{{service.name}}/etc",
         {{/storage.persistence.enable}}
         {{#storage.persistence.enable}}
-        {{^storage.persistence.external.enable}}          
+        {{^storage.persistence.external.enable}} 
+        "containerPath": "etc",          
         "persistent": {
           "size": {{storage.persistence.slapd_volume_size}}
         },
