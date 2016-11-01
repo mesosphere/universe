@@ -71,7 +71,7 @@
                 "pgdata": {
                     "description": "Location of the database files.",
                     "type": "string",
-                    "default": "pgdata"
+                    "default": "/var/lib/postgresql/pgdata/"
                 },    
                 "persistence": {
                     "type": "object",
