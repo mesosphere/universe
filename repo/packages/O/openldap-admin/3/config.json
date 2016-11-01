@@ -17,16 +17,16 @@
             "description": "OpenLDAP-admin service configuration properties",
             "properties": {
                 "cpus": {
-                    "description": "CPU shares to allocate to each OpenLDAP node.",
+                    "description": "CPU shares to allocate to each OpenLDAP Admin node.",
                     "type": "number",
-                    "default": 0.2,
-                    "minimum": 0.1
+                    "default": 0.3,
+                    "minimum": 0.2
                 },
                 "mem": {
-                    "description": "Memory to allocate to each OpenLDAP node.",
+                    "description": "Memory to allocate to each OpenLDAP Admin node.",
                     "type": "number",
-                    "default": 256.0,
-                    "minimum": 128.0
+                    "default": 512.0,
+                    "minimum": 256.0
                 }
             },
             "required": [
