@@ -68,7 +68,7 @@
 			"description": "registry security configuration properties",
 			"properties":{
 				"enable": {
-					"description":  "Enable secure registry.",
+					"description":  "Enable TLS secure registry.",
 					"type": "boolean",
 					"default": false
 				},
