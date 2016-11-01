@@ -13,7 +13,7 @@
     "type": "DOCKER",
     "volumes": [{
       {{^storage.persistence.enable}}
-      "containerPath": "/var/lib/postgresql/",
+      "containerPath": "/var/lib/postgresql/data/",
       "hostPath": "{{storage.host_volume}}/{{service.name}}",
       {{/storage.persistence.enable}}
       {{#storage.persistence.enable}}
@@ -24,7 +24,7 @@
       },
       {{/storage.persistence.external.enable}}
       {{#storage.persistence.external.enable}}
-      "containerPath": "/var/lib/postgresql/",
+      "containerPath": "/var/lib/postgresql/data/",
       "external": {
         "name": "{{storage.persistence.external.volume_name}}",
         "provider": "{{storage.persistence.external.provider}}",
