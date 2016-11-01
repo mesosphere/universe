@@ -100,7 +100,7 @@
 				"storage_path": {
 					"description": "Storage path to be used inside the registry container.",
 					"type": "string",
-					"default": "/registry"
+					"default": "/var/lib/registry"
 				}, 
 				"host_volume_registry": {
 					"description": "If using non-persistent volumes (local volumes), this sets the location of a volume on the host to be used for the registry service to store the contents of the registry. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/service_name`). This can be a mounted NFS drive. Note that this path must be the same on all DC/OS agents. NOTE: if you don't change the default /tmp value, YOUR DATA WILL NOT BE SAVED IN ANY WAY.",
