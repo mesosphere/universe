@@ -1,0 +1,61 @@
+{
+  "properties": {
+    "vamp": {
+      "description": "Vamp specific configuration properties",
+      "properties": {
+        "vamp-id": {
+          "default": "vamp",
+          "description": "Marathon Vamp application id.",
+          "type": "string"
+        },
+        "memory": {
+          "default": "1024",
+          "description": "The amount of ram that Mesos should give to Vamp.",
+          "type": "string"
+        },
+        "cpu": {
+          "default": "0.5",
+          "description": "The amount of CPU resource to allocate to Vamp instance.",
+          "type": "string"
+        },
+        "vamp-internal-vip": {
+          "default": "10.20.0.100:8080",
+          "description": "The internal Vamp URL used for components (Minuteman VIP).",
+          "type": "string"
+        },
+        "rest-api-port": {
+          "default": "9090",
+          "description": "The Rest API and UI port.",
+          "type": "string"
+        },
+        "logstash": {
+          "description": "Logstash host (IP), e.g.'elasticsearch.marathon.mesos'. By default Logstash should listen on 10001 UDP port.",
+          "type": "string"
+        },
+        "elasticsearch-url": {
+          "description": "Elasticsearch URL, e.g. 'http://elasticsearch.marathon.mesos:9200'",
+          "type": "string"
+        },
+        "force-pull-image": {
+          "default": true,
+          "description": "Force docker to re-pull the image.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "vamp-id",
+        "memory",
+        "cpu",
+        "vamp-internal-vip",
+        "rest-api-port",
+        "logstash",
+        "elasticsearch-url",
+        "force-pull-image"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "vamp"
+  ]
+}

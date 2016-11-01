@@ -1,0 +1,25 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.8",
+  "name": "vamp",
+  "version": "0.9.1",
+  "website": "http://vamp.io/",
+  "scm": "https://github.com/magneticio/vamp.git",
+  "maintainer": "mikael@magnetic.io",
+  "framework": false,
+  "description": "Canary test/release and autoscaling platform for DC/OS",
+  "preInstallNotes": "In order to run Vamp you need to specify few parameters like connection to Elasticsearch, Logstash etc.\n\nSee installation instruction at http://vamp.io/documentation/installation/dcos/",
+  "postInstallNotes": "Vamp has been successfully installed!\n\nYou can access Vamp at\n **`https://<dcos_url>/service/vamp/`**\n\nSee [our website](http://vamp.io/documentation/installation/dcos/) for documentation.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/magneticio/vamp/master/LICENSE"
+    }
+  ],
+  "tags": [
+    "vamp",
+    "canary",
+    "testing",
+    "autoscaling"
+  ]
+}
