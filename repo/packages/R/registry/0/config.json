@@ -98,7 +98,7 @@
 			"description": "registry storage configuration properties",
 			"properties":{
 				"storage_path": {
-					"description": "Storage path to be used.",
+					"description": "Storage path to be used inside the registry container.",
 					"type": "string",
 					"default": "/registry"
 				}, 
