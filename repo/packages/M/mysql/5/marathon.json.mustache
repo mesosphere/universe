@@ -14,7 +14,7 @@
     "type": "DOCKER",
     "volumes": [{
       {{^storage.persistence.enable}}
-      "containerPath": "var",
+      "containerPath": "/var/lib/mysql/",
       "hostPath": "{{storage.host_volume}}/{{service.name}}",
       {{/storage.persistence.enable}}
       {{#storage.persistence.enable}}
