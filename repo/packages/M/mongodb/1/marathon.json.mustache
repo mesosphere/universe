@@ -18,7 +18,7 @@
     "type": "DOCKER",
     "volumes": [{
       {{^storage.persistence.enable}}
-      "containerPath": "/data",
+      "containerPath": "/data/",
       "hostPath": "{{storage.host_volume}}/{{service.name}}",
       {{/storage.persistence.enable}}
       {{#storage.persistence.enable}}
@@ -29,7 +29,7 @@
       },
       {{/storage.persistence.external.enable}}
       {{#storage.persistence.external.enable}}
-      "containerPath": "/data",
+      "containerPath": "/data/",
       "external": {
         "name": "{{storage.persistence.external.volume_name}}",
         "provider": "{{storage.persistence.external.provider}}",
