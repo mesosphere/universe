@@ -19,7 +19,7 @@
       {{/storage.persistence.enable}}
       {{#storage.persistence.enable}}
       {{^storage.persistence.external.enable}}
-      "containerPath": "var",
+      "containerPath": "/var/lib/mysql",
       "persistent": {
         "size": {{storage.persistence.volume_size}}
       },
