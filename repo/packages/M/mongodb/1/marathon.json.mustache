@@ -18,18 +18,18 @@
     "type": "DOCKER",
     "volumes": [{
       {{^storage.persistence.enable}}
-      "containerPath": "var",
+      "containerPath": "/data/db/",
       "hostPath": "{{storage.host_volume}}/{{service.name}}",
       {{/storage.persistence.enable}}
       {{#storage.persistence.enable}}
       {{^storage.persistence.external.enable}}
-      "containerPath": "var",
+      "containerPath": "data",
       "persistent": {
         "size": {{storage.persistence.volume_size}}
       },
       {{/storage.persistence.external.enable}}
       {{#storage.persistence.external.enable}}
-      "containerPath": "/var",
+      "containerPath": "/data/db/",
       "external": {
         "name": "{{storage.persistence.external.volume_name}}",
         "provider": "{{storage.persistence.external.provider}}",
