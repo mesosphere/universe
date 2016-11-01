@@ -8,7 +8,7 @@
     "REGISTRY_HTTP_TLS_CERTIFICATE": "/mnt/mesos/sandbox/{{security.http_tls_certificate_filename}}",
     "REGISTRY_HTTP_TLS_KEY": "/mnt/mesos/sandbox/{{security.http_tls_key_filename}}",
     {{/security.enable}}
-    "STORAGE_PATH": "{{registry.storage_path}}",
+    "STORAGE_PATH": "{{storage.storage_path}}",
     "SEARCH_BACKEND": "{{registry.search_backend}}"
   },
   {{#security.enable}}
@@ -21,7 +21,7 @@
     "type": "DOCKER",
     "volumes": [{
       {{^storage.persistence.enable}}
-      "containerPath": "{{registry.storage_path}}",
+      "containerPath": "{{storage.storage_path}}",
       "hostPath": "{{storage.host_volume_registry}}/{{service.name}}",
       {{/storage.persistence.enable}}
       {{#storage.persistence.enable}}
