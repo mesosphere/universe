@@ -29,7 +29,7 @@
       },
       {{/storage.persistence.external.enable}}
       {{#storage.persistence.external.enable}}
-      "containerPath": "/var",
+      "containerPath": "/var/lib/mongodb/",
       "external": {
         "name": "{{storage.persistence.external.volume_name}}",
         "provider": "{{storage.persistence.external.provider}}",
