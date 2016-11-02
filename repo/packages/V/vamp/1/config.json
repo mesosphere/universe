@@ -23,9 +23,9 @@
           "description": "The internal Vamp URL used for components (Minuteman VIP).",
           "type": "string"
         },
-        "rest-api-port": {
+        "http-api-port": {
           "default": "9090",
-          "description": "The Rest API and UI port.",
+          "description": "The HTTP API port.",
           "type": "string"
         },
         "logstash": {
@@ -47,7 +47,7 @@
         "memory",
         "cpu",
         "vamp-internal-vip",
-        "rest-api-port",
+        "http-api-port",
         "logstash",
         "elasticsearch-url",
         "force-pull-image"
