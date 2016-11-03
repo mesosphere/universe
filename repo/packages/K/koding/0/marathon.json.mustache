@@ -82,5 +82,9 @@
     "HAPROXY_0_HTTPS_FRONTEND_ACL": "  use_backend {backend} if {{ ssl_fc_sni -m end .{hostname} }}",
     "HAPROXY_0_REDIRECT_TO_HTTPS": "{{networking.https-redirect}}",
     "MARATHON_SINGLE_INSTANCE_APP": "true"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
   }
 }
