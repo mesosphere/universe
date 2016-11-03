@@ -69,7 +69,7 @@
                     "default": "/tmp"
                 },
                 "pgdata": {
-                    "description": "Location of the database files.",
+                    "description": "Location of the database files inside the container, under /var/lib/postgresql/.",
                     "type": "string",
                     "default": "pgdata"
                 },    
