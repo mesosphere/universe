@@ -3,6 +3,7 @@
   "cpus":{{bookkeeper.cpus}},
   "mem": {{bookkeeper.mem}},
   "instances": {{bookkeeper.instances}},
+  "constraints": [["hostname", "UNIQUE"]],
   "container": {
     "type": "DOCKER",
     "volumes": [
@@ -26,19 +27,21 @@
         "containerPath": "persist",
         "mode": "RW",
         "persistent": {
-          "size": 70
+          "size": {{bookkeeper.psize}}
         }
       }
     ],
 
     "docker": {
       "image": "{{resource.assets.container.docker.bookkeeper}}",
-      "network": "HOST",
-      "portMappings": [
-        { "containerPort": 3181, "hostPort": 3181, "protocol": "tcp" },
-        { "containerPort": 9001, "hostPort": 9001, "protocol": "tcp" }
-      ]
+      "network": "HOST"
+    },
+    
+    "env": {
+        "ZK": {{bookkeeper.zk_client}},
+        "BPORT": {{bookkeeper.service_port}}
     }
+
   },
   
   "upgradeStrategy": {

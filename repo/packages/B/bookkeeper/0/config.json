@@ -10,31 +10,37 @@
                 },
                 "cpus": {
                     "default": 1,
-                    "description": "CPU shares to allocate to each Marathon instance.",
+                    "description": "CPU shares to allocate to each bookkeeper instance.",
                     "minimum": 1,
                     "type": "number"
                 },
                 "instances": {
                     "default": 1,
-                    "description": "Number of Marathon instances to run.",
+                    "description": "Number of bookkeeper instances to run.",
                     "minimum": 1,
                     "type": "integer"
                 },
                 "mem": {
                     "default": 1024.0,
-                    "description": "Memory (MB) to allocate to each Marathon task.",
+                    "description": "Memory (MB) to allocate to each bookkeeper task.",
                     "minimum": 512.0,
                     "type": "number"
                 },
+                "psize": {
+                    "default": 70,
+                    "description": "psistent Volme size(MB).",
+                    "minimum": 10,
+                    "type": "number"
+                },
+                "zk_client": {
+                    "default": "master.mesos:2181",
+                    "description": "env -- zookeeper client instance",
+                    "type": "string"
+                },
                 "service_port": {
                     "default": 3181,
-                    "description": "service port, config file contains in docker",
-                    "type": "integer"
-                },
-                "stats_port": {
-                    "default": 9001,
-                    "description": "stats at port codahaleStatsHttpPort",
-                    "type": "integer"
+                    "description": "env -- bookkeeper service port that export",
+                    "type": "number"
                 }
             },
             
