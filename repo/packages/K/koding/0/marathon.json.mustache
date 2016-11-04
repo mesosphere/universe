@@ -8,25 +8,13 @@
   "args": [
     "-",
     "--host",
-    "koding.marathon.mesos:$PORT0",
+    "{{service.name}}.marathon.mesos:$PORT0",
     "--hostname",
     "{{networking.hostname}}"
   ],
   "container": {
     "docker": {
       "image": "{{resource.assets.container.docker.koding}}",
-      "volumes": [
-        {
-          "containerPath": "/var/lib/mongodb",
-          "hostPath": "/tmp/koding/mongodb",
-          "mode": "RW"
-        },
-        {
-          "containerPath": "/var/lib/postgresql/9.3/main",
-          "hostPath": "/tmp/koding/postgres",
-          "mode": "RW"
-        }
-      ],
       "network": "BRIDGE",
       "portMappings": [
         {
@@ -39,33 +27,16 @@
     "type": "DOCKER",
     "volumes": [
       {
-        "containerPath": "kodingmongodb",
-        "mode": "RW",
-        "persistent": {
-          "type": "root",
-          "size": 5000
-        }
-      },
-      {
-        "containerPath": "kodingpostgres",
-        "mode": "RW",
-        "persistent": {
-          "type": "root",
-          "size": 5000
-        }
-      },
-      {
         "containerPath": "/var/lib/mongodb",
-        "hostPath": "kodingmongodb",
+        "hostPath": "/var/lib/koding/mongodb",
         "mode": "RW"
       },
       {
         "containerPath": "/var/lib/postgresql",
-        "hostPath": "kodingpostgres",
+        "hostPath": "/var/lib/koding/postgres",
         "mode": "RW"
       }
     ]
-
   },
   "requirePorts": true,
   "constraints": [
