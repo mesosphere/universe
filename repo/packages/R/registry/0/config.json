@@ -21,18 +21,6 @@
 					"type": "number",
 					"default": 256.0,
 					"minimum": 256.0
-				}
-			}
-		},
-		"registry": {
-			"type": "object",
-			"description": "registry service configuration properties",
-			"properties": {
-
-				"search_backend": {
-					"description":  "Search backend to be used.",
-					"type": "string",
-					"default": "sqlalchemy"
 				},
 				"proxy": {
 					"type": "object",
