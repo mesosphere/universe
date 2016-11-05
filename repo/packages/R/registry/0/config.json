@@ -38,11 +38,13 @@
 						},
 						"username": {
 							"description": "Username to use in the remote proxy.",
-							"type": "string"
+							"type": "string",
+							"default": "username"
 						},						
 						"password": {
 							"description": "Password to use in the remote proxy.",
-							"type": "string"
+							"type": "string",
+							"default": "password"
 						}
 					}
 				}
