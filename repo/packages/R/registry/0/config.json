@@ -9,13 +9,7 @@
 					"description": "Name of this service instance",
 					"type": "string",
 					"default": "registry"
-				}
-			}
-		},
-		"registry": {
-			"type": "object",
-			"description": "registry service configuration properties",
-			"properties": {
+				},
 				"cpus": {
 					"description": "CPU shares to allocate to each service instance.",
 					"type": "number",
@@ -27,7 +21,14 @@
 					"type": "number",
 					"default": 256.0,
 					"minimum": 256.0
-				},
+				}
+			}
+		},
+		"registry": {
+			"type": "object",
+			"description": "registry service configuration properties",
+			"properties": {
+
 				"search_backend": {
 					"description":  "Search backend to be used.",
 					"type": "string",
