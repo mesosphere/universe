@@ -3,7 +3,7 @@
   "minDcosReleaseVersion": "1.7",
   "name": "registry",
   "version": "2.5.1-0.1",
-  "scm": "https://github.com/registry/registry-server.git",
+  "scm": "https://github.com/docker/distribution",
   "maintainer": "support@mesosphere.io",
   "website": "https://docs.docker.com/registry/",
   "description": "The docker Registry is a stateless, highly scalable server side application that stores and lets you distribute Docker images. This DC/OS package provides a private registry that can be made available to any other component in the system through a virtual IP (default: registry.marathon.l4lb.thisdcos.directory:5000.\n\nNOTE: This package requires a valid HTTP TLS certificate and key to be available for download as an URI. The host to download from, and the file names for the certificate and key are configurable. See Advanced Installation options for details.\n\nInstallation Documentation: https://github.com/dcos/examples/tree/master/1.8/registry\n\n",
