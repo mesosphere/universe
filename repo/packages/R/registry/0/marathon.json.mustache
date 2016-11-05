@@ -4,10 +4,15 @@
   "mem": {{service.mem}},
   "instances": 1,
   "env": {
+    {{#service.proxy.enable}}
+    "REGISTRY_PROXY_REMOTEURL": {{service.proxy.remoteurl}},
+    "REGISTRY_PROXY_USERNAME": {{service.proxy.username}},
+    "REGISTRY_PROXY_PASSWORD": {{service.proxy.password}},        
+    {{/service.proxy.enable}} 
     {{#security.enable}}
     "REGISTRY_HTTP_TLS_CERTIFICATE": "/mnt/mesos/sandbox/{{security.http_tls_certificate_filename}}",
     "REGISTRY_HTTP_TLS_KEY": "/mnt/mesos/sandbox/{{security.http_tls_key_filename}}",
-    {{/security.enable}}
+    {{/security.enable}}   
     "STORAGE_PATH": "{{storage.storage_path}}",
     "SEARCH_BACKEND": "{{registry.search_backend}}"
   },
