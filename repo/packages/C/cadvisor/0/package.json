@@ -9,8 +9,8 @@
   "description": "cAdvisor (Container Advisor) provides container users an understanding of the resource usage and performance characteristics of their running containers. It is a running daemon that collects, aggregates, processes, and exports information about running containers. Specifically, for each container it keeps resource isolation parameters, historical resource usage, histograms of complete historical resource usage and network statistics. This data is exported by container and machine-wide.\n\nNOTE: This package will install by default a single instance of cAdvisor in each host of your cluster.\n\nThis package is intended to be used alongside the DC/OS 'influxdb' and 'grafana' packages for a cluster-wide monitoring solution.\n\nInstallation Documentation: https://github.com/dcos/examples/tree/master/1.8/cadvisor\n\n",
   "tags": ["docker", "cadvisor", "monitoring", "metrics"],
   "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nAdvanced Installation options notes\n\nnetworking / external_access: create an entry in Marathon-LB for accessing the service from outside of the cluster. Please note that each access to this endpoint will connect you to a SINGLE instance of cAdvisor running in one of the nodes of your cluster.\n\nnetworking / external_access_port: port to be used in Marathon-LB for accessing the service.",
- "postInstallNotes": "Service installed.\n\nNOTE: Docker cadvisor requires a working Certificate/key. Provide an IP:port combination to download it in Advanced Install > Security options. Check the package documentation at https://github.com/dcos/examples/tree/master/1.8/cadvisor for details",
- "postUninstallNotes": "Service uninstalled. Note that any persisting data still exists and will need to be manually removed for the agent where the service was deployed.",
+ "postInstallNotes": "Service installed.",
+ "postUninstallNotes": "Service uninstalled.",
   "licenses": [
     {
       "name": "Apache License",
