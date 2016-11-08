@@ -47,10 +47,10 @@
   {
       "protocol": "TCP",
       "port": {{bookkeeper.service_port}},
-      "gracePeriodSeconds": 300,
+      "gracePeriodSeconds": 900,
       "intervalSeconds": 60,
       "timeoutSeconds": 20,
-      "maxConsecutiveFailures": 3,
+      "maxConsecutiveFailures": 0,
       "ignoreHttp1xx": false
   }
   ],
