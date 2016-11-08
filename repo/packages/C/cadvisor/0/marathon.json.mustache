@@ -44,6 +44,13 @@
       ]
     }
   },
+  "portDefinitions": [
+    {
+      "port": 18080,
+      "protocol": "tcp",
+      "labels": {}
+    }
+  ],
   "healthChecks": [
     {
       "protocol": "HTTP",
@@ -54,6 +61,10 @@
       "maxConsecutiveFailures": 3,
       "ignoreHttp1xx": false
     }
+  ],
+  "acceptedResourceRoles": [
+    "*",
+    "slave_public"
   ],
   "labels": {
     "DCOS_PACKAGE_VERSION": "0.24.1-0.1",
