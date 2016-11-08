@@ -1,8 +1,8 @@
 {
-    "id": "/vamp/{{vamp.vamp-id}}",
+    "id": "/vamp/{{service.name}}",
     "instances": 1,
-    "cpus": {{vamp.cpu}},
-    "mem": {{vamp.memory}},
+    "cpus": {{service.cpu}},
+    "mem": {{service.memory}},
     "container": {
         "type": "DOCKER",
         "docker": {
@@ -10,29 +10,29 @@
         "network": "BRIDGE",
         "portMappings": [
           {
-            "containerPort": 8080,
+            "containerPort": {{service.vamp-internal-port}},
             "hostPort": 0,
             "name": "vip0",
             "labels": {
-              "VIP_0": "{{vamp.vamp-internal-vip}}"
+              "VIP_0": "{{service.vamp-internal-vip}}:{{service.vamp-internal-port}}"
             }
           }
         ],
-        "forcePullImage": {{vamp.force-pull-image}}
+        "forcePullImage": {{service.force-pull-image}}
         }
     },
     "labels": {
-      "DCOS_SERVICE_NAME": "{{vamp.vamp-id}}",
+      "DCOS_SERVICE_NAME": "{{service.name}}",
       "DCOS_SERVICE_SCHEME": "http",
       "DCOS_SERVICE_PORT_INDEX": "0"
     },
     "env": {
-        "VAMP_GATEWAY_DRIVER_LOGSTASH_HOST": "{{vamp.logstash}}",
-        "VAMP_PERSISTENCE_DATABASE_ELASTICSEARCH_URL": "{{vamp.elasticsearch-url}}",
-        "VAMP_PULSE_ELASTICSEARCH_URL": "{{vamp.elasticsearch-url}}",
-        "VAMP_HTTP_API_PORT": "{{vamp.http-api-port}}",
-        "VAMP_WAIT_FOR": "{{vamp.elasticsearch-url}}/.kibana",
-        "VAMP_WORKFLOW_DRIVER_VAMP_URL": "http://{{vamp.vamp-internal-vip}}"
+        "VAMP_GATEWAY_DRIVER_LOGSTASH_HOST": "{{service.logstash}}",
+        "VAMP_PERSISTENCE_DATABASE_ELASTICSEARCH_URL": "{{service.elasticsearch-url}}",
+        "VAMP_PULSE_ELASTICSEARCH_URL": "{{service.elasticsearch-url}}",
+        "VAMP_HTTP_API_PORT": "{{service.vamp-internal-port}}",
+        "VAMP_WAIT_FOR": "{{service.elasticsearch-url}}/.kibana",
+        "VAMP_WORKFLOW_DRIVER_VAMP_URL": "http://{{service.vamp-internal-vip}}:{{service.vamp-internal-port}}"
     },
     "healthChecks": [
       {
@@ -41,7 +41,7 @@
         "intervalSeconds": 10,
         "timeoutSeconds": 5,
         "portIndex": 0,
-        "maxConsecutiveFailures": 5
+        "maxConsecutiveFailures": 0
       }
     ]
 }

@@ -1,31 +1,31 @@
 {
   "properties": {
-    "vamp": {
+    "service": {
       "description": "Vamp specific configuration properties",
       "properties": {
-        "vamp-id": {
+        "name": {
           "default": "vamp",
-          "description": "Marathon Vamp application id.",
+          "description": "The name of the service to display in the DC/OS dashboard.",
           "type": "string"
         },
         "memory": {
           "default": "1024",
-          "description": "The amount of ram that Mesos should give to Vamp.",
+          "description": "Memory (in MB) to allocate to the Vamp instance.",
           "type": "string"
         },
         "cpu": {
           "default": "0.5",
-          "description": "The amount of CPU resource to allocate to Vamp instance.",
+          "description": "CPU shares to allocate to the Vamp instance.",
           "type": "string"
         },
         "vamp-internal-vip": {
-          "default": "10.20.0.100:8080",
-          "description": "The internal Vamp URL used for components (Minuteman VIP).",
+          "default": "10.20.0.100",
+          "description": "Internal Vamp VIP used for Vamp components.",
           "type": "string"
         },
-        "http-api-port": {
-          "default": "9090",
-          "description": "The HTTP API port.",
+        "vamp-internal-port": {
+          "default": "8080",
+          "description": "The HTTP API port for the Internal VIP.",
           "type": "string"
         },
         "logstash": {
@@ -43,11 +43,11 @@
         }
       },
       "required": [
-        "vamp-id",
+        "name",
         "memory",
         "cpu",
         "vamp-internal-vip",
-        "http-api-port",
+        "vamp-internal-port",
         "logstash",
         "elasticsearch-url",
         "force-pull-image"
@@ -56,6 +56,6 @@
     }
   },
   "required": [
-    "vamp"
+    "service"
   ]
 }
