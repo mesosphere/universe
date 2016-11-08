@@ -3,6 +3,12 @@
   "cpus": {{service.cpus}},
   "mem": {{service.mem}},
   "instances": {{service.instances}},
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
   "container": {
     "type": "DOCKER",
     "docker": {
