@@ -27,11 +27,7 @@
 					"type": "number",
 					"default": 128.0,
 					"minimum": 128.0
-				},
-			"required": [
-				"cpus",
-				"mem"
-			]
+				}
 		},
 		"networking": {
 			"type": "object",
