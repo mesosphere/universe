@@ -35,14 +35,25 @@
     "docker": {
       "image": "{{resource.assets.container.docker.bookkeeper}}",
       "network": "HOST"
-    },
-    
-    "env": {
-        "ZK": {{bookkeeper.zk_client}},
-        "BPORT": {{bookkeeper.service_port}}
     }
-
   },
+  
+  "env": {
+      "ZK": "{{bookkeeper.zk_client}}",
+      "BPORT": "{{bookkeeper.service_port}}"
+  },
+
+  "healthChecks": [
+  {
+      "protocol": "TCP",
+      "port": {{bookkeeper.service_port}},
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+  }
+  ],
   
   "upgradeStrategy": {
     "maximumOverCapacity": 0,

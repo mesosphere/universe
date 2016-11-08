@@ -1,10 +1,11 @@
 {
+    "$schema": "http://json-schema.org/schema#",
     "properties": {
         "bookkeeper": {
             "description": "bookkeeper specific configuration properties",
             "properties": {
                 "app_id": {
-                    "default": "bookies",
+                    "default": "bookkeeper",
                     "description": "Marathon Application ID",
                     "type": "string"
                 },
@@ -40,15 +41,12 @@
                 "service_port": {
                     "default": 3181,
                     "description": "env -- bookkeeper service port that export",
-                    "type": "number"
+                    "type": "integer"
                 }
             },
-            
+            "required": ["cpus", "mem", "instances"],
             "type": "object"
         }
     },
-    "required": [
-        "bookkeeper"
-    ],
     "type": "object"
 }
