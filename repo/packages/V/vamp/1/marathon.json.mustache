@@ -1,0 +1,47 @@
+{
+    "id": "/vamp/{{service.name}}",
+    "instances": 1,
+    "cpus": {{service.cpu}},
+    "mem": {{service.memory}},
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+        "image": "{{resource.assets.container.docker.vamp}}",
+        "network": "BRIDGE",
+        "portMappings": [
+          {
+            "containerPort": {{service.vamp-internal-port}},
+            "hostPort": 0,
+            "name": "vip0",
+            "labels": {
+              "VIP_0": "{{service.vamp-internal-vip}}:{{service.vamp-internal-port}}"
+            }
+          }
+        ],
+        "forcePullImage": {{service.force-pull-image}}
+        }
+    },
+    "labels": {
+      "DCOS_SERVICE_NAME": "{{service.name}}",
+      "DCOS_SERVICE_SCHEME": "http",
+      "DCOS_SERVICE_PORT_INDEX": "0"
+    },
+    "env": {
+        "VAMP_GATEWAY_DRIVER_LOGSTASH_HOST": "{{service.logstash}}",
+        "VAMP_PERSISTENCE_DATABASE_ELASTICSEARCH_URL": "{{service.elasticsearch-url}}",
+        "VAMP_PULSE_ELASTICSEARCH_URL": "{{service.elasticsearch-url}}",
+        "VAMP_HTTP_API_PORT": "{{service.vamp-internal-port}}",
+        "VAMP_WAIT_FOR": "{{service.elasticsearch-url}}/.kibana",
+        "VAMP_WORKFLOW_DRIVER_VAMP_URL": "http://{{service.vamp-internal-vip}}:{{service.vamp-internal-port}}"
+    },
+    "healthChecks": [
+      {
+        "protocol": "TCP",
+        "gracePeriodSeconds": 30,
+        "intervalSeconds": 10,
+        "timeoutSeconds": 5,
+        "portIndex": 0,
+        "maxConsecutiveFailures": 0
+      }
+    ]
+}
