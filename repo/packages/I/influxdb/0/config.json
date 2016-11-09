@@ -37,7 +37,7 @@
 					"type": "boolean",
 					"default": "true"
 				},
-				"database_name": {
+				"pre_create_database_name": {
 					"description": "Use 'db1;db2;db3' to create databases named 'db1', 'db2', and 'db3' on the first time the service starts automatically. Each database name is separated by ; .",
 					"type": "string",
 					"default": "cadvisor"
