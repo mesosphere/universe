@@ -19,7 +19,6 @@
       "image": "{{resource.assets.container.docker.cadvisor-docker}}",
       "forcePullImage": false,
       "privileged": false,      
-      "network": "BRIDGE",
       "portMappings": [
         {
           "containerPort": 8080,
@@ -30,29 +29,30 @@
           "protocol": "tcp"
         }
       ],
-      "volumes": [
-        {
-          "containerPath": "/rootfs",
-          "hostPath": "/",
-          "mode": "RO"
-        },
-        {
-          "containerPath": "/var/run",
-          "hostPath": "/var/run",
-          "mode": "RW"
-        },
-        {
-          "containerPath": "/sys",
-          "hostPath": "/sys",
-          "mode": "RO"
-        },
-        {
-          "containerPath": "/var/lib/docker",
-          "hostPath": "/var/lib/docker",
-          "mode": "RO"
-        }
-      ]
-    }
+      "network": "BRIDGE"
+    },
+    "volumes": [
+      {
+        "containerPath": "/rootfs",
+        "hostPath": "/",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/var/run",
+        "hostPath": "/var/run",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/sys",
+        "hostPath": "/sys",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/var/lib/docker",
+        "hostPath": "/var/lib/docker",
+        "mode": "RO"
+      }
+    ]
   },
   "portDefinitions": [
     {
