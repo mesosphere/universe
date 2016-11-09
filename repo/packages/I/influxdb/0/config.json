@@ -20,7 +20,7 @@
 					"description":  "Memory to allocate to each service instance.",
 					"type": "number",
 					"default": 2048.0,
-					"minimum": 2048.0
+					"minimum": 1024.0
 				}
 			},
 			"required": [
