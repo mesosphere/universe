@@ -40,7 +40,7 @@
                 },
                 "service_port": {
                     "default": 3181,
-                    "description": "env -- bookkeeper service port that export",
+                    "description": "bookkeeper export service port, using PORT0 in marathon",
                     "type": "integer"
                 }
             },

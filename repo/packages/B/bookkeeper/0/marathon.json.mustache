@@ -37,10 +37,17 @@
       "network": "HOST"
     }
   },
-  
+ 
+  "portDefinitions": [
+    {
+      "protocol": "tcp",
+      "port": {{bookkeeper.service_port}}
+    }
+   ],
+  "requirePorts": true,
+ 
   "env": {
-      "ZK": "{{bookkeeper.zk_client}}",
-      "BPORT": "{{bookkeeper.service_port}}"
+      "ZK": "{{bookkeeper.zk_client}}"
   },
 
   "healthChecks": [
