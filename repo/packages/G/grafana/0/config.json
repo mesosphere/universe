@@ -50,7 +50,7 @@
                         "enable": {
                             "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
                             "type": "boolean",
-                            "default": false                    
+                            "default": true                    
                         },
                         "external_access_port": {
                             "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
