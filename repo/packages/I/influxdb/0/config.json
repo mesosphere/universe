@@ -35,7 +35,7 @@
 				"pre_create_database": {
 					"description": "Check to create one or more databases on the first time the service starts automatically.",
 					"type": "boolean",
-					"default": "true"
+					"default": true
 				},
 				"pre_create_database_name": {
 					"description": "Use 'db1;db2;db3' to create databases named 'db1', 'db2', and 'db3' on the first time the service starts automatically. Each database name is separated by ; .",
