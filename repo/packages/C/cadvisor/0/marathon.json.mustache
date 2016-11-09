@@ -82,7 +82,7 @@
     "DCOS_SERVICE_NAME": "{{service.name}}",
     {{#networking.external_access.enable}}
     "HAPROXY_GROUP": "external",
-    "HAPROXY_0_STICKY": "true"
+    "HAPROXY_0_STICKY": "true",
     {{/networking.external_access.enable}}
     "DCOS_PACKAGE_IS_FRAMEWORK": "false"
   }
