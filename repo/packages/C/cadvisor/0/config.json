@@ -33,7 +33,17 @@
 		"networking": {
 			"type": "object",
 			"description": "cadvisor networking configuration properties",
-			"properties": {    
+			"properties": {
+    			"influxdb_host": {
+					"description":  "Hostname or IP address of the host running InfluxDB for metrics storage.",
+					"type": "string",
+					"default": "influxdb.marathon.l4lb.thisdcos.directory"
+				},
+    			"influxdb_port": {
+					"description":  "TCP port where the influxdb_host is listening.",
+					"type": "number",
+					"default": 8086
+				},				
 				"external_access": {
 					"type": "object",
 					"description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
