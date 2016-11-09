@@ -13,14 +13,14 @@
 				"cpus": {
 					"description": "CPU shares to allocate to each service instance.",
 					"type": "number",
-					"default": 0.5,
-					"minimum": 0.3
+					"default": 1,
+					"minimum": 1
 				},
 				"mem": {
 					"description":  "Memory to allocate to each service instance.",
 					"type": "number",
-					"default": 256.0,
-					"minimum": 256.0
+					"default": 1024.0,
+					"minimum": 1024.0
 				}
 			},
 			"required": [
