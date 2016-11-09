@@ -1,9 +1,12 @@
 {
   "id": "{{service.name}}",
+  "cmd": "/usr/bin/cadvisor -storage_driver=influxdb -storage_driver_db=cadvisor -storage_driver_host=influxdb.marathon.l4lb.thisdcos.directory:8086",
+  "args": null,
+  "user": null,
+  "env": null,
   "cpus": {{service.cpus}},
   "mem": {{service.mem}},
   "instances": {{service.instances}},
-  "cmd": "/usr/bin/cadvisor -storage_driver=influxdb -storage_driver_db=cadvisor -storage_driver_host=influxdb.marathon.l4lb.thisdcos.directory:8086",
   "constraints": [
     [
       "hostname",
@@ -15,11 +18,11 @@
     "docker": {
       "image": "{{resource.assets.container.docker.cadvisor-docker}}",
       "forcePullImage": false,
+      "privileged": false,      
       "network": "BRIDGE",
       "portMappings": [
         {
           "containerPort": 8080,
-          "hostPort": 0,
           "name": "cadvisor",
           {{#networking.external_access.enable}}          
           "servicePort": {{networking.external_access.external_access_port}},
@@ -58,6 +61,7 @@
       "labels": {}
     }
   ],
+  "requirePorts": false,  
   "healthChecks": [
     {
       "protocol": "HTTP",
