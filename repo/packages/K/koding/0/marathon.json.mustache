@@ -8,8 +8,6 @@
   "args": [
     "-",
     "--host",
-    "{{service.name}}.marathon.mesos:$PORT0",
-    "--hostname",
     "{{networking.hostname}}"
   ],
   "container": {
@@ -48,7 +46,7 @@
   ],
   "labels":{
     "HAPROXY_GROUP":"external",
-    "HAPROXY_0_VHOST":"{{networking.virtual-host}}",
+    "HAPROXY_0_VHOST":"{{networking.hostname}},{{networking.virtual-host}}",
     "HAPROXY_0_HTTP_FRONTEND_ACL": "  acl host_{cleanedUpHostname} hdr_end(host) -i {hostname}\n  use_backend {backend} if host_{cleanedUpHostname}",
     "HAPROXY_0_HTTPS_FRONTEND_ACL": "  use_backend {backend} if {{ ssl_fc_sni -m end .{hostname} }}",
     "HAPROXY_0_REDIRECT_TO_HTTPS": "{{networking.https-redirect}}",
