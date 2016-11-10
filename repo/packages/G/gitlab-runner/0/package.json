@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "3.0",
+  "name": "gitlab-runner",
+  "version": "1.0-1.5.3",
+  "minDcosReleaseVersion" : "1.8",
+  "scm": "https://gitlab.com/gitlab-org/gitlab-ci-multi-runner.git",
+  "maintainer": "support@gitlab.com",
+  "website": "https://gitlab.com/gitlab-org/gitlab-ci-multi-runner",
+  "framework": false,
+  "description": "GitLab Runner runs tests and sends the results to GitLab. GitLab CI is the open-source continuous integration service included with GitLab that coordinates the testing.",
+  "tags": ["gitlab", "ci", "cd", "runner", "build", "test", "integration", "git"],
+  "preInstallNotes": "You need a running instance of either GitLab CE or EE. Also, you need to specify the Runner Token (available on GitLab -> Admin -> Runners), otherwise the runners cannot connect to the GitLab instance.",
+  "postInstallNotes": "GitLab Runner has been installed.",
+  "postUninstallNotes": "GitLab Runner has been uninstalled. Thanks for using it!",
+  "licenses": [
+    {
+      "name": "MIT License",
+      "url": "https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/master/LICENSE.md"
+    }
+  ],
+  "selected": false
+}
