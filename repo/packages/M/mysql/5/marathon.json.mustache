@@ -62,7 +62,7 @@
   "portDefinitions": [{
       "protocol": "tcp",
       "port": 3306,
-      "name": "{{service.name}}",
+      "name": "mysql",
       {{#networking.external_access.enable}}
       "servicePort": {{networking.external_access.external_access_port}},
       {{/networking.external_access.enable}}
