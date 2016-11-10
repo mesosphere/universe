@@ -56,7 +56,7 @@
         "servicePort": {{networking.external_access.external_access_port}},
         {{/networking.external_access.enable}}
         "protocol": "tcp",
-        "name": "{{service.name}}",
+        "name": "registry",
         "labels": {
           "VIP_0": "/{{service.name}}:{{networking.port}}"
         }
