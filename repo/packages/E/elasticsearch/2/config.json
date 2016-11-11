@@ -43,7 +43,7 @@
           "type":"boolean"
         },
         "docker-image":{
-          "default":"elasticsearch:latest",
+          "default":"elasticsearch:2.4.1",
           "description":"The elasticsearch docker image to use",
           "type":"string"
         },
