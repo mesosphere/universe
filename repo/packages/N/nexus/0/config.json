@@ -24,7 +24,7 @@
         },
         "role": {
           "default": "*",
-          "description": "Deploy Nexus only on nodes with this role.",
+          "description": "Deploy Nexus only on nodes with this role. Resources that are assigned to the * role are considered unreserved",
           "type": "string"
         },
         "local-volumes": {
