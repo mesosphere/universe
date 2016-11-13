@@ -1,0 +1,44 @@
+{
+   "id":"{{service.name}}",
+   "cmd":"echo $(curl ifconfig.co) > ip.txt && python -m SimpleHTTPServer 80",
+   "cpus":1,
+   "mem":128,
+   "disk":0,
+   "instances":1,
+   "acceptedResourceRoles":[
+      "slave_public"
+   ],
+   "container":{
+      "type":"DOCKER",
+      "volumes":[
+
+      ],
+      "docker":{
+         "image":"{{resource.assets.container.docker.minio-docker-RELEASE}}",
+         "network":"BRIDGE",
+         "forcePullImage":true,
+         "portMappings":[
+            {
+               "containerPort":0,
+               "hostPort":9000,
+               "servicePort":9000,
+               "protocol":"tcp"
+            }
+         ]
+      }
+   },
+   "args":[
+      "server",
+      "/export"
+   ],
+   "healthChecks":[
+      {
+         "protocol":"HTTP",
+         "portIndex":0,
+         "path":"/",
+         "gracePeriodSeconds":5,
+         "intervalSeconds":20,
+         "maxConsecutiveFailures":3
+      }
+   ]
+}
