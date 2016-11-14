@@ -49,7 +49,7 @@
           "servicePort": {{networking.external_access.external_access_port}},
           {{/networking.external_access.enable}}
           "protocol": "tcp",
-          "name": "{{service.name}}",
+          "name": "postgresql",
           "labels": {
             "VIP_0": "/{{service.name}}:{{networking.port}}"
           }
@@ -62,7 +62,7 @@
   "portDefinitions": [{
       "protocol": "tcp",
       "port": 5432,
-      "name": "{{service.name}}",
+      "name": "postgresql",
       {{#networking.external_access.enable}}
       "servicePort": {{networking.external_access.external_access_port}},
       {{/networking.external_access.enable}}
