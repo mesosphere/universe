@@ -65,7 +65,7 @@
         "external-volumes"
       ]
     },
-    "routing": {
+    "networking": {
       "description": "Nexus routing properties for use with Marathon-lb.",
       "type": "object",
       "properties": {
@@ -73,11 +73,13 @@
           "description": "The virtual host address to configure for integration with Marathon-lb.",
           "type": "string"
         }
-      }
+      },
+      "required": [
+        "virtual-host"
+      ]
     }
   },
   "required": [
-    "service",
-    "routing"
+    "service"
   ]
 }

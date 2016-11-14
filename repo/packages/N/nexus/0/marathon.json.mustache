@@ -46,10 +46,10 @@
     ],
     "labels": {
         "MARATHON_SINGLE_INSTANCE_APP": "true",
-        {{#routing.virtual-host}}
+        {{#networking.virtual-host}}
         "HAPROXY_GROUP":"external",
-        "HAPROXY_0_VHOST":"{{routing.virtual-host}}",
-        {{/routing.virtual-host}}
+        "HAPROXY_0_VHOST":"{{networking.virtual-host}}",
+        {{/networking.virtual-host}}
         "DCOS_SERVICE_NAME": "{{service.name}}"
     },
     "upgradeStrategy":{
