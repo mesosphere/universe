@@ -11,6 +11,11 @@
         "containerPath": "/var/run/docker.sock",
         "hostPath": "/var/run/docker.sock",
         "mode": "RW"
+      },
+      {
+        "containerPath": "/var/opt/microsoft/omsagent/state/containerhostname",
+        "hostPath": "/etc/hostname",
+        "mode": "RO"
       }
     ],
     "docker": {
@@ -27,14 +32,11 @@
       "privileged": true,
       "parameters": [
         {
-          "key": "name",
-          "value": "omsagent"
-        },
-        {
           "key": "restart",
           "value": "always"
         }
       ]
+      "forcePullImage": true
     }
   },
   "env": {
@@ -46,6 +48,10 @@
       "hostname",
       "UNIQUE"
     ]
+  ],
+  "acceptedResourceRoles": [
+    "slave_public",
+    "*"
   ],
   "healthChecks": [
     {
