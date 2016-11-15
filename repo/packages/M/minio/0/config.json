@@ -1,8 +1,7 @@
 {
-   "$schema":"http://json-schema.org/schema#",
    "properties":{
       "service":{
-         "type":"Object Storage",
+         "type":"object",
          "description":"Minio DC/OS service properties",
          "properties":{
             "name":{
