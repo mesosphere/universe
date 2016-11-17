@@ -199,6 +199,26 @@
           "description": "Use enterprise edition using the following key",
           "type": "string",
           "default": ""
+        },
+        "arangodb-additional-agent-args": {
+          "description": "Additional arangod arguments to use when starting an agent (see arangod --help)",
+          "type": "string",
+          "default": ""
+        },
+        "arangodb-additional-dbserver-args": {
+          "description": "Additional arangod arguments to use when starting a dbserver (see arangod --help)",
+          "type": "string",
+          "default": ""
+        },
+        "arangodb-additional-secondary-args": {
+          "description": "Additional arangod arguments to use when starting a secondary dbserver (see arangod --help)",
+          "type": "string",
+          "default": ""
+        },
+        "arangodb-additional-coordinator-args": {
+          "description": "Additional arangod arguments to use when starting a coordinator (see arangod --help)",
+          "type": "string",
+          "default": ""
         }
       },
 
