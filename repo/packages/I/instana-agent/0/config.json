@@ -1,0 +1,65 @@
+{
+  "properties": {
+    "instana-agent": {
+      "description": "Instana specific configuration properties",
+      "properties": {
+        "agent_key": {
+          "description": "Your (Customer specific) Instana Agent key.",
+          "type": "string"
+        },
+        "framework_name": {
+          "description": "Cluster ID.",
+          "type": "string",
+          "default": "instana-agent"
+        },
+        "app_id": {
+          "default": "instana-agent",
+          "description": "Automatically assigned Marathon application ID.",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 0.5,
+          "description": "Number of CPU shares assigned to the Instana agent.",
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "ram": {
+          "default": 400,
+          "description": "Number of memory shares assigned to the Instana agent.",
+          "minimum": 300,
+          "type": "integer"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of Instana Agent instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "tag_list": {
+          "default": "",
+          "description": "Comma separated list of host-specific tags which identify the Mesos node.",
+          "type": "string"
+        },
+        "agent_endpoint": {
+          "default": "saas-us-west-2.instana.io",
+          "description": "Instana SaaS/On Premise monitoring endpoint URl.",
+          "type": "string"
+        },
+        "agent_endpoint_port": {
+          "default": 443,
+          "description": "Instana SaaS/On Premise monitoring endpoint port.",
+          "minimum": 443,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "agent_key"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "instana-agent"
+  ],
+  "type": "object"
+}
