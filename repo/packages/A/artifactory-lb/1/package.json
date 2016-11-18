@@ -1,7 +1,7 @@
 {
   "packagingVersion": "3.0",
   "name": "artifactory-lb",
-  "version": "4.8.2",
+  "version": "4.14.1",
   "minDcosReleaseVersion": "1.8",
   "scm": "https://github.com/JfrogDev/artifactory-dcos.git",
   "maintainer": "soleng-team@jfrog.com",
@@ -14,7 +14,7 @@
     "artifactory",
     "artifactory-lb"
   ],
-  "preInstallNotes": "Make sure you have a running instance of Artifactory.",
+  "preInstallNotes": "Make sure you have a running instance of Artifactory. Documentation is available at: https://github.com/JFrogDev/artifactory-dcos.",
   "postInstallNotes": "Artifactory-lb has been installed.",
   "postUninstallNotes": "Artifactory-lb has been uninstalled.",
   "licenses": [
