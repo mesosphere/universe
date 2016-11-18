@@ -14,7 +14,7 @@
     "artifacts",
     "artifactory"
   ],
-  "preInstallNotes": "If you wish to use Artifactory High Availability, you need to ensure the `cluster-home` directory is visible and writable to all the Artifactory cluster nodes in your system (e.g. using NFS storage).",
+  "preInstallNotes": "Documentation is available at: https://github.com/JFrogDev/artifactory-dcos. If you wish to use Artifactory High Availability, you need to ensure the `cluster-home` directory is visible and writable to all the Artifactory cluster nodes in your system (e.g. using NFS storage).",
   "postInstallNotes": "Artifactory has been installed.",
   "postUninstallNotes": "Artifactory has been uninstalled. Note that any data persisted to a NFS share still exists and will need to be manually removed.",
   "licenses": [
