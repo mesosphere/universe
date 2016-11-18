@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-large": "https://raw.githubusercontent.com/JFrogDev/artifactory-dcos/master/images/jfrog_lrg.png",
+    "icon-medium": "https://raw.githubusercontent.com/JFrogDev/artifactory-dcos/master/images/jfrog_med.png",
+    "icon-small": "https://raw.githubusercontent.com/JFrogDev/artifactory-dcos/master/images/jfrog_sml.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "artifactory-lb": "jfrog-docker-reg2.bintray.io/jfrog/nginx-art:4.8.2"
+      }
+    }
+  }
+}
