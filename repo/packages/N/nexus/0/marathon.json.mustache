@@ -1,0 +1,61 @@
+{
+    "id": "{{service.name}}",
+    "cpus": {{service.cpus}},
+    "mem": {{service.mem}},
+    "instances": 1,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.nexus3}}",
+            "network" : "BRIDGE",
+            "portMappings": [
+                { "hostPort": 0, "containerPort": 8081, "protocol": "tcp" }
+            ]
+        },
+        "volumes": [
+            {{^service.external-volumes.enabled}}
+            {
+                "containerPath": "/nexus-data",
+                "hostPath": "{{service.local-volumes.host-volume}}",
+                "mode": "RW"
+            }
+            {{/service.external-volumes.enabled}}
+            {{#service.external-volumes.enabled}}
+            {
+                "containerPath": "/nexus-data",
+                "external": {
+                    "name": "{{service.name}}-data",
+                    "provider": "dvdi",
+                    "options": { "dvdi/driver": "rexray" }
+                },
+                "mode": "RW"
+            }
+            {{/service.external-volumes.enabled}}
+        ]
+    },
+    "acceptedResourceRoles": [ "{{service.role}}" ],
+    "healthChecks": [
+        {
+            "protocol": "COMMAND",
+            "command": { "value": "curl --fail ${HOST}:${PORT0}/ > /dev/null" },
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 5
+        }
+    ],
+    "labels": {
+        "MARATHON_SINGLE_INSTANCE_APP": "true",
+        {{#networking.virtual-host}}
+        "HAPROXY_GROUP":"external",
+        "HAPROXY_0_VHOST":"{{networking.virtual-host}}",
+        {{/networking.virtual-host}}
+        "DCOS_SERVICE_NAME": "{{service.name}}"
+    },
+    "upgradeStrategy":{
+        "minimumHealthCapacity": 0,
+        "maximumOverCapacity": 0
+    }{{^service.external-volumes.enabled}},
+    "constraints": [["hostname", "CLUSTER", "{{service.local-volumes.pinned-hostname}}"]]
+    {{/service.external-volumes.enabled}}
+}
