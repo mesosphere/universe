@@ -63,46 +63,25 @@
     {{^pro.external-volumes.enabled}}
         {
         "containerPath": "/var/opt/jfrog/artifactory/logs",
-        "hostPath": "artifactory-logs",
+        "hostPath": "{{service.host-volume}}/{{service.name}}/artifactory-logs",
         "mode": "RW"
-        },
-        {
-        "containerPath": "artifactory-logs",
-        "mode": "RW",
-        "persistent": {
-        "size": {{pro.local-volumes.artifactory-home-size}}
-        }
         },
         {
         "containerPath": "/var/opt/jfrog/artifactory/data",
-        "hostPath": "artifactory-data",
+        "hostPath": "{{service.host-volume}}/{{service.name}}/artifactory-data",
         "mode": "RW"
-        },
-        {
-        "containerPath": "artifactory-data",
-        "mode": "RW",
-        "persistent": {
-        "size": {{pro.local-volumes.artifactory-home-size}}
-        }
         },
         {
         "containerPath": "/var/opt/jfrog/artifactory/etc",
-        "hostPath": "artifactory-etc",
+        "hostPath": "{{service.host-volume}}/{{service.name}}/artifactory-etc",
         "mode": "RW"
-        },
-        {
-        "containerPath": "artifactory-etc",
-        "mode": "RW",
-        "persistent": {
-        "size": {{pro.local-volumes.artifactory-home-size}}
-        }
         }
     {{/pro.external-volumes.enabled}}
 {{/high-availability.enabled}}
 {{#high-availability.enabled}}
     {
     "containerPath": "/var/opt/jfrog/cluster",
-    "hostPath": "{{high-availability.cluster-home}}/cluster-home",
+    "hostPath": "{{service.host-volume}}/cluster-home",
     "mode": "RW"
     }
 {{/high-availability.enabled}}
