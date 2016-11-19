@@ -9,9 +9,9 @@
       "JENKINS_FRAMEWORK_NAME": "{{service.name}}",
       "JENKINS_CONTEXT": "/service/{{service.name}}",
       "JENKINS_MESOS_MASTER": "{{advanced.mesos-master}}",
-      {{#networking.root-url}}
-      "JENKINS_ROOT_URL": "{{networking.root-url}}",
-      {{/networking.root-url}}
+      {{#networking.virtual-host}}
+      "JENKINS_ROOT_URL": "{{#networking.https-redirect}}https://{{/networking.https-redirect}}{{^networking.https-redirect}}http://{{/networking.https-redirect}}{{networking.virtual-host}}/service/{{service.name}}",
+      {{/networking.virtual-host}}
       "JVM_OPTS": "{{advanced.jvm-opts}}",
       "JENKINS_OPTS": "{{advanced.jenkins-opts}}",
       "LD_LIBRARY_PATH": "/opt/mesosphere/lib",

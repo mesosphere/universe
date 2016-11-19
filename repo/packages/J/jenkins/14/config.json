@@ -56,10 +56,6 @@
                     "description": "Whether Marathon-lb should redirect HTTP traffic to HTTPS. This requires 'virtual-host' to be set. By default, this is false.",
                     "type": "boolean",
                     "default": false
-                },
-                "root-url": {
-                    "description": "The web address of the Jenkins installation (e.g. http://jenkins.example.com). This is used by Jenkins to refer to itself when creating links in emails, chat notifications, etc.",
-                    "type": "string"
                 }
             }
         },
