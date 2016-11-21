@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "http://www.sharelytics.de/assets/img/nexus/nexus_48.png",
+    "icon-medium": "http://www.sharelytics.de/assets/img/nexus/nexus_96.png",
+    "icon-large": "http://www.sharelytics.de/assets/img/nexus/nexus_256.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "nexus3": "sonatype/nexus3:3.1.0"
+      }
+    }
+  }
+}
