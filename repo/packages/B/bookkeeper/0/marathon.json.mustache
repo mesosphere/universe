@@ -1,5 +1,5 @@
 {
-  "id": "{{bookkeeper.app_id}}",
+  "id": "{{bookkeeper.name}}",
   "cpus":{{bookkeeper.cpus}},
   "mem": {{bookkeeper.mem}},
   "instances": {{bookkeeper.instances}},
@@ -27,7 +27,7 @@
         "containerPath": "persist",
         "mode": "RW",
         "persistent": {
-          "size": {{bookkeeper.psize}}
+          "size": {{bookkeeper.volume_size}}
         }
       }
     ],

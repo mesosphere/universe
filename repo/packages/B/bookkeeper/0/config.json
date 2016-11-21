@@ -4,9 +4,9 @@
         "bookkeeper": {
             "description": "bookkeeper specific configuration properties",
             "properties": {
-                "app_id": {
+                "name": {
                     "default": "bookkeeper",
-                    "description": "Marathon Application ID",
+                    "description": "The name of this DC/OS service.",
                     "type": "string"
                 },
                 "cpus": {
@@ -27,9 +27,9 @@
                     "minimum": 512.0,
                     "type": "number"
                 },
-                "psize": {
+                "volume_size": {
                     "default": 70,
-                    "description": "psistent Volme size(MB).",
+                    "description": "persistent Volme size(MB).",
                     "minimum": 10,
                     "type": "number"
                 },
