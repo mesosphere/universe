@@ -15,6 +15,6 @@
  ],
  "website":  "http://bookkeeper.apache.org",
  "postInstallNotes": "bookkeeper on DCOS installed successfully!",
- "preInstallNotes": "Welcome using bookkeeper. This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.  Be sure zk could access, by default it's master.mesos:2181,  bk default service port:3181.",
+ "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.  Be sure zk could access, by default it's master.mesos:2181,  bk default service port:3181.",
  "postUninstallNotes": "Thank you for using bookkeeper."
 }
