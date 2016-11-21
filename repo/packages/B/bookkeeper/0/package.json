@@ -1,0 +1,20 @@
+{
+ "packagingVersion": "3.0",
+ "name": "bookkeeper",
+ "version": "4.3.4-0.1",
+ "scm": "https://github.com/twitter/bookkeeper",
+ "maintainer": "jia.zhai@emc.com",
+ "description": "BookKeeper is a replicated log service which can be used to build replicated state machines. A log contains a sequence of events which can be applied to a state machine. BookKeeper guarantees that each replica state machine will see all the same entries, in the same order. One bookkeeper instance is called a bookie, By default this package deploy 1 bookie. Usually we should deploy at least 3 bookies to start a bookkeeper cluster. And there is an example included here:https://github.com/dcos/examples",
+ "framework": false,
+ "tags": ["service", "bookkeeper"],
+ "licenses": [
+   {
+     "name": "BSD",
+     "url": "https://github.com/apache/bookkeeper/blob/master/LICENSE"
+   }
+ ],
+ "website":  "http://bookkeeper.apache.org",
+ "postInstallNotes": "bookkeeper on DCOS installed successfully!",
+ "preInstallNotes": "Welcome using bookkeeper. This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.  Be sure zk could access, by default it's master.mesos:2181,  bk default service port:3181.",
+ "postUninstallNotes": "Thank you for using bookkeeper."
+}
