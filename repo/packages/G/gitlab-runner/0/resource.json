@@ -7,7 +7,7 @@
   "assets": {
     "container": {
       "docker": {
-        "gitlab-runner": "mesosphere/dcos-gitlab-ci-service:latest"
+        "gitlab-runner": "tobilg/gitlab-ci-runner-marathon:dind-v1.7"
       }
     }
   }
