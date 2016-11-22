@@ -1,0 +1,24 @@
+{
+    "packagingVersion": "3.0",
+    "postInstallNotes": "The DC/OS Spark History Server is being installed!",
+    "scm": "https://github.com/apache/spark.git",
+    "maintainer": "support@mesosphere.io",
+    "postUninstallNotes": "The DC/OS Spark History Server has been uninstalled and will no longer run.",
+    "name": "spark-history",
+    "description": "description",
+    "licenses": [
+        {
+            "name": "Apache License Version 2.0",
+            "url": "https://raw.githubusercontent.com/apache/spark/master/LICENSE"
+        }
+    ],
+    "tags": [
+        "bigdata",
+        "mapreduce",
+        "batch",
+        "analytics"
+    ],
+    "website": "https://docs.mesosphere.com/current/usage/service-guides/spark/",
+    "version": "2.0.2",
+    "minDcosReleaseVersion": "1.7"
+}

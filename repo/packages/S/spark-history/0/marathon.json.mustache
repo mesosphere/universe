@@ -1,0 +1,30 @@
+{
+    "id": "{{name}}",
+    "cpus": {{cpus}},
+    "mem": {{mem}},
+    "cmd": "SPARK_HISTORY_OPTS=\"-Dspark.history.ui.port=${PORT0} ${SPARK_HISTORY_OPTS}\" ./bin/spark-class org.apache.spark.deploy.history.HistoryServer",
+    "env": {
+        "APPLICATION_WEB_PROXY_BASE": "/service/{{name}}",
+        "SPARK_HISTORY_OPTS": "-Dspark.history.fs.logDirectory={{log-dir}} -Dspark.history.fs.cleaner.enabled={{cleaner.enabled}} -Dspark.history.fs.cleaner.interval={{cleaner.interval}} -Dspark.history.fs.cleaner.maxAge={{cleaner.max-age}}"
+    },
+    "ports": [0],
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{docker-image}}",
+            "network": "HOST",
+            "parameters": [
+               {
+                 "key": "user",
+                 "value": "{{user}}"
+               }
+            ]
+        }
+    },
+    "labels": {
+        "DCOS_SERVICE_NAME": "{{name}}",
+        "DCOS_SERVICE_PORT_INDEX": "0",
+        "DCOS_SERVICE_SCHEME": "http"
+    },
+    "uris": ["{{hdfs-config-url}}/hdfs-site.xml", "{{hdfs-config-url}}/core-site.xml"]
+}
