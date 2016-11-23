@@ -1,14 +1,19 @@
 {
   "packagingVersion": "3.0",
-  "minDcosReleaseVersion": "1.7",
+  "minDcosReleaseVersion": "1.8",
   "name": "instana-agent",
   "version": "1.0.0",
   "maintainer": "support@instana.com",
   "website": "https://www.instana.com",
-  "description": "Instana is the next generation Application Performance Management solution that automatically monitors dynamic modern applications, including scheduled environments.\nInstana comprehensively manages your application’s quality of service with zero to absolute minimal configuration effort.\nInstana monitors your application full stack from the node to the container up to distributed Traces.",
-  "tags": ["instana", "apm", "monitoring"],
-  "preInstallNotes": "This package will deploy the Instana agent on your Mesos node.",
-  "postInstallNotes": "Installed.",
-  "postUninstallNotes": "Uninstalled.",
-  "licenses": [{"name": "Proprietary", "url": "https://instana.com/terms-of-service.pdf"}]
+  "description": "Instana is the next generation Application Performance Management solution that automatically monitors dynamic modern applications, including scheduled environments.\nInstana comprehensively manages your application’s quality of service with zero to absolute minimal configuration effort.",
+  "preInstallNotes": "This package will deploy the Instana agent on your Mesos nodes.",
+  "postInstallNotes": "Instana agent Installed.",
+  "postUninstallNotes": "Instana agent Uninstalled.",
+  "selected": false,
+  "framework": false,
+  "tags": [
+    "instana",
+    "apm",
+    "monitoring"
+  ]
 }

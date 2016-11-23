@@ -1,6 +1,10 @@
 {
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
   "properties": {
     "instana-agent": {
+      "additionalProperties": true,
+      "type": "object",
       "description": "Instana specific configuration properties",
       "properties": {
         "agent_key": {
@@ -18,9 +22,9 @@
           "type": "string"
         },
         "cpus": {
-          "default": 0.5,
+          "default": 1,
           "description": "Number of CPU shares assigned to the Instana agent.",
-          "minimum": 0.3,
+          "minimum": 0.5,
           "type": "number"
         },
         "ram": {
@@ -53,13 +57,13 @@
         }
       },
       "required": [
-        "agent_key"
-      ],
-      "type": "object"
+        "agent_key",
+        "agent_endpoint",
+        "agent_endpoint_port"
+      ]
     }
   },
   "required": [
     "instana-agent"
-  ],
-  "type": "object"
+  ]
 }

@@ -1,15 +1,19 @@
 {
+  "assets": {
+    "uris": {
+      "docker":"file:///tmp/docker.tar.gz"
+    }
+  },
   "images": {
-    "icon-small":  "instana-icon-small.jpg",
-    "icon-medium": "instana-icon-medium.jpg",
-    "icon-large":  "instana-icon-large.jpg",
-     "screenshots": [
-      "instana-screenshot-1.png",
-      "instana-screenshot-2.png",
-      "instana-screenshot-3.png",
-      "instana-screenshot-4.png",
-      "instana-screenshot-5.png",
-      "instana-screenshot-6.png"
+    "icon-small": "https://www.instana.com/wp-content/uploads/2016/11/instana_icon_small.jpg",
+    "icon-medium": "https://www.instana.com/wp-content/uploads/2016/11/instana_icon_medium.jpg",
+    "icon-large": "https://www.instana.com/wp-content/uploads/2016/11/instana_icon_large.jpg",
+    "screenshots": [
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Application-Map.png",
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Incidents-View.png",
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Infrastructure-Map.png",
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Metrics-Comparison.png",
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Tracing-View.png"
    ]
   }
 }
