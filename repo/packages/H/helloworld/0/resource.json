@@ -1,0 +1,37 @@
+{
+    "assets": {
+        "container": {
+            "docker": {
+                "python-3-image": "python:3"
+            }
+        }
+    },
+    "cli": {
+        "binaries": {
+            "darwin": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "80cdf124c718b33c0aac9e4876e03545add3384445fce37af5b1f07fbffda6f7"
+                        }
+                    ],
+                    "kind": "executable",
+                    "url": "https://downloads.dcos.io/cli/binaries/darwin/x86-64/0/dcos-helloworld"
+                }
+            },
+            "linux": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "97456616dc6255e6365dba7dae3f984d0c5194918405838762978725f49a3132"
+                        }
+                    ],
+                    "kind": "executable",
+                    "url": "https://downloads.dcos.io/cli/binaries/linux/x86-64/0/dcos-helloworld"
+                }
+            }
+        }
+    }
+}

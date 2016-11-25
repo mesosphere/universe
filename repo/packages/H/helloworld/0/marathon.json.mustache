@@ -1,0 +1,27 @@
+{
+  "id": "helloworld",
+  "cpus": 1.0,
+  "mem": 512,
+  "instances": 1,
+  "cmd": "python3 -m http.server {{port}}",
+  "acceptedResourceRoles": [
+    "{{role}}"
+  ],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.python-3-image}}",
+      "network": "HOST"
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/",
+      "gracePeriodSeconds": 5,
+      "intervalSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ]
+}
