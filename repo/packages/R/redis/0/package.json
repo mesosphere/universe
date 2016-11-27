@@ -1,11 +1,12 @@
 {
  "packagingVersion": "3.0",
  "name": "redis",
- "version": "0.0.1",
+ "version": "3.0.7-0.0.1",
  "maintainer": "joerg@mesosphere.io",
- "description": "Single redis container.",
+ "description": "This is a single redis container, which is suited for HA setups. Redis is a popular in-memory data structure store, used as database, cache and message broker.. See documentation for more details: https://github.com/dcos/examples/tree/master/1.8/redis ",
+ "website": "http://www.redis.io",
  "framework": false,
- "tags": ["mesosphere", "service", "redis"],
+ "tags": ["mesosphere", "service", "redis", "storage"],
  "licenses": [
    {
      "name": "BSD",
@@ -14,6 +15,6 @@
  ],
  "website": "http://redis.io",
  "postInstallNotes": "Redis installed!",
- "preInstallNotes": "Redis requires a single node with 300MB of RAM and 0.1 CPUs. ",
+ "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Redis requires a single node with 300MB of RAM and 0.1 CPUs. ",
  "postUninstallNotes": "Thank you for using Redis"
 }

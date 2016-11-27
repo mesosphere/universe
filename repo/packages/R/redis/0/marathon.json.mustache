@@ -1,12 +1,13 @@
 {
- "id": "redis",
+ "id": "{{service.name}}",
  "instances": 1,
- "cpus": 0.1,
- "mem": 300,
+ "cpus": {{redis.cpus}},
+ "mem": {{redis.mem}},
+ "disk": 2000,
  "container": {
    "type": "DOCKER",
    "docker": {
-     "image": "{{resource.assets.container.docker.8d81cd6f6c5e}}",
+     "image": "{{resource.assets.container.docker.redis}}",
      "network": "BRIDGE",
      "portMappings": [
        {
