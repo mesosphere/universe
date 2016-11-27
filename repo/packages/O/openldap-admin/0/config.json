@@ -47,16 +47,6 @@
                     "description": "The port where the OpenLDAP server is listening on. Defaults to 389",
                     "type": "number",
                     "default": 389
-                },               
-                "port":{
-                    "description": "Port number to be used for external clear web traffic",
-                    "type": "number",
-                    "default": 11389
-                },
-                "port_https":{
-                    "description": "Port number to be used for external secure web traffic",
-                    "type": "number",
-                    "default": 11636
                 },
                 "virtual_host":{
                     "description": "Virtual host to be used to publish the UI",
