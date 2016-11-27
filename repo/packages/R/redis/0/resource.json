@@ -1,0 +1,17 @@
+{
+ "images": {
+   "icon-small": "http://redis.io/images/redis-white.png",
+   "icon-medium": "http://redis.io/images/redis-white.png",
+   "icon-large": "http://redis.io/images/redis-white.png",
+   "screenshots": [
+     "http://redis.io/images/redis-white.png"
+   ]
+ },
+ "assets": {
+   "container": {
+     "docker": {
+       "redis": "redis:3.0.7"
+     }
+   }
+ }
+}
