@@ -44,7 +44,7 @@
       "servicePort": {{networking.external_access.external_access_port}},
       {{/networking.external_access.enable}}
       "labels": {
-        "VIP_0": "/{{service.name}}:{{networking.ceph_api_port}},"
+        "VIP_0": "/{{service.name}}:{{networking.ceph_api_port}}"
       },
       "name": "api"
     }]
