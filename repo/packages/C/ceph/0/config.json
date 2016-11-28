@@ -40,11 +40,11 @@
             "properties": {
                  "cluster_network":{
                     "description": "Network where the Ceph nodes live. This is usually the host network where the DC/OS nodes live. This network is assumed to be trusted.",
-                    "type": "string",
+                    "type": "string"
                 },
                 "public_network":{
                     "description": "Network that the Ceph services are exposed on, where the Ceph clients/consumers live. This is often the same as cluster_network unless Ceph is to be exposed outside the cluster.",
-                    "type": "string",
+                    "type": "string"
                 },
                 "ceph_api_port":{
                     "description": "The port where the Ceph API is listening on.",
