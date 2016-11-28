@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-ceph-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-ceph-medium.jpg",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-ceph-large.jpg"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "ceph-docker": "mesosphere/marathon:v1.3.3"
+      }
+    }
+  }
+}
