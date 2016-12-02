@@ -5,11 +5,6 @@
       "description": "Neo4j  specific configuration properties",
       "type": "object",
       "properties": {
-        "name": {
-          "description": "The name of this DC/OS service.",
-          "type": "string",
-          "default": "neo4j"
-        },
         "auth-username": {
           "description": "Username for authentication",
           "type": "string",
@@ -81,11 +76,18 @@
         }
       },
       "required": [
-        "name",
-        "cpus",
-        "mem",
-        "local-volumes",
-        "external-volumes"
+        "auth-username",
+        "auth-password",
+        "core-cpus",
+        "core-mem",
+        "core-disk",
+        "core-instances",
+        "core-expected-cluster-size",
+        "replica-cpus",
+        "replica-mem",
+        "replica-disk",
+        "replica-instances",
+        "network-name"
       ]
     }
   },
