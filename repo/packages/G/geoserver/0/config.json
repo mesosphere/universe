@@ -28,7 +28,7 @@
 					"default": 1024,
 					"minimum": 512
 				},
-				"haproxy-vhost": {
+				"virtual-host": {
 					"type": "string",
 					"description": "External address for access to the GeoServer cluster. This should be added to your DNS as an A record targeting your marathon-lb public slave.",
 					"default": "geoserver.marathon.mesos"
