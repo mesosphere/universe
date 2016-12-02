@@ -1,0 +1,95 @@
+{
+  "type": "object",
+  "properties": {
+    "neo4j": {
+      "description": "Neo4j  specific configuration properties",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of this DC/OS service.",
+          "type": "string",
+          "default": "neo4j"
+        },
+        "auth-username": {
+          "description": "Username for authentication",
+          "type": "string",
+          "default": "neo4j"
+        },
+        "auth-password": {
+          "description": "Password for authentication",
+          "type": "string",
+          "default": "dcos"
+        },
+        "core-cpus": {
+          "description": "CPU shares allocated to one neo4j core instance.",
+          "type": "number",
+          "default": 2.0,
+          "minimum": 0.5
+        },
+        "core-mem": {
+          "description": "Memory [mb] allocated to one neo4j core instance.",
+          "type": "number",
+          "default": 8000.0,
+          "minimum": 1000.0
+        },
+        "core-disk": {
+          "description": "Disk size [mb] allocated to one neo4j core instance.",
+          "type": "number",
+          "default": 8000.0,
+          "minimum": 1000.0
+        },
+        "core-instances": {
+          "description": "Amount of neo4j core instances.",
+          "type": "number",
+          "default": 3,
+          "minimum": 3
+        },
+        "core-expected-cluster-size": {
+          "description": "Expected core cluster size.",
+          "type": "number",
+          "default": 3,
+          "minimum": 3
+        },
+        "replica-cpus": {
+          "description": "CPU shares allocated to one neo4j read replica instance.",
+          "type": "number",
+          "default": 2.0,
+          "minimum": 0.5
+        },
+        "replica-mem": {
+          "description": "Memory [mb] allocated to one neo4j read replica instance.",
+          "type": "number",
+          "default": 4000.0,
+          "minimum": 1000.0
+        },
+        "replica-disk": {
+          "description": "Disk size [mb] allocated to one neo4j read replica instance.",
+          "type": "number",
+          "default": 8000.0,
+          "minimum": 1000.0
+        },
+        "replica-instances": {
+          "description": "Amount of neo4j read replica instances.",
+          "type": "number",
+          "default": 0,
+          "minimum": 0
+        },
+        "network-name": {
+          "description": "The name of your existing DC/OS overlay network.",
+          "type": "string",
+          "default": "dcos"
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem",
+        "local-volumes",
+        "external-volumes"
+      ]
+    }
+  },
+  "required": [
+    "neo4j"
+  ]
+}
