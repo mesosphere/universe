@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/unterstein/dcos-neo4j/master/universe/assets/neo4j_logo_globe_48.png",
+    "icon-medium": "https://raw.githubusercontent.com/unterstein/dcos-neo4j/master/universe/assets/neo4j_logo_globe_96.png",
+    "icon-large": "https://raw.githubusercontent.com/unterstein/dcos-neo4j/master/universe/assets/neo4j_logo_globe_256.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "dcos-neo4j": "unterstein/dcos-neo4j:1.0.0-3.1-RC1"
+      }
+    }
+  }
+}

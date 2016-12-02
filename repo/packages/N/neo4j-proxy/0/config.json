@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "neo4j-proxy": {
+      "description": "Neo4j specific configuration properties",
+      "type": "object",
+      "properties": {
+        "auth-username": {
+          "description": "Username for authentication",
+          "type": "string",
+          "default": "neo4j"
+        },
+        "auth-password": {
+          "description": "Password for authentication",
+          "type": "string",
+          "default": "dcos"
+        }
+      },
+      "required": [
+        "auth-username",
+        "auth-password"
+      ]
+    }
+  },
+  "required": [
+    "neo4j-proxy"
+  ]
+}
