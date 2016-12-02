@@ -9,13 +9,7 @@
 					"description": "Name of this service instance",
 					"type": "string",
 					"default": "sqlserver"
-				}
-			}
-		},
-		"sqlserver": {
-			"type": "object",
-			"description": "SQL server service configuration properties",
-			"properties": {
+				},
 				"cpus": {
 					"description": "CPU shares to allocate to each service instance.",
 					"type": "number",
@@ -32,11 +26,12 @@
 					"description": "Specifies the the system administrator (userid = 'sa') password used to connect to SQL Server once the container is running.",
 					"type": "string",
 					"default": "password"
-			},
-			"required": [
-				"cpus",
-				"mem"
-			]
+			  },
+			  "required": [
+				  "cpus",
+				  "mem"
+			  ]
+			}
 		},
 		"storage": {
 			"type": "object",
