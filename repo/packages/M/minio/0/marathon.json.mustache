@@ -1,17 +1,22 @@
 {
-   "id":"/{{service.name}}",
-   "cmd":"echo $(curl ifconfig.co) > ip.txt && python -m SimpleHTTPServer 80",
+   "id":"{{service.name}}",
    "cpus":1,
    "mem":128,
    "disk":0,
    "instances":1,
-   "acceptedResourceRoles":[
-      "slave_public"
-   ],
    "container":{
       "type":"DOCKER",
       "volumes":[
-
+	    {
+                "containerPath": "/export",
+                "hostPath":"export/minio/data 
+                "mode": "RW"
+            },
+            {
+              "containerPath": "/root/.minio",
+              "hostPath": "export/minio/config",
+              "mode": "RW"
+            }
       ],
       "docker":{
          "image":"{{resource.assets.container.docker.minio-docker-RELEASE}}",
@@ -21,7 +26,6 @@
             {
                "containerPort":0,
                "hostPort":9000,
-               "servicePort":9000,
                "protocol":"tcp"
             }
          ]
