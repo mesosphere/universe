@@ -46,9 +46,9 @@
           "type": "string"
         },
         "marathon-port": {
-          "default": "8080",
+          "default": 8080,
           "description": "DC/OS leader port, for Marathon API access.",
-          "type": "string"
+          "type": "integer"
         },
         "marathon-uri-prefix": {
           "default": "",
@@ -57,7 +57,7 @@
         },
         "secret_name": {
           "default": "",
-          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed. For more information see https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/service-auth/custom-service-auth/",
+          "description": "Enterprise Only. Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed. For more information see https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/service-auth/custom-service-auth/",
           "type": "string"
         },
         "resource-roles": {

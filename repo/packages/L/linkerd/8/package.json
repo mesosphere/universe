@@ -7,7 +7,7 @@
   "maintainer": "hello@buoyant.io",
   "website": "https://linkerd.io",
   "tags": ["linkerd", "namerd", "buoyant", "loadbalancer", "service-discovery", "proxy", "microservices", "rpc"],
-  "preInstallNotes": "We recommend a minimum of 0.25 CPUs and 256 MB of RAM available for linkerd. We also recommend running linkerd on every host. To ensure this, set instances to the number of nodes in your cluster.",
+  "preInstallNotes": "We recommend a minimum of 0.25 CPUs and 256 MB of RAM available for linkerd. We also recommend running linkerd on every host. To ensure this, set instances to the number of nodes in your cluster. Installation Documentation: https://github.com/dcos/examples/tree/master/1.8/linkerd",
   "postInstallNotes": "linkerd DC/OS Service has been successfully installed!\nSee https://linkerd.io for documentation.",
   "postUninstallNotes": "linkerd DC/OS Service has been uninstalled and will no longer run.",
   "licenses": [
