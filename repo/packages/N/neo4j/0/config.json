@@ -19,19 +19,19 @@
           "description": "CPU shares allocated to one neo4j core instance.",
           "type": "number",
           "default": 2.0,
-          "minimum": 0.5
+          "minimum": 1.0
         },
         "mem": {
           "description": "Memory [mb] allocated to one neo4j core instance.",
           "type": "number",
-          "default": 8000.0,
+          "default": 4000.0,
           "minimum": 1000.0
         },
         "disk": {
           "description": "Disk size [mb] allocated to one neo4j core instance.",
           "type": "number",
           "default": 8000.0,
-          "minimum": 1000.0
+          "minimum": 4000.0
         },
         "instances": {
           "description": "Amount of neo4j core instances.",
