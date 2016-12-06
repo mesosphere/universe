@@ -1,48 +1,56 @@
 {
-   "id":"{{service.name}}",
+   "id":"minio",
    "cpus":1,
-   "mem":128,
-   "disk":0,
+   "mem":512,
    "instances":1,
-   "container":{
-      "type":"DOCKER",
-      "volumes":[
-	    {
-                "containerPath": "/export",
-                "hostPath":"export/minio/data 
-                "mode": "RW"
-            },
-            {
-              "containerPath": "/root/.minio",
-              "hostPath": "export/minio/config",
-              "mode": "RW"
-            }
-      ],
-      "docker":{
-         "image":"{{resource.assets.container.docker.minio-docker-RELEASE}}",
-         "network":"BRIDGE",
-         "forcePullImage":true,
-         "portMappings":[
-            {
-               "containerPort":0,
-               "hostPort":9000,
-               "protocol":"tcp"
-            }
-         ]
-      }
-   },
+   "maxLaunchDelaySeconds":36000,
    "args":[
       "server",
       "/export"
    ],
-   "healthChecks":[
+   "container":{
+      "type":"DOCKER",
+      "volumes": [
       {
-         "protocol":"HTTP",
-         "portIndex":0,
-         "path":"/",
-         "gracePeriodSeconds":5,
-         "intervalSeconds":20,
-         "maxConsecutiveFailures":3
+        "containerPath": "/export",
+        "hostPath": "export/minio",
+        "mode": "RW"
       }
-   ]
+    ],
+      "docker":{
+         "image":"minio/minio:edge",
+         "network":"BRIDGE",
+         "portMappings":[
+            {
+               "containerPort":9000,
+               "hostPort":0,
+               "servicePort":0
+            }
+         ],
+         "privileged":true,
+         "parameters":[
+
+         ],
+         "forcePullImage":true
+      }
+   },
+   "healthChecks": [
+        {
+            "protocol": "HTTP",
+            "path": "/minio/index.html",
+            "portIndex": 0,
+
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3
+        }
+   ],
+   "labels":{
+    "HAPROXY_DEPLOYMENT_GROUP":"external",
+    "HAPROXY_DEPLOYMENT_ALT_PORT":"10005",
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_REDIRECT_TO_HTTPS":"false",
+    "HAPROXY_0_VHOST": "54.67.42.226"
+  }
 }
