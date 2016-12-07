@@ -107,9 +107,9 @@
     "ART_NETWORK": "{{high-availability.network}}",
     {{^high-availability.secondary.enabled}}
     "ART_LICENSES": "{{service.licenses}}",
-    "ART_DATABASE_CONNECTION_STRING": "{{high-availability.database.connection-string}}",
-    "ART_DATABASE_USER":  "{{high-availability.database.user}}",
-    "ART_DATABASE_PASSWORD":  "{{high-availability.database.password}}"
+    "ART_DATABASE_CONNECTION_STRING": "{{service.database.connection-string}}",
+    "ART_DATABASE_USER":  "{{service.database.user}}",
+    "ART_DATABASE_PASSWORD":  "{{service.database.password}}"
     {{/high-availability.secondary.enabled}}
     {{#high-availability.secondary.enabled}}
         "ART_API_KEY": "{{high-availability.secondary.api-key}}"
@@ -117,9 +117,9 @@
 {{/high-availability.enabled}}
 {{^high-availability.enabled}}
     "ART_LICENSE": "{{service.licenses}}",
-    "ART_DATABASE_CONNECTION_STRING": "{{pro.database.connection-string}}",
-    "ART_DATABASE_USER":  "{{pro.database.user}}",
-    "ART_DATABASE_PASSWORD":  "{{pro.database.password}}"
+    "ART_DATABASE_CONNECTION_STRING": "{{service.database.connection-string}}",
+    "ART_DATABASE_USER":  "{{service.database.user}}",
+    "ART_DATABASE_PASSWORD":  "{{service.database.password}}"
 {{/high-availability.enabled}}
 },
 "labels": {
