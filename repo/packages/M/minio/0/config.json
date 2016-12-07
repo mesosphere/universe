@@ -1,15 +1,33 @@
 {
+   "type":"object",
    "properties":{
       "service":{
          "type":"object",
          "description":"Minio DC/OS service properties",
          "properties":{
             "name":{
-               "description":"The name of the Minio service",
+               "description":"The name of the Minio Object Storage Service",
                "type":"string",
                "default":"minio"
+            },
+            "cpus":{
+               "description":"CPU shares to allocate to each Minio node",
+               "type":"number",
+               "default":1,
+               "minimum":0.5
+            },
+            "mem":{
+               "description":"Memory to allocate to each Minio node",
+               "type":"number",
+               "default":2048,
+               "minimum":2048
             }
-         }
+         },
+         "required":[
+            "name",
+            "cpus",
+            "mem"
+         ]
       }
    }
 }
