@@ -112,6 +112,7 @@
     "ART_DATABASE_PASSWORD":  "{{service.database.password}}"
     {{/high-availability.secondary.enabled}}
     {{#high-availability.secondary.enabled}}
+        "ART_PRIMARY_SERVICE_NAME": "{{high-availability.secondary.name}}",
         "ART_API_KEY": "{{high-availability.secondary.api-key}}"
     {{/high-availability.secondary.enabled}}
 {{/high-availability.enabled}}
