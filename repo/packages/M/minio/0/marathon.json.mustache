@@ -55,7 +55,7 @@
     "HAPROXY_DEPLOYMENT_GROUP":"external",
     "HAPROXY_DEPLOYMENT_ALT_PORT":"10005",
     "HAPROXY_GROUP":"external",
-    "HAPROXY_0_REDIRECT_TO_HTTPS":"false",
-    "HAPROXY_0_VHOST": "54.67.42.226"
+    "HAPROXY_0_REDIRECT_TO_HTTPS":"{{networking.https-redirect}}",
+    "HAPROXY_0_VHOST":"{{networking.public-agent}}"
   }
 }
