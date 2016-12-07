@@ -1,32 +1,52 @@
-{
+{  
    "type":"object",
-   "properties":{
-      "service":{
+   "properties":{  
+      "service":{  
          "type":"object",
          "description":"Minio DC/OS service properties",
-         "properties":{
-            "name":{
+         "properties":{  
+            "name":{  
                "description":"The name of the Minio Object Storage Service",
                "type":"string",
                "default":"minio"
             },
-            "cpus":{
+            "cpus":{  
                "description":"CPU shares to allocate to each Minio node",
                "type":"number",
                "default":1,
                "minimum":0.5
             },
-            "mem":{
+            "mem":{  
                "description":"Memory to allocate to each Minio node",
                "type":"number",
                "default":2048,
                "minimum":2048
             }
          },
-         "required":[
+         "required":[  
             "name",
             "cpus",
             "mem"
+         ]
+      },
+      "storage":{  
+         "type":"object",
+         "description":"Storage configuration for Minio's application and config on DC/OS",
+         "properties":{  
+            "persistant-volume":{  
+               "description":"Persistant volumes configuration Local volumes are created on the machine with the hostname specified and Marathon will attempt to re-launch the task on the same machine. Note that if the machine is lost, your data may also be lost.",
+               "type":"object",
+               "properties":{  
+                  "host-volume":{  
+                     "description":"The location of a volume on the host to be used for persisting Minio configuration and data.",
+                     "type":"string",
+                     "default":"export/minio"
+                  }
+               }
+            }
+         },
+         "required":[  
+            "persistant-volume"
          ]
       }
    }

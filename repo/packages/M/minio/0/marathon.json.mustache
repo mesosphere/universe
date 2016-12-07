@@ -13,8 +13,13 @@
       "volumes": [
       {
         "containerPath": "/export",
-        "hostPath": "export/minio",
+        "hostPath":"{{storage.persistant-volume.host-volume}}/{{service.name}}/data", 
         "mode": "RW"
+      },
+      {
+              "containerPath": "/root/.minio",
+              "hostPath": "{{storage.persistant-volume.host-volume}}/{{service.name}}/config",
+              "mode": "RW"
       }
     ],
       "docker":{
