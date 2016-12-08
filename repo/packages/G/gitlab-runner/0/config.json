@@ -84,6 +84,14 @@
           "minimum": 1,
           "maximum": 16,
           "default": 1
+        },
+        "docker-default-image": {
+          "description": "Which Docker image should be used as default image for your builds. This is only relevant when using the 'docker' executor, and must be defined in that case.",
+          "type": "string"
+        },
+        "docker-insecure-registry": {
+          "description": "If you want to use an insecure Docker registry, you can add the hostname:port information here.",
+          "type": "string"
         }
       },
       "required": [
