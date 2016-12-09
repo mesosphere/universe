@@ -3,7 +3,7 @@
  "name": "redis",
  "version": "3.0.7-0.0.1",
  "maintainer": "joerg@mesosphere.io",
- "description": "This is a single redis container, which is suited for HA setups. Redis is a popular in-memory data structure store, used as database, cache and message broker.. See documentation for more details: https://github.com/dcos/examples/tree/master/1.8/redis ",
+ "description": "This is a single redis container, which is not suited for HA setups. Redis is a popular in-memory data structure store, used as database, cache and message broker.. See documentation for more details: https://github.com/dcos/examples/tree/master/1.8/redis ",
  "website": "http://www.redis.io",
  "framework": false,
  "tags": ["mesosphere", "service", "redis", "storage"],
