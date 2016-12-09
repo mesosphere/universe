@@ -90,7 +90,7 @@
           "type": "string"
         },
         "docker-insecure-registry": {
-          "description": "If you want to use an insecure Docker registry, you can add the hostname:port information here.",
+          "description": "If you want to use an insecure Docker registry, e.g. to push the built Docker images to or pull image from, you can add the hostname:port information here.",
           "type": "string"
         }
       },
