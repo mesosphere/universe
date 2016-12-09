@@ -9,10 +9,10 @@
         "RUNNER_EXECUTOR": "{{gitlab-runner.executor}}",
         "RUNNER_TAG_LIST": "{{gitlab-runner.tag-list}}",
         "RUNNER_CONCURRENT_BUILDS": "{{gitlab-runner.concurrent-builds}}"
-        {{^gitlab-runner.docker-default-image}},
+        {{#gitlab-runner.docker-default-image}},
         "DOCKER_IMAGE": "{{gitlab-runner.docker-default-image}}"
         {{/gitlab-runner.docker-default-image}}
-        {{^gitlab-runner.docker-insecure-registry}},
+        {{#gitlab-runner.docker-insecure-registry}},
         "DOCKER_EXTRA_OPTS": "--insecure-registry {{gitlab-runner.docker-insecure-registry}}"
         {{/gitlab-runner.docker-insecure-registry}}
     },
