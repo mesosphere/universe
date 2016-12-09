@@ -1,0 +1,132 @@
+{
+  "id": "{{chronos.id}}",
+  "instances": {{chronos.instances}},
+  "cpus": {{chronos.cpus}},
+  "args": [
+    "--master", "{{mesos.master}}",
+    "--zk_hosts", "{{chronos.zk-hosts}}",
+    "--mesos_framework_name", "{{chronos.framework-name}}",
+    {{#chronos.hostname}}
+    "--hostname", "{{chronos.hostname}}",
+    {{/chronos.hostname}}
+    {{#chronos.cassandra-consistency}}
+    "--cassandra_consistency", "{{chronos.cassandra-consistency}}",
+    {{/chronos.cassandra-consistency}}
+    {{#chronos.cassandra-contact-points}}
+    "--cassandra_contact_points", "{{chronos.cassandra-contact-points}}",
+    {{/chronos.cassandra-contact-points}}
+    {{#chronos.cassandra-keyspace}}
+    "--cassandra_keyspace", "{{chronos.cassandra-keyspace}}",
+    {{/chronos.cassandra-keyspace}}
+    "--cassandra_port", "{{chronos.cassandra-port}}",
+    {{#chronos.cassandra-table}}
+    "--cassandra_table", "{{chronos.cassandra-table}}",
+    {{/chronos.cassandra-table}}
+    "--cassandra_ttl", "{{chronos.cassandra-ttl}}",
+    {{#chronos.cluster-name}}
+    "--cluster_name", "{{chronos.cluster-name}}",
+    {{/chronos.cluster-name}}
+    "--decline_offer_duration", "{{chronos.decline-offer-duration}}",
+    "--disable_after_failures", "{{chronos.disable-after-failures}}",
+    "--failover_timeout", "{{chronos.failover-timeout}}",
+    "--failure_retry", "{{chronos.failure-retry}}",
+    {{#chronos.graphite-group-prefix}}
+    "--graphite_group_prefix", "{{chronos.graphite-group-prefix}}",
+    {{/chronos.graphite-group-prefix}}
+    {{#chronos.graphite-host-port}}
+    "--graphite_host_port", "{{chronos.graphite-host-port}}",
+    {{/chronos.graphite-host-port}}
+    "--graphite_reporting_interval", "{{chronos.graphite-reporting-interval}}",
+    {{#chronos.http-credentials}}
+    "--http_credentials", "{{chronos.http-credentials}}",
+    {{/chronos.http-credentials}}
+    {{#chronos.http-realm}}
+    "--http_realm", "{{chronos.http-realm}}",
+    {{/chronos.http-realm}}
+    {{#chronos.leader-max-idle-time}}
+    "--leader_max_idle_time", "{{chronos.leader-max-idle-time}}",
+    {{/chronos.leader-max-idle-time}}
+    {{#chronos.mail-from}}
+    "--mail_from", "{{chronos.mail-from}}",
+    {{/chronos.mail-from}}
+    {{#chronos.mail-password}}
+    "--mail_password", "{{chronos.mail-password}}",
+    {{/chronos.mail-password}}
+    {{#chronos.mail-server}}
+    "--mail_server", "{{chronos.mail-server}}",
+    {{/chronos.mail-server}}
+    {{#chronos.mail-ssl}}
+    "--mail_ssl", "{{chronos.mail-ssl}}",
+    {{/chronos.mail-ssl}}
+    {{#chronos.mail-user}}
+    "--mail_user", "{{chronos.mail-user}}",
+    {{/chronos.mail-user}}
+    {{#chronos.mesos-checkpoint}}
+    "--mesos_checkpoint",
+    {{/chronos.mesos-checkpoint}}
+    {{#chronos.mesos-role}}
+    "--mesos_role", "{{chronos.mesos-role}}",
+    {{/chronos.mesos-role}}
+    "--mesos_task_cpu", "{{chronos.mesos-task-cpu}}",
+    "--mesos_task_disk", "{{chronos.mesos-task-disk}}",
+    "--mesos_task_mem", "{{chronos.mesos-task-mem}}",
+    "--min_revive_offers_interval", "{{chronos.min-revive-offers-interval}}",
+    {{#chronos.raven-dsn}}
+    "--raven_dsn", "{{chronos.raven-dsn}}",
+    {{/chronos.raven-dsn}}
+    "--reconciliation_interval", "{{chronos.reconciliation-interval}}",
+    "--revive_offers_for_new_jobs",
+    {{#chronos.slack-url}}
+    "--slack_url", "{{chronos.slack-url}}",
+    {{/chronos.slack-url}}
+    "--user", "{{chronos.user}}",
+    {{#chronos.webui-url}}
+    "--webui_url", "{{chronos.webui-url}}",
+    {{/chronos.webui-url}}
+    "--zk_path", "{{chronos.zk-path}}",
+    "--zk_timeout", "{{chronos.zk-timeout}}"
+  ],
+  "mem": {{chronos.mem}},
+  "portDefinitions": [{
+    "name": "http-api",
+    "protocol": "tcp"
+  },{
+    "name": "libprocess",
+    "protocol": "tcp"
+  }],
+  "disk": 0.0,
+  "env": {
+    "JVM_OPTS": "{{chronos.jvm_opts}}"
+  },
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}",
+      "network": "HOST"
+    }
+  },
+  "healthChecks": [{
+    "intervalSeconds": 60,
+    "maxConsecutiveFailures": 2,
+    "gracePeriodSeconds": 30,
+    "path": "/ping",
+    "portIndex": 0,
+    "protocol": "HTTP"
+  }],
+  "readinessChecks": [{
+    "name": "readinessCheck",
+    "portName": "http-api",
+    "protocol": "HTTP",
+    "path": "/v1/scheduler/jobs/summary",
+    "intervalSeconds": 60,
+    "timeoutSeconds": 10,
+    "httpStatusCodesForReady": [ 200 ],
+    "preserveLastResponse": false
+  }],
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{chronos.framework-name}}",
+    "DCOS_SERVICE_NAME": "{{chronos.framework-name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  }
+}
