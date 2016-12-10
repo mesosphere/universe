@@ -57,5 +57,12 @@
     "HAPROXY_GROUP":"external",
     "HAPROXY_0_REDIRECT_TO_HTTPS":"{{networking.https-redirect}}",
     "HAPROXY_0_VHOST":"{{networking.public-agent}}"
-  }
+  },
+   "upgradeStrategy":{
+      "minimumHealthCapacity": 0,
+      "maximumOverCapacity": 0
+    }{{#storage.persistant-volume.pinned-hostname}},
+    "constraints": [["hostname", "CLUSTER", "{{storage.persistant-volume.pinned-hostname}}"]]
+    {{/storage.persistant-volume.pinned-hostname}}
 }
+
