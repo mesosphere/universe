@@ -5,8 +5,8 @@
   "instances":1,
   "container":{  
     "type":"DOCKER",
-    "docker":{  
-      "image":"{{assets.container.docker.dcos-neo4j}}",
+    "docker":{
+      "image":"{{resource.assets.container.docker.dcos-neo4j}}",
       "forcePullImage":true,
       "network":"BRIDGE",
       "portMappings":[  
