@@ -6,24 +6,24 @@
   "disk": {{neo4j-replica.disk}},
   "container":{  
     "type":"DOCKER",
-    "docker":{  
-      "image":"neo4j/neo4j-dcos:1.0.0-3.1-RC1",
-      "network":"USER",
-      "volumes":[  
-        {  
-          "containerPath":"data",
-          "mode":"RW",
-          "persistent":{  
-            "type":"root",
-            "size":{{neo4j-replica.disk}}
-          }
-        },
-        {  
-          "containerPath":"/data",
-          "hostPath":"data",
-          "mode":"RW"
+    "volumes":[  
+      {  
+        "containerPath":"data",
+        "mode":"RW",
+        "persistent":{  
+          "type":"root",
+          "size":{{neo4j-replica.disk}}
         }
-      ]
+      },
+      {  
+        "containerPath":"/data",
+        "hostPath":"data",
+        "mode":"RW"
+      }
+    ]
+    "docker":{  
+      "image":"{{assets.container.docker.dcos-neo4j}}",
+      "network":"USER"
     }
   },
   "env":{  

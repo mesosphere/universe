@@ -6,7 +6,7 @@
   "container":{  
     "type":"DOCKER",
     "docker":{  
-      "image":"neo4j/neo4j-dcos-proxy:1.0.0",
+      "image":"{{assets.container.docker.dcos-neo4j}}",
       "forcePullImage":true,
       "network":"BRIDGE",
       "portMappings":[  
