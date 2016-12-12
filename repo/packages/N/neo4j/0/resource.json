@@ -1,13 +1,13 @@
 {
   "images": {
-    "icon-small": "https://github.com/neo4j-contrib/neo4j-dcos/raw/master/universe/assets/neo4j_logo_globe_48.png",
-    "icon-medium": "https://github.com/neo4j-contrib/neo4j-dcos/raw/master/universe/assets/neo4j_logo_globe_96.png",
-    "icon-large": "https://github.com/neo4j-contrib/neo4j-dcos/raw/master/universe/assets/neo4j_logo_globe_256.png"
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-neo4j-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-neo4j-medium.png",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-neo4j-large.png"
   },
   "assets": {
     "container": {
       "docker": {
-        "dcos-neo4j": "neo4j/neo4j-dcos:1.0.0-3.1-RC1"
+        "dcos-neo4j": "neo4j/neo4j-dcos:1.0.0-3.1.0"
       }
     }
   }

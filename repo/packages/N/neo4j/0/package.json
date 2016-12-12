@@ -1,7 +1,7 @@
 {
   "packagingVersion": "3.0",
   "name": "neo4j",
-  "version": "3.1.RC1-1.0.0",
+  "version": "3.1.0-1.0.0",
   "minDcosReleaseVersion" : "1.8",
   "scm": "https://github.com/neo4j-contrib/neo4j-dcos",
   "maintainer": "feedback@neo4j.com",
@@ -14,7 +14,7 @@
   "postUninstallNotes": "Neo4j has been uninstalled.",
   "licenses": [
     {
-      "name": "GPL v3 license or Neo4j Commercial/Evaluation/Education License",
+      "name": "GPL v3 license or Neo4j Commercial License",
       "url": "https://neo4j.com/licensing/"
     }
   ],
