@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "3.0",
+  "name": "ceph",
+  "version": "0.2.9-0.1",
+  "scm": "https://github.com/ceph",
+  "maintainer": "support@mesosphere.io",
+  "website": "https://www.ceph.org",
+  "description": "Ceph, a free-software storage platform, implements object storage on a single distributed computer cluster, and provides interfaces for object-, block- and file-level storage. Ceph aims primarily for completely distributed operation without a single point of failure, scalable to the exabyte level, and freely available.\n\nCeph replicates data and makes it fault-tolerant, using commodity hardware and requiring no specific hardware support. As a result of its design, the system is both self-healing and self-managing, aiming to minimize administration time and other costs.",
+  "tags": [
+    "ceph",
+    "storage",
+    "filesystem"
+    ],
+  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\n Make sure to set correctly the mandatory `cluster_network` and `public_network` fields in the Advanced Installation menu.\n\nMake sure to check the service tutorial at https://github.com/dcos/examples/tree/master/1.8/ceph",
+  "postInstallNotes": "Service installed.\n\nPlease access the UI through the endpoint created in Marathon-LB.",
+  "licenses": [
+    {
+      "name": "Apache License",
+      "url": "https://github.com/fernandosanchezmunoz/dcos-ceph/blob/master/LICENSE"
+    }
+  ]
+}

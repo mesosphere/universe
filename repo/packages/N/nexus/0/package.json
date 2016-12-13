@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "3.0",
+  "name": "nexus",
+  "version": "1.0-3.1.0",
+  "minDcosReleaseVersion" : "1.8",
+  "scm": "https://github.com/sonatype/docker-nexus3",
+  "maintainer": "tobilg@gmail.com",
+  "website": "http://www.sonatype.org/nexus/",
+  "framework": false,
+  "description": "Nexus is a software repository manager. It supports Bower, Docker, Maven 2, npm, NuGet, PyPI, and Raw site repositories. Installation documentation can be found at https://github.com/dcos/examples/tree/master/1.8/nexus",
+  "tags": ["artifact", "maven", "npm", "package", "repository", "bower", "nuget", "pypi"],
+  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Having Marathon-lb installed and setting a virtual host in the config is required for being able to access Nexus. If you're using a host volume, make sure that the folder exists on the host you used for host pinning, and that you did a 'chown -R 200:200' on the folder. Default credentials are admin/admin123. Please change them after the first login.",
+  "postInstallNotes": "Nexus has been installed. Documentation can be found at http://books.sonatype.com/nexus-book/",
+  "postUninstallNotes": "Nexus has been uninstalled. Note that any data persisted to a host volume still exists and will need to be manually removed.",
+  "licenses": [
+    {
+      "name": "Apache License, Version 2.0",
+      "url": "https://github.com/sonatype/docker-nexus3/blob/master/LICENSE"
+    }
+  ],
+  "selected": false
+}

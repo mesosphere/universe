@@ -102,6 +102,8 @@ what properties are available for each corresponding version of a package.
 }
 ```
 
+For the first version of the package, add this line to the beginning of `preInstallNotes`: ```This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Experimental packages should never be used in production!``` It will be removed once the package has been tested and used by the community. 
+
 ###### `.minDcosReleaseVersion`
 |Packaging Version|   |
 |-----------------|---|
@@ -352,6 +354,7 @@ Full Instructions:
 6. Respond to manual review feedback provided by the DC/OS Community.
   * Each Pull Request to Universe will also be manually reviewed by a member of the DC/OS Community. To ensure your
     package is able to be made available to users as quickly as possible be sure to respond to the feedback provided.
+7. Add a getting started example of how to install and use the DC/OS package. To add the example, fork the [`examples`](https://github.com/dcos/examples) repo and send in a pull request. Re-use the format from the existing examples there.
 
 
 ## Repository Consumption

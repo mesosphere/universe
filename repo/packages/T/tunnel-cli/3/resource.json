@@ -1,0 +1,30 @@
+{
+    "cli": {
+        "binaries": {
+            "darwin": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "cc53d2257f5d6c0b8b2a6386534c0f8ffcd989a8097226ef0177b1ba52108394"
+                        }
+                    ],
+                    "kind": "zip",
+                    "url": "https://downloads.dcos.io/cli/binaries/darwin/x86-64/0.3.2/dcos-tunnel.zip"
+                }
+            },
+            "linux": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "58fe1fe132968189c58a461aacccee24980085c14b103d37b2da6f625f1b52f2"
+                        }
+                    ],
+                    "kind": "zip",
+                    "url": "https://downloads.dcos.io/cli/binaries/linux/x86-64/0.3.2/dcos-tunnel.zip"
+                }
+            }
+        }
+    }
+}

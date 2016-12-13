@@ -1,0 +1,174 @@
+
+{
+  "id": "/{{service.name}}",
+  "cmd": "./scheduler/bin/cassandra-scheduler server ./scheduler/conf/scheduler.yml",
+  "instances": 1,
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "requirePorts": true,
+  "portDefinitions": [
+    {
+      "port": {{service.api_port}},
+      "protocol": "tcp",
+      "name": "api",
+      "labels": {}
+    }
+  ],
+"uris": [
+  "{{resource.assets.uris.scheduler-zip}}",
+  "{{resource.assets.uris.jre-tar-gz}}"
+],
+"healthChecks": [
+  {
+    "gracePeriodSeconds": 120,
+    "intervalSeconds": 30,
+    "maxConsecutiveFailures": 0,
+    "path": "/admin/healthcheck",
+    "portIndex": 0,
+    "protocol": "HTTP",
+    "timeoutSeconds": 5
+  }
+],
+"readinessChecks": [
+    {
+      "name": "cassandraUpdateProgress",
+      "protocol": "HTTP",
+      "path": "/v1/plan",
+      "portName": "api",
+      "interval": 10000,
+      "timeout": 10000,
+      "httpStatusCodesForReady": [200],
+      "preserveLastResponse": true
+    }
+],
+"labels": {
+  "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+  "DCOS_MIGRATION_API_VERSION": "v1",
+  "DCOS_MIGRATION_API_PATH": "/v1/plan",
+  "MARATHON_SINGLE_INSTANCE_APP":"true",
+  "DCOS_SERVICE_NAME": "{{service.name}}",
+  "DCOS_SERVICE_PORT_INDEX": "0",
+  "DCOS_SERVICE_SCHEME": "http"
+},
+"upgradeStrategy":{
+  "minimumHealthCapacity": 0,
+  "maximumOverCapacity": 0
+},
+{{#service.secret_name}}
+"secrets": {
+  "serviceCredential": {
+    "source": "{{service.secret_name}}"
+  }
+},
+{{/service.secret_name}}
+"env":{
+{{#service.secret_name}}
+"DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+"MESOS_MODULES": "file:///opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
+"MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+{{/service.secret_name}}
+"JAVA_HOME":"./jre"
+,"JAVA_OPTS":"-Xmx{{service.heap}}M"
+,"SERVICE_NAME":"{{service.name}}"
+,"SERVICE_PRINCIPAL": "{{service.principal}}"
+,"SERVICE_USER": "{{service.user}}"
+,"SERVICE_VERSION":"1.0.0"
+,"CASSANDRA_VERSION":"3.0.8"
+,"CASSANDRA_CLUSTER_NAME":"{{cassandra.cluster_name}}"
+,"CASSANDRA_AUTHENTICATOR":"{{cassandra.authenticator}}"
+,"CASSANDRA_AUTHORIZER":"{{cassandra.authorizer}}"
+,"CASSANDRA_CPUS":"{{nodes.cpus}}"
+,"CASSANDRA_MEMORY_MB":"{{nodes.mem}}"
+,"CASSANDRA_DISK_MB":"{{nodes.disk}}"
+,"CASSANDRA_DISK_TYPE":"{{nodes.disk_type}}"
+,"CASSANDRA_HEAP_SIZE_MB":"{{nodes.heap.size}}"
+,"CASSANDRA_HEAP_NEW_MB":"{{nodes.heap.new}}"
+,"CASSANDRA_HEAP_GC":"{{nodes.heap.gc}}"
+,"CASSANDRA_JMX_PORT":"{{cassandra.jmx_port}}"
+,"CASSANDRA_VOLUME_SIZE_MB":"{{nodes.disk}}"
+,"CASSANDRA_NUM_TOKENS":"{{cassandra.num_tokens}}"
+,"CASSANDRA_HINTED_HANDOFF_ENABLED":"{{cassandra.hinted_handoff_enabled}}"
+,"CASSANDRA_MAX_HINT_WINDOW_IN_MS":"{{cassandra.max_hint_window_in_ms}}"
+,"CASSANDRA_HINTED_HANDOFF_THROTTLE_IN_KB":"{{cassandra.hinted_handoff_throttle_in_kb}}"
+,"CASSANDRA_MAX_HINTS_DELIVERY_THREADS":"{{cassandra.max_hints_delivery_threads}}"
+,"CASSANDRA_BATCHLOG_REPLAY_THROTTLE_IN_KB":"{{cassandra.batchlog_replay_throttle_in_kb}}"
+,"CASSANDRA_PARTITIONER":"{{cassandra.partitioner}}"
+,"CASSANDRA_PERSISTENT_VOLUME":"volume"
+,"CASSANDRA_DISK_FAILURE_POLICY":"stop"
+,"CASSANDRA_COMMIT_FAILURE_POLICY":"stop"
+,"CASSANDRA_KEY_CACHE_SAVE_PERIOD":"{{cassandra.key_cache_save_period}}"
+,"CASSANDRA_ROW_CACHE_SIZE_IN_MB":"{{cassandra.row_cache_size_in_mb}}"
+,"CASSANDRA_ROW_CACHE_SAVE_PERIOD":"{{cassandra.row_cache_save_period}}"
+,"CASSANDRA_COMMITLOG_SYNC":"periodic"
+,"CASSANDRA_COMMITLOG_SYNC_PERIOD_IN_MS":"{{cassandra.commitlog_sync_period_in_ms}}"
+,"CASSANDRA_COMMITLOG_SEGMENT_SIZE_IN_MB":"{{cassandra.commitlog_segment_size_in_mb}}"
+,"CASSANDRA_CONCURRENT_READS":"{{cassandra.concurrent_reads}}"
+,"CASSANDRA_CONCURRENT_WRITES":"{{cassandra.concurrent_writes}}"
+,"CASSANDRA_CONCURRENT_COUNTER_WRITES":"{{cassandra.concurrent_counter_writes}}"
+,"CASSANDRA_MEMTABLE_ALLOCATION_TYPE":"{{cassandra.memtable_allocation_type}}"
+,"CASSANDRA_INDEX_SUMMARY_RESIZE_INTERVAL_IN_MINUTES":"{{cassandra.index_summary_resize_interval_in_minutes}}"
+,"CASSANDRA_TRICKLE_FSYNC":"false"
+,"CASSANDRA_TRICKLE_FSYNC_INTERVAL_IN_KB":"10240"
+,"CASSANDRA_STORAGE_PORT":"{{cassandra.storage_port}}"
+,"CASSANDRA_SSL_STORAGE_PORT":"7001"
+,"CASSANDRA_START_NATIVE_TRANSPORT":"{{cassandra.start_native_transport}}"
+,"CASSANDRA_NATIVE_TRANSPORT_PORT":"{{cassandra.native_transport_port}}"
+,"CASSANDRA_START_RPC":"{{cassandra.start_rpc}}"
+,"CASSANDRA_RPC_PORT":"{{cassandra.rpc_port}}"
+,"CASSANDRA_RPC_KEEPALIVE":"{{cassandra.rpc_keepalive}}"
+,"CASSANDRA_RPC_SERVER_TYPE":"sync"
+,"CASSANDRA_THRIFT_FRAMED_TRANSPORT_SIZE_IN_MB":"{{cassandra.thrift_framed_transport_size_in_mb}}"
+,"CASSANDRA_TOMBSTONE_WARN_THRESHOLD":"{{cassandra.tombstone_warn_threshold}}"
+,"CASSANDRA_TOMBSTONE_FAILURE_THRESHOLD":"{{cassandra.tombstone_failure_threshold}}"
+,"CASSANDRA_COLUMN_INDEX_SIZE_IN_KB":"{{cassandra.column_index_size_in_kb}}"
+,"CASSANDRA_BATCH_SIZE_WARN_THRESHOLD_IN_KB":"{{cassandra.batch_size_warn_threshold_in_kb}}"
+,"CASSANDRA_BATCH_SIZE_FAIL_THRESHOLD_IN_KB":"{{cassandra.batch_size_fail_threshold_in_kb}}"
+,"CASSANDRA_COMPACTION_THROUGHPUT_MB_PER_SEC":"{{cassandra.compaction_throughput_mb_per_sec}}"
+,"CASSANDRA_COMPACTION_LARGE_PARTITION_WARNING_THRESHOLD_MB":"100"
+,"CASSANDRA_SSTABLE_PREEMPTIVE_OPEN_INTERVAL_IN_MB":"{{cassandra.sstable_preemptive_open_interval_in_mb}}"
+,"CASSANDRA_READ_REQUEST_TIMEOUT_IN_MS":"{{cassandra.read_request_timeout_in_ms}}"
+,"CASSANDRA_RANGE_REQUEST_TIMEOUT_IN_MS":"{{cassandra.range_request_timeout_in_ms}}"
+,"CASSANDRA_WRITE_REQUEST_TIMEOUT_IN_MS":"{{cassandra.write_request_timeout_in_ms}}"
+,"CASSANDRA_COUNTER_WRITE_REQUEST_TIMEOUT_IN_MS":"{{cassandra.counter_write_request_timeout_in_ms}}"
+,"CASSANDRA_CAS_CONTENTION_TIMEOUT_IN_MS":"{{cassandra.cas_contention_timeout_in_ms}}"
+,"CASSANDRA_TRUNCATE_REQUEST_TIMEOUT_IN_MS":"{{cassandra.truncate_request_timeout_in_ms}}"
+,"CASSANDRA_REQUEST_TIMEOUT_IN_MS":"{{cassandra.request_timeout_in_ms}}"
+,"CASSANDRA_CROSS_NODE_TIMEOUT":"false"
+,"CASSANDRA_DYNAMIC_SNITCH_UPDATE_INTERVAL_IN_MS":"{{cassandra.dynamic_snitch_update_interval_in_ms}}"
+,"CASSANDRA_DYNAMIC_SNITCH_RESET_INTERVAL_IN_MS":"{{cassandra.dynamic_snitch_reset_interval_in_ms}}"
+,"CASSANDRA_DYNAMIC_SNITCH_BADNESS_THRESHOLD":"{{cassandra.dynamic_snitch_badness_threshold}}"
+,"CASSANDRA_REQUEST_SCHEDULER":"org.apache.cassandra.scheduler.NoScheduler"
+,"CASSANDRA_INTERNODE_COMPRESSION":"{{cassandra.internode_compression}}"
+,"CASSANDRA_INTER_DC_TCP_NODELAY":"false"
+,"CASSANDRA_TRACETYPE_QUERY_TTL":"86400"
+,"CASSANDRA_TRACETYPE_REPAIR_TTL":"604800"
+,"CASSANDRA_WINDOWS_TIMER_INTERVAL":"1"
+,"CASSANDRA_MAX_HINTS_FILE_SIZE_IN_MB":"{{cassandra.max_hints_file_size_in_mb}}"
+,"CASSANDRA_HINTS_FLUSH_PERIOD_IN_MS":"{{cassandra.hints_flush_period_in_ms}}"
+,"CASSANDRA_MATERIALIZED_VIEW_WRITES":"{{cassandra.concurrent_materialized_view_writes}}"
+,"CASSANDRA_COMMITLOG_TOTAL_SPACE_IN_MB":"{{cassandra.commitlog_total_space_in_mb}}"
+,"EXECUTOR_CPUS":"{{executor.cpus}}"
+,"EXECUTOR_MEMORY_MB":"{{executor.mem}}"
+,"EXECUTOR_DISK_MB":"{{executor.disk}}"
+,"EXECUTOR_HEAP_MB":"{{executor.heap}}"
+,"EXECUTOR_API_PORT":"{{executor.api_port}}"
+,"EXECUTOR_JAVA_HOME":"./jre"
+,"EXECUTOR_JRE_LOCATION":"{{resource.assets.uris.jre-tar-gz}}"
+,"EXECUTOR_LOCATION":"{{resource.assets.uris.executor-zip}}"
+,"EXECUTOR_CASSANDRA_LOCATION":"{{resource.assets.uris.apache-cassandra-bin-tar-gz}}"
+,"CASSANDRA_LOCATION_DATA_CENTER":"{{service.data_center}}"
+,"CLUSTER_TASK_CPUS":"{{task.cpus}}"
+,"CLUSTER_TASK_MEMORY_MB":"{{task.mem}}"
+{{#service.external_data_center_urls}}
+,"EXTERNAL_DCS":"{{service.external_data_center_urls}}"
+{{/service.external_data_center_urls}}
+{{#service.data_center_url}}
+,"DC_URL":"{{service.data_center_url}}"
+{{/service.data_center_url}}
+,"NODES":"{{nodes.count}}"
+,"SEED_NODES":"{{nodes.seeds}}"
+,"PLACEMENT_STRATEGY":"{{service.placement_strategy}}"
+,"PHASE_STRATEGY":"org.apache.mesos.scheduler.plan.DefaultInstallStrategy"
+,"API_PORT":"{{service.api_port}}"
+}
+}

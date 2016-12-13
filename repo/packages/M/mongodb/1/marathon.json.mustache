@@ -54,7 +54,7 @@
           "servicePort": {{networking.external_access.external_access_port}},
           {{/networking.external_access.enable}}
           "protocol": "tcp",
-          "name": "{{service.name}}",
+          "name": "mongodb",
           "labels": {
             "VIP_0": "/{{service.name}}:{{networking.port}}"
           }
@@ -65,7 +65,7 @@
           {{#networking.external_ui_access.enable}}
           "servicePort": {{networking.external_ui_access.external_ui_access_port}},
           {{/networking.external_ui_access.enable}}
-          "name": "{{service.name}}-ui",
+          "name": "mongodb-ui",
           "protocol": "tcp"
         }
       ],
@@ -81,7 +81,7 @@
       {{/networking.external_access.enable}}
       "port": 27017,
       "protocol": "tcp",
-      "name": "{{service.name}}",
+      "name": "mongodb",
       "labels": {
         "VIP_0": "/{{service.name}}:{{networking.port}}"
       }

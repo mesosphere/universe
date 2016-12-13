@@ -1,0 +1,52 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "bookkeeper": {
+            "description": "bookkeeper specific configuration properties",
+            "properties": {
+                "name": {
+                    "default": "bookkeeper",
+                    "description": "The name of this DC/OS service.",
+                    "type": "string"
+                },
+                "cpus": {
+                    "default": 1,
+                    "description": "CPU shares to allocate to each bookkeeper instance.",
+                    "minimum": 1,
+                    "type": "number"
+                },
+                "instances": {
+                    "default": 1,
+                    "description": "Number of bookkeeper instances to run.",
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "mem": {
+                    "default": 1024.0,
+                    "description": "Memory (MB) to allocate to each bookkeeper task.",
+                    "minimum": 512.0,
+                    "type": "number"
+                },
+                "volume_size": {
+                    "default": 70,
+                    "description": "persistent Volme size(MB).",
+                    "minimum": 10,
+                    "type": "number"
+                },
+                "zk_client": {
+                    "default": "master.mesos:2181",
+                    "description": "env -- zookeeper client instance",
+                    "type": "string"
+                },
+                "service_port": {
+                    "default": 3181,
+                    "description": "bookkeeper export service port, using PORT0 in marathon",
+                    "type": "integer"
+                }
+            },
+            "required": ["cpus", "mem", "instances"],
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
