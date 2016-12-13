@@ -1,0 +1,15 @@
+{
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/AppliedIS/universe-assets/master/postgres/icon-small-postgres.png",
+    "icon-medium": "https://raw.githubusercontent.com/AppliedIS/universe-assets/master/postgres/icon-medium-postgres.png",
+    "icon-large": "https://raw.githubusercontent.com/AppliedIS/universe-assets/master/postgres/icon-large-postgres.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "29e9dc4e1aed": "appliedis/postgres:9.5",
+        "7b79c4c0010e": "appliedis/postgis:9.5-2.2"
+      }
+    }
+  }
+}
