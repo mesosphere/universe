@@ -2,7 +2,7 @@
   "packagingVersion": "2.0",
   "name": "jenkins",
   "version": "2.1.0-2.19.3",
-  "scm": "https://github.com/mesosphere/jenkins-dcos.git",
+  "scm": "https://github.com/mesosphere/dcos-jenkins-service.git",
   "maintainer": "support@mesosphere.io",
   "website": "https://jenkins.io",
   "framework": true,
@@ -14,7 +14,7 @@
   "licenses": [
     {
       "name": "Apache License Version 2.0",
-      "url": "https://github.com/mesosphere/jenkins-dcos/blob/master/LICENSE"
+      "url": "https://github.com/mesosphere/dcos-jenkins-service/blob/master/LICENSE"
     }
   ],
   "selected": true
