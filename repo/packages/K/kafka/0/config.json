@@ -52,7 +52,7 @@
                         "jar": {
                             "type": "string",
                             "description": "kafka-mesos*.jar URL",
-                            "default": "https://d1vubr0evspla.cloudfront.net/kafka-mesos-0.9.0-beta.jar"
+                            "default": "https://d1vubr0evspla.cloudfront.net/kafka-mesos-0.9.1.1.jar"
                         }
                     },
                     "required": ["id", "cpus", "mem", "jre", "kafka", "jar"]
