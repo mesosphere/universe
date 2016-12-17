@@ -1,0 +1,66 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.nexus3}}",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 8081, 
+          "hostPort": {{networking.host-port}} 
+        }
+      ]
+    },
+    "volumes": [
+      {{^service.external-volume.enabled}}
+      {
+        "containerPath": "/nexus-data",
+        "hostPath": "{{service.local-volume.host-volume}}",
+        "mode": "RW"
+      }
+      {{/service.external-volume.enabled}}
+      {{#service.external-volume.enabled}}
+      {
+        "containerPath": "/nexus-data",
+        "external": {
+          "name": "{{service.external-volume.volume-name}}",
+          "provider": "dvdi",
+          "options": { "dvdi/driver": "rexray" }
+        },
+        "mode": "RW"
+      }
+      {{/service.external-volumes.enabled}}
+    ]
+  },
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": { 
+        "value": "curl --user admin:admin123 --fail --request GET ${HOST}:${PORT0}/service/metrics/ping" 
+      },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 5
+    }
+  ],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0.5
+  },
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "https"
+  }
+  {{#service.local-volumes.pinned-hostname}},
+  "constraints": [
+    [
+      "hostname", "CLUSTER", "{{service.local-volume.pinned-hostname}}"
+    ]
+  ]
+  {{/service.local-volumes.pinned-hostname}}
+}

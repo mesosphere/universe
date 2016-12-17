@@ -1,0 +1,30 @@
+{
+  "packagingVersion": "3.0",
+  "name": "nexus",
+  "version": "3.1.0",
+  "minDcosReleaseVersion" : "1.8",
+  "scm": "https://github.com/sonatype/docker-nexus3",
+  "maintainer": "cloud-ops@sonatype.com",
+  "website": "https://www.sonatype.com/",
+  "framework": false,
+  "description": "Nexus Repository Manager is the world's only repository manager with FREE support for popular formats. It supports Bower, Docker, Maven 2, npm, NuGet, PyPI, and Raw site repositories.",
+  "tags": [
+    "artifact",
+    "maven",
+    "npm",
+    "package",
+    "repository",
+    "bower",
+    "nuget",
+    "pypi"
+  ],
+  "preInstallNotes": "In order to use a persistent local volume, the directory specified by host volume must exist on the task agent and be owned by UID 200.\nTo setup the default directory, connect to the machine then run `mkdir -p /nexus-data && chown -R 200:200 /nexus-data`.\nFailure to do so will cause the service to fail.\n\nIn a multi-agent setup, there is no guarantee that the agent which originally ran Nexus will be used for future Nexus instances. As such, the local volume may not be available on the running agent.\nSet a pinned-hostname value to ensure that Nexus is always ran on the same agent, use a mount point on a shared file system, or use an external volume to ensure a single persistent data source.",
+  "postInstallNotes": "Nexus has been installed. Documentation can be found at http://books.sonatype.com/nexus-book/. The default credentials are admin/admin123. When changing them, update the task's health check to utilize the new credentials.",
+  "postUninstallNotes": "Nexus has been uninstalled. Note that any data persisted to a host volume still exists and will need to be manually removed.",
+  "licenses": [
+    {
+      "name": "Eclipse Public License Version 1.0",
+      "url": "https://github.com/sonatype/nexus-public/blob/master/header.txt"
+    }
+  ]
+}
