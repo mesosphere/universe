@@ -1,0 +1,17 @@
+{
+  "description": "An example implementation of a stateful service using the DC/OS SDK",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.7",
+  "name": "hello-world",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "hello-world post install notes go here.",
+  "postUninstallNotes": "hello-world post uninstall notes go here.",
+  "selected": false,
+  "tags": [
+    "example",
+    "reference",
+    "hello-world"
+  ],
+  "version": "1.0.0"
+}
