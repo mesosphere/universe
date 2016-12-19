@@ -2,7 +2,7 @@
   "description": "Apache Cassandra running on DC/OS",
   "framework": true,
   "maintainer": "support@mesosphere.io",
-  "minDcosReleaseVersion": "1.7",
+  "minDcosReleaseVersion": "999.0",
   "name": "cassandra",
   "packagingVersion": "3.0",
   "postInstallNotes": "DC/OS Apache Cassandra has been successfully installed!\n\n\tDocumentation: https://docs.mesosphere.com/current/usage/service-guides/cassandra/\n\tIssues: https://dcosjira.atlassian.net/projects/CASSANDRA/issues",
