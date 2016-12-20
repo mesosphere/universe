@@ -29,7 +29,10 @@
       "LD_LIBRARY_PATH": "/opt/mesosphere/lib",
       "SSH_KNOWN_HOSTS": "{{networking.known-hosts}}"
   },
-  "ports": [0, 0],
+  "portDefinitions": [
+      {"port": 0, "protocol": "tcp", "name": "nginx"},
+      {"port": 0, "protocol": "tcp", "name": "jenkins"}
+  ],
   "container": {
        "type": "DOCKER",
        "docker": {
