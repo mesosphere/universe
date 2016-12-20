@@ -16,24 +16,26 @@
       ]
     },
     "volumes": [
-      {{^service.external-volume.enabled}}
+      {{#storage.persist}}
+      {{^storage.external-volume.enable}}
       {
         "containerPath": "/nexus-data",
-        "hostPath": "{{service.local-volume.host-volume}}",
+        "hostPath": "{{storage.local-volume.host-volume}}",
         "mode": "RW"
       }
-      {{/service.external-volume.enabled}}
-      {{#service.external-volume.enabled}}
+      {{/storage.external-volume.enable}}
+      {{#storage.external-volume.enable}}
       {
         "containerPath": "/nexus-data",
         "external": {
-          "name": "{{service.external-volume.volume-name}}",
+          "name": "{{storage.external-volume.volume-name}}",
           "provider": "dvdi",
           "options": { "dvdi/driver": "rexray" }
         },
         "mode": "RW"
       }
-      {{/service.external-volumes.enabled}}
+      {{/storage.external-volume.enable}}
+      {{/storage.persist}}
     ]
   },
   "healthChecks": [
@@ -52,15 +54,13 @@
     "minimumHealthCapacity": 0.5
   },
   "labels": {
-    "DCOS_SERVICE_NAME": "{{service.name}}",
-    "DCOS_SERVICE_PORT_INDEX": "0",
-    "DCOS_SERVICE_SCHEME": "https"
+    "DCOS_SERVICE_NAME": "{{service.name}}"
   }
-  {{#service.local-volumes.pinned-hostname}},
+  {{#storage.local-volumes.pinned-hostname}},
   "constraints": [
     [
-      "hostname", "CLUSTER", "{{service.local-volume.pinned-hostname}}"
+      "hostname", "CLUSTER", "{{storage.local-volume.pinned-hostname}}"
     ]
   ]
-  {{/service.local-volumes.pinned-hostname}}
+  {{/storage.local-volumes.pinned-hostname}}
 }
