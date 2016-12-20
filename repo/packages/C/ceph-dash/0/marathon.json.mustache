@@ -53,10 +53,10 @@
         "DCOS_PACKAGE_VERSION": "0.1-0.1",
         "DCOS_SERVICE_NAME": "{{service.name}}",
         "MARATHON_SINGLE_INSTANCE_APP": "true",
-        {{#networking.external_access.enable}}
+        {{#service.external_access.enable}}
         "HAPROXY_GROUP": "external",
         "HAPROXY_0_VHOST": "{{service.external_access.virtual_host}}",
-        {{/networking.external_access.enable}}             
+        {{/service.external_access.enable}}             
         "DCOS_PACKAGE_IS_FRAMEWORK": "false"
     },
     "upgradeStrategy":{
