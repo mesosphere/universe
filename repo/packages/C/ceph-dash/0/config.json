@@ -22,11 +22,11 @@
                     "default": 512.0,
                     "minimum": 512.0
                 },
-                "ceph.conf_URI": {
+                "ceph_conf_URI": {
                     "description": "MANDATORY: URI location of the ceph.conf configuration file holding the Ceph cluster configuration. example: http://172.16.0.31/ceph.conf",
                     "type": "string"
                 },
-                "ceph.client.admin.keyring_URI": {
+                "ceph_client_admin_keyring_URI": {
                     "description": "MANDATORY: URI location of the ceph.client.admin.keyring keyring file used to authenticate against the Ceph cluster. example: http://172.16.0.31/ceph.client.admin.keyring",
                     "type": "string"
                 },

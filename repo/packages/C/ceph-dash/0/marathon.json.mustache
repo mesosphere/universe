@@ -4,10 +4,10 @@
     "mem": {{service.mem}},
     "fetch": [
     {
-      "uri": "{{service.ceph.conf_URI}}"
+      "uri": "{{service.ceph_conf_URI}}"
     },
     {
-      "uri": "{{ceph.client.admin.keyring_URI}}"
+      "uri": "{{service.ceph_client_admin_keyring_URI}}"
     }
   ],
     "instances": 1,
