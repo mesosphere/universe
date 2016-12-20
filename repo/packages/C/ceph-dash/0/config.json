@@ -55,8 +55,8 @@
             "required": [
                 "cpus",
                 "mem",
-                "ceph.conf_URI",
-                "ceph.client.admin.keyring_URI"
+                "ceph_conf_URI",
+                "ceph_client_admin_keyring_URI"
             ]
         }
     }
