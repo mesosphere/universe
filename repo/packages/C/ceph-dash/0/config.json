@@ -50,14 +50,14 @@
                             "default": "ceph-dash.example.org"
                         }
                     }
-                },
-                "required": [
-                    "cpus",
-                    "mem",
-                    "ceph.conf_URI",
-                    "ceph.client.admin.keyring_URI"
-                ]
-            }
+                }
+            },
+            "required": [
+                "cpus",
+                "mem",
+                "ceph.conf_URI",
+                "ceph.client.admin.keyring_URI"
+            ]
         }
     }
 }
