@@ -1,0 +1,29 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "portworx",
+  "version": "1.1",
+  "scm": "https://github.com/portworx/px-dev",
+  "maintainer": "support@portworx.com",
+  "website": "http://www.portworx.com/",
+  "description": "Portworx PX provides scheduler integrated data services for containers.",
+  "framework": true,
+  "tags": [
+    "portworx",
+    "storage",
+    "data",
+    "cloud",
+    "volume",
+    "s3",
+    "database"
+  ],
+  "preInstallNotes": "Please visit http://docs.portworx.com/run-with-mesosphere.html for detailed instructions",
+ "postInstallNotes": "",
+ "postUninstallNotes": "Service uninstalled. Note that any persisting data still exists and will need to be manually removed.",
+  "licenses": [
+    {
+      "name": "Apache 2.0 License",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}
