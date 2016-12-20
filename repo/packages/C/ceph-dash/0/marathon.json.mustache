@@ -2,14 +2,10 @@
     "id": "{{service.name}}",
     "cpus": {{service.cpus}},
     "mem": {{service.mem}},
-    "fetch": [
-    {
-      "uri": "{{service.ceph_conf_URI}}"
-    },
-    {
-      "uri": "{{service.ceph_client_admin_keyring_URI}}"
-    }
-  ],
+    "uris": [
+        "{{service.ceph_conf_URI}}",
+        "{{service.ceph_client_admin_keyring_URI}}"
+    ],
     "instances": 1,
     "container": {
         "type": "DOCKER",
