@@ -23,7 +23,7 @@
       }
     ],
       "docker":{
-         "image":"minio/minio:edge",
+         "image":"{{resource.assets.container.docker.minio-docker-RELEASE}}",
          "network":"BRIDGE",
          "portMappings":[
             {
