@@ -52,15 +52,19 @@
   ],
   "upgradeStrategy": {
     "minimumHealthCapacity": 0.5
+    {{#storage.external-volume.enable}},
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+    {{/storage.external-volume.enable}}
   },
   "labels": {
     "DCOS_SERVICE_NAME": "{{service.name}}"
   }
-  {{#storage.local-volumes.pinned-hostname}},
+  {{#networking.pinned-hostname}},
   "constraints": [
     [
-      "hostname", "CLUSTER", "{{storage.local-volume.pinned-hostname}}"
+      "hostname", "CLUSTER", "{{networking.pinned-hostname}}"
     ]
   ]
-  {{/storage.local-volumes.pinned-hostname}}
+  {{/networking.pinned-hostname}}
 }
