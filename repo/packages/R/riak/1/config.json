@@ -40,21 +40,6 @@
                     "description": "Framework Role.",
                     "default": "riak"
                 },
-                "auth-principal": {
-                    "type": "string",
-                    "description": "Mesos authentication principal.",
-                    "default": ""
-                },
-                "auth-provider": {
-                    "type": "string",
-                    "description": "Mesos authentication provider.",
-                    "default": ""
-                },
-                "auth-secret-file": {
-                    "type": "string",
-                    "description": "Mesos authentication secret file.",
-                    "default": ""
-                },
                 "instances": {
                     "type": "number",
                     "description": "Number of framework instances",
@@ -188,7 +173,6 @@
                 "master",
                 "zk",
                 "user",
-                "auth-principal",
                 "instances",
                 "healthcheck-grace-period-seconds",
                 "healthcheck-interval-seconds",
