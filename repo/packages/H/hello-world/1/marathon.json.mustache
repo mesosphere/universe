@@ -1,0 +1,47 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1230,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib && export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so) && export PATH=$(ls -d $MESOS_SANDBOX/jre*/bin):$PATH && ./hello-world-scheduler/bin/helloworld ./hello-world-scheduler/svc.yml",
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_MIGRATION_API_VERSION": "v1",
+    "DCOS_MIGRATION_API_PATH": "/v1/plan",
+    "MARATHON_SINGLE_INSTANCE_APP":"true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "env": {
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "HELLO_COUNT": "{{hello.count}}",
+    "HELLO_CPUS": "{{hello.cpus}}",
+    "HELLO_MEM": "{{hello.mem}}",
+    "HELLO_DISK": "{{hello.disk}}",
+    "WORLD_COUNT": "{{world.count}}",
+    "WORLD_CPUS": "{{world.cpus}}",
+    "WORLD_MEM": "{{world.mem}}",
+    "WORLD_DISK": "{{world.disk}}",
+    "SLEEP_DURATION": "{{service.sleep}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-bz2}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-bz2}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": {}
+    }
+  ]
+}

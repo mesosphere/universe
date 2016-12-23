@@ -54,11 +54,11 @@
 					"description": "The port that the Cassandra service API will accept on.",
 					"default": 9000
 				},
-				"placement_strategy": {
-					"id": "http://cassandra/docs/mesosphere.com/service/placement_strategy",
+				"placement_constraint": {
+					"id": "http://cassandra/docs/mesosphere.com/service/placement_constraint",
 					"type": "string",
-					"description": "The placement strategy for Cassandra nodes. This should always be NODE.",
-					"default": "NODE"
+					"description": "Marathon-style placement constraint for Cassandra nodes. Example: rack_id:LIKE:rack-foo-.*,rack_id:MAX_PER:2",
+					"default": ""
 				},
 				"data_center": {
 					"id": "http://cassandra/docs/mesosphere.com/service/data_center",
@@ -69,12 +69,12 @@
 				"data_center_url": {
 					"id": "http://cassandra/docs/mesosphere.com/service/data_center_url",
 					"type": "string",
-					"description": "The URL of from which the the data center for the cluster managed by this service instance will server its data center information."
+					"description": "The URL from which the data center for the cluster managed by this service instance will serve its data center information."
 				},
 				"external_data_center_urls": {
 					"id": "http://cassandra/docs/mesosphere.com/service/data_center_url",
 					"type": "string",
-					"description": "A comma separated list of the URLs from which this service instance retrieve data center info to form a cluster spanning multiple data centers."
+					"description": "A comma separated list of the URLs from which this service instance retrieves data center info to form a cluster spanning multiple data centers."
 				}
 			},
 			"additionalProperties": false,
@@ -84,8 +84,7 @@
 				"cpus",
 				"mem",
 				"heap",
-				"api_port",
-				"placement_strategy"
+				"api_port"
 			]
 		},
 		"nodes": {
@@ -179,19 +178,19 @@
 			"type": "object",
 			"properties": {
 				"cluster_name" : {
-					"id" : 	 "http://cassandra/docs/mesosphere.com/cassandra/cluster_name",
+					"id" : "http://cassandra/docs/mesosphere.com/cassandra/cluster_name",
 					"type" : "string",
 					"description" : "The name of the cluster managed by the Service",
 					"default" : "cassandra"
 				},
 				"authenticator" : {
-					"id" : 	 "http://cassandra/docs/mesosphere.com/cassandra/authenticator",
+					"id" : "http://cassandra/docs/mesosphere.com/cassandra/authenticator",
 					"type" : "string",
 					"description" : "The authentication backend. It implements IAuthenticator, which is used to identify users.",
 					"default" : "AllowAllAuthenticator"
 				},
 				"authorizer" : {
-					"id" : 	 "http://cassandra/docs/mesosphere.com/cassandra/authorizer",
+					"id" : "http://cassandra/docs/mesosphere.com/cassandra/authorizer",
 					"type" : "string",
 					"description" : "The authorization backend. It implements IAuthenticator, which limits access and provides permissions.",
 					"default" : "AllowAllAuthorizer"
@@ -309,6 +308,12 @@
 					"type": "integer",
 					"description": "The port for inter-node communication.",
 					"default": 7000
+				},
+				"ssl_storage_port": {
+					"id": "http://cassandra/docs/mesosphere.com/cassandra/sslStoragePort",
+					"type": "integer",
+					"description": "The port for inter-node communication over SSL.",
+					"default": 7001
 				},
 				"start_native_transport": {
 					"id": "http://cassandra/docs/mesosphere.com/cassandra/startNativeTransport",

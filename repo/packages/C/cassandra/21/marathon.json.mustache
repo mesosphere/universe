@@ -1,7 +1,6 @@
-
 {
   "id": "/{{service.name}}",
-  "cmd": "./scheduler/bin/cassandra-scheduler server ./scheduler/conf/scheduler.yml",
+  "cmd": "env && export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib && export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so) && env && ./scheduler/bin/cassandra-scheduler server ./scheduler/conf/scheduler.yml",
   "instances": 1,
   "cpus": {{service.cpus}},
   "mem": {{service.mem}},
@@ -16,7 +15,8 @@
   ],
 "uris": [
   "{{resource.assets.uris.scheduler-zip}}",
-  "{{resource.assets.uris.jre-tar-gz}}"
+  "{{resource.assets.uris.jre-tar-gz}}",
+  "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
 ],
 "healthChecks": [
   {
@@ -73,7 +73,7 @@
 ,"SERVICE_PRINCIPAL": "{{service.principal}}"
 ,"SERVICE_USER": "{{service.user}}"
 ,"SERVICE_VERSION":"1.0.0"
-,"CASSANDRA_VERSION":"3.0.9"
+,"CASSANDRA_VERSION":"3.0.10"
 ,"CASSANDRA_CLUSTER_NAME":"{{cassandra.cluster_name}}"
 ,"CASSANDRA_AUTHENTICATOR":"{{cassandra.authenticator}}"
 ,"CASSANDRA_AUTHORIZER":"{{cassandra.authorizer}}"
@@ -110,7 +110,7 @@
 ,"CASSANDRA_TRICKLE_FSYNC":"false"
 ,"CASSANDRA_TRICKLE_FSYNC_INTERVAL_IN_KB":"10240"
 ,"CASSANDRA_STORAGE_PORT":"{{cassandra.storage_port}}"
-,"CASSANDRA_SSL_STORAGE_PORT":"7001"
+,"CASSANDRA_SSL_STORAGE_PORT":"{{cassandra.ssl_storage_port}}"
 ,"CASSANDRA_START_NATIVE_TRANSPORT":"{{cassandra.start_native_transport}}"
 ,"CASSANDRA_NATIVE_TRANSPORT_PORT":"{{cassandra.native_transport_port}}"
 ,"CASSANDRA_START_RPC":"{{cassandra.start_rpc}}"
@@ -156,6 +156,7 @@
 ,"EXECUTOR_JRE_LOCATION":"{{resource.assets.uris.jre-tar-gz}}"
 ,"EXECUTOR_LOCATION":"{{resource.assets.uris.executor-zip}}"
 ,"EXECUTOR_CASSANDRA_LOCATION":"{{resource.assets.uris.apache-cassandra-bin-tar-gz}}"
+,"EXECUTOR_LIBMESOS_LOCATION": "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
 ,"CASSANDRA_LOCATION_DATA_CENTER":"{{service.data_center}}"
 ,"CLUSTER_TASK_CPUS":"{{task.cpus}}"
 ,"CLUSTER_TASK_MEMORY_MB":"{{task.mem}}"
@@ -167,7 +168,7 @@
 {{/service.data_center_url}}
 ,"NODES":"{{nodes.count}}"
 ,"SEED_NODES":"{{nodes.seeds}}"
-,"PLACEMENT_STRATEGY":"{{service.placement_strategy}}"
+,"PLACEMENT_CONSTRAINT":"{{service.placement_constraint}}"
 ,"PHASE_STRATEGY":"org.apache.mesos.scheduler.plan.DefaultInstallStrategy"
 ,"API_PORT":"{{service.api_port}}"
 }
