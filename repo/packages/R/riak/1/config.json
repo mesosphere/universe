@@ -104,16 +104,16 @@
                 },
                 "scheduler": {
                     "type": "object",
-                    "description": "Requirements for Riak Mesos Scheduler",
+                    "description": "Requirements for Riak DC/OS Scheduler",
                     "properties": {
                         "cpus": {
                             "type": "number",
-                            "description": "Riak Mesos Scheduler CPU requirements",
+                            "description": "Riak DC/OS Scheduler CPU requirements",
                             "default": 0.5
                         },
                         "mem": {
                             "type": "number",
-                            "description": "Riak Mesos Scheduler Memory requirements",
+                            "description": "Riak DC/OS Scheduler Memory requirements",
                             "default": 2048.0
                         },
                         "constraints": {
@@ -125,16 +125,16 @@
                 },
                 "executor": {
                     "type": "object",
-                    "description": "Requirements for Riak Mesos Executor",
+                    "description": "Requirements for Riak DC/OS Executor",
                     "properties": {
                         "cpus": {
                             "type": "number",
-                            "description": "Riak Mesos Executor CPU requirements",
+                            "description": "Riak DC/OS Executor CPU requirements",
                             "default": 0.1
                         },
                         "mem": {
                             "type": "number",
-                            "description": "Riak Mesos Executor Memory requirements",
+                            "description": "Riak DC/OS Executor Memory requirements",
                             "default": 512.0
                         }
                     }
@@ -162,7 +162,7 @@
                 },
                 "director": {
                     "type": "object",
-                    "description": "Requirements for Riak Mesos Director",
+                    "description": "Requirements for Riak DC/OS Director",
                     "properties": {
                         "use-public": {
                             "type": "boolean",
@@ -171,7 +171,7 @@
                         },
                         "cpus": {
                             "type": "number",
-                            "description": "Riak Mesos Director CPU requirements",
+                            "description": "Riak DC/OS Director CPU requirements",
                             "default": 0.5
                         },
                         "mem": {
