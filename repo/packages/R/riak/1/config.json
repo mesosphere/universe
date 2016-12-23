@@ -3,7 +3,7 @@
     "properties": {
         "riak": {
             "type": "object",
-            "description": "Riak Mesos Framework specific properties",
+            "description": "Configuration properties for the Riak service for DC/OS.",
             "properties": {
                 "framework-name": {
                     "type": "string",
