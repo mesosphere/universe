@@ -1,0 +1,75 @@
+{
+   "type":"object",
+   "properties":{
+      "service":{
+         "type":"object",
+         "description":"Minio DC/OS service properties",
+         "properties":{
+            "name":{
+               "description":"The name of the Minio Object Storage Service",
+               "type":"string",
+               "default":"minio"
+            },
+            "cpus":{
+               "description":"CPU shares to allocate to each Minio node",
+               "type":"number",
+               "default":1,
+               "minimum":0.5
+            },
+            "mem":{
+               "description":"Memory to allocate to each Minio node",
+               "type":"number",
+               "default":2048,
+               "minimum":2048
+            }
+         },
+         "required":[
+            "name",
+            "cpus",
+            "mem"
+         ]
+      },
+      "storage":{
+         "type":"object",
+         "description":"Storage configuration for Minio's application and config on DC/OS",
+         "properties":{
+            "persistant-volume":{
+               "description":"Persistant volumes configuration Local volumes are created on the machine with the hostname specified and Marathon will attempt to re-launch the task on the same machine. Note that if the machine is lost, your data may also be lost.",
+               "type":"object",
+               "properties":{
+                  "host-volume":{
+                     "description":"The location of a volume on the host to be used for persisting Minio configuration and data.",
+                     "type":"string",
+                     "default":"export"
+                  }
+               }
+            },
+            "pinned-hostname":{
+               "description":"An optional DC/OS agent hostname to run this Minio instance on (e.g. 10.0.0.1). If this is not specified then the task may relaunch on another node than the one it originally ran on.",
+               "type":"string"
+            }
+         },
+         "required":[
+            "persistant-volume"
+         ]
+      },
+      "networking":{
+         "description":"Networking-related configuration properties for Minio on DC/OS.",
+         "type":"object",
+         "properties":{
+            "public-agent":{
+               "description":"The IP address of the public agent configure for integration with Marathon-lb.Remove the leading http:// and the trailing / from the IP. ",
+               "type":"string"
+            },
+            "https-redirect":{
+               "description":"Whether Marathon-lb should redirect HTTP traffic to HTTPS.",
+               "type":"boolean",
+               "default":false
+            }
+         },
+         "required":[
+            "public-agent"
+         ]
+      }
+   }
+}

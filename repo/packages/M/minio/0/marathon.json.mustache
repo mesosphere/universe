@@ -1,0 +1,68 @@
+{
+   "id":"{{service.name}}",
+   "cpus":{{service.cpus}},
+   "mem":{{service.mem}},
+   "instances":1,
+   "maxLaunchDelaySeconds":36000,
+   "args":[
+      "server",
+      "/export"
+   ],
+   "container":{
+      "type":"DOCKER",
+      "volumes": [
+      {
+        "containerPath": "/export",
+        "hostPath":"{{storage.persistant-volume.host-volume}}/{{service.name}}/data", 
+        "mode": "RW"
+      },
+      {
+              "containerPath": "/root/.minio",
+              "hostPath": "{{storage.persistant-volume.host-volume}}/{{service.name}}/config",
+              "mode": "RW"
+      }
+    ],
+      "docker":{
+         "image":"{{resource.assets.container.docker.minio-docker-RELEASE}}",
+         "network":"BRIDGE",
+         "portMappings":[
+            {
+               "containerPort":9000,
+               "hostPort":0,
+               "servicePort":0
+            }
+         ],
+         "privileged":true,
+         "parameters":[
+
+         ],
+         "forcePullImage":true
+      }
+   },
+   "healthChecks": [
+        {
+            "protocol": "HTTP",
+            "path": "/minio/index.html",
+            "portIndex": 0,
+
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3
+        }
+   ],
+   "labels":{
+    "HAPROXY_DEPLOYMENT_GROUP":"external",
+    "HAPROXY_DEPLOYMENT_ALT_PORT":"10005",
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_REDIRECT_TO_HTTPS":"{{networking.https-redirect}}",
+    "HAPROXY_0_VHOST":"{{networking.public-agent}}"
+  },
+   "upgradeStrategy":{
+      "minimumHealthCapacity": 0,
+      "maximumOverCapacity": 0
+    }{{#storage.persistant-volume.pinned-hostname}},
+    "constraints": [["hostname", "CLUSTER", "{{storage.persistant-volume.pinned-hostname}}"]]
+    {{/storage.persistant-volume.pinned-hostname}}
+}
+
