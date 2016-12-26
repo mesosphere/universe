@@ -1,0 +1,64 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 0.25,
+  "mem": 1230,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib && export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so) && export PATH=$(ls -d $MESOS_SANDBOX/jre*/bin):$PATH && env && ./scheduler/bin/mongodb-replicaset ./scheduler/svc.yml",
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_MIGRATION_API_VERSION": "v1",
+    "DCOS_MIGRATION_API_PATH": "/v1/plan",
+    "MARATHON_SINGLE_INSTANCE_APP":"true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "env": {
+    "MONGODB_COUNT": "{{mongodb.count}}",
+    "MONGODB_CPUS": "{{mongodb.cpus}}",
+    "MONGODB_MEM": "{{mongodb.mem}}",
+    "MONGODB_DISK": "{{mongodb.disk}}",
+    "MONGODB_REPLSET": "{{mongodb.replicaSetName}}",
+    {{#mongodb.constraint}}
+    "MONGODB_CONSTRAINT": "{{mongodb.constraint}}",
+    {{/mongodb.constraint}}
+    "INIT_COUNT": "1",
+    "INIT_CPUS": "{{init.cpus}}",
+    "INIT_MEM": "{{init.mem}}",
+    "INIT_DISK": "0",
+    "INIT_APP_NAME": "{{service.name}}",
+    "INIT_ADD_DELAY": "10",
+    "CONFIG_TEMPLATE_PATH": "scheduler",
+    "LD_LIBRARY_PATH": "/opt/mesosphere/lib",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": {}
+    }
+  ],
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 0,
+      "path": "/v1/tasks",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "timeoutSeconds": 5
+    }
+  ]
+}

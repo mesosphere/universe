@@ -1,0 +1,78 @@
+{
+  "type":"object",
+    "properties":{
+      "service":{
+        "type":"object",
+        "description": "DC/OS service configuration properties",
+        "properties":{
+          "name" : {
+            "description":"The name of the service instance",
+            "type":"string",
+            "default":"mongodb-replicaset"
+          }
+        }
+      },
+      "mongodb":{
+        "description":"MongoDB server node configuration properties",
+        "type":"object",
+        "properties":{
+          "cpus":{
+            "description":"MongoDB server node cpu requirements",
+            "type":"number",
+            "default":0.1
+          },
+          "mem":{
+            "description":"MongoDB server node mem requirements",
+            "type":"integer",
+            "default":1024
+          },
+          "disk":{
+            "description":"MongoDB server node disk requirements (local persistent volumes)",
+            "type":"integer",
+            "default":1000
+          },
+          "count":{
+            "description":"Number of MongoDB server nodes to run",
+            "type":"integer",
+            "default":3
+          },
+          "replicaSetName":{
+            "description":"Name of the MongoDB ReplicaSet",
+            "type":"string",
+            "default":"rs"
+          },
+          "constraint":{
+            "description":"Marathon-style constraint for MongoDB server nodes (use empty string to override the default hostname UNIQUE behavior)",
+            "type":"string",
+            "default":"[['hostname', 'UNIQUE']]"
+          }
+        },
+        "required":[
+          "cpus",
+          "mem",
+          "disk",
+          "count"
+        ]
+      },
+      "init":{
+        "description":"MongoDB init node configuration properties",
+        "type":"object",
+        "properties":{
+          "cpus":{
+            "description":"MongoDB init node cpu requirements",
+            "type":"number",
+            "default":0.1
+          },
+          "mem":{
+            "description":"MongoDB init node mem requirements",
+            "type":"integer",
+            "default":64
+          }
+        },
+        "required":[
+          "cpus",
+          "mem"
+        ]
+      }
+    }
+}

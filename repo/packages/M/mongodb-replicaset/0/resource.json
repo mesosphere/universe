@@ -1,0 +1,15 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u112-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "http://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.8.7-1.0.2.tar.gz",
+      "executor-zip": "https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/executor.zip",
+      "scheduler-zip": "https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/scheduler.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://files.serv.sh/frameworks/mongodb-replicaset/images/mongodb_48x48.png",
+    "icon-medium": "https://files.serv.sh/frameworks/mongodb-replicaset/images/mongodb_96x96.png",
+    "icon-large": "https://files.serv.sh/frameworks/mongodb-replicaset/images/mongodb_256x256.png"
+  }
+}
