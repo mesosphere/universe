@@ -1,0 +1,118 @@
+{
+  "id": "/{{service.name}}",
+  "cmd": "./scheduler/bin/hdfs-scheduler server ./scheduler/conf/scheduler.yml",
+  "user": "nobody",
+  "instances": 1,
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "requirePorts": true,
+  "portDefinitions": [
+    {
+      "port": {{service.api_port}},
+      "protocol": "tcp",
+      "name": "api",
+      "labels": {}
+    }
+  ],
+"uris": [
+  "{{resource.assets.uris.scheduler-zip}}",
+  "{{resource.assets.uris.jre-tar-gz}}"
+],
+"healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "curl -f -X GET http://$HOST:{{service.api_port}}/admin/healthcheck" },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 60,
+      "maxConsecutiveFailures": 3
+    }
+],
+"readinessChecks": [
+    {
+      "name": "hdfsUpdateProgress",
+      "protocol": "HTTP",
+      "path": "/v1/plan",
+      "portName": "api",
+      "interval": 10000,
+      "timeout": 10000,
+      "httpStatusCodesForReady": [200],
+      "preserveLastResponse": true
+    }
+],
+"labels": {
+  "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+  "DCOS_MIGRATION_API_VERSION": "v1",
+  "DCOS_MIGRATION_API_PATH": "/v1/plan",
+  "MARATHON_SINGLE_INSTANCE_APP":"true",
+  "DCOS_SERVICE_NAME": "{{service.name}}",
+  "DCOS_SERVICE_PORT_INDEX": "0",
+  "DCOS_SERVICE_SCHEME": "http"
+},
+"upgradeStrategy":{
+  "minimumHealthCapacity": 0,
+  "maximumOverCapacity": 0
+},
+{{#service.secret_name}}
+"secrets": {
+  "serviceCredential": {
+    "source": "{{service.secret_name}}"
+  }
+},
+{{/service.secret_name}}
+"env":{
+{{#service.secret_name}}
+"DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+"MESOS_MODULES": "file:///opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
+"MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+{{/service.secret_name}}
+"JAVA_HOME":"./jre1.8.0_91"
+,"JAVA_OPTS":"-Xmx{{service.heap}}M"
+,"SERVICE_NAME":"{{service.name}}"
+,"SERVICE_ROLE":"{{service.role}}"
+,"SERVICE_PRINCIPAL":"{{service.principal}}"
+,"SERVICE_USER":"nobody"
+,"HDFS_NAME_NODE_CPUS":"{{name_node.cpus}}"
+,"HDFS_NAME_MEMORY_MB":"{{name_node.mem}}"
+,"HDFS_NAME_NODE_HEAP_MB":"{{name_node.heap}}"
+,"HDFS_NAME_NODE_DISK_MB":"{{name_node.disk}}"
+,"HDFS_NAME_NODE_DISK_TYPE":"{{name_node.disk_type}}"
+,"HDFS_JOURNAL_NODE_CPUS":"{{journal_node.cpus}}"
+,"HDFS_JOURNAL_MEMORY_MB":"{{journal_node.mem}}"
+,"HDFS_JOURNAL_NODE_HEAP_MB":"{{journal_node.heap}}"
+,"HDFS_JOURNAL_NODE_DISK_MB":"{{journal_node.disk}}"
+,"HDFS_JOURNAL_NODE_DISK_TYPE":"{{journal_node.disk_type}}"
+,"HDFS_JOURNAL_NODES":"{{journal_node.count}}"
+,"HDFS_DATA_NODE_CPUS":"{{data_node.cpus}}"
+,"HDFS_DATA_MEMORY_MB":"{{data_node.mem}}"
+,"HDFS_DATA_NODE_HEAP_MB":"{{data_node.heap}}"
+,"HDFS_DATA_NODE_DISK_MB":"{{data_node.disk}}"
+,"HDFS_DATA_NODE_DISK_TYPE":"{{data_node.disk_type}}"
+,"HDFS_DATA_NODES":"{{data_node.count}}"
+,"EXECUTOR_COMMAND":"./executor/bin/hdfs-executor executor/conf/executor.yml"
+,"EXECUTOR_CPUS":"{{executor.cpus}}"
+,"EXECUTOR_MEMORY_MB":"{{executor.mem}}"
+,"EXECUTOR_DISK_MB":"{{executor.disk}}"
+,"EXECUTOR_HEAP_MB":"{{executor.heap}}"
+,"EXECUTOR_JAVA_HOME":"./jre1.8.0_91"
+,"EXECUTOR_HDFS_HOME":"./hadoop-2.6.0-cdh5.7.1"
+,"EXECUTOR_JRE_LOCATION":"{{resource.assets.uris.jre-tar-gz}}"
+,"EXECUTOR_LOCATION":"{{resource.assets.uris.executor-zip}}"
+,"EXECUTOR_HDFS_LOCATION":"{{resource.assets.uris.hadoop-tar-gz}}"
+,"EXECUTOR_HDFS_VERSION":"2.5.0"
+,"HDFS_NAME_NODE_RPC_PORT":"{{hdfs.name_node_rpc_port}}"
+,"HDFS_NAME_NODE_HTTP_PORT":"{{hdfs.name_node_http_port}}"
+,"HDFS_JOURNAL_NODE_RPC_PORT":"{{hdfs.journal_node_rpc_port}}"
+,"HDFS_JOURNAL_NODE_HTTP_PORT":"{{hdfs.journal_node_http_port}}"
+,"HDFS_DATA_NODE_RPC_PORT":"{{hdfs.data_node_rpc_port}}"
+,"HDFS_DATA_NODE_HTTP_PORT":"{{hdfs.data_node_http_port}}"
+,"HDFS_DATA_NODE_IPC_PORT":"{{hdfs.data_node_ipc_port}}"
+,"HDFS_PERMISSIONS_ENABLED":"{{hdfs.permissions_enabled}}"
+,"HDFS_NAME_NODE_HEARTBEAT_RECHECK_INTERVAL":"{{hdfs.name_node_heartbeat_recheck_interval}}"
+,"HDFS_COMPRESS_IMAGE":"{{hdfs.compress_image}}"
+,"HDFS_IMAGE_COMPRESSION_CODEC":"{{hdfs.image_compression_codec}}"
+,"PLACEMENT_STRATEGY":"{{service.placement_strategy}}"
+,"PHASE_STRATEGY":"org.apache.mesos.scheduler.plan.DefaultInstallStrategy"
+,"API_PORT":"{{service.api_port}}"
+}
+}
