@@ -6,9 +6,21 @@
       "type": "object",
       "properties": {
         "name": {
-          "description": "The framework name to register with Mesos.",
+          "description": "The framework name to register with Mesos, which is also used for the DC/OS service URL and DNS name.",
           "type": "string",
           "default": "myriad"
+        },
+        "cpus": {
+          "description": "CPUs to allocate to Myriad scheduler and YARN Resource Manager.",
+          "type": "number",
+          "default": 1.0,
+          "minimum": 0.1
+        },
+        "mem": {
+          "description": "Memory (in MB) to allocate to Myriad scheduler and YARN Resource Manager.",
+          "type": "number",
+          "default": 2048.0,
+          "minimum": 2048.0
         }
       },
       "required": [

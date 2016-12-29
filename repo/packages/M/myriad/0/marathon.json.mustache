@@ -1,9 +1,9 @@
 {
-  "id": "myriad",
-  "cmd": "until nslookup myriad.marathon.mesos; do echo 'Cannot resolve myriad.marathon.mesos yet. Trying again...'; sleep 2; done && export JAVA_HOME=$MESOS_DIRECTORY/jre1.7.0_76 && env && ./hadoop-2.7.1/bin/yarn resourcemanager",
+  "id": "{{service.name}}",
+  "cmd": "until nslookup {{service.name}}.marathon.mesos; do echo 'Cannot resolve {{service.name}}.marathon.mesos yet. Trying again...'; sleep 2; done && export JAVA_HOME=$MESOS_DIRECTORY/jre1.7.0_76 && env && ./hadoop-2.7.1/bin/yarn resourcemanager",
   "instances": 1,
-  "cpus": 1,
-  "mem": 2048,
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
   "requirePorts": true,
   "portDefinitions": [
     {
@@ -40,10 +40,10 @@
     "https://downloads.mesosphere.com/java/jre-7u76-linux-x64.tar.gz"
   ],
   "labels": {
-    "DCOS_PACKAGE_FRAMEWORK_NAME": "myriad"
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}"
   },
   "env":{
-    "YARN_RESOURCEMANAGER_OPTS":"-Dyarn.resourcemanager.hostname=myriad.marathon.mesos",
+    "YARN_RESOURCEMANAGER_OPTS":"-Dyarn.resourcemanager.hostname={{service.name}}.marathon.mesos",
     "USER":"root"
   }
 }
