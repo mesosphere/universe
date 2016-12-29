@@ -4,6 +4,10 @@
     "icon-medium" : "https://raw.githubusercontent.com/apache/incubator-myriad/master/website/img/myriad_elephant.png",
     "icon-large" : "https://raw.githubusercontent.com/apache/incubator-myriad/master/website/img/myriad_elephant.png"
   },
-  "assets" : {
+  "assets": {
+    "uris": {
+      "apache-myriad-hadoop-tar-xz": "https://s3-us-west-2.amazonaws.com/myriad-dev/universe/hadoop-2.7.1-rm.tar.xz",
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-7u76-linux-x64.tar.gz"
+    }
   }
 }
