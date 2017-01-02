@@ -1,0 +1,67 @@
+{
+  "properties": {
+    "service": {
+      "description": "Vamp specific configuration properties",
+      "properties": {
+        "name": {
+          "default": "vamp",
+          "description": "The name of the service to display in the DC/OS dashboard.",
+          "type": "string"
+        },
+        "memory": {
+          "default": "1024",
+          "description": "Memory (in MB) to allocate to the Vamp instance.",
+          "type": "string"
+        },
+        "cpu": {
+          "default": "0.5",
+          "description": "CPU shares to allocate to the Vamp instance.",
+          "type": "string"
+        },
+        "vamp-internal-vip": {
+          "default": "10.20.0.100",
+          "description": "Internal Vamp VIP used for Vamp components.",
+          "type": "string"
+        },
+        "vamp-internal-port": {
+          "default": "8080",
+          "description": "The HTTP API port for the Internal VIP.",
+          "type": "string"
+        },
+        "logstash-host": {
+          "description": "Logstash host (IP), e.g.'elasticsearch.marathon.mesos'.",
+          "type": "string"
+        },
+        "logstash-port": {
+          "description": "Logstash listening port",
+          "default": "10001",
+          "type": "string"
+        },
+        "elasticsearch-url": {
+          "description": "Elasticsearch URL, e.g. 'http://elasticsearch.marathon.mesos:9200'",
+          "type": "string"
+        },
+        "force-pull-image": {
+          "default": true,
+          "description": "Force docker to re-pull the image.",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "memory",
+        "cpu",
+        "vamp-internal-vip",
+        "vamp-internal-port",
+        "logstash-host",
+        "logstash-port",
+        "elasticsearch-url",
+        "force-pull-image"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "service"
+  ]
+}
