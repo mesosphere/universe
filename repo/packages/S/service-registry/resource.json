@@ -1,0 +1,13 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/dcos-commons/artifacts/jre-8u91-linux-x64.tar.gz",
+      "registry-zip": "https://github.com/gabrielhartmann/registry/blob/master/releases/registry-1.0-SNAPSHOT.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-small.png?raw=true",
+    "icon-medium": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-medium.png?raw=true",
+    "icon-large": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-large.png?raw=true"
+  }
+}
