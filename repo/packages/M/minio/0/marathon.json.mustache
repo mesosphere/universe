@@ -13,12 +13,12 @@
       "volumes": [
       {
         "containerPath": "/export",
-        "hostPath":"{{storage.persistant-volume.host-volume}}/{{service.name}}/data", 
+        "hostPath":"{{storage.persistent-volume.host-volume}}/{{service.name}}/data", 
         "mode": "RW"
       },
       {
               "containerPath": "/root/.minio",
-              "hostPath": "{{storage.persistant-volume.host-volume}}/{{service.name}}/config",
+              "hostPath": "{{storage.persistent-volume.host-volume}}/{{service.name}}/config",
               "mode": "RW"
       }
     ],
@@ -61,8 +61,8 @@
    "upgradeStrategy":{
       "minimumHealthCapacity": 0,
       "maximumOverCapacity": 0
-    }{{#storage.persistant-volume.pinned-hostname}},
-    "constraints": [["hostname", "CLUSTER", "{{storage.persistant-volume.pinned-hostname}}"]]
-    {{/storage.persistant-volume.pinned-hostname}}
+    }{{#storage.persistent-volume.pinned-hostname}},
+    "constraints": [["hostname", "CLUSTER", "{{storage.persistent-volume.pinned-hostname}}"]]
+    {{/storage.persistent-volume.pinned-hostname}}
 }
 

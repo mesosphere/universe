@@ -8,7 +8,11 @@
   "website": "https://www.minio.io",
   "framework": false,
   "description": "Minio is an object storage server compatible with Amazon S3. It is best suited for storing unstructured data such as photos, videos, log files, backups and container / VM images.",
-  "tags": ["data", "storage", "filesystem"],
+  "tags": [
+    "data",
+    "storage",
+    "filesystem"
+  ],
   "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Experimental packages should never be used in production!",
   "postInstallNotes": "Minio DC/OS service has been successfully installed.\nSee https://docs.minio.io/ for documentation.",
   "postUninstallNotes": "Minio DC/OS service has been successfully uninstalled and will no longer run.",
