@@ -16,7 +16,7 @@ def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 def _get_json_schema(file_name):
-    with open(os.path.join(SCHEMA_DIR, file_name)) as f:
+    with open(os.path.join(SCHEMA_DIR, file_name), encoding='utf-8') as f:
         return json.loads(f.read())
 
 PACKAGE_JSON_SCHEMA = _get_json_schema('package-schema.json')
@@ -105,7 +105,7 @@ def _validate_revision(given_package, revision, path):
                  '1.8.')
 
 def _validate_json(path, schema):
-        with open(path) as f:
+        with open(path, encoding='utf-8') as f:
             data = json.loads(f.read())
 
         _validate_jsonschema(data, schema)

@@ -52,11 +52,13 @@ def main():
     ]
 
     # Render entire universe
-    with (args.outdir / 'universe.json').open('w') as universe_file:
+    universe_path = args.outdir / 'universe.json'
+    with universe_path.open('w', encoding='utf-8') as universe_file:
         json.dump({'packages': packages}, universe_file)
 
     # Render empty json
-    with (args.outdir / 'repo-empty-v3.json').open('w') as universe_file:
+    empty_path = args.outdir / 'repo-empty-v3.json'
+    with empty_path.open('w', encoding='utf-8') as universe_file:
         json.dump({'packages': []}, universe_file)
 
     # create universe-by-version files for `dcos_versions`
@@ -96,8 +98,8 @@ def render_json_by_version(outdir, packages, version):
     :rtype: None
     """
 
-    json_file_name = 'repo-up-to-{}.json'.format(version)
-    with (outdir / json_file_name).open('w') as universe_file:
+    json_file_path = outdir / 'repo-up-to-{}.json'.format(version)
+    with json_file_path.open('w', encoding='utf-8') as universe_file:
         json.dump(
             {'packages': list(filter(
                 lambda package: filter_by_version(package, version), packages)
@@ -177,7 +179,7 @@ def read_package(path):
 
     path = path / 'package.json'
 
-    with path.open() as file_object:
+    with path.open(encoding='utf-8') as file_object:
         return json.load(file_object)
 
 
@@ -192,7 +194,7 @@ def read_resource(path):
     path = path / 'resource.json'
 
     if path.is_file():
-        with path.open() as file_object:
+        with path.open(encoding='utf-8') as file_object:
             return json.load(file_object)
 
 
@@ -207,7 +209,7 @@ def read_marathon_template(path):
     path = path / 'marathon.json.mustache'
 
     if path.is_file():
-        with path.open(mode='rb') as file_object:
+        with path.open(mode='rb', encoding='utf-8') as file_object:
             return base64.standard_b64encode(file_object.read()).decode()
 
 
@@ -222,7 +224,7 @@ def read_config(path):
     path = path / 'config.json'
 
     if path.is_file():
-        with path.open() as file_object:
+        with path.open(encoding='utf-8') as file_object:
             # Load config file into a OrderedDict to preserve order
             return json.load(
                 file_object,
@@ -241,7 +243,7 @@ def read_command(path):
     path = path / 'command.json'
 
     if path.is_file():
-        with path.open() as file_object:
+        with path.open(encoding='utf-8') as file_object:
             return json.load(file_object)
 
 
