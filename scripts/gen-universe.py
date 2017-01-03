@@ -209,7 +209,7 @@ def read_marathon_template(path):
     path = path / 'marathon.json.mustache'
 
     if path.is_file():
-        with path.open(mode='rb', encoding='utf-8') as file_object:
+        with path.open(mode='rb') as file_object:
             return base64.standard_b64encode(file_object.read()).decode()
 
 
