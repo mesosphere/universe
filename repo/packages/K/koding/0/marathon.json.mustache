@@ -1,0 +1,59 @@
+{
+  "id": "{{service.name}}",
+  "cmd": null,
+  "cpus": {{koding.cpus}},
+  "instances": 1,
+  "mem": {{koding.mem}},
+  "disk": 20000,
+  "args": [
+    "-",
+    "--host",
+    "{{networking.hostname}}"
+  ],
+  "container": {
+    "docker": {
+      "image": "{{resource.assets.container.docker.koding}}",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 8090,
+          "hostPort": 0,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/var/lib/mongodb",
+        "hostPath": "/var/lib/koding/mongodb",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/var/lib/postgresql",
+        "hostPath": "/var/lib/koding/postgres",
+        "mode": "RW"
+      }
+    ]
+  },
+  "requirePorts": true,
+  "constraints": [
+    [
+      "hostname",
+      "CLUSTER",
+      "{{networking.node}}"
+    ]
+  ],
+  "labels":{
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_VHOST":"{{networking.hostname}},{{networking.virtual-host}}",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "{{networking.https-redirect}}",
+    "HAPROXY_0_HTTP_FRONTEND_ACL": "  acl host_{cleanedUpHostname} hdr_end(host) -i {hostname}\n  use_backend {backend} if host_{cleanedUpHostname}\n",
+    "HAPROXY_0_HTTPS_FRONTEND_ACL": "  use_backend {backend} if {{ ssl_fc_sni -m end .{hostname} }}\n",
+    "MARATHON_SINGLE_INSTANCE_APP": "true"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}

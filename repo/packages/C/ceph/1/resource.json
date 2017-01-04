@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-ceph-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-ceph-medium.png",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-ceph-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "ceph-docker": "fernandosanchez/ceph-on-mesos:0.1"
+      }
+    }
+  }
+}

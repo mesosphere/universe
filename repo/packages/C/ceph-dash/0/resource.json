@@ -1,0 +1,18 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-ceph-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-ceph-medium.png",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-ceph-large.png",
+    "screenshots": [
+      "https://raw.githubusercontent.com/crapworks/ceph-dash/master/screenshots/ceph-dash.png",
+      "https://raw.githubusercontent.com/crapworks/ceph-dash/master/screenshots/ceph-dash-graphite.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "ceph-dash-docker": "fernandosanchez/ceph-dash:0.1"
+      }
+    }
+  }
+}

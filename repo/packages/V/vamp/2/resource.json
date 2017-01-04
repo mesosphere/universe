@@ -1,0 +1,19 @@
+{
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/magneticio/vamp.io/master/static/images/dcos_universe/icon-vamp-small.png",
+    "icon-medium": "https://raw.githubusercontent.com/magneticio/vamp.io/master/static/images/dcos_universe/icon-vamp-medium.png",
+    "icon-large": "https://raw.githubusercontent.com/magneticio/vamp.io/master/static/images/dcos_universe/icon-vamp-large.png",
+    "screenshots": [
+      "https://raw.githubusercontent.com/magneticio/vamp.io/master/static/images/dcos_universe/screenshot-vamp-dcos.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "vamp": "magneticio/vamp:0.9.2-dcos"
+      }
+    }
+  }
+}
+
+

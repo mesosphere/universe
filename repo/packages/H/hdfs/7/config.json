@@ -1,0 +1,357 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"id": "http://hdfs/dcos/mesosphere.com",
+	"type": "object",
+	"properties": {
+		"service": {
+			"id": "http://hdfs/dcos/mesosphere.com/service",
+			"type": "object",
+			"description": "DC/OS service configuration properties",
+			"properties": {
+				"name": {
+					"id": "http://hdfs/dcos/mesosphere.com/service/name",
+					"type": "string",
+					"description": "The name of the HDFS service instance.",
+					"default": "hdfs"
+				},
+				"role": {
+					"id": "http://hdfs/dcos/mesosphere.com/service/role",
+					"type": "string",
+					"description": "The role of the HDFS service instance.",
+					"default": "hdfs-role"
+				},
+				"principal": {
+					"id": "http://hdfs/dcos/mesosphere.com/service/principal",
+					"type": "string",
+					"description": "The principal for the HDFS service instance.",
+					"default": "hdfs-principal"
+				},
+				"secret_name": {
+					"type": "string",
+					"description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+					"default": ""
+				},
+				"cpus": {
+					"id": "http://hdfs/dcos/mesosphere.com/service/cpus",
+					"type": "number",
+					"description": "The cpu shares used by the HDFS service scheduler.",
+					"default": 0.5
+				},
+				"mem": {
+					"id": "http://hdfs/dcos/mesosphere.com/service/mem",
+					"type": "integer",
+					"description": "The memory used by the HDFS service scheduler in Mb.",
+					"default": 2048
+				},
+				"heap": {
+					"id": "http://hdfs/dcos/mesosphere.com/service/heap",
+					"type": "integer",
+					"description": "The JVM heap used by the HDFS service scheduler in Mb.",
+					"default": 1024
+				},
+				"api_port": {
+					"id": "http://hdfs/dcos/mesosphere.com/service/api_port",
+					"type": "integer",
+					"description": "The port that the HDFS service API will accept on.",
+					"default": 9000
+				},
+				"placement_strategy": {
+					"id": "http://hdfs/dcos/mesosphere.com/service/placement_strategy",
+					"type": "string",
+					"description": "The placement strategy for HDFS nodes. This should always be NODE.",
+					"default": "NODE"
+				}
+			},
+			"additionalProperties": false,
+			"required": [
+				"name",
+				"role",
+				"principal",
+				"cpus",
+				"mem",
+				"heap",
+				"api_port",
+				"placement_strategy"
+			]
+		},
+		"name_node": {
+			"id": "http://hdfs/dcos/mesosphere.com/name_node",
+			"type": "object",
+			"description": "HDFS Name Node configuration properties",
+			"properties": {
+				"cpus": {
+					"id": "http://hdfs/dcos/mesosphere.com/name_node/cpus",
+					"type": "number",
+					"description": "The number of cpu shares allocated to the Name Node process.",
+					"default": 0.5
+				},
+				"mem": {
+					"id": "http://hdfs/dcos/mesosphere.com/name_node/mem",
+					"type": "integer",
+					"description": "The amount of memory, in MB, allocated to the Name Node process.",
+					"default": 4096
+				},
+				"disk": {
+					"id": "http://hdfs/dcos/mesosphere.com/name_node/disk",
+					"type": "integer",
+					"description": "The amount of disk, in MB, allocated to the Name Node process.",
+					"default": 10240
+				},
+				"disk_type": {
+					"id": "http://hdfs/dcos/mesosphere.com/name_node/diskType",
+					"type": "string",
+					"description": "Disk type to be used for storing Name Node data. See documentation. [ROOT, MOUNT]",
+					"default": "ROOT"
+				},
+				"heap": {
+					"id": "http://hdfs/dcos/mesosphere.com/name_node/heap",
+					"type": "integer",
+					"description": "The JVM heap used by the Name Node in Mb.",
+					"default": 2048
+				}
+			},
+			"additionalProperties": false,
+			"required": [
+				"cpus",
+				"mem",
+				"disk",
+				"heap"
+			]
+		},
+		"journal_node": {
+			"id": "http://hdfs/dcos/mesosphere.com/journal_node",
+			"type": "object",
+			"description": "HDFS Journal Node configuration properties",
+			"properties": {
+				"cpus": {
+					"id": "http://hdfs/dcos/mesosphere.com/journal_node/cpus",
+					"type": "number",
+					"description": "The number of cpu shares allocated to the Journal Node process.",
+					"default": 0.5
+				},
+				"mem": {
+					"id": "http://hdfs/dcos/mesosphere.com/journal_node/mem",
+					"type": "integer",
+					"description": "The amount of memory, in MB, allocated to the Journal Node process.",
+					"default": 4096
+				},
+				"disk": {
+					"id": "http://hdfs/dcos/mesosphere.com/journal_node/disk",
+					"type": "integer",
+					"description": "The amount of disk, in MB, allocated to the Journal Node process.",
+					"default": 10240
+				},
+				"disk_type": {
+					"id": "http://hdfs/dcos/mesosphere.com/journal_node/diskType",
+					"type": "string",
+					"description": "Disk type to be used for storing Journal Node data. See documentation. [ROOT, MOUNT]",
+					"default": "ROOT"
+				},
+				"heap": {
+					"id": "http://hdfs/dcos/mesosphere.com/journal_node/heap",
+					"type": "integer",
+					"description": "The JVM heap used by the Journal Node in Mb.",
+					"default": 2048
+				},
+				"count": {
+					"id": "http://hdfs/dcos/mesosphere.com/journal_node/count",
+					"type": "integer",
+					"description": "The number of Nodes in the Quorum Journal. This should be either 3 or 5.",
+					"default": 3
+				}
+			},
+			"additionalProperties": false,
+			"required": [
+				"cpus",
+				"mem",
+				"disk",
+				"heap",
+				"count"
+			]
+		},
+		"data_node": {
+			"id": "http://hdfs/dcos/mesosphere.com/data_node",
+			"type": "object",
+			"description": "HDFS Data Node configuration properties",
+			"properties": {
+				"cpus": {
+					"id": "http://hdfs/dcos/mesosphere.com/data_node/cpus",
+					"type": "number",
+					"description": "The number of cpu shares allocated to the Data Node process.",
+					"default": 0.5
+				},
+				"mem": {
+					"id": "http://hdfs/dcos/mesosphere.com/data_node/mem",
+					"type": "integer",
+					"description": "The amount of memory, in MB, allocated to the Data Node process.",
+					"default": 4096
+				},
+				"disk": {
+					"id": "http://hdfs/dcos/mesosphere.com/data_node/disk",
+					"type": "integer",
+					"description": "The amount of disk, in MB, allocated to the Data Node process.",
+					"default": 10240
+				},
+				"disk_type": {
+					"id": "http://hdfs/dcos/mesosphere.com/data_node/diskType",
+					"type": "string",
+					"description": "Disk type to be used for storing Data Node data. See documentation. [ROOT, MOUNT]",
+					"default": "ROOT"
+				},
+				"heap": {
+					"id": "http://hdfs/dcos/mesosphere.com/data_node/heap",
+					"type": "integer",
+					"description": "The JVM heap used by the Data Node in Mb.",
+					"default": 2048
+				},
+				"count": {
+					"id": "http://hdfs/dcos/mesosphere.com/data_node/count",
+					"type": "integer",
+					"description": "The number of Data Nodes in the cluster",
+					"default": 3
+				}
+			},
+			"additionalProperties": false,
+			"required": [
+				"cpus",
+				"mem",
+				"disk",
+				"heap",
+				"count"
+			]
+		},
+		"executor": {
+			"id": "http://hdfs/dcos/mesosphere.com/executor",
+			"type": "object",
+			"description": "The HDFS service executor configuration object.",
+			"properties": {
+				"cpus": {
+					"id": "http://hdfs/dcos/mesosphere.com/executor/cpus",
+					"type": "number",
+					"description": "The cpu shares used by the HDFS service executor.",
+					"default": 0.5
+				},
+				"mem": {
+					"id": "http://hdfs/dcos/mesosphere.com/executor/mem",
+					"type": "integer",
+					"description": "The memory used by the HDFS service executor in Mb.",
+					"default": 1024
+				},
+				"heap": {
+					"id": "http://hdfs/dcos/mesosphere.com/executor/heap",
+					"type": "integer",
+					"description": "The JVM heap used by the HDFS service executor in Mb.",
+					"default": 768
+				},
+				"disk": {
+					"id": "http://hdfs/dcos/mesosphere.com/executor/heap",
+					"type": "integer",
+					"description": "The amount of disk used by the HDFS service executor in Mb.",
+					"default": 1024
+				}
+			},
+			"additionalProperties": false,
+			"required": [
+				"cpus",
+				"mem",
+				"heap",
+				"disk"
+			]
+		},
+		"hdfs": {
+			"type": "object",
+			"id": "http://hdfs/dcos/mesosphere.com/hdfs",
+			"description": "HDFS File System configuration options",
+			"properties": {
+				"name_node_rpc_port": {
+					"type": "integer",
+					"id": "http://hdfs/dcos/mesosphere.com/hdfs/name_node_rpc_port",
+					"description": "The RPC port for HDFS Name Nodes.",
+					"default": 9001
+				},
+				"name_node_http_port": {
+					"type": "integer",
+					"id": "http://hdfs/dcos/mesosphere.com/hdfs/name_node_http_port",
+					"description": "The HTTP port for HDFS Name Nodes. ",
+					"default": 9002
+				},
+				"journal_node_rpc_port": {
+					"type": "integer",
+					"id": "http://hdfs/dcos/mesosphere.com/hdfs/journal_node_rpc_port",
+					"description": "The RPC port used by Journal Nodes.",
+					"default": 8485
+				},
+				"journal_node_http_port": {
+					"type": "integer",
+					"id": "http://hdfs/dcos/mesosphere.com/hdfs/journal_node_http_port",
+					"description": "The HTTP port used by Journal Nodes.",
+					"default": 8480
+				},
+				"data_node_rpc_port": {
+					"type": "integer",
+					"id": "http://hdfs/dcos/mesosphere.com/hdfs/data_node_rpc_port",
+					"description": "The RPC port used by Data Nodes.",
+					"default": 9003
+				},
+				"data_node_http_port": {
+					"type": "integer",
+					"id": "http://hdfs/dcos/mesosphere.com/hdfs/data_node_http_port",
+					"description": "The HTTP port used by Data Nodes.",
+					"default": 9004
+				},
+				"data_node_ipc_port": {
+					"type": "integer",
+					"id": "http://hdfs/dcos/mesosphere.com/hdfs/data_node_ipc_port",
+					"description": "The IPS port used by Data Nodes.",
+					"default": 9005
+				},
+				"permissions_enabled": {
+					"type": "boolean",
+					"id": "http://hdfs/dcos/mesosphere.com/hdfs/permissions_enabled",
+					"description": "If true, permissions checking is enabled",
+					"default": false
+				},
+				"name_node_heartbeat_recheck_interval": {
+					"type": "integer",
+					"id": "http://hdfs/dcos/mesosphere.com/hdfs/name_node_heartbeat_recheck_interval",
+					"description": "This time decides the interval to check for expired datanodes.",
+					"default": 60000
+				},
+				"compress_image": {
+					"type": "boolean",
+					"id": "http://hdfs/dcos/mesosphere.com/hdfs/compress_image",
+					"description": "If true, the File System image will be compressed.",
+					"default": true
+				},
+				"image_compression_codec": {
+					"type": "string",
+					"id": "http://hdfs/dcos/mesosphere.com/hdfs/image_compression_codec",
+					"description": "The image compression codec for the File System image.",
+					"default": "org.apache.hadoop.io.compress.SnappyCodec"
+				}
+			},
+			"required": [
+				"name_node_rpc_port",
+				"name_node_http_port",
+				"journal_node_rpc_port",
+				"journal_node_http_port",
+				"data_node_rpc_port",
+				"data_node_http_port",
+				"data_node_ipc_port",
+				"permissions_enabled",
+				"name_node_heartbeat_recheck_interval",
+				"compress_image",
+				"image_compression_codec"
+			]
+		}
+	},
+	"additionalProperties": false,
+	"required": [
+		"service",
+		"name_node",
+		"journal_node",
+		"data_node",
+		"executor",
+		"hdfs"
+	]
+}
