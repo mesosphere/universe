@@ -75,6 +75,7 @@ def main():
 
         os.makedirs(str(http_artifacts))
         os.makedirs(str(repo_artifacts))
+        os.makedirs(str(docker_artifacts))
 
         failed_packages = []
         def handle_package(opts):
