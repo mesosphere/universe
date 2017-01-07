@@ -1,0 +1,72 @@
+{
+  "acceptedResourceRoles": null,
+  "args": [
+    "agent"
+  ],
+  "backoffFactor": 1.15,
+  "backoffSeconds": 1,
+  "cmd": null,
+  "constraints": [],
+  "container": {
+    "docker": {
+      "forcePullImage": false,
+      "image": "drone/drone:0.5",
+      "network": "HOST",
+      "parameters": [],
+      "portMappings": null,
+      "privileged": false
+    },
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/var/run/docker.sock",
+        "hostPath": "/var/run/docker.sock",
+        "mode": "RW"
+      }
+    ]
+  },
+  "cpus": {{drone.agent.cpus}},
+  "dependencies": [],
+  "disk": 0,
+  "env": {
+    "DRONE_SECRET": "{{drone.secret}}",
+    "DRONE_SERVER": "{{drone.server}}",
+    "DRONE_DEBUG": "{{drone.debug}}",
+    "DRONE_BACKOFF": "{{drone.backoff}}",
+    "DRONE_TIMEOUT": "{{drone.timeout}}",
+    "DRONE_MAX_LOGS": "{{drone.max_logs}}",
+    "DRONE_PLUGIN_PULL": "{{drone.plugin_pull}}",
+    "DRONE_PLUGIN_PRIVILEGED": "{{drone.plugin_privileged}}"
+  },
+  "executor": "",
+  "fetch": [],
+  "gpus": 0,
+  "healthChecks": [],
+  "id": "{{drone.agent.app_id}}",
+  "instances": {{drone.agent.instances}},
+  "ipAddress": null,
+  "labels": {
+    "HAPROXY_GROUP": "internal"
+  },
+  "maxLaunchDelaySeconds": 3600,
+  "mem": {{drone.agent.mem}},
+  "portDefinitions": [
+    {
+      "labels": {},
+      "port": 0,
+      "protocol": "tcp"
+    }
+  ],
+  "readinessChecks": [],
+  "requirePorts": false,
+  "residency": null,
+  "secrets": {},
+  "storeUrls": [],
+  "taskKillGracePeriodSeconds": null,
+  "upgradeStrategy": {
+    "maximumOverCapacity": 1,
+    "minimumHealthCapacity": 1
+  },
+  "uris": [],
+  "user": null
+}
