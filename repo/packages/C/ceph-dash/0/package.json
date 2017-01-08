@@ -6,7 +6,7 @@
   "scm": "https://github.com/Crapworks/ceph-dash",
   "maintainer": "support@mesosphere.io",
   "website": "https://github.com/Crapworks/ceph-dash",
-  "description": "Ceph-dash is a small and clean approach of providing the Ceph overall cluster health status via a restful json api as well as via a web GUI. There are no dependecies to the existing ceph-rest-api. This wsgi application talks to the cluster directly via librados.\n\n Please check the installation tutorial at: https://github.com/dcos/examples/tree/master/1.8/ceph",
+  "description": "Ceph-dash is a small and clean approach of providing the Ceph overall cluster health status via a restful json api as well as via a web GUI. There are no dependecies to the existing ceph-rest-api. This wsgi application talks to the cluster directly via librados.\n\n Please check the installation tutorial at: https://github.com/dcos/examples/tree/master/1.8/ceph#ceph-dashboard",
   "tags": ["monitoring", "admin", "ceph", "storage"],
 "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.",
 "postInstallNotes": "Service installed.\n\nAccess this service through Marathon-LB in http://YOUR_PUBLIC_NODE_IP_ADDRESS:15000.",
