@@ -1,0 +1,30 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{advanced.docker-image}}",
+      "network": "HOST"    
+    }
+  },
+  "healthChecks": [
+    {
+      "path": "/nifi",
+      "portIndex": 0,
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20
+      "maxConsecutiveFailures": 3,
+    }
+  ],
+  "labels": {
+    "DCOS_SERVICE_NAME":"{{service.name}}",
+    "DCOS_SERVICE_SCHEME":"http",
+    "DCOS_SERVICE_PORT_INDEX":"0",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "HAPROXY_0_VHOST":"{{networking.virtual-host}}"
+  }
+}

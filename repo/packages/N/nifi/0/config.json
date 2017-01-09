@@ -1,0 +1,63 @@
+{
+    "type": "object",
+    "properties": {
+        "service": {
+            "description": "Configuration properties for the NIFI service for DC/OS.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "The name of the service to display in the DC/OS dashboard.",
+                    "type": "string",
+                    "default": "nifi"
+                },
+                "cpus": {
+                    "description": "CPU shares to allocate to each Nifi master.",
+                    "type": "number",
+                    "default": 1.0,
+                    "minimum": 0.1
+                },
+                "mem": {
+                    "description": "Memory (in MB) to allocate to each Nifi instance.",
+                    "type": "number",
+                    "default": 2048.0,
+                    "minimum": 2048.0
+                }
+            }
+        },
+        "networking": {
+            "description": "Networking-related configuration properties for NIFI on DC/OS.",
+            "type": "object",
+            "properties": {
+                "virtual-host": {
+                    "description": "The virtual host address to configure for integration with Marathon-lb.",
+                    "type": "string"
+                }
+            }
+        },
+        "advanced": {
+            "description": "Advanced configuration properties for the Nifi service. Under normal circumstances, you shouldn't need to modify these values.",
+            "type": "object",
+            "properties": {
+                "zookeeper": {
+                    "description": "URL of this zookeeper",
+                    "type": "string",
+                    "default": "zk://master.mesos:2181/nifi"
+                },
+                "jvm-opts": {
+                    "description": "Optional arguments to pass to the JVM.",
+                    "type": "string",
+                    "default": "-Xms1024m -Xmx1024m"
+                },
+                "docker-image": {
+                    "description": "The Docker image to use for the Nifi service.",
+                    "type": "string",
+                    "default": "mderela/apache-nifi:1.1.1"
+                },
+                "docker-credentials-uri": {
+                    "description": "An optional URI to be fetched and extracted that contains docker credentials (e.g. file:///etc/docker/docker.tar.gz).",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

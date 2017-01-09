@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "3.0",
+  "name": "nifi",
+  "version": "1.1.1",
+  "minDcosReleaseVersion" : "1.8",
+  "scm": "https://git-wip-us.apache.org/repos/asf?p=nifi.git",
+  "maintainer": "mariusz.derela@gmail.com",
+  "website": "https://nifi.apache.org",
+  "framework": false,
+  "description": "An easy to use, powerful, and reliable system to process and distribute data.",
+  "tags": ["nifi","dataflow","apache","flow","data"],
+  "preInstallNotes":"Nifi on DC/OS is in alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
+  "postInstallNotes": "Nifi has been successfully installed.\nDocumentation can be found at https://nifi.apache.org/docs.html\nPlease keep in mind that first start of nifi can take a more than 60 seconds, so please be patient.",
+  "postUninstallNotes": "Nifi has been uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/elastic/kibana/master/LICENSE.md"
+    }
+  ],
+  "selected": false
+}
