@@ -17,9 +17,16 @@
       "gracePeriodSeconds": 120,
       "intervalSeconds": 60,
       "timeoutSeconds": 20
-      "maxConsecutiveFailures": 3,
+      "maxConsecutiveFailures": 3
     }
   ],
+  "env": {
+    "NIFI_WEB_HTTP_PORT": "{{nifi.web-port}}",
+    "NIFI_ZOOKEEPER_CONNECT_STRING": "{{nifi.zookeeper}}",
+    "NIFI_ZOOKEEPER_ROOT_NODE": "{{nifi.zookeeper-root}}",
+    "NIFI_UI_BANNER_TEXT": "{{nifi.banner}}",
+    "NIFI_CLUSTER_IS_NODE": "{{nifi.cluster}}"
+  },
   "labels": {
     "DCOS_SERVICE_NAME":"{{service.name}}",
     "DCOS_SERVICE_SCHEME":"http",
