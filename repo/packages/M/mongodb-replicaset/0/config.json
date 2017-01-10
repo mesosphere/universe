@@ -31,11 +31,6 @@
           "type":"integer",
           "default":1000
         },
-        "count":{
-          "description":"Number of MongoDB server nodes to run",
-          "type":"integer",
-          "default":3
-        },
         "replicaSetName":{
           "description":"Name of the MongoDB ReplicaSet",
           "type":"string",
