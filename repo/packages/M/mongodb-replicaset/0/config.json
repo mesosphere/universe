@@ -19,12 +19,12 @@
         "cpus":{
           "description":"MongoDB server node cpu requirements",
           "type":"number",
-          "default":0.1
+          "default":0.5
         },
         "mem":{
           "description":"MongoDB server node mem requirements",
           "type":"integer",
-          "default":1024
+          "default":2048
         },
         "disk":{
           "description":"MongoDB server node disk requirements (local persistent volumes)",
