@@ -11,5 +11,45 @@
     "icon-small": "https://files.serv.sh/frameworks/mongodb-replicaset/images/icons/mongodb_48x48.png",
     "icon-medium": "https://files.serv.sh/frameworks/mongodb-replicaset/images/icons/mongodb_96x96.png",
     "icon-large": "https://files.serv.sh/frameworks/mongodb-replicaset/images/icons/mongodb_256x256.png"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[
+            {
+              "algo":"sha256",
+              "value":"e12d29e7769ea3bce51109a84c454c7090de19a1c4d392160e8a451364537e7d"
+            }
+          ],
+          "kind":"executable",
+          "url":"https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/dcos-mongodb-replicaset-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[
+            {
+              "algo":"sha256",
+              "value":"e105cfe78bc0f99f71f108631b5a2e6bceaf46d8d5fe3a6a8770ed55cf48ad0a"
+            }
+          ],
+          "kind":"executable",
+          "url":"https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/dcos-mongodb-replicaset-linux"
+        }
+      },
+      "windows":{
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "2911cbb35936c3f08c4fc701230fbd8ad67ba83ee35b1ede9fee65823e998ac4"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/dcos-mongodb-replicaset.exe"
+        }
+      }
+    }
   }
 }
