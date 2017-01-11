@@ -142,7 +142,8 @@ def enumerate_dcos_packages(packages_path, package_names, only_selected):
 
 
             if only_selected:
-                with (largest_revision / 'package.json').open() as json_file:
+                json_path = largest_revision / 'package.json'
+                with json_path.open(encoding='utf-8') as json_file:
                     if json.load(json_file).get('selected', False):
                         yield (package_path.name, largest_revision)
 
@@ -152,7 +153,8 @@ def enumerate_dcos_packages(packages_path, package_names, only_selected):
 
 
 def enumerate_http_resources(package, package_path):
-    with (package_path / 'resource.json').open() as json_file:
+    resource_path = package_path / 'resource.json'
+    with resource_path.open(encoding='utf-8') as json_file:
         resource = json.load(json_file)
 
     for name, url in resource.get('images', {}).items():
@@ -168,7 +170,7 @@ def enumerate_http_resources(package, package_path):
 
     command_path = (package_path / 'command.json')
     if command_path.exists():
-        with command_path.open() as json_file:
+        with command_path.open(encoding='utf-8') as json_file:
             commands = json.load(json_file)
 
         for url in commands.get("pip", []):
@@ -176,7 +178,8 @@ def enumerate_http_resources(package, package_path):
 
 
 def enumerate_docker_images(package_path):
-    with (package_path / 'resource.json').open() as json_file:
+    resource_path = package_path / 'resource.json'
+    with resource_path.open(encoding='utf-8') as json_file:
         resource = json.load(json_file)
 
     dockers = resource.get('assets', {}).get('container', {}).get('docker', {})
@@ -254,8 +257,10 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
     dest_path = dest_repo / package_path.relative_to(source_repo)
     shutil.copytree(str(package_path), str(dest_path))
 
-    with (package_path / 'resource.json').open() as source_file, \
-            (dest_path / 'resource.json').open('w') as dest_file:
+    source_resource = package_path / 'resource.json'
+    dest_resource = dest_path / 'resource.json'
+    with source_resource.open(encoding='utf-8') as source_file, \
+            dest_resource.open('w', encoding='utf-8') as dest_file:
         resource = json.load(source_file)
 
         # Change the root for images (ignore screenshots)
@@ -295,8 +300,9 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
     if not command_path.exists():
         return
 
-    with command_path.open() as source_file, \
-            (dest_path / 'command.json').open('w') as dest_file:
+    dest_command = dest_path / 'command.json'
+    with command_path.open(encoding='utf-8') as source_file, \
+            dest_command.open('w', encoding='utf-8') as dest_file:
         command = json.load(source_file)
 
         command['pip'] = [
