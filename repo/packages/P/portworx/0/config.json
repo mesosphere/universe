@@ -1,0 +1,90 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"Name of this service instance.",
+                    "type":"string",
+                    "default": "portworx"
+                }
+            }
+        },
+        "portworx":{
+	    "additionalProperties": false,
+            "description":  "PX configuration properties",
+            "properties": {
+               "framework-name": {
+               "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
+               "type": "string",
+               "default": "portworx"
+               },
+               "cpus": {
+		      "default": 1.0,
+		      "description": "CPU shares to allocate to each Marathon instance.",
+		      "minimum": 0.0,
+		      "type": "number"
+	        },
+	       "mem": {
+			   "default": 2048.0,
+			   "description": "Memory (MB) to allocate to each Marathon task.",
+			   "minimum": 2048.0,
+			   "type": "number"
+		},
+		"instances": {
+			"default": 3,
+			"description": "Number of PX instances to run.",
+			"minimum": 3,
+			"type": "integer"
+			},
+                "kvdb": {
+                    "description": "Key Value database to use for PX to store configuration parameters.",
+                    "type": "string",
+                    "default": "etcd://etcd.mycompany.com:4001"
+                },
+                "clusterid": {
+                    "description":  "PX Cluster ID",
+                    "type": "string",
+                    "default": "my-cluster"
+                },
+                "storage": {
+                    "description":  "Local storage devices to use.  Specify devices using the -s option.  Multiple devices can be specified using multiple -s options.  To use all available devices, just use -a",
+                    "type": "string",
+                    "default": "/dev/sdb"
+                },
+                "mgmtif": {
+                    "description":  "Network interface to use for Mgmt traffic.  Specify using the -m option.",  
+                    "type": "string",
+                    "default": "enp0s3"
+                },
+                "dataif": {
+                    "description":  "Network interface to use for Data traffic.  Specify using the -d option.",  
+                    "type": "string",
+                    "default": "enp0s3"
+                },
+                "headers_dir": {
+                    "description":  "Directory location for system headers",
+                    "type": "string",
+                    "default": "/usr/src"
+                },
+                "api_port": {
+                    "description":  "API access port",
+                    "type": "integer",
+                    "default": 9001
+                }
+            },
+            "required": [
+                "kvdb",
+                "clusterid",
+		"storage",
+                "mgmtif",
+                "dataif",
+                "headers_dir",
+                "api_port",
+                "instances"
+            ]
+        }
+    }
+}
