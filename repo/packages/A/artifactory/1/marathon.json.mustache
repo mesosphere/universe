@@ -16,7 +16,12 @@
 "container": {
 "type": "DOCKER",
 "docker": {
-    "image": "{{resource.assets.container.docker.artifactory}}",
+{{^high-availability.enabled}}
+    "image": "{{resource.assets.container.docker.artifactory-pro}}",
+{{/high-availability.enabled}}
+{{#high-availability.enabled}}
+    "image": "{{resource.assets.container.docker.artifactory-ha}}",
+{{/high-availability.enabled}}
     "network": "HOST"
 },
 "volumes": [
@@ -93,14 +98,14 @@
 {{/high-availability.enabled}}
 ],
 "env": {
-"ART_LICENSE": "{{service.licenses}}",
+"ART_LICENSES": "{{service.licenses}}",
 "DB_TYPE": "{{service.database.type}}",
 "DB_HOST": "{{service.database.host}}",
 "DB_PORT": "{{service.database.port}}",
 "DB_USER": "{{service.database.user}}",
-"DB_PASSWORD": "{{service.database.password}}",
+"DB_PASSWORD": "{{service.database.password}}"
 {{#high-availability.enabled}}
-    "ART_NETWORK": "{{high-availability.network}}",
+    ,"ART_NETWORK": "{{high-availability.network}}",
     "HA_DATA_DIR": "{{service.host-volume}}/data",
     "HA_BACKUP_DIR": "{{service.host-volume}}/backup",
     {{^high-availability.secondary.enabled}}
@@ -108,7 +113,6 @@
         "HA_IS_PRIMARY": "true"
     {{/high-availability.secondary.enabled}}
     {{#high-availability.secondary.enabled}}
-        "HA_NODE_ID": "{{service.name}}-secondary"
         "HA_IS_PRIMARY": "false"
     {{/high-availability.secondary.enabled}}
 {{/high-availability.enabled}}
