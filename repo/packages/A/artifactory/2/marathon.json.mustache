@@ -20,14 +20,9 @@
     "image": "{{resource.assets.container.docker.artifactory-pro}}",
 {{/high-availability.enabled}}
 {{#high-availability.enabled}}
-    {{^high-availability.secondary.enabled}}
-        "image": "{{resource.assets.container.docker.artifactory-ha-primary}}",
-    {{/high-availability.secondary.enabled}}
-    {{#high-availability.secondary.enabled}}
-        "image": "{{resource.assets.container.docker.artifactory-ha-secondary}}",
-    {{/high-availability.secondary.enabled}}
+    "image": "{{resource.assets.container.docker.artifactory-ha}}",
 {{/high-availability.enabled}}
-"network": "HOST"
+    "network": "HOST"
 },
 "volumes": [
 {{^high-availability.enabled}}
@@ -80,47 +75,47 @@
 {{/high-availability.enabled}}
 {{#high-availability.enabled}}
     {
-    "containerPath": "/var/opt/jfrog/cluster",
-    "hostPath": "{{service.host-volume}}/cluster-home",
+    "containerPath": "/var/opj/jfrog/cluster",
+    "hostPath": "{{service.host-volume}}/data",
     "mode": "RW"
     }
 {{/high-availability.enabled}}
 ]
 },
 "portDefinitions": [
-{
-"port": 0,
-"protocol": "tcp",
-"name": "instance"
-}
+    {
+        "port": 0,
+        "protocol": "tcp",
+        "name": "instance"
+    }
 {{#high-availability.enabled}}
     ,
     {
-    "port": 0,
-    "protocol": "tcp",
-    "name": "member"
+        "port": 0,
+        "protocol": "tcp",
+        "name": "member"
     }
 {{/high-availability.enabled}}
 ],
 "env": {
+"ART_LICENSES": "{{service.licenses}}",
+"DB_TYPE": "{{service.database.type}}",
+"DB_HOST": "{{service.database.host}}",
+"DB_PORT": "{{service.database.port}}",
+"DB_USER": "{{service.database.user}}",
+"DB_PASSWORD": "{{service.database.password}}"
 {{#high-availability.enabled}}
+    ,
     "ART_NETWORK": "{{high-availability.network}}",
+    "HA_DATA_DIR": "/var/opj/jfrog/cluster",
+    "HA_BACKUP_DIR": "/var/opj/jfrog/cluster",
     {{^high-availability.secondary.enabled}}
-        "ART_LICENSES": "{{service.licenses}}",
-        "ART_DATABASE_CONNECTION_STRING": "{{service.database.connection-string}}",
-        "ART_DATABASE_USER":  "{{service.database.user}}",
-        "ART_DATABASE_PASSWORD":  "{{service.database.password}}"
+        "HA_NODE_ID": "{{service.name}}-primary",
+        "HA_IS_PRIMARY": "true"
     {{/high-availability.secondary.enabled}}
     {{#high-availability.secondary.enabled}}
-        "ART_PRIMARY_SERVICE_NAME": "{{high-availability.secondary.name}}",
-        "ART_API_KEY": "{{high-availability.secondary.api-key}}"
+        "HA_IS_PRIMARY": "false"
     {{/high-availability.secondary.enabled}}
-{{/high-availability.enabled}}
-{{^high-availability.enabled}}
-    "ART_LICENSE": "{{service.licenses}}",
-    "ART_DATABASE_CONNECTION_STRING": "{{service.database.connection-string}}",
-    "ART_DATABASE_USER":  "{{service.database.user}}",
-    "ART_DATABASE_PASSWORD":  "{{service.database.password}}"
 {{/high-availability.enabled}}
 },
 "labels": {
