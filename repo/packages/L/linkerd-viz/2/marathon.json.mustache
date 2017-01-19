@@ -34,7 +34,11 @@
   "requirePorts": true,
   "env": {
     "PUBLIC_PORT": "{{linkerd-viz.public-port}}",
-    "STATS_PORT": "{{linkerd-viz.stats-port}}"
+    "STATS_PORT": "{{linkerd-viz.stats-port}}",
+    "GF_AUTH_BASIC_ENABLED": "false"
+    {{#linkerd-viz.dcos-ui}}
+    ,"GF_SERVER_ROOT_URL": "/service/linkerd-viz"
+    {{/linkerd-viz.dcos-ui}}
   },
   "labels": {
     "DCOS_SERVICE_NAME": "linkerd-viz",

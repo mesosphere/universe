@@ -7,6 +7,11 @@
       "type": "object",
       "required": ["cpus", "mem", "public-port", "resource-role", "stats-port"],
       "properties": {
+        "dcos-ui": {
+          "description": "Access linkerd-viz at http://DCOS_URL/service/linkerd-viz via the DC/OS \"Open Service\" button. If you prefer to access linkerd-viz directly (http://PUBLIC_NODE:3000), set this to false.",
+          "type": "boolean",
+          "default": true
+        },
         "cpus": {
           "default": 1.0,
           "description": "CPU shares to allocate to linkerd-viz.",
