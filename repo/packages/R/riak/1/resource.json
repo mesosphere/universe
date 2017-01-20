@@ -17,5 +17,18 @@
       "riak-kv-2-2": "https://github.com/basho-labs/riak-mesos/releases/download/2.0.0-rc1/riak-2.2.0-centos-7.tar.gz",
       "riak-ts-1-4": "https://github.com/basho-labs/riak-mesos/releases/download/2.0.0-rc1/riak_ts-1.4.0-centos-7.tar.gz"
     }
+  },
+  "cli":{
+    "binaries": {
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {"algo": "sha256", "value":"371475b592e959f0948e0b311f6a8789f8e7cdfc11e072563449e53aaa988fd9"}
+          ],
+          "kind": "executable",
+          "url": "https://github.com/basho-labs/riak-mesos-tools/releases/download/2.0.0-rc3/dcos-riak-2.0.0rc2-linux-x64"
+        }
+      }
+    }
   }
 }
