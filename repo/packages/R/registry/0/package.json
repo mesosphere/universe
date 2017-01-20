@@ -4,7 +4,7 @@
   "name": "registry",
   "version": "2.5.1-0.1",
   "scm": "https://github.com/docker/distribution",
-  "maintainer": "support@mesosphere.io",
+  "maintainer": "https://dcos.io/community/",
   "website": "https://docs.docker.com/registry/",
   "description": "The docker Registry is a stateless, highly scalable server side application that stores and lets you distribute Docker images. This DC/OS package provides a private registry that can be made available to any other component in the system through a virtual IP (default: registry.marathon.l4lb.thisdcos.directory:5000).\n\nNOTE: This package requires additional configuration in order to run either in secure or insecure mode. Check the package documentation at https://github.com/dcos/examples/tree/master/1.8/registry for details.",
   "tags": ["docker", "registry"],
