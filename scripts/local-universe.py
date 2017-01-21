@@ -192,7 +192,7 @@ def run_docker_registry(volume_path):
     print('Start docker registry.')
     command = [ 'docker', 'run', '-d', '-p', '5000:5000', '--name',
         'registry', '-v', '{}:/var/lib/registry'.format(volume_path),
-        'registry:2.4.0']
+        'registry:2.4.1']
 
     subprocess.check_call(command)
 
