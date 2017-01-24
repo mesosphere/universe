@@ -1,18 +1,8 @@
 {
-"id": "{{service.name}}{{#high-availability.enabled}}{{#high-availability.secondary.enabled}}-secondary{{/high-availability.secondary.enabled}}{{/high-availability.enabled}}",
+"id": "{{service.name}}",
 "cpus": {{service.cpus}},
 "mem": {{service.mem}},
-{{^high-availability.enabled}}
-    "instances": 1,
-{{/high-availability.enabled}}
-{{#high-availability.enabled}}
-    {{^high-availability.secondary.enabled}}
-        "instances": 1,
-    {{/high-availability.secondary.enabled}}
-    {{#high-availability.secondary.enabled}}
-        "instances": {{high-availability.secondary.nodes}},
-    {{/high-availability.secondary.enabled}}
-{{/high-availability.enabled}}
+"instances": {{service.nodes}},
 "container": {
 "type": "DOCKER",
 "docker": {
@@ -109,31 +99,18 @@
     "ART_NETWORK": "{{high-availability.network}}",
     "HA_DATA_DIR": "/var/opj/jfrog/cluster",
     "HA_BACKUP_DIR": "/var/opj/jfrog/cluster",
-    {{^high-availability.secondary.enabled}}
-        "HA_NODE_ID": "{{service.name}}-primary",
-        "HA_IS_PRIMARY": "true"
-    {{/high-availability.secondary.enabled}}
-    {{#high-availability.secondary.enabled}}
-        "HA_IS_PRIMARY": "false"
-    {{/high-availability.secondary.enabled}}
+    "HA_IS_PRIMARY": "true"
 {{/high-availability.enabled}}
 },
 "labels": {
-{{^high-availability.secondary.enabled}}
-    "MARATHON_SINGLE_INSTANCE_APP": "true",
-{{/high-availability.secondary.enabled}}
 "DCOS_SERVICE_NAME": "{{service.name}}"
 },
-{{^high-availability.secondary.enabled}}
+{{#high-availability.enabled}}
     "upgradeStrategy":{
     "minimumHealthCapacity": 0,
-    "maximumOverCapacity": 0
+    "maximumOverCapacity": 0,
+    "constraints": [["hostname", "UNIQUE"]]
     },
-{{/high-availability.secondary.enabled}}
-{{#high-availability.enabled}}
-    {{#high-availability.secondary.unique-nodes}}
-        "constraints": [["hostname", "UNIQUE"]],
-    {{/high-availability.secondary.unique-nodes}}
 {{/high-availability.enabled}}
 "healthChecks": [
 {
