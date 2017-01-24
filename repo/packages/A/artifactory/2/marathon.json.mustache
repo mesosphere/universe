@@ -65,7 +65,7 @@
 {{/high-availability.enabled}}
 {{#high-availability.enabled}}
     {
-    "containerPath": "/var/opj/jfrog/cluster",
+    "containerPath": "/var/opt/jfrog/cluster",
     "hostPath": "{{service.host-volume}}/data",
     "mode": "RW"
     }
@@ -97,8 +97,8 @@
 {{#high-availability.enabled}}
     ,
     "ART_NETWORK": "{{high-availability.network}}",
-    "HA_DATA_DIR": "/var/opj/jfrog/cluster",
-    "HA_BACKUP_DIR": "/var/opj/jfrog/cluster",
+    "HA_DATA_DIR": "/var/opt/jfrog/cluster",
+    "HA_BACKUP_DIR": "/var/opt/jfrog/cluster",
     "HA_IS_PRIMARY": "true"
 {{/high-availability.enabled}}
 },
