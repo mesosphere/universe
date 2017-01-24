@@ -9,26 +9,13 @@
   },
   "assets": {
     "uris": {
-      "scheduler": "https://github.com/basho-labs/riak-mesos-scheduler/releases/download/2.0.2/riak_mesos_scheduler-2.0.2-mesos-1.0.0-centos-7.tar.gz",
+      "scheduler": "https://github.com/basho-labs/riak-mesos-scheduler/releases/download/2.0.3/riak_mesos_scheduler-2.0.3-mesos-1.0.0-centos-7.tar.gz",
       "executor": "https://github.com/basho-labs/riak-mesos-executor/releases/download/1.7.1/riak_mesos_executor-1.7.1-mesos-1.0.0-centos-7.tar.gz",
       "patches": "https://github.com/basho-labs/riak-mesos-executor/releases/download/1.7.1/riak_erlpmd_patches-rel-1.7.1-mesos-1.0.0-centos-7.tar.gz",
-      "explorer": "https://github.com/basho-labs/riak_explorer/releases/download/1.3.0/riak_explorer-1.3.0.relpatch-centos-7.tar.gz",
+      "explorer": "https://github.com/basho-labs/riak_explorer/releases/download/1.4.1/riak_explorer-1.4.1.relpatch-centos-7.tar.gz",
       "director": "https://github.com/basho-labs/riak-mesos-director/releases/download/1.0.1/riak_mesos_director-1.0.1-centos-7.tar.gz",
-      "riak-kv-2-2": "https://github.com/basho-labs/riak-mesos/releases/download/2.0.0-rc1/riak-2.2.0-centos-7.tar.gz",
-      "riak-ts-1-4": "https://github.com/basho-labs/riak-mesos/releases/download/2.0.0-rc1/riak_ts-1.4.0-centos-7.tar.gz"
-    }
-  },
-  "cli":{
-    "binaries": {
-      "linux": {
-        "x86-64": {
-          "contentHash": [
-            {"algo": "sha256", "value":"371475b592e959f0948e0b311f6a8789f8e7cdfc11e072563449e53aaa988fd9"}
-          ],
-          "kind": "executable",
-          "url": "https://github.com/basho-labs/riak-mesos-tools/releases/download/2.0.0-rc3/dcos-riak-2.0.0rc2-linux-x64"
-        }
-      }
+      "riak-kv-2-2": "https://github.com/basho-labs/riak-mesos/releases/download/2.0.0-rc4/riak-2.2.0-centos-7.tar.gz",
+      "riak-ts-1-5": "https://github.com/basho-labs/riak-mesos/releases/download/2.0.0-rc4/riak_ts-1.5.1-centos-7.tar.gz"
     }
   }
 }
