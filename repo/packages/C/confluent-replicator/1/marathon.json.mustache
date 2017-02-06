@@ -1,0 +1,67 @@
+{
+  "id": "/{{connect.name}}",
+  "instances": {{connect.instances}},
+  "cpus": {{connect.cpus}},
+  "mem": {{connect.mem}},
+  "maintainer": "partner-support@confluent.io", 
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}",
+	  "forcePullImage": true,
+      "network": "BRIDGE",    
+      "portMappings": [ {
+          "containerPort": 8083,
+          "hostPort": 0,
+          "protocol": "tcp",
+          "labels": {
+            "VIP_0": "{{connect.name}}:8083"
+          }
+      } ]
+    }
+  },
+  "portDefinitions": [ {
+    "name": "{{connect.name}}",
+    "port": 8083,
+    "protocol": "tcp",
+    "labels": {
+      "VIP_0": "{{connect.name}}:8083"
+    }
+  } ],
+  "env": {
+    "CONNECT_BOOTSTRAP_SERVERS": "broker.{{connect.kafka-service}}.l4lb.thisdcos.directory:9092",
+    "CONNECT_REST_PORT": "8083",
+    "CONNECT_GROUP_ID": "dcos-{{connect.name}}-group",
+    "CONNECT_CONFIG_STORAGE_TOPIC": "dcos-{{connect.name}}-configs",
+    "CONNECT_OFFSET_STORAGE_TOPIC": "dcos-{{connect.name}}-offsets",
+    "CONNECT_STATUS_STORAGE_TOPIC": "dcos-{{connect.name}}-status",
+	"CONNECT_KEY_CONVERTER" : "io.confluent.connect.replicator.util.ByteArrayConverter",
+	"CONNECT_VALUE_CONVERTER" : "io.confluent.connect.replicator.util.ByteArrayConverter",
+	"CONNECT_INTERNAL_KEY_CONVERTER" : "org.apache.kafka.connect.json.JsonConverter",
+	"CONNECT_INTERNAL_VALUE_CONVERTER" : "org.apache.kafka.connect.json.JsonConverter",
+    "CONNECT_PRODUCER_INTERCEPTOR_CLASSES" : "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor",
+    "CONNECT_CONSUMER_INTERCEPTOR_CLASSES" : "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor",
+    "CONNECT_ZOOKEEPER_CONNECT": "{{connect.zookeeper-connect}}",
+    "KAFKA_HEAP_OPTS": "-Xmx{{connect.heap}}M"
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/",
+      "gracePeriodSeconds": 60,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+	  "ignoreHttp1xx": false
+	}
+  ],
+  "acceptedResourceRoles": [
+    "{{connect.role}}"
+  ],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{connect.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  }
+}
