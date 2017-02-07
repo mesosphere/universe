@@ -6,14 +6,14 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "registry-agent.instana.io/instana/agent:latest",
+      "image": "{{resource.assets.container.docker.8cac606fe0cd}}",
       "forcePullImage": true,
       "privileged": true,
       "network": "HOST",
       "parameters": [
         {
           "key": "name",
-          "value": "instana"
+          "value": "instana-agent"
         },
         {
           "key": "env",
@@ -30,39 +30,54 @@
         {
           "key": "env",
           "value": "INSTANA_PORT={{instana-agent.agent_endpoint_port}}"
-        }
-      ],
-      "volumes": [
+        },
+        { 
+          "key": "pid",
+          "value": "host"
+        }, 
         {
-          "containerPath": "/var/run/docker.sock",
-          "hostPath": "/var/run/docker.sock",
-          "mode": "RW"
+          "key": "ipc", 
+          "value": "host" 
         }
       ]
-    }
+    },
+    "volumes": [
+      {
+        "containerPath": "/var/run/docker.sock",
+        "hostPath": "/var/run/docker.sock",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/sys",
+        "hostPath": "/sys",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/proc",
+        "hostPath": "/proc",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/var/log",
+        "hostPath": "/var/log",
+        "mode": "RW"
+      }
+    ]
   },
   "healthChecks": [
     {
-      "port": 42699,
-      "path": "/version",
-      "protocol": "HTTP",
-      "gracePeriodSeconds": 300,
-      "intervalSeconds": 60,
-      "timeoutSeconds": 20,
+      "protocol": "COMMAND",
+      "command": { "value": "curl -f -X GET http://127.0.0.1:42699/version" },
       "maxConsecutiveFailures": 3
     }
+  ],   
+  "constraints": [
+    ["hostname", "UNIQUE"]
   ],
-  "upgradeStrategy":{
-    "minimumHealthCapacity": 0,
-    "maximumOverCapacity": 0
-  },
   "labels": {
     "DCOS_PACKAGE_FRAMEWORK_NAME": "{{instana-agent.framework_name}}",
     "DCOS_SERVICE_NAME": "{{instana-agent.framework_name}}",
     "DCOS_SERVICE_SCHEME": "http",
     "DCOS_SERVICE_PORT_INDEX": "0"
-  },
-  "uris": [
-    "{{resource.assets.uris.docker}}"
-  ]
+  }
 }

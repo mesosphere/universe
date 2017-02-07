@@ -46,12 +46,12 @@
         },
         "agent_endpoint": {
           "default": "saas-us-west-2.instana.io",
-          "description": "Instana SaaS/On Premise monitoring endpoint URl.",
+          "description": "Instana-SaaS endpoint URl or on-premise cluster hostname.",
           "type": "string"
         },
         "agent_endpoint_port": {
           "default": 443,
-          "description": "Instana SaaS/On Premise monitoring endpoint port.",
+          "description": "Instana SaaS/On Premise monitoring endpoint port (port 1444 if you're an onprem customer!).",
           "minimum": 443,
           "type": "integer"
         }
