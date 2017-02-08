@@ -6,7 +6,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "{{resource.assets.container.docker.14b28c562da2}}",
+      "image": "{{resource.assets.container.docker.instana-agent}}",
       "forcePullImage": true,
       "privileged": true,
       "network": "HOST",
@@ -53,9 +53,9 @@
         "mode": "RO"
       },
       {
-        "containerPath": "/proc",
-        "hostPath": "/proc",
-        "mode": "RO"
+        "containerPath": "/dev",
+        "hostPath": "/dev",
+        "mode": "RW"
       },
       {
         "containerPath": "/var/log",
@@ -67,10 +67,13 @@
   "healthChecks": [
     {
       "protocol": "COMMAND",
-      "command": { "value": "curl -f -X GET http://127.0.0.1:42699/version" },
+      "command": { "value": "curl http://127.0.0.1:42699/version" },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
       "maxConsecutiveFailures": 3
     }
-  ],   
+  ],
   "constraints": [
     ["hostname", "UNIQUE"]
   ],
