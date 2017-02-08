@@ -1,0 +1,17 @@
+{
+  "description": "Elasticsearch 5, Kibana 5, and X-Pack",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.7",
+  "name": "elastic",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "elastic post install notes.",
+  "postUninstallNotes": "elastic post uninstall notes",
+  "selected": true,
+  "tags": [
+    "kibana",
+    "elasticsearch",
+    "x-pack"
+  ],
+  "version": "1.0.0-5.1.2"
+}
