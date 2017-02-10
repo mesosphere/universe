@@ -1,0 +1,213 @@
+{
+    "id": "{{service.name}}",
+    "cpus": {{service.cpus}},
+    "mem": {{service.mem}},
+    "instances": 1,
+    "env": {
+        {{#service.basePath}}"GERRIT_gerrit_basePath": "{{service.basePath}}",{{/service.basePath}}
+        {{#service.canonicalWebUrl}}"GERRIT_gerrit_canonicalWebUrl": "{{service.canonicalWebUrl}}",{{/service.canonicalWebUrl}}
+        {{#service.canonicalGitUrl}}"GERRIT_gerrit_canonicalGitUrl": "{{service.canonicalGitUrl}}",{{/service.canonicalGitUrl}}
+        {{#service.editGpgKeys}}"GERRIT_gerrit_editGpgKeys": "{{service.editGpgKeys}}",{{/service.editGpgKeys}}
+        {{#service.installCommitMsgHookCommand}}"GERRIT_gerrit_installCommitMsgHookCommand": "{{service.installCommitMsgHookCommand}}",{{/service.installCommitMsgHookCommand}}
+        {{#service.gitHttpUrl}}"GERRIT_gerrit_gitHttpUrl": "{{service.gitHttpUrl}}",{{/service.gitHttpUrl}}
+        {{#service.reportBugUrl}}"GERRIT_gerrit_reportBugUrl": "{{service.reportBugUrl}}",{{/service.reportBugUrl}}
+        {{#service.reportBugText}}"GERRIT_gerrit_reportBugText": "{{service.reportBugText}}",{{/service.reportBugText}}
+        {{#service.disableReverseDnsLookup}}"GERRIT_gerrit_disableReverseDnsLookup": "{{service.disableReverseDnsLookup}}",{{/service.disableReverseDnsLookup}}
+        {{#accounts.visibility}}"GERRIT_accounts_visibility": "{{accounts.visibility}}",{{/accounts.visibility}}
+        {{#auth.type}}"GERRIT_auth_type": "{{auth.type}}",{{/auth.type}}
+        {{#auth.allowedOpenID}}"GERRIT_auth_allowedOpenID": "{{auth.allowedOpenID}}",{{/auth.allowedOpenID}}
+        {{#auth.trustedOpenID}}"GERRIT_auth_trustedOpenID": "{{auth.trustedOpenID}}",{{/auth.trustedOpenID}}
+        {{#auth.openIdDomain}}"GERRIT_auth_openIdDomain": "{{auth.openIdDomain}}",{{/auth.openIdDomain}}
+        {{#auth.maxOpenIdSessionAge}}"GERRIT_auth_maxOpenIdSessionAge": "{{auth.maxOpenIdSessionAge}}",{{/auth.maxOpenIdSessionAge}}
+        {{#auth.openIdSsoUrl}}"GERRIT_auth_openIdSsoUrl": "{{auth.openIdSsoUrl}}",{{/auth.openIdSsoUrl}}
+        {{#auth.httpHeader}}"GERRIT_auth_httpHeader": "{{auth.httpHeader}}",{{/auth.httpHeader}}
+        {{#auth.httpDisplaynameHeader}}"GERRIT_auth_httpDisplaynameHeader": "{{auth.httpDisplaynameHeader}}",{{/auth.httpDisplaynameHeader}}
+        {{#auth.httpEmailHeader}}"GERRIT_auth_httpEmailHeader": "{{auth.httpEmailHeader}}",{{/auth.httpEmailHeader}}
+        {{#auth.httpExternalIdHeader}}"GERRIT_auth_httpExternalIdHeader": "{{auth.httpExternalIdHeader}}",{{/auth.httpExternalIdHeader}}
+        {{#auth.loginUrl}}"GERRIT_auth_loginUrl": "{{auth.loginUrl}}",{{/auth.loginUrl}}
+        {{#auth.loginText}}"GERRIT_auth_loginText": "{{auth.loginText}}",{{/auth.loginText}}
+        {{#auth.registerPageUrl}}"GERRIT_auth_registerPageUrl": "{{auth.registerPageUrl}}",{{/auth.registerPageUrl}}
+        {{#auth.logoutUrl}}"GERRIT_auth_logoutUrl": "{{auth.logoutUrl}}",{{/auth.logoutUrl}}
+        {{#auth.registerUrl}}"GERRIT_auth_registerUrl": "{{auth.registerUrl}}",{{/auth.registerUrl}}
+        {{#auth.registerText}}"GERRIT_auth_registerText": "{{auth.registerText}}",{{/auth.registerText}}
+        {{#auth.editFullNameUrl}}"GERRIT_auth_editFullNameUrl": "{{auth.editFullNameUrl}}",{{/auth.editFullNameUrl}}
+        {{#auth.httpPasswordUrl}}"GERRIT_auth_httpPasswordUrl": "{{auth.httpPasswordUrl}}",{{/auth.httpPasswordUrl}}
+        {{#auth.cookiePath}}"GERRIT_auth_cookiePath": "{{auth.cookiePath}}",{{/auth.cookiePath}}
+        {{#auth.cookieSecure}}"GERRIT_auth_cookieSecure": "{{auth.cookieSecure}}",{{/auth.cookieSecure}}
+        {{#auth.emailFormat}}"GERRIT_auth_emailFormat": "{{auth.emailFormat}}",{{/auth.emailFormat}}
+        {{#auth.contributorAgreements}}"GERRIT_auth_contributorAgreements": "{{auth.contributorAgreements}}",{{/auth.contributorAgreements}}
+        {{#auth.gitBasicAuth}}"GERRIT_auth_gitBasicAuth": "{{auth.gitBasicAuth}}",{{/auth.gitBasicAuth}}
+        {{#auth.userNameToLowerCase}}"GERRIT_auth_userNameToLowerCase": "{{auth.userNameToLowerCase}}",{{/auth.userNameToLowerCase}}
+        {{#auth.enableRunAs}}"GERRIT_auth_enableRunAs": "{{auth.enableRunAs}}",{{/auth.enableRunAs}}
+        {{#auth.allowRegisterNewEmail}}"GERRIT_auth_allowRegisterNewEmail": "{{auth.allowRegisterNewEmail}}",{{/auth.allowRegisterNewEmail}}
+        {{#container.heapLimit}}"GERRIT_container_heapLimit": "{{container.heapLimit}}",{{/container.heapLimit}}
+        {{#container.javaOptions}}"GERRIT_container_javaOptions": "{{container.javaOptions}}",{{/container.javaOptions}}
+        {{#container.daemonOpt}}"GERRIT_container_daemonOpt": "{{container.daemonOpt}}",{{/container.daemonOpt}}
+        {{#container.slave}}"GERRIT_container_slave": "{{container.slave}}",{{/container.slave}}
+        {{#database.type}}"GERRIT_database_type": "{{database.type}}",{{/database.type}}
+        {{#database.hostname}}"GERRIT_database_hostname": "{{database.hostname}}",{{/database.hostname}}
+        {{#database.port}}"GERRIT_database_port": "{{database.port}}",{{/database.port}}
+        {{#database.database}}"GERRIT_database_database": "{{database.database}}",{{/database.database}}
+        {{#database.username}}"GERRIT_database_username": "{{database.username}}",{{/database.username}}
+        {{#database.password}}"GERRIT_database_password": "{{database.password}}",{{/database.password}}
+        {{#database.driver}}"GERRIT_database_driver": "{{database.driver}}",{{/database.driver}}
+        {{#database.url}}"GERRIT_database_url": "{{database.url}}",{{/database.url}}
+        {{#database.connectionPool}}"GERRIT_database_connectionPool": "{{database.connectionPool}}",{{/database.connectionPool}}
+        {{#database.poolLimit}}"GERRIT_database_poolLimit": "{{database.poolLimit}}",{{/database.poolLimit}}
+        {{#database.poolMinIdle}}"GERRIT_database_poolMinIdle": "{{database.poolMinIdle}}",{{/database.poolMinIdle}}
+        {{#database.poolMaxIdle}}"GERRIT_database_poolMaxIdle": "{{database.poolMaxIdle}}",{{/database.poolMaxIdle}}
+        {{#database.poolMaxWait}}"GERRIT_database_poolMaxWait": "{{database.poolMaxWait}}",{{/database.poolMaxWait}}
+        {{#gitweb.cgi}}"GERRIT_gitweb_cgi": "{{gitweb.cgi}}",{{/gitweb.cgi}}
+        {{#gitweb.url}}"GERRIT_gitweb_url": "{{gitweb.url}}",{{/gitweb.url}}
+        {{#gitweb.type}}"GERRIT_gitweb_type": "{{gitweb.type}}",{{/gitweb.type}}
+        {{#gitweb.revision}}"GERRIT_gitweb_revision": "{{gitweb.revision}}",{{/gitweb.revision}}
+        {{#gitweb.project}}"GERRIT_gitweb_project": "{{gitweb.project}}",{{/gitweb.project}}
+        {{#gitweb.branch}}"GERRIT_gitweb_branch": "{{gitweb.branch}}",{{/gitweb.branch}}
+        {{#gitweb.roottree}}"GERRIT_gitweb_roottree": "{{gitweb.roottree}}",{{/gitweb.roottree}}
+        {{#gitweb.file}}"GERRIT_gitweb_file": "{{gitweb.file}}",{{/gitweb.file}}
+        {{#gitweb.filehistory}}"GERRIT_gitweb_filehistory": "{{gitweb.filehistory}}",{{/gitweb.filehistory}}
+        {{#gitweb.linkname}}"GERRIT_gitweb_linkname": "{{gitweb.linkname}}",{{/gitweb.linkname}}
+        {{#gitweb.pathSeparator}}"GERRIT_gitweb_pathSeparator": "{{gitweb.pathSeparator}}",{{/gitweb.pathSeparator}}
+        {{#gitweb.urlEncode}}"GERRIT_gitweb_urlEncode": "{{gitweb.urlEncode}}",{{/gitweb.urlEncode}}
+        {{#gitweb.linkDrafts}}"GERRIT_gitweb_linkDrafts": "{{gitweb.linkDrafts}}",{{/gitweb.linkDrafts}}
+        {{#http.proxy}}"GERRIT_http_proxy": "{{http.proxy}}",{{/http.proxy}}
+        {{#http.proxyUsername}}"GERRIT_http_proxyUsername": "{{http.proxyUsername}}",{{/http.proxyUsername}}
+        {{#http.proxyPassword}}"GERRIT_http_proxyPassword": "{{http.proxyPassword}}",{{/http.proxyPassword}}
+        {{#http.addUserAsRequestAttribute}}"GERRIT_http_addUserAsRequestAttribute": "{{http.addUserAsRequestAttribute}}",{{/http.addUserAsRequestAttribute}}
+        {{#httpd.listenUrl}}"GERRIT_httpd_listenUrl": "{{httpd.listenUrl}}",{{/httpd.listenUrl}}
+        {{#httpd.reuseAddress}}"GERRIT_httpd_reuseAddress": "{{httpd.reuseAddress}}",{{/httpd.reuseAddress}}
+        {{#httpd.requestHeaderSize}}"GERRIT_httpd_requestHeaderSize": "{{httpd.requestHeaderSize}}",{{/httpd.requestHeaderSize}}
+        {{#httpd.sslCrl}}"GERRIT_httpd_sslCrl": "{{httpd.sslCrl}}",{{/httpd.sslCrl}}
+        {{#httpd.sslKeyStore}}"GERRIT_httpd_sslKeyStore": "{{httpd.sslKeyStore}}",{{/httpd.sslKeyStore}}
+        {{#httpd.sslKeyPassword}}"GERRIT_httpd_sslKeyPassword": "{{httpd.sslKeyPassword}}",{{/httpd.sslKeyPassword}}
+        {{#httpd.requestLog}}"GERRIT_httpd_requestLog": "{{httpd.requestLog}}",{{/httpd.requestLog}}
+        {{#httpd.acceptorThreads}}"GERRIT_httpd_acceptorThreads": "{{httpd.acceptorThreads}}",{{/httpd.acceptorThreads}}
+        {{#httpd.minThreads}}"GERRIT_httpd_minThreads": "{{httpd.minThreads}}",{{/httpd.minThreads}}
+        {{#httpd.maxThreads}}"GERRIT_httpd_maxThreads": "{{httpd.maxThreads}}",{{/httpd.maxThreads}}
+        {{#httpd.maxQueued}}"GERRIT_httpd_maxQueued": "{{httpd.maxQueued}}",{{/httpd.maxQueued}}
+        {{#httpd.maxWait}}"GERRIT_httpd_maxWait": "{{httpd.maxWait}}",{{/httpd.maxWait}}
+        {{#httpd.registerMBeans}}"GERRIT_httpd_registerMBeans": "{{httpd.registerMBeans}}",{{/httpd.registerMBeans}}
+        {{#ldap.server}}"GERRIT_ldap_server": "{{ldap.server}}",{{/ldap.server}}
+        {{#ldap.sslVerify}}"GERRIT_ldap_sslVerify": "{{ldap.sslVerify}}",{{/ldap.sslVerify}}
+        {{#ldap.groupsVisibleToAll}}"GERRIT_ldap_groupsVisibleToAll": "{{ldap.groupsVisibleToAll}}",{{/ldap.groupsVisibleToAll}}
+        {{#ldap.username}}"GERRIT_ldap_username": "{{ldap.username}}",{{/ldap.username}}
+        {{#ldap.password}}"GERRIT_ldap_password": "{{ldap.password}}",{{/ldap.password}}
+        {{#ldap.referral}}"GERRIT_ldap_referral": "{{ldap.referral}}",{{/ldap.referral}}
+        {{#ldap.readTimeout}}"GERRIT_ldap_readTimeout": "{{ldap.readTimeout}}",{{/ldap.readTimeout}}
+        {{#ldap.accountBase}}"GERRIT_ldap_accountBase": "{{ldap.accountBase}}",{{/ldap.accountBase}}
+        {{#ldap.accountScope}}"GERRIT_ldap_accountScope": "{{ldap.accountScope}}",{{/ldap.accountScope}}
+        {{#ldap.accountPattern}}"GERRIT_ldap_accountPattern": "{{ldap.accountPattern}}",{{/ldap.accountPattern}}
+        {{#ldap.accountFullName}}"GERRIT_ldap_accountFullName": "{{ldap.accountFullName}}",{{/ldap.accountFullName}}
+        {{#ldap.accountEmailAddress}}"GERRIT_ldap_accountEmailAddress": "{{ldap.accountEmailAddress}}",{{/ldap.accountEmailAddress}}
+        {{#ldap.accountSshUserName}}"GERRIT_ldap_accountSshUserName": "{{ldap.accountSshUserName}}",{{/ldap.accountSshUserName}}
+        {{#ldap.accountMemberField}}"GERRIT_ldap_accountMemberField": "{{ldap.accountMemberField}}",{{/ldap.accountMemberField}}
+        {{#ldap.fetchMemberOfEagerly}}"GERRIT_ldap_fetchMemberOfEagerly": "{{ldap.fetchMemberOfEagerly}}",{{/ldap.fetchMemberOfEagerly}}
+        {{#ldap.groupBase}}"GERRIT_ldap_groupBase": "{{ldap.groupBase}}",{{/ldap.groupBase}}
+        {{#ldap.groupScope}}"GERRIT_ldap_groupScope": "{{ldap.groupScope}}",{{/ldap.groupScope}}
+        {{#ldap.groupPattern}}"GERRIT_ldap_groupPattern": "{{ldap.groupPattern}}",{{/ldap.groupPattern}}
+        {{#ldap.groupMemberPattern}}"GERRIT_ldap_groupMemberPattern": "{{ldap.groupMemberPattern}}",{{/ldap.groupMemberPattern}}
+        {{#ldap.groupName}}"GERRIT_ldap_groupName": "{{ldap.groupName}}",{{/ldap.groupName}}
+        {{#ldap.localUsernameToLowerCase}}"GERRIT_ldap_localUsernameToLowerCase": "{{ldap.localUsernameToLowerCase}}",{{/ldap.localUsernameToLowerCase}}
+        {{#ldap.useConnectionPooling}}"GERRIT_ldap_useConnectionPooling": "{{ldap.useConnectionPooling}}",{{/ldap.useConnectionPooling}}
+        {{#ldap.connectTimeout}}"GERRIT_ldap_connectTimeout": "{{ldap.connectTimeout}}",{{/ldap.connectTimeout}}
+        {{#receive.allowGroup}}"GERRIT_receive_allowGroup": "{{receive.allowGroup}}",{{/receive.allowGroup}}
+        {{#receive.threadPoolSize}}"GERRIT_receive_threadPoolSize": "{{receive.threadPoolSize}}",{{/receive.threadPoolSize}}
+        {{#sendemail.enable}}"GERRIT_sendemail_enable": "{{sendemail.enable}}",{{/sendemail.enable}}
+        {{#sendemail.connectTimeout}}"GERRIT_sendemail_connectTimeout": "{{sendemail.connectTimeout}}",{{/sendemail.connectTimeout}}
+        {{#sendemail.threadPoolSize}}"GERRIT_sendemail_threadPoolSize": "{{sendemail.threadPoolSize}}",{{/sendemail.threadPoolSize}}
+        {{#sendemail.from}}"GERRIT_sendemail_from": "{{sendemail.from}}",{{/sendemail.from}}
+        {{#sendemail.smtpServer}}"GERRIT_sendemail_smtpServer": "{{sendemail.smtpServer}}",{{/sendemail.smtpServer}}
+        {{#sendemail.smtpServerPort}}"GERRIT_sendemail_smtpServerPort": "{{sendemail.smtpServerPort}}",{{/sendemail.smtpServerPort}}
+        {{#sendemail.smtpEncryption}}"GERRIT_sendemail_smtpEncryption": "{{sendemail.smtpEncryption}}",{{/sendemail.smtpEncryption}}
+        {{#sendemail.sslVerify}}"GERRIT_sendemail_sslVerify": "{{sendemail.sslVerify}}",{{/sendemail.sslVerify}}
+        {{#sendemail.smtpUser}}"GERRIT_sendemail_smtpUser": "{{sendemail.smtpUser}}",{{/sendemail.smtpUser}}
+        {{#sendemail.smtpPass}}"GERRIT_sendemail_smtpPass": "{{sendemail.smtpPass}}",{{/sendemail.smtpPass}}
+        {{#sendemail.allowrcpt}}"GERRIT_sendemail_allowrcpt": "{{sendemail.allowrcpt}}",{{/sendemail.allowrcpt}}
+        {{#sendemail.includeDiff}}"GERRIT_sendemail_includeDiff": "{{sendemail.includeDiff}}",{{/sendemail.includeDiff}}
+        {{#sendemail.maximumDiffSize}}"GERRIT_sendemail_maximumDiffSize": "{{sendemail.maximumDiffSize}}",{{/sendemail.maximumDiffSize}}
+        {{#sshd.enableCompression}}"GERRIT_sshd_enableCompression": "{{sshd.enableCompression}}",{{/sshd.enableCompression}}
+        {{#sshd.listenAddress}}"GERRIT_sshd_listenAddress": "{{sshd.listenAddress}}",{{/sshd.listenAddress}}
+        {{#sshd.advertisedAddress}}"GERRIT_sshd_advertisedAddress": "{{sshd.advertisedAddress}}",{{/sshd.advertisedAddress}}
+        {{#sshd.tcpKeepAlive}}"GERRIT_sshd_tcpKeepAlive": "{{sshd.tcpKeepAlive}}",{{/sshd.tcpKeepAlive}}
+        {{#sshd.threads}}"GERRIT_sshd_threads": "{{sshd.threads}}",{{/sshd.threads}}
+        {{#sshd.batchThreads}}"GERRIT_sshd_batchThreads": "{{sshd.batchThreads}}",{{/sshd.batchThreads}}
+        {{#sshd.streamThreads}}"GERRIT_sshd_streamThreads": "{{sshd.streamThreads}}",{{/sshd.streamThreads}}
+        {{#sshd.commandStartThreads}}"GERRIT_sshd_commandStartThreads": "{{sshd.commandStartThreads}}",{{/sshd.commandStartThreads}}
+        {{#sshd.maxAuthTries}}"GERRIT_sshd_maxAuthTries": "{{sshd.maxAuthTries}}",{{/sshd.maxAuthTries}}
+        {{#sshd.loginGraceTime}}"GERRIT_sshd_loginGraceTime": "{{sshd.loginGraceTime}}",{{/sshd.loginGraceTime}}
+        {{#sshd.idleTimeout}}"GERRIT_sshd_idleTimeout": "{{sshd.idleTimeout}}",{{/sshd.idleTimeout}}
+        {{#sshd.maxConnectionsPerUser}}"GERRIT_sshd_maxConnectionsPerUser": "{{sshd.maxConnectionsPerUser}}",{{/sshd.maxConnectionsPerUser}}
+        {{#sshd.cipher}}"GERRIT_sshd_cipher": "{{sshd.cipher}}",{{/sshd.cipher}}
+        {{#sshd.mac}}"GERRIT_sshd_mac": "{{sshd.mac}}",{{/sshd.mac}}
+        {{#sshd.requestLog}}"GERRIT_sshd_requestLog": "{{sshd.requestLog}}",{{/sshd.requestLog}}
+        {{#sshd.rekeyBytesLimit}}"GERRIT_sshd_rekeyBytesLimit": "{{sshd.rekeyBytesLimit}}",{{/sshd.rekeyBytesLimit}}
+        {{#sshd.rekeyTimeLimit}}"GERRIT_sshd_rekeyTimeLimit": "{{sshd.rekeyTimeLimit}}",{{/sshd.rekeyTimeLimit}}
+        {{#theme.backgroundColor}}"GERRIT_theme_backgroundColor": "{{theme.backgroundColor}}",{{/theme.backgroundColor}}
+        {{#theme.topMenuColor}}"GERRIT_theme_topMenuColor": "{{theme.topMenuColor}}",{{/theme.topMenuColor}}
+        {{#theme.textColor}}"GERRIT_theme_textColor": "{{theme.textColor}}",{{/theme.textColor}}
+        {{#theme.trimColor}}"GERRIT_theme_trimColor": "{{theme.trimColor}}",{{/theme.trimColor}}
+        {{#theme.selectionColor}}"GERRIT_theme_selectionColor": "{{theme.selectionColor}}",{{/theme.selectionColor}}
+        {{#theme.changeTableOutdatedColor}}"GERRIT_theme_changeTableOutdatedColor": "{{theme.changeTableOutdatedColor}}",{{/theme.changeTableOutdatedColor}}
+        {{#theme.tableOddRowColor}}"GERRIT_theme_tableOddRowColor": "{{theme.tableOddRowColor}}",{{/theme.tableOddRowColor}}
+        {{#theme.tableEvenRowColor}}"GERRIT_theme_tableEvenRowColor": "{{theme.tableEvenRowColor}}",{{/theme.tableEvenRowColor}}
+        {{#user.name}}"GERRIT_user_name": "{{user.name}}",{{/user.name}}
+        {{#user.email}}"GERRIT_user_email": "{{user.email}}",{{/user.email}}
+        {{#user.anonymousCoward}}"GERRIT_user_anonymousCoward": "{{user.anonymousCoward}}",{{/user.anonymousCoward}}
+        "_DUMMY": ""
+    },
+    "ports": [0, 0],
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            {{#advanced.docker-image}}"image": "{{advanced.docker-image}}",{{/advanced.docker-image}}
+            {{^advanced.docker-image}}
+            "image": "{{resource.assets.container.docker.mesosphere-gerrit}}",{{/advanced.docker-image}}
+            "network" : "BRIDGE"
+        },
+        "volumes": [
+            {
+                "containerPath": "/opt/gerrit",
+                "hostPath": "{{service.name}}-site",
+                "mode": "RW"
+            },
+            {
+                "containerPath": "{{service.name}}-site",
+                "mode": "RW",
+                "persistent": {
+                    "size": 10240
+                }
+            }
+        ]
+    },
+    {{#advanced.docker-credentials-uri}}
+    "fetch": [
+        {
+            "uri": "{{advanced.docker-credentials-uri}}",
+            "executable": false,
+            "extract": true
+        }
+    ],{{/advanced.docker-credentials-uri}}
+    "acceptedResourceRoles": [ "{{advanced.role}}" ],
+    "healthChecks": [
+        {
+            "path": "/",
+            "portIndex": 0,
+            "protocol": "HTTP",
+            "gracePeriodSeconds": 30,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3
+        }
+    ],
+    "labels": {
+        "MARATHON_SINGLE_INSTANCE_APP": "true",
+        "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "DCOS_SERVICE_PORT_INDEX": "0",
+        "DCOS_SERVICE_SCHEME": "http"
+    },
+    "upgradeStrategy":{
+        "minimumHealthCapacity": 0,
+        "maximumOverCapacity": 0
+    }
+}

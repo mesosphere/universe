@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://gerrit-review.googlesource.com/static/diffy1.cache.png",
+    "icon-medium": "https://gerrit-review.googlesource.com/static/diffy1.cache.png",
+    "icon-large": "https://gerrit-review.googlesource.com/static/diffy1.cache.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "mesosphere-gerrit": "mesosphere/gerrit:0.1.0-2.12.3"
+      }
+    }
+  }
+}
