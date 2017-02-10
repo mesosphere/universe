@@ -112,6 +112,9 @@
     "constraints": [["hostname", "UNIQUE"]]
     },
 {{/high-availability.enabled}}
+{{^high-availability.enabled}}
+    "constraints": [["hostname", "CLUSTER", "{{pro.local-volumes.pinned-hostname}}"]],
+{{/high-availability.enabled}}
 "healthChecks": [
 {
 "gracePeriodSeconds": 120,
