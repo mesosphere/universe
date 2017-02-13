@@ -1,0 +1,43 @@
+{
+  "images": {
+    "icon-small": "http://riak-tools.s3.amazonaws.com/riak-mesos/riak-mesos-small.png",
+    "icon-medium": "http://riak-tools.s3.amazonaws.com/riak-mesos/riak-mesos-medium.png",
+    "icon-large": "http://riak-tools.s3.amazonaws.com/riak-mesos/riak-mesos-large.png",
+    "screenshots": [
+      "http://riak-tools.s3.amazonaws.com/riak-mesos/riak-mesos-screenshot.png"
+    ]
+  },
+  "assets": {
+    "uris": {
+      "scheduler": "https://github.com/basho-labs/riak-mesos-scheduler/releases/download/2.0.3/riak_mesos_scheduler-2.0.3-mesos-1.0.0-centos-7.tar.gz",
+      "executor": "https://github.com/basho-labs/riak-mesos-executor/releases/download/1.7.1/riak_mesos_executor-1.7.1-mesos-1.0.0-centos-7.tar.gz",
+      "patches": "https://github.com/basho-labs/riak-mesos-executor/releases/download/1.7.1/riak_erlpmd_patches-rel-1.7.1-mesos-1.0.0-centos-7.tar.gz",
+      "explorer": "https://github.com/basho-labs/riak_explorer/releases/download/1.4.1/riak_explorer-1.4.1.relpatch-centos-7.tar.gz",
+      "director": "https://github.com/basho-labs/riak-mesos-director/releases/download/1.0.1/riak_mesos_director-1.0.1-centos-7.tar.gz",
+      "riak-kv-2-2": "https://github.com/basho-labs/riak-mesos/releases/download/2.0.0-rc4/riak-2.2.0-centos-7.tar.gz",
+      "riak-ts-1-5": "https://github.com/basho-labs/riak-mesos/releases/download/2.0.0-rc4/riak_ts-1.5.1-centos-7.tar.gz"
+    }
+  },
+  "cli":{
+    "binaries": {
+      "darwin":{
+        "x86-64":{
+          "contentHash":[
+            {"algo": "sha256", "value": "1bb661733ad2898f6714f4d8b7065d89a1f2afe1720f77f9552a3f7d6851daae"}
+          ],
+          "kind": "executable",
+          "url":"https://github.com/basho-labs/riak-mesos-tools/releases/download/2.0.0/dcos-riak-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {"algo": "sha256", "value": "15120f78025df04a7ee954823757dff49249abe18b775652444274aa20e93408"}
+          ],
+          "kind": "executable",
+          "url": "https://github.com/basho-labs/riak-mesos-tools/releases/download/2.0.0/dcos-riak-linux"
+        }
+      }
+    }
+  }
+}
