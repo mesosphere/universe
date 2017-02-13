@@ -6,7 +6,7 @@
       "type": "object",
       "properties": {
         "name": {
-          "description": "The name of this DC/OS service.",
+          "description": "The name of this DC/OS service. Note that the executor type will be appended to this name.",
           "type": "string",
           "default": "gitlab-runner"
         },
@@ -70,7 +70,7 @@
       "type": "object",
       "properties": {
         "executor": {
-          "description": "The executor type (supported are shell or docker)",
+          "description": "The executor type (supported are shell or docker). This is appended to the service name.",
           "enum": ["shell", "docker"],
           "default": "shell"
         },
