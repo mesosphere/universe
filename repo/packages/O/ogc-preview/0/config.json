@@ -1,0 +1,54 @@
+{
+	"type": "object",
+	"description": "OGC Preview Service properties",
+	"properties": {
+		"ogc-preview": {
+			"description": "OGC Preview configuration properties.",
+			"properties": {
+				"framework-name": {
+					"type": "string",
+					"description": "Mesos Framework Name",
+					"default": "ogc-preview"
+				},
+				"haproxy-vhost": {
+					"type": "string",
+					"description": "External address for access to the OGC Preview server. This should be added as an A entry in your DNS.",
+					"default": "ogcpreview.marathon.mesos"
+				},
+				"config-dir": {
+					"type": "string",
+					"description": "Host location containing OGC Preview configuration over-rides (announcements.json, opConfig.js, etc.). This setting should be left blank unless custom settings are required."
+				}
+			},
+			"required": [
+				"framework-name",
+				"haproxy-vhost"
+			],
+			"type": "object"
+		},
+		"geoserver": {
+			"description": "Settings used to connect Apache reverse proxy entries to backing GeoServer.",
+			"properties": {
+				"hostname": {
+					"type": "string",
+					"description": "Cluster internal addressable location of backing GeoServer. Defaults to the marathon-lb hostname to route to service port in a clustered GeoServer configuration.",
+					"default": "marathon-lb.marathon.mesos"
+				},
+        "port": {
+					"type": "integer",
+					"description": "Service port of the GeoServer instance.",
+					"default": 8080
+				}
+			},
+			"required": [
+				"hostname",
+				"port"
+			],
+			"type": "object"
+		}
+	},
+	"required": [
+		"ogc-preview",
+		"geoserver"
+	]
+}
