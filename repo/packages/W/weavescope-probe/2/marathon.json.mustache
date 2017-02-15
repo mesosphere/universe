@@ -1,0 +1,57 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{weavescope.probe.cpus}},
+  "mem": {{weavescope.probe.mem}},
+  "instances": {{weavescope.probe.instances}},
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/var/run/docker.sock",
+        "hostPath": "/var/run/docker.sock",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}",
+      "network": "HOST",
+      "privileged": true,
+      "parameters": [
+        {
+          "key": "pid",
+          "value": "host"
+        }
+      ],
+      "forcePullImage": false
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": {
+        "value": "/bin/true"
+      },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "args": [
+    "--no-app",
+    "--probe.docker=true",
+{{^weavescope.probe.service_token}}
+    "weavescope.marathon.mesos"
+{{/weavescope.probe.service_token}}
+{{#weavescope.probe.service_token}}
+    "--service-token={{weavescope.probe.service_token}}"
+{{/weavescope.probe.service_token}}
+  ],
+  "acceptedResourceRoles": [ "slave_public", "*" ]
+}
