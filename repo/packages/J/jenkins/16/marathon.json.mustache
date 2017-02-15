@@ -48,7 +48,12 @@
                "containerPath": "/var/jenkins_home",
                "hostPath": "{{storage.host-volume}}/{{service.name}}",
                "mode": "RW"
-           }
+           }{{#security.secret-name}},
+           {
+               "containerPath": "/opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
+               "hostPath": "/opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
+               "mode": "RO"
+           }{{/security.secret-name}}
        ]
    },
    {{#advanced.docker-credentials-uri}}
