@@ -18,6 +18,7 @@
           "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
           "MESOS_MODULES": "file:///opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
           "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+          "LD_LIBRARY_PATH": "/opt/mesosphere/lib",
       {{/security.secret-name}}
       "JENKINS_CONTEXT": "/service/{{service.name}}",
       "JENKINS_MESOS_MASTER": "{{advanced.mesos-master}}",
@@ -50,9 +51,9 @@
                "mode": "RW"
            }{{#security.secret-name}},
            {
-               "containerPath": "/opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
-               "hostPath": "/opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
-               "mode": "RO"
+                "containerPath": "/opt/mesosphere",
+                "hostPath": "/opt/mesosphere",
+                "mode": "RO"
            }{{/security.secret-name}}
        ]
    },
