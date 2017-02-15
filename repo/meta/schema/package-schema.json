@@ -198,7 +198,7 @@
       "properties": {
         "packagingVersion": {
           "type": "string",
-          "enum": ["3.0"]
+          "enum": ["4.0"]
         },
         "name": {
           "type": "string"
@@ -294,7 +294,7 @@
   },
 
   "type": "object",
-  "anyOf": [
+  "oneOf": [
     { "$ref": "#/definitions/v20Package" },
     { "$ref": "#/definitions/v30Package" },
     { "$ref": "#/definitions/v40Package" }
