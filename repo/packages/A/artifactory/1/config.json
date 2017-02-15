@@ -1,0 +1,156 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "Artifactory service properties.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of this DC/OS service.  If running in high-availability mode and this is a secondary node, -secondary will be appended to this name.",
+          "type": "string",
+          "default": "artifactory"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to this instance.",
+          "type": "number",
+          "default": 2.0,
+          "minimum": 1.0
+        },
+        "mem": {
+          "description": "Memory to allocate to this instance.",
+          "type": "number",
+          "default": 2048.0,
+          "minimum": 1024.0
+        },
+        "licenses": {
+          "description": "License for Artifactory Pro or comma separated licenses for Artifactory High Availability.",
+          "type": "string"
+        },
+        "host-volume": {
+          "description": "The location of a volume on the host to be used for persisting Artifactory data. If running Artifactory in HA mode, this volume must be available and mounted on all DC/OS agents.",
+          "type": "string",
+          "default": "/var/artifactory/"
+        },
+        "database": {
+          "description": "Database properties.",
+          "type": "object",
+          "properties": {
+            "connection-string": {
+              "description": "Database connection string.",
+              "type": "string",
+              "default": "jdbc:mysql://mysql.marathon.mesos:3306/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true"
+            },
+            "user": {
+              "description": "Database username.",
+              "type": "string",
+              "default": "jfrogdcos"
+            },
+            "password": {
+              "description": "Database password.",
+              "type": "string",
+              "default": "jfrogdcos"
+            }
+          }
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem",
+        "licenses",
+        "host-volume",
+        "database"
+      ]
+    },
+    "pro": {
+      "description": "Configuration for Artifactory Pro. These do not apply if Artifactory HA is enabled.",
+      "type": "object",
+      "properties": {
+        "local-volumes": {
+          "description": "Local persistent volumes configuration (only used if external persistent volumes are disabled). Local volumes are created on the machine with the hostname specified and Marathon will attempt to re-launch the task on the same machine. Note that if the machine is lost, your data may also be lost.",
+          "type": "object",
+          "properties": {
+            "pinned-hostname": {
+              "description": "A DC/OS agent hostname to run this GitLab instance on (e.g. 10.0.0.1). This must be specified if using local volumes with Artifactory Pro. If this is not specified then the task may relaunch on another node than the one it originally ran on.",
+              "type": "string"
+            }
+          }
+        },
+        "external-volumes": {
+          "description": "External persistent volumes configuration. External persistent volumes are a DC/OS feature that allow your data to be migrated with your task.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Whether to use DC/OS external persistent volumes to persist Artifactory state. By default, this is false.",
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "enabled"
+          ]
+        }
+      },
+      "required": [
+        "local-volumes",
+        "external-volumes"
+      ]
+    },
+    "high-availability": {
+      "description": "Configuration for Artifactory High Availability (HA). If enabled, this will override any Artifactory Pro configuration.",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Whether to deploy Artifactory HA. By default, Artifactory HA is not deployed.",
+          "type": "boolean",
+          "default": false
+        },
+        "network": {
+          "description": "The network on which the Artifactory instances will communicate, in CIDR notation. For example: 192.168.65.0/24",
+          "type": "string"
+        },
+        "secondary": {
+          "description": "Configuration properties for the Artifactory HA secondary node.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Whether this DC/OS service represents the Artifactory HA secondary instance. To run Artifactory HA, you must deploy one primary DC/OS service and one secondary DC/OS service. By default, this is false (i.e. a primary instance).",
+              "type": "boolean",
+              "default": false
+            },
+            "unique-nodes": {
+              "description": "Run secondary instances on unique hosts. By default, this is true.",
+              "type": "boolean",
+              "default": true
+            },
+            "nodes": {
+              "description": "Number of Artifactory Secondary instances for High-Availability. By default, this is 1.",
+              "type": "integer",
+              "default": 1
+            },
+            "name": {
+              "description": "The DC/OS service name of the primary Artifactory instance to route requests to.",
+              "type": "string",
+              "default": "artifactory"
+            },
+            "api-key": {
+              "description": "API key generated by the primary Artifactory. This is necessary for the secondary instances to authenticate against the primary instance.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "enabled"
+          ]
+        }
+      },
+      "required": [
+        "enabled"
+      ]
+    }
+  },
+  "required": [
+    "service",
+    "pro",
+    "high-availability"
+  ]
+}
