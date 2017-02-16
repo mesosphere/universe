@@ -1,0 +1,188 @@
+{
+    "type": "object",
+    "properties": {
+        "riak": {
+            "type": "object",
+            "description": "Configuration properties for the Riak service for DC/OS.",
+            "properties": {
+                "framework-name": {
+                    "type": "string",
+                    "description": "Framework Instance Name.",
+                    "default": "riak"
+                },
+                "hostname": {
+                    "default": "riak.marathon.mesos",
+                    "type": "string",
+                    "description": "Framework HTTP API hostname."
+                },
+                "marathon": {
+                    "type": "string",
+                    "description": "The Marathon URL.",
+                    "default": "marathon.mesos:8080"
+                },
+                "master": {
+                    "type": "string",
+                    "description": "The URL of the Mesos master.",
+                    "default": "leader.mesos:5050"
+                },
+                "zk": {
+                    "type": "string",
+                    "description": "Zookeeper address. Specify in the format host:port.",
+                    "default": "zk-1.zk:2181,zk-2.zk:2181,zk-3.zk:2181,zk-4.zk:2181,zk-5.zk:2181"
+                },
+                "user": {
+                    "type": "string",
+                    "description": "Framework User.",
+                    "default": "root"
+                },
+                "role": {
+                    "type": "string",
+                    "description": "Framework Role.",
+                    "default": "riak"
+                },
+                "instances": {
+                    "type": "number",
+                    "description": "Number of framework instances",
+                    "default": 1
+                },
+                "healthcheck-grace-period-seconds": {
+                    "type": "number",
+                    "description": "Memory requirements",
+                    "default": 300
+                },
+                "healthcheck-interval-seconds": {
+                    "type": "number",
+                    "description": "Memory requirements",
+                    "default": 60
+                },
+                "healthcheck-timeout-seconds": {
+                    "type": "number",
+                    "description": "Memory requirements",
+                    "default": 20
+                },
+                "healthcheck-max-consecutive-failures": {
+                    "type": "number",
+                    "description": "Memory requirements",
+                    "default": 5
+                },
+                "constraints": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "string",
+                                "enum": ["UNIQUE", "CLUSTER", "GROUP_BY", "LIKE", "UNLIKE"]
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ],
+                        "minItems": 2,
+                        "additionalItems": false
+                    },
+                    "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
+                    "default": []
+                },
+                "scheduler": {
+                    "type": "object",
+                    "description": "Requirements for Riak DC/OS Scheduler",
+                    "properties": {
+                        "cpus": {
+                            "type": "number",
+                            "description": "Riak DC/OS Scheduler CPU requirements",
+                            "default": 0.5
+                        },
+                        "mem": {
+                            "type": "number",
+                            "description": "Riak DC/OS Scheduler Memory requirements",
+                            "default": 2048.0
+                        },
+                        "constraints": {
+                            "type": "string",
+                            "default": "[[\"hostname\", \"UNIQUE\"]]",
+                            "description": "Scheduler constraints for Riak node tasks. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE."
+                        }
+                    }
+                },
+                "executor": {
+                    "type": "object",
+                    "description": "Requirements for Riak DC/OS Executor",
+                    "properties": {
+                        "cpus": {
+                            "type": "number",
+                            "description": "Riak DC/OS Executor CPU requirements",
+                            "default": 0.1
+                        },
+                        "mem": {
+                            "type": "number",
+                            "description": "Riak DC/OS Executor Memory requirements",
+                            "default": 512.0
+                        }
+                    }
+                },
+                "node": {
+                    "type": "object",
+                    "description": "Requirements for Riak",
+                    "properties": {
+                        "cpus": {
+                            "type": "number",
+                            "description": "Riak CPU requirements",
+                            "default": 8.0
+                        },
+                        "mem": {
+                            "type": "number",
+                            "description": "Riak Memory requirements",
+                            "default": 16000.0
+                        },
+                        "disk": {
+                            "type": "number",
+                            "description": "Riak Disk requirements",
+                            "default": 200000.0
+                        }
+                    }
+                },
+                "director": {
+                    "type": "object",
+                    "description": "Requirements for Riak DC/OS Director",
+                    "properties": {
+                        "use-public": {
+                            "type": "boolean",
+                            "description": "When true, only deploys director on public agents.",
+                            "default": false
+                        },
+                        "cpus": {
+                            "type": "number",
+                            "description": "Riak DC/OS Director CPU requirements",
+                            "default": 0.5
+                        },
+                        "mem": {
+                            "type": "number",
+                            "description": "Riak Director Memory requirements",
+                            "default": 1024.0
+                        }
+                    }
+                }
+            },
+            "required": [
+                "framework-name",
+                "marathon",
+                "master",
+                "zk",
+                "user",
+                "instances",
+                "healthcheck-grace-period-seconds",
+                "healthcheck-interval-seconds",
+                "healthcheck-timeout-seconds",
+                "healthcheck-max-consecutive-failures",
+                "scheduler",
+                "executor",
+                "node",
+                "director"
+            ]
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.8",
+  "name": "portworx",
+  "version": "1.1.2-3.0",
+  "scm": "https://github.com/portworx/px-dev",
+  "maintainer": "support@portworx.com",
+  "website": "http://www.portworx.com/",
+  "description": "Portworx PX provides scheduler integrated data services for containers, such as data persistence, multi-node replication, cloud-agnostic snapshots and data encryption. Portworx itself is deployed as a container and is suitable for both cloud and on-prem deployments.  Portworx enables containerized applications to be persistent, portable and protected.  For DCOS examples of Portworx, please see dcos/examples/portworx",
+  "framework": true,
+  "tags": [
+    "portworx",
+    "storage",
+    "data",
+    "cloud",
+    "volume",
+    "s3",
+    "database"
+  ],
+  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Experimental packages should never be used in production!  Please visit http://docs.portworx.com/run-with-mesosphere.html for detailed instructions",
+ "postInstallNotes": "To see how Portorx data services integrate with common applications and services, to view the application solutions and to view Portworx reference architectures,  please visit http://docs.portworx.com",
+ "postUninstallNotes": "Service uninstalled. Note that any persisting data still exists and will need to be manually removed.",
+  "licenses": [
+    {
+      "name": "Apache 2.0 License",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}

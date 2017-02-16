@@ -15,10 +15,10 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-import zipfile
 
 HTTP_ROOT = "http://master.mesos:8082/"
 DOCKER_ROOT = "master.mesos:5000"
+
 
 def main():
     # Docker writes files into the tempdir as root, you need to be running
@@ -41,12 +41,10 @@ def main():
 
     parser = argparse.ArgumentParser(
         description='This script is able to download the latest artifacts for '
-        'all of the packages in the Universe repository into a zipfile. It '
-        'uses a temporary file to store all of the artifacts as it downloads '
-        'them because of this it requires that your temporary filesystem has '
-        'enough space to store all of the artifact. You can control the path '
-        'to the temporary file by setting the TMPDIR environment variable. '
-        'E.g. TMPDIR=\'.\' ./scripts/local-universe.py ...')
+        'all of the packages in the Universe repository into a docker image. '
+        'You can control the path to the temporary file by setting the TMPDIR '
+        'environment variable. E.g. TMPDIR=\'.\' ./scripts/local-universe.py '
+        '...')
     parser.add_argument(
         '--repository',
         required=True,
@@ -73,17 +71,26 @@ def main():
         docker_artifacts = dir_path / pathlib.Path("registry")
         repo_artifacts = dir_path / pathlib.Path("universe/repo/packages")
 
+        # There is a race between creating this folder and docker run command
+        # creating this volume
+        os.makedirs(str(docker_artifacts), exist_ok=True)
+
         os.makedirs(str(http_artifacts))
         os.makedirs(str(repo_artifacts))
 
         failed_packages = []
+
         def handle_package(opts):
             package, path = opts
             try:
-                prepare_repository(package, path, pathlib.Path(args.repository),
+                prepare_repository(
+                    package,
+                    path,
+                    pathlib.Path(args.repository),
                     repo_artifacts)
 
-                for url, archive_path in enumerate_http_resources(package, path):
+                for url, archive_path in \
+                        enumerate_http_resources(package, path):
                     add_http_resource(http_artifacts, url, archive_path)
 
                 for name in enumerate_docker_images(path):
@@ -97,11 +104,12 @@ def main():
             return package
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-            for package in executor.map(handle_package,
-                    enumerate_dcos_packages(
-                        pathlib.Path(args.repository),
-                        package_names,
-                        args.selected)):
+            for package in executor.map(
+                handle_package,
+                enumerate_dcos_packages(
+                    pathlib.Path(args.repository),
+                    package_names,
+                    args.selected)):
                 print("Completed: {}".format(package))
 
         build_repository(pathlib.Path(
@@ -139,9 +147,9 @@ def enumerate_dcos_packages(packages_path, package_names, only_selected):
                 package_path.iterdir(),
                 key=lambda revision: int(revision.name))
 
-
             if only_selected:
-                with (largest_revision / 'package.json').open() as json_file:
+                json_path = largest_revision / 'package.json'
+                with json_path.open(encoding='utf-8') as json_file:
                     if json.load(json_file).get('selected', False):
                         yield (package_path.name, largest_revision)
 
@@ -151,7 +159,8 @@ def enumerate_dcos_packages(packages_path, package_names, only_selected):
 
 
 def enumerate_http_resources(package, package_path):
-    with (package_path / 'resource.json').open() as json_file:
+    resource_path = package_path / 'resource.json'
+    with resource_path.open(encoding='utf-8') as json_file:
         resource = json.load(json_file)
 
     for name, url in resource.get('images', {}).items():
@@ -161,13 +170,14 @@ def enumerate_http_resources(package, package_path):
     for name, url in resource.get('assets', {}).get('uris', {}).items():
         yield url, pathlib.Path(package, 'uris')
 
-    for os_type, arch_dict in resource.get('cli', {}).get('binaries', {}).items():
+    for os_type, arch_dict in \
+            resource.get('cli', {}).get('binaries', {}).items():
         for arch in arch_dict.items():
             yield arch[1]['url'], pathlib.Path(package, 'uris')
 
     command_path = (package_path / 'command.json')
     if command_path.exists():
-        with command_path.open() as json_file:
+        with command_path.open(encoding='utf-8') as json_file:
             commands = json.load(json_file)
 
         for url in commands.get("pip", []):
@@ -175,7 +185,8 @@ def enumerate_http_resources(package, package_path):
 
 
 def enumerate_docker_images(package_path):
-    with (package_path / 'resource.json').open() as json_file:
+    resource_path = package_path / 'resource.json'
+    with resource_path.open(encoding='utf-8') as json_file:
         resource = json.load(json_file)
 
     dockers = resource.get('assets', {}).get('container', {}).get('docker', {})
@@ -186,9 +197,9 @@ def enumerate_docker_images(package_path):
 @contextlib.contextmanager
 def run_docker_registry(volume_path):
     print('Start docker registry.')
-    command = [ 'docker', 'run', '-d', '-p', '5000:5000', '--name',
-        'registry', '-v', '{}:/var/lib/registry'.format(volume_path),
-        'registry:2.4.0']
+    command = ['docker', 'run', '-d', '-p', '5000:5000', '--name',
+               'registry', '-v', '{}:/var/lib/registry'.format(volume_path),
+               'registry:2.4.1']
 
     subprocess.check_call(command)
 
@@ -196,7 +207,7 @@ def run_docker_registry(volume_path):
         yield
     finally:
         print('Stopping docker registry.')
-        command = [ 'docker', 'rm', '-f', 'registry']
+        command = ['docker', 'rm', '-f', 'registry']
         subprocess.call(command)
 
 
@@ -214,10 +225,11 @@ def format_image_name(host, name):
 
     return '{}/{}'.format(host, name)
 
+
 def upload_docker_image(name):
     print('Pushing docker image: {}'.format(name))
     command = ['docker', 'tag', name,
-        format_image_name('localhost:5000', name)]
+               format_image_name('localhost:5000', name)]
 
     subprocess.check_call(command)
 
@@ -234,16 +246,16 @@ def build_universe_docker(dir_path):
         str(current_dir / '..' / 'docker' / 'local-universe' / 'Dockerfile'),
         str(dir_path / 'Dockerfile'))
 
-    command = [ 'docker', 'build', '-t',
-        'mesosphere/universe:{:.0f}'.format(time.time()),
-        '-t', 'mesosphere/universe:latest', '.' ]
+    command = ['docker', 'build', '-t',
+               'mesosphere/universe:{:.0f}'.format(time.time()),
+               '-t', 'mesosphere/universe:latest', '.']
 
     subprocess.check_call(command, cwd=str(dir_path))
 
 
 def add_http_resource(dir_path, url, base_path):
     archive_path = (dir_path / base_path /
-        pathlib.Path(urllib.parse.urlparse(url).path).name)
+                    pathlib.Path(urllib.parse.urlparse(url).path).name)
     print('Adding {} at {}.'.format(url, archive_path))
     os.makedirs(str(archive_path.parent), exist_ok=True)
     urllib.request.urlretrieve(url, str(archive_path))
@@ -253,8 +265,10 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
     dest_path = dest_repo / package_path.relative_to(source_repo)
     shutil.copytree(str(package_path), str(dest_path))
 
-    with (package_path / 'resource.json').open() as source_file, \
-            (dest_path / 'resource.json').open('w') as dest_file:
+    source_resource = package_path / 'resource.json'
+    dest_resource = dest_path / 'resource.json'
+    with source_resource.open(encoding='utf-8') as source_file, \
+            dest_resource.open('w', encoding='utf-8') as dest_file:
         resource = json.load(source_file)
 
         # Change the root for images (ignore screenshots)
@@ -263,7 +277,7 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
                 n: urllib.parse.urljoin(
                     HTTP_ROOT, str(pathlib.PurePath(
                         package, "images", pathlib.Path(uri).name)))
-                for n,uri in resource.get("images", {}).items() if 'icon' in n}
+                for n, uri in resource.get("images", {}).items() if 'icon' in n}
 
         # Change the root for asset uris.
         if 'assets' in resource:
@@ -275,18 +289,24 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
 
         # Change the root for cli uris.
         if 'cli' in resource:
-            for os_type, arch_dict in resource.get('cli', {}).get('binaries', {}).items():
+            for os_type, arch_dict in \
+                    resource.get('cli', {}).get('binaries', {}).items():
                 for arch in arch_dict.items():
                     uri = arch[1]["url"]
-                    arch[1]["url"] = urllib.parse.urljoin(HTTP_ROOT, str(pathlib.PurePath(
-                        package, "uris", pathlib.Path(uri).name)))
+                    arch[1]["url"] = urllib.parse.urljoin(
+                        HTTP_ROOT,
+                        str(
+                            pathlib.PurePath(
+                                package,
+                                "uris",
+                                pathlib.Path(uri).name)))
 
         # Add the local docker repo prefix.
         if 'container' in resource["assets"]:
             resource["assets"]["container"]["docker"] = {
                 n: format_image_name(DOCKER_ROOT, image_name)
                 for n, image_name in resource["assets"]["container"].get(
-                    "docker", {}).items() }
+                    "docker", {}).items()}
 
         json.dump(resource, dest_file, indent=4)
 
@@ -294,8 +314,9 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
     if not command_path.exists():
         return
 
-    with command_path.open() as source_file, \
-            (dest_path / 'command.json').open('w') as dest_file:
+    dest_command = dest_path / 'command.json'
+    with command_path.open(encoding='utf-8') as source_file, \
+            dest_command.open('w', encoding='utf-8') as dest_file:
         command = json.load(source_file)
 
         command['pip'] = [
@@ -310,9 +331,9 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
 def build_repository(scripts_dir, repo_dir, dest_dir):
     shutil.copytree(str(scripts_dir), str(dest_dir / "scripts"))
     shutil.copytree(str(repo_dir / '..' / 'meta'),
-        str(dest_dir / 'repo' / 'meta'))
+                    str(dest_dir / 'repo' / 'meta'))
 
-    command = [ "bash", "scripts/build.sh" ]
+    command = ["bash", "scripts/build.sh"]
     subprocess.check_call(command, cwd=str(dest_dir))
 
 

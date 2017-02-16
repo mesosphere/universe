@@ -1,0 +1,55 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u112-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "http://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.8.7-1.0.2.tar.gz",
+      "executor-zip": "https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/executor.zip",
+      "scheduler-zip": "https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/scheduler.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://files.serv.sh/frameworks/mongodb-replicaset/images/icons/mongodb_48x48.png",
+    "icon-medium": "https://files.serv.sh/frameworks/mongodb-replicaset/images/icons/mongodb_96x96.png",
+    "icon-large": "https://files.serv.sh/frameworks/mongodb-replicaset/images/icons/mongodb_256x256.png"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[
+            {
+              "algo":"sha256",
+              "value":"c0512da733b8d206c8fdf7632ecbac370e9455eb254672669fb8f07085c9ead5"
+            }
+          ],
+          "kind":"executable",
+          "url":"https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/dcos-mongodb-replicaset-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[
+            {
+              "algo":"sha256",
+              "value":"0041d058d720d2f630e6129dc4ab11e8944eeb8e97a25173e37a4864c2350e70"
+            }
+          ],
+          "kind":"executable",
+          "url":"https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/dcos-mongodb-replicaset-linux"
+        }
+      },
+      "windows":{
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "3a52ccc34d54e10c68bdf195e34ebc18385dee15475fd9ac4e821ee0d6dfb8c0"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/dcos-mongodb-replicaset.exe"
+        }
+      }
+    }
+  }
+}

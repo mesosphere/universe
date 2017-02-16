@@ -25,7 +25,8 @@ if len(sys.argv) != 2:
     sys.exit(1)
 
 try:
-    json.load(open(sys.argv[1]), object_pairs_hook=json_checker)
+    f = open(sys.argv[1], encoding='utf-8')
+    json.load(f, object_pairs_hook=json_checker)
 except DuplicatedKeysException as e:
     sys.stderr.write("Error validating %s: %s\n" % (sys.argv[1], e.args[0]))
     sys.exit(1)
