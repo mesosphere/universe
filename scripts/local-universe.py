@@ -173,7 +173,7 @@ def enumerate_http_resources(package, package_path):
     for os_type, arch_dict in \
             resource.get('cli', {}).get('binaries', {}).items():
         for arch in arch_dict.items():
-            yield arch[1]['url'], pathlib.Path(package, 'uris')
+            yield arch[1]['url'], pathlib.Path(package, 'uris', os_type)
 
     command_path = (package_path / 'command.json')
     if command_path.exists():
@@ -299,6 +299,7 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
                             pathlib.PurePath(
                                 package,
                                 "uris",
+                                os_type,
                                 pathlib.Path(uri).name)))
 
         # Add the local docker repo prefix.
