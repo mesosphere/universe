@@ -223,12 +223,19 @@
           "default": false,
           "description": "True if this package installs a new Mesos framework."
         },
-        "upgrades": {
+        "upgradesFrom": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "List of versions from which this package can upgrade from. If the property is missing or null it means that it can upgrade from any package. If the property is the empty list then it means that it can’t upgrade from any package."
+          "description": "Versions this package can upgrade from."
+        },
+        "downgradesTo": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Versions this package can downgrade to."
         },
         "preInstallNotes": {
           "type": "string",
@@ -286,7 +293,9 @@
         "version",
         "maintainer",
         "description",
-        "tags"
+        "tags",
+        "upgradesFrom",
+        "downgradesTo"
       ],
       "additionalProperties": false
     }
