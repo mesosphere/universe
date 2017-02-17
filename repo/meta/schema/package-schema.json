@@ -228,14 +228,14 @@
           "items": {
             "type": "string"
           },
-          "description": "Versions this package can upgrade from."
+          "description": "List of versions that can upgrade to this package."
         },
         "downgradesTo": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Versions this package can downgrade to."
+          "description": "List of versions that this package can downgrade to."
         },
         "preInstallNotes": {
           "type": "string",
