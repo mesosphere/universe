@@ -114,7 +114,8 @@
           "type": "string"
         },
         "version": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[-a-zA-Z0-9.]+$"
         },
         "scm": {
           "type": "string"
@@ -204,7 +205,8 @@
           "type": "string"
         },
         "version": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[-a-zA-Z0-9.]+$"
         },
         "scm": {
           "type": "string"
@@ -228,14 +230,14 @@
           "items": {
             "type": "string"
           },
-          "description": "List of versions that can upgrade to this package."
+          "description": "List of versions that can upgrade to this package. If the property is a list containing '*', any version can upgrade to this package. If the property is the empty list, no version can upgrade to this package."
         },
         "downgradesTo": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "List of versions that this package can downgrade to."
+          "description": "List of versions that this package can downgrade to. If the property is a list containing '*', this package can downgrade to any version. If the property is the empty list, this package cannot downgrade."
         },
         "preInstallNotes": {
           "type": "string",
