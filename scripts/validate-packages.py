@@ -58,7 +58,7 @@ def _validate_revision(given_package, revision, path):
     packaging_version = package_json.get("packagingVersion", "2.0")
 
     # validate upgrades version
-    if packaging_version is "4.0":
+    if packaging_version == "4.0":
         min_dcos_version = package_json.get("minDcosReleaseVersion").split('.')
         major = int(min_dcos_version[0])
         minor = int(min_dcos_version[1])
