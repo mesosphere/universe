@@ -603,7 +603,9 @@
         "releaseVersion",
         "maintainer",
         "description",
-        "tags"
+        "tags",
+        "upgradesFrom",
+        "downgradesTo"
       ],
       "additionalProperties": false
     }
