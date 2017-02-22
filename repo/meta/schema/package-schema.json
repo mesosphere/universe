@@ -230,14 +230,14 @@
           "items": {
             "type": "string"
           },
-          "description": "List of versions that can upgrade to this package. If the property is a list containing '*', any version can upgrade to this package. If the property is the empty list, no version can upgrade to this package."
+          "description": "List of versions that can upgrade to this package. If the property is a list containing the string '*', any version can upgrade to this package. If the property is not set or the empty list, no version can upgrade to this package."
         },
         "downgradesTo": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "List of versions that this package can downgrade to. If the property is a list containing '*', this package can downgrade to any version. If the property is the empty list, this package cannot downgrade."
+          "description": "List of versions that this package can downgrade to. If the property is a list containing the string '*', this package can downgrade to any version. If the property is not set or the empty list, this package cannot downgrade."
         },
         "preInstallNotes": {
           "type": "string",
@@ -296,8 +296,6 @@
         "maintainer",
         "description",
         "tags",
-        "upgradesFrom",
-        "downgradesTo",
         "minDcosReleaseVersion"
       ],
       "additionalProperties": false
