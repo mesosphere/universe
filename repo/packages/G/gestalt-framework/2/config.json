@@ -32,7 +32,7 @@
         "framework-version": {
           "type": "string",
           "description": "Version of the Gestalt framework to install",
-          "default": "1.0.0"
+          "default": "1.0.1"
         },
         "role": {
           "description": "Deploy gestalt-framework-scheduler only on nodes with this role.",
@@ -50,6 +50,21 @@
         "framework-version",
         "marathon-url",
         "debug-logging"
+      ],
+      "type": "object"
+    },
+    "meta": {
+      "description": "gestalt-framework metadata",
+      "properties": {
+        "company-name": {
+          "description": "Preconfigured company name",
+          "default": "A Galactic Fog Customer",
+          "type": "string",
+          "pattern": "^.+$"
+        }
+      },
+      "required": [
+        "company-name"
       ],
       "type": "object"
     },
@@ -159,19 +174,55 @@
           "description": "Maximum port number for scheduler listening sockets.",
           "default" : 60500,
           "minimum" : 1
+        },
+        "enable-js-runtime": {
+          "description": "Enable javascript lambda runtime.",
+          "type": "boolean",
+          "default": true
+        },
+        "enable-jvm-runtime": {
+          "description": "Enable Java/Scala lambda runtime.",
+          "type": "boolean",
+          "default": true
+        },
+        "enable-dotnet-runtime": {
+          "description": "Enable .NET CLR lambda runtime.",
+          "type": "boolean",
+          "default": true
+        },
+        "enable-golang-runtime": {
+          "description": "Enable Go lambda runtime.",
+          "type": "boolean",
+          "default": true
+        },
+        "enable-python-runtime": {
+          "description": "Enable Python lambda runtime.",
+          "type": "boolean",
+          "default": true
+        },
+        "enable-ruby-runtime": {
+          "description": "Enable Ruby lambda runtime.",
+          "type": "boolean",
+          "default": true
         }
       },
       "required": [
         "min-cool-executors",
         "scale-down-timeout",
         "min-port-range",
-        "max-port-range"
+        "max-port-range",
+        "enable-js-runtime",
+        "enable-jvm-runtime",
+        "enable-dotnet-runtime",
+        "enable-golang-runtime",
+        "enable-python-runtime",
+        "enable-ruby-runtime"
       ],
       "type": "object"
     }
   },
   "required": [
-    "service", "database", "security", "laser"
+    "service", "database", "security", "laser", "meta"
   ],
   "type": "object"
 }
