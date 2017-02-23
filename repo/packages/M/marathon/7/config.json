@@ -34,7 +34,7 @@
           "default" : [ ],
           "description" : "List of URIs that will be downloaded and made available in the current working directory of Marathon. For example this can be used to download a Java keystore file for SSL configuration.",
           "items" : {
-            "pattern" : "^[\\s]+",
+            "pattern" : "^[\\S]+",
             "type" : "string"
           },
           "type" : "array"
