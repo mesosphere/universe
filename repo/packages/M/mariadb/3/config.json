@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the MariaDB service instance",
+          "type": "string",
+          "default": "mariadb"
+        }
+      }
+    },
+    "mariadb": {
+      "additionalProperties": false,
+      "description": "MariaDB service configuration properties",
+      "properties": {
+        "cpus": {
+          "description": "CPU shares to allocate to each MariaDB node.",
+          "type": "number",
+          "default": 0.5,
+          "minimum": 0.5
+        },
+        "mem": {
+          "description": "Memory to allocate to each MariaDB node.",
+          "type": "number",
+          "default": 1024.0,
+          "minimum": 512.0
+        }
+      }
+    },
+    "database": {
+      "type": "object",
+      "description": "MariaDB database configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of a database to be created on startup.",
+          "type": "string",
+          "default": "defaultdb"
+        },
+        "username": {
+          "description": "The username of a user to be created with superuser access to this database only.",
+          "type": "string",
+          "default": "admin"
+        },
+        "password": {
+          "description": "The password for a user to be created with superuser access to this database only.",
+          "type": "string",
+          "default": "password"
+        },
+        "root_password": {
+          "description": "Specifies the password that will be set for the MariaDB root superuser account.",
+          "type": "string",
+          "default": "root"
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "description": "MariaDB storage configuration properties",
+      "properties": {
+        "host_volume": {
+          "description": "If using non-persistent volumes (local volumes), this sets the location of a volume on the host to be used for the service. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/service_name`). This can be a mounted NFS drive. Note that this path must be the same on all DC/OS agents. NOTE: if you don't change the default /tmp value, YOUR DATA WILL NOT BE SAVED IN ANY WAY.",
+          "type": "string",
+          "default": "/tmp"
+        }
+      }
+    },
+    "networking": {
+      "type": "object",
+      "description": "MariaDB networking configuration properties",
+      "properties": {
+        "host_mode": {
+          "description": "Enable or disable host networking mode. NOTE: this requires the default port to be available on the target host. This also forces to have a single instance per node.",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  }
+}

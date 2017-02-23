@@ -1,0 +1,75 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{mariadb.cpus}},
+  "mem": {{mariadb.mem}},
+  "instances": 1,
+  "env": {
+    "MYSQL_DATABASE": "{{database.name}}",
+    "MYSQL_USER": "{{database.username}}",
+    "MYSQL_PASSWORD": "{{database.password}}",
+    "MYSQL_ROOT_PASSWORD": "{{database.root_password}}"
+  },
+  "container": {
+    "type": "DOCKER",
+    "volumes": [{
+      "containerPath": "/var/lib/mysql/",
+      "hostPath": "{{storage.host_volume}}/{{service.name}}",
+      "mode": "RW"
+    }],
+    "docker": {
+      "image": "{{resource.assets.container.docker.mariadb-docker}}",
+      {{#networking.host_mode}}
+      "network": "HOST",
+      {{/networking.host_mode}}
+      {{^networking.host_mode}}
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 3306,
+          "hostPort": 0,
+          "protocol": "tcp",
+          "name": "mysql",
+          "labels": {
+            "VIP_0": "/{{service.name}}:{{networking.port}}"
+          }
+        }
+      ]
+      {{/networking.host_mode}}
+    }
+  },
+  {{#networking.host_mode}}
+  "portDefinitions": [{
+      "protocol": "tcp",
+      "port": 3306,
+      "name": "mysql",
+      "labels": {
+        "VIP_0": "/{{service.name}}:{{networking.port}}"
+      }
+  }],
+  "requirePorts": true,
+  "constraints": [["hostname", "UNIQUE"]],
+  {{/networking.host_mode}}
+  "healthChecks": [{
+    "protocol": "TCP",
+    {{#networking.host_mode}}
+    "port": 3306,
+    {{/networking.host_mode}}
+    {{^networking.host_mode}}
+    "portIndex": 0,
+    {{/networking.host_mode}}
+    "gracePeriodSeconds": 300,
+    "intervalSeconds": 60,
+    "timeoutSeconds": 20,
+    "maxConsecutiveFailures": 3
+  }],
+  "labels": {
+    "DCOS_PACKAGE_VERSION": "10.1.21",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP":"true",
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}
