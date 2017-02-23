@@ -45,6 +45,9 @@
         {
           "containerPort": 3306,
           "hostPort": 0,
+          {{#networking.external_access.enable}}
+          "servicePort": {{networking.external_access.external_access_port}},
+          {{/networking.external_access.enable}}
           "protocol": "tcp",
           "name": "mysql",
           "labels": {
@@ -57,8 +60,11 @@
   },
   {{#networking.host_mode}}
   "portDefinitions": [{
-      "protocol": "tcp",
       "port": 3306,
+      {{#networking.external_access.enable}}
+      "servicePort": {{networking.external_access.external_access_port}},
+      {{/networking.external_access.enable}}
+      "protocol": "tcp",
       "name": "mysql",
       "labels": {
         "VIP_0": "/{{service.name}}:{{networking.port}}"
@@ -83,6 +89,9 @@
   "labels": {
     "DCOS_PACKAGE_VERSION": "10.1.21",
     "DCOS_SERVICE_NAME": "{{service.name}}",
+    {{#networking.external_access.enable}}
+    "HAPROXY_GROUP": "external",
+    {{/networking.external_access.enable}}
     "MARATHON_SINGLE_INSTANCE_APP":"true",
     "DCOS_PACKAGE_IS_FRAMEWORK": "false"
   },
