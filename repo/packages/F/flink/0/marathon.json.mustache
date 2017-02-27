@@ -3,7 +3,8 @@
   "cpus": {{app-master.cpus}},
   "mem": {{app-master.memory}},
   "env": {
-    "DCOS_SERVICE_NAME": "{{service.name}}"
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "FLINK_LOG_DIR": "$MESOS_SANDBOX"
   },
   "cmd": "export LIBPROCESS_PORT=$PORT4 && cd \"$MESOS_SANDBOX\" && \"$FLINK_HOME/bin/mesos-appmaster.sh\" -Dblob.server.port=$PORT2 -Djobmanager.heap.mb={{app-master.heap}} -Djobmanager.rpc.port=$PORT1 -Djobmanager.web.port=$PORT0 -Dmesos.artifact-server.port=$PORT3 -Dmesos.initial-tasks={{task-managers.count}} -Dmesos.resourcemanager.tasks.cpus={{task-managers.cpus}} -Dmesos.resourcemanager.tasks.mem={{task-managers.memory}} -Dtaskmanager.heap.mb={{task-managers.heap}} -Dtaskmanager.memory.preallocate={{task-managers.memory-preallocation}} -Dtaskmanager.numberOfTaskSlots={{service.slots}} -Dparallelism.default={{service.parallelism-default}}",
   "container": {
