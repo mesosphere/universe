@@ -504,16 +504,15 @@ def v3_to_v2_package(v3_package):
     :rtype: dict
     """
     package = copy.deepcopy(v3_package)
+
     package.pop('minDcosReleaseVersion', None)
     package['packagingVersion'] = "2.0"
-
-    resource = package.pop('resource', None)
+    resource = package.get('resource', None)
     if resource:
         cli = resource.pop('cli', None)
         if cli and 'command' not in package:
             print(('WARNING: Removing binary CLI from ({}, {}) without a '
                   'Python CLI').format(package['name'], package['version']))
-        package['resource'] = resource
 
     return package
 
