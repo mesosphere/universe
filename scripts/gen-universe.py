@@ -98,13 +98,15 @@ def render_json_by_version(outdir, packages, version):
     :rtype: None
     """
 
+    packages = list(
+        filter(lambda package: filter_by_version(package, version), packages))
+
+    if LooseVersion(version) < LooseVersion('1.10'):
+        packages = list(map(downgrade_package_to_v3, packages))
+
     json_file_path = outdir / 'repo-up-to-{}.json'.format(version)
     with json_file_path.open('w', encoding='utf-8') as universe_file:
-        json.dump(
-            {'packages': list(filter(
-                lambda package: filter_by_version(package, version), packages)
-                )},
-            universe_file)
+        json.dump({'packages': packages}, universe_file)
 
 
 def render_zip_universe_by_version(outdir, packages, version):
@@ -409,17 +411,12 @@ def write_package_in_zip(zip_file, path, package):
     :rtype: None
     """
 
-    package = copy.deepcopy(package)
+    package = downgrade_package_to_v2(package)
+
     package.pop('releaseVersion')
-    package.pop('minDcosReleaseVersion', None)
-    package['packagingVersion'] = "2.0"
 
     resource = package.pop('resource', None)
     if resource:
-        cli = resource.pop('cli', None)
-        if cli and 'command' not in package:
-            print(('WARNING: Removing binary CLI from ({}, {}) without a '
-                  'Python CLI').format(package['name'], package['version']))
         zip_file.writestr(
             str(path / 'resource.json'),
             json.dumps(resource))
@@ -497,6 +494,79 @@ def create_index_entry(packages):
         entry['versions'][package['version']] = str(package['releaseVersion'])
 
     return entry
+
+
+def v3_to_v2_package(v3_package):
+    """Converts a v3 package to a v2 package
+
+    :param v3_package: a v3 package
+    :type v3_package: dict
+    :return: a v2 package
+    :rtype: dict
+    """
+    package = copy.deepcopy(v3_package)
+    package.pop('minDcosReleaseVersion', None)
+    package['packagingVersion'] = "2.0"
+
+    resource = package.pop('resource', None)
+    if resource:
+        cli = resource.pop('cli', None)
+        if cli and 'command' not in package:
+            print(('WARNING: Removing binary CLI from ({}, {}) without a '
+                  'Python CLI').format(package['name'], package['version']))
+        package['resource'] = resource
+
+    return package
+
+
+def v4_to_v3_package(v4_package):
+    """Converts a v4 package to a v3 package
+
+    :param v4_package: a v3 package
+    :type v4_package: dict
+    :return: a v3 package
+    :rtype: dict
+    """
+    package = copy.deepcopy(v4_package)
+    package.pop('upgradesFrom', None)
+    package.pop('downgradesTo', None)
+    return package
+
+
+def downgrade_package_to_v2(package):
+    """Converts a v4 or v3 package to a v2 package. If given a v2
+    package, it creates a deep copy but does not modify it. It does not
+    modify the original package.
+
+    :param package: v4, v3, or v2 package
+    :type package: dict
+    :return: a v2 package
+    :rtyte: dict
+    """
+    packaging_version = package.get("packagingVersion")
+    if packaging_version == "2.0":
+        return copy.deepcopy(package)
+    elif packaging_version == "3.0":
+        return v3_to_v2_package(package)
+    else:
+        return v3_to_v2_package(v4_to_v3_package(package))
+
+
+def downgrade_package_to_v3(package):
+    """Converts a v4 package to a v3 package. If given a v3 or v2 package
+    it creates a deep copy of it, but does not modify it. It does not
+    modify the original package.
+
+    :param package: v4, v3, or v2 package
+    :type package: dict
+    :return: a v3 or v2 package
+    :rtyte: dict
+    """
+    packaging_version = package.get("packagingVersion")
+    if packaging_version == "2.0" or packaging_version == "3.0":
+        return copy.deepcopy(package)
+    else:
+        return v4_to_v3_package(package)
 
 
 if __name__ == '__main__':

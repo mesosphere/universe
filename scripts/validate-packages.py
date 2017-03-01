@@ -58,9 +58,9 @@ def _validate_revision(given_package, revision, path):
     packaging_version = package_json.get("packagingVersion", "2.0")
 
     # validate upgrades version
-    min_dcos_release_version = package_json.get("minDcosReleaseVersion")
-    upgrades_from = package_json.get("upgradesFrom")
-    downgrades_to = package_json.get("downgradesTo")
+    min_dcos_release_version = package_json.get("minDcosReleaseVersion", "0.0")
+    upgrades_from = package_json.get("upgradesFrom", None)
+    downgrades_to = package_json.get("downgradesTo", None)
     if (packaging_version == "4.0" and
             (upgrades_from or downgrades_to) and
                 LooseVersion(min_dcos_release_version) < LooseVersion("1.10")):
