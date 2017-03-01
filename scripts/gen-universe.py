@@ -98,11 +98,10 @@ def render_json_by_version(outdir, packages, version):
     :rtype: None
     """
 
-    packages = list(
-        filter(lambda package: filter_by_version(package, version), packages))
+    packages = [package for package in packages if filter_by_version(package, version)]
 
     if LooseVersion(version) < LooseVersion('1.10'):
-        packages = list(map(downgrade_package_to_v3, packages))
+        packages = [downgrade_package_to_v3(package) for package in packages]
 
     json_file_path = outdir / 'repo-up-to-{}.json'.format(version)
     with json_file_path.open('w', encoding='utf-8') as universe_file:
