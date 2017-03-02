@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "neo4j-replica": {
+      "description": "Neo4j specific configuration properties",
+      "type": "object",
+      "properties": {
+        "auth-username": {
+          "description": "Username for authentication",
+          "type": "string",
+          "default": "neo4j"
+        },
+        "auth-password": {
+          "description": "Password for authentication",
+          "type": "string",
+          "default": "dcos"
+        },
+        "cpus": {
+          "description": "CPU shares allocated to one neo4j read replica instance.",
+          "type": "number",
+          "default": 2.0,
+          "minimum": 1.0
+        },
+        "mem": {
+          "description": "Memory [mb] allocated to one neo4j read replica instance.",
+          "type": "number",
+          "default": 4000.0,
+          "minimum": 1000.0
+        },
+        "disk": {
+          "description": "Disk size [mb] allocated to one neo4j read replica instance.",
+          "type": "number",
+          "default": 8000.0,
+          "minimum": 4000.0
+        },
+        "instances": {
+          "description": "Amount of neo4j read replica instances.",
+          "type": "number",
+          "default": 2,
+          "minimum": 0
+        },
+        "network-name": {
+          "description": "The name of your existing DC/OS overlay network.",
+          "type": "string",
+          "default": "dcos"
+        }
+      },
+      "required": [
+        "auth-username",
+        "auth-password",
+        "cpus",
+        "mem",
+        "disk",
+        "instances",
+        "network-name"
+      ]
+    }
+  },
+  "required": [
+    "neo4j-replica"
+  ]
+}

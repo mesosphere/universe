@@ -1,0 +1,69 @@
+{
+  "type": "object",
+  "properties": {
+    "neo4j-core": {
+      "description": "Neo4j specific configuration properties",
+      "type": "object",
+      "properties": {
+        "auth-username": {
+          "description": "Username for authentication",
+          "type": "string",
+          "default": "neo4j"
+        },
+        "auth-password": {
+          "description": "Password for authentication",
+          "type": "string",
+          "default": "dcos"
+        },
+        "cpus": {
+          "description": "CPU shares allocated to one neo4j core instance.",
+          "type": "number",
+          "default": 2.0,
+          "minimum": 1.0
+        },
+        "mem": {
+          "description": "Memory [mb] allocated to one neo4j core instance.",
+          "type": "number",
+          "default": 4000.0,
+          "minimum": 1000.0
+        },
+        "disk": {
+          "description": "Disk size [mb] allocated to one neo4j core instance.",
+          "type": "number",
+          "default": 8000.0,
+          "minimum": 4000.0
+        },
+        "instances": {
+          "description": "Amount of neo4j core instances.",
+          "type": "number",
+          "default": 3,
+          "minimum": 3
+        },
+        "expected-cluster-size": {
+          "description": "Expected core cluster size.",
+          "type": "number",
+          "default": 3,
+          "minimum": 3
+        },
+        "network-name": {
+          "description": "The name of your existing DC/OS overlay network.",
+          "type": "string",
+          "default": "dcos"
+        }
+      },
+      "required": [
+        "auth-username",
+        "auth-password",
+        "cpus",
+        "mem",
+        "disk",
+        "instances",
+        "expected-cluster-size",
+        "network-name"
+      ]
+    }
+  },
+  "required": [
+    "neo4j-core"
+  ]
+}

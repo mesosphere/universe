@@ -1,0 +1,47 @@
+{  
+  "id":"/neo4j/replica",
+  "cpus":{{neo4j-replica.cpus}},
+  "mem":{{neo4j-replica.mem}},
+  "instances":{{neo4j-replica.instances}},
+  "disk": {{neo4j-replica.disk}},
+  "container":{  
+    "type":"DOCKER",
+    "volumes":[  
+      {  
+        "containerPath":"data",
+        "mode":"RW",
+        "persistent":{  
+          "type":"root",
+          "size":{{neo4j-replica.disk}}
+        }
+      },
+      {  
+        "containerPath":"/data",
+        "hostPath":"data",
+        "mode":"RW"
+      }
+    ],
+    "docker":{  
+      "image":"{{resource.assets.container.docker.dcos-neo4j}}",
+      "network":"USER"
+    }
+  },
+  "env":{  
+    "NEO4J_AUTH":"{{neo4j-replica.auth-username}}/{{neo4j-replica.auth-password}}",
+    "NEO4J_dbms_mode":"READ_REPLICA"
+  },
+  "ipAddress":{  
+    "networkName":"{{neo4j-replica.network-name}}"
+  },
+  "healthChecks":[
+    {
+      "protocol":"HTTP",
+      "path":"/",
+      "port":7474,
+      "timeoutSeconds":10,
+      "gracePeriodSeconds":240,
+      "intervalSeconds":10,
+      "maxConsecutiveFailures":10
+    }
+  ]
+}
