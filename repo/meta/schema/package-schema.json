@@ -22,25 +22,32 @@
       "properties": {
         "packagingVersion": {
           "type": "string",
-          "enum": ["2.0"]
+          "enum": ["2.0"],
+          "description": "The version of the packaging format. Please do not use this version. It is only here for backwards compatibility. We recommend you use the latest version."
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the package."
         },
         "version": {
-          "type": "string"
+          "type": "string",
+          "description": "The version of the package. We recommend you use semantic versions."
         },
         "scm": {
-          "type": "string"
+          "type": "string",
+          "description": "Software configuration management. Location where can users view information, and file bugs."
         },
         "maintainer": {
-          "type": "string"
+          "type": "string",
+          "description": "The maintainer of the package."
         },
         "website": {
-          "type": "string"
+          "type": "string",
+          "description": "URL to the project's website."
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "Description of what the package does."
         },
         "framework": {
           "type": "boolean",
@@ -64,7 +71,8 @@
           "items": {
             "type": "string",
             "pattern": "^[^\\s]+$"
-          }
+          },
+          "description": "A list of keywords associated with the package."
         },
         "selected": {
           "type": "boolean",
@@ -108,26 +116,33 @@
       "properties": {
         "packagingVersion": {
           "type": "string",
-          "enum": ["3.0"]
+          "enum": ["3.0"],
+          "description": "The version of the packaging format."
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the package."
         },
         "version": {
           "type": "string",
-          "pattern": "^[-a-zA-Z0-9.]+$"
+          "pattern": "^[-a-zA-Z0-9.]+$",
+          "description": "The version of the package. We recommend you use semantic versions."
         },
         "scm": {
-          "type": "string"
+          "type": "string",
+          "description": "Software configuration management. Location where can users view information, and file bugs."
         },
         "maintainer": {
-          "type": "string"
+          "type": "string",
+          "description": "The maintainer of the package."
         },
         "website": {
-          "type": "string"
+          "type": "string",
+          "description": "URL to the project's website."
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "Description of what the package does."
         },
         "framework": {
           "type": "boolean",
@@ -151,7 +166,8 @@
           "items": {
             "type": "string",
             "pattern": "^[^\\s]+$"
-          }
+          },
+          "description": "A list of keywords associated with the package."
         },
         "selected": {
           "type": "boolean",
@@ -199,26 +215,33 @@
       "properties": {
         "packagingVersion": {
           "type": "string",
-          "enum": ["4.0"]
+          "enum": ["4.0"],
+          "description": "The version of the packaging format."
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the package."
         },
         "version": {
           "type": "string",
-          "pattern": "^[-a-zA-Z0-9.]+$"
+          "pattern": "^[-a-zA-Z0-9.]+$",
+          "description": "The version of the package. We recommend you use semantic versions."
         },
         "scm": {
-          "type": "string"
+          "type": "string",
+          "description": "Software configuration management. Location where can users view information, and file bugs."
         },
         "maintainer": {
-          "type": "string"
+          "type": "string",
+          "description": "The maintainer of the package."
         },
         "website": {
-          "type": "string"
+          "type": "string",
+          "description": "URL to the project's website."
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "Description of what the package does."
         },
         "framework": {
           "type": "boolean",
@@ -255,7 +278,8 @@
           "type": "array",
           "items": {
             "type": "string",
-            "pattern": "^[^\\s]+$"
+            "pattern": "^[^\\s]+$",
+          "description": "A list of keywords associated with the package."
           }
         },
         "selected": {
