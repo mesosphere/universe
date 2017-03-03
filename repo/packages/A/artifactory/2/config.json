@@ -81,15 +81,9 @@
       "description": "Configuration for Artifactory Pro. These do not apply if Artifactory HA is enabled.",
       "type": "object",
       "properties": {
-        "local-volumes": {
-          "description": "Local persistent volumes configuration (only used if external persistent volumes are disabled). Local volumes are created on the machine with the hostname specified and Marathon will attempt to re-launch the task on the same machine. Note that if the machine is lost, your data may also be lost.",
-          "type": "object",
-          "properties": {
-            "pinned-hostname": {
-              "description": "A DC/OS agent hostname to run this GitLab instance on (e.g. 10.0.0.1). This must be specified if using local volumes with Artifactory Pro. If this is not specified then the task may relaunch on another node than the one it originally ran on.",
-              "type": "string"
-            }
-          }
+        "pinned-hostname": {
+          "description": "A DC/OS agent hostname to run this GitLab instance on (e.g. 10.0.0.1). This must be specified if using local volumes with Artifactory Pro. If this is not specified then the task may relaunch on another node than the one it originally ran on.",
+          "type": "string"
         },
         "external-volumes": {
           "description": "External persistent volumes configuration. External persistent volumes are a DC/OS feature that allow your data to be migrated with your task.",
@@ -99,6 +93,16 @@
               "description": "Whether to use DC/OS external persistent volumes to persist Artifactory state. By default, this is false.",
               "type": "boolean",
               "default": false
+            },
+            "provider": {
+              "description": "Provider of the external persistent volume. The default value should be correct for most use cases.",
+              "type": "string",
+              "default": "dvdi"
+            },
+            "driver": {
+              "description": "Volume driver to use for storage. The default value should be correct for most use cases.",
+              "type": "string",
+              "default": "rexray"
             }
           },
           "required": [
@@ -107,7 +111,6 @@
         }
       },
       "required": [
-        "local-volumes",
         "external-volumes"
       ]
     },

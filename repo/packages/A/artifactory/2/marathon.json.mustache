@@ -21,8 +21,8 @@
         "containerPath": "/var/opt/jfrog/artifactory/logs",
         "external": {
         "name": "{{service.name}}-logs",
-        "provider": "dvdi",
-        "options": { "dvdi/driver": "rexray" }
+        "provider": "{{pro.external-volumes.provider}}",
+        "options": { "dvdi/driver": "{{pro.external-volumes.driver}}" }
         },
         "mode": "RW"
         },
@@ -30,8 +30,8 @@
         "containerPath": "/var/opt/jfrog/artifactory/etc",
         "external": {
         "name": "{{service.name}}-etc",
-        "provider": "dvdi",
-        "options": { "dvdi/driver": "rexray" }
+        "provider": "{{pro.external-volumes.provider}}",
+        "options": { "dvdi/driver": "{{pro.external-volumes.driver}}" }
         },
         "mode": "RW"
         },
@@ -39,8 +39,8 @@
         "containerPath": "/var/opt/jfrog/artifactory/data",
         "external": {
         "name": "{{service.name}}-data",
-        "provider": "dvdi",
-        "options": { "dvdi/driver": "rexray" }
+        "provider": "{{pro.external-volumes.provider}}",
+        "options": { "dvdi/driver": "{{pro.external-volumes.driver}}" }
         },
         "mode": "RW"
         }
@@ -112,9 +112,9 @@
     "constraints": [["hostname", "UNIQUE"]]
     },
 {{/high-availability.enabled}}
-{{^high-availability.enabled}}
-    "constraints": [["hostname", "CLUSTER", "{{pro.local-volumes.pinned-hostname}}"]],
-{{/high-availability.enabled}}
+{{#pro.pinned-hostname}}
+    "constraints": [["hostname", "CLUSTER", "{{pro.pinned-hostname}}"]],
+{{/pro.pinned-hostname}}
 "healthChecks": [
 {
 "gracePeriodSeconds": 120,
