@@ -1,0 +1,13 @@
+{
+  "packagingVersion": "2.0",
+  "name": "kong",
+  "version": "0.9.9",
+  "scm": "http://github.com/Mashape/kong",
+  "maintainer": "https://dcos.io/community",
+  "description": "Kong is a scalable, open source API Layer",
+  "framework": false,
+  "tags": ["proxy", "web-server"],
+  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Prerequisites for this service include postgres and marathon-lb. See https://github.com/Mashape/kong-dist-mesos for more details.",
+  "postInstallNotes": "Kong has been installed.",
+  "postUninstallNotes": "Kong was uninstalled successfully."
+}
