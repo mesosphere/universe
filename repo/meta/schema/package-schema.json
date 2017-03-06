@@ -35,11 +35,11 @@
         },
         "scm": {
           "type": "string",
-          "description": "Software configuration management. Location where can users view information, and file bugs."
+          "description": "Source control management. Usually the url to the project's github repository."
         },
         "maintainer": {
           "type": "string",
-          "description": "The maintainer of the package."
+          "description": "The maintainer of the package. Usually an email address."
         },
         "website": {
           "type": "string",
@@ -130,11 +130,11 @@
         },
         "scm": {
           "type": "string",
-          "description": "Software configuration management. Location where can users view information, and file bugs."
+          "description": "Source control management. Usually the url to the project's github repository."
         },
         "maintainer": {
           "type": "string",
-          "description": "The maintainer of the package."
+          "description": "The maintainer of the package. Usually an email address."
         },
         "website": {
           "type": "string",
@@ -229,11 +229,11 @@
         },
         "scm": {
           "type": "string",
-          "description": "Software configuration management. Location where can users view information, and file bugs."
+          "description": "Source control management. Usually the url to the project's github repository."
         },
         "maintainer": {
           "type": "string",
-          "description": "The maintainer of the package."
+          "description": "The maintainer of the package. Usually an email address."
         },
         "website": {
           "type": "string",
