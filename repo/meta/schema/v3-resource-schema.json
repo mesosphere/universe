@@ -18,7 +18,7 @@
           },
           "minItems": 1,
           "type": "array",
-          "description": "List of the hashes for the content of the binary CLI described in the URL property."
+          "description": "List of hashes for binary CLI described in the URL property."
         },
         "kind": {
           "enum": [
@@ -26,12 +26,12 @@
             "zip"
           ],
           "type": "string",
-          "description": "The type of CLI. See link TODO."
+          "description": "The format of the CLI."
         }
       },
       "additionalProperties": false,
       "type": "object",
-      "description": "Description of the CLI for the packaging system."
+      "description": "Schema for adding a supported CLI to your package."
     },
     "hash": {
       "required": [
@@ -53,7 +53,7 @@
       },
       "additionalProperties": false,
       "type": "object",
-      "description": "Description of the hash. The value of the hash and the algorithm used to compute it."
+      "description": "CLI validation."
     }
   },
   "properties": {
@@ -129,7 +129,7 @@
               },
               "additionalProperties": false,
               "type": "object",
-              "description": "CLI information for Linux."
+              "description": "Schema for Linux CLI."
             },
             "windows": {
               "required": [
@@ -142,7 +142,7 @@
               },
               "additionalProperties": false,
               "type": "object",
-              "description": "CLI information for Windows."
+              "description": "Schema for Windows CLI."
             },
             "darwin": {
               "required": [
@@ -155,12 +155,12 @@
               },
               "additionalProperties": false,
               "type": "object",
-              "description": "CLI information for macOS."
+              "description": "Schema for MacOS (darwin) CLI."
             }
           },
           "additionalProperties": false,
           "type": "object",
-          "description": "Enumerates all binaries available in this package. The supported platforms are 64 bit of Windows, Linux, and macOS."
+          "description": "Enumerates all binaries available in this package."
         }
       },
       "additionalProperties": false,
