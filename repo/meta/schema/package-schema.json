@@ -31,23 +31,23 @@
         },
         "version": {
           "type": "string",
-          "description": "The version of the package. We recommend you use semantic versions."
+          "description": "The version of the package. We recommend that you use semantic versions. See http://semver.org/ for more details on semantic versions."
         },
         "scm": {
           "type": "string",
-          "description": "Source control management. Usually the url to the project's github repository."
+          "description": "Source control management. This is generally the URL of the project GitHub repository."
         },
         "maintainer": {
           "type": "string",
-          "description": "The maintainer of the package. Usually an email address."
+          "description": "The maintainer of the package. This is generally an email address."
         },
         "website": {
           "type": "string",
-          "description": "URL to the project's website."
+          "description": "URL to the website of a project. This is generally the URL of the project GitHub repository."
         },
         "description": {
           "type": "string",
-          "description": "Description of what the package does."
+          "description": "Detailed description of what the package does."
         },
         "framework": {
           "type": "boolean",
@@ -126,23 +126,23 @@
         "version": {
           "type": "string",
           "pattern": "^[-a-zA-Z0-9.]+$",
-          "description": "The version of the package. We recommend you use semantic versions."
+          "description": "The version of the package. We recommend that you use semantic versions. See http://semver.org/ for details on semantic versions."
         },
         "scm": {
           "type": "string",
-          "description": "Source control management. Usually the url to the project's github repository."
+          "description": "Source control management. This is generally the URL of the project GitHub repository."
         },
         "maintainer": {
           "type": "string",
-          "description": "The maintainer of the package. Usually an email address."
+          "description": "The maintainer of the package. This is generally an email address."
         },
         "website": {
           "type": "string",
-          "description": "URL to the project's website."
+          "description": "URL to the website of a project. This is generally the URL of the project GitHub repository."
         },
         "description": {
           "type": "string",
-          "description": "Description of what the package does."
+          "description": "Detailed description of what the package does."
         },
         "framework": {
           "type": "boolean",
@@ -225,23 +225,23 @@
         "version": {
           "type": "string",
           "pattern": "^[-a-zA-Z0-9.]+$",
-          "description": "The version of the package. We recommend you use semantic versions."
+          "description": "The version of the package. We recommend that you use semantic versions. See http://semver.org/ for details on semantic versions."
         },
         "scm": {
           "type": "string",
-          "description": "Source control management. Usually the url to the project's github repository."
+          "description": "Source control management. This is generally the URL of the project GitHub repository."
         },
         "maintainer": {
           "type": "string",
-          "description": "The maintainer of the package. Usually an email address."
+          "description": "The maintainer of the package. This is generally an email address."
         },
         "website": {
           "type": "string",
-          "description": "URL to the project's website."
+          "description": "URL to the website of a project. This is generally the URL of the project GitHub repository."
         },
         "description": {
           "type": "string",
-          "description": "Description of what the package does."
+          "description": "Detailed description of what the package does."
         },
         "framework": {
           "type": "boolean",
