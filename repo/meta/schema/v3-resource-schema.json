@@ -10,7 +10,7 @@
       "properties": {
         "url": {
           "type": "string",
-          "description": "URL for binary CLI."
+          "description": "URL for the binary CLI."
         },
         "contentHash": {
           "items": {
@@ -18,7 +18,7 @@
           },
           "minItems": 1,
           "type": "array",
-          "description": "List of hashes for binary CLI described in the URL property."
+          "description": "List of hashes for the binary CLI that are described in the URL property."
         },
         "kind": {
           "enum": [
@@ -64,7 +64,7 @@
             "type": "string"
           },
           "type": "object",
-          "description": "This is a mapping of aliases to http resources. Aliases enumerated here are available during resolution of marathon.json.mustache file."
+          "description": "This is a mapping of aliases to HTTP resources. The aliases enumerated here are available during resolution of the marathon.json.mustache file."
         },
         "container": {
           "properties": {
@@ -77,12 +77,12 @@
           },
           "additionalProperties": false,
           "type": "object",
-          "description": "This is a mapping of aliases to docker images. Aliases enumerated here are available during resolution of marathon.json.mustache file."
+          "description": "This is a mapping of aliases to Docker images. The aliases enumerated here are available during resolution of marathon.json.mustache file."
         }
       },
       "additionalProperties": false,
       "type": "object",
-      "description": "Object that enumerates all of the assets required for the package."
+      "description": "Object that enumerates all of the required package assets."
     },
     "images": {
       "properties": {
@@ -108,7 +108,7 @@
       },
       "additionalProperties": false,
       "type": "object",
-      "description": "Images used by DCOS to display the package."
+      "description": "Images used by DC/OS to display the package."
     },
     "cli": {
       "required": [
@@ -129,7 +129,7 @@
               },
               "additionalProperties": false,
               "type": "object",
-              "description": "Schema for Linux CLI."
+              "description": "Schema for the Linux CLI."
             },
             "windows": {
               "required": [
@@ -142,7 +142,7 @@
               },
               "additionalProperties": false,
               "type": "object",
-              "description": "Schema for Windows CLI."
+              "description": "Schema for the Windows CLI."
             },
             "darwin": {
               "required": [
@@ -155,17 +155,17 @@
               },
               "additionalProperties": false,
               "type": "object",
-              "description": "Schema for MacOS (darwin) CLI."
+              "description": "Schema for the MacOS (darwin) CLI."
             }
           },
           "additionalProperties": false,
           "type": "object",
-          "description": "Enumerates all binaries available in this package."
+          "description": "Enumerates all of the available binaries in this package."
         }
       },
       "additionalProperties": false,
       "type": "object",
-      "description": "Object describing all externally hosted assets this package will need."
+      "description": "Object that describes all of the required externally hosted assets for this package."
     }
   },
   "$schema": "http://json-schema.org/draft-04/schema#"
