@@ -28,7 +28,17 @@
     "acceptedResourceRoles": [ "{{service.role}}" ],
     "labels": {
         "DCOS_SERVICE_NAME": "{{service.name}}"
-    }
+    },
+     "healthChecks": [
+        {
+          "protocol": "COMMAND",
+          "command": { "value": "gitlab-runner verify" },
+          "gracePeriodSeconds": 300,
+          "intervalSeconds": 60,
+          "timeoutSeconds": 20,
+          "maxConsecutiveFailures": 5
+        }
+    ]
     {{^service.allow-multiple-host-instances}},
     "constraints": [["hostname", "UNIQUE"]]
     {{/service.allow-multiple-host-instances}}
