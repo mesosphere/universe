@@ -97,7 +97,7 @@
         "host": {
           "description": "The DNS name of the internal MLB",
           "type": "string",
-          "default": "marathon-lb-internal.marathon.mesos"
+          "default": "postgres.marathon.l4lb.thisdcos.directory"
         },
         "user": {
           "description": "The postgresdb username",
@@ -107,7 +107,7 @@
         "port": {
           "description": "The service port for the postgresdb",
           "type": "integer",
-          "default": 10000
+          "default": 5432
         },
         "database": {
           "description": "The database backend type",
