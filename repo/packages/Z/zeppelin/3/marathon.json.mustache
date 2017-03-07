@@ -26,7 +26,7 @@
         "SPARK_EXECUTOR_MEMORY": "{{spark.executor_memory}}",
         "ZEPPELIN_JAVA_OPTS": "{{service.zeppelin_java_opts}}"
     },
-    "cmd": "sed \"s#<value>8080</value>#<value>$PORT0</value>#\" < conf/zeppelin-site.xml.template > conf/zeppelin-site.xml && sed -i \"s#<value>-1</value>#<value>$PORT1</value>#\" conf/zeppelin-site.xml && SnPARK_HOME_TGZ=$(ls ${MESOS_SANDBOX}/spark-*.tgz) SPARK_HOME=${SPARK_HOME_TGZ%.tgz} bin/zeppelin.sh start",
+    "cmd": "sed \"s#<value>8080</value>#<value>$PORT0</value>#\" < conf/zeppelin-site.xml.template > conf/zeppelin-site.xml && sed -i \"s#<value>-1</value>#<value>$PORT1</value>#\" conf/zeppelin-site.xml && SPARK_HOME_TGZ=$(ls ${MESOS_SANDBOX}/spark-*.tgz) SPARK_HOME=${SPARK_HOME_TGZ%.tgz} bin/zeppelin.sh start",
     "ports": [0, 0],
     "cpus": 1,
     "mem": 2048.0,
