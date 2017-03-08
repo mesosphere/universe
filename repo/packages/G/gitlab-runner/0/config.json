@@ -20,7 +20,7 @@
           "description": "Memory to allocate to GitLab Runner.",
           "type": "number",
           "default": 2048.0,
-          "minimum": 2048.0
+          "minimum": 1024.0
         },
         "instances": {
           "description": "The number of GitLab Runner instances to start.",
