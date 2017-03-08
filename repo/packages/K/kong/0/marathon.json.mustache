@@ -3,7 +3,6 @@
   "instances": {{kong.instances}},
   "cpus": {{kong.cpus}},
   "mem": {{kong.mem}},
-  "maintainer": "ben.lin@mesosphere.io",
   "cmd": "KONG_NGINX_DAEMON=\"off\" KONG_CLUSTER_ADVERTISE=$HOST:$PORT3  kong start",
   "container": {
     "type": "DOCKER",

@@ -97,7 +97,7 @@
         "host": {
           "description": "The DNS name of the internal MLB",
           "type": "string",
-          "default": "postgres.marathon.l4lb.thisdcos.directory"
+          "default": "postgresql.marathon.l4lb.thisdcos.directory"
         },
         "user": {
           "description": "The postgresdb username",
