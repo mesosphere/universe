@@ -84,6 +84,7 @@ Every package in Universe must have a `package.json` file which specifies the hi
 Currently, a package can specify one of two values for `.packagingVersion` either `2.0` or `3.0`; which version is declared
 will dictate which other files are required for the complete package as well as the schema(s) all the files must
 adhere to. Below is a snippet that represents a version `2.0` package.
+
 See [`repo/meta/schema/package-schema.json`](repo/meta/schema/package-schema.json) for the full json schema outlining
 what properties are available for each corresponding version of a package.
 
@@ -229,6 +230,10 @@ format of a Pip requirements file where each element in the array is a line in t
 
 This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects and
 images) needed to install the application.
+
+See [`repo/meta/schema/v2-resource-schema.json`](repo/meta/schema/v2-resource-schema.json) and
+[`repo/meta/schema/v3-resource-schema.json`](repo/meta/schema/v3-resource-schema.json) for the full
+json schema outlining what properties are available for each corresponding version of a package.
 
 ```json
 {
