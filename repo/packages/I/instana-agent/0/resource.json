@@ -1,0 +1,21 @@
+{
+  "images": {
+    "icon-small": "https://www.instana.com/wp-content/uploads/2016/11/instana_icon_small.jpg",
+    "icon-medium": "https://www.instana.com/wp-content/uploads/2016/11/instana_icon_medium.jpg",
+    "icon-large": "https://www.instana.com/wp-content/uploads/2016/11/instana_icon_large.jpg",
+    "screenshots": [
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Application-Map.png",
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Incidents-View.png",
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Infrastructure-Map.png",
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Metrics-Comparison.png",
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Tracing-View.png"
+   ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "instana-agent": "instana/agent:0.0.2"
+      }
+    }
+  }
+}

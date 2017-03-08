@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/portworx/px-dev/master/images/px-small.png",
+    "icon-medium": "https://raw.githubusercontent.com/portworx/px-dev/master/images/px-medium.png",
+    "icon-large": "https://raw.githubusercontent.com/portworx/px-dev/master/images/px-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "portworx-docker": "portworx/px-dev:dcos-1.8"
+      }
+    }
+  }
+}

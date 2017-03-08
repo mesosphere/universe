@@ -1,0 +1,45 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{app-master.cpus}},
+  "mem": {{app-master.memory}},
+  "env": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "FLINK_LOG_DIR": "$MESOS_SANDBOX"
+  },
+  "cmd": "export LIBPROCESS_PORT=$PORT4 && cd \"$MESOS_SANDBOX\" && \"$FLINK_HOME/bin/mesos-appmaster.sh\" -Dblob.server.port=$PORT2 -Djobmanager.heap.mb={{app-master.heap}} -Djobmanager.rpc.port=$PORT1 -Djobmanager.web.port=$PORT0 -Dmesos.artifact-server.port=$PORT3 -Dmesos.initial-tasks={{task-managers.count}} -Dmesos.resourcemanager.tasks.cpus={{task-managers.cpus}} -Dmesos.resourcemanager.tasks.mem={{task-managers.memory}} -Dtaskmanager.heap.mb={{task-managers.heap}} -Dtaskmanager.memory.preallocate={{task-managers.memory-preallocation}} -Dtaskmanager.numberOfTaskSlots={{service.slots}} -Dparallelism.default={{service.parallelism-default}}",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.flink}}",
+      "network": "HOST"
+    }
+  },
+  "portDefinitions": [
+    {"port": 0},
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "labels": {"VIP_0": "/jobmanager:6123"}
+    },
+    {"port": 0},
+    {"port": 0},
+    {"port": 0}
+  ],
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/",
+      "portIndex": 0,
+      "gracePeriodSeconds": 5,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http",
+    "HAPROXY_GROUP":"external"
+  }
+}

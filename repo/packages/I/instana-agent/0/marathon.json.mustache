@@ -1,0 +1,84 @@
+{
+  "id": "{{instana-agent.app_id}}",
+  "cpus": {{instana-agent.cpus}},
+  "mem": {{instana-agent.ram}},
+  "instances": {{instana-agent.instances}},
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.instana-agent}}",
+      "forcePullImage": true,
+      "privileged": true,
+      "network": "HOST",
+      "parameters": [
+        {
+          "key": "name",
+          "value": "instana-agent"
+        },
+        {
+          "key": "env",
+          "value": "INSTANA_TAGS={{instana-agent.tag_list}}"
+        },
+        {
+          "key": "env",
+          "value": "INSTANA_KEY={{instana-agent.agent_key}}"
+        },
+        {
+          "key": "env",
+          "value": "INSTANA_HOST={{instana-agent.agent_endpoint}}"
+        },
+        {
+          "key": "env",
+          "value": "INSTANA_PORT={{instana-agent.agent_endpoint_port}}"
+        },
+        { 
+          "key": "pid",
+          "value": "host"
+        }, 
+        {
+          "key": "ipc", 
+          "value": "host" 
+        }
+      ]
+    },
+    "volumes": [
+      {
+        "containerPath": "/var/run/docker.sock",
+        "hostPath": "/var/run/docker.sock",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/sys",
+        "hostPath": "/sys",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/dev",
+        "hostPath": "/dev",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/var/log",
+        "hostPath": "/var/log",
+        "mode": "RW"
+      }
+    ]
+  },
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "curl http://127.0.0.1:42699/version" },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "constraints": [
+    ["hostname", "UNIQUE"]
+  ],
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{instana-agent.framework_name}}",
+    "DCOS_SERVICE_NAME": "{{instana-agent.framework_name}}"
+  }
+}

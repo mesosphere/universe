@@ -1,0 +1,89 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "DC/OS Flink service configuration properties.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "default": "flink",
+          "description": "The Flink Job Manager will register with Mesos with this as framework name. This service will be available at http://<dcos_url>/service/<name>/",
+          "type": "string"
+        },
+        "slots": {
+          "description": "A processing slot allows Flink to execute a distributed DataSet transformation, such as a data source or a map-transformation. As a general recommendation, the number of available CPU cores is a good default.",
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        },
+        "parallelism-default": {
+          "description": "The parallelism used for programs that did not specify any other parallelism.",
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        }
+      }
+    },
+
+    "app-master": {
+      "description": "Properties configuring the Flink AppMaster/JobManager.",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares of AppMaster.",
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "memory": {
+          "default": 1024,
+          "description": "Memory (MB) of AppMaster.",
+          "minimum": 1024,
+          "type": "number"
+        },
+        "heap": {
+          "description": "Heap size (MB) for the AppMaster JVM. This value has to be less or equal than memory.",
+          "type": "number",
+          "default": 256,
+          "minimum": 1
+        }
+      }
+    },
+
+    "task-managers": {
+      "description": "Properties configuring the Flink TaskManagers.",
+      "type": "object",
+      "properties": {
+        "count": {
+          "description": "Number of task managers to spawn.",
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        },
+        "cpus": {
+          "description": "CPU shares of each TaskManager.",
+          "type": "number",
+          "default": 1,
+          "minimum": 0.01
+        },
+        "memory": {
+          "description": "Memory (MB) for each task manager.",
+          "type": "number",
+          "default": 1024,
+          "minimum": 256
+        },
+        "heap": {
+          "description": "Heap size (MB) for the TaskManager JVM. This value has to be less or equal than memory.",
+          "type": "number",
+          "default": 512,
+          "minimum": 1
+        },
+        "memory-preallocation": {
+          "description": "Specify whether TaskManager-memory should be allocated when starting up (checked) or when memory is required in the memory manager (unchecked).",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  }
+}
