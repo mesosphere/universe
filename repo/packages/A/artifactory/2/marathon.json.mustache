@@ -68,6 +68,16 @@
     "containerPath": "/var/opt/jfrog/cluster",
     "hostPath": "{{service.host-volume}}/data",
     "mode": "RW"
+    },
+    {
+    "containerPath": "/var/opt/jfrog/artifactory/etc",
+    "hostPath": "{{service.host-volume}}/etc",
+    "mode": "RW"
+    },
+    {
+    "containerPath": "/var/opt/jfrog/artifactory/logs",
+    "hostPath": "{{service.host-volume}}/logs",
+    "mode": "RW"
     }
 {{/high-availability.enabled}}
 ]
@@ -103,15 +113,16 @@
 {{/high-availability.enabled}}
 },
 "labels": {
+{{^high-availability.enabled}}
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+{{/high-availability.enabled}}
 "DCOS_SERVICE_NAME": "{{service.name}}"
 },
-{{#high-availability.enabled}}
-    "upgradeStrategy":{
+"upgradeStrategy":{
     "minimumHealthCapacity": 0,
     "maximumOverCapacity": 0,
     "constraints": [["hostname", "UNIQUE"]]
-    },
-{{/high-availability.enabled}}
+},
 {{#pro.pinned-hostname}}
     "constraints": [["hostname", "CLUSTER", "{{pro.pinned-hostname}}"]],
 {{/pro.pinned-hostname}}
