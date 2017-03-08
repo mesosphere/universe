@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "kong": {
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares to allocate to each instance.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 512,
+          "description": "Memory (MB) to allocate to each task.",
+          "minimum": 512,
+          "type": "number"
+        },
+        "name": {
+          "default": "kong",
+          "description": "Name for this application",
+          "type": "string"
+        },
+        "role": {
+          "default": "*",
+          "description": "Deploy crm only on nodes with this role.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "instances",
+        "name"
+      ],
+      "type": "object"
+    },
+    "marathon-lb": {
+      "type": "object",
+      "description": "Marathon-LB service configuration properties",
+      "properties": {
+        "port0": {
+          "description": "The service port for port0",
+          "type": "integer",
+          "default": 10001
+        },
+        "port1": {
+          "description": "The service port for port1",
+          "type": "integer",
+          "default": 10002
+        },
+        "port2": {
+          "description": "The service port for port2",
+          "type": "integer",
+          "default": 10003
+        },
+        "port3": {
+          "description": "The service port for port3",
+          "type": "integer",
+          "default": 10004
+        },
+        "group0": {
+          "description": "The MLB name for HAPROXY_0_GROUP",
+          "type": "string",
+          "default": "external"
+        },
+        "group1": {
+          "description": "The MLB name for HAPROXY_1_GROUP",
+          "type": "string",
+          "default": "external"
+        }
+      },
+      "required": [
+        "port0",
+        "port1",
+        "port2",
+        "port3",
+        "group0",
+        "group1"
+      ]
+    },
+    "database": {
+      "type": "object",
+      "description": "Kong database configuration properties",
+      "properties": {
+        "password": {
+          "description": "The postgresdb password",
+          "type": "string",
+          "default": "kong"
+        },
+        "host": {
+          "description": "The DNS name of the internal MLB",
+          "type": "string",
+          "default": "postgresql.marathon.l4lb.thisdcos.directory"
+        },
+        "user": {
+          "description": "The postgresdb username",
+          "type": "string",
+          "default": "kong"
+        },
+        "port": {
+          "description": "The service port for the postgresdb",
+          "type": "integer",
+          "default": 5432
+        },
+        "database": {
+          "description": "The database backend type",
+          "type": "string",
+          "default": "postgres"
+        }
+      },
+      "required": [
+        "password",
+        "host",
+        "user",
+        "port",
+        "database"
+      ]
+    }
+  },
+  "type": "object"
+}
