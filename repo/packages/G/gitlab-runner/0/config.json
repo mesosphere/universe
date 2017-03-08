@@ -70,13 +70,14 @@
       "type": "object",
       "properties": {
         "executor": {
-          "description": "The executor type (supported are shell or docker). This is appended to the service name.",
+          "description": "The executor type (\"shell\" or \"docker\" are supported). This is appended to the service name.",
           "enum": ["shell", "docker"],
           "default": "shell"
         },
         "tag-list": {
           "description": "A comma-separated list of tags. Those can be used in the CI job setting to pin build to specific runners having those tags.",
-          "type": "string"
+          "type": "string",
+          "default": "dcos"
         },
         "concurrent-builds": {
           "description": "The number of concurrent builds this runner should be able to run. This is bound to the resources this runner was given.",
