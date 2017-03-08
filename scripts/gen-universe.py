@@ -56,10 +56,22 @@ def main():
     with universe_path.open('w', encoding='utf-8') as universe_file:
         json.dump({'packages': packages}, universe_file)
 
+    ct_universe_path = args.outdir / 'universe.content_type'
+    with ct_universe_path.open('w', encoding='utf-8') as ct_universe_file:
+        ct_universe_file.write(
+            "application/nd.dcos.universe.repo+json;charset=utf-8;version=v4"
+        )
+
     # Render empty json
     empty_path = args.outdir / 'repo-empty-v3.json'
     with empty_path.open('w', encoding='utf-8') as universe_file:
         json.dump({'packages': []}, universe_file)
+
+    ct_empty_path = args.outdir / 'repo-empty-v3.content_type'
+    with ct_empty_path.open('w', encoding='utf-8') as ct_empty_file:
+        ct_empty_file.write(
+            "application/nd.dcos.universe.repo+json;charset=utf-8;version=v3"
+        )
 
     # create universe-by-version files for `dcos_versions`
     dcos_versions = ["1.6.1", "1.7", "1.8", "1.9", "1.10"]
@@ -84,6 +96,29 @@ def render_universe_by_version(outdir, packages, version):
         render_zip_universe_by_version(outdir, packages, version)
     else:
         render_json_by_version(outdir, packages, version)
+        render_content_type_file_by_version(outdir, version)
+
+
+def render_content_type_file_by_version(outdir, version):
+    """Render content type file for `version`
+
+    :param outdir: Path to the directory to use to store all universe objects
+    :type outdir: str
+    :param version: DC/OS version
+    :type version: str
+    :rtype: None
+    """
+
+    universe_version = \
+        "v3" if LooseVersion(version) < LooseVersion("1.10") else "v4"
+    content_type = "application/" \
+                   "vnd.dcos.universe.repo+json;" \
+                   "charset=utf-8;version=" \
+                   + universe_version
+    ct_file_path = \
+        outdir / 'repo-up-to-{}.content_type'.format(version)
+    with ct_file_path.open('w', encoding='utf-8') as ct_file:
+        ct_file.write(content_type)
 
 
 def render_json_by_version(outdir, packages, version):
