@@ -39,7 +39,7 @@
           "maxConsecutiveFailures": 5
         }
     ]
-    {{^service.allow-multiple-host-instances}},
+    {{#service.one-instance-per-host}},
     "constraints": [["hostname", "UNIQUE"]]
-    {{/service.allow-multiple-host-instances}}
+    {{/service.one-instance-per-host}}
 }

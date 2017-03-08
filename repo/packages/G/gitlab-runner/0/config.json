@@ -33,8 +33,8 @@
           "description": "Deploy GitLab Runner only on nodes with this role.",
           "type": "string"
         },
-        "allow-multiple-host-instances": {
-          "description": "Whether it should be allowed that multiple instances of the GitLab Runner can exist on the same agent.",
+        "one-instance-per-host": {
+          "description": "Only run one instance of GitLab Runner per DC/OS node.",
           "type": "boolean",
           "default": false
         }
