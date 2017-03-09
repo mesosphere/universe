@@ -109,20 +109,22 @@ def render_content_type_file_by_version(outdir, version):
 
 
 def create_content_type_file(path, universe_version):
-    """
+    """ Creates a file with universe repo version `universe_version` content-type
+    as its contents.
 
-    :param path:
-    :param universe_version:
-    :return:
+    :param path: the name of the content-type file
+    :type path: str
+    :param universe_version: Universe content type version: "v3" or "v4"
+    :type universe_version: str
+    :rtype: None
     """
     with path.open('w', encoding='utf-8') as ct_file:
         content_type = format_universe_repo_content_type(universe_version)
         ct_file.write(content_type)
 
 
-
 def format_universe_repo_content_type(universe_version):
-    """
+    """ Formats a universe repo content-type of version `universe-version`
 
     :param universe_version: Universe content type version: "v3" or "v4"
     :type universe_version: str
