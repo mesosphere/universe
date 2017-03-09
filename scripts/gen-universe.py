@@ -59,7 +59,7 @@ def main():
     ct_universe_path = args.outdir / 'universe.content_type'
     with ct_universe_path.open('w', encoding='utf-8') as ct_universe_file:
         ct_universe_file.write(
-            "application/nd.dcos.universe.repo+json;charset=utf-8;version=v4"
+            "application/vnd.dcos.universe.repo+json;charset=utf-8;version=v4"
         )
 
     # Render empty json
@@ -70,7 +70,7 @@ def main():
     ct_empty_path = args.outdir / 'repo-empty-v3.content_type'
     with ct_empty_path.open('w', encoding='utf-8') as ct_empty_file:
         ct_empty_file.write(
-            "application/nd.dcos.universe.repo+json;charset=utf-8;version=v3"
+            "application/vnd.dcos.universe.repo+json;charset=utf-8;version=v3"
         )
 
     # create universe-by-version files for `dcos_versions`
