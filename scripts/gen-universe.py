@@ -55,23 +55,15 @@ def main():
     universe_path = args.outdir / 'universe.json'
     with universe_path.open('w', encoding='utf-8') as universe_file:
         json.dump({'packages': packages}, universe_file)
-
     ct_universe_path = args.outdir / 'universe.content_type'
-    with ct_universe_path.open('w', encoding='utf-8') as ct_universe_file:
-        ct_universe_file.write(
-            format_universe_repo_content_type("v4")
-        )
+    create_content_type_file(ct_universe_path, "v4")
 
     # Render empty json
     empty_path = args.outdir / 'repo-empty-v3.json'
     with empty_path.open('w', encoding='utf-8') as universe_file:
         json.dump({'packages': []}, universe_file)
-
     ct_empty_path = args.outdir / 'repo-empty-v3.content_type'
-    with ct_empty_path.open('w', encoding='utf-8') as ct_empty_file:
-        ct_empty_file.write(
-            format_universe_repo_content_type("v3")
-        )
+    create_content_type_file(ct_empty_path, "v3")
 
     # create universe-by-version files for `dcos_versions`
     dcos_versions = ["1.6.1", "1.7", "1.8", "1.9", "1.10"]
@@ -111,11 +103,22 @@ def render_content_type_file_by_version(outdir, version):
 
     universe_version = \
         "v3" if LooseVersion(version) < LooseVersion("1.10") else "v4"
-    content_type = format_universe_repo_content_type(universe_version)
     ct_file_path = \
         outdir / 'repo-up-to-{}.content_type'.format(version)
-    with ct_file_path.open('w', encoding='utf-8') as ct_file:
+    create_content_type_file(ct_file_path, universe_version)
+
+
+def create_content_type_file(path, universe_version):
+    """
+
+    :param path:
+    :param universe_version:
+    :return:
+    """
+    with path.open('w', encoding='utf-8') as ct_file:
+        content_type = format_universe_repo_content_type(universe_version)
         ct_file.write(content_type)
+
 
 
 def format_universe_repo_content_type(universe_version):
