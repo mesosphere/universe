@@ -14,7 +14,7 @@
     "artifacts",
     "artifactory"
   ],
-  "preInstallNotes": "If you wish to use Artifactory High Availability, You will need atlead 1 public slave in your cluster",
+  "preInstallNotes": "If you wish to use Artifactory High Availability, You will need at least 1 public agent in your cluster",
   "postInstallNotes": "Artifactory has been installed.",
   "postUninstallNotes": "Artifactory has been uninstalled.",
   "licenses": [

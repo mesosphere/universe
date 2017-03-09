@@ -52,7 +52,7 @@
             },
             "port": {
               "description": "Database port.",
-              "type": "number",
+              "type": "integer",
               "default": "3306"
             },
             "user": {
@@ -82,7 +82,7 @@
       "type": "object",
       "properties": {
         "pinned-hostname": {
-          "description": "A DC/OS agent hostname to run this GitLab instance on (e.g. 10.0.0.1). This must be specified if using local volumes with Artifactory Pro. If this is not specified then the task may relaunch on another node than the one it originally ran on.",
+          "description": "A DC/OS agent hostname to run this Artifactory instance on (e.g. 10.0.0.1). This must be specified if using local volumes with Artifactory Pro. If this is not specified then the task may relaunch on another node than the one it originally ran on.",
           "type": "string"
         },
         "external-volumes": {
@@ -128,7 +128,7 @@
           "type": "string"
         },
         "unique-nodes": {
-          "description": "Run secondary instances on unique hosts. By default, this is true.",
+          "description": "Run Artifactory on unique hosts. By default, this is true.",
           "type": "boolean",
           "default": true
         }
