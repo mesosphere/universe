@@ -55,11 +55,15 @@ def main():
     universe_path = args.outdir / 'universe.json'
     with universe_path.open('w', encoding='utf-8') as universe_file:
         json.dump({'packages': packages}, universe_file)
+    ct_universe_path = args.outdir / 'universe.content_type'
+    create_content_type_file(ct_universe_path, "v4")
 
     # Render empty json
     empty_path = args.outdir / 'repo-empty-v3.json'
     with empty_path.open('w', encoding='utf-8') as universe_file:
         json.dump({'packages': []}, universe_file)
+    ct_empty_path = args.outdir / 'repo-empty-v3.content_type'
+    create_content_type_file(ct_empty_path, "v3")
 
     # create universe-by-version files for `dcos_versions`
     dcos_versions = ["1.6.1", "1.7", "1.8", "1.9", "1.10"]
@@ -84,6 +88,54 @@ def render_universe_by_version(outdir, packages, version):
         render_zip_universe_by_version(outdir, packages, version)
     else:
         render_json_by_version(outdir, packages, version)
+        render_content_type_file_by_version(outdir, version)
+
+
+def render_content_type_file_by_version(outdir, version):
+    """Render content type file for `version`
+
+    :param outdir: Path to the directory to use to store all universe objects
+    :type outdir: str
+    :param version: DC/OS version
+    :type version: str
+    :rtype: None
+    """
+
+    universe_version = \
+        "v3" if LooseVersion(version) < LooseVersion("1.10") else "v4"
+    ct_file_path = \
+        outdir / 'repo-up-to-{}.content_type'.format(version)
+    create_content_type_file(ct_file_path, universe_version)
+
+
+def create_content_type_file(path, universe_version):
+    """ Creates a file with universe repo version `universe_version` content-type
+    as its contents.
+
+    :param path: the name of the content-type file
+    :type path: str
+    :param universe_version: Universe content type version: "v3" or "v4"
+    :type universe_version: str
+    :rtype: None
+    """
+    with path.open('w', encoding='utf-8') as ct_file:
+        content_type = format_universe_repo_content_type(universe_version)
+        ct_file.write(content_type)
+
+
+def format_universe_repo_content_type(universe_version):
+    """ Formats a universe repo content-type of version `universe-version`
+
+    :param universe_version: Universe content type version: "v3" or "v4"
+    :type universe_version: str
+    :return: content-type of the universe repo version `universe_version`
+    :rtype: str
+    """
+    content_type = "application/" \
+                   "vnd.dcos.universe.repo+json;" \
+                   "charset=utf-8;version=" \
+                   + universe_version
+    return content_type
 
 
 def render_json_by_version(outdir, packages, version):
