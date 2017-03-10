@@ -55,6 +55,11 @@
               "type": "integer",
               "default": "3306"
             },
+            "url":{
+              "description": "Database url.",
+              "type": "string",
+              "default": "jdbc:mysql://mysql.marathon.mesos:3306/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true"
+            },
             "user": {
               "description": "Database username.",
               "type": "string",
