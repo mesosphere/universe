@@ -9,10 +9,10 @@
   "framework": false,
   "description": "As the first, and only, universal Artifact Repository Manager on the market, JFrog Artifactory fully supports software packages created by any language or technology.",
   "tags": [
-    "mesosphere",
     "framework",
     "artifacts",
-    "artifactory"
+    "artifactory",
+    "repository"
   ],
   "preInstallNotes": "If you wish to use Artifactory High Availability, You will need at least 1 public agent in your cluster",
   "postInstallNotes": "Artifactory has been installed.",
