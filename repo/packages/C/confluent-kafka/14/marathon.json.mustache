@@ -3,7 +3,7 @@
   "cpus": 1.0,
   "mem": 1230,
   "instances": 1,
-  "cmd": "export PATH=$(ls -d $MESOS_SANDBOX/jre*/bin):$PATH && ./scheduler/bin/kafka-scheduler server ./scheduler/conf/scheduler.yml",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH && export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so) && export PATH=$(ls -d $MESOS_SANDBOX/jre*/bin):$PATH && ./scheduler/bin/kafka-scheduler server ./scheduler/conf/scheduler.yml",
   "labels": {
     "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
     "DCOS_MIGRATION_API_VERSION": "v1",
@@ -15,6 +15,7 @@
   },
   "env": {
     "LD_LIBRARY_PATH": "/opt/mesosphere/lib",
+    "JAVA_HOME":"./jre1.8.0_121",
     "FRAMEWORK_NAME": "{{service.name}}",
     "FRAMEWORK_PRINCIPAL": "{{service.principal}}",
     "USER": "{{service.user}}",
@@ -141,8 +142,8 @@
     "KAFKA_OVERRIDE_COMPRESSION_TYPE": "{{kafka.compression_type}}"
     {{#service.secret_name}}
     ,"DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
-    "MESOS_MODULES": "file:///opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
-    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee"
     {{/service.secret_name}}
   },
   {{#service.secret_name}}
@@ -155,7 +156,8 @@
   "uris": [
     "{{resource.assets.uris.jre-tar-gz}}",
     "{{resource.assets.uris.scheduler-zip}}",
-    "{{resource.assets.uris.kafka_tgz}}"
+    "{{resource.assets.uris.kafka_tgz}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
   ],
   "healthChecks": [
     {
