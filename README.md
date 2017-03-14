@@ -85,14 +85,14 @@ Every package in Universe must have a `package.json` file which specifies the hi
 Currently, a package can specify one of three values for `.packagingVersion`
 either `2.0` or `3.0` or `4.0`; which version is declared
 will dictate which other files are required for the complete package as well as the schema(s) all the files must
-adhere to. Below is a snippet that represents a version `2.0` package.
+adhere to. Below is a snippet that represents a version `4.0` package.
 
 See [`repo/meta/schema/package-schema.json`](repo/meta/schema/package-schema.json) for the full json schema outlining
 what properties are available for each corresponding version of a package.
 
 ```json
 {
-  "packagingVersion": "2.0",
+  "packagingVersion": "4.0",
   "name": "foo",
   "version": "1.2.3",
   "tags": ["mesosphere", "framework"],
@@ -101,6 +101,9 @@ what properties are available for each corresponding version of a package.
   "scm": "https://github.com/bar/foo.git",
   "website": "http://bar.io/foo",
   "framework": true,
+  "upgradesFrom": ["1.2.2"],
+  "downgradesTo": ["1.2.2"],
+  "minDcosReleaseVersion": "1.10",
   "postInstallNotes": "Have fun foo-ing and baz-ing!"
 }
 ```
