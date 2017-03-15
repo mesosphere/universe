@@ -18,8 +18,8 @@
           "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
           "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
           "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
-          "LD_LIBRARY_PATH": "/libmesos-bundle/lib/mesos",
       {{/security.secret-name}}
+      "LD_LIBRARY_PATH": "/libmesos-bundle/lib:/libmesos-bundle/lib/mesos",
       "JENKINS_CONTEXT": "/service/{{service.name}}",
       "JENKINS_MESOS_MASTER": "{{advanced.mesos-master}}",
       {{#networking.virtual-host}}
