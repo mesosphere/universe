@@ -1,0 +1,207 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Avi Vantage ADC service name",
+          "type": "string",
+          "default": "avi-vantage"
+        }
+      },
+      "additionalProperties": false,
+      "required": ["name"]
+    },
+    "avi": {
+      "description": "Avi Vantage specific configuration properties",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "controller": {
+          "description": "Avi Controller specific configuration properties",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "admin-password": {
+              "description": "Password for Avi 'admin' user",
+              "type": "string",
+              "default": "admin"
+            },
+            "cluster-vip": {
+              "description": "Cluster VIP for Avi Controller instance(s)",
+              "type": "string",
+              "pattern" : "^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$"
+            },
+            "cpus": {
+              "description": "CPU shares to allocate to each Avi Controller instance.",
+              "type": "integer",
+              "default": 4,
+              "minimum": 1
+            },
+            "disk": {
+              "description": "Disk (MB) to allocate to each Avi Controller instance.",
+              "type": "integer",
+              "default": 65536,
+              "minimum": 25600
+            },
+            "dns-port": {
+              "description": "Avi DNS port",
+              "type": "integer",
+              "default": 9053
+            },
+            "dns-servers": {
+              "description": "comma-delimited list of DNS servers.",
+              "type": "string",
+              "default": "master.mesos"
+            },
+            "enable-avidns": {
+              "description": "Enable AVI DNS.",
+              "type": "boolean",
+              "default": false
+            },
+            "enable-cluster": {
+              "description": "Enable AVI Controller clustering.",
+              "type": "boolean",
+              "default": false
+            },
+            "enable-ntp": {
+              "description": "Enable AVI NTP.",
+              "type": "boolean",
+              "default": false
+            },
+            "force-pull":{
+              "description":"Force docker to re-pull the Controller & SE images.",
+              "type":"boolean",
+              "default": false
+            },
+            "http-port": {
+              "description": "HTTP port for Avi-Vantage portal",
+              "type": "integer",
+              "default": 9080
+            },
+            "https-port": {
+              "description": "HTTPS port for Avi-Vantage portal",
+              "type": "integer",
+              "default": 9443
+            },
+            "memory": {
+              "description": "Memory (MB) to allocate to each Avi Controller task.",
+              "type": "integer",
+              "default": 12288,
+              "minimum": 8192
+            },
+            "ntp-port": {
+              "description": "NTP port",
+              "type": "integer",
+              "default": 9161,
+              "minimum": 9161,
+              "maximum": 9161
+            },
+            "persistent-vol-size": {
+              "description": "Size of persistent volume",
+              "type": "integer",
+              "default": 10,
+              "minimum": 10,
+              "maximum": 100
+            },
+            "remote-cli-port": {
+              "description": "Remote CLI shell port",
+              "type": "integer",
+              "default": 5054
+            },
+            "resource-role": {
+                "description": "The accepted resource role (e.g. slave_public or *). By default, this will deploy to any agents with '*' role.",
+                "type": "string",
+                "default": "*"
+            },
+            "schannel-port": {
+              "description": "Secure-Channel port",
+              "type": "integer",
+              "default": 8443,
+              "minimum": 8443,
+              "maximum": 8443
+            },
+            "ssh-port": {
+              "description": "SSH port",
+              "type": "integer",
+              "default": 5098,
+              "minimum": 5098,
+              "maximum": 5098
+            },
+            "tag": {
+              "description": "Tag value of the Avi-Vantage image in the Docker repository.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "cpus",
+            "memory",
+            "disk",
+            "https-port"
+          ]
+        },
+        "serviceengine": {
+          "description": "Avi ServiceEngine specific configuration properties",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "cpus": {
+              "description": "CPU shares to allocate to each Avi SE instance.",
+              "type": "number",
+              "default": 1,
+              "minimum": 1
+            },
+            "disk": {
+              "description": "Disk (MB) to allocate to each Avi SE instance.",
+              "type": "integer",
+              "minimum": 10240,
+              "default": 10240
+            },
+            "memory": {
+              "description": "Memory (MB) to allocate to each Avi SE instance.",
+              "type": "number",
+              "default": 2,
+              "minimum": 2
+            }
+          },
+          "required": [
+            "cpus",
+            "memory",
+            "disk"
+          ]
+        }
+      },
+      "required": [
+        "controller",
+        "serviceengine"
+      ]
+    },
+    "mesos": {
+      "description": "Mesos specific configuration properties",
+      "type": "object",
+      "properties": {
+        "master": {
+          "default": "master.mesos:5050",
+          "description": "The URL of the Mesos master.",
+          "type": "string"
+        },
+        "marathon": {
+          "default": "http://marathon.mesos:8080",
+          "description": "URI of Marathon instance",
+          "type": "string"
+        }
+      },
+      "required": [
+        "master",
+        "marathon"
+      ]
+    }
+  },
+  "required": [
+    "service",
+    "avi",
+    "mesos"
+  ]
+}
