@@ -12,7 +12,7 @@
   {{/security.secret-name}}
   "env": {
       "JENKINS_AGENT_ROLE": "{{roles.jenkins-agent-role}}",
-      "JENKINS_AGENT_USER": "{{#security.strict-mode}}{{security.strict-mode-user}}{{/security.strict-mode}}{{^security.strict-mode}}root{{/security.strict-mode}}",
+      "JENKINS_AGENT_USER": "{{service.user}}",
       "JENKINS_FRAMEWORK_NAME": "{{service.name}}",
       {{#security.secret-name}}
           "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },

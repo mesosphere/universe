@@ -21,6 +21,11 @@
                     "type": "number",
                     "default": 2048.0,
                     "minimum": 2048.0
+                },
+                "user": {
+                    "description": "The user that the service will run as. In 'strict' security mode, running tasks as root is disabled by default. Ensure that this user exists on each of the agents in your DC/OS cluster.",
+                    "type": "string",
+                    "default": "root"
                 }
             },
             "required": [
@@ -88,11 +93,6 @@
                     "description": "Enabled if Enterprise DC/OS is provisioned using the 'strict' security mode flag. When enabled, tasks run as the user specified below.",
                     "type": "boolean",
                     "default": false
-                },
-                "strict-mode-user": {
-                    "description": "In strict mode, tasks will run as this user. The 'strict' security mode does not permit running tasks as root. By default, the user 'nobody' is used. Ensure that this user exists on each of the agents in your DC/OS cluster.",
-                    "type": "string",
-                    "default": "nobody"
                 },
                 "secret-name": {
                     "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
