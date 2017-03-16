@@ -1,0 +1,16 @@
+{
+  "description": "Apache Hadoop Distributed File System (HDFS)",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.7",
+  "name": "hdfs",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS HDFS service is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/latest/usage/service-guides/hdfs\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS HDFS service has been uninstalled.",
+  "selected": false,
+  "tags": [
+    "hdfs",
+    "hadoop"
+  ],
+  "version": "1.2.0-2.6.0-cdh5.9.1"
+}
