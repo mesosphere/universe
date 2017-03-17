@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "cpu": {
+      "type": "integer",
+      "description": "cpu to allocate to the container",
+      "minimum": 0.3,
+      "maximum": 16,
+      "default": 1
+    },
+    "memory": {
+      "type": "integer",
+      "description": "Memory to allocate",
+      "minimum": 500,
+      "maximum": 9999,
+      "default": 1024
+    }
+  }
+}

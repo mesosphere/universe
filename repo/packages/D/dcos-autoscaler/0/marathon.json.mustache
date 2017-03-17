@@ -1,0 +1,12 @@
+{
+  "id": "/dcos-autoscaler",
+  "cpus": "{{cpu}}",
+  "mem": "{{memory}}",
+  "instances": "1",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.23b1cfe8e04a}}"
+    }
+  }
+}

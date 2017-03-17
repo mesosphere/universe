@@ -1,0 +1,11 @@
+{
+  "packagingVersion": "3.0",
+  "name": "dcos-autoscaler",
+  "version": "1.0.0",
+  "maintainer": "ahmadhassan612@gmail.com",
+  "description": "Adds autoscaling to your application based on cpu and memory metrics",
+  "scm": "https://github.com/Ahmadposten/DC-OS-Marathon-autoscaling",
+  "framework": true,
+  "tags": ["autoscaling", "mesosphere", "dcos"],
+  "postInstallNotes": "Thank you for installing dcos autoscaler, Consult github.com/Ahmadposten/DC-OS-Marathon-autoscaling for more more info on usage and tuning configurations"
+}
