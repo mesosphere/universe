@@ -1,0 +1,207 @@
+{
+  "type":"object",
+    "properties":{
+      "service":{
+        "type":"object",
+        "description": "DC/OS service configuration properties",
+        "properties":{
+          "name" : {
+            "description":"The name of the service instance",
+            "type":"string",
+            "default":"couchbase"
+          },
+          "spec_file" : {
+            "description":"The name of the service spec yaml file.",
+            "type":"string",
+            "default":"svc.yml"
+          },
+          "cmd_prefix" : {
+            "description":"A generic prefix to start the scheduler.",
+            "type":"string",
+            "default":"LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so) PATH=$(ls -d $MESOS_SANDBOX/jre*/bin):$PATH"
+          }
+        }
+      },
+      "couchbase":{
+        "description":"Common Couchbase Cluster Configuration",
+        "type":"object",
+        "properties":{
+          "version":{
+            "description":"Version of Couchbase Server to be installed",
+            "type":"string",
+            "default":"4.5.1"
+          },
+          "installer_location":{
+            "description":"Location of the installation RPM file",
+            "type":"string",
+            "default": "https://packages.couchbase.com/releases/4.5.1/couchbase-server-enterprise-4.5.1-centos7.x86_64.rpm"
+          },
+          "admin_password":{
+            "description":"Enter the cluster Administrator password",
+            "type":"string",
+            "default": "password"
+          },
+          "use_placement_contraints":{
+            "description":"Set to true if you want to use the couchbase-eligible:true placement constraint",
+            "type":"boolean",
+            "default": false
+          }      
+        },
+        "required":[
+          "version",
+          "installer_location"
+        ]
+      },      
+      "data-service":{
+        "description":"Couchbase Data Service Configuration",
+        "type":"object",
+        "properties":{
+          "count":{
+            "description":"Number of data nodes to create",
+            "type":"integer",
+            "default":3
+          },        
+          "cpus":{
+            "description":"Number of cores available for each Data Service container",
+            "type":"number",
+            "default":2
+          },
+          "mem":{
+            "description":"Amount of memory available for each Data Service container (in MB)",
+            "type":"integer",
+            "default": 4096
+          },
+          "mem_usable":{
+            "description":"Amount of memory available for each Data Service node (in MB)",
+            "type":"integer",
+            "default": 3686
+          },          
+          "disk":{
+            "description":"Size of the persistent data volume that hosts the data partition (in MB)",
+            "type":"integer",
+            "default":15360
+          }
+        },
+        "required":[
+          "count",
+          "cpus",
+          "mem",
+          "mem_usable",
+          "disk"
+        ]
+      },
+      "index-service":{
+        "description":"Template pod configuration properties",
+        "type":"object",
+        "properties":{
+          "enabled":{
+            "description":"Determines whether or not the index service will be installed",
+            "type":"boolean",
+            "default":true
+          },            
+          "count":{
+            "description":"Number of index nodes to create",
+            "type":"integer",
+            "default":1
+          },        
+          "cpus":{
+            "description":"Number of cores available for each Index Service container",
+            "type":"number",
+            "default":2
+          },
+          "mem":{
+            "description":"Amount of memory available for each Index Service container (in MB)",
+            "type":"integer",
+            "default": 4096
+          },
+          "mem_usable":{
+            "description":"Amount of memory available for each Index Service node (in MB)",
+            "type":"integer",
+            "default": 3686
+          },          
+          "disk":{
+            "description":"Size of the persistent data volume that hosts the data partition (in MB)",
+            "type":"integer",
+            "default":15360
+          },
+          "index_type":{
+            "description":"Determines whether standard or memory optimized GSIs will be used, choices: default,memopt",
+            "type":"string",
+            "default":"default"          
+          }
+        },
+        "required":[
+          "count",
+          "cpus",
+          "mem",
+          "mem_usable",   
+		  "index_type",                 
+          "disk"
+        ]
+      },
+      "query-service":{
+        "description":"Template pod configuration properties",
+        "type":"object",
+        "properties":{
+          "enabled":{
+            "description":"Determines whether or not the index service will be installed",
+            "type":"boolean",
+            "default":true
+          },         
+		  "count":{
+            "description":"Number of query nodes to create",
+            "type":"integer",
+            "default":1
+          },        
+          "cpus":{
+            "description":"Number of cores available for each Query Service container",
+            "type":"number",
+            "default":2
+          },
+          "mem":{
+            "description":"Amount of memory available for each Query Service container (in MB)",
+            "type":"integer",
+            "default": 4096
+          },         
+          "disk":{
+            "description":"Size of the persistent data volume that hosts the data partition (in MB)",
+            "type":"integer",
+            "default":15360
+          }
+        },
+        "required":[
+          "enabled",        
+          "count",
+          "cpus",
+          "mem",
+          "disk"
+        ]
+      },
+      "demo-data":{
+        "description":"Template pod configuration properties",
+        "type":"object",
+        "properties":{
+          "install-beer-sample":{
+            "description":"Installs the beer-sample test bucket.",
+            "type":"boolean",
+            "default":false
+          },         
+		  "install-travel-sample":{
+            "description":"Installs the travel-sample test bucket.",
+            "type":"boolean",
+            "default":false
+          },        
+          "install-gamesim-sample":{
+            "description":"Installs the gamesim-sample test bucket.",
+            "type":"boolean",
+            "default":false
+          }
+        },
+        "required":[
+          "install-beer-sample",        
+          "install-travel-sample",
+          "install-gamesim-sample"
+        ]
+      }                     
+    }
+}

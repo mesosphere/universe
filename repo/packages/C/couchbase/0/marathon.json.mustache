@@ -1,0 +1,72 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1230,
+  "instances": 1,
+  "cmd": "{{service.cmd_prefix}} && ./couchbase-scheduler/bin/couchbase ./couchbase-scheduler/{{service.spec_file}}",
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_MIGRATION_API_VERSION": "v1",
+    "DCOS_MIGRATION_API_PATH": "/v1/plan",
+    "MARATHON_SINGLE_INSTANCE_APP":"true"
+  },
+  "env": {
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "COUCHBASE_VERSION": "{{couchbase.version}}",
+    "COUCHBASE_INSTALLER_LOCATION": "{{couchbase.installer_location}}",
+    "COUCHBASE_ADMIN_PASSWORD": "{{couchbase.admin_password}}",
+    {{#couchbase.use_placement_contraints}}
+    "COUCHBASE_USE_PLACEMENT_CONSTRAINTS": "{{couchbase.use_placement_contraints}}",
+    {{/couchbase.use_placement_contraints}}           
+    "DATA_SERVICE_COUNT": "{{data-service.count}}",
+    "DATA_SERVICE_CPUS": "{{data-service.cpus}}",
+    "DATA_SERVICE_MEM": "{{data-service.mem}}",
+    "DATA_SERVICE_MEM_USABLE": "{{data-service.mem_usable}}",    
+    "DATA_SERVICE_DISK": "{{data-service.disk}}",
+    "INDEX_SERVICE_COUNT": "{{index-service.count}}",
+    "INDEX_SERVICE_CPUS": "{{index-service.cpus}}",
+    {{#index-service.enabled}}
+    "INDEX_SERVICE_ENABLED": "{{index-service.enabled}}",
+    "INDEX_SERVICE_INDEX_TYPE": "{{index-service.index_type}}",
+    {{/index-service.enabled}}    
+    "INDEX_SERVICE_MEM": "{{index-service.mem}}",
+    "INDEX_SERVICE_MEM_USABLE": "{{index-service.mem_usable}}",   
+    "INDEX_SERVICE_DISK": "{{index-service.disk}}",
+    {{#query-service.enabled}}
+    "QUERY_SERVICE_ENABLED": "{{query-service.enabled}}",
+    {{/query-service.enabled}}    
+    "QUERY_SERVICE_COUNT": "{{query-service.count}}",
+    "QUERY_SERVICE_CPUS": "{{query-service.cpus}}",
+    "QUERY_SERVICE_MEM": "{{query-service.mem}}",  
+    "QUERY_SERVICE_DISK": "{{query-service.disk}}", 
+    {{#demo-data.install-beer-sample}} 
+    "DEMO_DATA_INSTALL_BEER_SAMPLE": "{{demo-data.install-beer-sample}}",
+    {{/demo-data.install-beer-sample}}
+    {{#demo-data.install-travel-sample}}
+    "DEMO_DATA_INSTALL_TRAVEL_SAMPLE": "{{demo-data.install-travel-sample}}",
+    {{/demo-data.install-travel-sample}}
+    {{#demo-data.install-gamesim-sample}}  
+    "DEMO_DATA_INSTALL_GAMESIM_SAMPLE": "{{demo-data.install-gamesim-sample}}",   
+    {{/demo-data.install-gamesim-sample}}        
+    "SLEEP_DURATION": "{{service.sleep}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": {}
+    }
+  ]
+}

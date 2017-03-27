@@ -1,0 +1,40 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/dcos-commons/artifacts/jre-8u91-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9-argus-1.1.x-2.tar.gz",
+      "scheduler-zip": "https://dcos-couchbase.s3.amazonaws.com/universe/0.1.0/couchbase-scheduler.zip",
+      "executor-zip": "https://dcos-couchbase.s3.amazonaws.com/universe/0.1.0/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://s3-us-west-2.amazonaws.com/jharper-public-mesosphere/images/coucbase_icon_small.png?raw=true",
+    "icon-medium": "https://s3-us-west-2.amazonaws.com/jharper-public-mesosphere/images/coucbase_icon_medium.png?raw=true",
+    "icon-large": "https://s3-us-west-2.amazonaws.com/jharper-public-mesosphere/images/coucbase_icon_large.png?raw=true"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"bdab5d54ec43098164fecc477b52b0b3c7852db96809ab7bf0f0aacd05f73aae" } ],
+          "kind":"executable",
+          "url":"https://dcos-couchbase.s3.amazonaws.com/universe/0.1.0/dcos-couchbase-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"f1b3bde5ffa71f47c3e7a4089d8cd0b573e9fb49d89dbcc6d4fdf2f1186c38cb" } ],
+          "kind":"executable",
+          "url":"https://dcos-couchbase.s3.amazonaws.com/universe/0.1.0/dcos-couchbase-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"5be354b50cd0fbb17daef7af82458d812a6fead38eed61eb348737fc061ccd3e" } ],
+          "kind":"executable",
+          "url":"https://dcos-couchbase.s3.amazonaws.com/universe/0.1.0/dcos-couchbase.exe"
+        }
+      }
+    }
+  }
+}
