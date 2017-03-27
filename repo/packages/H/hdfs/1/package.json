@@ -14,7 +14,7 @@
     }
   ],
   "preInstallNotes": "In order for HDFS to start successfully, it requires a minimum of five nodes; each with at least 2 CPU shares and 8GB of RAM available for use by the HDFS Service.\nNote that the service is alpha and there may be bugs, including possible data loss, incomplete features, incorrect documentation or other discrepancies.",
-  "postInstallNotes": "HDFS DC/OS Service has been successfully installed!\n\n\tDocumentation: https://docs.mesosphere.com/usage/services/hdfs/\n\tIssues: https://github.com/mesosphere/hdfs/issues",
-  "postUninstallNotes": "The HDFS DC/OS Service has been uninstalled and will no longer run.\nPlease follow the instructions at https://docs.mesosphere.com/usage/services/hdfs/uninstall/ to clean up any persisted state",
+  "postInstallNotes": "HDFS DC/OS Service has been successfully installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/hdfs/\n\tIssues: https://github.com/mesosphere/hdfs/issues",
+  "postUninstallNotes": "The HDFS DC/OS Service has been uninstalled and will no longer run.\nPlease follow the instructions at https://docs.mesosphere.com/service-docs/hdfs/uninstall/ to clean up any persisted state",
   "selected": false
 }
