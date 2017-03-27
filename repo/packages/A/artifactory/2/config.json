@@ -41,8 +41,8 @@
           "type": "object",
           "properties": {
             "type": {
-              "description": "Database type.",
-              "type": "string",
+              "description": "Database type. ",
+              "enum": ["mysql", "postgres"],
               "default": "mysql"
             },
             "host": {
