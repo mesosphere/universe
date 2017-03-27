@@ -1,0 +1,94 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "env": {
+      "GITLAB_OMNIBUS_CONFIG": "{{#routing.virtual-host}}external_url 'http://{{routing.virtual-host}}/'; registry_external_url 'http://{{routing.virtual-host}}:{{routing.registry-port}}/'; gitlab_rails['gitlab_ssh_host'] = '{{routing.virtual-host}}:{{routing.ssh-port}}'; {{/routing.virtual-host}}{{#high-availability.enabled}} postgresql['enable']=false; gitlab_rails['db_host'] = '{{high-availability.postgres.host}}'; gitlab_rails['db_password']='{{high-availability.postgres.password}}'; gitlab_rails['db_username']='{{high-availability.postgres.user}}'; gitlab_rails['db_database']='{{high-availability.postgres.database}}'; redis['enable'] = false; gitlab_rails['redis_host']='{{high-availability.redis.host}}';{{/high-availability.enabled}}{{#email.enabled}}gitlab_rails['smtp_enable'] = true; gitlab_rails['smtp_address'] = '{{email.address}}'; gitlab_rails['smtp_port'] = {{email.port}}; gitlab_rails['smtp_user_name'] = '{{email.username}}'; gitlab_rails['smtp_password'] = '{{email.password}}'; gitlab_rails['smtp_domain'] = '{{email.domain}}'; gitlab_rails['smtp_authentication'] = '{{email.authentication}}'; gitlab_rails['smtp_enable_starttls_auto'] = {{email.enable-starttls-auto}}; gitlab_rails['smtp_openssl_verify_mode'] = '{{email.openssl-verify-mode}}'; gitlab_rails['smtp_tls'] = '{{email.tls}}'; gitlab_rails['gitlab_email_from'] = '{{email.email-from-address}}'; gitlab_rails['gitlab_email_reply_to'] = '{{email.email-reply-to-address}}';{{/email.enabled}} unicorn['worker_processes'] = 2; manage_accounts['enable'] = true; user['home'] = '/gitlab-data/home'; git_data_dir '/gitlab-data/git-data'; gitlab_rails['shared_path'] = '/gitlab-data/shared'; gitlab_rails['uploads_directory'] = '/gitlab-data/uploads'; gitlab_ci['builds_directory'] = '/gitlab-data/builds';"
+  },
+  "container": {
+       "type": "DOCKER",
+       "docker": {
+           "image": "{{#enterprise.enterprise-edition}}{{resource.assets.container.docker.gitlab-ee}}{{/enterprise.enterprise-edition}}{{^enterprise.enterprise-edition}}{{resource.assets.container.docker.gitlab-ce}}{{/enterprise.enterprise-edition}}",
+           "network" : "BRIDGE",
+           "portMappings": [
+             { "hostPort": 0, "containerPort": 80, "protocol": "tcp" },
+             { "hostPort": 0, "containerPort": 443, "protocol": "tcp" },
+             { "hostPort": 0, "containerPort": 22, "servicePort": {{routing.ssh-port}}, "protocol": "tcp" },
+             { "hostPort": 0, "containerPort": {{routing.registry-port}}, "servicePort": {{routing.registry-port}}, "protocol": "tcp" }
+           ]
+       },
+       "volumes": [
+           {
+               "containerPath": "/var/opt/gitlab",
+               "hostPath": "{{service.host-volume}}/{{service.name}}/opt",
+               "mode": "RW"
+           },
+           {
+               "containerPath": "/var/log/gitlab",
+               "hostPath": "{{service.host-volume}}/{{service.name}}/log",
+               "mode": "RW"
+           },
+           {{^single-node.external-volumes.enabled}}
+           {
+               "containerPath": "/etc/gitlab",
+               "hostPath": "{{service.host-shared-volume}}/{{service.name}}/config",
+               "mode": "RW"
+           },
+           {
+               "containerPath": "/gitlab-data",
+               "hostPath": "{{service.host-shared-volume}}/{{service.name}}/data",
+               "mode": "RW"
+           }
+           {{/single-node.external-volumes.enabled}}
+           {{#single-node.external-volumes.enabled}}
+           {
+               "containerPath": "/etc/gitlab",
+               "external": {
+                  "name": "{{service.name}}-config",
+                  "provider": "dvdi",
+                  "options": { "dvdi/driver": "rexray" }
+               },
+               "mode": "RW"
+           },
+           {
+               "containerPath": "/gitlab-data",
+               "external": {
+                  "name": "{{service.name}}-data",
+                  "provider": "dvdi",
+                  "options": { "dvdi/driver": "rexray" }
+               },
+               "mode": "RW"
+           }
+           {{/single-node.external-volumes.enabled}}
+       ]
+   },
+   "acceptedResourceRoles": [ "{{service.role}}" ],
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "/opt/gitlab/bin/gitlab-healthcheck --fail > /dev/null" },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 5
+    }
+  ],
+  "labels": {
+    {{^high-availability.enabled}}
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    {{/high-availability.enabled}}
+    {{#routing.virtual-host}}
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_VHOST":"{{routing.virtual-host}}",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "{{routing.https-redirect}}",
+    {{/routing.virtual-host}}
+    "DCOS_SERVICE_NAME": "{{service.name}}"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }{{^high-availability.enabled}}{{^single-node.external-volumes.enabled}},
+  "constraints": [["hostname", "CLUSTER", "{{single-node.local-volumes.pinned-hostname}}"]]
+  {{/single-node.external-volumes.enabled}}{{/high-availability.enabled}}
+}
