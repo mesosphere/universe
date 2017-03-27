@@ -7,8 +7,7 @@
   "assets": {
     "container": {
       "docker": {
-        "artifactory-pro": "jfrog-docker-reg2.bintray.io/jfrog/artifactory-pro:5.1.4",
-        "artifactory-ha": "jfrog-docker-reg2.bintray.io/jfrog/artifactory-ha:5.1.4"
+        "artifactory-lb": "jfrog-docker-reg2.bintray.io/jfrog/nginx-art:5.1.4"
       }
     }
   }

@@ -1,0 +1,65 @@
+{
+    "id": "/{{service.name}}",
+    "cpus": {{service.cpus}},
+    "mem": {{service.mem}},
+    "instances": {{service.instances}},
+    "constraints": [[ "hostname", "UNIQUE"]],
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.artifactory-lb}}",
+            {{#service.bridge}}
+            "network": "BRIDGE",
+            "portMappings": [{
+                    "containerPort": 80,
+                    "hostPort": 0
+                },
+                {
+                    "containerPort": 443,
+                    "hostPort": 0
+                }]
+            {{/service.bridge}}
+            {{^service.bridge}}
+            "network": "HOST"
+            {{/service.bridge}}
+        }
+    },
+    "acceptedResourceRoles": [
+        "slave_public"
+    ],
+    {{#service.ssl.enabled}}
+    "fetch": [
+        { "uri": "{{service.ssl.ssl_key_path}}" },
+        { "uri": "{{service.ssl.ssl_cert_path}}" }
+    ],
+    {{/service.ssl.enabled}}
+    {{^service.bridge}}
+    "portDefinitions": [{
+        "port": 80,
+        "protocol": "tcp",
+        "name": "artifactory-lb-http"
+    },
+    {
+        "port": 443,
+        "protocol": "tcp",
+        "name": "artifactory-lb-https"
+    }],
+    "requirePorts": true,
+    {{/service.bridge}}
+    "env": {
+        "ART_SERVICE_NAME": "{{artifactory.name}}",
+        "ART_API_KEY": "{{artifactory.api-key}}"
+    },
+    "healthChecks": [
+    {
+      "path": "/",
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+    ]
+}
