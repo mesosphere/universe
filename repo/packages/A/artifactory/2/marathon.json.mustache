@@ -1,5 +1,5 @@
 {
-"id": "{{service.name}}",
+"id": "{{service.name}}{{#high-availability.enabled}}{{#high-availability.secondary.enabled}}-secondary{{/high-availability.secondary.enabled}}{{/high-availability.enabled}}",
 "cpus": {{service.cpus}},
 "mem": {{service.mem}},
 "instances": {{service.nodes}},
@@ -65,7 +65,7 @@
 {{/high-availability.enabled}}
 {{#high-availability.enabled}}
     {
-    "containerPath": "/var/opt/jfrog/cluster",
+    "containerPath": "/var/opt/jfrog/artifactory/data",
     "hostPath": "{{service.host-volume}}/data",
     "mode": "RW"
     },
@@ -108,15 +108,21 @@
 {{#high-availability.enabled}}
     ,
     "ART_NETWORK": "{{high-availability.network}}",
-    "HA_DATA_DIR": "/var/opt/jfrog/cluster",
-    "HA_BACKUP_DIR": "/var/opt/jfrog/cluster",
+    "HA_DATA_DIR": "/var/opt/jfrog/artifactory/data",
+    "HA_BACKUP_DIR": "/var/opt/jfrog/artifactory/backup",
+    {{^high-availability.secondary.enabled}}
     "HA_IS_PRIMARY": "true"
+    {{/high-availability.secondary.enabled}}
+    {{#high-availability.secondary.enabled}}
+        "ART_PRIMARY_SERVICE_NAME": "{{high-availability.secondary.name}}",
+        "HA_IS_PRIMARY": "false"
+    {{/high-availability.secondary.enabled}}
 {{/high-availability.enabled}}
 },
 "labels": {
-{{^high-availability.enabled}}
+{{^high-availability.secondary.enabled}}
     "MARATHON_SINGLE_INSTANCE_APP": "true",
-{{/high-availability.enabled}}
+{{/high-availability.secondary.enabled}}
 "DCOS_SERVICE_NAME": "{{service.name}}"
 },
 "upgradeStrategy":{
@@ -127,6 +133,11 @@
 {{#pro.pinned-hostname}}
     "constraints": [["hostname", "CLUSTER", "{{pro.pinned-hostname}}"]],
 {{/pro.pinned-hostname}}
+{{#high-availability.enabled}}
+    {{#high-availability.secondary.unique-nodes}}
+        "constraints": [["hostname", "UNIQUE"]],
+    {{/high-availability.secondary.unique-nodes}}
+{{/high-availability.enabled}}
 "healthChecks": [
 {
 "gracePeriodSeconds": 120,
