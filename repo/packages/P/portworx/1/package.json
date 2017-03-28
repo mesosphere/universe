@@ -18,11 +18,7 @@
     "s3",
     "database"
   ],
-<<<<<<< HEAD
   "preInstallNotes": "Please visit http://docs.portworx.com/run-with-mesosphere.html for detailed instructions",
-=======
-  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Experimental packages should never be used in production!  Please visit http://docs.portworx.com/run-with-mesosphere.html for detailed instructions",
->>>>>>> 1df0fea2855dfe41f8422911a9de9beaf82f2301
  "postInstallNotes": "To see how Portorx data services integrate with common applications and services, to view the application solutions and to view Portworx reference architectures,  please visit http://docs.portworx.com",
  "postUninstallNotes": "Service uninstalled. Note that any persisting data still exists and will need to be manually removed.",
   "licenses": [
