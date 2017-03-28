@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "nginx": {
+      "properties": {
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares to allocate to each nginx instance.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 1024.0,
+          "description": "Memory (MB) to allocate to each nginx task.",
+          "minimum": 256.0,
+          "type": "number"
+        },
+        "minimumHealthCapacity": {
+          "default": 0.5,
+          "description": "Minimum health capacity.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "maximumOverCapacity": {
+          "default": 0.2,
+          "description": "Maximum over capacity.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "name": {
+          "default": "nginx",
+          "description": "Name for this nginx application",
+          "type": "string"
+        },
+        "role": {
+          "default": "*",
+          "description": "Deploy nginx only on nodes with this role.",
+          "type": "string"
+        },
+        "contentDir": {
+          "description": "Path of directory, relative to sandbox, containing HTML code. Can NOT be combined with configUrl.",
+          "type": "string"
+        },
+        "contentUrl": {
+          "description": "URL of content that needs to be hosted. Can NOT be combined with configUrl.",
+          "type": "string"
+        },
+        "configUrl": {
+          "description": "URL to Nginx vhost configurations (e.g., load balancing, reverse proxy, etc). Can NOT be combined with contentUrl or contentDir.",
+          "type": "string"
+        },
+        "bridge": {
+          "default": true,
+          "description": "Whether to use BRIDGE networking mode for Docker container. By default, this is true and BRIDGE mode networking is used.",
+          "type": "boolean"
+        },
+        "virtual-host": {
+          "description": "The virtual host address to configure for integration with Marathon-lb.",
+          "type": "string"
+        },
+        "https-redirect": {
+          "description": "Whether Marathon-lb should redirect HTTP traffic to HTTPS. This requires 'virtual-host' to be set. By default, this is false.",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "instances",
+        "name"
+      ],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}
