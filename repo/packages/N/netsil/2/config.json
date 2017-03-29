@@ -16,7 +16,7 @@
           "type": "number"
         },
         "mem": {
-          "default": 12288,
+          "default": 16384,
           "description": "Memory (MB) to allocate to each instance of netsil.",
           "minimum": 12288,
           "type": "integer"
