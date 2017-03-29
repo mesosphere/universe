@@ -1,0 +1,17 @@
+{
+  "images": {
+    "icon-small": "http://www.file-extensions.org/imgs/app-icon/48/8854/mongodb-icon.png",
+    "icon-medium": "http://www.sudops.com/wp-content/uploads/2014/02/mongodb-96x96.png",
+    "icon-large": "http://1.bp.blogspot.com/-FagQLEI_Zhc/VnAzE9L8e3I/AAAAAAAAAFk/DWPqvL0ZXo8/s320/mongodb.jpg",
+   "screenshots": [
+     "http://www.databasejournal.com/img/2010/10/9781449381561-sampler-ch8_img_2.jpg"
+   ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "mongodb-docker": "tutum/mongodb:3.2"
+      }
+    }
+  }
+}

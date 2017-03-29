@@ -1,0 +1,63 @@
+{
+  "id": "{{msoms.app_id}}",
+  "cpus": 1,
+  "mem": 256,
+  "disk": 0,
+  "instances": {{msoms.instances}},
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/var/run/docker.sock",
+        "hostPath": "/var/run/docker.sock",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 25225,
+          "hostPort": 25225,
+          "protocol": "tcp",
+          "labels": {}
+        }
+      ],
+      "privileged": true,
+      "parameters": [
+        {
+          "key": "name",
+          "value": "omsagent"
+        },
+        {
+          "key": "restart",
+          "value": "always"
+        }
+      ]
+    }
+  },
+  "env": {
+    "WSID": "{{msoms.wsid}}",
+    "KEY": "{{msoms.wskey}}"
+  },
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": {
+        "value": "status=$(ps -ef | grep -v grep | grep omsagent | wc -l); if ($status > 0); then exit 0; else exit 1; fi"
+      },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 5,
+      "ignoreHttp1xx": false
+    }
+  ]
+}

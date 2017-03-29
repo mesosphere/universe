@@ -1,0 +1,245 @@
+{
+  "properties": {
+    "Framework Settings": {
+      "description": "Configuration options for Calico's DC/OS Framework.",
+      "properties": {
+        "framework-name": {
+          "type": "string",
+          "description": "The name of the framework.",
+          "default": "calico-install-framework"
+        },
+        "master": {
+          "default": "zk://zk-1.zk:2181,zk-2.zk:2181,zk-3.zk:2181,zk-4.zk:2181,zk-5.zk:2181/mesos",
+          "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard host:port patterns, like localhost:5050 or 10.0.0.5:5050,10.0.0.6:5050, are also acceptable.",
+          "type": "string"
+        },
+        "max-concurrent-restarts": {
+          "type": "integer",
+          "description": "The maximum number of Agent or Docker restarts that are allowed to be scheduled concurrently by the Calico framework.",
+          "default": 1
+        },
+        "zk": {
+          "default": "zk://zk-1.zk:2181,zk-2.zk:2181,zk-3.zk:2181,zk-4.zk:2181,zk-5.zk:2181/calico",
+          "description": "The URL of Zookeeper to be used to persist Calico framework data. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/calico, including the trailing path.",
+          "type": "string"
+        },
+        "cpu-limit": {
+          "default": 0.2,
+          "description": "The CPU shares for the Calico framework.",
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "mem-limit": {
+          "default": 512,
+          "description": "Memory limit (MB) for the Calico framework.",
+          "minimum": 32,
+          "type": "integer"
+        },
+        "status-dns": {
+          "default": "calico.marathon.mesos",
+          "description": "The DNS name used to resolve the Calico status web page.",
+          "type": "string"
+        },
+        "override-framework-image": {
+          "type": "string",
+          "description": "Override the docker image for the calico-dcos framework."
+        },
+        "override-installer-url": {
+          "type": "string",
+          "description": "Override the URL for the installer binary."
+        }
+      },
+      "required": [
+        "framework-name",
+        "master",
+        "max-concurrent-restarts",
+        "zk",
+        "cpu-limit",
+        "mem-limit",
+        "status-dns"
+      ],
+      "type": "object"
+    },
+    "Etcd Settings": {
+      "description": "Configure etcd settings used by calico/node, calico/libnetwork-plugin, and calico-CNI. Below presents the option of whether to run etcd on each agent in proxy mode, forwarding requests made to localhost:2379 to the etcd clutser avaiable via the etcd-discovery-url presented by the Universe etcd package. Users who prefer to run etcd themselves on an agent can disable etcd proxy, and modify etcd-endpoints to point at their own etcd server directly.\n\nWARNING: The docker cluster-store configuration by default will use etcd-proxy. Ensure if you have disabled etcd-proxy, that you configure docker to use a different datastore as well.",
+      "type": "object",
+      "properties": {
+        "run-proxy": {
+          "type": "boolean",
+          "description": "Enable running etcd-proxy on each agent. Keep enabled if using Universe etcd package.",
+          "default": true
+        },
+        "etcd-discovery-url": {
+          "default": "etcd.mesos",
+          "description": "The etcd service discovery URL which via an SRV lookup resolves to the Universe etcd package. Used by etcd-proxy to forward etcd requests made on localhost:2379 to the universe etcd package.",
+          "type": "string"
+        },
+        "etcd-endpoints": {
+          "description": "The address used by Calico to connect to etcd. If etcd-proxy is enabled, keep as 'http://localhost:2379'. Otherwise, enter url of etcd server.",
+          "type": "string",
+          "default": "http://localhost:2379"
+        },
+        "cpu-limit": {
+          "default": 0.1,
+          "description": "The CPU shares for each etcd proxy instance.",
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "mem-limit": {
+          "default": 128,
+          "description": "Memory limit (MB) for each etcd proxy instance.",
+          "minimum": 32,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "run-proxy",
+        "etcd-discovery-url",
+        "etcd-endpoints",
+        "cpu-limit",
+        "mem-limit"
+      ]
+    },
+    "Configure Docker Cluster-Store": {
+      "description": "Reconfigure Docker with a cluster-store. Only required if using Calico's Docker plugin.",
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean",
+          "description": "Whether the Calico framework is allowed to reconfigure and restart Docker on the Mesos Agent to install Docker with multi-host networking.  Note that during restart, the agent will not be available, and tasks running on the agent will be lost.",
+          "default": true
+        },
+        "override-docker-cluster-store": {
+          "description": "URL of the distributed storage backend for Docker. When ommitted, this will be constructed from etcd-endpoints.",
+          "type": "string"
+        },
+        "cpu-limit": {
+          "description": "The CPU shares for each Calico node instance.",
+          "type": "number",
+          "default": 0.2,
+          "minimum": 0.01
+        },
+        "mem-limit": {
+          "description": "Memory limit (MB) for each Calico node instance.",
+          "type": "integer",
+          "default": 256,
+          "minimum": 32
+        }
+      },
+      "required": [
+        "enable",
+        "cpu-limit",
+        "mem-limit"
+      ]
+    },
+    "Install CNI": {
+      "description": "Installs Calico's CNI plugin and a default CNI network configuration on all agents, then restarts each agent (to pickup the new configuration).",
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean",
+          "description": "Enable installation of CNI plugin and network.",
+          "default": true
+        },
+        "cni-plugins-dir": {
+          "default": "/opt/mesosphere/active/cni/",
+          "description": "Location of CNI plugins on the Agent.",
+          "type": "string"
+        },
+        "cni-config-dir": {
+          "default": "/opt/mesosphere/etc/dcos/network/cni/",
+          "description": "Location of CNI configs.",
+          "type": "string"
+        },
+        "cpu-limit": {
+          "default": 0.2,
+          "description": "The CPU shares for each install task instance.",
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "mem-limit": {
+          "default": 512,
+          "description": "Memory limit (MB) for each install task instance.",
+          "minimum": 32,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "enable",
+        "cni-plugins-dir",
+        "cni-config-dir",
+        "cpu-limit",
+        "mem-limit"
+      ]
+    },
+    "Run Calico-Node": {
+      "description": "Run the calico/node docker container on all agents. Required if using either Calico's CNI or Docker plugin.",
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "Enable running calico/node on each agent.",
+          "type": "boolean",
+          "default": true
+        },
+        "cpu-limit": {
+          "description": "The CPU shares for each Calico node instance.",
+          "type": "number",
+          "default": 0.2,
+          "minimum": 0.01
+        },
+        "mem-limit": {
+          "description": "Memory limit (MB) for each Calico node instance.",
+          "type": "integer",
+          "default": 256,
+          "minimum": 32
+        },
+        "override-node-image": {
+          "description": "Override the node image specified in resources.json",
+          "type": "string"
+        }
+      },
+      "required": [
+        "enable",
+        "cpu-limit",
+        "mem-limit"
+      ]
+    },
+    "Run Calico-Libnetwork": {
+      "description": "Run calico/libnetwork on all agents. Required to use calico networking for Docker containers.",
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean",
+          "description": "Enable running calico/libnetwork on each agent.",
+          "default": true
+        },
+        "cpu-limit": {
+          "default": 0.2,
+          "description": "The CPU shares for each Calico Docker Network driver instance.",
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "mem-limit": {
+          "default": 256,
+          "description": "Memory limit (MB) for each Calico Docker Network driver instance.",
+          "minimum": 32,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "enable",
+        "cpu-limit",
+        "mem-limit"
+      ]
+    }
+  },
+  "required": [
+    "Framework Settings",
+    "Etcd Settings",
+    "Configure Docker Cluster-Store",
+    "Install CNI",
+    "Run Calico-Node",
+    "Run Calico-Libnetwork"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,122 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{mongodb.cpus}},
+  "mem": {{mongodb.mem}},
+  "instances": 1,
+  "env": {
+    {{^database.status_ui_auth}}
+    "AUTH": "no",
+    {{/database.status_ui_auth}}
+    "MONGODB_DATABASE": "{{database.name}}",
+    "MONGODB_PASS": "{{database.password}}",
+    {{#storage.use_storage_engine.enable}}
+    "STORAGE_ENGINE": "{{storage.use_storage_engine.storage_engine}}",
+    {{/storage.use_storage_engine.enable}}
+    "MONGODB_USER": "{{database.username}}"
+  },
+  "container": {
+    "type": "DOCKER",
+    "volumes": [{
+      "containerPath": "var",
+      {{^storage.persistence.enable}}
+      "hostPath": "{{storage.host_volume}}/{{service.name}}",
+      {{/storage.persistence.enable}}
+      {{#storage.persistence.enable}}
+      "persistent": {
+        "size": {{storage.persistence.volume_size}}
+      },
+      {{/storage.persistence.enable}}
+      "mode": "RW"
+    }],
+    "docker": {
+      "image": "{{resource.assets.container.docker.mongodb-docker}}",
+      {{#networking.host_mode}}
+      "network": "HOST",
+      {{/networking.host_mode}}            
+      {{^networking.host_mode}}
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 27017,
+          "hostPort": 0,
+          {{#networking.external_access.enable}}
+          "servicePort": {{networking.external_access.external_access_port}},
+          {{/networking.external_access.enable}}
+          "protocol": "tcp",
+          "name": "{{service.name}}",
+          "labels": {
+            "VIP_0": "/{{service.name}}:{{networking.port}}"
+          }
+        },
+        {
+          "containerPort": 28017,
+          "hostPort": 0,
+          {{#networking.external_ui_access.enable}}
+          "servicePort": {{networking.external_ui_access.external_ui_access_port}},
+          {{/networking.external_ui_access.enable}}
+          "name": "{{service.name}}-ui",
+          "protocol": "tcp"
+        }
+      ],
+      {{/networking.host_mode}}
+      "forcePullImage": false
+    }
+  },
+  {{#networking.host_mode}}
+  "portDefinitions": [
+    {
+      {{#networking.external_access.enable}}
+      "servicePort": {{networking.external_access.external_access_port}},
+      {{/networking.external_access.enable}}
+      "port": 27017,
+      "protocol": "tcp",
+      "name": "{{service.name}}",
+      "labels": {
+        "VIP_0": "/{{service.name}}:{{networking.port}}"
+      }
+    },
+    {
+      {{#networking.external_ui_access.enable}}
+      "servicePort": {{networking.external_ui_access.external_ui_access_port}},
+      {{/networking.external_ui_access.enable}}
+      "port": 28017,
+      "protocol": "tcp"
+    }
+  ],
+  "requirePorts": true,
+  "constraints": [["hostname", "UNIQUE"]],
+  {{/networking.host_mode}}
+  "healthChecks": [
+    {
+    "protocol": "TCP",
+    {{#networking.host_mode}}
+    "port": 27017,
+    {{/networking.host_mode}}
+    {{^networking.host_mode}}
+    "portIndex": 0,
+    {{/networking.host_mode}}   
+    "gracePeriodSeconds": 300,
+    "intervalSeconds": 60,
+    "timeoutSeconds": 20,
+    "maxConsecutiveFailures": 3
+    }
+  ],
+  "labels": {
+    "DCOS_PACKAGE_VERSION": "3.2-0.1",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "1",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    {{#networking.external_access.enable}}
+    "HAPROXY_GROUP": "external",
+    {{#networking.external_ui_access.enable}}  
+    "HAPROXY_0_VHOST": "{{networking.external_ui_access.virtual_host}}",
+    {{/networking.external_ui_access.enable}}  
+    {{/networking.external_access.enable}}
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  },
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}

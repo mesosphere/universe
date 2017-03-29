@@ -1,0 +1,40 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/dcos-commons/artifacts/jre-8u91-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "http://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.8.7-1.0.2.tar.gz",
+      "scheduler-zip": "https://downloads.mesosphere.com/hello-world/assets/1.1.0/hello-world-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/hello-world/assets/1.1.0/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-small.png?raw=true",
+    "icon-medium": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-medium.png?raw=true",
+    "icon-large": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-large.png?raw=true"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"26bd503a6c576727296dd04d54ffcaebaeed9c8cd910bc2fbfe09a0044fb2f04" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/hello-world/assets/1.1.0/dcos-hello-world-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"247d0597e3f44a303596b5e551ab5c645f481ac34e96f19520d72bb230d08825" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/hello-world/assets/1.1.0/dcos-hello-world-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"866e3c1ca7565fc127aa4ad1df44083d2cf16e09d27ff514c5846efef22f6810" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/hello-world/assets/1.1.0/dcos-hello-world.exe"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.8",
+  "name": "vamp",
+  "version": "0.9.2-0.0.1",
+  "website": "http://vamp.io/",
+  "scm": "https://github.com/magneticio/vamp.git",
+  "maintainer": "vamp@magnetic.io",
+  "framework": false,
+  "description": "Canary test/release and autoscaling platform for DC/OS",
+  "preInstallNotes": "In order to run Vamp you need to specify connection parameters to Elasticsearch and Logstash.\nSee installation instruction at http://vamp.io/documentation/installation/dcos/\n",
+  "postInstallNotes": "Vamp has been successfully installed!\n\n\tDocumentation: http://www.vamp.io\n\tIssues: https://github.com/magneticio/vamp/issues\n",
+  "postUninstallNotes": "Vamp has been uninstalled and will no longer run.\nPlease follow the instructions at https://docs.mesosphere.com/1.8/usage/managing-services/uninstall/#framework-cleaner to clean up any persisted state.\n",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/magneticio/vamp/master/LICENSE"
+    }
+  ],
+  "tags": [
+    "vamp",
+    "canary",
+    "testing",
+    "autoscaling"
+  ]
+}

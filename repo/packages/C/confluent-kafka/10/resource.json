@@ -1,0 +1,41 @@
+{
+    "assets": {
+        "uris": {
+            "jre-tar-gz": "https://downloads.mesosphere.com/kafka/assets/jre-8u91-linux-x64.tar.gz",
+            "kafka_tgz": "https://packages.confluent.io/archive/3.1/confluent-oss-3.1.1-mesos.tgz",
+            "scheduler-zip": "https://downloads.mesosphere.com/kafka/assets/1.1.16-0.10.0.0/scheduler.zip",
+            "executor-zip": "https://downloads.mesosphere.com/kafka/assets/1.1.16-0.10.0.0/executor.zip",
+            "overrider-zip": "https://downloads.mesosphere.com/kafka/assets/1.1.16-0.10.0.0/overrider.zip"
+        }
+    },
+    "images": {
+      "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-small.png",
+      "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-medium.png",
+      "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-large.png"
+    },
+    "cli":{
+        "binaries":{
+            "darwin":{
+                "x86-64":{
+                    "contentHash":[ { "algo":"sha256", "value":"9a3d9076133506ea325120d460d33ea0272951f074b363d72860dcef36279257" } ],
+                    "kind":"executable",
+                    "url":"https://downloads.mesosphere.com/kafka/assets/1.1.16-0.10.0.0/dcos-kafka-darwin"
+                }
+            },
+            "linux":{
+                "x86-64":{
+                    "contentHash":[ { "algo":"sha256", "value":"6eb3725a793d7f21c9296f45685005833fb6ee07ca084bd1be50c26db01c508c" } ],
+                    "kind":"executable",
+                    "url":"https://downloads.mesosphere.com/kafka/assets/1.1.16-0.10.0.0/dcos-kafka-linux"
+                }
+            },
+            "windows":{
+                "x86-64":{
+                    "contentHash":[ { "algo":"sha256", "value":"229b1b4f65e534a610769eabd6da9886a0a041afd735a336377f4cb0579008f5" } ],
+                    "kind":"executable",
+                    "url":"https://downloads.mesosphere.com/kafka/assets/1.1.16-0.10.0.0/dcos-kafka.exe"
+                }
+            }
+        }
+    }
+}

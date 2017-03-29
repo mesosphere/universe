@@ -1,0 +1,19 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-postgresql-admin-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-postgresql-admin-medium.png",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-postgresql-admin-large.png",
+   "screenshots": [
+     "http://i1-scripts.softpedia-static.com/screenshots/phpPgAdmin-4889.png",
+     "https://www.turnkeylinux.org/files/images/screenshots/phppgadmin3.jpg?1255241341",
+     "http://theopensourcery.com/images/postgresphpadmin.png"
+   ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "postgresql-admin-docker": "zhajor/docker-phppgadmin:latest"
+      }
+    }
+  }
+}

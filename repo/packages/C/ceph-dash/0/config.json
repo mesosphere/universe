@@ -1,0 +1,63 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties.",
+            "properties":{
+                "name" : {
+                    "description":"Name of this service instance.",
+                    "type":"string",
+                    "default":"ceph-dash"
+                },
+                "cpus": {
+                    "description": "CPU shares to allocate to this service instance.",
+                    "type": "number",
+                    "default": 0.5,
+                    "minimum": 0.3
+                },
+                "mem": {
+                    "description": "Memory to allocate to this service instance.",
+                    "type": "number",
+                    "default": 512.0,
+                    "minimum": 512.0
+                },
+                "ceph_conf_URI": {
+                    "description": "MANDATORY: URI location of the ceph.conf configuration file holding the Ceph cluster configuration. example: http://172.16.0.31/ceph.conf",
+                    "type": "string"
+                },
+                "ceph_client_admin_keyring_URI": {
+                    "description": "MANDATORY: URI location of the ceph.client.admin.keyring keyring file used to authenticate against the Ceph cluster. example: http://172.16.0.31/ceph.client.admin.keyring",
+                    "type": "string"
+                },
+                "external_access": {
+                    "type": "object",
+                    "description": "Enable access from outside the cluster through Marathon-LB.\n PLEASE NOTE THIS CONNECTION IS UNENCRYPTED.",
+                    "properties": {    
+                        "enable": {
+                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+                            "type": "boolean",
+                            "default": true                    
+                        },
+                        "external_access_port": {
+                            "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+                            "type": "number",
+                            "default": 15000
+                        },
+                        "virtual_host": {
+                            "description": "For external access, Virtual Host URL to be used in the external load balancer.",
+                            "type": "string",
+                            "default": "ceph-dash.example.org"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "cpus",
+                "mem",
+                "ceph_conf_URI",
+                "ceph_client_admin_keyring_URI"
+            ]
+        }
+    }
+}

@@ -1,0 +1,18 @@
+{
+  "description": "Apache Cassandra running on DC/OS",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.7",
+  "name": "cassandra",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS Apache Cassandra has been successfully installed!\n\n\tDocumentation: https://docs.mesosphere.com/current/usage/service-guides/cassandra/\n\tIssues: https://dcosjira.atlassian.net/projects/CASSANDRA/issues",
+  "postUninstallNotes": "DC/OS Apache Cassandra service has been uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/current/usage/service-guides/cassandra/uninstall to remove any persistent state if required.",
+  "preInstallNotes": "DC/OS Cassandra Service default configuration requires 3 nodes each with 1.5 CPU shares, 5376MB of memory and 11264MB of disk for running Cassandra Nodes. And, 1 node with 0.5 CPU shares, 2048MB of memory for running the service scheduler.",
+  "selected": true,
+  "tags": [
+    "data",
+    "database",
+    "nosql"
+  ],
+  "version": "1.0.21-3.0.10"
+}

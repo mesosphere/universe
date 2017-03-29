@@ -1,0 +1,63 @@
+{
+  "id": "{{service.name}}",
+  "cmd": "/opt/spark/dist/sbin/start-mesos-shuffle-service.sh --conf spark.shuffle.service.enabled=true --conf spark.network.timeout=10s --conf spark.shuffle.io.connectionTimeout=10s && cd /opt/spark/dist/logs/ && find . -name 'spark--org.apache.spark.deploy.mesos.MesosExternalShuffleService-*.out' -exec tail -f {} \\;",
+  "args": null,
+  "user": null,
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": {{service.instances}},
+  "env": {
+    "SPARK_DAEMON_MEMORY": "{{service.spark-daemon-memory}}"
+  },
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.spark-shuffle-docker}}",
+      "forcePullImage": false,
+      "privileged": false,      
+      "network": "HOST"
+    },
+    "volumes": [
+      {
+        "containerPath": "/tmp/spark",
+        "hostPath": "{{service.host_path}}",
+        "mode": "RW"
+      }
+    ]
+  },
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
+  "portDefinitions": [
+    { 
+      "port": {{service.port}},
+      "protocol": "tcp", 
+      "name": "shuffle-service" 
+    }
+  ],
+  "requirePorts": true,  
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": {
+        "value": "ps -Aef |grep \"[s]huffle\""
+      },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "acceptedResourceRoles": [
+    "*"
+  ],
+  "labels": {
+    "DCOS_PACKAGE_VERSION": "0.1-0.1",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "SPARK_VERSION": "2.0.0",
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  }
+}

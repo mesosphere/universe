@@ -1,0 +1,87 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{openldap.cpus}},
+  "mem": {{openldap.mem}},
+  "instances": 1,
+  "env": {
+    "SLAPD_PASSWORD": "{{openldap.admin_password}}",
+    "SLAPD_DOMAIN": "{{openldap.domain}}",
+    "SLAPD_ORGANIZATION": "{{openldap.organization}}",
+    "SLAPD_CONFIG_PASSWORD": "{{openldap.config_password}}",
+    "SLAPD_ADDITIONAL_SCHEMAS": "{{openldap.additional_schemas}}",
+    "SLAPD_ADDITIONAL_MODULES": "{{openldap.additional_modules}}",
+    "SLAPD_FORCE_RECONFIGURE": "{{openldap.force_reconfigure}}"
+  },
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "var",
+        {{^storage.persistence.enable}}
+        "hostPath": "{{storage.host_volume}}/{{service.name}}/var",
+        {{/storage.persistence.enable}}
+        {{#storage.persistence.enable}}
+        "persistent": {
+          "size": {{storage.persistence.ldap_volume_size}}
+        },
+        {{/storage.persistence.enable}}
+        "mode": "RW"
+      },
+      {
+        "containerPath": "etc",
+        {{^storage.persistence.enable}}
+        "hostPath": "{{storage.host_volume}}/{{service.name}}/etc",
+        {{/storage.persistence.enable}}
+        {{#storage.persistence.enable}}
+        "persistent": {
+          "size": {{storage.persistence.slapd_volume_size}}
+        },
+        {{/storage.persistence.enable}}
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "{{resource.assets.container.docker.openldap-docker}}",
+      "forcePullImage": false,
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 389,
+          "hostPort": 0,
+          {{#networking.external_access.enable}}
+          "servicePort": {{networking.external_access.external_port}},
+          {{/networking.external_access.enable}}
+          "protocol": "tcp",
+          "name": "{{service.name}}",
+          "labels": {
+            "VIP_0": "/{{service.name}}:{{networking.port}}"
+          }
+        }
+      ]
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "TCP",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
+  "labels": {
+    "DCOS_PACKAGE_VERSION": "0.3",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    {{#networking.external_access.enable}}
+    "HAPROXY_GROUP": "external",
+    {{/networking.external_access.enable}}
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  }
+}

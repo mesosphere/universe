@@ -1,0 +1,116 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"Name of this service instance.",
+                    "type":"string",
+                    "default": "postgresql"
+                }
+            }
+        },
+        "postgresql":{
+            "type": "object",
+            "description": "PostgreSQL service configuration properties",
+            "properties": {
+                "cpus": {
+                    "description": "CPU shares to allocate to each PostgreSQL node.",
+                    "type": "number",
+                    "default": 0.3,
+                    "minimum": 0.3
+                },
+                "mem": {
+                    "description": "Memory to allocate to each PostgreSQL node.",
+                    "type": "number",
+                    "default": 256.0,
+                    "minimum": 256.0
+                },
+                "user": {
+                    "description": "Postgres user.",
+                    "type": "string",
+                    "default": "admin"
+                },
+                "password": {
+                    "description": "Postgres password.",
+                    "type": "string",
+                    "default": "password"
+                },
+                "dbname": {
+                    "description": "Name for the default database that is created when the image is first started.",
+                    "type": "string",
+                    "default": "admin"
+                },
+                "initdbargs": {
+                    "description": "Arguments to send to postgres initdb. The value is a space separated string of arguments as postgres initdb would expect them.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "cpus",
+                "mem"
+            ]
+        },
+        "storage": {
+            "type": "object",
+            "description": "PostgreSQL storage configuration properties",
+            "properties":{    
+                "host_volume": {
+                    "description": "The location of a volume on the host to be used for persisting PostgreSQL data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/postgresql`). This can be a mounted NFS drive. Note that this path must be the same on all DCOS agents.",
+                    "type": "string",
+                    "default": "/tmp"
+                },
+                "pgdata": {
+                    "description": "Location of the database files.",
+                    "type": "string",
+                    "default": "pgdata"
+                },
+                "persistence": {
+                    "type": "object",
+                    "description": "Enable persistent storage.",
+                    "properties": {    
+                       "enable": {
+                            "description": "Enable or disable persistent storage.",
+                            "type": "boolean",
+                            "default": false                    
+                        },
+                        "volume_size": {
+                            "description": "If a new volume is to be created, this controls its size in MBs. Defaults to 64MBs",
+                            "type": "number",
+                            "default": 64
+                        }
+                    }
+                }
+            }
+        },
+        "networking": {
+            "type": "object",
+            "description": "PostgreSQL networking configuration properties",
+            "properties": {    
+                "port": {
+                    "description": "Port number to be used for clear communication internally to the cluster.",
+                    "type": "number",
+                    "default": 5432
+                },
+                "external_access": {
+                    "type": "object",
+                    "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+                    "properties": {    
+                        "enable": {
+                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to FALSE.",
+                            "type": "boolean",
+                            "default": false                    
+                        },
+                        "external_port": {
+                            "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+                            "type": "number",
+                            "default": 15432
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

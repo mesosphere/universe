@@ -1,0 +1,19 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-mysql-admin-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-mysql-admin-medium.jpg",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-mysql-admin-large.jpg",
+   "screenshots": [
+     "https://upload.wikimedia.org/wikipedia/commons/6/66/PhpMyAdmin_screenshot_new.png",
+     "http://i1-linux.softpedia-static.com/screenshots/phpMyAdmin_2.png",
+     "https://www.phpmyadmin.net/static/images/screenshots/monitor.png"
+   ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "mysql-admin-docker": "phpmyadmin/phpmyadmin:4.6.4-1"
+      }
+    }
+  }
+}

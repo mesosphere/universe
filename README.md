@@ -84,6 +84,7 @@ Every package in Universe must have a `package.json` file which specifies the hi
 Currently, a package can specify one of two values for `.packagingVersion` either `2.0` or `3.0`; which version is declared
 will dictate which other files are required for the complete package as well as the schema(s) all the files must
 adhere to. Below is a snippet that represents a version `2.0` package.
+
 See [`repo/meta/schema/package-schema.json`](repo/meta/schema/package-schema.json) for the full json schema outlining
 what properties are available for each corresponding version of a package.
 
@@ -101,6 +102,8 @@ what properties are available for each corresponding version of a package.
   "postInstallNotes": "Have fun foo-ing and baz-ing!"
 }
 ```
+
+For the first version of the package, add this line to the beginning of `preInstallNotes`: ```This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Experimental packages should never be used in production!``` It will be removed once the package has been tested and used by the community. 
 
 ###### `.minDcosReleaseVersion`
 |Packaging Version|   |
@@ -205,10 +208,10 @@ for more detailed instruction on app definitions.
 |2.0|optional|
 |3.0|optional **[Deprecated]**|
 
-As of `packagingVersion` `3.0`, `command.json` is deprecated in favor of the `.cli` property of `resources.json`.
+As of `packagingVersion` `3.0`, `command.json` is deprecated in favor of the `.cli` property of `resource.json`.
 See [CLI Resources](#cli-resources) for details.
 
-Describes how to install the package's package's CLI via pip, the Python package manager. This document represents the
+Describes how to install the package's CLI via pip, the Python package manager. This document represents the
 format of a Pip requirements file where each element in the array is a line in the requirements file.
 
 ```json
@@ -227,6 +230,10 @@ format of a Pip requirements file where each element in the array is a line in t
 
 This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects and
 images) needed to install the application.
+
+See [`repo/meta/schema/v2-resource-schema.json`](repo/meta/schema/v2-resource-schema.json) and
+[`repo/meta/schema/v3-resource-schema.json`](repo/meta/schema/v3-resource-schema.json) for the full
+json schema outlining what properties are available for each corresponding version of a package.
 
 ```json
 {
@@ -352,6 +359,7 @@ Full Instructions:
 6. Respond to manual review feedback provided by the DC/OS Community.
   * Each Pull Request to Universe will also be manually reviewed by a member of the DC/OS Community. To ensure your
     package is able to be made available to users as quickly as possible be sure to respond to the feedback provided.
+7. Add a getting started example of how to install and use the DC/OS package. To add the example, fork the [`examples`](https://github.com/dcos/examples) repo and send in a pull request. Re-use the format from the existing examples there.
 
 
 ## Repository Consumption
@@ -437,3 +445,5 @@ Currently Universe Server provides support for the following versions of DC/OS
 | 1.6.1                 | Full Support  |
 | 1.7                   | Full Support  |
 | 1.8                   | Full Support  |
+| 1.9                   | Full Support  |
+| 1.10                  | Full Support  |

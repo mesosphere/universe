@@ -1,0 +1,91 @@
+{
+  "type":"object",
+    "properties":{
+      "service":{
+        "type":"object",
+        "description": "DC/OS service configuration properties",
+        "properties":{
+          "name" : {
+            "description":"The name of the service instance",
+            "type":"string",
+            "default":"hello-world"
+          },
+          "sleep" : {
+            "description":"The sleep duration in seconds before tasks exit.",
+            "type":"number",
+            "default":1000
+          }
+        }
+      },
+      "hello":{
+        "description":"Hello Pod configuration properties",
+        "type":"object",
+        "properties":{
+          "cpus":{
+            "description":"Hello Pod cpu requirements",
+            "type":"number",
+            "default":0.1
+          },
+          "mem":{
+            "description":"Hello Pod mem requirements",
+            "type":"integer",
+            "default":252
+          },
+          "disk":{
+            "description":"Hello Pod disk requirements (only respected with persistent volumes)",
+            "type":"integer",
+            "default":25
+          },
+          "count":{
+            "description":"Number of Hello Pods to run",
+            "type":"integer",
+            "default":1
+          },
+          "constraint":{
+            "description":"Marathon-style constraint for metadata nodes",
+            "type":"string",
+            "default":""
+          }
+        },
+        "required":[
+          "cpus",
+          "count"
+        ]
+      },
+      "world":{
+        "description":"Pod configuration properties",
+        "type":"object",
+        "properties":{
+          "cpus":{
+            "description":"World Pod Cpu requirements",
+            "type":"number",
+            "default":0.2
+          },
+          "mem":{
+            "description":"World Pod  mem requirements",
+            "type":"integer",
+            "default":512
+          },
+          "disk":{
+            "description":"World Pod disk requirements (only respected with persistent volumes)",
+            "type":"integer",
+            "default":50
+          },
+          "count":{
+            "description":"Number of World Pods to run",
+            "type":"integer",
+            "default":2
+          },
+          "constraint":{
+            "description":"Marathon-style constraint for metadata nodes",
+            "type":"string",
+            "default":""
+          }
+        },
+        "required":[
+          "cpus",
+          "count"
+        ]
+      }
+    }
+}

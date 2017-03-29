@@ -1,0 +1,98 @@
+{
+  "type":"object",
+  "properties":{
+    "service":{
+      "type":"object",
+      "description": "DC/OS service configuration properties",
+      "properties":{
+        "name" : {
+          "description":"The name of the service instance",
+          "type":"string",
+          "default":"mongodb-replicaset"
+        }
+      }
+    },
+    "mongodb":{
+      "description":"MongoDB server node configuration properties",
+      "type":"object",
+      "properties":{
+        "cpus":{
+          "description":"MongoDB server node cpu requirements",
+          "type":"number",
+          "default":0.5
+        },
+        "mem":{
+          "description":"MongoDB server node mem requirements",
+          "type":"integer",
+          "default":2048
+        },
+        "disk":{
+          "description":"MongoDB server node disk requirements (local persistent volumes)",
+          "type":"integer",
+          "default":1000
+        },
+        "count":{
+          "description":"Number of MongoDB server nodes to run",
+          "type":"integer",
+          "default":3
+        },
+        "replicaSetName":{
+          "description":"Name of the MongoDB ReplicaSet",
+          "type":"string",
+          "default":"rs"
+        },
+        "port":{
+          "description":"MongoDB server listening port",
+          "type":"number",
+          "default":27017
+        },
+        "version":{
+          "description":"MongoDB server version",
+          "type":"string",
+          "default":"3.4.1"
+        },
+        "constraint":{
+          "description":"Marathon-style constraint for MongoDB server nodes (use empty string to override the default hostname UNIQUE behavior)",
+          "type":"string",
+          "default":"[['hostname', 'UNIQUE']]"
+        }
+      },
+      "required":[
+        "cpus",
+        "mem",
+        "disk",
+        "count"
+      ]
+    },
+    "init":{
+      "description":"MongoDB init node configuration properties",
+      "type":"object",
+      "properties":{
+        "cpus":{
+          "description":"MongoDB init node cpu requirements",
+          "type":"number",
+          "default":0.1
+        },
+        "mem":{
+          "description":"MongoDB init node mem requirements",
+          "type":"integer",
+          "default":256
+        },
+        "initiate-delay":{
+          "description":"The delay in seconds after the ReplicaSet initialization",
+          "type":"integer",
+          "default":10
+        },
+        "add-delay":{
+          "description":"The delay in seconds after each ReplicaSet host addition",
+          "type":"integer",
+          "default":5
+        }
+      },
+      "required":[
+        "cpus",
+        "mem"
+      ]
+    }
+  }
+}

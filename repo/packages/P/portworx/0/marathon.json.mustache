@@ -1,0 +1,71 @@
+{
+  "id": "{{portworx.framework-name}}",
+  "cpus": {{portworx.cpus}},
+  "mem": {{portworx.mem}},
+  "instances": {{portworx.instances}},
+  "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.portworx-docker}}",
+            "forcePullImage": true,
+            "network": "HOST",
+            "privileged": true,
+            "parameters": [
+			{
+			    "key": "volume",
+			    "value": "/run/docker/plugins:/run/docker/plugins"
+			},
+			{
+			    "key": "volume",
+			    "value": "/etc/pwx:/etc/pwx"
+			},
+			{
+			    "key": "volume",
+			    "value": "/var/lib/osd:/var/lib/osd:shared"
+			},
+			{
+			    "key": "volume",
+			    "value": "/dev:/dev"
+			},
+			{
+			    "key": "volume",
+			    "value": "/opt/pwx/bin:/export_bin:shared"
+			},
+			{
+			    "key": "volume",
+			    "value": "/var/run/docker.sock:/var/run/docker.sock"
+			},
+			{
+			    "key": "volume",
+			    "value": "/var/cores:/var/cores"
+			},
+			{
+			    "key": "volume",
+			    "value": "{{portworx.headers_dir}}:{{portworx.headers_dir}}"
+			}
+	      ]
+	}
+    },
+    "args": [
+        "--name pxcluster.mesos",
+        "--ipc host",
+        "-k {{portworx.kvdb}}",
+        "-c {{portworx.clusterid}}",
+        "-s {{portworx.storage}}",
+        "-m {{portworx.mgmtif}}",
+        "-d {{portworx.dataif}}"
+
+    ],
+    "healthChecks": [
+    {
+     "protocol": "COMMAND",
+     "command": { "value": "curl -X GET http://$HOST:{{portworx.api_port}}/status"},
+        "portIndex": 0,
+        "gracePeriodSeconds": 300,
+        "intervalSeconds": 60,
+        "timeoutSeconds": 20,
+        "maxConsecutiveFailures": 3,
+        "ignoreHttp1xx": false
+    }
+    ]
+}

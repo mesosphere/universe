@@ -1,0 +1,85 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "Nexus service properties",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of this DC/OS service.",
+          "type": "string",
+          "default": "nexus"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to Nexus.",
+          "type": "number",
+          "default": 1.0,
+          "minimum": 0.5
+        },
+        "mem": {
+          "description": "Memory to allocate to Nexus.",
+          "type": "number",
+          "default": 2048.0,
+          "minimum": 2048.0
+        },
+        "role": {
+          "default": "*",
+          "description": "Deploy Nexus only on nodes with this role. Resources that are assigned to the * role are considered unreserved",
+          "type": "string"
+        },
+        "local-volumes": {
+          "description": "Local volumes configuration (only used if external persistent volumes are disabled). Local volumes are created on the machine with the hostname specified and Marathon will attempt to re-launch the task on the same machine. Note that if the machine is lost, your data may also be lost.",
+          "type": "object",
+          "properties": {
+            "host-volume": {
+              "description": "The location of a volume on the host to be used for persisting Nexus configuration and data (via Docker volumes).",
+              "type": "string",
+              "default": "/opt/nexus"
+            },
+            "pinned-hostname": {
+              "description": "An optional DC/OS agent hostname to run this Nexus instance on (e.g. 10.0.0.1). If this is not specified then the task may relaunch on another node than the one it originally ran on.",
+              "type" : "string"
+            }
+          }
+        },
+        "external-volumes": {
+          "description": "External persistent volumes configuration. External persistent volumes are a DC/OS feature that allow your data to be migrated with your task.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Whether to use DC/OS external volumes to persist Nexus state. By default, this is false.",
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "enabled"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem",
+        "local-volumes",
+        "external-volumes"
+      ]
+    },
+    "networking": {
+      "description": "Nexus routing properties for use with Marathon-lb.",
+      "type": "object",
+      "properties": {
+        "virtual-host": {
+          "description": "The virtual host address to configure for integration with Marathon-lb.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "virtual-host"
+      ]
+    }
+  },
+  "required": [
+    "service"
+  ]
+}

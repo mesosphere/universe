@@ -1,0 +1,66 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"Name of this service instance.",
+                    "type":"string",
+                    "default": "portworx"
+                }
+            }
+        },
+        "portworx":{
+	    "additionalProperties": false,
+            "description":  "PX configuration properties",
+            "properties": {
+               "framework-name": {
+               "description": "The name of the framework. Until this is configurable, please do not change this from it's default value.",
+               "type": "string",
+               "default": "portworx"
+               },
+               "cpus": {
+		      "default": 1.0,
+		      "description": "CPU shares to allocate to each Marathon instance.",
+		      "minimum": 0.0,
+		      "type": "number"
+	        },
+	       "mem": {
+			   "default": 2048.0,
+			   "description": "Memory (MB) to allocate to each Marathon task.",
+			   "minimum": 2048.0,
+			   "type": "number"
+		},
+		"instances": {
+			"default": 3,
+			"description": "Number of PX instances to run.",
+			"minimum": 3,
+			"type": "integer"
+			},
+                "cmdargs": {
+                    "description":  "Command args for Portworx.  See http://docs.portworx.com/run-with-docker.html#run-px",
+                    "type": "string",
+                    "default": "-a"
+                },
+                "headers_dir": {
+                    "description":  "Directory location for system headers.  Use /lib/modules for CoreOS, or /usr/src for other distros",
+                    "type": "string",
+                    "default": "/lib/modules"
+                },
+                "api_port": {
+                    "description":  "API access port",
+                    "type": "integer",
+                    "default": 9001
+                }
+            },
+            "required": [
+		"cmdargs",
+                "headers_dir",
+                "api_port",
+                "instances"
+            ]
+        }
+    }
+}

@@ -16,7 +16,7 @@ def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 def _get_json_schema(file_name):
-    with open(os.path.join(SCHEMA_DIR, file_name)) as f:
+    with open(os.path.join(SCHEMA_DIR, file_name), encoding='utf-8') as f:
         return json.loads(f.read())
 
 PACKAGE_JSON_SCHEMA = _get_json_schema('package-schema.json')
@@ -56,6 +56,17 @@ def _validate_revision(given_package, revision, path):
     eprint("\tOK")
 
     packaging_version = package_json.get("packagingVersion", "2.0")
+
+    # validate upgrades version
+    min_dcos_release_version = package_json.get("minDcosReleaseVersion", "0.0")
+    upgrades_from = package_json.get("upgradesFrom", None)
+    downgrades_to = package_json.get("downgradesTo", None)
+    if (packaging_version == "4.0" and
+            (upgrades_from or downgrades_to) and
+                LooseVersion(min_dcos_release_version) < LooseVersion("1.10")):
+        sys.exit("\tERROR\n\nIf upgradesFrom or downgradesTo fields are set to a "
+                 "non-empty list, then minDcosReleaseVersion must be greater "
+                 "than or equal to 1.10")
 
     # validate command.json
     command_json_path = os.path.join(path, 'command.json')
@@ -105,7 +116,7 @@ def _validate_revision(given_package, revision, path):
                  '1.8.')
 
 def _validate_json(path, schema):
-        with open(path) as f:
+        with open(path, encoding='utf-8') as f:
             data = json.loads(f.read())
 
         _validate_jsonschema(data, schema)

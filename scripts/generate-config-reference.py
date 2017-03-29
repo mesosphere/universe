@@ -25,11 +25,12 @@ def find_config_files(path):
 
 def main(path):
     files = find_config_files(path)
-    outfile = open(os.path.join(os.getcwd(), 'config-reference.md'), 'w')
+    config_ref_path = os.path.join(os.getcwd(), 'config-reference.md')
+    outfile = open(config_ref_path, 'w', encoding='utf-8')
     outfile.write("# DC/OS Universe Package Configuration Reference\n\n")
 
     for f in files:
-        with open(f, 'r') as config:
+        with open(f, 'r', encoding='utf-8') as config:
             package_name = f.split('/')[-3]
             package_version = f.split('/')[-2]
             outfile.write("## {} version {}\n\n".format(package_name, package_version))

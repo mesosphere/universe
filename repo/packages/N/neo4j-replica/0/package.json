@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "3.0",
+  "name": "neo4j-replica",
+  "version": "3.1.0-1.0.0",
+  "minDcosReleaseVersion" : "1.8",
+  "scm": "https://github.com/neo4j-contrib/neo4j-dcos",
+  "maintainer": "feedback@neo4j.com",
+  "website": "http://neo4j.com/developer",
+  "framework": false,
+  "description": "Neo4j is an open source Graph Database. It allows you to efficiently manage highly connected data. This DC/OS package is about the Neo4j read replica servers, read replicas act like caches for the data that the core servers safeguard. You can access the cluster via officially supported drivers from most languages. Installation documentation can be found at https://github.com/dcos/examples/tree/master/1.8/neo4j",
+  "tags": ["neo4j","cypher","nosql","database","graph","acid","graphdb","data"],
+  "preInstallNotes": " This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. The default configuration requires at least 2 nodes having 4 CPU, 8GB of memory and 16GB of persistent disk storage in total.",
+  "postInstallNotes": "Neo4j has been successfully installed.\nDocumentation can be found at https://neo4j.com/docs and https://neo4j.com/developer",
+  "postUninstallNotes": "Neo4j has been uninstalled.",
+  "licenses": [
+    {
+      "name": "AGPL v3 license or Neo4j Commercial License",
+      "url": "https://neo4j.com/licensing/"
+    }
+  ],
+  "selected": false
+}

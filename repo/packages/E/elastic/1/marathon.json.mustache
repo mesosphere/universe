@@ -1,0 +1,80 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 0.5,
+  "mem": 2048,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib && export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so) && export PATH=$(ls -d $MESOS_SANDBOX/jre*/bin):$PATH && env && ./elastic-scheduler/bin/elastic ./elastic-scheduler/elastic_service.yml",
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_MIGRATION_API_VERSION": "v1",
+    "DCOS_MIGRATION_API_PATH": "/v1/plan",
+    "MARATHON_SINGLE_INSTANCE_APP": "true"
+  },
+  "env": {
+    "ELASTIC_VERSION": "5.1.2",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "SCHEDULER_URI": "{{resource.assets.uris.scheduler-zip}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "PLAN_STRATEGY": "{{service.plan_strategy}}",
+    "ELASTICSEARCH_PLUGINS": "{{elasticsearch.plugins}}",
+    "MASTER_NODE_CPUS": "{{master_nodes.cpus}}",
+    "MASTER_NODE_MEM": "{{master_nodes.mem}}",
+    "MASTER_NODE_PLACEMENT": "{{master_nodes.placement}}",
+    "MASTER_NODE_HEAP_MB": "{{master_nodes.heap.size}}",
+    "MASTER_NODE_DISK": "{{master_nodes.disk}}",
+    "MASTER_NODE_DISK_TYPE": "{{master_nodes.disk_type}}",
+    "MASTER_NODE_TRANSPORT_PORT": "{{master_nodes.transport_port}}",
+    "DATA_NODE_COUNT": "{{data_nodes.count}}",
+    "DATA_NODE_CPUS": "{{data_nodes.cpus}}",
+    "DATA_NODE_MEM": "{{data_nodes.mem}}",
+    "DATA_NODE_PLACEMENT": "{{data_nodes.placement}}",
+    "DATA_NODE_HEAP_MB": "{{data_nodes.heap.size}}",
+    "DATA_NODE_DISK": "{{data_nodes.disk}}",
+    "DATA_NODE_DISK_TYPE": "{{data_nodes.disk_type}}",
+    "INGEST_NODE_COUNT": "{{ingest_nodes.count}}",
+    "INGEST_NODE_CPUS": "{{ingest_nodes.cpus}}",
+    "INGEST_NODE_MEM": "{{ingest_nodes.mem}}",
+    "INGEST_NODE_PLACEMENT": "{{ingest_nodes.placement}}",
+    "INGEST_NODE_HEAP_MB": "{{ingest_nodes.heap.size}}",
+    "INGEST_NODE_DISK": "{{ingest_nodes.disk}}",
+    "INGEST_NODE_DISK_TYPE": "{{ingest_nodes.disk_type}}",
+    "COORDINATOR_NODE_COUNT": "{{coordinator_nodes.count}}",
+    "COORDINATOR_NODE_CPUS": "{{coordinator_nodes.cpus}}",
+    "COORDINATOR_NODE_MEM": "{{coordinator_nodes.mem}}",
+    "COORDINATOR_NODE_PLACEMENT": "{{coordinator_nodes.placement}}",
+    "COORDINATOR_NODE_HEAP_MB": "{{coordinator_nodes.heap.size}}",
+    "COORDINATOR_NODE_DISK": "{{coordinator_nodes.disk}}",
+    "COORDINATOR_NODE_DISK_TYPE": "{{coordinator_nodes.disk_type}}",
+    "KIBANA_COUNT": "{{kibana.count}}",
+    "KIBANA_CPUS": "{{kibana.cpus}}",
+    "KIBANA_MEM": "{{kibana.mem}}",
+    "KIBANA_PLACEMENT": "{{kibana.placement}}",
+    "KIBANA_DISK": "{{kibana.disk}}",
+    "KIBANA_DISK_TYPE": "{{kibana.disk_type}}",
+    "KIBANA_PASSWORD": "{{kibana.password}}",
+    "PROXYLITE_CPUS": "{{proxylite.cpus}}",
+    "PROXYLITE_MEM": "{{proxylite.mem}}",
+    "PROXYLITE_PORT": "{{proxylite.port}}",
+    "CONFIG_TEMPLATE_PATH": "elastic-scheduler"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}

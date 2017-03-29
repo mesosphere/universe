@@ -32,7 +32,8 @@
     {{/elasticsearch.executor.settings-location}}
 
     "--executorForcePullImage", "{{elasticsearch.force-pull-image}}",
-    "--executorName", "{{elasticsearch.executor.name}}"
+    "--executorName", "{{elasticsearch.executor.name}}",
+    "--elasticsearchDockerImage", "elasticsearch:2.3"
   ],
   "env": {
     "JAVA_OPTS": "{{elasticsearch.scheduler.java-heap}}"

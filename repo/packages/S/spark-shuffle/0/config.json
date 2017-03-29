@@ -1,0 +1,49 @@
+{
+	"$schema": "http://json-schema.org/schema#",
+	"properties": {
+		"service": {
+			"type": "object",
+			"description": "DC/OS service configuration properties",
+			"properties": {
+				"name": {
+					"description": "Name of this service instance",
+					"type": "string",
+					"default": "spark-shuffle"
+				},
+				"instances": {
+					"description": "Number of service instances to run in the cluster. A single instance will be run per node in the cluster. Normally, this number should be equal or higher than the number of nodes in the cluster.",
+					"type": "number",
+					"default": 256,
+					"minimum": 1
+				},
+				"cpus": {
+					"description": "CPU shares to allocate to each service instance.",
+					"type": "number",
+					"default": 0.1,
+					"minimum": 0.1
+				},
+				"mem": {
+					"description":  "Memory to allocate to each service instance.",
+					"type": "number",
+					"default": 128.0,
+					"minimum": 128.0
+				},
+				"spark-daemon-memory": {
+					"description":  "Memory to allocate to the spark daemon.",
+					"type": "string",
+					"default": "512m"
+				},
+    			"port": {
+					"description":  "TCP port for the shuffle service",
+					"type": "number",
+					"default": 7337
+				},
+    			"host_path": {
+					"description":  "Path in the host to be mapped into spark executors",
+					"type": "string",
+					"default": "/var/lib/tmp/spark"
+				}				
+			}      
+		}
+	}
+}

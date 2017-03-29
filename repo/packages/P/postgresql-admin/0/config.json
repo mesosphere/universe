@@ -1,0 +1,80 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"Name of this service instance.",
+                    "type":"string",
+                    "default":"postgresql-admin"
+                }
+            }
+        },
+        "postgresql-admin":{
+            "type": "object",
+            "description": "postgresql admin service configuration properties",
+            "properties": {
+                "cpus": {
+                    "description": "CPU shares to allocate to each postgresql node.",
+                    "type": "number",
+                    "default": 0.2,
+                    "minimum": 0.2
+                },
+                "mem": {
+                    "description": "Memory to allocate to each postgresql node.",
+                    "type": "number",
+                    "default": 256.0,
+                    "minimum": 256.0
+                },
+                "defaultdb": {
+                    "description": "Default database. Defaults to 'admin'.",
+                    "type": "string",
+                    "default": "admin"
+                }
+            },
+            "required": [
+                "cpus",
+                "mem"
+            ]
+        },
+        "networking":{
+            "type": "object",
+            "description": "PostgreSQL admin networking configuration properties",
+            "properties": {
+                "postgres_location":{
+                    "description": "The name of the DC/OS postgresql instance to connect to.",
+                    "type": "string",
+                    "default": "postgresql"
+                },
+                "postgres_host_port":{
+                    "description": "The port where the postgresql instance is listening on. Defaults to 5432",
+                    "type": "number",
+                    "default": 5432
+                },
+                "external_access": {
+                    "type": "object",
+                    "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+                    "properties": {    
+                        "enable": {
+                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB. Defaults to false.",
+                            "type": "boolean",
+                            "default": false                    
+                        },
+                        "external_port": {
+                            "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+                            "type": "number",
+                            "default": 15433
+                        },
+                        "virtual_host": {
+                            "description": "For external access, Virtual Host URL to be used in the external load balancer.",
+                            "type": "string",
+                            "default": "postgresql.example.org"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
