@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "3.0",
+  "name": "elasticsearch",
+  "version": "1.0.1-2",
+  "tags": ["elastic", "monitoring", "debug"],
+  "framework": true,
+  "maintainer": "pnw@trifork.com",
+  "description": "DCOS implementation of the Mesos-Elasticsearch framework",
+  "scm": "https://github.com/mesos/elasticsearch.git",
+  "website": "https://github.com/mesos/elasticsearch",
+  "preInstallNotes":"The ElasticSearch DCOS Service implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
+  "postInstallNotes": "Elasticsearch is staging. Check Marathon and the ES management front-end for status.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/mesos/elasticsearch/master/LICENSE"
+    }
+  ]
+}
