@@ -7,15 +7,15 @@
   "maintainer": "soleng-team@jfrog.com",
   "website": "https://jfrog.com",
   "framework": false,
-  "description": "As the first, and only, universal Artifact Repository Manager on the market, JFrog Artifactory fully supports software packages created by any language or technology.",
+  "description": "As the first, and only, universal Artifact Repository Manager on the market, JFrog Artifactory fully supports software packages created by any language or technology. Documentation is available at: https://github.com/dcos/examples/",
   "tags": [
     "framework",
     "artifacts",
     "artifactory",
     "repository"
   ],
-  "preInstallNotes": "If you wish to use Artifactory High Availability, You will need at least 1 public agent in your cluster",
-  "postInstallNotes": "Artifactory has been installed.",
+  "preInstallNotes": "You will need at least 1 public agent in your cluster to install Artifactory-lb.",
+  "postInstallNotes": "Artifactory has been installed. Please install Artifactory-lb if not already installed.",
   "postUninstallNotes": "Artifactory has been uninstalled.",
   "licenses": [
     {

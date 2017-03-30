@@ -28,7 +28,7 @@
           "default": 1
         },
         "licenses": {
-          "description": "License for Artifactory Pro or comma separated licenses for Artifactory High Availability.",
+          "description": "License for Artifactory Pro or comma separated licenses for Artifactory Enterprise.",
           "type": "string"
         },
         "host-volume": {
@@ -83,7 +83,7 @@
       ]
     },
     "pro": {
-      "description": "Configuration for Artifactory Pro. These do not apply if Artifactory HA is enabled.",
+      "description": "Configuration for Artifactory Pro. These do not apply if Artifactory Enterprise is enabled.",
       "type": "object",
       "properties": {
         "pinned-hostname": {
@@ -119,12 +119,12 @@
         "external-volumes"
       ]
     },
-    "high-availability": {
-      "description": "Configuration for Artifactory High Availability (HA). If enabled, this will override any Artifactory Pro configuration.",
+    "enterprise": {
+      "description": "Configuration for Artifactory Enterprise (a highly-available deployment of Artifactory). If enabled, this will override any Artifactory Pro configuration.",
       "type": "object",
       "properties": {
         "enabled": {
-          "description": "Whether to deploy Artifactory HA. By default, Artifactory HA is not deployed.",
+          "description": "Whether to deploy Artifactory Enterprise. By default, this is false and Artifactory Enterprise is not deployed.",
           "type": "boolean",
           "default": false
         },
@@ -133,11 +133,11 @@
           "type": "string"
         },
         "secondary": {
-          "description": "Configuration properties for the Artifactory HA secondary node.",
+          "description": "Configuration properties for the Artifactory Enterprise secondary node.",
           "type": "object",
           "properties": {
             "enabled": {
-              "description": "Whether this DC/OS service represents the Artifactory HA secondary instance. To run Artifactory HA, you must deploy one primary DC/OS service and one secondary DC/OS service. By default, this is false (i.e. a primary instance).",
+              "description": "Whether this DC/OS service represents the Artifactory Enterprise secondary instance. To run Artifactory Enterprise, you must deploy one primary DC/OS service and one secondary DC/OS service. By default, this is false (i.e. a primary instance).",
               "type": "boolean",
               "default": false
             },
@@ -147,12 +147,12 @@
               "default": true
             },
             "nodes": {
-              "description": "Number of Artifactory Secondary instances for High-Availability. By default, this is 1.",
+              "description": "Number of Artifactory Enterprise secondary instances. By default, this is 1.",
               "type": "integer",
               "default": 1
             },
             "name": {
-              "description": "The DC/OS service name of the primary Artifactory instance to route requests to.",
+              "description": "The DC/OS service name of the primary Artifactory Enterprise instance to route requests to.",
               "type": "string",
               "default": "artifactory"
             },
@@ -174,6 +174,6 @@
   "required": [
     "service",
     "pro",
-    "high-availability"
+    "enterprise"
   ]
 }

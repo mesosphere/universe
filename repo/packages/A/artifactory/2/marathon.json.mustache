@@ -1,21 +1,21 @@
 {
-"id": "{{service.name}}{{#high-availability.enabled}}{{#high-availability.secondary.enabled}}-secondary{{/high-availability.secondary.enabled}}{{/high-availability.enabled}}",
+"id": "{{service.name}}{{#enterprise.enabled}}{{#enterprise.secondary.enabled}}-secondary{{/enterprise.secondary.enabled}}{{/enterprise.enabled}}",
 "cpus": {{service.cpus}},
 "mem": {{service.mem}},
 "instances": {{service.nodes}},
 "container": {
 "type": "DOCKER",
 "docker": {
-{{^high-availability.enabled}}
+{{^enterprise.enabled}}
     "image": "{{resource.assets.container.docker.artifactory-pro}}",
-{{/high-availability.enabled}}
-{{#high-availability.enabled}}
-    "image": "{{resource.assets.container.docker.artifactory-ha}}",
-{{/high-availability.enabled}}
+{{/enterprise.enabled}}
+{{#enterprise.enabled}}
+    "image": "{{resource.assets.container.docker.artifactory-enterprise}}",
+{{/enterprise.enabled}}
     "network": "HOST"
 },
 "volumes": [
-{{^high-availability.enabled}}
+{{^enterprise.enabled}}
     {{#pro.external-volumes.enabled}}
         {
         "containerPath": "/var/opt/jfrog/artifactory/logs",
@@ -62,8 +62,8 @@
         "mode": "RW"
         }
     {{/pro.external-volumes.enabled}}
-{{/high-availability.enabled}}
-{{#high-availability.enabled}}
+{{/enterprise.enabled}}
+{{#enterprise.enabled}}
     {
     "containerPath": "/var/opt/jfrog/artifactory/data",
     "hostPath": "{{service.host-volume}}/data",
@@ -79,7 +79,7 @@
     "hostPath": "{{service.host-volume}}/logs",
     "mode": "RW"
     }
-{{/high-availability.enabled}}
+{{/enterprise.enabled}}
 ]
 },
 "portDefinitions": [
@@ -88,14 +88,14 @@
         "protocol": "tcp",
         "name": "instance"
     }
-{{#high-availability.enabled}}
+{{#enterprise.enabled}}
     ,
     {
         "port": 0,
         "protocol": "tcp",
         "name": "member"
     }
-{{/high-availability.enabled}}
+{{/enterprise.enabled}}
 ],
 "env": {
 "ART_LICENSES": "{{service.licenses}}",
@@ -105,24 +105,24 @@
 "DB_URL": "{{service.database.url}}",
 "DB_USER": "{{service.database.user}}",
 "DB_PASSWORD": "{{service.database.password}}"
-{{#high-availability.enabled}}
+{{#enterprise.enabled}}
     ,
-    "ART_NETWORK": "{{high-availability.network}}",
+    "ART_NETWORK": "{{enterprise.network}}",
     "HA_DATA_DIR": "/var/opt/jfrog/artifactory/data",
     "HA_BACKUP_DIR": "/var/opt/jfrog/artifactory/backup",
-    {{^high-availability.secondary.enabled}}
+    {{^enterprise.secondary.enabled}}
     "HA_IS_PRIMARY": "true"
-    {{/high-availability.secondary.enabled}}
-    {{#high-availability.secondary.enabled}}
-        "ART_PRIMARY_SERVICE_NAME": "{{high-availability.secondary.name}}",
+    {{/enterprise.secondary.enabled}}
+    {{#enterprise.secondary.enabled}}
+        "ART_PRIMARY_SERVICE_NAME": "{{enterprise.secondary.name}}",
         "HA_IS_PRIMARY": "false"
-    {{/high-availability.secondary.enabled}}
-{{/high-availability.enabled}}
+    {{/enterprise.secondary.enabled}}
+{{/enterprise.enabled}}
 },
 "labels": {
-{{^high-availability.secondary.enabled}}
+{{^enterprise.secondary.enabled}}
     "MARATHON_SINGLE_INSTANCE_APP": "true",
-{{/high-availability.secondary.enabled}}
+{{/enterprise.secondary.enabled}}
 "DCOS_SERVICE_NAME": "{{service.name}}"
 },
 "upgradeStrategy":{
@@ -133,11 +133,11 @@
 {{#pro.pinned-hostname}}
     "constraints": [["hostname", "CLUSTER", "{{pro.pinned-hostname}}"]],
 {{/pro.pinned-hostname}}
-{{#high-availability.enabled}}
-    {{#high-availability.secondary.unique-nodes}}
+{{#enterprise.enabled}}
+    {{#enterprise.secondary.unique-nodes}}
         "constraints": [["hostname", "UNIQUE"]],
-    {{/high-availability.secondary.unique-nodes}}
-{{/high-availability.enabled}}
+    {{/enterprise.secondary.unique-nodes}}
+{{/enterprise.enabled}}
 "healthChecks": [
 {
 "gracePeriodSeconds": 120,
