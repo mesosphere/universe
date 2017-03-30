@@ -7,14 +7,14 @@
   "maintainer": "soleng-team@jfrog.com",
   "website": "https://jfrog.com",
   "framework": false,
-  "description": "Load Balancer for JFrog Artifactory.",
+  "description": "Load Balancer for JFrog Artifactory. Documentation is available at: https://github.com/dcos/examples/.",
   "tags": [
     "mesosphere",
     "artifacts",
     "artifactory",
     "artifactory-lb"
   ],
-  "preInstallNotes": "Make sure you have a running instance of Artifactory. Documentation is available at: https://github.com/JFrogDev/artifactory-dcos.",
+  "preInstallNotes": "Make sure you have a running instance of Artifactory.",
   "postInstallNotes": "Artifactory-lb has been installed.",
   "postUninstallNotes": "Artifactory-lb has been uninstalled.",
   "licenses": [
