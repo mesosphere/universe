@@ -23,21 +23,21 @@
     "binaries":{
       "darwin":{
         "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"{{sha256:dcos-alluxio-enterprise-darwin}}" } ],
+          "contentHash":[ { "algo":"sha256", "value":"15a9e457e995337b25799a70cd6d93b1133461d722959d264f19053e2b017ba3" } ],
           "kind":"executable",
           "url":"https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/dcos-alluxio-enterprise-darwin"
         }
       },
       "linux":{
         "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"{{sha256:dcos-alluxio-enterprise-linux}}" } ],
+          "contentHash":[ { "algo":"sha256", "value":"65848e8778c74f4659d3382474e8eebd9628b4586fcdafa0bd19a3487436c9f6" } ],
           "kind":"executable",
           "url":"https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/dcos-alluxio-enterprise-linux"
         }
       },
       "windows":{
         "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"{{sha256:dcos-alluxio-enterprise.exe}}" } ],
+          "contentHash":[ { "algo":"sha256", "value":"f0abf80ecb756d026d88cf3b05b4e60abd2679a1431ea5b8ee328f7fcffc8712" } ],
           "kind":"executable",
           "url":"https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/dcos-alluxio-enterprise.exe"
         }
