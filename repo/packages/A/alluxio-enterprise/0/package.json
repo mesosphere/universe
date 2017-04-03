@@ -3,11 +3,11 @@
   "name": "alluxio-enterprise",
   "version": "1.0.0-1.4.0",
   "maintainer": "info@alluxio.com",
-  "description": "Alluxio Enterprise Edition (AEE). Please obtain a license by visiting: https://alluxio.com/products. Visit https://alluxio.com/docs/enterprise/1.4/en/Alluxio-on-DCOS.html for a detailed installation guide. \n\n Alluxio, formerly Tachyon, is the world's first system that unifies disparate storage systems at memory speed. With Alluxio, enterprises can manage data efficiently, accelerate business analytics, and ease the adoption of hybrid cloud. \n\n Please refer to https://alluxio.com/docs/ for a detailed operation guide.",
+  "description": "Alluxio Enterprise Edition (AEE). \n\n Alluxio, formerly Tachyon, is the world's first system that unifies disparate storage systems at memory speed. With Alluxio, enterprises can manage data efficiently, accelerate business analytics, and ease the adoption of hybrid cloud. \n\n Please refer to https://alluxio.com/docs/ for a detailed operation guide.",
   "selected": false,
   "framework": true,
   "tags": ["enterprise", "alluxio"],
-  "preInstallNotes": "Please visit https://alluxio.com/ to obtain a license for Alluxio Enterprise Edition. Visit https://alluxio.com/docs/enterprise/1.4/en/Alluxio-on-DCOS.html for a detailed installation guide.",
+  "preInstallNotes": "Please visit https://alluxio.com/products to obtain a license for Alluxio Enterprise Edition. Visit https://alluxio.com/docs/enterprise/1.4/en/Alluxio-on-DCOS.html for a detailed installation guide.",
   "postInstallNotes": "DC/OS Alluxio is being installed!\n\n\tDocumentation: https://alluxio.com/docs/ \n\tIssues: info@aluxio.com",
   "postUninstallNotes": "DC/OS Alluxio has been uninstalled."
 }
