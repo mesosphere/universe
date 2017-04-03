@@ -1,0 +1,76 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1230,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib && export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so) && export PATH=$(ls -d $MESOS_SANDBOX/jre*/bin):$PATH && ./alluxio-enterprise-scheduler/bin/alluxio-enterprise ./alluxio-enterprise-scheduler/svc.yml",
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_MIGRATION_API_VERSION": "v1",
+    "DCOS_MIGRATION_API_PATH": "/v1/plan",
+    "MARATHON_SINGLE_INSTANCE_APP":"true"
+  },
+  "env": {
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.name}}-principal",
+    "SLAVE_COUNT": "{{service.worker-count}}",
+    "UFS_ADDRESS": "{{service.ufs-address}}",
+    "DOCKER_PUBLISH": "{{service.docker-publish}}",
+    "DOCKER_PUBLISH_URL": "{{service.docker-publish-url}}",
+    "ALLUXIO_LICENSE": "{{service.license}}",
+    "AWS_ACCESS_KEY": "{{s3a.aws-access-key}}",
+    "AWS_SECRET_KEY": "{{s3a.aws-secret-key}}",
+    "MASTER_CPUS": "{{master.cpus}}",
+    "MASTER_MEM": "{{master.mem}}",
+    "MASTER_DISK": "{{master.disk}}",
+    "MASTER_DISK_TYPE": "{{master.disk-type}}",
+    "MASTER_PLACEMENT": "{{master.placement}}",
+    "WORKER_CPUS": "{{worker.cpus}}",
+    "WORKER_MEM": "{{worker.mem}}",
+    "WORKER_DISK": "{{worker.disk}}",
+    "WORKER_DISK_TYPE": "{{worker.disk-type}}",
+    "WORKER_PLACEMENT": "{{worker.placement}}",
+    "TASKCFG_ALL_ALLUXIO_LOGLEVEL": "{{general.loglevel}}",
+    "CONFIG_TEMPLATE_PATH": "alluxio-enterprise-scheduler",
+    "ALLUXIO_MASTER_PORT": "{{network.master-port}}",
+    "ALLUXIO_MASTER_WEB_PORT": "{{network.master-web-port}}",
+    "ALLUXIO_WORKER_PORT": "{{network.worker-port}}",
+    "ALLUXIO_WORKER_DATA_PORT": "{{network.worker-data-port}}",
+    "ALLUXIO_WORKER_WEB_PORT": "{{network.worker-web-port}}",
+    "ALLUXIO_JOB_MASTER_PORT": "{{network.job-master-port}}",
+    "ALLUXIO_JOB_MASTER_WEB_PORT": "{{network.job-master-web-port}}",
+    "ALLUXIO_JOB_WORKER_PORT": "{{network.job-worker-port}}",
+    "ALLUXIO_JOB_WORKER_DATA_PORT": "{{network.job-worker-data-port}}",
+    "ALLUXIO_JOB_WORKER_WEB_PORT": "{{network.job-worker-web-port}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "ALLUXIO_URI": "{{resource.assets.uris.alluxio-bootstrap}}",
+    "LAUNCHER_URI": "{{resource.assets.uris.launcher-script}}",
+    "DOCKERFILE": "{{resource.assets.uris.dockerfile}}",
+    "SITE_PROPERTIES": "{{resource.assets.uris.site-properties}}",
+    "DOCKERFILE_SPARK": "{{resource.assets.uris.dockerfile-spark}}",
+    "SPARK_CORE_SITE": "{{resource.assets.uris.spark-core-site}}",
+    "JDK_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "PROXYLITE_CPUS": "{{master.cpus}}",
+    "PROXYLITE_MEM": "{{master.mem}}",
+    "PROXYLITE_PORT": "{{network.proxylite-port}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}
