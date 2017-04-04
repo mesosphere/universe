@@ -77,7 +77,7 @@
     ```
 ### Outside Resources
 
-As a workaround for the image and CLI resource issues in [the FAQ above](#FAQ), you can place those assets outside of the cluster.
+As a workaround for the image and CLI resource issues in [the FAQ above](#faq), you can place those assets outside of the cluster.
 
 1. Place your CLI and image resources on a web server accessible to CLI and web UI users.
 
