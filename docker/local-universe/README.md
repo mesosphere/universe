@@ -52,11 +52,11 @@
 
 - I can't install CLI subcommands.
 
-    Packages are being hosted at `master.mesos:8082`. If you cannot resolve (or connect) to that from your DC/OS CLI install, you won't be able to install subcommands. If you're able to connect to port 8082 on your masters, the easiest way around this is adding the IP for one of the masters to `/etc/hosts`.  See also [Special Options](#outside-resources) below.
+    Packages are being hosted at `master.mesos:8082`. If you cannot resolve (or connect) to that from your DC/OS CLI install, you won't be able to install subcommands. If you're able to connect to port 8082 on your masters, the easiest way around this is adding the IP for one of the masters to `/etc/hosts`.  See also [Outside Resources](#outside-resources) below.
 
 - The images are broken!
 
-    We host everything from inside your cluster, including the images. They're getting served up by `master.mesos:8082`. If you have connectivity to that IP, you can add it to `/etc/hosts` and get the images working.   See also [Special Options](#outside-resources) below.
+    We host everything from inside your cluster, including the images. They're getting served up by `master.mesos:8082`. If you have connectivity to that IP, you can add it to `/etc/hosts` and get the images working.   See also [Outside Resources](#outside-resources) below.
 
 - I don't see the package I was looking for!
 
