@@ -12,7 +12,7 @@
     "name": "datadog",
     "postInstallNotes": "Datadog on DCOS successfully installed.\nHead over to https://app.datadoghq.com to monitor your DCOS cluster.",
     "postUninstallNotes": "Datadog on DCOS successfully uninstalled.\n.",
-    "preInstallNotes": "Pass your API key as a package option (datadog.api_key), which you can find at https://app.datadoghq.com/account/settings#api \nAlso pass the number of Mesos slaves as an option (datadog.instances).\nMarathon will make sure that the Datadog Agent runs only once per slave.",
+    "preInstallNotes": "This DC/OS Service is currently in preview. \n Pass your API key as a package option (datadog.api_key), which you can find at https://app.datadoghq.com/account/settings#api \nAlso pass the number of Mesos slaves as an option (datadog.instances).\nMarathon will make sure that the Datadog Agent runs only once per slave.",
     "scm": "https://github.com/datadog/dd-agent.git",
     "tags": [
         "datadog",

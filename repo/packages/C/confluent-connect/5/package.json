@@ -6,7 +6,7 @@
   "description": "Confluent Connect worker\n\n\tDocumentation: http://docs.confluent.io/3.2.0/connect/managing.html",
   "maintainer": "partner-support@confluent.io",
   "tags": ["kafka", "confluent", "connect"],
-  "preInstallNotes": "Preparing to install confluent-connect",
+  "preInstallNotes": "This DC/OS Service is currently in preview. Preparing to install confluent-connect",
   "postInstallNotes": "confluent-connect has been installed.",
   "postUninstallNotes": "confluent-connect was uninstalled successfully.",
   "minDcosReleaseVersion" : "1.8",
