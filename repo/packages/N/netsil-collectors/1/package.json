@@ -5,7 +5,7 @@
   "description": "The collectors package for Netsil.",
   "maintainer": "support@netsil.com",
   "tags": ["netsil", "monitoring", "microservices", "collectors"],
-  "preInstallNotes": "You may want to change the 'instances' field to control how many collectors you wish to install.\n\nFor instance, you may want one collector for every server you wish to monitor.\n\nIn addition, you may need to change the 'role' field to control on which nodes to install the collectors.",
+  "preInstallNotes": "This DC/OS Service is currently in preview. You may want to change the 'instances' field to control how many collectors you wish to install.\n\nFor instance, you may want one collector for every server you wish to monitor.\n\nIn addition, you may need to change the 'role' field to control on which nodes to install the collectors.",
   "postInstallNotes": "Netsil collectors are installed!",
   "postUninstallNotes": "Netsil collectors are uninstalled successfully.",
   "licenses": [

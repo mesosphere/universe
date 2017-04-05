@@ -12,7 +12,7 @@
   "framework": true,
   "scm": "https://github.com/bar/foo.git",
   "website": "http://www.quobyte.com/",
-  "preInstallNotes": "Installing Quobyte.\nRequired Mesos version for this package is 0.25.0 or newer.\nIn order to start the Quobyte framework a minimum of 1 cpu share and 768MB RAM need to be available.\nPlease ensure your devices have been set up (see https://github.com/quobyte/mesos-framework/blob/master/docs/usage.md#setup-storage-devices)",
+  "preInstallNotes": "This DC/OS Service is currently in preview. Installing Quobyte.\nRequired Mesos version for this package is 0.25.0 or newer.\nIn order to start the Quobyte framework a minimum of 1 cpu share and 768MB RAM need to be available.\nPlease ensure your devices have been set up (see https://github.com/quobyte/mesos-framework/blob/master/docs/usage.md#setup-storage-devices)",
   "postInstallNotes": "Quobyte has been successfully installed!",
   "postUninstallNotes": "Quobyte has been uninstalled. Please follow the steps described at https://github.com/quobyte/dcos-quobyte/blob/master/uninstall_framework.md\n Please note that device tags do persist (see https://github.com/quobyte/mesos-framework#setup-devices)",
   "licenses": [

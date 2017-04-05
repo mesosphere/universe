@@ -103,7 +103,7 @@ what properties are available for each corresponding version of a package.
 }
 ```
 
-For the first version of the package, add this line to the beginning of `preInstallNotes`: ```This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Experimental packages should never be used in production!``` It will be removed once the package has been tested and used by the community. 
+For the first version of the package, add this line to the beginning of `preInstallNotes`: ```This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Experimental packages should never be used in production!``` It will be removed once the package has been tested and used by the community.
 
 ###### `.minDcosReleaseVersion`
 |Packaging Version|   |
