@@ -40,7 +40,7 @@
     {{#networking.enable_external}}
     "labels": {
         "HAPROXY_GROUP": "external",
-        "HAPROXY_0_VHOST": "{{networking.virtual_host}}"
+        "HAPROXY_0_VHOST": "{{networking.virtual_host}}",
         "HAPROXY_0_PORT": "{{networking.port}}"
     },
     {{/networking.enable_external}}
