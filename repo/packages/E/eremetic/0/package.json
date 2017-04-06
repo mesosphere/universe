@@ -1,0 +1,19 @@
+{
+  "description": "Eremetic is a Mesos Framework to run one-shot tasks. The vision is to provide a bridge between Applications that need to run tasks and Mesos. That way a developer creating an application that needs to launch tasks into a cluster wouldn't need to manage Mesos resource offers directly.",
+  "framework": true,
+  "scm" : "https://github.com/klarna/eremetic",
+  "maintainer" : "dcos-support@appliedis.com",
+  "minDcosReleaseVersion": "1.8",
+  "name": "eremetic",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS Eremetic service has been installed. You can access the API within the cluster at http://eremetic.marathon.l4lb.thisdcos.directory:11419 or outside the cluster at https://<master-hostname>/service/eremetic/.",
+  "postUninstallNotes": "DC/OS Eremetic service has been uninstalled.",
+  "selected": false,
+  "tags": [
+    "eremetic",
+    "one-shot",
+    "task",
+    "job"
+  ],
+  "version": "0.0.1-0.27.0"
+}
