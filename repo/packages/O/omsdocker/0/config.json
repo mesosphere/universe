@@ -1,0 +1,28 @@
+{
+    "properties": {
+        "omsdocker": {
+            "description": "OMS Docker specific configuration properties",
+            "properties": {
+                "wsid": {
+                    "description": "Your workspace ID.",
+                    "type": "string"
+                },
+                "wskey": {
+                    "description": "Your workspace Key.",
+                    "type": "string"
+                },
+                "app_id": {
+                    "default": "oms-docker",
+                    "description": "OMS Docker Application ID",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "wsid",
+                "wskey"
+            ],
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
