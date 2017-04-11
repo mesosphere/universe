@@ -1,0 +1,89 @@
+{
+  "id": "/{{conductr.name}}",
+  "cmd": "GLOBIGNORE='*.tar.gz:*.tgz' && ./conductr-*/bin/conductr-dcos.sh {{conductr.zookeeper_uris}} --mesos-conductr-agent-uri={{resource.assets.uris.jre_tar_gz}} --mesos-conductr-agent-uri={{resource.assets.uris.conductr_agent_tar_tgz}}",
+  "instances": 1,
+  "cpus": {{conductr.cpus}},
+  "mem": {{conductr.mem}},
+  "disk": {{conductr.disk}},
+  "healthChecks": [
+    {
+      "path": "/members",
+      "protocol": "HTTP",
+      "portIndex": 1,
+      "gracePeriodSeconds": 600,
+      "intervalSeconds": 20,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{conductr.name}}",
+    "DCOS_PACKAGE_NAME": "{{conductr.name}}",
+    "DCOS_PACKAGE_IS_FRAMEWORK": "true",
+  	"DCOS_SERVICE_NAME": "{{conductr.name}}",
+  	"DCOS_SERVICE_PORT_INDEX": "1",
+  	"DCOS_SERVICE_SCHEME": "http"
+  },
+  "portDefinitions": [
+    {
+      "port": {{conductr.akka_remoting_port}},
+      "protocol": "tcp",
+      "name": "akka-remoting",
+      "labels": {}
+    },
+    {
+      "port": {{conductr.control_protocol_port}},
+      "protocol": "tcp",
+      "name": "control-protocol",
+      "labels": {}
+    },
+    {
+      "port": {{conductr.bundle_stream_server_port}},
+      "protocol": "tcp",
+      "name": "bundle-stream-server",
+      "labels": {}
+    },
+    {
+      "port": {{conductr.status_server_port}},
+      "protocol": "tcp",
+      "name": "status-server",
+      "labels": {}
+    },
+    {
+      "port": {{conductr.service_locator_port}},
+      "protocol": "tcp",
+      "name": "service-locator",
+      "labels": {}
+    }
+  ],
+  "fetch": [
+    {
+      "uri": "{{resource.assets.uris.conductr_core_tar_tgz}}",
+      "extract": true,
+      "executable": false,
+      "cache": false
+    },
+    {
+      "uri": "{{resource.assets.uris.jre_tar_gz}}",
+      "extract": true,
+      "executable": false,
+      "cache": true
+    }
+  ],
+  "requirePorts": true,
+  "readinessChecks": [
+    {
+      "name": "conductrReadinessCheck",
+      "protocol": "HTTP",
+      "path": "/members",
+      "portName": "control-protocol",
+      "intervalSeconds": 20,
+      "timeoutSeconds": 10,
+      "httpStatusCodesForReady": [
+        200
+      ],
+      "preserveLastResponse": false
+    }
+  ]
+}

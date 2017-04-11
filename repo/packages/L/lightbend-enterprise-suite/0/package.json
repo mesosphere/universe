@@ -1,0 +1,31 @@
+{
+  "packagingVersion": "4.0",
+  "name": "lightbend-enterprise-suite",
+  "version": "2.1.3",
+  "upgradesFrom": ["2.1.2"],
+  "downgradesTo": ["2.1.2"],
+  "minDcosReleaseVersion": "1.8",
+  "description": "Lightbend Enterprise Suite (ConductR) is a service orchestration platform to manage distributed systems.",
+  "preInstallNotes": "We recommend a minimum of 3 nodes, each with at least 1 CPU share and 1GB of RAM available for the ConductR DC/OS Service.",
+  "postInstallNotes": "ConductR DC/OS service has been successfully installed!\nTo integrate ConductR into the DC/OS CLI follow these instructions: http://conductr.lightbend.com/docs/2.1.x/CLI\nGeneral documentation is available on https://conductr.lightbend.com/docs",
+  "postUninstallNotes": "ConductR DC/OS service has been uninstalled and will no longer run.",
+  "maintainer": "support@lightbend.com",
+  "website": "https://www.lightbend.com",
+  "licenses": [
+    {
+      "name": "Lightbend Subscription Agreement",
+      "url": "http://downloads.typesafe.com/website/legal/LightbendSubscriptionAgreement.pdf"
+    }
+  ],
+  "tags": [
+    "lightbend",
+    "conductr",
+    "akka",
+    "lagom",
+    "mircoservices",
+    "service-orchestration",
+    "long-running"
+  ],
+  "framework": true,
+  "selected": false
+}
