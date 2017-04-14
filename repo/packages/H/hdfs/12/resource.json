@@ -1,0 +1,40 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-large.png"
+  },
+  "assets": {
+    "uris": {
+      "scheduler-zip": "https://downloads.mesosphere.com/hdfs/assets/0.9.2-2.6.0/scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/hdfs/assets/0.9.2-2.6.0/executor.zip",
+      "jre-tar-gz": "https://downloads.mesosphere.com/hdfs/assets/jre-8u91-linux-x64.tar.gz",
+      "hadoop-tar-gz": "https://downloads.mesosphere.com/hdfs/assets/hadoop-2.6.0-cdh5.7.1-dcos.tar.gz"
+    }
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"4c211b5d9dd60671991a3eaa0e2395ecd182c1f1d4c41d997f55285d7e9f683b" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/hdfs/assets/0.9.2-2.6.0/dcos-hdfs-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"a17664127a56004779bd2faa9c6b19f72ed2f1838f045b781c37826056b774ba" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/hdfs/assets/0.9.2-2.6.0/dcos-hdfs-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"204abbdfb2aa063fc229088985179b306369fb53b2e39eefb97c8a4a518c95a0" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/hdfs/assets/0.9.2-2.6.0/dcos-hdfs.exe"
+        }
+      }
+    }
+  }
+}
