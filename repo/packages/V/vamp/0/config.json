@@ -44,11 +44,11 @@
           "type":"string"
         },
         "logstash":{
-          "description":"Logstash host (IP), e.g.'10.240.0.4'. By default Logstash should listen on 10001 UDP port.",
+          "description":"Logstash host (IP), e.g.'elasticsearch-executor.elasticsearch.mesos'. By default Logstash should listen on 10001 UDP port.",
           "type":"string"
         },
         "elasticsearch-url":{
-          "description":"Elasticsearch URL, e.g. 'http://10.240.0.4:9200'",
+          "description":"Elasticsearch URL, e.g. 'http://elasticsearch-executor.elasticsearch.mesos:9200'",
           "type":"string"
         },
         "vga-deployment":{
