@@ -1,0 +1,361 @@
+{
+    "properties": {
+        "kibana": {
+            "properties": {
+                "cpus": {
+                    "default": 0.5,
+                    "description": "Kibana cpu requirements",
+                    "type": "number"
+                },
+                "password": {
+                    "default": "changeme",
+                    "description": "'kibana' user password for basic authentication with Elasticsearch",
+                    "type": "string"
+                },
+                "disk_type": {
+                    "default": "ROOT",
+                    "description": "Disk type to be used for storing data. [ROOT, MOUNT]",
+                    "type": "string"
+                },
+                "disk": {
+                    "default": 100,
+                    "description": "Kibana disk requirements (minimal for logging)",
+                    "type": "integer"
+                },
+                "count": {
+                    "default": 1,
+                    "description": "Number of Kibana nodes to run",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "placement": {
+                    "description": "Marathon-style placement constraints",
+                    "type": "string"
+                },
+                "mem": {
+                    "default": 2048,
+                    "description": "Kibana mem requirements",
+                    "type": "integer"
+                }
+            },
+            "description": "Kibana configuration properties",
+            "required": [
+                "cpus",
+                "mem",
+                "disk",
+                "password",
+                "count"
+            ],
+            "type": "object"
+        },
+        "elasticsearch": {
+            "additionalProperties": false,
+            "properties": {
+                "plugins": {
+                    "default": "",
+                    "description": "Comma-separated list of plugins to install",
+                    "type": "string"
+                }
+            },
+            "description": "Elasticsearch service configuration properties",
+            "type": "object"
+        },
+        "coordinator_nodes": {
+            "properties": {
+                "cpus": {
+                    "default": 1.0,
+                    "description": "Node cpu requirements",
+                    "type": "number"
+                },
+                "disk_type": {
+                    "default": "ROOT",
+                    "description": "Disk type to be used for storing data. [ROOT, MOUNT]",
+                    "type": "string"
+                },
+                "heap": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "size": {
+                            "default": 1024,
+                            "description": "The amount of JVM heap, in MB, allocated to the Elasticsearch node process.",
+                            "type": "integer"
+                        }
+                    },
+                    "description": "The Elasticsearch process JVM heap configuration object",
+                    "required": [
+                        "size"
+                    ],
+                    "type": "object"
+                },
+                "disk": {
+                    "default": 1000,
+                    "description": "Node disk requirements (only respected with persistent volumes)",
+                    "type": "integer"
+                },
+                "count": {
+                    "default": 1,
+                    "description": "Number of coordinator nodes to run",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "placement": {
+                    "description": "Marathon-style placement constraints",
+                    "type": "string"
+                },
+                "mem": {
+                    "default": 2048,
+                    "description": "Node mem requirements",
+                    "type": "integer"
+                }
+            },
+            "description": "Elasticsearch coordinator node configuration properties",
+            "required": [
+                "cpus",
+                "mem",
+                "disk",
+                "count"
+            ],
+            "type": "object"
+        },
+        "proxylite": {
+            "properties": {
+                "cpus": {
+                    "default": 0.1,
+                    "description": "Proxylite cpu requirements",
+                    "type": "number"
+                },
+                "port": {
+                    "default": 4040,
+                    "description": "HTTP port for Proxylite to listen on.",
+                    "type": "integer"
+                },
+                "mem": {
+                    "default": 100,
+                    "description": "Proxylite mem requirements",
+                    "type": "integer"
+                }
+            },
+            "description": "Proxylite configuration properties",
+            "required": [
+                "cpus",
+                "mem",
+                "port"
+            ],
+            "type": "object"
+        },
+        "ingest_nodes": {
+            "properties": {
+                "cpus": {
+                    "default": 0.5,
+                    "description": "Node cpu requirements",
+                    "type": "number"
+                },
+                "disk_type": {
+                    "default": "ROOT",
+                    "description": "Disk type to be used for storing data. [ROOT, MOUNT]",
+                    "type": "string"
+                },
+                "heap": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "size": {
+                            "default": 512,
+                            "description": "The amount of JVM heap, in MB, allocated to the Elasticsearch node process.",
+                            "type": "integer"
+                        }
+                    },
+                    "description": "The Elasticsearch process JVM heap configuration object",
+                    "required": [
+                        "size"
+                    ],
+                    "type": "object"
+                },
+                "disk": {
+                    "default": 2000,
+                    "description": "Node disk requirements (only respected with persistent volumes)",
+                    "type": "integer"
+                },
+                "count": {
+                    "default": 1,
+                    "description": "Number of ingest nodes to run",
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "placement": {
+                    "description": "Marathon-style placement constraints",
+                    "type": "string"
+                },
+                "mem": {
+                    "default": 1024,
+                    "description": "Node mem requirements",
+                    "type": "integer"
+                }
+            },
+            "description": "Elasticsearch ingest node configuration properties",
+            "required": [
+                "cpus",
+                "mem",
+                "disk",
+                "count"
+            ],
+            "type": "object"
+        },
+        "service": {
+            "properties": {
+                "name": {
+                    "default": "elastic",
+                    "description": "The name of the Elasticsearch service instance",
+                    "type": "string"
+                },
+                "user": {
+                    "default": "nobody",
+                    "description": "The user that runs the Elasticsearch/Kibana services and owns the Mesos sandbox.",
+                    "type": "string"
+                },
+                "beta-optin": {
+                    "default": "",
+                    "description": "I have been invited to the Beta Program and accept all the terms of the Beta Agreement.",
+                    "title": "Agree to Beta terms",
+                    "type": "boolean"
+                },
+                "principal": {
+                    "default": "",
+                    "description": "The principal for the Elasticsearch service instance.",
+                    "type": "string"
+                },
+                "deploy_strategy": {
+                    "default": "parallel",
+                    "description": "Elasticsearch and Kibana rollout strategy. [parallel, serial]",
+                    "type": "string"
+                },
+                "secret_name": {
+                    "default": "",
+                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+                    "type": "string"
+                }
+            },
+            "description": "DC/OS service configuration properties",
+            "required": [
+                "name",
+                "user",
+                "deploy_strategy",
+                "beta-optin"
+            ],
+            "type": "object"
+        },
+        "data_nodes": {
+            "properties": {
+                "cpus": {
+                    "default": 1.0,
+                    "description": "Node cpu requirements",
+                    "type": "number"
+                },
+                "disk_type": {
+                    "default": "ROOT",
+                    "description": "Disk type to be used for storing data. [ROOT, MOUNT]",
+                    "type": "string"
+                },
+                "heap": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "size": {
+                            "default": 2048,
+                            "description": "The amount of JVM heap, in MB, allocated to the Elasticsearch node process.",
+                            "type": "integer"
+                        }
+                    },
+                    "description": "The Elasticsearch process JVM heap configuration object",
+                    "required": [
+                        "size"
+                    ],
+                    "type": "object"
+                },
+                "disk": {
+                    "default": 10000,
+                    "description": "Node disk requirements (only respected with persistent volumes)",
+                    "type": "integer"
+                },
+                "count": {
+                    "default": 2,
+                    "description": "Number of data nodes to run",
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "placement": {
+                    "description": "Marathon-style placement constraints",
+                    "type": "string"
+                },
+                "mem": {
+                    "default": 4096,
+                    "description": "Node mem requirements",
+                    "type": "integer"
+                }
+            },
+            "description": "Elasticsearch data node configuration properties",
+            "required": [
+                "cpus",
+                "mem",
+                "disk",
+                "count"
+            ],
+            "type": "object"
+        },
+        "master_nodes": {
+            "properties": {
+                "cpus": {
+                    "default": 1.0,
+                    "description": "Node cpu requirements",
+                    "type": "number"
+                },
+                "heap": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "size": {
+                            "default": 1024,
+                            "description": "The amount of JVM heap, in MB, allocated to the Elasticsearch node process.",
+                            "type": "integer"
+                        }
+                    },
+                    "description": "The Elasticsearch process JVM heap configuration object",
+                    "required": [
+                        "size"
+                    ],
+                    "type": "object"
+                },
+                "disk_type": {
+                    "default": "ROOT",
+                    "description": "Disk type to be used for storing data. [ROOT, MOUNT]",
+                    "type": "string"
+                },
+                "disk": {
+                    "default": 2000,
+                    "description": "Node disk requirements (only respected with persistent volumes)",
+                    "type": "integer"
+                },
+                "transport_port": {
+                    "default": 9300,
+                    "description": "Transport port for master nodes to listen on.",
+                    "type": "integer"
+                },
+                "placement": {
+                    "description": "Marathon-style placement constraints",
+                    "type": "string"
+                },
+                "mem": {
+                    "default": 2048,
+                    "description": "Node mem requirements",
+                    "type": "integer"
+                }
+            },
+            "description": "Configuration properties for the three (3) Elasticsearch master nodes",
+            "required": [
+                "cpus",
+                "mem",
+                "disk",
+                "transport_port"
+            ],
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
