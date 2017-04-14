@@ -8,6 +8,12 @@
             "type": "object",
             "description": "DC/OS service configuration properties",
             "properties": {
+                "beta-optin": {
+                    "default": "",
+                    "type": "boolean",
+                    "description": "I have been invited to the Beta Program and accept all the terms of the Beta Agreement.",
+                    "title": "Agree to Beta terms"
+                },
                 "name": {
                     "default": "hdfs",
                     "type": "string",
@@ -78,12 +84,6 @@
                     "default": "root",
                     "type": "string",
                     "description": "The linux user used to run the scheduler and all executors."
-                },
-                "beta-optin": {
-                    "default": "",
-                    "type": "boolean",
-                    "description": "I have been invited to the Beta Program and accept all the terms of the Beta Agreement.",
-                    "title": "Agree to Beta terms"
                 }
             }
         },
