@@ -1,0 +1,56 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u121-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
+      "scheduler-zip": "https://downloads.mesosphere.com/cassandra/assets/beta-0.0.1/cassandra-scheduler.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/cassandra/assets/beta-0.0.1/bootstrap.zip",
+      "executor-zip": "https://downloads.mesosphere.com/cassandra/assets/beta-0.0.1/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "e815ce5418d6822b17f16f83df861956b7f2c566156a6ee22aa0c2250bd37c76"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cassandra/assets/beta-0.0.1/dcos-cassandra-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "cf72336a7594aaf0348bdb40e0a108267910200725b28e74f35aa3f5569ba9ff"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cassandra/assets/beta-0.0.1/dcos-cassandra-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "6af582b75a1ac15840fdd888d8d4645df620e403b9d473451cc93680a767d7c7"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cassandra/assets/beta-0.0.1/dcos-cassandra.exe"
+        }
+      }
+    }
+  }
+}
