@@ -6,7 +6,7 @@
   "minDcosReleaseVersion": "1.8",
   "name": "eremetic",
   "packagingVersion": "3.0",
-  "postInstallNotes": "DC/OS Eremetic service has been installed. You can access the API within the cluster at http://eremetic.marathon.l4lb.thisdcos.directory:11419 or outside the cluster at https://<master-hostname>/service/eremetic/.",
+  "postInstallNotes": "DC/OS Eremetic service has been installed. You can access the API within the cluster at http://eremetic.marathon.l4lb.thisdcos.directory:8000 or outside the cluster at https://<master-hostname>/service/eremetic/.",
   "postUninstallNotes": "DC/OS Eremetic service has been uninstalled.",
   "selected": false,
   "tags": [
