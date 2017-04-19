@@ -7,9 +7,9 @@
   "assets": {
     "container": {
       "docker": {
-         "scale": "geoint/scale:4.4.0",
+         "scale": "geoint/scale:4.4.1",
          "db": "mdillon/postgis:9.5",
-         "logstash": "geoint/scale-logstash:4.4.0"
+         "logstash": "geoint/scale-logstash:4.4.1"
       }
     }
   }
