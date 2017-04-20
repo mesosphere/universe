@@ -1,6 +1,6 @@
 
 {
-  "id": "{{service.name}}",
+  "id": "{{#service.group}}{{service.group}}/{{/service.group}}{{service.name}}",
   "cpus": {{service.cpus}},
   "mem": {{service.mem}},
   "instances": {{service.instances}},

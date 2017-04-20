@@ -7,10 +7,15 @@
       "description" : "Marathon app configuration properties.",
       "properties" : {
         "name" : {
-          "description" : "The ID of this Marathon service inside DCOS base Marathon.",
+          "description" : "The name of this Marathon service inside DCOS base Marathon.\nIf not specified otherwise, this name will also be used for the framework name, dcos service name, zk path and mesos role.\nTo create a nested path, please specify a group.",
           "type" : "string",
           "default" : "marathon-user",
           "pattern" : "^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$"
+        },
+        "group" : {
+          "description" : "The group of this Marathon service inside DCOS base Marathon. If a group is defined, the id of this service will be group/name",
+          "type" : "string",
+          "pattern" : "^(([a-z0-9])([a-z0-9\\-]*[a-z0-9]))([/](([a-z0-9])([a-z0-9\\-]*[a-z0-9])))*$"
         },
         "cpus" : {
           "default" : 2,
