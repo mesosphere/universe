@@ -15,7 +15,7 @@
         "group" : {
           "description" : "The group of this Marathon service inside DCOS base Marathon. If a group is defined, the id of this service will be group/name",
           "type" : "string",
-          "pattern" : "^(([a-z0-9])([a-z0-9\\-]*[a-z0-9]))([/](([a-z0-9])([a-z0-9\\-]*[a-z0-9])))*$"
+          "pattern" : "^[/]?(([a-z0-9])([a-z0-9\\-]*[a-z0-9]))([/](([a-z0-9])([a-z0-9\\-]*[a-z0-9])))*$"
         },
         "cpus" : {
           "default" : 2,
