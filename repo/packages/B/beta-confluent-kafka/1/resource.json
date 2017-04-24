@@ -1,0 +1,42 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u121-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
+      "bootstrap-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.14.0/bootstrap.zip",
+      "kafka-tgz": "https://packages.confluent.io/archive/3.2/confluent-3.2.0-mesos.tgz",
+      "kafka-scheduler-zip": "https://downloads.mesosphere.com/confluent-kafka/assets/1.2.1-3.2.0e-beta/confluent-kafka-scheduler.zip",
+      "executor-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.14.0/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-large.png"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"f30f983e8b11c3097d9e6b4208d3b1d3b50c331225f05d2e3016623e4d2596d0" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/confluent-kafka/assets/1.2.1-3.2.0e-beta/dcos-confluent-kafka-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"56ec71c8548d866b446f77126842c0d0bfa43a62e2890ec049a64d2ad71350a3" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/confluent-kafka/assets/1.2.1-3.2.0e-beta/dcos-confluent-kafka-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"f2c65020cf06950e416d5605df8bc749e3290067939656ec536867a8c92dd45d" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/confluent-kafka/assets/1.2.1-3.2.0e-beta/dcos-confluent-kafka.exe"
+        }
+      }
+    }
+  }
+}

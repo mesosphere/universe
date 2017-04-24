@@ -6,7 +6,7 @@
   "description": "Confluent Enterprise Replicator for multi-data center synchronization of topic data\n\n\tDocumentation: http://docs.confluent.io/3.2.0/connect/connect-replicator/docs/index.html",
   "maintainer": "partner-support@confluent.io",
   "tags": ["kafka", "confluent", "connect", "replicator"],
-  "preInstallNotes": "Preparing to install Replicator service",
+  "preInstallNotes": "This DC/OS Service is currently in preview. Preparing to install Replicator service",
   "postInstallNotes": "Replicator service has been installed.",
   "postUninstallNotes": "Replicator service was uninstalled successfully.",
   "minDcosReleaseVersion" : "1.8",

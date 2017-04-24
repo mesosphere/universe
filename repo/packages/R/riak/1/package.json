@@ -10,7 +10,7 @@
   "scm": "https://github.com/basho-labs/riak-mesos.git",
   "website": "http://basho-labs.github.io/riak-mesos/",
   "postInstallNotes": "Thank you for installing Riak on DC/OS.\nPlease run `dcos riak framework wait-for-service [--timeout <secs>]` until the Framework has fully started.\nVisit https://github.com/basho-labs/riak-mesos for usage information.",
-  "preInstallNotes": "The Riak framework recommends at least 16GB of RAM and 8.0 CPUs per node to perform successfully.\nDocumentation: https://github.com/dcos/examples/tree/master/1.8/riak",
+  "preInstallNotes": "This DC/OS Service is currently in preview. The Riak framework recommends at least 16GB of RAM and 8.0 CPUs per node to perform successfully.\nDocumentation: https://github.com/dcos/examples/tree/master/1.8/riak",
   "postUninstallNotes": "The DC/OS Riak Framework has been uninstalled.",
   "licenses": [
     {

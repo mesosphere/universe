@@ -1,0 +1,29 @@
+{
+  "id": "/httpbin",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.httpbin}}",
+      "network": "BRIDGE",
+      "portMappings": [
+        { "containerPort": 8000, "hostPort": 0 }
+      ]
+    }
+  },
+  "healthChecks": [{
+    "path": "/get",
+    "portIndex": 0,
+    "protocol": "HTTP",
+    "gracePeriodSeconds": 30,
+    "intervalSeconds": 60,
+    "timeoutSeconds": 20,
+    "maxConsecutiveFailures": 3
+  }],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  },
+  "cpus": 1,
+  "mem": 256.0
+}

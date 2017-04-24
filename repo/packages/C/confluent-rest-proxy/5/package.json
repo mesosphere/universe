@@ -6,7 +6,7 @@
   "description": "Confluent REST Proxy service\n\n\tDocumentation: http://docs.confluent.io/3.2.0/kafka-rest/docs/api.html",
   "maintainer": "partner-support@confluent.io",
   "tags": ["kafka", "confluent", "proxy", "rest"],
-  "preInstallNotes": "Preparing to install confluent-rest-proxy",
+  "preInstallNotes": "This DC/OS Service is currently in preview. Preparing to install confluent-rest-proxy",
   "postInstallNotes": "confluent-rest-proxy has been installed.",
   "postUninstallNotes": "confluent-rest-proxy was uninstalled successfully.",
   "minDcosReleaseVersion" : "1.8",
