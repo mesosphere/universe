@@ -22,25 +22,32 @@
       "properties": {
         "packagingVersion": {
           "type": "string",
-          "enum": ["2.0"]
+          "enum": ["2.0"],
+          "description": "The version of the packaging format. Please do not use this version. It is only here for backwards compatibility. We recommend you use the latest version."
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the package."
         },
         "version": {
-          "type": "string"
+          "type": "string",
+          "description": "The version of the package. We recommend that you use semantic versions. See http://semver.org/ for more details on semantic versions."
         },
         "scm": {
-          "type": "string"
+          "type": "string",
+          "description": "Source control management. This is generally the URL of the project GitHub repository."
         },
         "maintainer": {
-          "type": "string"
+          "type": "string",
+          "description": "The maintainer of the package. This is generally an email address."
         },
         "website": {
-          "type": "string"
+          "type": "string",
+          "description": "URL to the website of a project. This is generally the URL of the project GitHub repository."
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "Detailed description of what the package does."
         },
         "framework": {
           "type": "boolean",
@@ -64,7 +71,8 @@
           "items": {
             "type": "string",
             "pattern": "^[^\\s]+$"
-          }
+          },
+          "description": "A list of keywords associated with the package."
         },
         "selected": {
           "type": "boolean",
@@ -108,25 +116,33 @@
       "properties": {
         "packagingVersion": {
           "type": "string",
-          "enum": ["3.0"]
+          "enum": ["3.0"],
+          "description": "The version of the packaging format."
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the package."
         },
         "version": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[-a-zA-Z0-9.]+$",
+          "description": "The version of the package. We recommend that you use semantic versions. See http://semver.org/ for details on semantic versions."
         },
         "scm": {
-          "type": "string"
+          "type": "string",
+          "description": "Source control management. This is generally the URL of the project GitHub repository."
         },
         "maintainer": {
-          "type": "string"
+          "type": "string",
+          "description": "The maintainer of the package. This is generally an email address."
         },
         "website": {
-          "type": "string"
+          "type": "string",
+          "description": "URL to the website of a project. This is generally the URL of the project GitHub repository."
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "Detailed description of what the package does."
         },
         "framework": {
           "type": "boolean",
@@ -150,6 +166,120 @@
           "items": {
             "type": "string",
             "pattern": "^[^\\s]+$"
+          },
+          "description": "A list of keywords associated with the package."
+        },
+        "selected": {
+          "type": "boolean",
+          "description": "Flag indicating if the package is selected in search results",
+          "default": false
+        },
+        "licenses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the license. For example one of [Apache License Version 2.0 | MIT License | BSD License | Proprietary]"
+              },
+              "url": {
+                "$ref": "#/definitions/url",
+                "description": "The URL where the license can be accessed"
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "url"
+            ]
+          }
+        },
+        "minDcosReleaseVersion": {
+          "$ref": "#/definitions/dcosReleaseVersion",
+          "description": "The minimum DC/OS Release Version the package can run on."
+        }
+      },
+      "required": [
+        "packagingVersion",
+        "name",
+        "version",
+        "maintainer",
+        "description",
+        "tags"
+      ],
+      "additionalProperties": false
+    },
+
+    "v40Package": {
+      "properties": {
+        "packagingVersion": {
+          "type": "string",
+          "enum": ["4.0"],
+          "description": "The version of the packaging format."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the package."
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[-a-zA-Z0-9.]+$",
+          "description": "The version of the package. We recommend that you use semantic versions. See http://semver.org/ for details on semantic versions."
+        },
+        "scm": {
+          "type": "string",
+          "description": "Source control management. This is generally the URL of the project GitHub repository."
+        },
+        "maintainer": {
+          "type": "string",
+          "description": "The maintainer of the package. This is generally an email address."
+        },
+        "website": {
+          "type": "string",
+          "description": "URL to the website of a project. This is generally the URL of the project GitHub repository."
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of what the package does."
+        },
+        "framework": {
+          "type": "boolean",
+          "default": false,
+          "description": "True if this package installs a new Mesos framework."
+        },
+        "upgradesFrom": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of versions that can upgrade to this package. If the property is a list containing the string '*', any version can upgrade to this package. If the property is not set or the empty list, no version can upgrade to this package."
+        },
+        "downgradesTo": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of versions that this package can downgrade to. If the property is a list containing the string '*', this package can downgrade to any version. If the property is not set or the empty list, this package cannot downgrade."
+        },
+        "preInstallNotes": {
+          "type": "string",
+          "description": "Pre installation notes that would be useful to the user of this package."
+        },
+        "postInstallNotes": {
+          "type": "string",
+          "description": "Post installation notes that would be useful to the user of this package."
+        },
+        "postUninstallNotes": {
+          "type": "string",
+          "description": "Post uninstallation notes that would be useful to the user of this package."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$",
+          "description": "A list of keywords associated with the package."
           }
         },
         "selected": {
@@ -199,7 +329,8 @@
   "type": "object",
   "oneOf": [
     { "$ref": "#/definitions/v20Package" },
-    { "$ref": "#/definitions/v30Package" }
+    { "$ref": "#/definitions/v30Package" },
+    { "$ref": "#/definitions/v40Package" }
   ]
 
 }
