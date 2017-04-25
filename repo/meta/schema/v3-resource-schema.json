@@ -9,29 +9,25 @@
       ],
       "properties": {
         "url": {
-          "type": "string",
-          "description": "URL for the binary CLI."
+          "type": "string"
         },
         "contentHash": {
           "items": {
             "$ref": "#/definitions/hash"
           },
           "minItems": 1,
-          "type": "array",
-          "description": "List of hashes for the binary CLI that are described in the URL property."
+          "type": "array"
         },
         "kind": {
           "enum": [
             "executable",
             "zip"
           ],
-          "type": "string",
-          "description": "The format of the CLI."
+          "type": "string"
         }
       },
       "additionalProperties": false,
-      "type": "object",
-      "description": "Schema for adding a supported CLI to your package."
+      "type": "object"
     },
     "hash": {
       "required": [
@@ -43,17 +39,14 @@
           "enum": [
             "sha256"
           ],
-          "type": "string",
-          "description": "The algorithm used to compute the hash."
+          "type": "string"
         },
         "value": {
-          "type": "string",
-          "description": "The value of the hash."
+          "type": "string"
         }
       },
       "additionalProperties": false,
-      "type": "object",
-      "description": "CLI validation."
+      "type": "object"
     }
   },
   "properties": {
@@ -63,8 +56,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "type": "object",
-          "description": "This is a mapping of aliases to HTTP resources. The aliases enumerated here are available during resolution of the marathon.json.mustache file."
+          "type": "object"
         },
         "container": {
           "properties": {
@@ -76,13 +68,11 @@
             }
           },
           "additionalProperties": false,
-          "type": "object",
-          "description": "This is a mapping of aliases to Docker images. The aliases enumerated here are available during resolution of marathon.json.mustache file."
+          "type": "object"
         }
       },
       "additionalProperties": false,
-      "type": "object",
-      "description": "Object that enumerates all of the required package assets."
+      "type": "object"
     },
     "images": {
       "properties": {
@@ -107,8 +97,7 @@
         }
       },
       "additionalProperties": false,
-      "type": "object",
-      "description": "Images used by DC/OS to display the package."
+      "type": "object"
     },
     "cli": {
       "required": [
@@ -128,8 +117,7 @@
                 }
               },
               "additionalProperties": false,
-              "type": "object",
-              "description": "Schema for the Linux CLI."
+              "type": "object"
             },
             "windows": {
               "required": [
@@ -141,8 +129,7 @@
                 }
               },
               "additionalProperties": false,
-              "type": "object",
-              "description": "Schema for the Windows CLI."
+              "type": "object"
             },
             "darwin": {
               "required": [
@@ -154,18 +141,15 @@
                 }
               },
               "additionalProperties": false,
-              "type": "object",
-              "description": "Schema for the MacOS (darwin) CLI."
+              "type": "object"
             }
           },
           "additionalProperties": false,
-          "type": "object",
-          "description": "Enumerates all of the available binaries in this package."
+          "type": "object"
         }
       },
       "additionalProperties": false,
-      "type": "object",
-      "description": "Object that describes all of the required externally hosted assets for this package."
+      "type": "object"
     }
   },
   "$schema": "http://json-schema.org/draft-04/schema#"
