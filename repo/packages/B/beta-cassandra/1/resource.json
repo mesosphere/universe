@@ -1,0 +1,57 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u121-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
+      "scheduler-zip": "https://downloads.mesosphere.com/cassandra/assets/1.0.27-3.0.10-beta/cassandra-scheduler.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/cassandra/assets/1.0.27-3.0.10-beta/bootstrap.zip",
+      "executor-zip": "https://downloads.mesosphere.com/cassandra/assets/1.0.27-3.0.10-beta/executor.zip",
+      "s3cli-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/s3cli-0.0.55-linux-amd64.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "c71b5eb56fa11a77075e098cf2991f34128cd85100523473546d140c39764412"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cassandra/assets/1.0.27-3.0.10-beta/dcos-cassandra-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "fc1264e1a25332f2fb8789db44030590b478f88b317518a209c6a81880925b01"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cassandra/assets/1.0.27-3.0.10-beta/dcos-cassandra-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "9db93a130335058c0a88c8d700409a3c1c187c8bfd178c438110079bb7ca7b3f"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cassandra/assets/1.0.27-3.0.10-beta/dcos-cassandra.exe"
+        }
+      }
+    }
+  }
+}
