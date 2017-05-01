@@ -324,11 +324,12 @@ def prepare_repository(package, package_path, source_repo, dest_repo, http_root,
                                 pathlib.Path(uri).name)))
 
         # Add the local docker repo prefix.
-        if 'container' in resource["assets"]:
-            resource["assets"]["container"]["docker"] = {
-                n: format_image_name(DOCKER_ROOT, image_name)
-                for n, image_name in resource["assets"]["container"].get(
-                    "docker", {}).items()}
+        if 'assets' in resource:
+            if 'container' in resource["assets"]:
+                resource["assets"]["container"]["docker"] = {
+                    n: format_image_name(DOCKER_ROOT, image_name)
+                    for n, image_name in resource["assets"]["container"].get(
+                        "docker", {}).items()}
 
         json.dump(resource, dest_file, indent=4)
 
