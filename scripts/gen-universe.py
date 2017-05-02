@@ -644,7 +644,7 @@ def _validate_repo(file_path, version):
 
     validator = jsonschema.Draft4Validator(_load_jsonschema('v3'))
 
-    with open(file_path, encoding='utf-8') as repo_file:
+    with file_path.open(encoding='utf-8') as repo_file:
         repo = json.loads(repo_file.read())
 
     errors = list(validator.iter_errors(repo))
