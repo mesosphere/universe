@@ -78,7 +78,8 @@ def _validate_revision(given_package, revision, path):
         eprint("\t\tcommand.json:", end='')
         if packaging_version == "4.0":
             sys.exit(
-                "\tERROR\n\nThis file is not support for version 4.0 packages"
+                "\tERROR\n\n"
+                "Command file is not support for version 4.0 packages"
             )
         else:
             command_json = _validate_json(
