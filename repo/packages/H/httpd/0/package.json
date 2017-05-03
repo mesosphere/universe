@@ -1,0 +1,20 @@
+{
+ "packagingVersion": "3.0",
+ "name": "httpd",
+ "version": "2.4.23",
+ "scm": "https://github.com/apache/httpd",
+ "maintainer": "abhi.j24@gmail.com",
+ "description": "Just httpd",
+ "framework": false,
+ "tags": ["mesosphere", "service", "httpd"],
+ "licenses": [
+   {
+     "name": "BSD",
+     "url": "http://www.apache.org/licenses/"
+   }
+ ],
+ "website": "https://httpd.apache.org/",
+ "postInstallNotes": "Https installed!",
+ "preInstallNotes": "Read this message before installing please",
+ "postUninstallNotes": "Thank you for using Httpd"
+}

@@ -1,0 +1,33 @@
+{
+ "id": "httpd",
+ "instances": 1,
+ "cpus": 0.1,
+ "mem": 30,
+ "container": {
+   "type": "DOCKER",
+   "docker": {
+     "image": "{{resource.assets.container.docker.462fca6e7913}}",
+     "network": "BRIDGE",
+     "portMappings": [
+       {
+       "containerPort": 80,
+       "servicePort" : 0,
+       "hostPort": 0,
+       "protocol": "tcp"
+       }
+     ]
+   }
+ },
+ "healthChecks": [
+   {
+   "protocol": "TCP",
+   "gracePeriodSeconds": 60,
+   "intervalSeconds": 5,
+   "portIndex": 0,
+   "timeoutSeconds": 5,
+   "maxConsecutiveFailures": 3
+   }
+ ]
+}
+
+
