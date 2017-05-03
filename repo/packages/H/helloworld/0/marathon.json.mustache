@@ -1,0 +1,15 @@
+{
+  "id": "helloworld",
+  "cpus": 1.0,
+  "mem": 512,
+  "instances": 1,
+  "cmd": "python3 -m http.server $PORT0",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": {{resource.assets.container.docker.python}},
+      "network": "HOST"
+    }
+  },
+  "ports": [ 0 ]
+}
