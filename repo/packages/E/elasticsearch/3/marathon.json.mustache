@@ -47,10 +47,7 @@
   "requirePorts": true,
   "labels": {
     {{#mesos.extra-tag}}
-    "tags": "DATASTORE,VERSION-2.4.1,UNSECURED,SERVICE-ELASTICSEARCH,{{mesos.extra-tag}}",
-    {{/mesos.extra-tag}}
-    {{^mesos.extra-tag}}
-    "tags": "DATASTORE,VERSION-2.4.1,UNSECURED,SERVICE-ELASTICSEARCH",
+    "tags": "{{mesos.extra-tag}}",
     {{/mesos.extra-tag}}
     "DCOS_PACKAGE_FRAMEWORK_NAME": "{{elasticsearch.framework-name}}"
 
