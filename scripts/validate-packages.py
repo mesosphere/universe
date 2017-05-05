@@ -65,11 +65,17 @@ def _validate_revision(given_package, revision, path):
     if (packaging_version == "4.0" and
             (upgrades_from or downgrades_to) and
             LooseVersion(min_dcos_release_version) < LooseVersion("1.10")):
-        sys.exit(
-            "\tERROR\n\nIf upgradesFrom or downgradesTo fields are set to a "
-            "non-empty list, then minDcosReleaseVersion must be greater than "
-            "or equal to 1.10"
-        )
+        # Note: We are going to allow this package state and as a result the
+        # conversion from v4 to v3. Even though this conversion loses
+        # information, the only consumers of the Universe repo API is "Cosmos
+        # the service manager". Old (< 1.10) Cosmos client don't implement the
+        # update API and new Cosmos (>= 1.10), which implement the update API
+        # will use the new repo media type.
+        #
+        # It is important that "package managers" (e.g. Local Universe) cannot
+        # see this converted package and instead always see the original v4
+        # package.
+        pass
 
     # validate command.json
     command_json_path = os.path.join(path, 'command.json')
