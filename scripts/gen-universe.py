@@ -366,10 +366,8 @@ def generate_package(
         }
     if config:
         package['config'] = config
-    package['command'] = command
-
-    if package['packagingVersion'] == "4.0":
-        package.pop('command', None)
+    if command:
+        package['command'] = command
 
     return package
 
@@ -591,7 +589,6 @@ def v4_to_v3_package(v4_package):
     package = copy.deepcopy(v4_package)
     package.pop('upgradesFrom', None)
     package.pop('downgradesTo', None)
-    package['command'] = None
     package["packagingVersion"] = "3.0"
     return package
 
