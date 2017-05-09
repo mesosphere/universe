@@ -1,0 +1,73 @@
+{
+    "id": "{{service.name}}",
+    "cpus": {{service.cpus}},
+    "mem": {{service.mem}},
+    "instances": 1,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.clair}}",
+            "network": "HOST",
+            "forcePullImage": true
+        }
+    },
+    "env": {
+        {{#basic.update_interval}}
+        "UPDATE_INTERVAL_HOURS": "{{basic.update_interval}}",
+        {{/basic.update_interval}}
+        {{#basic.api_timeout}}
+        "API_TIMEOUT_SECONDS": "{{basic.api_timeout}}",
+        {{/basic.api_timeout}}
+        {{#basic.cache_size}}
+        "CACHE_SIZE": "{{basic.cache_size}}",
+        {{/basic.cache_size}}
+        {{#notifier.endpoint_url}}
+        "NOTIFIER_ENDPOINT": "{{notifier.endpoint_url}}",
+        {{/notifier.endpoint_url}}
+        {{#notifier.attempts}}
+        "NOTIFIER_ATTEMPTS": "{{notifier.attempts}}",
+        {{/notifier.attempts}}
+        {{#notifier.renotify_interval}}
+        "NOTIFIER_RENOTIFY_INTERVAL_HOURS": "{{notifier.renotify_interval}}",
+        {{/notifier.renotify_interval}}
+        "POSTGRES_USER": "{{postgres.user}}",
+        "POSTGRES_PASSWORD": "{{postgres.password}}",
+        "POSTGRES_DATABASE": "{{postgres.database}}",
+        "POSTGRES_HOST": "{{postgres.host}}",
+        "POSTGRES_PORT": "{{postgres.port}}",
+        "POSTGRES_TIMEOUT_SECONDS": "{{postgres.timeout_seconds}}"
+    },
+    {{#networking.enable_external}}
+    "labels": {
+        "HAPROXY_GROUP": "external",
+        "HAPROXY_0_VHOST": "{{networking.virtual_host}}",
+        "HAPROXY_0_PORT": "{{networking.port}}"
+    },
+    {{/networking.enable_external}}
+    "portDefinitions": [
+        {
+            "port": 0,
+            "protocol": "tcp",
+            "name": "http",
+            "labels": {
+                "VIP_0": "clair:6060"
+            }
+        },
+        {
+            "port": 0,
+            "protocol": "tcp",
+            "name": "health-check"
+        }
+    ],
+    "requirePorts": false,
+    "healthChecks": [
+        {
+            "protocol": "HTTP",
+            "portIndex": 1,
+            "path": "/health",
+            "gracePeriodSeconds": 5,
+            "intervalSeconds": 20,
+            "maxConsecutiveFailures": 3
+        }
+    ]
+}

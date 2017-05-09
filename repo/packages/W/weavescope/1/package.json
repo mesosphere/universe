@@ -13,5 +13,6 @@
       "url": "https://raw.github.com/weaveworks/scope/master/LICENSE"
     }
   ],
+  "preInstallNotes": "This DC/OS Service is currently in preview.",
   "postInstallNotes": "Have fun monitoring, visualising and managing you containers with Weave Scope!\n\nYou also need to install `weavescope-probe` package.\n\nYou can access Weave Scope at\n **`https://<dcos_url>/service/weavescope/`**\n\nMore documentation can be found on [Weaveworks website](http://weave.works/deploy-scope-on-dcos)."
 }

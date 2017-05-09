@@ -7,6 +7,6 @@
   "selected": true,
   "framework": true,
   "tags": ["message", "broker", "pubsub"],
-  "postInstallNotes": "DC/OS Kafka Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/usage/services/kafka/\n\tIssues: https://docs.mesosphere.com/support/",
-  "postUninstallNotes": "DC/OS Kafka Service has been uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/usage/services/kafka/#uninstall to remove any persistent state if required."
+  "postInstallNotes": "DC/OS Kafka Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/kafka/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS Kafka Service has been uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/service-docs/kafka/uninstall to remove any persistent state if required."
 }

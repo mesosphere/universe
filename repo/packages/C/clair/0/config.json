@@ -1,0 +1,150 @@
+{
+  "properties": {
+    "service": {
+      "description": "The clair service for DC/OS settings",
+      "properties": {
+        "name": {
+          "description": "The name of the service.",
+          "type": "string",
+          "default": "clair"
+        },
+        "cpus": {
+          "default": 0.5,
+          "description": "CPU (shares) to allocate to the clair service.",
+          "minimum": 0.25,
+          "maximum": 2.0,
+          "type": "number"
+        },
+        "mem": {
+          "default": 1024.0,
+          "description": "Memory (MB) to allocate to the clair service.",
+          "minimum": 1024.0,
+          "maximum": 4096.0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem"
+      ],
+      "type": "object"
+    },
+    "basic": {
+      "description": "The basic of the clair DC/OS service.",
+      "properties": {
+        "update_interval": {
+          "description": "The interval in hours in which the vulnerability database is updated.",
+          "type": "number",
+          "default": 2
+        },
+        "api_timeout": {
+          "description": "The API timeout in seconds.",
+          "type": "number",
+          "default": 900
+        },
+        "cache_size": {
+          "description": "The cache size (number of elements in the cache).",
+          "type": "number",
+          "default": 16384
+        }
+      },
+      "required": [
+        "update_interval",
+        "api_timeout",
+        "cache_size"
+      ],
+      "type": "object"
+    },
+    "networking": {
+      "description": "The networking settings for the clair DC/OS service.",
+      "properties": {
+        "enable_external": {
+          "description": "If the clair service should be exposed to the public via marathon-lb.",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_host": {
+          "description": "The virtual host name under which clair should be exposed via marathon-lb.",
+          "type": "string"
+        },
+        "port": {
+          "description": "The port under which clair should be exposed via marathon-lb.",
+          "type": "number",
+          "default": 6060
+        }
+      },
+      "required": [
+        "enable_external"
+      ],
+      "type": "object"
+    },
+    "postgres": {
+      "description": "The Postgres settings for the clair DC/OS service.",
+      "properties": {
+        "user": {
+          "description": "The user name to connect to the Postgres instance.",
+          "type": "string"
+        },
+        "password": {
+          "description": "The password to connect to the Postgres instance.",
+          "type": "string"
+        },
+        "database": {
+          "description": "The database name to use to connect to the Postgres instance.",
+          "type": "string",
+          "default": "clair"
+        },
+        "host": {
+          "description": "The host name/ip address of the Postgres instance.",
+          "type": "string",
+          "default": "postgresql.marathon.l4lb.thisdcos.directory"
+        },
+        "port": {
+          "description": "The host port of the Postgres instance.",
+          "type": "number",
+          "default": 5432
+        },
+        "timeout_seconds": {
+          "description": "The name of the service.",
+          "type": "number",
+          "default": 30
+        }
+      },
+      "required": [
+        "user",
+        "password",
+        "database",
+        "port"
+      ],
+      "type": "object"
+    },
+    "notifier": {
+      "description": "The notification settings for the clair DC/OS service.",
+      "properties": {
+        "endpoint_url": {
+          "description": "The endpoint url to send the notifications to.",
+          "type": "string"
+        },
+        "attempts": {
+          "description": "The number of attempts to connect to the endpoint url.",
+          "type": "number",
+          "default": 3
+        },
+        "renotify_interval": {
+          "description": "Duration in hours before a failed notification is retried.",
+          "type": "number",
+          "default": 3
+        }
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "service",
+    "networking",
+    "postgres",
+    "basic"
+  ],
+  "type": "object"
+}

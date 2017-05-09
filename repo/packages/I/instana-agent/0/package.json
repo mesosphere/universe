@@ -6,7 +6,7 @@
   "maintainer": "support@instana.com",
   "website": "https://www.instana.com",
   "description": "Instana is the next generation Application Performance Management solution that automatically monitors scheduled environments/dynamic modern applications.\nInstana comprehensively manages the quality of service of your microservice applications with zero to absolute minimal configuration effort.",
-  "preInstallNotes": "This package will deploy the Instana agent on your Mesos nodes.",
+  "preInstallNotes": "This DC/OS Service is currently in preview. This package will deploy the Instana agent on your Mesos nodes.",
   "postInstallNotes": "Instana agent installed.",
   "postUninstallNotes": "Instana agent uninstalled.",
   "selected": false,

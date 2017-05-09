@@ -46,6 +46,10 @@ def main():
         'environment variable. E.g. TMPDIR=\'.\' ./scripts/local-universe.py '
         '...')
     parser.add_argument(
+        '--server_url',
+        default=HTTP_ROOT,
+        help="URL for http server")
+    parser.add_argument(
         '--repository',
         required=True,
         help='Path to the top level package directory. E.g. repo/packages')
@@ -60,6 +64,17 @@ def main():
         action='store_true',
         default=False,
         help='Set this to include only selected packages')
+    parser.add_argument(
+        '--nonlocal_images',
+        action='store_true',
+        default=False,
+        help='Set this to leave images resource URLs untouched.')
+    parser.add_argument(
+        '--nonlocal_cli',
+        action='store_true',
+        default=False,
+        help='Set this to leave CLI resource URLs untouched.')
+
     args = parser.parse_args()
 
     package_names = [name for name in args.include.split(',') if name != '']
@@ -87,10 +102,18 @@ def main():
                     package,
                     path,
                     pathlib.Path(args.repository),
-                    repo_artifacts)
+                    repo_artifacts,
+                    args.server_url,
+                    args.nonlocal_images,
+                    args.nonlocal_cli
+                )
 
-                for url, archive_path in \
-                        enumerate_http_resources(package, path):
+                for url, archive_path in enumerate_http_resources(
+                    package,
+                    path,
+                    args.nonlocal_images,
+                    args.nonlocal_cli
+                ):
                     add_http_resource(http_artifacts, url, archive_path)
 
                 for name in enumerate_docker_images(path):
@@ -112,10 +135,15 @@ def main():
                     args.selected)):
                 print("Completed: {}".format(package))
 
-        build_repository(pathlib.Path(
-            os.path.dirname(os.path.realpath(__file__)), '..', 'scripts'),
+        build_repository(
+            pathlib.Path(
+                os.path.dirname(os.path.realpath(__file__)),
+                '..',
+                'scripts'
+            ),
             pathlib.Path(args.repository),
-            pathlib.Path(dir_path, 'universe'))
+            pathlib.Path(dir_path, 'universe')
+        )
 
         build_universe_docker(pathlib.Path(dir_path))
 
@@ -158,22 +186,24 @@ def enumerate_dcos_packages(packages_path, package_names, only_selected):
                 yield (package_path.name, largest_revision)
 
 
-def enumerate_http_resources(package, package_path):
+def enumerate_http_resources(package, package_path, skip_images, skip_cli):
     resource_path = package_path / 'resource.json'
     with resource_path.open(encoding='utf-8') as json_file:
         resource = json.load(json_file)
 
-    for name, url in resource.get('images', {}).items():
-        if name != 'screenshots':
-            yield url, pathlib.Path(package, 'images')
+    if not skip_images:
+        for name, url in resource.get('images', {}).items():
+            if name != 'screenshots':
+                yield url, pathlib.Path(package, 'images')
 
     for name, url in resource.get('assets', {}).get('uris', {}).items():
         yield url, pathlib.Path(package, 'uris')
 
-    for os_type, arch_dict in \
-            resource.get('cli', {}).get('binaries', {}).items():
-        for arch in arch_dict.items():
-            yield arch[1]['url'], pathlib.Path(package, 'uris', os_type)
+    if not skip_cli:
+        for os_type, arch_dict in \
+                resource.get('cli', {}).get('binaries', {}).items():
+            for arch in arch_dict.items():
+                yield arch[1]['url'], pathlib.Path(package, 'uris', os_type)
 
     command_path = (package_path / 'command.json')
     if command_path.exists():
@@ -261,7 +291,13 @@ def add_http_resource(dir_path, url, base_path):
     urllib.request.urlretrieve(url, str(archive_path))
 
 
-def prepare_repository(package, package_path, source_repo, dest_repo):
+def prepare_repository(
+    package, package_path,
+    source_repo, dest_repo,
+    http_root,
+    skip_images,
+    skip_cli
+):
     dest_path = dest_repo / package_path.relative_to(source_repo)
     shutil.copytree(str(package_path), str(dest_path))
 
@@ -272,10 +308,10 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
         resource = json.load(source_file)
 
         # Change the root for images (ignore screenshots)
-        if 'images' in resource:
+        if not skip_images and 'images' in resource:
             resource["images"] = {
                 n: urllib.parse.urljoin(
-                    HTTP_ROOT, str(pathlib.PurePath(
+                    http_root, str(pathlib.PurePath(
                         package, "images", pathlib.Path(uri).name)))
                 for n, uri in resource.get("images", {}).items() if 'icon' in n}
 
@@ -283,18 +319,18 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
         if 'assets' in resource:
             resource["assets"]["uris"] = {
                 n: urllib.parse.urljoin(
-                    HTTP_ROOT, str(pathlib.PurePath(
+                    http_root, str(pathlib.PurePath(
                         package, "uris", pathlib.Path(uri).name)))
                 for n, uri in resource["assets"].get("uris", {}).items()}
 
         # Change the root for cli uris.
-        if 'cli' in resource:
+        if not skip_cli and 'cli' in resource:
             for os_type, arch_dict in \
                     resource.get('cli', {}).get('binaries', {}).items():
                 for arch in arch_dict.items():
                     uri = arch[1]["url"]
                     arch[1]["url"] = urllib.parse.urljoin(
-                        HTTP_ROOT,
+                        http_root,
                         str(
                             pathlib.PurePath(
                                 package,
@@ -303,11 +339,12 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
                                 pathlib.Path(uri).name)))
 
         # Add the local docker repo prefix.
-        if 'container' in resource["assets"]:
-            resource["assets"]["container"]["docker"] = {
-                n: format_image_name(DOCKER_ROOT, image_name)
-                for n, image_name in resource["assets"]["container"].get(
-                    "docker", {}).items()}
+        if 'assets' in resource:
+            if 'container' in resource["assets"]:
+                resource["assets"]["container"]["docker"] = {
+                    n: format_image_name(DOCKER_ROOT, image_name)
+                    for n, image_name in resource["assets"]["container"].get(
+                        "docker", {}).items()}
 
         json.dump(resource, dest_file, indent=4)
 
@@ -322,7 +359,7 @@ def prepare_repository(package, package_path, source_repo, dest_repo):
 
         command['pip'] = [
             urllib.parse.urljoin(
-                HTTP_ROOT, str(pathlib.PurePath(
+                http_root, str(pathlib.PurePath(
                     package, "commands", pathlib.Path(uri).name)))
             for uri in command.get("pip", [])
         ]

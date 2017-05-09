@@ -1,0 +1,14 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "clair": "tobilg/clair-dcos:v1.2.6"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://files.serv.sh/packages/clair/icons/clair_48x48.png",
+    "icon-medium": "https://files.serv.sh/packages/clair/icons/clair_96x96.png",
+    "icon-large": "https://files.serv.sh/packages/clair/icons/clair_256x256.png"
+  }
+}

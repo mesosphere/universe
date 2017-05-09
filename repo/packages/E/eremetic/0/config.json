@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "description": "Eremetic DC/OS Service properties",
+  "properties": {
+    "eremetic": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "framework-name": {
+          "description": "The name of the Eremetic scheduler and service instance",
+          "type": "string",
+          "default": "eremetic"
+        },
+        "cpus": {
+          "description": "Number of cores allocated to Eremetic instance",
+          "type": "number",
+          "default": 0.2,
+          "minimum": 0.2
+        },
+        "mem": {
+          "description": "Amount of memory in MiBs allocated to Eremetic instance",
+          "type": "integer",
+          "default": 100,
+          "minimum": 100
+        },
+        "auth-uri": {
+          "description": "URI to file for private Docker registry authentication",
+          "type": "string"
+        },
+        "log-level": {
+          "description": "Logging level of framework",
+          "type": "string",
+          "enum": ["DEBUG", "INFO", "WARN", "ERROR", "CRITICAL"],
+          "default": "INFO"
+        },
+        "queue-size": {
+          "description": "Maximum queue size for tasks",
+          "type": "integer",
+          "default": 10000
+        }
+      },
+      "required": [
+        "framework-name",
+        "cpus",
+        "mem",
+        "log-level",
+        "queue-size"
+      ]
+    }
+  }
+}

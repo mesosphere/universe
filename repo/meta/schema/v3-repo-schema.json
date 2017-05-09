@@ -483,131 +483,7 @@
         "tags"
       ],
       "additionalProperties": false
-    },
-
-    "v40Package": {
-      "properties": {
-        "packagingVersion": {
-          "type": "string",
-          "enum": ["4.0"]
-        },
-        "name": {
-          "type": "string"
-        },
-        "version": {
-          "type": "string",
-          "pattern": "^[-a-zA-Z0-9.]+$"
-        },
-        "releaseVersion": {
-          "type": "integer",
-          "description": "Corresponds to the revision index from the universe directory structure",
-          "minimum": 0
-        },
-        "scm": {
-          "type": "string"
-        },
-        "maintainer": {
-          "type": "string"
-        },
-        "website": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "framework": {
-          "type": "boolean",
-          "default": false,
-          "description": "True if this package installs a new Mesos framework."
-        },
-        "upgradesFrom": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "List of versions that can upgrade to this package. If the property is a list containing the string '*', any version can upgrade to this package. If the property is not set or the empty list, no version can upgrade to this package."
-        },
-        "downgradesTo": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "List of versions that this package can downgrade to. If the property is a list containing the string '*', this package can downgrade to any version. If the property is not set or the empty list, this package cannot downgrade."
-        },
-        "preInstallNotes": {
-          "type": "string",
-          "description": "Pre installation notes that would be useful to the user of this package."
-        },
-        "postInstallNotes": {
-          "type": "string",
-          "description": "Post installation notes that would be useful to the user of this package."
-        },
-        "postUninstallNotes": {
-          "type": "string",
-          "description": "Post uninstallation notes that would be useful to the user of this package."
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^[^\\s]+$"
-          }
-        },
-        "selected": {
-          "type": "boolean",
-          "description": "Flag indicating if the package is selected in search results",
-          "default": false
-        },
-        "licenses": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "The name of the license. For example one of [Apache License Version 2.0 | MIT License | BSD License | Proprietary]"
-              },
-              "url": {
-                "$ref": "#/definitions/url",
-                "description": "The URL where the license can be accessed"
-              }
-            },
-            "additionalProperties": false,
-            "required": [
-              "name",
-              "url"
-            ]
-          }
-        },
-        "minDcosReleaseVersion": {
-          "$ref": "#/definitions/dcosReleaseVersion",
-          "description": "The minimum DC/OS Release Version the package can run on."
-        },
-        "marathon": {
-          "$ref": "#/definitions/marathon"
-        },
-        "resource": {
-          "$ref": "#/definitions/v30resource"
-        },
-        "config": {
-          "$ref": "#/definitions/config"
-        },
-        "command": {
-          "$ref": "#/definitions/command"
-        }
-      },
-      "required": [
-        "packagingVersion",
-        "name",
-        "version",
-        "releaseVersion",
-        "maintainer",
-        "description",
-        "tags"
-      ],
-      "additionalProperties": false
     }
-
 
   },
 
@@ -619,8 +495,7 @@
       "items": {
         "oneOf": [
           { "$ref": "#/definitions/v20Package" },
-          { "$ref": "#/definitions/v30Package" },
-          { "$ref": "#/definitions/v40Package" }
+          { "$ref": "#/definitions/v30Package" }
         ]
       }
     }
