@@ -27,12 +27,6 @@ def main():
         print("You must run this as root, please `sudo` first.")
         sys.exit(1)
 
-    # cosmos requires directories to be saved. python does it only sometimes.
-    # Use zip to make sure it works.
-    if not shutil.which("zip"):
-        print("You must first install `zip`.")
-        sys.exit(1)
-
     parser = argparse.ArgumentParser(
         description='This script is able to download the latest artifacts for '
         'all of the packages in the Universe repository into a docker image. '
