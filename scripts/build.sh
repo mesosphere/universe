@@ -10,7 +10,7 @@ mkdir -p ${REPO_BASE_DIR}/target/
 
 # Create a new virtual environment
 rm -rf ${REPO_BASE_DIR}/target/venv
-pyvenv ${REPO_BASE_DIR}/target/venv
+python3 -m venv ${REPO_BASE_DIR}/target/venv
 
 # Install dependencies
 ${REPO_BASE_DIR}/target/venv/bin/pip install -r ${SCRIPTS_DIR}/requirements/requirements.txt
