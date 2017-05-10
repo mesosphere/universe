@@ -5,21 +5,6 @@
   "cmd": "/sbin/init.sh",
 
   "env": {
-{{#high-availability.enabled}}
-    "FLINK_HA_ENABLED": "{{high-availability.enabled}}",
-    "FLINK_HIGH_AVAILABILITY_CLUSTER_ID": "{{high-availability.cluster-id}}",
-    "FLINK_HIGH_AVAILABILITY_STORAGE_DIR": "{{high-availability.storage-dir}}",
-    "FLINK_HIGH_AVAILABILITY_ZOOKEEPER_QUORUM": "{{high-availability.zookeeper-quorum}}",
-    "FLINK_HIGH_AVAILABILITY_JOBMANAGER_PORT": "{{high-availability.jobmanager-port}}",
-    "FLINK_HIGH_AVAILABILITY_JOB_DELAY": "{{high-availability.jobmanager-delay}}",
-    "FLINK_HIGH_AVAILABILITY_ZOOKEEPER_PATH_ROOT": "{{high-availability.zookeeper-path-root}}",
-    "FLINK_HIGH_AVAILABILITY_ZOOKEEPER_CLIENT_SESSION_TIMEOUT": "{{high-availability.zookeeper-client-session-timeout}}",
-    "FLINK_HIGH_AVAILABILITY_ZOOKEEPER_CLIENT_CONNECTION_TIMEOUT": "{{high-availability.zookeeper-client-connection-timeout}}",
-    "FLINK_HIGH_AVAILABILITY_ZOOKEEPER_CLIENT_RETRY_WAIT": "{{high-availability.zookeeper-client-retry-wait}}",
-    "FLINK_HIGH_AVAILABILITY_ZOOKEEPER_CLIENT_MAX_RETRY_ATTEMPTS": "{{high-availability.zookeeper-client-max-retry-attempts}}",
-    "FLINK_HIGH_AVAILABILITY_ZOOKEEPER_PATH_RUNNING_REGISTRY": "{{high-availability.zookeeper-path-running-registry}}",
-{{/high-availability.enabled}}
-
 {{#security.ssl.enabled}}
     "FLINK_SSL_ENABLED": "{{security.ssl.enabled}}",
     "FLINK_SSL_KEYSTOREBASE64": "{{security.ssl.keyStoreBase64}}",
