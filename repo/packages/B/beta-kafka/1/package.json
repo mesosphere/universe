@@ -1,0 +1,18 @@
+{
+  "description": "Apache Kafka framework running on DC/OS",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.8",
+  "name": "beta-kafka",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS Apache Kafka Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/current/usage/service-guides/kafka\n\tIssues: https://dcosjira.atlassian.net/projects/KAFKA/issues",
+  "postUninstallNotes": "DC/OS Apache Kafka Service has been uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/current/usage/service-guides/kafka/uninstall to remove any persistent state if required.",
+  "preInstallNotes": "This DC/OS Service is currently in beta.  You must perform an advanced install and check the opt-in option.  Contact Mesosphere before deploying this beta candidate data service framework.  There may be bugs, incomplete features, incorrect documentation, or other discrepancies. ",  
+  "selected": false,
+  "tags": [
+    "message",
+    "broker",
+    "pubsub"
+  ],
+  "version": "1.1.22-0.10.1.0-beta"
+}

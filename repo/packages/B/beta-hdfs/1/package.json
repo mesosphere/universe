@@ -7,7 +7,7 @@
   "packagingVersion": "3.0",
   "postInstallNotes": "DC/OS Apache HDFS Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/current/usage/service-guides/hdfs/\n\tIssues: https://jira.dcos.io/projects/DCOS_HDFS",
   "postUninstallNotes": "DC/OS Apache HDFS Service has been uninstalled.\nPlease follow the instructions at http://docs.mesosphere.com/current/usage/service-guides/hdfs/#uninstall to remove any persistent state if required.",
-  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, missing features, or missing documentation. Test HDFS thoroughly before putting it into production. \n HDFS requires a minimum of five nodes, each with at least 2 CPU shares and 8GB of RAM available to the HDFS service.",
+  "preInstallNotes": "This DC/OS Service is currently in beta.  You must perform an advanced install and check the opt-in option.  Contact Mesosphere before deploying this beta candidate data service framework.  There may be bugs, incomplete features, incorrect documentation, or other discrepancies. ",  
   "selected": false,
   "tags": [
     "hdfs",

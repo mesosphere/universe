@@ -366,7 +366,8 @@ def generate_package(
         }
     if config:
         package['config'] = config
-    package['command'] = command
+    if command:
+        package['command'] = command
 
     return package
 
@@ -588,6 +589,7 @@ def v4_to_v3_package(v4_package):
     package = copy.deepcopy(v4_package)
     package.pop('upgradesFrom', None)
     package.pop('downgradesTo', None)
+    package["packagingVersion"] = "3.0"
     return package
 
 
@@ -642,7 +644,7 @@ def _validate_repo(file_path, version):
     else:
         repo_version = 'v3'
 
-    validator = jsonschema.Draft4Validator(_load_jsonschema('v3'))
+    validator = jsonschema.Draft4Validator(_load_jsonschema(repo_version))
 
     with file_path.open(encoding='utf-8') as repo_file:
         repo = json.loads(repo_file.read())

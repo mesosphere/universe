@@ -339,12 +339,6 @@ Full Instructions:
   git clone https://github.com/<user>/universe.git /path/to/universe
   ```
 
-2. Ensure that the `jsonschema` command line tool is installed:
-
-  ```bash
-  sudo pip install jsonschema
-  ```
-
 3. Run the verification and build script:
 
   ```bash
