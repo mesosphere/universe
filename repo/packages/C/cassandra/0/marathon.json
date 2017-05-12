@@ -36,6 +36,7 @@
   },
   "env": {
     "MESOS_ZK": "{{mesos.master}}"
+    ,"LD_LIBRARY_PATH": "{{cassandra.ld-library-path}}"
     ,"JAVA_OPTS": "-Xms256m -Xmx256m"
     ,"CASSANDRA_CLUSTER_NAME": "{{cassandra.cluster-name}}"
     ,"CASSANDRA_NODE_COUNT": "{{cassandra.node-count}}"
