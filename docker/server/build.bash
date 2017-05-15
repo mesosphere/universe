@@ -74,7 +74,8 @@ function gzipJsonFiles {(
 
 
 function build {(
-
+  echo `whoami`
+  echo "test"
   gzipJsonFiles
 
   cd ${DOCKER_SERVER_DIR}
