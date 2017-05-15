@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "3.0",
+  "name": "confluent-rest-proxy",
+  "version": "1.0.0-3.2.1",
+  "scm": "https://github.com/confluentinc/kafka-rest",
+  "description": "Confluent REST Proxy service\n\n\tDocumentation: http://docs.confluent.io/3.2.1/kafka-rest/docs/api.html",
+  "maintainer": "partner-support@confluent.io",
+  "tags": ["kafka", "confluent", "proxy", "rest"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. Preparing to install confluent-rest-proxy",
+  "postInstallNotes": "confluent-rest-proxy has been installed.",
+  "postUninstallNotes": "confluent-rest-proxy was uninstalled successfully.",
+  "minDcosReleaseVersion" : "1.8",
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://raw.githubusercontent.com/confluentinc/kafka-rest/master/LICENSE"
+    }
+  ]
+}

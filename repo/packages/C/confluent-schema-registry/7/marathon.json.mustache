@@ -1,0 +1,56 @@
+{
+  "id": "/{{registry.name}}",
+  "instances": {{registry.instances}},
+  "cpus": {{registry.cpus}},
+  "mem": {{registry.mem}},
+  "maintainer": "partner-support@confluent.io", 
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}",
+      "forcePullImage": true,
+      "network": "BRIDGE",    
+      "portMappings": [ {
+          "containerPort": 8081,
+          "hostPort": 0,
+          "protocol": "tcp",
+          "labels": {
+            "VIP_0": "{{registry.name}}:8081"
+          }
+      } ]
+    }
+  },
+  "portDefinitions": [ {
+    "name": "{{registry.name}}",
+    "port": 8081,
+    "protocol": "tcp",
+    "labels": {
+      "VIP_0": "{{registry.name}}:8081"
+    }
+  } ],
+  "env": {
+    "SCHEMA_REGISTRY_HEAP_OPTS": "-Xmx{{registry.heap}}M",
+    "SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL": "{{registry.zookeeper-master}}/{{registry.kafkastore}}",
+    "SCHEMA_REGISTRY_SCHEMA_REGISTRY_ZK_NAMESPACE": "{{registry.kafkastore}}/{{registry.name}}"
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/",
+      "gracePeriodSeconds": 60,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "acceptedResourceRoles": [
+    "{{registry.role}}"
+  ],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{registry.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "3.0",
+  "name": "confluent-schema-registry",
+  "version": "1.0.0-3.2.1",
+  "scm": "https://github.com/confluentinc/schema-registry",
+  "description": "Confluent Schema Registry service\n\n\tDocumentation: http://docs.confluent.io/3.2.1/schema-registry/docs/intro.html",
+  "maintainer": "partner-support@confluent.io",
+  "tags": ["kafka", "confluent", "schema", "registry"],
+  "preInstallNotes": "Preparing to install confluent-schema-registry",
+  "postInstallNotes": "confluent-schema-registry has been installed.",
+  "postUninstallNotes": "confluent-schema-registry was uninstalled successfully.",
+  "minDcosReleaseVersion" : "1.8",
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://raw.githubusercontent.com/confluentinc/schema-registry/master/LICENSE"
+    }
+  ]
+}
