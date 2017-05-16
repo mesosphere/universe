@@ -9,7 +9,15 @@
     "docker": {
       "image": "{{resource.assets.container.docker.marathon-lb-docker}}",
       "network": "HOST",
-      "privileged": true
+      "privileged": true,
+      "parameters": [
+      {{#parameters}}
+        {
+          "key": "{{key}}",
+          "value": "{{value}}"
+        }{{^last}},{{/last}}
+      {{/parameters}}
+      ],
     }
   },
   {{#marathon-lb.role}}
