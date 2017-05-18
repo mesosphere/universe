@@ -15,6 +15,7 @@ SCHEMA_DIR = os.path.join(UNIVERSE_DIR, "repo/meta/schema")
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
+
 def _get_json_schema(file_name):
     with open(os.path.join(SCHEMA_DIR, file_name), encoding='utf-8') as f:
         return json.loads(f.read())
@@ -63,17 +64,34 @@ def _validate_revision(given_package, revision, path):
     downgrades_to = package_json.get("downgradesTo", None)
     if (packaging_version == "4.0" and
             (upgrades_from or downgrades_to) and
-                LooseVersion(min_dcos_release_version) < LooseVersion("1.10")):
-        sys.exit("\tERROR\n\nIf upgradesFrom or downgradesTo fields are set to a "
-                 "non-empty list, then minDcosReleaseVersion must be greater "
-                 "than or equal to 1.10")
+            LooseVersion(min_dcos_release_version) < LooseVersion("1.10")):
+        # Note: We are going to allow this package state and as a result the
+        # conversion from v4 to v3. Even though this conversion loses
+        # information, the only consumers of the Universe repo API is "Cosmos
+        # the service manager". Old (< 1.10) Cosmos client don't implement the
+        # update API and new Cosmos (>= 1.10), which implement the update API
+        # will use the new repo media type.
+        #
+        # It is important that "package managers" (e.g. Local Universe) cannot
+        # see this converted package and instead always see the original v4
+        # package.
+        pass
 
     # validate command.json
     command_json_path = os.path.join(path, 'command.json')
     command_json = None
     if os.path.isfile(command_json_path):
         eprint("\t\tcommand.json:", end='')
-        command_json = _validate_json(command_json_path, COMMAND_JSON_SCHEMA)
+        if packaging_version == "4.0":
+            sys.exit(
+                "\tERROR\n\n"
+                "Command file is not support for version 4.0 packages"
+            )
+        else:
+            command_json = _validate_json(
+                command_json_path,
+                COMMAND_JSON_SCHEMA
+            )
         eprint("\tOK")
 
     # validate config.json
@@ -110,10 +128,11 @@ def _validate_revision(given_package, revision, path):
     oldPackage = LooseVersion(
         package_json.get('minDcosReleaseVersion', "1.0")) < LooseVersion("1.8")
     if (oldPackage and resource_json and 'cli' in resource_json and
-        command_json is None):
+            command_json is None):
         sys.exit('\tERROR\n\nA package with CLI specified in resource.json is '
                  'only supported when minDcosReleaseVersion is greater than '
                  '1.8.')
+
 
 def _validate_json(path, schema):
         with open(path, encoding='utf-8') as f:
