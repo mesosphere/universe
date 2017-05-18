@@ -7,6 +7,7 @@ import collections
 import copy
 import itertools
 import json
+import jsonschema
 import pathlib
 import shutil
 import sys
@@ -87,7 +88,8 @@ def render_universe_by_version(outdir, packages, version):
     if LooseVersion(version) < LooseVersion("1.8"):
         render_zip_universe_by_version(outdir, packages, version)
     else:
-        render_json_by_version(outdir, packages, version)
+        file_path = render_json_by_version(outdir, packages, version)
+        _validate_repo(file_path, version)
         render_content_type_file_by_version(outdir, version)
 
 
@@ -147,10 +149,13 @@ def render_json_by_version(outdir, packages, version):
     :type package: dict
     :param version: DC/OS version
     :type version: str
-    :rtype: None
+    :return: the path where the universe was stored
+    :rtype: str
     """
 
-    packages = [package for package in packages if filter_by_version(package, version)]
+    packages = [
+        package for package in packages if filter_by_version(package, version)
+    ]
 
     if LooseVersion(version) < LooseVersion('1.10'):
         packages = [downgrade_package_to_v3(package) for package in packages]
@@ -158,6 +163,8 @@ def render_json_by_version(outdir, packages, version):
     json_file_path = outdir / 'repo-up-to-{}.json'.format(version)
     with json_file_path.open('w', encoding='utf-8') as universe_file:
         json.dump({'packages': packages}, universe_file)
+
+    return json_file_path
 
 
 def render_zip_universe_by_version(outdir, packages, version):
@@ -319,7 +326,8 @@ def generate_package_from_path(root, package_name, release_version):
         resource=read_resource(path),
         marathon_template=read_marathon_template(path),
         config=read_config(path),
-        command=read_command(path))
+        command=read_command(path)
+    )
 
 
 def generate_package(
@@ -358,7 +366,8 @@ def generate_package(
         }
     if config:
         package['config'] = config
-    package['command'] = command
+    if command:
+        package['command'] = command
 
     return package
 
@@ -580,6 +589,7 @@ def v4_to_v3_package(v4_package):
     package = copy.deepcopy(v4_package)
     package.pop('upgradesFrom', None)
     package.pop('downgradesTo', None)
+    package["packagingVersion"] = "3.0"
     return package
 
 
@@ -617,6 +627,53 @@ def downgrade_package_to_v3(package):
         return copy.deepcopy(package)
     else:
         return v4_to_v3_package(package)
+
+
+def _validate_repo(file_path, version):
+    """Validates a repo JSON file against the given version.
+
+    :param file_path: the path where the universe was stored
+    :type file_path: str
+    :param version: DC/OS version
+    :type version: str
+    :rtype: None
+    """
+
+    if LooseVersion(version) >= LooseVersion('1.10'):
+        repo_version = 'v4'
+    else:
+        repo_version = 'v3'
+
+    validator = jsonschema.Draft4Validator(_load_jsonschema(repo_version))
+
+    with file_path.open(encoding='utf-8') as repo_file:
+        repo = json.loads(repo_file.read())
+
+    errors = list(validator.iter_errors(repo))
+    if len(errors) != 0:
+        sys.exit(
+            'ERROR\n\nRepo {} version {} validation error: {}'.format(
+                file_path,
+                repo_version,
+                errors
+            )
+        )
+
+
+def _load_jsonschema(repo_version):
+    """Opens and parses the repo schema based on the version provided.
+
+    :param version: repo schema version. E.g. v3 vs v4
+    :type version: str
+    :return: the schema dictionary
+    :rtype: dict
+    """
+
+    with open(
+        'repo/meta/schema/{}-repo-schema.json'.format(repo_version),
+        encoding='utf-8'
+    ) as schema_file:
+        return json.loads(schema_file.read())
 
 
 if __name__ == '__main__':
