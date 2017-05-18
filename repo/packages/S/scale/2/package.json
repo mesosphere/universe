@@ -14,7 +14,7 @@
     "geospatial"
   ],
   "framework": true,
-  "version": "4.4.1-0.1.0",
+  "version": "4.4.2-0.1.0",
   "preInstallNotes": "This DC/OS Service is currently in preview. We recommend a minimum of three nodes with at least 4 CPU and 6GB of RAM available for the Scale services and running Scale jobs. By default, Elasticsearch package *must* be running within your DCOS cluster. If you wish to use an externally hosted Elasticsearch cluster, specify one or more of the nodes in comma delimited format in the SCALE_ELASTICSEARCH_URLS variable. For quick-start purposes, Scale is bootstrapped with a Postgres database. This should *NEVER* be used for production purposes as it offers no underlying storage persistence. It can be replaced with an externally hosted Postgres by setting DB_HOST and associated settings appropriately. If you are running DCOS 1.8 Enterprise Edition or higher, you will need to set the DCOS_OAUTH_TOKEN in the DCOS section of the Advanced Settings. This value can be found within the dcos.toml file under in the dcos_acs_token value on a system with an authenticated DCOS CLI.\n\nTutorial documentation for Scale can be found here: https://github.com/dcos/examples/tree/master/scale",
   "postInstallNotes": "The Scale DCOS Service has been successfully installed!\n\nNew User Tutorial: https://github.com/dcos/examples/tree/master/scale",
   "postUninstallNotes": "The Scale Scheduler has been uninstalled and will no longer run. You may need to remove supporting services - scale-logstash, scale-webserver and scale-db.",
@@ -24,6 +24,6 @@
       "name": "Apache License Version 2.0"
     }
   ],
-  "description": "Scale enables on-demand, near real-time, automated processing of large datasets (satellite, medical, audio, video, ...) using a dynamic bank of algorithms. Algorithm execution is seamlessly distributed across thousands of CPU cores. Docker provides algorithm containerization. Apache Mesos enables optimum resource utilization.\n\nRelease Notes: https://github.com/ngageoint/scale/releases/tag/4.4.1\n\nDocumentation: https://ngageoint.github.io/scale/\n\nIssues: https://github.com/ngageoint/scale/issues/\n\nNew User Tutorial: https://github.com/dcos/examples/tree/master/scale",
+  "description": "Scale enables on-demand, near real-time, automated processing of large datasets (satellite, medical, audio, video, ...) using a dynamic bank of algorithms. Algorithm execution is seamlessly distributed across thousands of CPU cores. Docker provides algorithm containerization. Apache Mesos enables optimum resource utilization.\n\nRelease Notes: https://github.com/ngageoint/scale/releases/tag/4.4.2\n\nDocumentation: https://ngageoint.github.io/scale/\n\nIssues: https://github.com/ngageoint/scale/issues/\n\nNew User Tutorial: https://github.com/dcos/examples/tree/master/scale",
   "selected": false
 }

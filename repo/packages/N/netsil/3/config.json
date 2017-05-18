@@ -1,0 +1,80 @@
+{
+  "type": "object",
+  "properties": {
+    "netsil": {
+      "description": "Netsil configuration properties",
+      "properties": {
+        "name": {
+          "default": "netsil",
+          "description": "Name for netsil",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 4.0,
+          "description": "CPU to allocate to each instance of netsil.",
+          "minimum": 4.0,
+          "type": "number"
+        },
+        "mem": {
+          "default": 16384,
+          "description": "Memory (MB) to allocate to each instance of netsil.",
+          "minimum": 12288,
+          "type": "integer"
+        },
+        "disk": {
+          "default": 25600,
+          "description": "Disk space (MB) to allocate to each instance of netsil.",
+          "minimum": 25600,
+          "type": "integer"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of instances of netsil to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "build_branch": {
+          "default": "stable",
+          "description": "Build branch to use.",
+          "type": "string"
+        },
+        "role": {
+          "default": "*",
+          "description": "Deploy netsil only on nodes with this role.",
+          "type": "string"
+        },
+        "https_port": {
+          "default": 0,
+          "description": "The HTTPS port used to access Netsil.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "infra_stats_port": {
+          "default": 2001,
+          "description": "The port for infrastructure stats collection.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "traffic_stats_port": {
+          "default": 2003,
+          "description": "The port for traffic collection.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "sp_load_balancer_port": {
+          "default": 5005,
+          "description": "The port for sp load balancer.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "version_number": {
+          "default": "1.3.1",
+          "description": "The version of netsil to use.",
+          "type": "string"
+        }
+      },
+      "required": ["name", "cpus", "mem", "instances", "https_port", "infra_stats_port", "traffic_stats_port"],
+      "type": "object"
+    }
+  }
+}

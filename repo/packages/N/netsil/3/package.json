@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "netsil",
+  "version": "1.3.1",
+  "description": "Netsil is the monitoring and analytics product for API and microservices-driven applications.\n\nAn auto-discovered topology map of your services lets you find and fix failures faster.\n\nListen to your APIs, see your apps.",
+  "maintainer": "support@netsil.com",
+  "tags": ["netsil", "monitoring", "microservices"],
+  "preInstallNotes": "This DC/OS Service is currently in preview.\n\n.We recommend using 4 CPUs and 16 GB of memory for Netsil.\n\nYou will also need to install the `netsil-collectors` package, which feeds network and infrastructure data to Netsil for monitoring.\n\nAfter installation, go to `https://<dcos_url>/service/netsil` to access Netsil.\n\nYour dcos_url is the URL you initially used to access your DCOS cluster.\n\nYou can find more documentation and usage information at https://github.com/dcos/examples/blob/master/netsil/README.md",
+  "postInstallNotes": "Netsil is installing!\n\nIn a few moments, go to `https://<dcos_url>/service/netsil` to access Netsil.\n\nYour dcos_url is the URL you initially used to access your DCOS cluster\n\nAlso remember to install the `netsil-collectors` package.",
+  "postUninstallNotes": "Netsil is uninstalled successfully.",
+  "licenses": [
+    {
+      "name": "Netsil License",
+      "url": "https://raw.githubusercontent.com/netsil/docs/master/licenses/license.txt"
+    },
+    {
+      "name": "Netsil Third Party Licenses",
+      "url": "https://raw.githubusercontent.com/netsil/docs/master/licenses/THIRD_PARTY_LICENSES.txt"
+    }
+  ]
+}
