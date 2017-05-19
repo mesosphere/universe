@@ -1,0 +1,74 @@
+{
+	"$schema": "http://json-schema.org/schema#",
+	"properties": {
+		"service": {
+			"type": "object",
+			"description": "DC/OS service configuration properties",
+			"properties": {
+				"name": {
+					"description": "Name of this service instance",
+					"type": "string",
+					"default": "spark-thrift"
+				},
+				"instances": {
+					"description": "Number of service instances to run in the cluster. A single instance will be run per node in the cluster. Normally, this number should be equal or higher than the number of nodes in the cluster.",
+					"type": "number",
+					"default": 1,
+					"minimum": 1
+				},
+				"cpus": {
+					"description": "CPU shares to allocate to each service instance.",
+					"type": "number",
+					"default": 0.5,
+					"minimum": 0.5
+				},
+				"mem": {
+					"description":  "Memory to allocate to each service instance.",
+					"type": "number",
+					"default": 512.0,
+					"minimum": 512.0
+				},
+    			"port": {
+					"description":  "TCP port for the Spark-thrift service",
+					"type": "number",
+					"default": 9000
+				},
+				"spark-executor-memory": {
+					"description":  "Memory to allocate to the Spark executor.",
+					"type": "string",
+					"default": "1024m"
+				},
+				"spark-driver-memory": {
+					"description":  "Memory to allocate to the Spark driver.",
+					"type": "string",
+					"default": "512m"
+				},
+				"spark-cores-max": {
+					"description":  "Maximum number of cores to allocate to Spark.",
+					"type": "string",
+					"default": "24"
+				},
+				"spark-executor-cores": {
+					"description":  "Maximum number of cores to allocate to the Spark executor.",
+					"type": "string",
+					"default": "1"
+				},
+				"spark-mesos-extra-cores": {
+					"description":  "Extra cores for Spark on Mesos.",
+					"type": "string",
+					"default": "1"
+				},
+				"spark-max-executors": {
+					"description":  "Maximum number of executors for Spark.",
+					"type": "string",
+					"default": "10"
+				},
+				"spark-max-executors": {
+					"description":  "Maximum number of executors for Spark.",
+					"type": "string",
+					"default": "10"
+				}
+			}      
+		}
+	}
+}
