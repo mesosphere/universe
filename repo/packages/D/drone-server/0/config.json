@@ -1,0 +1,276 @@
+{
+    "properties": {
+        "drone": {
+            "description": "Drone specific configuration properties.  Please see http://readme.drone.io/admin/installation-reference/ for further information regarding these settings.",
+            "properties": {
+                "database": {
+                    "type": "object",
+                    "properties": {
+                        "driver": {
+                            "description": "Drone CI Database driver `DRONE_DATABASE_DRIVER`",
+                            "type": "string",
+                            "default": "sqlite3"
+                        },
+                        "datasource": {
+                            "description": "Drone Database Source `DRONE_DATABASE_DATASOURCE`",
+                            "type": "string",
+                            "default": "drone.sqlite"
+                        }
+                    },
+                    "required": ["driver", "datasource"]
+                },
+                "secret": {
+                    "description": "Shared Secret. `DRONE_SECRET`",
+                    "type": "string"
+                },
+                "debug": {
+                    "description": "Set to `true` to see verbose debugging log output. `DRONE_DEBUG`",
+                    "type": "boolean",
+                    "default": false
+                },
+                "admin": {
+                    "description": "Comma-separated list of admin users. `DRONE_ADMIN`",
+                    "type": "string"
+                },
+                "orgs": {
+                    "description": "Comma-separated list of authorized organizations. `DRONE_ORGS`",
+                    "type": "string"
+                },
+                "open": {
+                    "description": "Set to `true` if registration is open. `DRONE_OPEN`",
+                    "type": "boolean",
+                    "default": false
+                },
+                "yaml": {
+                    "description": "Build configuration file name. `DRONE_YAML`",
+                    "type": "string",
+                    "default": ".drone.yml"
+                },
+                "cache_tty": {
+                    "description": "Duration for caching remote repository data. `DRONE_CACHE_TTY`",
+                    "type": "string",
+                    "default": "15m"
+                },
+                "github": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "description": "Set to true to enable the GitHub driver. `DRONE_GITHUB`",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "private_mode": {
+                            "description": "Set to true if GitHub is running in private mode. `DRONE_GITHUB_PRIVATE_MODE`",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "skip_verify": {
+                            "description": "Set to true to disable SSL verification. `DRONE_GITHUB_SKIP_VERIFY`",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "merge_ref": {
+                            "description": "Set to true to use the `refs/pulls/%d/merge` vs `refs/pulls/%d/head`. `DRONE_GITHUB_MERGE_REF`",
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "url": {
+                            "description": "GitHub server address. `DRONE_GITHUB_URL`",
+                            "type": "string",
+                            "default": "https://github.com"
+                        },
+                        "context": {
+                            "description": "Customize the GitHub status message context. `DRONE_GITHUB_CONTEXT`",
+                            "type": "string",
+                            "default": "continuous-integration/drone"
+                        },
+                        "client_id": {
+                            "description": "GitHub oauth2 client id. `DRONE_GITHUB_CLIENT`",
+                            "type": "string"
+                        },
+                        "client_secret": {
+                            "description": "GitHub oauth2 client secret. `DRONE_GITHUB_SECRET`",
+                            "type": "string"
+                        },
+                        "git_username": {
+                            "description": "Optional. Use a single machine account username to clone all repositories. `DRONE_GITHUB_GIT_USERNAME`",
+                            "type": "string"
+                        },
+                        "git_password": {
+                            "description": "Optional. Use a single machine account password to clone all repositories. `DRONE_GITHUB_GIT_PASSWORD`",
+                            "type": "string"
+                        },
+                        "scope": {
+                            "description": "Comma-separated GitHub oauth scope",
+                            "type": "string",
+                            "default": "repo,repo:status,user:email,read:org"
+                        }
+                    }
+                },
+                "gitlab": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "description": "Set to true to enable the GitLab driver. `DRONE_GITLAB`",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "url": {
+                            "description": "GitLab server address. `DRONE_GITLAB_URL`",
+                            "type": "string",
+                            "default": "https://gitlab.com"
+                        },
+                        "client_id": {
+                            "description": "GitLab oauth2 client id. `DRONE_GITLAB_CLIENT`",
+                            "type": "string"
+                        },
+                        "client_secret": {
+                            "description": "GitLab oauth2 client secret. `DRONE_GITLAB_SECRET`",
+                            "type": "string"
+                        },
+                        "git_username": {
+                            "description": "Optional. Use a single machine account username to clone all repositories. `DRONE_GITLAB_GIT_USERNAME`",
+                            "type": "string"
+                        },
+                        "git_password": {
+                            "description": "Optional. Use a single machine account password to clone all repositories. `DRONE_GITLAB_GIT_PASSWORD`",
+                            "type": "string"
+                        },
+                        "skip_verify": {
+                            "description": "Set to true to disable SSL verification. `DRONE_GITLAB_SKIP_VERIFY`",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "private_mode": {
+                            "description": "Set to true if GitLab is running in private mode. `DRONE_GITLAB_PRIVATE_MODE`",
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                },
+                "gogs": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "description": "Set to true to enable the Gogs driver. `DRONE_GOGS`",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "url": {
+                            "description": "Gogs server address. `DRONE_GOGS_URL`",
+                            "type": "string"
+                        },
+                        "git_username": {
+                            "description": "Optional. Use a single machine account username to clone all repositories. `DRONE_GOGS_GIT_USERNAME`",
+                            "type": "string"
+                        },
+                        "git_password": {
+                            "description": "Optional. Use a single machine account password to clone all repositories. `DRONE_GOGS_GIT_PASSWORD`",
+                            "type": "string"
+                        },
+                        "private_mode": {
+                            "description": "Set to true if Gogs is running in private mode. `DRONE_GOGS_PRIVATE_MODE`",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "skip_verify": {
+                            "description": "Set to true to disable SSL verification. `DRONE_GOGS_SKIP_VERIFY`",
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                },
+                "bitbucket": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "description": "Set to true to enable the Bitbucket driver. `DRONE_BITBUCKET`",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "client_id": {
+                            "description": "Bitbucket oauth2 client id. `DRONE_BITBUCKET_CLIENT`",
+                            "type": "string"
+                        },
+                        "client_secret": {
+                            "description": "Bitbucket oauth2 client secret. `DRONE_BITBUCKET_SECRET`",
+                            "type": "string"
+                        }
+                    }
+                },
+                "stash": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "description": "Set to true to enable the Bitbucket Server (Stash) driver. `DRONE_STASH`",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "url": {
+                            "description": "Bitbucket Server address. `DRONE_STASH_URL`",
+                            "type": "string"
+                        },
+                        "consumer_key": {
+                            "description": "Bitbucket Server oauth1 consumer key. `DRONE_STASH_CONSUMER_KEY`",
+                            "type": "string"
+                        },
+                        "consumer_rsa": {
+                            "description": "Bitbucket Server oauth1 private key file. `DRONE_STASH_CONSUMER_RSA`",
+                            "type": "string"
+                        },
+                        "git_username": {
+                            "description": "Machine account username used to clone repositories. `DRONE_STASH_GIT_USERNAME`",
+                            "type": "string"
+                        },
+                        "git_password": {
+                            "description": "Machine account password used to clone repositories. `DRONE_STASH_GIT_PASSWORD`",
+                            "type": "string"
+                        }
+                    }
+                },
+                "server": {
+                    "type": "object",
+                    "properties": {
+                        "app_id": {
+                            "description": "Marathon Application ID for Drone server",
+                            "default": "/drone/server",
+                            "type": "string"
+                        },
+                        "vhost": {
+                            "description": "Drone Server VHOST (e.g. drone.example.com - This MUST resolve to the external LB).",
+                            "type": "string"
+                        },
+                        "ssl": {
+                            "description": "SSL Encryption enabled for this vhost",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "cpus": {
+                            "default": 0.2,
+                            "description": "CPU shares to allocate to each server instance.",
+                            "minimum": 0.0,
+                            "type": "number"
+                        },
+                        "instances": {
+                            "default": 1,
+                            "description": "Number of server instances to run.",
+                            "minimum": 1,
+                            "type": "integer"
+                        },
+                        "mem": {
+                            "default": 128.0,
+                            "description": "Memory (MB) to allocate to each server instance.",
+                            "minimum": 128.0,
+                            "type": "number"
+                        }
+                    },
+                    "required": ["app_id", "vhost", "ssl", "cpus", "instances", "mem"]
+                }
+            },
+            "required": ["database", "secret", "server"],
+            "type": "object"
+        }
+    },
+    "required": ["drone"],
+    "type": "object"
+}

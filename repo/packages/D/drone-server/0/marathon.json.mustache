@@ -1,0 +1,124 @@
+{
+  "acceptedResourceRoles": null,
+  "args": null,
+  "backoffFactor": 1.15,
+  "backoffSeconds": 1,
+  "cmd": null,
+  "constraints": [],
+  "container": {
+    "docker": {
+      "forcePullImage": false,
+      "image": "drone/drone:0.5",
+      "network": "BRIDGE",
+      "parameters": [],
+      "portMappings": [
+        {
+          "containerPort": 8000,
+          "hostPort": 0,
+          "labels": {},
+          "protocol": "tcp",
+          "servicePort": 0
+        }
+      ],
+      "privileged": false
+    },
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/var/run/docker.sock",
+        "hostPath": "/var/run/docker.sock",
+        "mode": "RW"
+      }
+    ]
+  },
+  "cpus": {{drone.server.cpus}},
+  "dependencies": [],
+  "disk": 0,
+  "env": {
+    "DRONE_ADMIN": "{{drone.admin}}",
+    "DRONE_BITBUCKET": "{{drone.bitbucket.enabled}}",
+    "DRONE_BITBUCKET_CLIENT": "{{drone.bitbucket.client_id}}",
+    "DRONE_BITBUCKET_SECRET": "{{drone.bitbucket.client_secret}}",
+    "DRONE_CACHE_TTY": "{{drone.cache_tty}}",
+    "DRONE_DATABASE_DATASOURCE": "{{drone.database.datasource}}",
+    "DRONE_DATABASE_DRIVER": "{{drone.database.driver}}",
+    "DRONE_DEBUG": "{{drone.debug}}",
+    "DRONE_GITHUB": "{{drone.github.enabled}}",
+    "DRONE_GITHUB_CLIENT": "{{drone.github.client_id}}",
+    "DRONE_GITHUB_CONTEXT": "{{drone.github.context}}",
+    "DRONE_GITHUB_GIT_PASSWORD": "{{drone.github.git_password}}",
+    "DRONE_GITHUB_GIT_USERNAME": "{{drone.github.git_username}}",
+    "DRONE_GITHUB_PRIVATE_MODE": "{{drone.github.private_mode}}",
+    "DRONE_GITHUB_MERGE_REF": "{{drone.github.merge_ref}}",
+    "DRONE_GITHUB_SCOPE": "{{drone.github.scope}}",
+    "DRONE_GITHUB_SECRET": "{{drone.github.client_secret}}",
+    "DRONE_GITHUB_SKIP_VERIFY": "{{drone.github.skip_verify}}",
+    "DRONE_GITLAB": "{{drone.gitlab.enabled}}",
+    "DRONE_GITLAB_CLIENT": "{{drone.gitlab.client_id}}",
+    "DRONE_GITLAB_GIT_PASSWORD": "{{drone.gitlab.git_password}}",
+    "DRONE_GITLAB_GIT_USERNAME": "{{drone.gitlab.git_username}}",
+    "DRONE_GITLAB_PRIVATE_MODE": "{{drone.gitlab.private_mode}}",
+    "DRONE_GITLAB_SECRET": "{{drone.gitlab.client_secret}}",
+    "DRONE_GITLAB_SKIP_VERIFY": "{{drone.gitlab.skip_verify}}",
+    "DRONE_GOGS": "{{drone.gogs.enabled}}",
+    "DRONE_GOGS_URL": "{{drone.gogs.url}}",
+    "DRONE_GOGS_GIT_USERNAME": "{{drone.gogs.git_username}}",
+    "DRONE_GOGS_GIT_PASSWORD": "{{drone.gogs.git_password}}",
+    "DRONE_GOGS_PRIVATE_MODE": "{{drone.gogs.private_mode}}",
+    "DRONE_GOGS_SKIP_VERIFY": "{{drone.gogs.skip_verify}}",
+    "DRONE_OPEN": "{{drone.open}}",
+    "DRONE_ORGS": "{{drone.orgs}}",
+    "DRONE_SECRET": "{{drone.secret}}",
+    "DRONE_STASH": "{{drone.stash.enabled}}",
+    "DRONE_STASH_URL": "{{drone.stash.url}}",
+    "DRONE_STASH_CONSUMER_KEY": "{{drone.stash.consumer_key}}",
+    "DRONE_STASH_CONSUMER_RSA": "{{drone.stash.consumer_rsa}}",
+    "DRONE_STASH_GIT_USERNAME": "{{drone.stash.git_username}}",
+    "DRONE_STASH_GIT_PASSWORD": "{{drone.stash.git_password}}",
+    "DRONE_YAML": "{{drone.yaml}}"
+  },
+  "executor": "",
+  "fetch": [],
+  "gpus": 0,
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 60,
+      "ignoreHttp1xx": false,
+      "intervalSeconds": 10,
+      "maxConsecutiveFailures": 3,
+      "path": "/",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "timeoutSeconds": 20
+    }
+  ],
+  "id": "{{drone.server.app_id}}",
+  "instances": {{drone.server.instances}},
+  "ipAddress": null,
+  "labels": {
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "{{drone.server.ssl}}",
+    "HAPROXY_0_VHOST": "{{drone.server.vhost}}",
+    "HAPROXY_GROUP": "external,internal"
+  },
+  "maxLaunchDelaySeconds": 3600,
+  "mem": {{drone.server.mem}},
+  "portDefinitions": [
+    {
+      "labels": {},
+      "port": 0,
+      "protocol": "tcp"
+    }
+  ],
+  "readinessChecks": [],
+  "requirePorts": false,
+  "residency": null,
+  "secrets": {},
+  "storeUrls": [],
+  "taskKillGracePeriodSeconds": null,
+  "upgradeStrategy": {
+    "maximumOverCapacity": 1,
+    "minimumHealthCapacity": 1
+  },
+  "uris": [],
+  "user": null
+}

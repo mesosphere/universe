@@ -1,0 +1,23 @@
+{
+    "packagingVersion": "3.0",
+    "description": "Drone is a Continuous Delivery platform built on Docker, written in Go.  This is the drone-server; once you install it make sure to add the drone-agent in order to run builds.",
+    "framework": false,
+    "licenses": [
+        {
+            "name": "Apache license",
+            "url": "https://raw.githubusercontent.com/drone/drone/master/LICENSE"
+        }
+    ],
+    "maintainer": "twin.headquarters@gmail.com",
+    "name": "drone-server",
+    "postInstallNotes": "Drone CI on DCOS successfully installed.\n.",
+    "postUninstallNotes": "Drone on DCOS successfully uninstalled.\n.",
+    "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Experimental packages should never be used in production!",
+    "scm": "https://github.com/drone/drone.git",
+    "tags": [
+        "drone",
+        "ci"
+    ],
+    "version": "0.5.0",
+    "website": "https://drone.io"
+}

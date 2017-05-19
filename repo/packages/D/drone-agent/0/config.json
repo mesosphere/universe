@@ -1,0 +1,79 @@
+{
+    "properties": {
+        "drone": {
+            "description": "Drone specific configuration properties.  Please see http://readme.drone.io/admin/installation-reference/ for further information regarding these settings.",
+            "properties": {
+                "server": {
+                    "description": "Full URL (with protocol) to the Drone Server. `DRONE_SERVER`",
+                    "type": "string"
+                },
+                "secret": {
+                    "description": "Shared secret. Must match the value on Drone Server. `DRONE_SECRET`",
+                    "type": "string"
+                },
+                "debug": {
+                    "description": "Set to `true` to see verbose debugging log output. `DRONE_DEBUG`",
+                    "type": "boolean",
+                    "default": false
+                },
+                "backoff": {
+                    "description": "Drone Server reconnect backoff duration. `DRONE_BACKOFF`",
+                    "type": "string",
+                    "default": "15s"
+                },
+                "timeout": {
+                    "description": "Build timeout duration for console inactivity. `DRONE_TIMEOUT`",
+                    "type": "string",
+                    "default": "5m"
+                },
+                "max_logs": {
+                    "description": "Build log size limit, in megabytes. `DRONE_MAX_LOGS`",
+                    "type": "integer",
+                    "default": 5
+                },
+                "plugin_pull": {
+                    "description": "If true, plugin updates are pulled automatically. `DRONE_PLUGIN_PULL`",
+                    "type": "boolean",
+                    "default": true
+                },
+                "plugin_privileged": {
+                    "description": "Comma-separated list of plugins automatically granted privileged mode. `DRONE_PLUGIN_PRIVILEGED`",
+                    "type": "string"
+                },
+                "agent": {
+                    "type": "object",
+                    "properties": {
+                        "app_id": {
+                            "description": "Marathon Application ID for Drone agent",
+                            "default": "/drone/agent",
+                            "type": "string"
+                        },
+                        "cpus": {
+                            "default": 0.2,
+                            "description": "CPU shares to allocate to each agent instance.",
+                            "minimum": 0.0,
+                            "type": "number"
+                        },
+                        "instances": {
+                            "default": 1,
+                            "description": "Number of agent instances to run.",
+                            "minimum": 1,
+                            "type": "integer"
+                        },
+                        "mem": {
+                            "default": 128.0,
+                            "description": "Memory (MB) to allocate to each agent instance.",
+                            "minimum": 128.0,
+                            "type": "number"
+                        }
+                    },
+                    "required": ["app_id", "cpus", "instances", "mem"]
+                }
+            },
+            "required": ["secret", "agent", "server"],
+            "type": "object"
+        }
+    },
+    "required": ["drone"],
+    "type": "object"
+}
