@@ -133,8 +133,7 @@ For example, `"minDcosReleaseVersion" : "1.8"` will prevent the package from bei
 Introduced in `packagingVersion` `4.0`, `.upgradesFrom` can be specified as a property of `package.json`.
 When `.upgradesFrom` is specified this indicates to users that the package is able to upgrade from any of
 the versions listed in the property. It is the resposibility of the package creator to make sure that this
-is indeed the case. If this property is set then `minDcosReleaseVersion` must be set to `1.10`
-or higher.
+is indeed the case.
 
 ###### `.downgradeTo`
 |Packaging Version|   |
@@ -146,8 +145,7 @@ or higher.
 Introduced in `packagingVersion` `4.0`, `.downgradeTo` can be specified as a property of `package.json`.
 When `.downgradeTo` is specified this indicates to users that the package is able to downgrade to any of
 the versions listed in the property. It is the resposibility of the package creator to make sure that this
-is indeed the case. If this property is set then `minDcosReleaseVersion` must be set to `1.10`
-or higher.
+is indeed the case.
 
 #### `config.json`
 |Packaging Version|   |
@@ -256,6 +254,9 @@ format of a Pip requirements file where each element in the array is a line in t
   ]
 }
 ```
+
+Packaging version 4.0 does not support command.json. The presence of command.json in the
+directory will fail the universe validation.
 
 #### `resource.json`
 |Packaging Version|   |
