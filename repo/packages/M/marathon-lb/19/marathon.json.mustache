@@ -15,8 +15,16 @@
         {
           "key": "{{key}}",
           "value": "{{value}}"
-        }{{^last}},{{/last}}
+        },
       {{/parameters}}
+        {
+          "key": "created_by",
+          "value": "marathon"
+        },
+        {
+          "key": "dcos_pkg_name",
+          "value": "marathon-lb"
+        }
       ],
     }
   },
