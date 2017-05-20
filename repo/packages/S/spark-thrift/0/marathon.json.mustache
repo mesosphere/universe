@@ -7,7 +7,7 @@
   "mem": {{service.mem}},
   "instances": {{service.instances}},
   "env": {
-    "HIVE_SERVER2_THRIFT_PORT": "{{service.hive-server2-thrift-port}}",
+    "HIVE_SERVER2_THRIFT_PORT": "{{service.port}}",
     "SPARK_EXECUTOR_MEMORY": "{{service.spark-daemon-memory}}",
     "SPARK_DRIVER_MEMORY": "{{service.spark-driver-memory}}",
     "SPARK_CORES_MAX": "{{service.spark-cores-max}}",
@@ -54,9 +54,9 @@
     "*"
   ],
   "labels": {
-    "DCOS_PACKAGE_VERSION": "0.1-0.1",
+    "DCOS_PACKAGE_VERSION": "2.1.0-0.1",
     "DCOS_SERVICE_NAME": "{{service.name}}",
-    "SPARK_VERSION": "2.0.0",
+    "SPARK_VERSION": "2.1.0",
     "DCOS_PACKAGE_IS_FRAMEWORK": "false"
   }
 }
