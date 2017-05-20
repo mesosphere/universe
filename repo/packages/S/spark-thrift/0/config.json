@@ -36,7 +36,7 @@
     			"host_path": {
 					"description":  "Path in the host to be used for temporary storage",
 					"type": "string",
-					"default": "/tmp"
+					"default": "/var/lib/tmp/spark"
 				},
 				"spark-executor-memory": {
 					"description":  "Memory to allocate to the Spark executor.",
