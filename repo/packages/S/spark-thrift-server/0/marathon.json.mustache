@@ -33,10 +33,16 @@
     ]
   },
   "portDefinitions": [
-    { 
+    {
+      {{#service.external_access.enable}}
+      "servicePort": {{service.external_access.external_access_port}},
+      {{/service.external_access.enable}} 
       "port": {{service.port}},
       "protocol": "tcp", 
-      "name": "spark-thrift-server" 
+      "name": "spark-thrift-server",
+      "labels": {
+        "VIP_0": "/{{service.name}}:{{service.port}}"
+      }
     }
   ],
   "requirePorts": true,  
@@ -55,6 +61,10 @@
     "*"
   ],
   "labels": {
+    {{#service.external_access.enable}}
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "{{networking.external_access.virtual_host}}",
+    {{/service.external_access.enable}}  
     "DCOS_PACKAGE_VERSION": "2.1.0-0.1",
     "DCOS_SERVICE_NAME": "{{service.name}}",
     "SPARK_VERSION": "2.1.0",
