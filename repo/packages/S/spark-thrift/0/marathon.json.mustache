@@ -13,7 +13,8 @@
     "SPARK_CORES_MAX": "{{service.spark-cores-max}}",
     "SPARK_EXECUTOR_CORES": "{{service.spark-executor-cores}}",
     "SPARK_MESOS_EXTRA_CORES": "{{service.spark-mesos-extra-cores}}",
-    "SPARK_EXECUTOR_DOCKER_IMAGE": "{{service.spark-executor-docker-image}}"
+    "SPARK_EXECUTOR_DOCKER_IMAGE": "{{resource.assets.container.docker.spark-thrift-docker}}",
+    "SPARK_MAX_EXECUTORS": "{{service.spark-max-executors}}"
   },
   "container": {
     "type": "DOCKER",
