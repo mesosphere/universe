@@ -78,27 +78,27 @@
 					"type": "string",
 					"default": "10"
 				},
-                "external_access": {
-                    "type": "object",
-                    "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
-                    "properties": {    
-                        "enable": {
-                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
-                            "type": "boolean",
-                            "default": true                    
-                        },
-                        "external_access_port": {
-                            "description": "For external access, port number to be used for clear communication in Marathon-LB.",
-                            "type": "number",
-                            "default": 9000
-                        },
-                        "virtual_host": {
-                            "description": "For external access, Virtual Host URL to be used in Marathon-LB.",
-                            "type": "string",
-                            "default": "spark-thrift-server.example.org"
-                        }
-                    }
-        		}
+				"external_access": {
+					"type": "object",
+					"description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+					"properties": {    
+						"enable": {
+							"description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+							"type": "boolean",
+							"default": true                    
+						},
+						"external_access_port": {
+							"description": "For external access, port number to be used for clear communication in Marathon-LB.",
+							"type": "number",
+							"default": 9000
+						},
+						"virtual_host": {
+							"description": "For external access, Virtual Host URL to be used in Marathon-LB.",
+							"type": "string",
+							"default": "spark-thrift-server.example.org"
+						}
+					}
+				}
 			}      
 		}
 	}
