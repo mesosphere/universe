@@ -1,0 +1,45 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{advanced.docker-image}}",
+      "network": "HOST"    
+    }
+  },
+  "portDefinitions": [
+    {
+      "servicePort": {{networking.service-port}},
+      "port": 0,
+      "protocol": "tcp", 
+      "name": "{{service.name}}"
+    }
+  ],
+  "healthChecks": [
+    {
+      "path": "/nifi",
+      "portIndex": 0,
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "env": {
+    "NIFI_WEB_HTTP_PORT": "$PORT0",
+    "NIFI_ZOOKEEPER_CONNECT_STRING": "{{nifi.zookeeper}}",
+    "NIFI_ZOOKEEPER_ROOT_NODE": "{{nifi.zookeeper-root}}",
+    "NIFI_UI_BANNER_TEXT": "{{nifi.banner}}",
+    "NIFI_CLUSTER_IS_NODE": "{{nifi.cluster}}"
+  },
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_PACKAGE_VERSION": "1.1.1-0.1",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_VHOST":"{{networking.virtual-host}}"
+  }
+}
