@@ -66,22 +66,22 @@
         "parameters": {
             "description": "Docker parameters",
             "type": "array",
-             "items": {
-                "type": "object",
-                "properties": {
-                    "key": {
-                        "type": "string"
-                    },
-                    "value": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "key",
-                    "value"
-                ]
-            },
-            "default": []
+            "items": {
+               "type": "object",
+               "properties": {
+                   "key": {
+                       "type": "string"
+                   },
+                   "value": {
+                       "type": "string"
+                   }
+               },
+               "required": [
+                   "key",
+                   "value"
+               ]
+           },
+           "default": []
         },
         "role": {
           "default": "slave_public",
