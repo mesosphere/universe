@@ -11,12 +11,12 @@
       "network": "HOST",
       "privileged": true,
       "parameters": [
-      {{#parameters}}
+      {{#marathon-lb.parameters}}
         {
           "key": "{{key}}",
           "value": "{{value}}"
         },
-      {{/parameters}}
+      {{/marathon-lb.parameters}}
         {
           "key": "label",
           "value": "created_by=marathon"
