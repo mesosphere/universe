@@ -11,7 +11,7 @@
     "storage",
     "filesystem"
     ],
-  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\n Make sure to set correctly the mandatory `cluster_network` and `public_network` fields in the Advanced Installation menu.\n\nMake sure to check the service tutorial at https://github.com/dcos/examples/tree/master/1.8/ceph",
+  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\n Make sure to set correctly the mandatory `cluster_network` and `public_network` fields in the Advanced Installation menu.\n\nMake sure to check the service tutorial at https://github.com/dcos/examples/tree/master/ceph",
   "postInstallNotes": "Service installed.\n\nPlease access the UI through the endpoint created in Marathon-LB.",
   "licenses": [
     {

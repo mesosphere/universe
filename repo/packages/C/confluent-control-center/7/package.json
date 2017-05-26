@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "3.0",
+  "name": "confluent-control-center",
+  "version": "1.0.0-3.2.1",
+  "scm": "https://github.com/confluentinc/control-center",
+  "description": "Confluent Control Center service\n\n\tDocumentation: http://docs.confluent.io/3.2.1/control-center/docs/userguide.html\n\tDC/OS Specifics: https://www.confluent.io/whitepaper/deploying-confluent-platform-with-mesosphere",
+  "maintainer": "partner-support@confluent.io",
+  "tags": ["kafka", "confluent", "control", "center"],
+  "preInstallNotes": "Preparing to install confluent-control-center",
+  "postInstallNotes": "confluent-control-center has been installed.",
+  "postUninstallNotes": "confluent-control-center was uninstalled successfully.",
+  "minDcosReleaseVersion" : "1.8",
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://raw.githubusercontent.com/confluentinc/control-center/master/LICENSE"
+    }
+  ]
+}

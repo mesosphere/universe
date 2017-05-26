@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "netsil-collectors",
+  "version": "1.3.1",
+  "description": "The collectors package for Netsil.",
+  "maintainer": "support@netsil.com",
+  "tags": ["netsil", "monitoring", "microservices", "collectors"],
+  "preInstallNotes": "This DC/OS Service is currently in preview.\n\nYou may want to change the 'instances' field to control how many collectors you wish to install.\n\nFor instance, you may want one collector for every server you wish to monitor.\n\nIn addition, you may need to change the 'role' field to control on which nodes to install the collectors.\n\nYou can find more documentation and usage information at https://github.com/dcos/examples/blob/master/netsil/README.md",
+  "postInstallNotes": "Netsil collectors are installed!",
+  "postUninstallNotes": "Netsil collectors are uninstalled successfully.",
+  "licenses": [
+    {
+      "name": "Netsil License",
+      "url": "https://raw.githubusercontent.com/netsil/docs/master/licenses/license.txt"
+    },
+    {
+      "name": "Netsil Third Party Licenses",
+      "url": "https://raw.githubusercontent.com/netsil/docs/master/licenses/THIRD_PARTY_LICENSES.txt"
+    }
+  ]
+}

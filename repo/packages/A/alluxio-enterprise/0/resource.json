@@ -1,0 +1,47 @@
+{
+  "assets": {
+    "uris": {
+      "bootstrap-zip": "https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/bootstrap.zip",
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u112-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9-argus-1.1.x-2.tar.gz",
+      "alluxio-bootstrap": "https://s3-us-west-1.amazonaws.com/alluxio-dcos/v1.5.0/bootstrap-dcos.sh",
+      "launcher-script": "https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/launcher.sh",
+      "dockerfile": "https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/Dockerfile",
+      "site-properties": "https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/alluxio-client-site.properties",
+      "dockerfile-spark": "https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/Dockerfile.spark",
+      "spark-core-site": "https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/spark-core-site.xml",
+      "scheduler-zip": "https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/alluxio-enterprise-scheduler.zip",
+      "executor-zip": "https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://s3-us-west-1.amazonaws.com/alluxio-dcos-assets/icons/alluxio_logo_small.png?raw=true",
+    "icon-medium": "https://s3-us-west-1.amazonaws.com/alluxio-dcos-assets/icons/alluxio_logo_medium.png?raw=true",
+    "icon-large": "https://s3-us-west-1.amazonaws.com/alluxio-dcos-assets/icons/alluxio_logo_large.png?raw=true"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"15a9e457e995337b25799a70cd6d93b1133461d722959d264f19053e2b017ba3" } ],
+          "kind":"executable",
+          "url":"https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/dcos-alluxio-enterprise-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"65848e8778c74f4659d3382474e8eebd9628b4586fcdafa0bd19a3487436c9f6" } ],
+          "kind":"executable",
+          "url":"https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/dcos-alluxio-enterprise-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"f0abf80ecb756d026d88cf3b05b4e60abd2679a1431ea5b8ee328f7fcffc8712" } ],
+          "kind":"executable",
+          "url":"https://s3-us-west-1.amazonaws.com/alluxio-dcos/autodelete7d/alluxio-enterprise/20170401-161119-g498F5LL42PHGa0i/dcos-alluxio-enterprise.exe"
+        }
+      }
+    }
+  }
+}

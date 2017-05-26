@@ -11,7 +11,7 @@
     "database",
     "nosql"
   ],
-  "postInstallNotes": "DC/OS Cassandra Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/usage/services/cassandra/\n\tIssues: https://docs.mesosphere.com/support/",
-  "postUninstallNotes": "DC/OS Cassandra Service has been uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/usage/services/cassandra/#uninstall to remove any persistent state if required.",
+  "postInstallNotes": "DC/OS Cassandra Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/cassandra/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS Cassandra Service has been uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/service-docs/cassandra/#uninstall to remove any persistent state if required.",
   "minDcosReleaseVersion": "1.7"
 }

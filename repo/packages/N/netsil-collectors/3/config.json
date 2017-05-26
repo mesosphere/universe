@@ -1,0 +1,74 @@
+{
+  "type": "object",
+  "properties": {
+    "netsil-collectors": {
+      "description": "Netsil collectors configuration properties",
+      "properties": {
+        "name": {
+          "default": "netsil-collectors",
+          "description": "Name for the collectors",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 0.1,
+          "description": "CPU to allocate to each instance of the collectors.",
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 128,
+          "description": "Memory (MB) to allocate to each instance of the collectors.",
+          "minimum": 128,
+          "type": "integer"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of collectors to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "build_branch": {
+          "default": "stable",
+          "description": "Build branch to use.",
+          "type": "string"
+        },
+        "netsil_host": {
+          "default": "netsil.marathon.mesos",
+          "description": "This is the hostname or address of the Netsil appliance. It should be reacheable from your collectors.",
+          "type": "string"
+        },
+        "infra_stats_port": {
+          "default": 2001,
+          "description": "The port for collecting infrastructure stats.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "traffic_stats_port": {
+          "default": 2003,
+          "description": "The port for traffic collection.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "statsd_port": {
+          "default": 8125,
+          "description": "The statsd port for the collectors.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "dd_agent_listen_port": {
+          "default": 17130,
+          "description": "The dd-agent listening port for the collectors.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "version_number": {
+          "default": "1.3.1",
+          "description": "The version of netsil to use.",
+          "type": "string"
+        }
+      },
+      "required": ["name", "cpus", "mem", "instances", "build_branch", "infra_stats_port", "traffic_stats_port"],
+      "type": "object"
+    }
+  }
+}

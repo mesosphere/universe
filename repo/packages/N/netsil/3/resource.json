@@ -1,0 +1,18 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/docs.netsil.com/logos/Netsil_48x48-blue.jpg",
+    "icon-medium": "https://s3.amazonaws.com/docs.netsil.com/logos/Netsil_96x96-blue.jpg",
+    "icon-large": "https://s3.amazonaws.com/docs.netsil.com/logos/Netsil_256x256-blue.jpg",
+    "screenshots": [
+        "https://s3.amazonaws.com/docs.netsil.com/screenshots/default-map.png",
+        "https://s3.amazonaws.com/docs.netsil.com/screenshots/kube.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "netsil": "netsil/netsil"
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@
   "scm": "https://github.com/tobilg/dcos-commons.git",
   "website": "https://github.com/tobilg/dcos-commons/tree/mongodb-replicaset/frameworks/mongodb-replicaset",
   "tags": ["MongoDB", "ReplicaSet", "database", "nosql", "db", "json", "stateful"],
-  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.",
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.",
   "postInstallNotes": "The MongoDB ReplicaSet service was installed!",
   "postUninstallNotes": "The MongoDB ReplicaSet service was unistalled!",
   "minDcosReleaseVersion" : "1.8",

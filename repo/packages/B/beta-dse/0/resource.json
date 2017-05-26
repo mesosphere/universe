@@ -1,0 +1,63 @@
+{
+ "assets": {
+  "container": {
+   "docker": {
+    "dse": "gmflau/dse-docker-507:1.1",
+    "opscenter": "gmflau/opscenter-docker-608:1.0"
+   }
+  },
+  "uris": {
+   "scheduler-zip": "https://downloads.mesosphere.com/dse/assets/1.1.4-5.0.7/dse-scheduler.zip",
+   "dse-studio-tar-gz": "https://s3-us-west-2.amazonaws.com/dcos-dse-install/datastax-studio-1.0.2.tar.gz",
+   "executor-zip": "https://downloads.mesosphere.com/dse/assets/0.0.1-5.0.3/executor.zip",
+   "bootstrap-zip": "https://downloads.mesosphere.com/dse/assets/1.1.4-5.0.7/bootstrap.zip",
+   "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
+   "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u121-linux-x64.tar.gz"
+  }
+ },
+ "images": {
+  "icon-medium": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Medium.jpg",
+  "icon-small": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Small.jpg",
+  "icon-large": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Big.png"
+ },
+ "cli": {
+  "binaries": {
+   "darwin": {
+    "x86-64": {
+     "url": "https://downloads.mesosphere.com/dse/assets/1.1.4-5.0.7/dcos-dse-darwin",
+     "kind": "executable",
+     "contentHash": [
+      {
+       "algo": "sha256",
+       "value": "60a6b392d87e4b45ab6f6318096bc088d58eccb11ce5c9bbb65ba1763bb4ff91"
+      }
+     ]
+    }
+   },
+   "linux": {
+    "x86-64": {
+     "url": "https://downloads.mesosphere.com/dse/assets/1.1.4-5.0.7/dcos-dse-linux",
+     "kind": "executable",
+     "contentHash": [
+      {
+       "algo": "sha256",
+       "value": "2a568d4eea0d81d8c3da494377d9fb651e0520694eb5082f1be9ac449f0335b3"
+      }
+     ]
+    }
+   },
+   "windows": {
+    "x86-64": {
+     "url": "https://downloads.mesosphere.com/dse/assets/1.1.4-5.0.7/dcos-dse.exe",
+     "kind": "executable",
+     "contentHash": [
+      {
+       "algo": "sha256",
+       "value": "2065928287d5b9099faf8126a1480b12ce152c9834d3f26ce0f76b01b0b65742"
+      }
+     ]
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,41 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u121-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
+      "executor-zip": "https://downloads.mesosphere.com/elastic/assets/1.0.8-5.2.2/executor.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/elastic/assets/1.0.8-5.2.2/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/elastic/assets/1.0.8-5.2.2/elastic-scheduler.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/elasticsearch-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/elasticsearch-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/elasticsearch-large.png"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"4fb915e5405c5e282c9ca71555cdf862e239307e92413aee0bfb09d854d77f67" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/elastic/assets/1.0.8-5.2.2/dcos-elastic-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"c9e6b9db9448c7ca40781b000b44590a3f5931269b03c67ba8dabea4c74634ff" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/elastic/assets/1.0.8-5.2.2/dcos-elastic-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"a6e5ac99cb4eeecb66106f586c65830c3d01ef846c396f50c87ce173f0800a9c" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/elastic/assets/1.0.8-5.2.2/dcos-elastic.exe"
+        }
+      }
+    }
+  }
+}

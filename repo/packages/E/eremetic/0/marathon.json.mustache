@@ -1,0 +1,59 @@
+{
+    "id": "{{eremetic.framework-name}}",
+    "cpus": {{eremetic.cpus}},
+    "mem": {{eremetic.mem}},
+    "instances": 1,
+    "constraints": [[ "hostname", "UNIQUE"]],
+	"container": {
+		"type": "DOCKER",
+		"docker": {
+			"image": "{{resource.assets.container.docker.eremetic}}",
+			"network": "BRIDGE",
+			"portMappings": [
+			{
+				"containerPort": 8000,
+				"hostPort": 0,
+				"servicePort": 0,
+				"protocol": "tcp",
+				"labels": {
+				    "VIP_0": "/{{eremetic.framework-name}}:8000"
+				}
+			},
+			{
+				"containerPort": 11419,
+				"hostPort": 11419
+			}],
+			"forcePullImage": false
+		}
+	},
+	"healthChecks": [{
+		"path": "/version/",
+		"portIndex": 0,
+		"protocol": "HTTP",
+		"gracePeriodSeconds": 10,
+		"intervalSeconds": 10,
+		"maxConsecutiveFailures": 3,
+		"timeoutSeconds": 10
+	}],
+	"env": {
+		"ADDRESS": "0.0.0.0",
+		"PORT": "8000",
+		"MASTER": "zk://zk-1.zk:2181,zk-2.zk:2181,zk-3.zk:2181,zk-4.zk:2181,zk-5.zk:2181/mesos",
+		"DATABASE": "zk://zk-1.zk:2181,zk-2.zk:2181,zk-3.zk:2181,zk-4.zk:2181,zk-5.zk:2181/{{eremetic.framework-name}}",
+		"DATABASE_DRIVER": "zk",
+		"LOGLEVEL": "{{eremetic.log-level}}",
+		"QUEUE_SIZE": "{{eremetic.queue-size}}",
+		"FRAMEWORK_ID": "{{eremetic.framework-name}}1",
+		"URL_PREFIX": "/service/eremetic"
+	},
+ 	"labels": {
+		"DCOS_PACKAGE_FRAMEWORK_NAME": "{{eremetic.framework-name}}",
+		"DCOS_SERVICE_NAME": "{{eremetic.framework-name}}",
+		"DCOS_SERVICE_PORT_INDEX": "0",
+		"DCOS_SERVICE_SCHEME": "http",
+		"traefik.portIndex": "0"
+	}
+	{{#eremetic.auth-uri}}
+	"fetch": [{ "uri": "{{eremetic.auth-uri}}" }],
+	{{/eremetic.auth-uri}}
+}

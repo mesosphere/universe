@@ -1,0 +1,62 @@
+{
+    "type": "object",
+    "properties": {
+        "name": {
+            "default": "spark-history",
+            "description": "The app name for the Spark History Server.  The service will be available at http://<dcos_url>/service/<name>/",
+            "type": "string"
+        },
+        "cpus": {
+            "default": 1,
+            "description": "CPU shares",
+            "minimum": 0.0,
+            "type": "number"
+        },
+        "mem": {
+            "default": 1024.0,
+            "description": "Memory (MB)",
+            "minimum": 1024.0,
+            "type": "number"
+        },
+        "log-dir": {
+            "description": "Base directory to look for spark events.  Usually a networked directory like HDFS.  Note that this directory must exist prior to installing this package.",
+            "type": "string",
+            "default": "hdfs://hdfs/history"
+        },
+        "user": {
+            "description": "OS user",
+            "type": "string",
+            "default": "root"
+        },
+        "docker-image": {
+            "description": "Docker image to run in.  See https://hub.docker.com/r/mesosphere/spark/tags/ for options.",
+            "type": "string",
+            "default": "mesosphere/spark:1.0.8-2.1.0-1-hadoop-2.6"
+        },
+        "hdfs-config-url": {
+            "type": "string",
+            "description": "URL which serves hdfs-site.xml and core-site.xml (i.e. <hdfs-config-url>/hdfs-site.xml should exist)"
+        },
+        "cleaner": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "description": "Specifies whether the Spark History Server should periodically clean up event logs from storage.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "interval": {
+                    "default": "1d",
+                    "description": "Frequency the Spark History Server checks for files to delete.",
+                    "type": "string"
+                },
+                "max-age": {
+                    "default": "7d",
+                    "description": "History files older than this will be deleted.",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "required": ["hdfs-config-url"]
+}

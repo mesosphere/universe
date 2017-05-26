@@ -1,0 +1,85 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service": {
+            "type": "object",
+            "description": "Service properties for Minio on DC/OS",
+            "properties": {
+                "name": {
+                    "description": "Name of this service instance",
+                    "type": "string"
+                },
+                "cpus": {
+                    "description": "CPU shares to allocate to service instance",
+                    "type": "number",
+                    "default": 1,
+                    "minimum": 0.5
+                },
+                "mem": {
+                    "description": "Memory to allocate to service instance",
+                    "type": "number",
+                    "default": 2048,
+                    "minimum": 2048
+                }
+            },
+            "required": [
+                "name",
+                "cpus",
+                "mem"
+            ]
+        },
+        "storage": {
+            "type": "object",
+            "description": "Storage properties for Minio on DC/OS",
+            "properties": {
+                "data-size": {
+                    "type": "number",
+                    "description": "Size of data volume in MiB"
+                },
+                "config-size": {
+                    "type": "number",
+                    "description": "Size of config volume in MiB"
+                }
+            },
+            "required": [
+                "data-size",
+                "config-size"
+            ]
+
+        },
+        "credentials": {
+            "type": "object",
+            "description": "Credentials to authenticate with Minio server",
+            "properties": {
+                "access-key": {
+                    "type": "string",
+                    "description": "Access Key",
+                    "default": "minio"
+                },
+                "secret-key": {
+                    "type": "string",
+                    "description": "Secret Key",
+                    "default": "minio123"
+                }
+            }
+        },
+        "networking": {
+            "description": "Networking properties for Minio on DC/OS",
+            "type": "object",
+            "properties": {
+                "service-port": {
+                    "description": "Minio service port",
+                    "type": "number"
+                },
+                "https-redirect": {
+                    "description": "If true Marathon-LB redirects HTTP traffic to HTTPS",
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "required": [
+                "service-port"
+            ]
+        }
+    }
+}

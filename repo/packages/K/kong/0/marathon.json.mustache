@@ -1,0 +1,46 @@
+{
+  "id": "/{{kong.name}}",
+  "instances": {{kong.instances}},
+  "cpus": {{kong.cpus}},
+  "mem": {{kong.mem}},
+  "cmd": "KONG_NGINX_DAEMON=\"off\" KONG_CLUSTER_ADVERTISE=$HOST:$PORT3  kong start",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.kong-docker}}",
+      "network": "BRIDGE",
+      "forcePullImage": true,
+      "portMappings": [
+        { "containerPort": 8000, "hostPort": 0, "servicePort": {{marathon-lb.port0}}, "protocol": "tcp", "name": "proxy" },
+        { "containerPort": 8001, "hostPort": 0, "servicePort": {{marathon-lb.port1}}, "protocol": "tcp", "name": "admin" },
+        { "containerPort": 8443, "hostPort": 0, "servicePort": {{marathon-lb.port2}}, "protocol": "tcp", "name": "ssl" },
+        { "containerPort": 7946, "hostPort": 0, "servicePort": {{marathon-lb.port3}}, "protocol": "tcp,udp", "name": "serf" }
+      ]
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "TCP",
+      "portIndex": 1,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "acceptedResourceRoles": [
+    "{{kong.role}}"
+  ],
+    "env": {
+    "KONG_PG_PASSWORD": "{{database.password}}",
+    "KONG_PG_HOST": "{{database.host}}",
+    "KONG_PG_USER": "{{database.user}}",
+    "KONG_PG_PORT": "{{database.port}}",
+    "KONG_DATABASE": "{{database.database}}"
+  },
+  "labels": {
+    "HAPROXY_1_GROUP": "{{marathon-lb.group1}}",
+    "HAPROXY_0_GROUP": "{{marathon-lb.group0}}"    
+  }
+}

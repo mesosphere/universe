@@ -1,0 +1,1774 @@
+{
+    "type": "object",
+    "properties": {
+        "dse": {
+            "required": [
+                "global_performance_service",
+                "max_memory_to_lock_fraction",
+                "dsefs_data_disk_type",
+                "dsefs_disk"
+            ],
+            "type": "object",
+            "description": "dse.yaml configuration properties",
+            "properties": {
+                "dsefs_disk": {
+                    "default": 10,
+                    "type": "integer",
+                    "description": "DSE File System size in MB"
+                },
+                "solr_latency_snapshot_options_refresh_rate_ms": {
+                    "default": 60000,
+                    "type": "integer"
+                },
+                "hive_options_insert_retry_sleep_period": {
+                    "default": 50,
+                    "type": "integer"
+                },
+                "dsefs_data_disk_type": {
+                    "default": "ROOT",
+                    "description": "DSE FS persistent disk type [ROOT, MOUNT]",
+                    "enum": [
+                        "ROOT",
+                        "MOUNT"
+                    ]
+                },
+                "solr_slow_sub_query_log_options_async_writers": {
+                    "default": 1,
+                    "type": "integer"
+                },
+                "graph_schema_mode": {
+                    "default": "Production",
+                    "type": "string"
+                },
+                "graph_gremlin_server_threadPoolWorker": {
+                    "default": 2,
+                    "type": "integer"
+                },
+                "spark_application_info_options_driver_sink": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "user_level_latency_tracking_options_refresh_rate_ms": {
+                    "default": 10000,
+                    "type": "integer"
+                },
+                "graph_ids_id_hash_modulus": {
+                    "default": 20,
+                    "type": "integer"
+                },
+                "graph_gremlin_server_maxHeaderSize": {
+                    "default": 8192,
+                    "type": "integer"
+                },
+                "lease_metrics_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "internode_messaging_options_handshake_timeout_seconds": {
+                    "type": "integer"
+                },
+                "user_level_latency_tracking_options_quantiles": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "audit_logging_options_cassandra_audit_writer_options_queue_size": {
+                    "default": 10000,
+                    "type": "integer"
+                },
+                "solr_cache_stats_options_refresh_rate_ms": {
+                    "default": 60000,
+                    "type": "integer"
+                },
+                "spark_application_info_options_refresh_rate_ms": {
+                    "default": 10000,
+                    "type": "integer"
+                },
+                "load_max_time_per_core": {
+                    "type": "integer"
+                },
+                "spark_cluster_info_options_refresh_rate_ms": {
+                    "default": 10000,
+                    "type": "integer"
+                },
+                "performance_max_threads": {
+                    "type": "integer"
+                },
+                "user_level_latency_tracking_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "audit_logging_options_cassandra_audit_writer_options_batch_size": {
+                    "default": 50,
+                    "type": "integer"
+                },
+                "audit_logging_options_logger": {
+                    "default": "SLF4JAuditWriter",
+                    "type": "string"
+                },
+                "graph_gremlin_server_useEpollEventLoop": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "internode_messaging_options_client_worker_threads": {
+                    "type": "integer"
+                },
+                "graph_max_query_queue": {
+                    "default": 10000,
+                    "type": "integer"
+                },
+                "spark_daemon_readiness_assertion_interval": {
+                    "type": "integer"
+                },
+                "cql_slow_log_options_minimum_samples": {
+                    "default": 100,
+                    "type": "integer"
+                },
+                "max_memory_to_lock_mb": {
+                    "type": "integer"
+                },
+                "enable_back_pressure_adaptive_nrt_commit": {
+                    "type": "boolean"
+                },
+                "graph_window_size": {
+                    "default": 100000,
+                    "type": "integer"
+                },
+                "graph_ids_member_block_size": {
+                    "default": 512,
+                    "type": "integer"
+                },
+                "graph_ids_block_renew": {
+                    "default": 0.8,
+                    "type": "number"
+                },
+                "solr_indexing_error_log_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "graph_gremlin_server_enabled": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "audit_logging_options_cassandra_audit_writer_options_day_partition_millis": {
+                    "type": "integer"
+                },
+                "global_performance_service": {
+                    "additionalProperties": false,
+                    "required": [
+                        "performance_max_threads"
+                    ],
+                    "description": "Global Performance Service options",
+                    "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__global-perf-options",
+                    "type": "object",
+                    "properties": {
+                        "performance_max_threads": {
+                            "default": 32,
+                            "description": "Maximum number of background threads used by the performance service",
+                            "type": "integer",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__performance_max_threads"
+                        }
+                    }
+                },
+                "db_summary_stats_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "histogram_data_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "graph_ids_community_reuse": {
+                    "default": 28,
+                    "type": "integer"
+                },
+                "solr_indexing_error_log_options_async_writers": {
+                    "default": 1,
+                    "type": "integer"
+                },
+                "solr_slow_sub_query_log_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "max_solr_concurrency_per_core": {
+                    "type": "integer"
+                },
+                "node_health_options_uptime_ramp_up_period_seconds": {
+                    "default": 86400,
+                    "type": "integer"
+                },
+                "graph_shared_data_refresh_interval_in_ms": {
+                    "default": 60000,
+                    "type": "integer"
+                },
+                "async_bootstrap_reindex": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "audit_logging_options_cassandra_audit_writer_options_dropped_event_log": {
+                    "type": "string"
+                },
+                "histogram_data_options_retention_count": {
+                    "default": 10000,
+                    "type": "integer"
+                },
+                "solr_index_stats_options_ttl_seconds": {
+                    "default": 604800,
+                    "type": "integer"
+                },
+                "audit_logging_options_excluded_categories": {
+                    "type": "string"
+                },
+                "ttl_index_rebuild_options_thread_pool_size": {
+                    "default": 1,
+                    "type": "integer"
+                },
+                "solr_field_cache_enabled": {
+                    "type": "boolean"
+                },
+                "audit_logging_options_cassandra_audit_writer_options_num_writers": {
+                    "default": 10,
+                    "type": "integer"
+                },
+                "solr_request_handler_metrics_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "ttl_index_rebuild_options_max_docs_per_batch": {
+                    "default": 200,
+                    "type": "integer"
+                },
+                "spark_application_info_options_driver_jvm_source": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "node_health_options_dropped_mutation_window_minutes": {
+                    "default": 30,
+                    "type": "integer"
+                },
+                "graph_adjacency_cache_max_entry_size_in_mb": {
+                    "default": 0,
+                    "type": "integer"
+                },
+                "graph_gremlin_server_maxContentLength": {
+                    "default": 65536000,
+                    "type": "integer"
+                },
+                "hive_meta_store_enabled": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "max_memory_to_lock_fraction": {
+                    "default": 0.2,
+                    "type": "number",
+                    "description": "Specify a fraction of the system memory for DSE In-Memory",
+                    "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__max_memory_to_lock_mb"
+                },
+                "spark_cluster_info_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "audit_logging_options_cassandra_audit_writer_options_mode": {
+                    "default": "sync",
+                    "type": "string"
+                },
+                "graph_index_cache_clean_rate": {
+                    "default": 1024,
+                    "type": "integer"
+                },
+                "graph_system_evaluation_timeout_in_seconds": {
+                    "default": 180,
+                    "type": "integer"
+                },
+                "audit_logging_options_included_keyspaces": {
+                    "type": "string"
+                },
+                "solr_request_handler_metrics_options_ttl_seconds": {
+                    "default": 604800,
+                    "type": "integer"
+                },
+                "spark_application_info_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "config_encryption_active": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "shard_transport_options_netty_server_port": {
+                    "default": 8984,
+                    "type": "integer"
+                },
+                "graph_index_cache_size_in_mb": {
+                    "default": 128,
+                    "type": "integer"
+                },
+                "graph_gremlin_server_resultIterationBatchSize": {
+                    "default": 64,
+                    "type": "integer"
+                },
+                "graph_gremlin_server_gremlinPool": {
+                    "default": 8,
+                    "type": "integer"
+                },
+                "spark_application_info_options_executor_sink": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "spark_application_info_options_executor_connector_source": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "graph_msg_graph_msg_timeout_in_ms": {
+                    "default": 5000,
+                    "type": "integer"
+                },
+                "solr_index_stats_options_refresh_rate_ms": {
+                    "default": 60000,
+                    "type": "integer"
+                },
+                "solr_update_handler_metrics_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "graph_realtime_evaluation_timeout_in_seconds": {
+                    "default": 30,
+                    "type": "integer"
+                },
+                "internode_messaging_options_server_worker_threads": {
+                    "type": "integer"
+                },
+                "node_health_options_refresh_rate_ms": {
+                    "default": 60000,
+                    "type": "integer"
+                },
+                "solr_latency_snapshot_options_ttl_seconds": {
+                    "default": 604800,
+                    "type": "integer"
+                },
+                "audit_logging_options_excluded_keyspaces": {
+                    "type": "string"
+                },
+                "db_summary_stats_options_refresh_rate_ms": {
+                    "default": 10000,
+                    "type": "integer"
+                },
+                "solr_index_stats_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "internode_messaging_options_server_acceptor_threads": {
+                    "type": "integer"
+                },
+                "cql_slow_log_options_ttl_seconds": {
+                    "default": 259200,
+                    "type": "integer"
+                },
+                "ttl_index_rebuild_options_initial_delay": {
+                    "default": 20,
+                    "type": "integer"
+                },
+                "user_level_latency_tracking_options_top_stats_limit": {
+                    "default": 100,
+                    "type": "integer"
+                },
+                "solr_cache_stats_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "enable_health_based_routing": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "graph_gremlin_server_maxAccumulationBufferComponents": {
+                    "default": 1024,
+                    "type": "integer"
+                },
+                "solr_slow_sub_query_log_options_ttl_seconds": {
+                    "default": 604800,
+                    "type": "integer"
+                },
+                "solr_latency_snapshot_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "spark_security_encryption_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "back_pressure_threshold_per_core": {
+                    "type": "integer"
+                },
+                "shard_transport_options_type": {
+                    "default": "netty",
+                    "type": "string"
+                },
+                "resource_level_latency_tracking_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "cql_slow_log_options_threshold": {
+                    "default": 2000.0,
+                    "type": "number"
+                },
+                "audit_logging_options_cassandra_audit_writer_options_flush_time": {
+                    "default": 500,
+                    "type": "integer"
+                },
+                "cql_solr_query_row_timeout": {
+                    "type": "integer"
+                },
+                "spark_application_info_options_driver_connector_source": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "audit_logging_options_retention_time": {
+                    "default": 0,
+                    "type": "integer"
+                },
+                "graph_analytic_evaluation_timeout_in_minutes": {
+                    "default": 10080,
+                    "type": "integer"
+                },
+                "cluster_summary_stats_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "cql_slow_log_options_enabled": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "cluster_summary_stats_options_refresh_rate_ms": {
+                    "default": 10000,
+                    "type": "integer"
+                },
+                "graph_index_cache_max_entry_size_in_mb": {
+                    "default": 0,
+                    "type": "integer"
+                },
+                "lease_metrics_options_ttl_seconds": {
+                    "default": 604800,
+                    "type": "integer"
+                },
+                "solr_slow_sub_query_log_options_threshold_ms": {
+                    "default": 3000,
+                    "type": "integer"
+                },
+                "internode_messaging_options_frame_length_in_mb": {
+                    "type": "integer"
+                },
+                "initial_spark_worker_resources": {
+                    "default": 0.7,
+                    "type": "number"
+                },
+                "graph_adjacency_cache_size_in_mb": {
+                    "default": 128,
+                    "type": "integer"
+                },
+                "graph_events_ttl_seconds": {
+                    "default": 600,
+                    "type": "integer"
+                },
+                "audit_logging_options_cassandra_audit_writer_options_write_consistency": {
+                    "default": "QUORUM",
+                    "type": "string"
+                },
+                "spark_application_info_options_driver_state_source": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "audit_logging_options_included_categories": {
+                    "type": "string"
+                },
+                "hive_options_insert_max_retries": {
+                    "default": 6,
+                    "type": "integer"
+                },
+                "cql_system_info_options_refresh_rate_ms": {
+                    "default": 10000,
+                    "type": "integer"
+                },
+                "cql_system_info_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "graph_adjacency_cache_clean_rate": {
+                    "default": 1024,
+                    "type": "integer"
+                },
+                "resource_level_latency_tracking_options_refresh_rate_ms": {
+                    "default": 10000,
+                    "type": "integer"
+                },
+                "cql_solr_query_paging": {
+                    "default": "off",
+                    "type": "string"
+                },
+                "spark_security_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "enable_index_disk_failure_policy": {
+                    "type": "boolean"
+                },
+                "solr_indexing_error_log_options_ttl_seconds": {
+                    "default": 604800,
+                    "type": "integer"
+                },
+                "solr_request_handler_metrics_options_refresh_rate_ms": {
+                    "default": 60000,
+                    "type": "integer"
+                },
+                "solr_cache_stats_options_ttl_seconds": {
+                    "default": 604800,
+                    "type": "integer"
+                },
+                "ttl_index_rebuild_options_fixed_rate_period": {
+                    "default": 300,
+                    "type": "integer"
+                },
+                "solr_update_handler_metrics_options_refresh_rate_ms": {
+                    "default": 60000,
+                    "type": "integer"
+                },
+                "ldap": {
+                    "additionalProperties": false,
+                    "description": "LDAP Configuration",
+                    "type": "object",
+                    "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__ldap-options",
+                    "properties": {
+                        "server_host": {
+                            "default": "localhost",
+                            "description": "Hostname of LDAP server",
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__server_host"
+                        },
+                        "server_port": {
+                            "default": 389,
+                            "description": "Port of LDAP server",
+                            "type": "integer",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__server_port"
+                        },
+                        "group_search_filter": {
+                            "default": "(uniquemember={0})",
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_search_filterPL"
+                        },
+                        "user_memberof_attribute": {
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__user_memberof_attributePL"
+                        },
+                        "group_search_base": {
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_search_basePL"
+                        },
+                        "search_dn": {
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__search_dn"
+                        },
+                        "connection_pool_max_active": {
+                            "default": 8,
+                            "description": "The maximum number of active connections to the LDAP server.",
+                            "type": "integer",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__connection_pool"
+                        },
+                        "search_password": {
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__search_password"
+                        },
+                        "connection_pool_max_idle": {
+                            "default": 8,
+                            "description": "The maximum number of idle connections in the pool awaiting requests.",
+                            "type": "integer",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__connection_pool"
+                        },
+                        "enabled": {
+                            "default": false,
+                            "description": "Enable LDAP",
+                            "type": "boolean",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__ldap-options"
+                        },
+                        "search_validity_in_seconds": {
+                            "default": 0,
+                            "type": "integer",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__search_validity_in_seconds"
+                        },
+                        "user_search_base": {
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__user_search_base"
+                        },
+                        "user_search_filter": {
+                            "default": "(uid={0})",
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__usersearch-filter"
+                        },
+                        "group_name_attribute": {
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_name_attributePL"
+                        },
+                        "group_search_type": {
+                            "default": "directory_search",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_search_typePL",
+                            "enum": [
+                                "directory_search",
+                                "memberof_search"
+                            ]
+                        },
+                        "credentials_validity_in_ms": {
+                            "default": 0,
+                            "type": "integer",
+                            "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__credentials_validity_in_ms"
+                        }
+                    }
+                },
+                "solr_update_handler_metrics_options_ttl_seconds": {
+                    "default": 604800,
+                    "type": "integer"
+                },
+                "solr_data_dir": {
+                    "type": "string"
+                },
+                "spark_application_info_options_executor_jvm_source": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "flush_max_time_per_core": {
+                    "type": "integer"
+                },
+                "solr_resource_upload_limit_mb": {
+                    "default": 10,
+                    "type": "integer"
+                },
+                "histogram_data_options_refresh_rate_ms": {
+                    "default": 10000,
+                    "type": "integer"
+                },
+                "graph_gremlin_server_maxChunkSize": {
+                    "default": 4096000,
+                    "type": "integer"
+                },
+                "audit_logging_options_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "spark_shared_secret_bit_length": {
+                    "default": 256,
+                    "type": "integer"
+                },
+                "graph_gremlin_server_maxInitialLineLength": {
+                    "default": 4096,
+                    "type": "integer"
+                },
+                "internode_messaging_options_client_max_connections": {
+                    "type": "integer"
+                },
+                "cql_solr_query_executor_threads": {
+                    "type": "integer"
+                },
+                "graph_schema_agreement_timeout_in_ms": {
+                    "default": 10000,
+                    "type": "integer"
+                }
+            }
+        },
+        "studio": {
+            "required": [
+                "cpus",
+                "mem",
+                "port"
+            ],
+            "type": "object",
+            "description": "DataStax Studio pod configuration properties",
+            "properties": {
+                "enabled": {
+                    "default": true,
+                    "type": "boolean",
+                    "title": "Enable DataStax Studio"
+                },
+                "port": {
+                    "default": 9091,
+                    "type": "integer",
+                    "title": "Studio port"
+                },
+                "placement_constraint": {
+                    "default": "",
+                    "type": "string",
+                    "description": "Marathon-style placement constraint for the Studio node. Example: hostname:UNIQUE",
+                    "title": "Studio placement constraint"
+                },
+                "cpus": {
+                    "default": 2,
+                    "type": "number",
+                    "title": "Studio CPU count"
+                },
+                "mem": {
+                    "default": 8000,
+                    "type": "integer",
+                    "title": "Studio memory size (MB)"
+                }
+            }
+        },
+        "dsenode": {
+            "required": [
+                "cpus",
+                "mem",
+                "agent_cpus",
+                "agent_mem",
+                "data_disk",
+                "data_disk_type",
+                "count",
+                "log_disk",
+                "native_port",
+                "thrift_port",
+                "internode_port",
+                "internode_ssl_port",
+                "jmx_port",
+                "solr_admin_port",
+                "spark_master_port",
+                "spark_master_webui_port",
+                "spark_worker_webui_port"
+            ],
+            "type": "object",
+            "description": "DSE node pod configuration properties",
+            "properties": {
+                "native_port": {
+                    "default": 9042,
+                    "type": "integer",
+                    "title": "Cassandra native client port"
+                },
+                "agent_port": {
+                    "default": 21621,
+                    "type": "integer",
+                    "title": "Agent API port"
+                },
+                "placement_constraint": {
+                    "default": "",
+                    "type": "string",
+                    "description": "Marathon-style placement constraint for DSE nodes. Example: hostname:UNIQUE",
+                    "title": "Node placement constraint"
+                },
+                "thrift_port": {
+                    "default": 9160,
+                    "type": "integer",
+                    "title": "Cassandra thrift client port"
+                },
+                "count": {
+                    "default": 3,
+                    "type": "number",
+                    "description": "Number of DSE nodes in the cluster",
+                    "title": "Node count"
+                },
+                "heap": {
+                    "default": 16000,
+                    "type": "integer",
+                    "title": "DSE node heap size (MB)"
+                },
+                "internode_messaging_port": {
+                    "default": 8609,
+                    "type": "integer",
+                    "title": "DSE inter-node messaging service port"
+                },
+                "mem": {
+                    "default": 32000,
+                    "type": "integer",
+                    "title": "DSE node memory size (MB)"
+                },
+                "cpus": {
+                    "default": 2,
+                    "type": "number",
+                    "title": "DSE node CPU count"
+                },
+                "log_disk": {
+                    "default": 1000,
+                    "type": "integer",
+                    "title": "Persistent log volume size (MB)"
+                },
+                "gremlin_agent_port": {
+                    "default": 8182,
+                    "type": "integer",
+                    "title": "Gremlin graph service port"
+                },
+                "spark_master_webui_port": {
+                    "default": 7080,
+                    "type": "integer",
+                    "title": "Spark master web UI port"
+                },
+                "agent_mem": {
+                    "default": 500,
+                    "type": "integer",
+                    "title": "DSE agent memory size (MB)"
+                },
+                "jmx_port": {
+                    "default": 7199,
+                    "type": "integer",
+                    "title": "JMX monitoring port"
+                },
+                "internode_port": {
+                    "default": 7000,
+                    "type": "integer",
+                    "title": "Cassandra inter-node cluster communication port"
+                },
+                "solr_admin_port": {
+                    "default": 8983,
+                    "type": "integer",
+                    "title": "Solr admin port"
+                },
+                "log_disk_type": {
+                    "default": "ROOT",
+                    "enum": [
+                        "ROOT",
+                        "MOUNT"
+                    ],
+                    "title": "Persistent log volume type [ROOT, MOUNT]"
+                },
+                "agent_cpus": {
+                    "default": 0.5,
+                    "type": "number",
+                    "title": "DSE agent CPU count"
+                },
+                "spark_master_port": {
+                    "default": 7077,
+                    "type": "integer",
+                    "title": "Spark master port"
+                },
+                "solr_disk": {
+                    "default": 10240,
+                    "type": "integer",
+                    "title": "Persistent Solr volume size (MB)"
+                },
+                "spark_worker_webui_port": {
+                    "default": 7081,
+                    "type": "integer",
+                    "title": "Spark worker web UI port"
+                },
+                "deploy_strategy": {
+                    "default": "serial",
+                    "enum": [
+                        "serial",
+                        "serial-canary"
+                    ],
+                    "title": "Deployment strategy to use [serial, serial-canary]"
+                },
+                "data_disk": {
+                    "default": 10240,
+                    "type": "integer",
+                    "title": "Persistent data volume size (MB)"
+                },
+                "data_disk_type": {
+                    "default": "ROOT",
+                    "enum": [
+                        "ROOT",
+                        "MOUNT"
+                    ],
+                    "title": "Persistent data volume type [ROOT, MOUNT]"
+                },
+                "internode_ssl_port": {
+                    "default": 7001,
+                    "type": "integer",
+                    "title": "Cassandra SSL inter-node cluster communication port"
+                },
+                "native_ssl_port": {
+                    "default": "",
+                    "type": "string",
+                    "title": "Cassandra native client ssl port (if separate from native_port)"
+                },
+                "solr_disk_type": {
+                    "default": "ROOT",
+                    "enum": [
+                        "ROOT",
+                        "MOUNT"
+                    ],
+                    "title": "Persistent Solr volume type [ROOT, MOUNT]"
+                }
+            }
+        },
+        "cassandra": {
+            "required": [
+                "authenticator",
+                "authorizer",
+                "num_tokens",
+                "hinted_handoff_enabled",
+                "max_hint_window_in_ms",
+                "hinted_handoff_throttle_in_kb",
+                "max_hints_delivery_threads",
+                "batchlog_replay_throttle_in_kb",
+                "partitioner",
+                "key_cache_save_period",
+                "row_cache_size_in_mb",
+                "row_cache_save_period",
+                "commitlog_sync_period_in_ms",
+                "commitlog_segment_size_in_mb",
+                "concurrent_reads",
+                "concurrent_writes",
+                "concurrent_counter_writes",
+                "memtable_allocation_type",
+                "index_summary_resize_interval_in_minutes"
+            ],
+            "type": "object",
+            "description": "cassandra.yaml configuration properties",
+            "properties": {
+                "server_encryption_store_type": {
+                    "default": "JKS",
+                    "type": "string"
+                },
+                "role_manager": {
+                    "default": "com.datastax.bdp.cassandra.auth.DseRoleManager",
+                    "type": "string"
+                },
+                "commitlog_sync_period_in_ms": {
+                    "default": 10000,
+                    "description": "The number of milliseconds between disk fsync calls.",
+                    "type": "integer",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__commitlog_sync"
+                },
+                "concurrent_compactors": {
+                    "default": 1,
+                    "type": "integer"
+                },
+                "client_encryption_optional": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "compaction_throughput_mb_per_sec": {
+                    "default": 16,
+                    "type": "integer"
+                },
+                "trickle_fsync": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "hinted_handoff_throttle_in_kb": {
+                    "default": 1024,
+                    "type": "integer",
+                    "description": "The maximum throttle per delivery thread in kilobytes per second."
+                },
+                "rpc_server_type": {
+                    "default": "sync",
+                    "type": "string"
+                },
+                "concurrent_writes": {
+                    "default": 32,
+                    "description": "Writes in Cassandra are rarely I/O bound, so the ideal number of concurrent writes depends on the number of CPU cores in your system. The recommended value is 8 times the number of cpu cores.",
+                    "type": "integer",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__concurrent_writes"
+                },
+                "internode_recv_buff_size_in_bytes": {
+                    "default": "",
+                    "type": "string"
+                },
+                "commit_failure_policy": {
+                    "default": "stop",
+                    "type": "string"
+                },
+                "counter_cache_keys_to_save": {
+                    "default": 100,
+                    "type": "integer"
+                },
+                "dynamic_snitch_update_interval_in_ms": {
+                    "default": 100,
+                    "type": "integer"
+                },
+                "batch_size_warn_threshold_in_kb": {
+                    "default": 64,
+                    "type": "integer"
+                },
+                "read_request_timeout_in_ms": {
+                    "default": 5000,
+                    "type": "integer"
+                },
+                "cas_contention_timeout_in_ms": {
+                    "default": 1000,
+                    "type": "integer"
+                },
+                "server_encryption_truststore": {
+                    "default": "resources/dse/conf/.truststore",
+                    "type": "string"
+                },
+                "start_rpc": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "client_encryption_cipher_suites": {
+                    "default": "[TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA]",
+                    "type": "string"
+                },
+                "tracetype_repair_ttl": {
+                    "default": 604800,
+                    "type": "integer"
+                },
+                "authenticator": {
+                    "default": "AllowAllAuthenticator",
+                    "description": "The authentication backend. It implements IAuthenticator, which is used to identify users.",
+                    "type": "string",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__authenticator"
+                },
+                "cross_node_timeout": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "gc_warn_threshold_in_ms": {
+                    "default": 1000,
+                    "type": "integer"
+                },
+                "request_timeout_in_ms": {
+                    "default": 10000,
+                    "type": "integer"
+                },
+                "counter_write_request_timeout_in_ms": {
+                    "default": 5000,
+                    "type": "integer"
+                },
+                "client_encryption_keystore_password": {
+                    "default": "cassandra",
+                    "type": "string"
+                },
+                "dynamic_snitch_reset_interval_in_ms": {
+                    "default": 600000,
+                    "type": "integer"
+                },
+                "key_cache_save_period": {
+                    "default": 14400,
+                    "description": "The duration in seconds that keys are saved in cache. Saved caches greatly improve cold-start speeds and has relatively little effect on I/O.",
+                    "type": "integer",
+                    "id": "hhttp://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__key_cache_save_period"
+                },
+                "roles_validity_in_ms": {
+                    "default": 2000,
+                    "type": "integer"
+                },
+                "row_cache_keys_to_save": {
+                    "default": 100,
+                    "type": "integer"
+                },
+                "client_encryption_protocol": {
+                    "default": "TLS",
+                    "type": "string"
+                },
+                "max_value_size_in_mb": {
+                    "default": 256,
+                    "type": "integer"
+                },
+                "key_cache_size_in_mb": {
+                    "default": "",
+                    "type": "string"
+                },
+                "server_encryption_keystore_password": {
+                    "default": "cassandra",
+                    "type": "string"
+                },
+                "tombstone_warn_threshold": {
+                    "default": 1000,
+                    "type": "integer"
+                },
+                "write_request_timeout_in_ms": {
+                    "default": 2000,
+                    "type": "integer"
+                },
+                "memtable_flush_writers": {
+                    "default": 8,
+                    "type": "integer"
+                },
+                "server_encryption_internode_encryption": {
+                    "default": "none",
+                    "type": "string"
+                },
+                "windows_timer_interval": {
+                    "default": 1,
+                    "type": "integer"
+                },
+                "unlogged_batch_across_partitions_warn_threshold": {
+                    "default": 10,
+                    "type": "integer"
+                },
+                "row_cache_class_name": {
+                    "default": "org.apache.cassandra.cache.OHCProvider",
+                    "type": "string"
+                },
+                "concurrent_counter_writes": {
+                    "default": 16,
+                    "description": "Counter writes read the current values before incrementing and writing them back. The recommended value is (16 times the number of drives) .",
+                    "type": "integer",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__concurrent_counter_writes"
+                },
+                "client_encryption_store_type": {
+                    "default": "JKS",
+                    "type": "string"
+                },
+                "counter_cache_save_period": {
+                    "default": 7200,
+                    "type": "integer"
+                },
+                "rpc_send_buff_size_in_bytes": {
+                    "default": "",
+                    "type": "string"
+                },
+                "permissions_update_interval_in_ms": {
+                    "default": 1000,
+                    "type": "integer"
+                },
+                "inter_dc_tcp_nodelay": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "trickle_fsync_interval_in_kb": {
+                    "default": 10240,
+                    "type": "integer"
+                },
+                "auto_snapshot": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "request_scheduler_id": {
+                    "default": "keyspace",
+                    "type": "string"
+                },
+                "commitlog_total_space_in_mb": {
+                    "default": 8192,
+                    "type": "integer"
+                },
+                "rpc_recv_buff_size_in_bytes": {
+                    "default": "",
+                    "type": "string"
+                },
+                "commitlog_sync": {
+                    "default": "periodic",
+                    "type": "string"
+                },
+                "endpoint_snitch": {
+                    "default": "GossipingPropertyFileSnitch",
+                    "type": "string"
+                },
+                "request_scheduler_custom_weight_5": {
+                    "default": "",
+                    "type": "string"
+                },
+                "key_cache_keys_to_save": {
+                    "default": 100,
+                    "type": "integer"
+                },
+                "request_scheduler_custom_weight_1": {
+                    "default": "",
+                    "type": "string"
+                },
+                "request_scheduler_custom_weight_2": {
+                    "default": "",
+                    "type": "string"
+                },
+                "buffer_pool_use_heap_if_exhausted": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "otc_coalescing_window_us": {
+                    "default": 200,
+                    "type": "integer"
+                },
+                "gc_log_threshold_in_ms": {
+                    "default": 200,
+                    "type": "integer"
+                },
+                "stream_throughput_outbound_megabits_per_sec": {
+                    "default": 200,
+                    "type": "integer"
+                },
+                "native_transport_max_threads": {
+                    "default": 128,
+                    "type": "integer"
+                },
+                "tracetype_query_ttl": {
+                    "default": 86400,
+                    "type": "integer"
+                },
+                "concurrent_reads": {
+                    "default": 16,
+                    "description": "For workloads with more data than can fit in memory, the bottleneck is reads fetching data from disk. Setting to (16 times the number of drives) allows operations to queue low enough in the stack so that the OS and drives can reorder them.",
+                    "type": "integer",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__concurrent_reads"
+                },
+                "incremental_backups": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "internode_compression": {
+                    "default": "dc",
+                    "type": "string"
+                },
+                "batchlog_replay_throttle_in_kb": {
+                    "default": 1024,
+                    "description": "The total throttle for log replay in Kpbs.",
+                    "type": "integer",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__batchlog_replay"
+                },
+                "client_encryption_truststore_password": {
+                    "default": "cassandra",
+                    "type": "string"
+                },
+                "native_transport_max_concurrent_connections_per_ip": {
+                    "default": -1,
+                    "type": "integer"
+                },
+                "max_hints_delivery_threads": {
+                    "default": 2,
+                    "description": "The maximum number of delivery threads for hinted handoff.",
+                    "type": "integer",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__max_hints_delivery_threads"
+                },
+                "server_encryption_keystore": {
+                    "default": "resources/dse/conf/.keystore",
+                    "type": "string"
+                },
+                "request_scheduler_throttle_limit": {
+                    "default": "",
+                    "type": "string"
+                },
+                "request_scheduler_custom_weight_4": {
+                    "default": "",
+                    "type": "string"
+                },
+                "streaming_socket_timeout_in_ms": {
+                    "default": 86400000,
+                    "type": "integer"
+                },
+                "disk_optimization_strategy": {
+                    "default": "ssd",
+                    "type": "string"
+                },
+                "phi_convict_threshold": {
+                    "default": 8,
+                    "type": "integer"
+                },
+                "client_encryption_require_client_auth": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "request_scheduler": {
+                    "default": "org.apache.cassandra.scheduler.NoScheduler",
+                    "type": "string"
+                },
+                "rpc_keepalive": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "request_scheduler_default_weight": {
+                    "default": "",
+                    "type": "string"
+                },
+                "tombstone_failure_threshold": {
+                    "default": 100000,
+                    "type": "integer"
+                },
+                "batch_size_fail_threshold_in_kb": {
+                    "default": 640,
+                    "type": "integer"
+                },
+                "enable_user_defined_functions": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "authorizer": {
+                    "default": "AllowAllAuthorizer",
+                    "description": "The authorization backend. It implements IAuthenticator, which limits access and provides permissions.",
+                    "type": "string",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__authorizer"
+                },
+                "server_encryption_algorithm": {
+                    "default": "SunX509",
+                    "type": "string"
+                },
+                "server_encryption_truststore_password": {
+                    "default": "cassandra",
+                    "type": "string"
+                },
+                "disk_failure_policy": {
+                    "default": "stop",
+                    "type": "string"
+                },
+                "roles_update_interval_in_ms": {
+                    "default": 1000,
+                    "type": "integer"
+                },
+                "internode_send_buff_size_in_bytes": {
+                    "default": "",
+                    "type": "string"
+                },
+                "commitlog_batch_window_in_ms": {
+                    "default": "",
+                    "type": "string"
+                },
+                "commitlog_compression_class": {
+                    "default": "LZ4Compressor",
+                    "type": "string"
+                },
+                "request_scheduler_custom_weight_3": {
+                    "default": "",
+                    "type": "string"
+                },
+                "start_native_transport": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "thrift_framed_transport_size_in_mb": {
+                    "default": 15,
+                    "type": "integer"
+                },
+                "server_encryption_require_client_auth": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "column_index_size_in_kb": {
+                    "default": 64,
+                    "type": "integer"
+                },
+                "hinted_handoff_enabled": {
+                    "default": true,
+                    "type": "boolean",
+                    "description": "If true, hinted handoff is enabled for the cluster."
+                },
+                "enable_scripted_user_defined_functions": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "hints_compression_class": {
+                    "default": "",
+                    "type": "string"
+                },
+                "client_encryption_algorithm": {
+                    "default": "SunX509",
+                    "type": "string"
+                },
+                "server_encryption_protocol": {
+                    "default": "TLS",
+                    "type": "string"
+                },
+                "hints_flush_period_in_ms": {
+                    "default": 10000,
+                    "type": "integer",
+                    "description": "The number of milliseconds Cassandra waits before flushing hints from internal buffers to disk."
+                },
+                "otc_coalescing_strategy": {
+                    "default": "DISABLED",
+                    "type": "string"
+                },
+                "max_hints_file_size_in_mb": {
+                    "default": 128,
+                    "type": "integer"
+                },
+                "hints_compression_parameter": {
+                    "default": "",
+                    "type": "string"
+                },
+                "client_encryption_truststore": {
+                    "default": "resources/dse/conf/.truststore",
+                    "type": "string"
+                },
+                "server_encryption_cipher_suites": {
+                    "default": "[TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA]",
+                    "type": "string"
+                },
+                "sstable_preemptive_open_interval_in_mb": {
+                    "default": 50,
+                    "type": "integer"
+                },
+                "allocate_tokens_for_keyspace": {
+                    "default": "",
+                    "type": "string"
+                },
+                "counter_cache_size_in_mb": {
+                    "default": "",
+                    "type": "string"
+                },
+                "rpc_min_threads": {
+                    "default": 16,
+                    "type": "integer"
+                },
+                "inter_dc_stream_throughput_outbound_megabits_per_sec": {
+                    "default": 200,
+                    "type": "integer"
+                },
+                "memtable_heap_space_in_mb": {
+                    "default": 2048,
+                    "type": "integer"
+                },
+                "row_cache_size_in_mb": {
+                    "default": 0,
+                    "description": "Maximum size of the row cache in memory. Row cache can save more time than key_cache_size_in_mb, but is space-intensive because it contains the entire row. Use the row cache only for hot rows or static rows. 0 disables the row cache.",
+                    "type": "integer",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__row_cache_size_in_mb"
+                },
+                "index_summary_resize_interval_in_minutes": {
+                    "default": 60,
+                    "description": "How frequently index summaries should be re-sampled in minutes. This is done periodically to redistribute memory from the fixed-size pool to SSTables proportional their recent read rates.",
+                    "type": "integer",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__index_summary_resize_interval_in_minutes"
+                },
+                "index_summary_capacity_in_mb": {
+                    "default": "",
+                    "type": "string"
+                },
+                "partitioner": {
+                    "default": "org.apache.cassandra.dht.Murmur3Partitioner",
+                    "description": "The partitioner used to distribute rows across the cluster. Murmur3Partitioner is the recommended setting. RandomPartitioner and ByteOrderedPartitioner are supported for legacy applications.",
+                    "type": "string",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__partitioner"
+                },
+                "commitlog_segment_size_in_mb": {
+                    "default": 32,
+                    "description": "The size of each commit log segment in Mb.",
+                    "type": "integer",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__commitlog_segment_size_in_mb"
+                },
+                "truncate_request_timeout_in_ms": {
+                    "default": 60000,
+                    "type": "integer"
+                },
+                "permissions_validity_in_ms": {
+                    "default": 2000,
+                    "type": "integer"
+                },
+                "num_tokens": {
+                    "default": 256,
+                    "type": "integer",
+                    "description": "The number of tokens randomly assigned to node(s) in a cluster that use vnodes",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__num_tokens"
+                },
+                "commitlog_compression_parameter": {
+                    "default": "",
+                    "type": "string"
+                },
+                "snapshot_before_compaction": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "compaction_large_partition_warning_threshold_mb": {
+                    "default": 100,
+                    "type": "integer"
+                },
+                "range_request_timeout_in_ms": {
+                    "default": 10000,
+                    "type": "integer"
+                },
+                "initial_token": {
+                    "default": "",
+                    "type": "string"
+                },
+                "row_cache_save_period": {
+                    "default": 0,
+                    "description": "Duration in seconds that rows are saved in cache. 0 disables caching.",
+                    "type": "integer",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__row_cache_save_period"
+                },
+                "file_cache_size_in_mb": {
+                    "default": 512,
+                    "type": "integer"
+                },
+                "max_hint_window_in_ms": {
+                    "default": 10800000,
+                    "type": "integer",
+                    "description": "The maximum amount of time, in ms, that hints are generates hints for an unresponsive node."
+                },
+                "internode_authenticator": {
+                    "default": "org.apache.cassandra.auth.AllowAllInternodeAuthenticator",
+                    "type": "string"
+                },
+                "native_transport_max_concurrent_connections": {
+                    "default": -1,
+                    "type": "integer"
+                },
+                "memtable_offheap_space_in_mb": {
+                    "default": 2048,
+                    "type": "integer"
+                },
+                "rpc_max_threads": {
+                    "default": 2048,
+                    "type": "integer"
+                },
+                "client_encryption_keystore": {
+                    "default": "resources/dse/conf/.keystore",
+                    "type": "string"
+                },
+                "native_transport_max_frame_size_in_mb": {
+                    "default": 256,
+                    "type": "integer"
+                },
+                "memtable_allocation_type": {
+                    "default": "heap_buffers",
+                    "description": "The type of allocations for the Cassandra memtable. heap_buffers keep all data on the JVM heap. offheap_buffers may reduce heap utilization for large string or binary values. offheap_objects may improve heap size for small integers or UUIDs as well. Both off heap options will increase read latency.",
+                    "type": "string",
+                    "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__memtable_allocation_type"
+                },
+                "dynamic_snitch_badness_threshold": {
+                    "default": 0.1,
+                    "type": "number"
+                },
+                "concurrent_materialized_view_writes": {
+                    "default": 32,
+                    "type": "integer"
+                },
+                "client_encryption_enabled": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "hints_directory": {
+                    "default": "/var/lib/cassandra/hints",
+                    "type": "string"
+                },
+                "memtable_cleanup_threshold": {
+                    "default": 0.11,
+                    "type": "number"
+                }
+            }
+        },
+        "cluster": {
+            "required": [
+                "cluster_name",
+                "dc_name",
+                "dse_search",
+                "dse_analytics",
+                "dse_graph"
+            ],
+            "type": "object",
+            "description": "DSE pod configuration properties",
+            "properties": {
+                "dc_name": {
+                    "default": "dc_cassandra",
+                    "type": "string",
+                    "title": "DSE Datacenter name"
+                },
+                "external_seeds": {
+                    "default": "",
+                    "type": "string",
+                    "description": "Comma-separated list of seed hosts for multi-DC operation",
+                    "title": "External seed nodes"
+                },
+                "dse_graph": {
+                    "default": true,
+                    "type": "boolean",
+                    "title": "Enable DSE Graph"
+                },
+                "cluster_name": {
+                    "default": "cluster_cassandra",
+                    "type": "string",
+                    "title": "DSE Cluster name"
+                },
+                "dse_analytics": {
+                    "default": true,
+                    "type": "boolean",
+                    "title": "Enable DSE Analytics"
+                },
+                "dse_search": {
+                    "default": true,
+                    "type": "boolean",
+                    "title": "Enable DSE Search"
+                }
+            }
+        },
+        "opscenter": {
+            "required": [
+                "cpus",
+                "mem",
+                "heap",
+                "disk",
+                "disk_type",
+                "gui_port"
+            ],
+            "type": "object",
+            "description": "OpsCenter pod configuration properties",
+            "properties": {
+                "stomp_port": {
+                    "default": 31620,
+                    "type": "integer",
+                    "description": "Port used for DSE agents to reach OpsCenter. DSE default is 61620.",
+                    "title": "Stomp port"
+                },
+                "cassandra_password": {
+                    "default": "cassandra",
+                    "type": "string",
+                    "title": "The password used to connect to Cassandra if authentication is enabled."
+                },
+                "placement_constraint": {
+                    "default": "",
+                    "type": "string",
+                    "description": "Marathon-style placement constraint for the OpsCenter node. Example: hostname:UNIQUE",
+                    "title": "OpsCenter placement constraint"
+                },
+                "custom_host": {
+                    "default": "",
+                    "type": "string",
+                    "description": "Only used if built-in OpsCenter is disabled",
+                    "title": "External OpsCenter host"
+                },
+                "enabled": {
+                    "default": true,
+                    "type": "boolean",
+                    "title": "Enable built-in DataStax OpsCenter"
+                },
+                "ldap": {
+                    "additionalProperties": false,
+                    "description": "LDAP Configuration",
+                    "type": "object",
+                    "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-server_host",
+                    "properties": {
+                        "server_host": {
+                            "default": "localhost",
+                            "description": "Hostname of LDAP server",
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-server_host"
+                        },
+                        "server_port": {
+                            "default": 389,
+                            "description": "Port of LDAP server",
+                            "type": "integer",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-server_port"
+                        },
+                        "admin_group_name": {
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-admin_group_name"
+                        },
+                        "user_memberof_attribute": {
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-user_memberof_attribute"
+                        },
+                        "group_search_base": {
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-group_search_base"
+                        },
+                        "search_dn": {
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-search_dn"
+                        },
+                        "search_password": {
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-search_password"
+                        },
+                        "group_name_attribute": {
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-group_name_attribute"
+                        },
+                        "enabled": {
+                            "default": false,
+                            "description": "Enable LDAP",
+                            "type": "boolean",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-server_host"
+                        },
+                        "user_search_base": {
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-user_search_base"
+                        },
+                        "user_search_filter": {
+                            "default": "(uid={0})",
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-user_search_filter"
+                        },
+                        "group_search_filter_with_dn": {
+                            "default": "(member={0})",
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-group_search_filter_with_dn"
+                        },
+                        "group_search_type": {
+                            "default": "directory_search",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-group_search_type",
+                            "enum": [
+                                "directory_search",
+                                "memberof_search"
+                            ]
+                        }
+                    }
+                },
+                "heap": {
+                    "default": 2000,
+                    "type": "integer",
+                    "title": "OpsCenter heap size (MB)"
+                },
+                "cpus": {
+                    "default": 2,
+                    "type": "number",
+                    "title": "OpsCenter CPU count"
+                },
+                "disk_type": {
+                    "default": "ROOT",
+                    "description": "OpsCenter persistent disk type [ROOT, MOUNT]",
+                    "enum": [
+                        "ROOT",
+                        "MOUNT"
+                    ]
+                },
+                "spark_master_proxy_port": {
+                    "default": 17080,
+                    "type": "integer",
+                    "title": "OpsCenter Spark Master proxy port"
+                },
+                "cassandra_username": {
+                    "default": "cassandra",
+                    "type": "string",
+                    "title": "The username used to connect to Cassandra if authentication is enabled"
+                },
+                "gui_port": {
+                    "default": 8888,
+                    "type": "integer",
+                    "title": "OpsCenter GUI port"
+                },
+                "mem": {
+                    "default": 4000,
+                    "type": "integer",
+                    "title": "OpsCenter memory size (MB)"
+                },
+                "disk": {
+                    "default": 10240,
+                    "type": "integer",
+                    "title": "OpsCenter persistent volume size (MB)"
+                },
+                "authentication": {
+                    "additionalProperties": false,
+                    "description": "Authentication Configuration",
+                    "type": "object",
+                    "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-enabled",
+                    "properties": {
+                        "enabled": {
+                            "default": false,
+                            "description": "Enable Authentication for accessing OpsCenter",
+                            "type": "boolean",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-enabled"
+                        },
+                        "login_user": {
+                            "default": "admin",
+                            "description": "User name for OpsCenter's Internal or LDAP authentication",
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-authentication_method"
+                        },
+                        "method": {
+                            "default": "",
+                            "description": "Authentication Method",
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-authentication_method"
+                        },
+                        "login_password": {
+                            "default": "admin",
+                            "description": "Password for OpsCenter's Internal or LDAP authentication",
+                            "type": "string",
+                            "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-authentication_method"
+                        }
+                    }
+                }
+            }
+        },
+        "service": {
+            "required": [
+                "beta-optin"
+            ],
+            "description": "DC/OS service configuration properties",
+            "type": "object",
+            "properties": {
+                "beta-optin": {
+                    "default": "",
+                    "type": "boolean",
+                    "description": "I have been invited to the Beta Program and accept all the terms of the Beta Agreement.",
+                    "title": "Agree to Beta terms"
+                },
+                "name": {
+                    "default": "dse",
+                    "type": "string",
+                    "description": "The name of this DC/OS DSE instance",
+                    "title": "Service name"
+                }
+            }
+        }
+    }
+}
