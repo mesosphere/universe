@@ -1,0 +1,57 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/bootstrap.zip",
+      "kafka-tgz": "https://downloads.mesosphere.com/kafka/assets/kafka_2.11-0.10.2.1.tgz",
+      "kafka-scheduler-zip": "https://downloads.mesosphere.com/kafka/assets/1.1.24-0.10.1.0-beta/kafka-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/kafka/assets/1.1.24-0.10.1.0-beta/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "d05d3fa2840e6811b9e0b16dab75257edf15dee33a4e59c01dd60283c73c897c"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kafka/assets/1.1.24-0.10.1.0-beta/dcos-kafka-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "6315b04d0bca700511eeb1565f01cd7f92a3168c774872e6a1b89a7809915351"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kafka/assets/1.1.24-0.10.1.0-beta/dcos-kafka-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "d6a03d0c1e91859b5723b81b724ea7fdadccfb0d546b2843dd34b19a8c4537fa"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kafka/assets/1.1.24-0.10.1.0-beta/dcos-kafka.exe"
+        }
+      }
+    }
+  }
+}
