@@ -28,6 +28,10 @@
     "FRAMEWORK_PRINCIPAL": "{{service.principal}}",
     "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
 
+    "ELASTICSEARCH_URI": "{{resource.assets.uris.elasticsearch-tar-gz}}",
+    "X_PACK_URI": "{{resource.assets.uris.x-pack-zip}}",
+    "SUPPORT_DIAGNOSTICS_URI": "{{resource.assets.uris.support-diagnostics-zip}}",
+
     {{#service.secret_name}}
     "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
     "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
@@ -79,7 +83,12 @@
   "uris": [
     "{{resource.assets.uris.jre-tar-gz}}",
     "{{resource.assets.uris.scheduler-zip}}",
-    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "{{resource.assets.uris.elasticsearch-tar-gz}}",
+    "{{resource.assets.uris.x-pack-zip}}",
+    "{{resource.assets.uris.support-diagnostics-zip}}",
+    "{{resource.assets.uris.statsd-plugin-zip}}",
+    "{{resource.assets.uris.kibana-tar-gz}}"
   ],
   "upgradeStrategy":{
     "minimumHealthCapacity": 0,
