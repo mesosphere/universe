@@ -1,0 +1,69 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "Configuration properties for the Tadpole DB Hub service for DC/OS.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of the service to display in the DC/OS dashboard.",
+          "type": "string",
+          "default": "tadpoledbhub"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to this Tadpole DB Hub instance.",
+          "type": "number",
+          "default": 1,
+          "minimum": 0.5
+        },
+        "mem": {
+          "description": "Memory (in MB) to allocate to this Tadpole DB Hub instance.",
+          "type": "number",
+          "default": 1024.0,
+          "minimum": 512.0
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem"
+      ]
+    },
+    "networking": {
+      "description": "Networking-related configuration properties for Tadpole DB Hub on DC/OS.",
+      "type": "object",
+      "properties": {
+        "virtual-host": {
+          "description": "The virtual host address to configure for integration with Marathon-lb. This config need marathon-lb which configured with external group.",
+          "type": "string"
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "description": "Engine storage configuration properties for Tadpole DB Hub.",
+      "properties":{
+        "enable-persistent-storage": {
+          "description": "Enable or disable persistent storage. If this is not enabled, Tadpole DB Hub's data(user list, db list, query history, etc) will not be preserved. If enable, \"volume-size\" and \"pinned-hostname\" is requried.",
+          "type": "boolean",
+          "default": false
+        },
+        "volume-size": {
+          "description": "If a new volume is to be created, this controls its size in MBs.",
+          "type": "number",
+          "default": 512,
+          "minimum": 256.0
+        },
+        "pinned-hostname": {
+          "description": "Host IP or hostname where Tadpole DB Hub on.",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "service",
+    "networking",
+    "storage"
+  ]
+}
