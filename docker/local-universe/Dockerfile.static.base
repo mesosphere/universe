@@ -1,0 +1,5 @@
+# This adds custom certificates to the static universe image.
+FROM universe-static
+
+COPY certs /certs
+COPY certs/domain.crt /usr/share/nginx/html/certs/domain.crt

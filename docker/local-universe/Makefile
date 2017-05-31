@@ -14,6 +14,12 @@ clean:
 	rm -rf certs &&							\
 	rm -f local-universe.tar.gz || 0
 
+static:
+	docker build -t universe-static -f Dockerfile.static .
+
+static-base:
+	docker build -t universe-base -f Dockerfile.base .
+
 local-universe: clean
 	python3 $(REPO_BASE_DIR)/scripts/local-universe.py			\
 		--repository $(REPO_BASE_DIR)/repo/packages/	\
