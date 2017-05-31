@@ -18,7 +18,7 @@ static:
 	docker build -t universe-static -f Dockerfile.static .
 
 static-base:
-	docker build -t universe-base -f Dockerfile.base .
+	docker build -t universe-base -f Dockerfile.static.base .
 
 local-universe: clean
 	python3 $(REPO_BASE_DIR)/scripts/local-universe.py			\
