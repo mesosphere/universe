@@ -5,6 +5,9 @@
     "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-ceph-large.png"
   },
   "assets": {
+    "uris": {
+      "ceph-tgz": "https://dl.bintray.com/vivint-smarthome/ceph-on-mesos/ceph-on-mesos-0.2.11.tgz"
+    },
     "container": {
       "docker": {
         "ceph-docker": "fernandosanchez/ceph-on-mesos:0.3"
