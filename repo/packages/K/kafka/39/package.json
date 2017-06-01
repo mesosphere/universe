@@ -5,7 +5,6 @@
   "minDcosReleaseVersion": "1.7",
   "name": "kafka",
   "packagingVersion": "3.0",
-  "preInstallNotes": "DEPRECATED; see beta-kafka.",
   "postInstallNotes": "DC/OS Kafka Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/current/usage/service-guides/kafka/\n\tIssues: https://dcosjira.atlassian.net/projects/KAFKA/issues",
   "postUninstallNotes": "DC/OS Kafka Service has been uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/current/usage/service-guides/kafka/uninstall to remove any persistent state if required.",
   "selected": false,
