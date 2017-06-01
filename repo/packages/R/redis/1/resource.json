@@ -1,0 +1,17 @@
+{
+ "images": {
+   "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-redis-small.png",
+   "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-redis-medium.png",
+   "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-redis-large.png",
+   "screenshots": [
+     "http://redis.io/images/redis-white.png"
+   ]
+ },
+ "assets": {
+   "container": {
+     "docker": {
+       "redis": "redis:3.2.9"
+     }
+   }
+ }
+}
