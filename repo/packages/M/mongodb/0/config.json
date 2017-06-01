@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "service": {
+      "description": "Service configuration properties",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name for this MongoDB instance",
+          "type": "string",
+          "default": "mongodb"
+        },
+        "instances": {
+          "description": "Number of MongoDB instances to run",
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to each MongoDB instance",
+          "type": "number",
+          "default": 1,
+          "minimum": 0.1
+        },        
+        "mem": {
+          "description": "Memory (MB) to allocate to each MongoDB task",
+          "type": "number",
+          "default": 1024.0,
+          "minimum": 256.0
+        },
+        "disk": {
+          "description": "Disk (MB) to allocate to each MongoDB instance",
+          "type": "number",
+          "default": 0,
+          "minimum": 0
+        },
+        "role": {
+          "description": "Deploy MongoDB only on nodes with this role",
+          "type": "string",
+          "default": "*"
+        },
+        "marathon-uri": {
+          "description": "URI of Marathon instance",
+          "type": "string",
+          "default": "http://master.mesos:8080"
+        },
+        "host_volume": {
+          "description": "Host volume configuration properties",
+          "type": "object",
+          "properties": {
+            "enable": {
+              "description": "Enable the host volume properties",
+              "type": "boolean",
+              "default": true
+            },
+            "location": {
+              "description": "The location of a volume on the host to be used for persisting MongoDB data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/mongodb`). Note that this path must be the same on all DCOS agents",
+              "type": "string",
+              "default": "/tmp"
+            }
+          }
+        },
+        "bridge": {
+          "description": "Bridge configuration properties",
+          "type": "object",
+          "properties": {
+            "enable": {
+              "description": "Whether to use BRIDGE networking mode for Docker container. By default, this is false and HOST mode networking is used.",
+              "type": "boolean",
+              "default": false
+            },
+            "mongodb_port": {
+              "description": "MongoDB Port",
+              "type": "integer",
+              "default": 0
+            },
+            "http_port": {
+              "description": "HTTP Port if general.httpinterface is enabled",
+              "type": "integer",
+              "default": 0
+            }
+          }
+        }
+      },
+      "required": ["name", "instances", "cpus", "mem", "disk", "role", "marathon-uri"]
+    },
+    "general": {
+      "description": "Storage configuration properties",
+      "type": "object",
+      "properties": {
+        "maxConns": {
+          "description": "Max number of simultaneous connections",
+          "type": "number",
+          "default": 1000000
+        },
+        "auth": {
+          "description": "Run with security",
+          "type": "boolean",
+          "default": false
+        },
+        "httpinterface": {
+          "description": "Enable http interface",
+          "type": "boolean",
+          "default": false
+        },
+        "jsonp": {
+          "description": "Allow JSONP access via http (has security implications)",
+          "type": "boolean",
+          "default": false
+        },
+        "rest": {
+          "description": "Turn on simple rest api",
+          "type": "boolean",
+          "default": false
+        },
+        "noIndexBuildRetry": {
+          "description": "Do not retry any index builds that were interrupted by shutdown",
+          "type": "boolean",
+          "default": false
+        },
+        "noscripting": {
+          "description": "Disable scripting engine",
+          "type": "boolean",
+          "default": false
+        },
+        "notablescan": {
+          "description": "Do not allow table scans",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": ["maxConns"]
+    },
+    "replica-set": {
+      "description": "Replica set configuration properties",
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "Enable Replica set properties",
+          "type": "boolean",
+          "default": false
+        },
+        "replSet": {
+          "description": "<setname>[/<optionalseedhostlist>]",
+          "type": "string",
+          "default": "rs1"
+        },
+        "replIndexPrefetch": {
+          "description": "Specify index prefetching behavior (if secondary) [none|_id_only|all]",
+          "type": "string",
+          "default": "all"
+        },
+        "enableMajorityReadConcern": {
+          "description": "Enables majority readConcern",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "storage": {
+      "description": "Storage configuration properties",
+      "type": "object",
+      "properties": {
+        "storageEngine": {
+          "description": "What storage engine to use",
+          "type": "string",
+          "default": "wiredTiger"
+        },
+        "directoryperdb": {
+          "description": "Each database will be stored in a separate directory",
+          "type": "boolean",
+          "default": false
+        },
+        "smallfiles": {
+          "description": "Use a smaller default file size",
+          "type": "boolean",
+          "default": false
+        },
+        "nojournal": {
+          "description": "disable journaling (journaling is on by default for 64 bit)",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": ["storageEngine"]
+    }
+  },
+  "type": "object"
+}

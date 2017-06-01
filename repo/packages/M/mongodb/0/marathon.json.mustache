@@ -1,0 +1,87 @@
+{
+  "id": "/{{service.name}}",
+  "instances": {{service.instances}},
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "disk": {{service.disk}},
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.mongodb}}",
+    {{#service.bridge.enable}}
+      "network": "BRIDGE",    
+      "portMappings": [
+        { "containerPort": 27017, "hostPort": {{service.bridge.mongodb_port}} }
+      {{#general.httpinterface}}
+        ,{ "containerPort": 28017, "hostPort": {{service.bridge.http_port}} }
+      {{/general.httpinterface}}
+      ]
+    {{/service.bridge.enable}}
+    {{^service.bridge.enable}}
+      "network": "HOST"
+    {{/service.bridge.enable}}
+    }
+  {{#service.host_volume.enable}}
+    ,"volumes": [
+      {
+        "containerPath": "/data/db",
+        "hostPath": "{{service.host_volume.location}}/{{service.name}}",
+        "mode": "RW"
+      }
+    ]
+  {{/service.host_volume.enable}}
+  },
+  "args": [
+    "--maxConns", "{{general.maxConns}}",
+  {{#general.auth}}
+    "--auth",
+  {{/general.auth}}
+  {{^general.auth}}
+    "--noauth",
+  {{/general.auth}}
+  {{#general.httpinterface}}
+    "--httpinterface",
+  {{/general.httpinterface}}
+  {{#general.jsonp}}
+    "--jsonp",
+  {{/general.jsonp}}
+  {{#general.rest}}
+    "--rest",
+  {{/general.rest}}
+  {{#general.noIndexBuildRetry}}
+    "--noIndexBuildRetry",
+  {{/general.noIndexBuildRetry}}
+  {{#general.noscripting}}
+    "--noscripting",
+  {{/general.noscripting}}
+  {{#general.notablescan}}
+    "--notablescan",
+  {{/general.notablescan}}
+  {{#replica-set.enable}}
+    "--replSet", "{{replica-set.replSet}}",
+    "--replIndexPrefetch", "{{replica-set.replIndexPrefetch}}",
+  {{#replica-set.enableMajorityReadConcern}}
+    "--enableMajorityReadConcern",
+  {{/replica-set.enableMajorityReadConcern}}
+  {{/replica-set.enable}}
+    "--storageEngine", "{{storage.storageEngine}}",
+  {{#storage.directoryperdb}}
+    "--directoryperdb",
+  {{/storage.directoryperdb}}
+  {{#storage.smallfiles}}
+    "--smallfiles",
+  {{/storage.smallfiles}}
+  {{#storage.nojournal}}
+    "--nojournal"
+  {{/storage.nojournal}}
+  {{^storage.nojournal}}
+    "--journal"
+  {{/storage.nojournal}}
+  ],
+  "acceptedResourceRoles": [
+    "{{service.role}}"
+  ],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}"
+  }
+}
