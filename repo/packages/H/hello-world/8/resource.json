@@ -1,0 +1,40 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "{{jre-url}}",
+      "libmesos-bundle-tar-gz": "{{libmesos-bundle-url}}",
+      "scheduler-zip": "{{artifact-dir}}/hello-world-scheduler.zip",
+      "executor-zip": "{{artifact-dir}}/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-small.png?raw=true",
+    "icon-medium": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-medium.png?raw=true",
+    "icon-large": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-large.png?raw=true"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"{{sha256:dcos-hello-world-darwin}}" } ],
+          "kind":"executable",
+          "url":"{{artifact-dir}}/dcos-hello-world-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"{{sha256:dcos-hello-world-linux}}" } ],
+          "kind":"executable",
+          "url":"{{artifact-dir}}/dcos-hello-world-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"{{sha256:dcos-hello-world.exe}}" } ],
+          "kind":"executable",
+          "url":"{{artifact-dir}}/dcos-hello-world.exe"
+        }
+      }
+    }
+  }
+}
