@@ -43,6 +43,7 @@
                 "beta-optin": {
                     "title": "Agree to Beta terms",
                     "type": "boolean",
+                    "enum": [true],
                     "default": "",
                     "description": "I have been invited to the Beta Program and accept all the terms of the Beta Agreement."
                 }
