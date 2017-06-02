@@ -135,15 +135,15 @@ When `.upgradesFrom` is specified this indicates to users that the package is ab
 the versions listed in the property. It is the resposibility of the package creator to make sure that this
 is indeed the case.
 
-###### `.downgradeTo`
+###### `.downgradesTo`
 |Packaging Version|   |
 |-----------------|---|
 |2.0|not supported|
 |3.0|not supported|
 |4.0|optional|
 
-Introduced in `packagingVersion` `4.0`, `.downgradeTo` can be specified as a property of `package.json`.
-When `.downgradeTo` is specified this indicates to users that the package is able to downgrade to any of
+Introduced in `packagingVersion` `4.0`, `.downgradesTo` can be specified as a property of `package.json`.
+When `.downgradesTo` is specified this indicates to users that the package is able to downgrade to any of
 the versions listed in the property. It is the resposibility of the package creator to make sure that this
 is indeed the case.
 
