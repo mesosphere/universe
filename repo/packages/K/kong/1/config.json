@@ -1,0 +1,202 @@
+{
+  "$schema":"http://json-schema.org/schema#",
+  "type":"object",
+  "properties":{
+    "service":{
+      "type":"object",
+      "description":"DC/OS service configuration properties",
+      "properties":{
+        "name":{
+          "description":"The name of this Kong instance.",
+          "type":"string",
+          "default":"kong"
+        },
+        "instances":{
+          "default":1,
+          "description":"Number of instances to run.",
+          "minimum":1,
+          "type":"integer"
+        },
+        "cpus":{
+          "default":1,
+          "description":"CPU shares to allocate to each instance.",
+          "minimum":1,
+          "type":"number"
+        },
+        "mem":{
+          "default":512,
+          "description":"Memory (MB) to allocate to each task.",
+          "minimum":512,
+          "type":"number"
+        },
+        "role":{
+          "default":"*",
+          "description":"Deploy Kong only on nodes with this role.",
+          "type":"string"
+        }
+      },
+      "required":[
+        "name",
+        "instances",
+        "cpus",
+        "mem",
+        "role"
+      ]
+    },
+    "configurations":{
+      "type":"object",
+      "description":"Kong configuration properties.",
+      "properties":{
+        "postgres":{
+          "description":"Postgres connection properties.",
+          "type":"object",
+          "properties":{
+            "host":{
+              "description":"Postgres host address.",
+              "type":"string",
+              "default":"postgres.marathon.l4lb.thisdcos.directory"
+            },
+            "port":{
+              "description":"Postgres port.",
+              "type":"integer",
+              "default":5432
+            },
+            "database":{
+              "description":"Postgres database name.",
+              "type":"string",
+              "default":"kong"
+            },
+            "user":{
+              "description":"Postgres user.",
+              "type":"string",
+              "default":"kong"
+            },
+            "password":{
+              "description":"Postgres password.",
+              "type":"string",
+              "default":"kong"
+            }
+          }
+        },
+        "cassandra":{
+          "description":"Cassandra connection properties.",
+          "type":"object",
+          "properties":{
+            "use-cassandra":{
+              "title":"Use Cassandra as Kong datastore?",
+              "description":"If true, Cassandra is used as Kong datastore.",
+              "type":"boolean",
+              "default":false
+            },
+            "contact-points":{
+              "description":"A comma-separated list of contact points.",
+              "type":"string",
+              "default":"node-0.cassandra.mesos, node-1.cassandra.mesos, node-2.cassandra.mesos"
+            },
+            "port":{
+              "description":"The port on which cassandra nodes are listening on.",
+              "type":"integer",
+              "default":9042
+            },
+            "keyspace":{
+              "description":"Cassandra keyspace.",
+              "type":"string",
+              "default":"kong"
+            }
+          }
+        },
+        "log-level":{
+          "description":"Log level of the Kong server.",
+          "type":"string",
+          "default":"notice"
+        },
+        "custom-envs":{
+          "description":"A space-separated list Kong configurations. Please avoid updating properties which already being set through other properties above.",
+          "type":"string",
+          "pattern":"^(KONG_\\w+=\\S+)*(\\sKONG_\\w+=\\S+)*$"
+        }
+      }
+    },
+    "networking":{
+      "type":"object",
+      "description":"Marathon-LB service configuration properties.",
+      "properties":{
+        "proxy":{
+          "type":"object",
+          "description":"Kong's Proxy port configuration.",
+          "properties":{
+            "external-access":{
+              "title":"Allow external access",
+              "description":"Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+              "type":"boolean",
+              "default":true
+            },
+            "vip-port":{
+              "description":"Port number to be used for communication internally to the cluster. Default is 8000.",
+              "type":"number",
+              "default":8000
+            },
+            "virtual-host":{
+              "description":"The virtual host address to integrate Kong proxy port with Marathon-lb.",
+              "type":"string"
+            },
+            "https-redirect":{
+              "description":"Whether Marathon-lb should redirect HTTP traffic to HTTPS. This requires 'virtual-host' to be set.",
+              "type":"boolean",
+              "default":false
+            },
+            "service-port":{
+              "description":"Port number to be used for external traffic to cluster through Marathon-LB load balancer.",
+              "type":"integer",
+              "default":10201
+            }
+          }
+        },
+        "admin":{
+          "type":"object",
+          "description":"Kong's Admin port configuration.",
+          "properties":{
+            "external-access":{
+              "title":"Allow external access",
+              "description":"Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+              "type":"boolean",
+              "default":false
+            },
+            "vip-port":{
+              "description":"Port number to be used for communication internally to the cluster. Default is 8001.",
+              "type":"number",
+              "default":8001
+            },
+            "service-port":{
+              "description":"Port number to be used for external traffic to cluster through Marathon-LB load balancer.",
+              "type":"integer",
+              "default":10202
+            }
+          }
+        },
+        "admin-ssl":{
+          "type":"object",
+          "description":"Kong's Admin ssl port configuration.",
+          "properties":{
+            "external-access":{
+              "title":"Allow external access",
+              "description":"Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+              "type":"boolean",
+              "default":false
+            },
+            "vip-port":{
+              "description":"Port number to be used for communication internally to the cluster. Default is 8444.",
+              "type":"number",
+              "default":8444
+            },
+            "service-port":{
+              "description":"Port number to be used for external traffic to cluster through Marathon-LB load balancer.",
+              "type":"integer",
+              "default":10203
+            }
+          }
+        }
+      }
+    }
+  }
+}

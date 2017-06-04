@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.kong/universe/assets/icon-kong-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.kong/universe/assets/icon-kong-medium.png",
+    "icon-large": "https://s3.amazonaws.com/downloads.kong/universe/assets/icon-kong-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "kong-image": "kong:0.10.3"
+      }
+    }
+  }
+}
