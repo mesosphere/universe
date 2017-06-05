@@ -1,0 +1,49 @@
+{
+  "id": "{{service.name}}",
+  "cmd": "until nslookup {{service.name}}.marathon.mesos; do echo 'Cannot resolve {{service.name}}.marathon.mesos yet. Trying again...'; sleep 2; done && export JAVA_HOME=$MESOS_DIRECTORY/jre1.7.0_76 && env && ./hadoop-2.7.1/bin/yarn resourcemanager",
+  "instances": 1,
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "requirePorts": true,
+  "portDefinitions": [
+    {
+      "port": 8192,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": {
+        "VIP_0": "1.2.3.4:5000"
+      }
+    },
+    {
+      "port": 8088,
+      "protocol": "tcp",
+      "name": "rm",
+      "labels": {
+        "VIP_0": "1.2.3.4:6000"
+      }
+    }
+  ],
+  "healthChecks": [
+    {
+      "path": "/api/config",
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "uris": [
+    "{{resource.assets.uris.apache-myriad-hadoop-tar-xz}}",
+    "{{resource.assets.uris.jre-tar-gz}}"
+  ],
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}"
+  },
+  "env":{
+    "YARN_RESOURCEMANAGER_OPTS":"-Dyarn.resourcemanager.hostname={{service.name}}.marathon.mesos",
+    "USER":"root"
+  }
+}
