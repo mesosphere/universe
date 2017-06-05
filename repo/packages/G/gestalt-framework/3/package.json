@@ -5,7 +5,7 @@
   "minDcosReleaseVersion": "1.8",
   "name": "gestalt-framework",
   "packagingVersion" : "3.0",
-  "preInstallNotes": "Requires DC/OS 1.8.5 or later. Please see the Getting started guide at http://www.galacticfog.com/gestalt.html",
+  "preInstallNotes": "This DC/OS Service is currently in preview. Requires DC/OS 1.8.5 or later. Please see the Getting started guide at http://www.galacticfog.com/gestalt.html",
   "postInstallNotes": "The Gestalt Framework is now running on your server.",
   "postUninstallNotes": "The gestalt-framework launcher has been uninstalled.\nIf the framework services were not shutdown from the launcher, they will need to be manually removed from Marathon.",
   "selected": false,
