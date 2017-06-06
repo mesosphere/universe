@@ -17,6 +17,10 @@ clean:
 static:
 	docker build -t universe-static -f Dockerfile.static .
 
+static-online-base:
+	docker pull mesosphere/universe-static:0.2 && \
+		docker tag mesosphere/universe-static:0.2 universe-static
+
 static-base:
 	docker build -t universe-base -f Dockerfile.static.base .
 
