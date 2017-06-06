@@ -156,6 +156,42 @@
                             "type": "string"
                         }
                     }
+                },
+                "authn": {
+                    "description": "Spark authentication configuration properties",
+                    "properties": {
+                        "enabled": {
+                            "default": false,
+                            "description": "Set to true to enable authentication.",
+                            "type": "boolean"
+                        },
+                        "service_account_secret_name": {
+                            "default": "",
+                            "description": "Path to a service-account credential in the secret store. Only needed when DC/OS service authentication is enabled.",
+                            "type": "string"
+                        },
+                        "ssl_files_dir": {
+                            "default": "/run/dcos/pki",
+                            "description": "Directory containing SSL-related files.",
+                            "type": "string"
+                         },
+                        "ssl_cert_file": {
+                            "default": "/run/dcos/pki/tls/certs/mesos-slave.crt",
+                            "description": "Path to SSL cert file on the host.",
+                            "type": "string"
+                         },
+                         "ssl_key_file": {
+                              "default": "/run/dcos/pki/tls/private/mesos-slave.key",
+                              "description": "Path to SSL key file on the host.",
+                              "type": "string"
+                         },
+                         "ssl_ca_dir": {
+                              "default": "/run/dcos/pki/certs",
+                              "description": "Path to SSL CA directory on the host.",
+                              "type": "string"
+                         }
+                    },
+                    "type": "object"
                 }
             }
         },

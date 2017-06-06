@@ -3,6 +3,13 @@
     "cpus": {{service.cpus}},
     "mem": {{service.mem}},
     "cmd": "/sbin/init.sh",
+{{#security.authn.enabled}}
+    "secrets": {
+        "serviceCredential": {
+            "source": "{{security.authn.service_account_secret_name}}"
+      }
+    },
+{{/security.authn.enabled}}
     "env": {
         "DCOS_SERVICE_NAME": "{{service.name}}",
         "SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",
@@ -23,6 +30,15 @@
         "SPARK_SSL_PROTOCOL": "{{security.ssl.protocol}}",
         "SPARK_SSL_ENABLEDALGORITHMS": "{{security.ssl.enabledAlgorithms}}",
 {{/security.ssl.enabled}}
+{{#security.authn.enabled}}
+        "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+        "MESOS_MODULES": "file:///opt/mesosphere/etc/mesos-scheduler-modules/dcos_authenticatee_module.json",
+        "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+        "SSL_CERT_FILE": "{{security.authn.ssl_cert_file}}",
+        "SSL_KEY_FILE": "{{security.authn.ssl_key_file}}",
+        "SSL_CA_DIR": "{{security.authn.ssl_ca_dir}}",
+        "SSL_ENABLED": "true",
+{{/security.authn.enabled}}
         "ENABLE_HISTORY_SERVER": "{{history-server.enabled}}",
         "HISTORY_LOG_DIR": "{{history-server.log-dir}}",
         "HISTORY_CLEANER_ENABLED": "{{history-server.cleaner-enabled}}",
@@ -39,6 +55,20 @@
     ],
     "container": {
         "type": "DOCKER",
+{{#security.authn.enabled}}
+        "volumes": [
+            {
+                "containerPath": "{{security.authn.ssl_files_dir}}",
+                "hostPath": "{{security.authn.ssl_files_dir}}",
+                "mode": "RO"
+            },
+            {
+                "containerPath": "/opt/mesosphere",
+                "hostPath": "/opt/mesosphere",
+                "mode": "RO"
+            }
+        ],
+{{/security.authn.enabled}}
         "docker": {
             "image": "{{resource.assets.container.docker.spark_docker}}",
             "network": "HOST",
