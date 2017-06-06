@@ -14,10 +14,10 @@ clean:
 	rm -rf certs &&							\
 	rm -f local-universe.tar.gz || 0
 
-static:
+static-build:
 	docker build -t universe-static -f Dockerfile.static .
 
-static-online-base:
+static-online:
 	docker pull mesosphere/universe-static:0.2 && \
 		docker tag mesosphere/universe-static:0.2 universe-static
 
