@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion" : "1.7",
+  "name": "marathon-slack",
+  "version": "0.4.0",
+  "tags": ["slack", "notifier", "marathon", "eventbus", "events", "bot", "notifications"],
+  "maintainer": "tobilg@gmail.com",
+  "description": "Sends events from the Marathon event bus to a Slack WebHook, and get automatically notified about what is happening in your Marathon instance (e.g. deployments, failed heath checks etc.).",
+  "scm": "https://github.com/tobilg/marathon-slack.git",
+  "website": "https://github.com/tobilg/marathon-slack",
+  "framework": false,
+  "preInstallNotes": "This DC/OS Service is currently in preview. This will install marathon-slack... Send your Marathon events to Slack!",
+  "postInstallNotes": "Thanks for installing! Have fun sending your Marathon events to Slack.",
+  "postUninstallNotes": "marathon-slack was successfully unistalled.",
+  "licenses": [{
+    "name": "MIT",
+    "url": "https://github.com/tobilg/marathon-slack/blob/master/LICENSE"
+  }]
+}
