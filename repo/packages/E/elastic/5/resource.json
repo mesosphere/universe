@@ -5,7 +5,12 @@
       "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
       "executor-zip": "https://downloads.mesosphere.com/elastic/assets/1.0.8-5.2.2/executor.zip",
       "bootstrap-zip": "https://downloads.mesosphere.com/elastic/assets/1.0.8-5.2.2/bootstrap.zip",
-      "scheduler-zip": "https://downloads.mesosphere.com/elastic/assets/1.0.8-5.2.2/elastic-scheduler.zip"
+      "scheduler-zip": "file:///home/andrey/Projects/Ruv/dcos-commons/frameworks/elastic/build/distributions/elastic-scheduler.zip",
+      "elasticsearch-tar-gz": "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.2.2.tar.gz",
+      "x-pack-zip": "https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.2.2.zip",
+      "support-diagnostics-zip": "https://github.com/elastic/elasticsearch-support-diagnostics/releases/download/5.2/support-diagnostics-5.2-dist.zip",
+      "statsd-plugin-zip": "https://github.com/Automattic/elasticsearch-statsd-plugin/releases/download/5.2.2.0/elasticsearch-statsd-5.2.2.0.zip",
+      "kibana-tar-gz": "https://artifacts.elastic.co/downloads/kibana/kibana-5.2.2-linux-x86_64.tar.gz"
     }
   },
   "images": {
