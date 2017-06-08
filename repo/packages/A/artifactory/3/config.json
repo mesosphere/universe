@@ -1,0 +1,179 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "Artifactory service properties.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of this DC/OS service.",
+          "type": "string",
+          "default": "artifactory"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to this instance.",
+          "type": "number",
+          "default": 2.0,
+          "minimum": 1.0
+        },
+        "mem": {
+          "description": "Memory to allocate to this instance.",
+          "type": "number",
+          "default": 2048.0,
+          "minimum": 1024.0
+        },
+        "nodes": {
+          "description": "Number of Artifactory instances. By default, this is 1.",
+          "type": "integer",
+          "default": 1
+        },
+        "licenses": {
+          "description": "License for Artifactory Pro or the Artifactory Enterprise primary node.",
+          "type": "string"
+        },
+        "host-volume": {
+          "description": "The location of a volume on the host to be used for persisting Artifactory data.",
+          "type": "string",
+          "default": "/var/artifactory"
+        },
+        "database": {
+          "description": "Database properties.",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "Database type. (can be MySQL, Oracle, MS SQL Server or Postgres)",
+              "enum": ["mysql", "postgresql"],
+              "default": "mysql"
+            },
+            "host": {
+              "description": "Database host.",
+              "type": "string",
+              "default": "mysql.marathon.mesos"
+            },
+            "port": {
+              "description": "Database port.",
+              "type": "integer",
+              "default": "3306"
+            },
+            "url":{
+              "description": "Database url.",
+              "type": "string",
+              "default": "jdbc:mysql://mysql.marathon.mesos:3306/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true"
+            },
+            "user": {
+              "description": "Database username.",
+              "type": "string",
+              "default": "jfrogdcos"
+            },
+            "password": {
+              "description": "Database password.",
+              "type": "string",
+              "default": "jfrogdcos"
+            }
+          }
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem",
+        "licenses",
+        "host-volume",
+        "database"
+      ]
+    },
+    "pro": {
+      "description": "Configuration for Artifactory Pro. These do not apply if Artifactory Enterprise is enabled.",
+      "type": "object",
+      "properties": {
+        "pinned-hostname": {
+          "description": "A DC/OS agent hostname to run this Artifactory instance on (e.g. 10.0.0.1). This must be specified if using local volumes with Artifactory Pro. If this is not specified then the task may relaunch on another node than the one it originally ran on.",
+          "type": "string"
+        },
+        "external-volumes": {
+          "description": "External persistent volumes configuration. External persistent volumes are a DC/OS feature that allow your data to be migrated with your task.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Whether to use DC/OS external persistent volumes to persist Artifactory state. By default, this is false.",
+              "type": "boolean",
+              "default": false
+            },
+            "provider": {
+              "description": "Provider of the external persistent volume. The default value should be correct for most use cases.",
+              "type": "string",
+              "default": "dvdi"
+            },
+            "driver": {
+              "description": "Volume driver to use for storage. The default value should be correct for most use cases.",
+              "type": "string",
+              "default": "rexray"
+            }
+          },
+          "required": [
+            "enabled"
+          ]
+        }
+      },
+      "required": [
+        "external-volumes"
+      ]
+    },
+    "enterprise": {
+      "description": "Configuration for Artifactory Enterprise (a highly-available deployment of Artifactory). If enabled, this will override any Artifactory Pro configuration.",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Whether to deploy Artifactory Enterprise. By default, this is false and Artifactory Enterprise is not deployed.",
+          "type": "boolean",
+          "default": false
+        },
+        "network": {
+          "description": "The network on which the Artifactory instances will communicate, in CIDR notation. For example: 192.168.65.0/24",
+          "type": "string"
+        },
+        "secondary": {
+          "description": "Configuration properties for the Artifactory Enterprise secondary node.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Whether this DC/OS service represents the Artifactory Enterprise secondary instance. To run Artifactory Enterprise, you must deploy one primary DC/OS service and one secondary DC/OS service. By default, this is false (i.e. a primary instance).",
+              "type": "boolean",
+              "default": false
+            },
+            "unique-nodes": {
+              "description": "Run secondary instances on unique hosts. By default, this is true.",
+              "type": "boolean",
+              "default": true
+            },
+            "nodes": {
+              "description": "Number of Artifactory Enterprise secondary instances. By default, this is 1.",
+              "type": "integer",
+              "default": 1
+            },
+            "name": {
+              "description": "The DC/OS service name of the primary Artifactory Enterprise instance to route requests to.",
+              "type": "string",
+              "default": "artifactory"
+            },
+            "api-key": {
+              "description": "API key generated by the primary Artifactory. This is necessary for the secondary instances to authenticate against the primary instance.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "enabled"
+          ]
+        }
+      },
+      "required": [
+        "enabled"
+      ]
+    }
+  },
+  "required": [
+    "service",
+    "pro",
+    "enterprise"
+  ]
+}

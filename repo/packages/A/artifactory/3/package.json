@@ -1,0 +1,27 @@
+{
+  "packagingVersion": "3.0",
+  "name": "artifactory",
+  "version": "5.3.1",
+  "minDcosReleaseVersion": "1.8",
+  "scm": "https://github.com/JfrogDev/artifactory-dcos.git",
+  "maintainer": "soleng-team@jfrog.com",
+  "website": "https://jfrog.com",
+  "framework": false,
+  "description": "As the first, and only, universal Artifact Repository Manager on the market, JFrog Artifactory fully supports software packages created by any language or technology. Documentation is available at: https://github.com/dcos/examples/",
+  "tags": [
+    "framework",
+    "artifacts",
+    "artifactory",
+    "repository"
+  ],
+  "preInstallNotes": "You will need at least 1 public agent in your cluster to install Artifactory-lb.",
+  "postInstallNotes": "Artifactory has been installed. Please install Artifactory-lb if not already installed.",
+  "postUninstallNotes": "Artifactory has been uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/JfrogDev/artifactory-dcos/blob/master/LICENSE"
+    }
+  ],
+  "selected": true
+}
