@@ -15,11 +15,11 @@ clean:
 	rm -f local-universe.tar.gz || 0
 
 static-build:
-	docker build -t universe-static -f Dockerfile.static .
+	docker build -t universe-static:0.2 -f Dockerfile.static .
 
 static-online:
 	docker pull mesosphere/universe-static:0.2 && \
-		docker tag mesosphere/universe-static:0.2 universe-static
+		docker tag mesosphere/universe-static:0.2 universe-static:0.2
 
 static-base:
 	docker build -t universe-base -f Dockerfile.static.base .
