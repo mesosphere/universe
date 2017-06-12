@@ -75,6 +75,52 @@
     ```bash
     $ sudo make local-universe
     ```
+
+## Building Your Own, off a non-changing universe-static base image.
+
+Mesosphere provides a `mesosphere/universe-static` Docker image, which has all of the core requirements to run a local universe.  All that must be added are your own certificates and repo contents.
+
+1. Use the make command to download the static image
+
+    ```bash
+    $ sudo make static-online
+    ## Will pull and re-tag mesosphere/universe-static:0.2 to universe-static
+    ```
+
+1. Create your certs (either use `make certs` or generate your own), and add them to the static image to create a `universe-base` image
+
+    ```bash
+    $ sudo make static-base
+    ## Will add certs to universe-static and create universe-base
+    ```
+
+1. Add content (see above)
+
+    ```bash
+    $ sudo make local-universe
+    ```
+
+To generate your own static image, use and/or modify the make target `static-build` (e.g., `make static-build` instead of `make static-online`)
+
+This leaves three total options:
+
+```bash
+make base
+make local-universe
+```
+
+```bash
+make static-online
+make static-base
+make local-universe
+```
+
+```bash
+make static-build
+make static-base
+make local-universe
+```
+
 ### Outside Resources
 
 As a workaround for the image and CLI resource issues in [the FAQ above](#faq), you can place those assets outside of the cluster.
