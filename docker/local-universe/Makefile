@@ -1,4 +1,7 @@
 REPO_BASE_DIR ?= $(shell pwd -P)/../..
+static_version ?= 0.2
+static_image ?= universe-static:$(static_version)
+
 .PHONY: certs base clean
 
 certs:
@@ -15,11 +18,11 @@ clean:
 	rm -f local-universe.tar.gz || 0
 
 static-build:
-	docker build -t universe-static:0.2 -f Dockerfile.static .
+	docker build -t $(static_image) -f Dockerfile.static .
 
 static-online:
-	docker pull mesosphere/universe-static:0.2 && \
-		docker tag mesosphere/universe-static:0.2 universe-static:0.2
+	docker pull mesosphere/$(static_image) && \
+		docker tag mesosphere/$(static_image) $(static_image)
 
 static-base:
 	docker build -t universe-base -f Dockerfile.static.base .

@@ -84,7 +84,7 @@ Mesosphere provides a `mesosphere/universe-static` Docker image, which has all o
 
     ```bash
     $ sudo make static-online
-    ## Will pull and re-tag mesosphere/universe-static:0.2 to universe-static
+    ## Will pull and re-tag mesosphere/universe-static to universe-static
     ```
 
 1. Create your certs (either use `make certs` or generate your own), and add them to the static image to create a `universe-base` image
@@ -190,3 +190,13 @@ For example, if you want dev-universe, then add `--server_url http://dev-univers
   ]
 }
 ```
+
+## Making changes...
+
+###  ...to the `universe-static` image
+
+1. Update `Dockerfile.static` with the changes
+1. Bump the default value of `static_version` in `Makefile`
+1. Create a pull request with the above changes
+1. Once it is merged, run the [Publish universe-static image](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_2_PublishUniverseStaticImage&branch_Oss_Universe_2=%3Cdefault%3E&tab=buildTypeStatusDiv) build, providing the new version number when prompted
+1. Submit a pull request that updates the `FROM universe-static:...` line in `Dockerfile.static.base` to use the new version
