@@ -2,6 +2,10 @@
   "$schema": "http://json-schema.org/schema#",
   "type": "object",
   "properties": {
+    "name": {
+      "type": "string",
+      "default": "helloworld"
+    },
     "port": {
       "type": "integer",
       "default": 8080
