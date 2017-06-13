@@ -63,26 +63,6 @@
           "description": "Name for this LB instance",
           "type": "string"
         },
-        "parameters": {
-            "description": "Docker parameters",
-            "type": "array",
-            "items": {
-               "type": "object",
-               "properties": {
-                   "key": {
-                       "type": "string"
-                   },
-                   "value": {
-                       "type": "string"
-                   }
-               },
-               "required": [
-                   "key",
-                   "value"
-               ]
-           },
-           "default": []
-        },
         "role": {
           "default": "slave_public",
           "description": "Deploy marathon-lb only on nodes with this role.",

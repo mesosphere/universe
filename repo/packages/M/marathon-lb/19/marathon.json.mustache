@@ -9,23 +9,7 @@
     "docker": {
       "image": "{{resource.assets.container.docker.marathon-lb-docker}}",
       "network": "HOST",
-      "privileged": true,
-      "parameters": [
-      {{#marathon-lb.parameters}}
-        {
-          "key": "{{key}}",
-          "value": "{{value}}"
-        },
-      {{/marathon-lb.parameters}}
-        {
-          "key": "label",
-          "value": "created_by=marathon"
-        },
-        {
-          "key": "label",
-          "value": "dcos_pkg_name=marathon-lb"
-        }
-      ]
+      "privileged": true
     }
   },
   {{#marathon-lb.role}}
