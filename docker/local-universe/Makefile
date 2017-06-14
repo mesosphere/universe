@@ -1,5 +1,5 @@
 REPO_BASE_DIR ?= $(shell pwd -P)/../..
-static_version ?= 0.2
+static_version ?= 0.2-2
 static_image ?= universe-static:$(static_version)
 
 .PHONY: certs base clean
