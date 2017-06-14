@@ -1,0 +1,24 @@
+{
+  "id": "{{elastic-job-cloud.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": {{service.instances}},
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export PATH=$(ls -d $JAVA_HOME/bin):$PATH && ./elastic-job-cloud-scheduler-2.1.4/bin/dcos.sh",
+  "env": {
+    "mesos_url": "{{mesos.URL}}",
+    "zk_servers": "{{elastic-job-cloud.zk_servers}}",
+    "zk_namespace": "{{elastic-job-cloud.zk_namespace}}",
+    "zk_digest": "{{elastic-job-cloud.zk_digest}}",
+    "http_port": "{{elastic-job-cloud.http_port}}"  
+  },
+  "ports": [{{elastic-job-cloud.http_port}}],
+  "requirePorts": true,
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}"
+  ],
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{elastic-job-cloud.name}}"
+  }
+}

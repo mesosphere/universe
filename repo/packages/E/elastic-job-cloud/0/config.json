@@ -1,0 +1,78 @@
+{
+  "type":"object",
+  "properties": {
+    "service": {
+      "description": "DC/OS specific configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "default":1,
+          "description":"The amount of CPU resources to allocate to each elastic-job-cloud scheduler instance.",
+          "type":"number"
+        },
+        "mem": {
+          "default":512,
+          "description":"The amount of Memory(MB) resources to allocate to each elastic-job-cloud scheduler instance.",
+          "type":"number"
+        },
+        "instances": {
+          "default":1,
+          "description":"The number of elastic-job-cloud scheduler instances.",
+          "type":"number"
+        }
+      },
+      "required": [
+        "cpus","mem","instances"
+      ]
+    },
+    "mesos": {
+      "description": "Mesos specific configuration properties",
+      "type": "object",
+      "properties": {
+        "URL": {
+          "default": "zk://mesos.master:2181/mesos",
+          "description": "The URL of the Mesos master.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "URL"
+      ]
+    },
+    "elastic-job-cloud": {
+      "description":"Elastic-Job-Cloud specific configuration properties",
+      "properties": {
+        "name": {
+          "default":"elastic-job-cloud",
+          "description":"The framework name.",
+          "type":"string"
+        },
+        "zk_servers": {
+          "default": "mesos.master:2181",
+          "description": "The URL of Zookeeper to be used to persist elastic-job-cloud data. The format is a comma-delimited list of hosts like host1:port,host2:port/zk, including the trailing path.",
+          "type": "string"
+        },
+        "zk_namespace": {
+          "default": "elastic-job-cloud",
+          "description": "The Zookeeper namespace of elastic-job-cloud.",
+          "type": "string"
+        },
+        "zk_digest": {
+          "default": "",
+          "description": "The Zookeeper digest of elastic-job-cloud.",
+          "type": "string"
+        },
+        "http_port": {
+          "default":"8899",
+          "description":"Port to web console listen on.",
+          "type":"string"
+        }
+      },
+      "required":[
+        "name",
+        "zk_servers"
+      ],
+      "type":"object"
+    }
+  }
+}
