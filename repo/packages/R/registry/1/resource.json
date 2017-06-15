@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-registry-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-registry-medium.png",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-registry-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "registry-docker": "registry:2.5.1"
+      }
+    }
+  }
+}

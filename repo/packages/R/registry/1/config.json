@@ -1,0 +1,173 @@
+{
+	"$schema": "http://json-schema.org/schema#",
+	"properties": {
+		"service": {
+			"type": "object",
+			"description": "DC/OS service configuration properties",
+			"properties": {
+				"name": {
+					"description": "Name of this service instance",
+					"type": "string",
+					"default": "registry"
+				},
+				"cpus": {
+					"description": "CPU shares to allocate to each service instance.",
+					"type": "number",
+					"default": 0.2,
+					"minimum": 0.2
+				},
+				"mem": {
+					"description":  "Memory to allocate to each service instance.",
+					"type": "number",
+					"default": 256.0,
+					"minimum": 256.0
+				},
+				"proxy": {
+					"type": "object",
+					"description": "Configure this registry as a remote proxy for another registry.",
+					"properties": {    
+						"enable": {
+							"description": "Enable or disable proxy mode.",
+							"type": "boolean",
+							"default": false                    
+						},
+						"remote_url": {
+							"description": "URL of the remote proxy to connect to.",
+							"type": "string",
+							"default": "https://registry-1.docker.io"
+						},
+						"username": {
+							"description": "Username to use in the remote proxy.",
+							"type": "string",
+							"default": "username"
+						},						
+						"password": {
+							"description": "Password to use in the remote proxy.",
+							"type": "string",
+							"default": "password"
+						}
+					}
+				}
+			},
+			"required": [
+				"cpus",
+				"mem"
+			]
+		},
+		"security": {
+			"type": "object",
+			"description": "registry security configuration properties",
+			"properties":{
+				"enable": {
+					"description":  "Enable TLS secure registry.",
+					"type": "boolean",
+					"default": false
+				},
+				"http_tls_download_ip": {
+					"description":  "IP address of the host to download the HTTP TLS certificate and key from. Files need to be in the root subdirectory of the server.",
+					"type": "string"
+				},
+				"http_tls_download_port": {
+					"description":  "TCP port of the host to download the HTTP TLS certificate and key from (i.e. the port where the server is listening on). Files need to be in the root subdirectory of the server.",
+					"type": "string",
+					"default": "80"
+				},					
+				"http_tls_certificate_filename": {
+					"description":  "Name of the file holding the HTTP TLS certificate to download from the host with the IP address configured in http_tls_download_ip.",
+					"type": "string",
+					"default": "domain.crt"
+				},
+				"http_tls_key_filename": {
+					"description":  "Name of the file holding the HTTP TLS key to download from the host with the IP address configured in http_tls_download_ip.",
+					"type": "string",
+					"default": "domain.key"
+				}
+			}
+		},
+		"storage": {
+			"type": "object",
+			"description": "registry storage configuration properties",
+			"properties":{
+				"storage_path": {
+					"description": "Storage path to be used inside the registry container.",
+					"type": "string",
+					"default": "/var/lib/registry"
+				}, 
+				"host_volume_registry": {
+					"description": "If using non-persistent volumes (local volumes), this sets the location of a volume on the host to be used for the registry service to store the contents of the registry. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/service_name`). This can be a mounted NFS drive. Note that this path must be the same on all DC/OS agents. NOTE: if you don't change the default /tmp value, YOUR DATA WILL NOT BE SAVED IN ANY WAY.",
+					"type": "string",
+					"default": "/tmp"
+				},     
+				"persistence": {
+					"type": "object",
+					"description": "Enable persistent storage.",
+					"properties": {    
+						"enable": {
+							"description": "Enable or disable persistent storage.",
+							"type": "boolean",
+							"default": false                    
+						},
+						"volume_size_registry": {
+							"description": "If a new volume is to be created, this controls its size in MBs.",
+							"type": "number",
+							"default": 1024
+						},
+						"external": {
+							"type": "object",
+							"description": "External persistent storage properties",
+								"properties":{   
+									"enable": {
+										"description": "Enable or disable external persistent storage. The `persistence` option must also be selected. Please note that for these to work, your DC/OS cluster MUST have been installed with the right options in `config.yaml`. Also, please note this requires a working  configuration file for the driver (e.g. `rexray.yaml`).",
+										"type": "boolean",
+										"default": false                    
+									},
+									"volume_name_registry": {
+										"description": "Name that your volume driver uses to look up your external volume. When your task is staged on an agent, the volume driver queries the storage service for a volume with this name. If one does not exist, it is created implicitly. Otherwise, the existing volume is reused.",
+										"type": "string",
+										"default": "registry"
+									},
+									"provider": {
+										"description": "Provider of the external persistent volume. The default value should be correct for most use cases.",
+										"type": "string",
+										"default": "dvdi"
+									},
+									"driver": {
+										"description": "Volume driver to use for storage. The default value should be correct for most use cases.",
+										"type": "string",
+										"default": "rexray"
+									}
+								}
+						}
+					}
+				}
+			}
+		},
+		"networking": {
+			"type": "object",
+			"description": "registry networking configuration properties",
+			"properties": {    
+				"port": {
+					"description": "Port number to be used for clear communication internally to the cluster.",
+					"type": "number",
+					"default": 5000
+				},  
+				"external_access": {
+					"type": "object",
+					"description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+						"properties": {    
+							"enable": {
+								"description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+								"type": "boolean",
+								"default": false                    
+							},
+							"external_access_port": {
+								"description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+								"type": "number",
+								"default": 15000
+							}
+						}
+					}
+			}      
+		}
+	}
+}
