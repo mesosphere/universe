@@ -16,8 +16,8 @@
     {{^storage.persistence.enable}}
     {{#storage.persistence.external.enable}}    
     "REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY": "/mnt/mesos/sandbox/{{storage.storage_path}}",
-    {{/storage.persistence.enable}}
-    {{/storage.persistence.external.enable}}   
+    {{/storage.persistence.external.enable}}  
+    {{/storage.persistence.enable}} 
     "STORAGE_PATH": "{{storage.storage_path}}"
   },
   {{#security.enable}}
