@@ -13,8 +13,8 @@
     "REGISTRY_HTTP_TLS_CERTIFICATE": "/mnt/mesos/sandbox/{{security.http_tls_certificate_filename}}",
     "REGISTRY_HTTP_TLS_KEY": "/mnt/mesos/sandbox/{{security.http_tls_key_filename}}",
     {{/security.enable}}
-    {{^storage.persistence.enable}}
-    {{#storage.persistence.external.enable}}    
+    {{#storage.persistence.enable}}
+    {{^storage.persistence.external.enable}}    
     "REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY": "/mnt/mesos/sandbox/{{storage.storage_path}}",
     {{/storage.persistence.external.enable}}  
     {{/storage.persistence.enable}} 
