@@ -15,6 +15,7 @@
     {{/security.enable}}
     {{#storage.persistence.external.enable}}          
     "STORAGE_PATH": "{{storage.storage_path}}",
+    {{/storage.persistence.external.enable}}  
     {{^storage.persistence.external.enable}}    
     "REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY": "/mnt/mesos/sandbox/{{storage.storage_path}}",
     {{/storage.persistence.external.enable}}  
@@ -36,6 +37,7 @@
         "provider": "{{storage.persistence.external.provider}}",
         "options": { "dvdi/driver": "{{storage.persistence.external.driver}}" }
       },
+      {{/storage.persistence.external.enable}}  
       {{^storage.persistence.external.enable}}
       "containerPath": "var",
       "persistent": {
