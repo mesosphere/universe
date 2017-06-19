@@ -76,7 +76,7 @@ def main():
     package_names = [name for name in args.include.split(',') if name != '']
 
     dcos_version = distutils.version.LooseVersion(args.dcos_version) \
-        if args.dcos_version is not None else None
+        if args.dcos_version else None
 
     with tempfile.TemporaryDirectory() as dir_path, \
             run_docker_registry(dir_path / pathlib.Path("registry")):
