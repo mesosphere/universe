@@ -1,0 +1,100 @@
+{
+	"$schema": "http://json-schema.org/schema#",
+	"properties": {
+		"service": {
+			"type": "object",
+			"description": "DC/OS service configuration properties",
+			"properties": {
+				"name": {
+					"description": "Name of this service instance",
+					"type": "string",
+					"default": "spark-thrift-server"
+				},
+				"instances": {
+					"description": "Number of service instances to run in the cluster.",
+					"type": "number",
+					"default": 1,
+					"minimum": 1
+				},
+				"cpus": {
+					"description": "CPU shares to allocate to each service instance.",
+					"type": "number",
+					"default": 0.5,
+					"minimum": 0.5
+				},
+				"mem": {
+					"description":  "Memory to allocate to each service instance.",
+					"type": "number",
+					"default": 512.0,
+					"minimum": 512.0
+				},
+				"port": {
+					"description":  "TCP port for the Spark Thrift Server service",
+					"type": "number",
+					"default": 9000
+				},
+				"host_path": {
+					"description":  "Path in the host to be used for temporary storage",
+					"type": "string",
+					"default": "/var/lib/tmp/spark"
+				},
+				"spark-executor-memory": {
+					"description":  "Memory to allocate to the Spark executor.",
+					"type": "string",
+					"default": "1024m"
+				},
+				"spark-driver-memory": {
+					"description":  "Memory to allocate to the Spark driver.",
+					"type": "string",
+					"default": "512m"
+				},
+				"spark-cores-max": {
+					"description":  "Maximum number of cores to allocate to Spark.",
+					"type": "string",
+					"default": "24"
+				},
+				"spark-executor-cores": {
+					"description":  "Maximum number of cores to allocate to the Spark executor.",
+					"type": "string",
+					"default": "1"
+				},
+				"spark-mesos-extra-cores": {
+					"description":  "Extra cores for Spark on Mesos.",
+					"type": "string",
+					"default": "1"
+				},
+				"spark-max-executors": {
+					"description":  "Maximum number of executors for Spark.",
+					"type": "string",
+					"default": "10"
+				},
+				"spark-executor-docker-image": {
+					"description":  "Name of the docker image to be used for Spark.",
+					"type": "string",
+					"default": "mesosphere/spark:1.0.8-2.1.0-1-hadoop-2.7"
+				},
+				"external_access": {
+					"type": "object",
+					"description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+					"properties": {    
+						"enable": {
+							"description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+							"type": "boolean",
+							"default": true                    
+						},
+						"external_access_port": {
+							"description": "For external access, port number to be used for clear communication in Marathon-LB.",
+							"type": "number",
+							"default": 9000
+						},
+						"virtual_host": {
+							"description": "For external access, Virtual Host URL to be used in Marathon-LB.",
+							"type": "string",
+							"default": "spark-thrift-server.example.org"
+						}
+					}
+				}
+			}      
+		}
+	}
+}

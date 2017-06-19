@@ -1,0 +1,26 @@
+{
+  "packagingVersion": "3.0",
+  "name": "minio",
+  "version": "0.0.7-RELEASE.2017-05-05T01-14-51Z",
+  "minDcosReleaseVersion": "1.8",
+  "scm": "https://github.com/minio/minio.git",
+  "maintainer": "dev@minio.io",
+  "website": "https://www.minio.io",
+  "framework": false,
+  "description": "Minio is an object storage server for cloud native applications. To deploy at scale, use DC/OS to orchestrate Minio containers one per tenant.",
+  "tags": [
+    "data",
+    "storage",
+    "filesystem"
+  ],
+  "preInstallNotes": "This DC/OS service is currently in preview. There may be bugs, incomplete features, incorrect documentation or other discrepancies in packaging. Preview packages should never be used in production! There is no limit to number of Minio services you can launch. To learn how to install Minio on DC/OS refer to https://github.com/dcos/examples/blob/master/minio/1.9/README.md",
+  "postInstallNotes": "Minio is compatible with AWS S3 APIs. Learn more about Minio on docs.minio.io . Minio has an active community on Slack slack.minio.io.",
+  "postUninstallNotes": "Minio DC/OS service has been successfully uninstalled and will no longer run.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/minio/minio/blob/master/LICENSE"
+    }
+  ],
+  "selected": false
+}

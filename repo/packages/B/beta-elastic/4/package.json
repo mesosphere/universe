@@ -1,0 +1,17 @@
+{
+  "description": "Elasticsearch 5, and optionally X-Pack",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.9",
+  "name": "beta-elastic",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS elastic service is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/1.9/usage/service-guides/elastic\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS elastic service has been uninstalled.",
+  "preInstallNotes": "This DC/OS Service is currently a beta candidate undergoing testing as part of a formal beta test program. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Contact Mesosphere before deploying this beta candidate service. Product support is available to approved participants in the beta test program.",
+  "selected": false,
+  "tags": [
+    "elasticsearch",
+    "x-pack"
+  ],
+  "version": "1.0.13-5.4.1-beta"
+}

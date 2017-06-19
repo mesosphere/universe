@@ -1,4 +1,7 @@
 REPO_BASE_DIR ?= $(shell pwd -P)/../..
+static_version ?= 0.2-2
+static_image ?= universe-static:$(static_version)
+
 .PHONY: certs base clean
 
 certs:
@@ -13,6 +16,16 @@ base: clean certs
 clean:
 	rm -rf certs &&							\
 	rm -f local-universe.tar.gz || 0
+
+static-build:
+	docker build -t $(static_image) -f Dockerfile.static .
+
+static-online:
+	docker pull mesosphere/$(static_image) && \
+		docker tag mesosphere/$(static_image) $(static_image)
+
+static-base:
+	docker build -t universe-base -f Dockerfile.static.base .
 
 local-universe: clean
 	python3 $(REPO_BASE_DIR)/scripts/local-universe.py			\

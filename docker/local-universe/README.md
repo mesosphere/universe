@@ -75,6 +75,52 @@
     ```bash
     $ sudo make local-universe
     ```
+
+## Building Your Own, off a non-changing universe-static base image.
+
+Mesosphere provides a `mesosphere/universe-static` Docker image, which has all of the core requirements to run a local universe.  All that must be added are your own certificates and repo contents.
+
+1. Use the make command to download the static image
+
+    ```bash
+    $ sudo make static-online
+    ## Will pull and re-tag mesosphere/universe-static to universe-static
+    ```
+
+1. Create your certs (either use `make certs` or generate your own), and add them to the static image to create a `universe-base` image
+
+    ```bash
+    $ sudo make static-base
+    ## Will add certs to universe-static and create universe-base
+    ```
+
+1. Add content (see above)
+
+    ```bash
+    $ sudo make local-universe
+    ```
+
+To generate your own static image, use and/or modify the make target `static-build` (e.g., `make static-build` instead of `make static-online`)
+
+This leaves three total options:
+
+```bash
+make base
+make local-universe
+```
+
+```bash
+make static-online
+make static-base
+make local-universe
+```
+
+```bash
+make static-build
+make static-base
+make local-universe
+```
+
 ### Outside Resources
 
 As a workaround for the image and CLI resource issues in [the FAQ above](#faq), you can place those assets outside of the cluster.
@@ -144,3 +190,13 @@ For example, if you want dev-universe, then add `--server_url http://dev-univers
   ]
 }
 ```
+
+## Making changes...
+
+###  ...to the `universe-static` image
+
+1. Update `Dockerfile.static` with the changes
+1. Bump the default value of `static_version` in `Makefile`
+1. Create a pull request with the above changes
+1. Once it is merged, run the [Publish universe-static image](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_2_PublishUniverseStaticImage&branch_Oss_Universe_2=%3Cdefault%3E&tab=buildTypeStatusDiv) build, providing the new version number when prompted
+1. Submit a pull request that updates the `FROM universe-static:...` line in `Dockerfile.static.base` to use the new version

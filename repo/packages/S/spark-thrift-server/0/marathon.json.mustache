@@ -1,0 +1,73 @@
+{
+  "id": "{{service.name}}",
+  "cmd": "/opt/spark/dist/sbin/start-thriftserver.sh --master mesos://leader.mesos:5050 --executor-memory ${SPARK_EXECUTOR_MEMORY} --driver-memory ${SPARK_DRIVER_MEMORY} --conf spark.shuffle.service.enabled=true --conf spark.network.timeout=10s --conf spark.shuffle.io.connectionTimeout=10s --conf spark.ui.showConsoleProgress=false --conf spark.cores.max=${SPARK_CORES_MAX} --conf spark.executor.cores=${SPARK_EXECUTOR_CORES} --conf spark.mesos.extra.cores=${SPARK_MESOS_EXTRA_CORES} --conf spark.dynamicAllocation.enabled=true --conf spark.dynamicAllocation.maxExecutors=${SPARK_MAX_EXECUTORS} --conf spark.local.dir=/tmp/spark --conf spark.mesos.coarse=true --conf spark.mesos.executor.docker.volumes=/var/lib/tmp/spark:/tmp/spark:rw --conf spark.mesos.executor.docker.image=${SPARK_EXECUTOR_DOCKER_IMAGE} --conf spark.mesos.executor.docker.forcePullImage=true --conf spark.executor.home=/opt/spark/dist && find /opt/spark/dist/logs/ -name 'spark--org.apache.spark.sql.hive.thriftserver.*.out' -exec tail -f {} \\;",
+  "args": null,
+  "user": null,
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": {{service.instances}},
+  "env": {
+    "HIVE_SERVER2_THRIFT_PORT": "{{service.port}}",
+    "SPARK_EXECUTOR_MEMORY": "{{service.spark-executor-memory}}",
+    "SPARK_DRIVER_MEMORY": "{{service.spark-driver-memory}}",
+    "SPARK_CORES_MAX": "{{service.spark-cores-max}}",
+    "SPARK_EXECUTOR_CORES": "{{service.spark-executor-cores}}",
+    "SPARK_MESOS_EXTRA_CORES": "{{service.spark-mesos-extra-cores}}",
+    "SPARK_EXECUTOR_DOCKER_IMAGE": "{{resource.assets.container.docker.spark-thrift-server-docker}}",
+    "SPARK_MAX_EXECUTORS": "{{service.spark-max-executors}}"
+  },
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.spark-thrift-server-docker}}",
+      "forcePullImage": false,
+      "privileged": false,      
+      "network": "HOST"
+    },
+    "volumes": [
+      {
+        "containerPath": "/tmp/spark",
+        "hostPath": "{{service.host_path}}",
+        "mode": "RW"
+      }
+    ]
+  },
+  "portDefinitions": [
+    {
+      {{#service.external_access.enable}}
+      "servicePort": {{service.external_access.external_access_port}},
+      {{/service.external_access.enable}} 
+      "port": {{service.port}},
+      "protocol": "tcp", 
+      "name": "spark-thrift-server",
+      "labels": {
+        "VIP_0": "/{{service.name}}:{{service.port}}"
+      }
+    }
+  ],
+  "requirePorts": true,  
+  "healthChecks": [
+    {
+      "protocol": "TCP",
+      "gracePeriodSeconds": 10,
+      "intervalSeconds": 10,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 3,
+      "port": {{service.port}},
+      "portType": "PORT_NUMBER"
+    }
+  ],
+  "acceptedResourceRoles": [
+    "*"
+  ],
+  "labels": {
+    {{#service.external_access.enable}}
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "{{networking.external_access.virtual_host}}",
+    {{/service.external_access.enable}}  
+    "DCOS_PACKAGE_VERSION": "2.1.0-0.1",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "SPARK_VERSION": "2.1.0",
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  }
+}
