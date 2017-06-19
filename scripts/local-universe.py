@@ -3,6 +3,7 @@
 import argparse
 import concurrent.futures
 import contextlib
+import distutils.version
 import fnmatch
 import json
 import os
@@ -62,10 +63,20 @@ def main():
         action='store_true',
         default=False,
         help='Set this to leave CLI resource URLs untouched.')
+    parser.add_argument(
+        '--dcos_version',
+        help='Set this to the version of DC/OS under which the local universe '
+        'will operate. Ensures that only package versions compatible with '
+        'that DC/OS version are included. If unset, the latest version of '
+        'each package will be included.'
+    )
 
     args = parser.parse_args()
 
     package_names = [name for name in args.include.split(',') if name != '']
+
+    dcos_version = distutils.version.LooseVersion(args.dcos_version) \
+        if args.dcos_version else None
 
     with tempfile.TemporaryDirectory() as dir_path, \
             run_docker_registry(dir_path / pathlib.Path("registry")):
@@ -120,7 +131,8 @@ def main():
                 enumerate_dcos_packages(
                     pathlib.Path(args.repository),
                     package_names,
-                    args.selected)):
+                    args.selected,
+                    dcos_version)):
                 print("Completed: {}".format(package))
 
         build_repository(
@@ -140,38 +152,66 @@ def main():
             print("These packages are not included in the image.")
 
 
-def enumerate_dcos_packages(packages_path, package_names, only_selected):
+def enumerate_dcos_packages(
+        packages_path,
+        package_names,
+        only_selected,
+        dcos_version):
     """Enumarate all of the package and revision to include
 
     :param packages_path: the path to the root of the packages
-    :type pacakges_path: str
+    :type packages_path: pathlib.Path
     :param package_names: list of package to include. empty list means all
                          packages
     :type package_names: [str]
     :param only_selected: filter the list of packages to only ones that are
                           selected
     :type only_selected: boolean
+    :param: dcos_version: filter the list of packages to only ones compatible
+                          with this DC/OS version; if None, do not filter
+    :type dcos_version: distutils.version.LooseVersion | None
     :returns: generator of package name and revision
-    :rtype: gen((str, str))
+    :rtype: gen((str, pathlib.Path))
     """
+    def version_check(package_json):
+        if dcos_version:
+            raw_version = package_json.get('minDcosReleaseVersion')
+            if raw_version:
+                min_version = distutils.version.LooseVersion(raw_version)
+                if dcos_version < min_version:
+                    return False
+        return True
+
+
+    def selected_check(package_name, package_json):
+        if only_selected:
+            return package_json.get('selected', False)
+        return not package_names or package_name in package_names
+
+
+    def include_revision(package_name, revision_path):
+        json_path = revision_path / 'package.json'
+        with json_path.open(encoding='utf-8') as json_file:
+            package_json = json.load(json_file)
+
+            version_pass = version_check(package_json)
+            selected_pass = selected_check(package_name, package_json)
+
+            return version_pass and selected_pass
+
 
     for letter_path in packages_path.iterdir():
         assert len(letter_path.name) == 1 and letter_path.name.isupper()
+
         for package_path in letter_path.iterdir():
+            revision_paths = list(package_path.iterdir())
+            revision_paths.sort(key=lambda r: int(r.name), reverse=True)
 
-            largest_revision = max(
-                package_path.iterdir(),
-                key=lambda revision: int(revision.name))
-
-            if only_selected:
-                json_path = largest_revision / 'package.json'
-                with json_path.open(encoding='utf-8') as json_file:
-                    if json.load(json_file).get('selected', False):
-                        yield (package_path.name, largest_revision)
-
-            elif not package_names or package_path.name in package_names:
-                # Enumerate package if list is empty or package name in list
-                yield (package_path.name, largest_revision)
+            # Include only the first acceptable revision
+            for revision_path in revision_paths:
+                if include_revision(package_path.name, revision_path):
+                    yield (package_path.name, revision_path)
+                    break
 
 
 def enumerate_http_resources(package, package_path, skip_images, skip_cli):
