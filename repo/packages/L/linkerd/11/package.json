@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "3.0",
+  "name": "linkerd",
+  "version": "1.0.0-0.2",
+  "scm": "https://github.com/linkerd/linkerd/",
+  "description": "A dynamic linker for microservices. Install, set your http proxy to $HOST:4140, and connect to your services via app name. linkerd will handle Marathon service discovery for you.",
+  "maintainer": "linkerd-users@googlegroups.com",
+  "website": "https://linkerd.io",
+  "tags": ["linkerd", "namerd", "buoyant", "loadbalancer", "service-discovery", "proxy", "microservices", "rpc"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. We recommend a minimum of 0.25 CPUs and 256 MB of RAM available for linkerd. We also recommend running linkerd on every host. To ensure this, set instances to the number of nodes in your cluster. Installation Documentation: https://github.com/dcos/examples/tree/master/linkerd",
+  "postInstallNotes": "linkerd DC/OS Service has been successfully installed!\nSee https://linkerd.io for documentation.",
+  "postUninstallNotes": "linkerd DC/OS Service has been uninstalled and will no longer run.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/linkerd/linkerd/blob/master/LICENSE"
+    }
+  ]
+}
