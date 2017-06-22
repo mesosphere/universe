@@ -1,9 +1,8 @@
 # Getting Started
-
 This document is intended as a "getting started" guide. The audience are developers looking to modify or *publish* the packages to the universe. This document is written in tutorial and walk-through format. The goal is to help you "get started". It does not go into great depth on some of the conceptual or inner details. This guide aims at making a user familiar with the concepts of what a Package is and what are the roles of marathon and universe in the package life cycle.
 
-## Prerequisites
 
+## Prerequisites
 Before the launch, make sure you have:
 * Access to a running [DC/OS](https://dcos.io/docs/latest/overview/what-is-dcos/).
 * [DC/OS CLI](https://dcos.io/docs/latest/cli/install/) installed and configured.
@@ -11,15 +10,18 @@ Before the launch, make sure you have:
 * python3 in your environment.
 * Docker is installed.
 
-## Required nomenclature
 
+## Required nomenclature
 This guide assumes you are familiar with the basics of the concepts mentioned below. Advanced user can skip this section and jump to [Create a package](#create-a-package). If you are new to DC/OS, we recommend below reading along with the external links they provide.
+
 
 ### What is Universe ?
 The Universe is a DC/OS package repository that contains services like Spark, Cassandra, Jenkins, and many others. It allows users to install these services with a single click from the DC/OS UI or by a simple `dcos package install package_name` command from the DC/OS CLI. Many community members have already submitted their own packages to the Universe, and we encourage anyone interested to get involved with package development! It is a great way of contributing to the DC/OS ecosystem and allows users to easily get started with your favorite package.
 
+
 ### What is Marathon ?
 [Marathon](https://mesosphere.github.io/marathon/) is a production-grade container orchestration platform for Mesosphere’s Datacenter Operating System (DC/OS) and [Apache Mesos](https://mesos.apache.org/). In order to deploy applications on top of Mesos, one can use Marathon for Mesos. Marathon is a cluster-wide init and control system for running Linux services in cgroups and Docker containers. Marathon has a number of different deploy [features](https://mesosphere.github.io/marathon/#features) and is a very mature project. Marathon runs on top of Mesos, which is a highly scalable, battle tested and flexible resource manager. Marathon is proven to scale and runs in many production environments.
+
 
 ### What is a package ?
 There are several to deploy your service on to a running DC/OS cluster.
@@ -31,11 +33,10 @@ Deploying your service using the package approach makes your life easier and ser
 
 
 ## Create a package
-
 Let us build a simple python http server, which, when receives a Get or a Post, responds with the current time at the server. We will start with this and build a package that provides this python server as a service.
 
-### Step 1 : Create a simple python http server
 
+### Step 1 : Create a simple python http server
 For the purposes of this guide, we will be using python3 and the BaseHTTPServer library it has. Let's create a file called `helloworld.py` in an empty directory called `time-server`
 
 ```python
@@ -75,7 +76,6 @@ The code snippet simply starts a python server and serves the get or post reques
 
 
 ### Step 2 : Creating a docker container
-
 Creating a docker container is essential to distribute your service. It runs completely isolated from the host environment by default, only accessing host files and ports if configured to do so. To continue reading, you need to be familiar with docker. We recommend this [get-started](https://docs.docker.com/get-started/) guide to familiarize docker. You should have logged in to your docker account in your terminal using `docker login`.
 
 We create a docker file (named Dockerfile) in the `time-server` directory created earlier. The Dockerfile should look like this:
@@ -97,6 +97,7 @@ EXPOSE 8000
 CMD ["python", "helloworld.py"]
 ```
 Read through the comments to understand what each step in the Dockerfile does.
+
 
 #### Build the container
 That’s it! You don’t need any dependencies to be installed on your system, nor will building or running this image install them on your system.
@@ -121,16 +122,16 @@ REPOSITORY         TAG                 IMAGE ID
 time-server         latest              42somsoc147
 ```
 
-#### Test your container
 
+#### Test your container
 When you execute the  `docker images`, you should be able to see the your image in the displayed list. In order to make sure the image is working as expected, you can run the container by issuing the below command :
 
 `docker run -p 80:8000 -t time-server:latest`
 
 The `-p` option maps the host port 80 to the container port 8000. The  `-t` flag creates a pseudoTTY and since we unbuffered the python standard i/o in our Dockerfile, we will be able to see the real time logs of the server in the console. Once you executed the above command, you should be able to browse [localhost](http://localhost:80)
 
-#### Tag and publish your container
 
+#### Tag and publish your container
 Once you are satisfied with the functionality of your container, you can publish the docker image on to the docker registry. In our case, we execute :
 
 `docker tag time-server docker-user-name/time-server:latest`
@@ -143,8 +144,8 @@ Once we tag our image, we have to publish (synonmous with github push) to the do
 
 Now that we have the container ready, in the next section we will see how to create a package!
 
-### Step 3 : Creating the package
 
+### Step 3 : Creating the package
 In order to create a package, you need to have forked the [universe repo](https://github.com/mesosphere/universe) and then cloned it so that it is available in your terminal. Once you do this, go to the ./repo/package/ directory and create a folder called `time-server` under the repo/package/T/ directory (as our package name starts with T). Inside this folder, if there is already another package with a name of your choice, you have to name your package differently. We create all the required files in this package.
 
 Each package has its own directory, with one subdirectory for each package revision. Each package revision directory contains the set of files necessary to create a consumable package that can be used by a DC/OS Cluster to install the package. For example, our package would look like this:
@@ -161,6 +162,7 @@ Each package has its own directory, with one subdirectory for each package revis
 
 In our case, since this is the first version of our time-server, we will create the above folder structure with only one revision (with number 0) and create the required empty files. In this section, we discuss about the mandatory fields for each of the files.
 
+
 #### config.json
 As the name says, this file is used for any configuration purposes. As our use case is trivial and we don't have anything to configure in our time-server, we keep this file empty with minimal defaults. This is how our config.json would look like:
 
@@ -172,6 +174,7 @@ As the name says, this file is used for any configuration purposes. As our use c
 }
 ```
 You can read more about the various fields in this field [here](https://github.com/mesosphere/universe#configjson) or can refer to [`repo/meta/schema/config-schema.json`](repo/meta/schema/config-schema.json) for a full fledged definition.
+
 
 #### resource.json
 This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects and
@@ -201,8 +204,6 @@ Below is the resource file that we use for our package. Note that we have provid
 
 You can read more about the various fields in this field [here](https://github.com/mesosphere/universe#resourcejson) or can refer to [`repo/meta/schema/v3-resource-schema.json`](repo/meta/schema/v3-resource-schema.json) for a full fledged definition.
 
-#### marathon.json.mustache
-
 
 #### package.json
 Every package in Universe must have a `package.json` file which specifies the high level metadata about the package.
@@ -221,8 +222,8 @@ Below is a snippet that represents our time server package.json (a version `4.0`
 ```
 You can read more about the various fields in this field [here](https://github.com/mesosphere/universe#configjson) or can see [`repo/meta/schema/package-schema.json`](repo/meta/schema/package-schema.json) for the full json schema outlining what properties are available for each corresponding version of a package.
 
-#### marathon.json.mustache
 
+#### marathon.json.mustache
 This file is a [mustache template](http://mustache.github.io/) that when rendered will create a
 [Marathon](http://github.com/mesosphere/marathon) app definition capable of running your service. The first level of validation is that after Mustache substitution, the result must be a JSON document. Once the json document is produced, it will be valid request body for Marathon's `POST /v2/apps` endpoint ([Marathon API Documentation](https://mesosphere.github.io/marathon/docs/rest-api.html)).
 
@@ -252,20 +253,21 @@ This is the marathon file that we would use :
   }
 }
 ```
-### Step 4 : Testing the package
 
+
+### Step 4 : Testing the package
 Now that you have the package built, we need to make sure everything works as expected before publishing to the community.
 
-#### Validation using build script.
 
+#### Validation using build script.
 You can execute the script inside the `scripts/build.sh` to make sure all the json schema comply to specifications and to install any missing libraries. This script is also executed as a precommit hook.
 
 It may throw some error if there are any unrecognized fields in the package files. Fix those error and re-execute the command until the build is successful.
 
 Now, we can run the universe server locally to test and install our package.
 
-#### Build the local universe server
 
+#### Build the local universe server
 Build the Universe Server Docker image
 ```bash
 DOCKER_IMAGE = "docker-user-name/universe-server" DOCKER_TAG="time-server" docker/server/build.bash
@@ -278,16 +280,16 @@ If you would like to publish the built Docker image, run
 DOCKER_IMAGE = "docker-user-name/universe-server" DOCKER_TAG="time-server" docker/server/build.bash publish
 ```
 
-#### Run the local universe server
 
+#### Run the local universe server
 Using the `marathon.json` that is created when building Universe Server we can run a Universe Server in our DC/OS cluster which can then be used to install packages.
 
 Run the following commands inside the `server/target` directory to configure DC/OS to use the custom Universe Server (DC/OS 1.8+):
 
 `dcos marathon app add marathon.json`
 
-#### Add the universe repo to DC/OS cluster:
 
+#### Add the universe repo to DC/OS cluster:
 Now that you have local universe server up and running, add this to the cluster instance. You can do this from the GUI or CLI. From the `server/target` directory execute
 
 `dcos package repo add --index=0 dev-universe http://universe.marathon.mesos:8085/repo`
@@ -296,20 +298,25 @@ For DC/OS 1.7, a different URL must be used:
 
 `dcos package repo add --index=0 dev-universe http://universe.marathon.mesos:8085/repo-1.7`
 
-#### Install the package
 
+#### Install the package
 - Go to the Settings on the left menu and under the Package Repositories section, you should see the original Universe server and your local installation.
 - Go to the cluster UI and navigate to the Universe on the left menu. Search for time-server and you should be able to see the package that we deployed.
 - Install the package and if everything works, you have successfully created a package, tested and deployed it!. Now move on to next step to publish your package to the DC/OS community.
 
-### Step 5 : Publish the package
 
+### Step 5 : Publish the package
 Universe Server is a new component introduced alongside `packagingVersion` `3.0`. In order for Universe to be able to provide packages for many versions of DC/OS at the same time, it is necessary for a server to be responsible for serving the correct set of packages to a cluster based on the cluster's version.
 
 All Pull Requests opened for Universe and the `version-3.x` branch will have their Docker image built and published to the DockerHub image [`mesosphere/universe-server`](https://hub.docker.com/r/mesosphere/universe-server/). In the artifacts tab of the build results you can find `docker/server/marathon.json` which can be used to run the Universe Server for testing in your DC/OS cluster.  For each Pull Request, click the details link of the "Universe Server Docker image" status report to view the build results.
 
-# TODO
 
+
+
+
+
+
+# TODO
 - Explain mustasche json
 - Get a docker-user-name
 - Get resources uploaded under downloads.mesosphere.io s3 bucket
