@@ -15,7 +15,9 @@ DOCKER_SERVER_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 whoami
 hostname
 mkdir -p docker/server/target
-env >> docker/server/target/testfile
+env >> docker/server/target/envfile
+touch testfile
+aws s3 cp testfile s3://downloads.mesosphere.io/dcos-enterprise/testfile
 
 function clean {
 
