@@ -14,6 +14,7 @@ DOCKER_SERVER_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 whoami
 hostname
+env >> docker/server/target/testfile
 
 function clean {
 
