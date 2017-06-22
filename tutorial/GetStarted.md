@@ -8,7 +8,6 @@ Before the launch, make sure you have:
 * Access to a running [DC/OS](https://dcos.io/docs/latest/overview/what-is-dcos/).
 * [DC/OS CLI](https://dcos.io/docs/latest/cli/install/) installed and configured.
 * [jq](https://stedolan.github.io/jq/download/) is installed in your environment.
-* [json-schema](TODO) is installed.
 * python3 in your environment.
 * Docker is installed.
 
@@ -140,7 +139,7 @@ This tags our `time-server` image with the docker repository `time-server` in yo
 
 Once we tag our image, we have to publish (synonmous with github push) to the docker registry so that marathon would be able to discover this in future using an url. We achieve this by executing the command :
 
-`docker push takirala/time-server:latest`
+`docker push docker-user-name/time-server:latest`
 
 Now that we have the container ready, in the next section we will see how to create a package!
 
@@ -227,19 +226,45 @@ You can read more about the various fields in this field [here](https://github.c
 This file is a [mustache template](http://mustache.github.io/) that when rendered will create a
 [Marathon](http://github.com/mesosphere/marathon) app definition capable of running your service. The first level of validation is that after Mustache substitution, the result must be a JSON document. Once the json document is produced, it will be valid request body for Marathon's `POST /v2/apps` endpoint ([Marathon API Documentation](https://mesosphere.github.io/marathon/docs/rest-api.html)).
 
+This is the marathon file that we would use :
 
 
 ### Step 4 : Testing the package
-- validate using the build split
 
-- docker image of entire universe
+Now that you have the package built, we need to make sure everything works as expected before publishing to the community.
+
+#### Validation using build script.
+
+You can execute the script inside the `scripts/build.sh` to make sure all the json schema comply to specifications and to install any missing libraries. This script is also executed as a precommit hook.
+
+It may throw some error if there are any unrecognized fields in the package files. Fix those error and re-execute the command until the build is successful.
+
+Now, we can run the universe server locally to test and install our package.
+
+Build the Universe Server Docker image
+```bash
+DOCKER_IMAGE = "docker-user-name/universe-server" DOCKER_TAG="time-server" docker/server/build.bash
+```
+
+This will create a Docker image `universe-server:time-server` and `docker/server/target/marathon.json` on your local machine
 
 - deploy locally (add repo to cluster)
 
 - when done, mov eon
 
+If you would like to publish the built Docker image, run
+```bash
+DOCKER_IMAGE = "docker-user-name/universe-server" DOCKER_TAG="time-server" docker/server/build.bash publish
+```
+
 
 ### Step 5 :
+
+Universe Server is a new component introduced alongside `packagingVersion` `3.0`. In order for Universe to be able to provide packages for many versions of DC/OS at the same time, it is necessary for a server to be responsible for serving the correct set of packages to a cluster based on the cluster's version.
+
+All Pull Requests opened for Universe and the `version-3.x` branch will have their Docker image built and published to the DockerHub image [`mesosphere/universe-server`](https://hub.docker.com/r/mesosphere/universe-server/). In the artifacts tab of the build results you can find `docker/server/marathon.json` which can be used to run the Universe Server for testing in your DC/OS cluster.  For each Pull Request, click the details link of the "Universe Server
+Docker image" status report to view the build results.
+
 
 - Share package with community. PR.
 
@@ -258,3 +283,4 @@ This file is a [mustache template](http://mustache.github.io/) that when rendere
 - what are v3-resource-schema and v2-resource-schema
 - Mustasche docs?
 - why & who /universe
+* [json-schema](TODO) is installed.
