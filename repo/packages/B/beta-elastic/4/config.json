@@ -34,19 +34,12 @@
                     "description": "Elasticsearch deploy strategy. [parallel, serial]",
                     "type": "string",
                     "default": "parallel"
-                },
-                "beta-optin": {
-                    "description": "I have been invited to the Beta Program and accept all the terms of the Beta Agreement.",
-                    "type": "boolean",
-                    "default": "",
-                    "title": "Agree to Beta terms"
                 }
             },
             "required": [
                 "name",
                 "user",
-                "deploy_strategy",
-                "beta-optin"
+                "deploy_strategy"
             ]
         },
         "elasticsearch": {

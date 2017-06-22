@@ -14,18 +14,11 @@
                     "description": "The user that runs the Kibana services and owns the Mesos sandbox.",
                     "type": "string",
                     "default": "nobody"
-                },
-                "beta-optin": {
-                    "type": "boolean",
-                    "description": "I have been invited to the Beta Program and accept all the terms of the Beta Agreement.",
-                    "title": "Agree to Beta terms",
-                    "default": ""
                 }
             },
             "required": [
                 "name",
-                "user",
-                "beta-optin"
+                "user"
             ]
         },
         "kibana": {

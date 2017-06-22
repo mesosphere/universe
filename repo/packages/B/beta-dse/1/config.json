@@ -7,19 +7,10 @@
                     "description": "The name of this DC/OS DSE instance",
                     "title": "Service name",
                     "type": "string"
-                },
-                "beta-optin": {
-                    "default": "",
-                    "description": "I have been invited to the Beta Program and accept all the terms of the Beta Agreement.",
-                    "title": "Agree to Beta terms",
-                    "type": "boolean"
                 }
             },
             "description": "DC/OS service configuration properties",
-            "type": "object",
-            "required": [
-                "beta-optin"
-            ]
+            "type": "object"
         },
         "cassandra": {
             "properties": {
