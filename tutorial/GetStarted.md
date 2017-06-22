@@ -228,7 +228,30 @@ This file is a [mustache template](http://mustache.github.io/) that when rendere
 
 This is the marathon file that we would use :
 
-
+```
+{
+  "id": "time-server",
+  "cpus": "0.1",
+  "mem": "256",
+  "instances": "1",
+  "args": [],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.timeserverimage}}",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 8000,
+          "hostPort": 80,
+          "servicePort": 0,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  }
+}
+```
 ### Step 4 : Testing the package
 
 Now that you have the package built, we need to make sure everything works as expected before publishing to the community.
@@ -241,6 +264,8 @@ It may throw some error if there are any unrecognized fields in the package file
 
 Now, we can run the universe server locally to test and install our package.
 
+#### Build the local universe server
+
 Build the Universe Server Docker image
 ```bash
 DOCKER_IMAGE = "docker-user-name/universe-server" DOCKER_TAG="time-server" docker/server/build.bash
@@ -248,36 +273,44 @@ DOCKER_IMAGE = "docker-user-name/universe-server" DOCKER_TAG="time-server" docke
 
 This will create a Docker image `universe-server:time-server` and `docker/server/target/marathon.json` on your local machine
 
-- deploy locally (add repo to cluster)
-
-- when done, mov eon
-
 If you would like to publish the built Docker image, run
 ```bash
 DOCKER_IMAGE = "docker-user-name/universe-server" DOCKER_TAG="time-server" docker/server/build.bash publish
 ```
 
+#### Run the local universe server
 
-### Step 5 :
+Using the `marathon.json` that is created when building Universe Server we can run a Universe Server in our DC/OS cluster which can then be used to install packages.
+
+Run the following commands inside the `server/target` directory to configure DC/OS to use the custom Universe Server (DC/OS 1.8+):
+
+`dcos marathon app add marathon.json`
+
+#### Add the universe repo to DC/OS cluster:
+
+Now that you have local universe server up and running, add this to the cluster instance. You can do this from the GUI or CLI. From the `server/target` directory execute
+
+`dcos package repo add --index=0 dev-universe http://universe.marathon.mesos:8085/repo`
+
+For DC/OS 1.7, a different URL must be used:
+
+`dcos package repo add --index=0 dev-universe http://universe.marathon.mesos:8085/repo-1.7`
+
+#### Install the package
+
+- Go to the Settings on the left menu and under the Package Repositories section, you should see the original Universe server and your local installation.
+- Go to the cluster UI and navigate to the Universe on the left menu. Search for time-server and you should be able to see the package that we deployed.
+- Install the package and if everything works, you have successfully created a package, tested and deployed it!. Now move on to next step to publish your package to the DC/OS community.
+
+### Step 5 : Publish the package
 
 Universe Server is a new component introduced alongside `packagingVersion` `3.0`. In order for Universe to be able to provide packages for many versions of DC/OS at the same time, it is necessary for a server to be responsible for serving the correct set of packages to a cluster based on the cluster's version.
 
-All Pull Requests opened for Universe and the `version-3.x` branch will have their Docker image built and published to the DockerHub image [`mesosphere/universe-server`](https://hub.docker.com/r/mesosphere/universe-server/). In the artifacts tab of the build results you can find `docker/server/marathon.json` which can be used to run the Universe Server for testing in your DC/OS cluster.  For each Pull Request, click the details link of the "Universe Server
-Docker image" status report to view the build results.
-
-
-- Share package with community. PR.
-
-- dcos package install should work anywhere.
-
-
-
-
-
-
+All Pull Requests opened for Universe and the `version-3.x` branch will have their Docker image built and published to the DockerHub image [`mesosphere/universe-server`](https://hub.docker.com/r/mesosphere/universe-server/). In the artifacts tab of the build results you can find `docker/server/marathon.json` which can be used to run the Universe Server for testing in your DC/OS cluster.  For each Pull Request, click the details link of the "Universe Server Docker image" status report to view the build results.
 
 # TODO
 
+- Explain mustasche json
 - Get a docker-user-name
 - Get resources uploaded under downloads.mesosphere.io s3 bucket
 - what are v3-resource-schema and v2-resource-schema
