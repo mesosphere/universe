@@ -3,12 +3,18 @@ This document is intended as a "getting started" guide. The audience are develop
 
 
 ## Prerequisites
-Before the launch, make sure you have:
-* Access to a running [DC/OS](https://dcos.io/docs/latest/overview/what-is-dcos/).
+Before the launch, make sure you have met the following conditions.
+
+### Library dependencies
 * [DC/OS CLI](https://dcos.io/docs/latest/cli/install/) installed and configured.
 * [jq](https://stedolan.github.io/jq/download/) is installed in your environment.
 * python3 in your environment.
 * Docker is installed.
+* json-schema is installed (This is python library that can be installed with `pip` or `conda`)
+
+### Access requirements
+* Access to a running [DC/OS](https://dcos.io/docs/latest/overview/what-is-dcos/).
+* The Universe Server needs to be built and run in a location accessible by the DC/OS Cluster
 
 
 ## Required nomenclature
@@ -31,6 +37,12 @@ There are several to deploy your service on to a running DC/OS cluster.
 
 Deploying your service using the package approach makes your life easier and service management efficient. Once you have a running DC/OS cluster, you would be able to browse packages in the dashboard. By the end of this guide, you will be able to build, publish, and browse your package in the cluster.
 
+
+### This repository
+
+- You can refer to to **schema** in `/repo/meta/schema` folder.
+- The packages are located in `/repo/packages` folder.
+- This tutorial is in `/tutorial` folder
 
 ## Create a package
 Let us build a simple python http server, which, when receives a Get or a Post, responds with the current time at the server. We will start with this and build a package that provides this python server as a service.
@@ -184,14 +196,6 @@ Below is the resource file that we use for our package. Note that we have provid
 
 ```
 {
-  "images": {
-    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-influxdb-small.png",
-    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-influxdb-medium.png",
-    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-influxdb-large.png",
-     "screenshots": [
-     "https://raw.githubusercontent.com/Kentik/docker-monitor/master/screenshots/influxdb-screenshot.png"
-   ]
-  },
   "assets": {
     "container": {
       "docker": {
@@ -202,7 +206,7 @@ Below is the resource file that we use for our package. Note that we have provid
 }
 ```
 
-You can read more about the various fields in this field [here](https://github.com/mesosphere/universe#resourcejson) or can refer to [`repo/meta/schema/v3-resource-schema.json`](repo/meta/schema/v3-resource-schema.json) for a full fledged definition.
+You can put the icons related to your package and screenshots of your service if needed here. You can read more about the various fields in this field [here](https://github.com/mesosphere/universe#resourcejson) or can refer to [`repo/meta/schema/v3-resource-schema.json`](repo/meta/schema/v3-resource-schema.json) for a full fledged definition.
 
 
 #### package.json
@@ -311,11 +315,6 @@ Universe Server is a new component introduced alongside `packagingVersion` `3.0`
 All Pull Requests opened for Universe and the `version-3.x` branch will have their Docker image built and published to the DockerHub image [`mesosphere/universe-server`](https://hub.docker.com/r/mesosphere/universe-server/). In the artifacts tab of the build results you can find `docker/server/marathon.json` which can be used to run the Universe Server for testing in your DC/OS cluster.  For each Pull Request, click the details link of the "Universe Server Docker image" status report to view the build results.
 
 
-
-
-
-
-
 # TODO
 - Explain mustasche json
 - Get a docker-user-name
@@ -324,3 +323,4 @@ All Pull Requests opened for Universe and the `version-3.x` branch will have the
 - Mustasche docs?
 - why & who /universe
 * [json-schema](TODO) is installed.
+- why service.name
