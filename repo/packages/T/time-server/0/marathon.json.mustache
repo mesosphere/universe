@@ -1,0 +1,22 @@
+{
+  "id": "time-server",
+  "cpus": "0.1",
+  "mem": "256",
+  "instances": "1",
+  "args": ["{{{foo.baz}}}"],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.timeserverimage}}",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 0,
+          "servicePort": 0,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  }
+}

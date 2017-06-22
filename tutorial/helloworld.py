@@ -2,8 +2,8 @@ import time
 import BaseHTTPServer
 
 
-HOST_NAME = 'localhost' #
-PORT_NUMBER = 8000 # Maybe set this to 9000.
+HOST_NAME = '0.0.0.0' # Host name of the http server
+PORT_NUMBER = 8000 # Port number of the http server
 
 class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_GET(s):
@@ -17,6 +17,8 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     def do_POST(s):
         do_GET(s)
+
+print "Server booting"
 
 if __name__ == '__main__':
     server_class = BaseHTTPServer.HTTPServer
