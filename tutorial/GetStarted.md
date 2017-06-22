@@ -10,11 +10,11 @@ Before the launch, make sure you have met the following conditions.
 * [jq](https://stedolan.github.io/jq/download/) is installed in your environment.
 * python3 in your environment.
 * Docker is installed.
-* json-schema is installed (This is python library that can be installed with `pip` or `conda`)
+* The python library json-schema has to be installed  (e.g.: using `pip` or `conda`)
 
 ### Access requirements
 * Access to a running [DC/OS](https://dcos.io/docs/latest/overview/what-is-dcos/).
-* The Universe Server needs to be built and run in a location accessible by the DC/OS Cluster
+* The Universe Server needs to be built and run in a location accessible by the DC/OS Cluster. There is no other way to test your package otherwise.
 
 
 ## Required nomenclature
@@ -35,14 +35,21 @@ There are several to deploy your service on to a running DC/OS cluster.
   * Use Marathon REST API Directly and
   * Deploy your service as a package
 
-Deploying your service using the package approach makes your life easier and service management efficient. Once you have a running DC/OS cluster, you would be able to browse packages in the dashboard. By the end of this guide, you will be able to build, publish, and browse your package in the cluster.
+Deploying your service using the package approach makes your life easier and service management efficient. Once you have a running DC/OS cluster, you would be able to browse packages in the dashboard. A package constitutes of the four required configuration files and all the external links those configuration files point to.
+
+Package implicitly relies on marathon as the definition provided by package is converted to a marathon app template. However, marathon doesn't know about package. By the end of this guide, you will be able to build, publish, and browse your package in the cluster.
 
 
 ### This repository
 
-- You can refer to to **schema** in `/repo/meta/schema` folder.
+- v4 is the latest version
 - The packages are located in `/repo/packages` folder.
 - This tutorial is in `/tutorial` folder
+- You can refer to to **schema** in `/repo/meta/schema` folder. This folder has
+  - config-schema.json that refers to the schema of the config.json
+  - package-schema.json that refers to the schema of the package.json
+  - v3-resource-schema.json that refers to the schema of the resource.json for the v3 and v4 packages
+  - repo-schema.json files are not for developer understanding.
 
 ## Create a package
 Let us build a simple python http server, which, when receives a Get or a Post, responds with the current time at the server. We will start with this and build a package that provides this python server as a service.
@@ -160,6 +167,8 @@ Now that we have the container ready, in the next section we will see how to cre
 ### Step 3 : Creating the package
 In order to create a package, you need to have forked the [universe repo](https://github.com/mesosphere/universe) and then cloned it so that it is available in your terminal. Once you do this, go to the ./repo/package/ directory and create a folder called `time-server` under the repo/package/T/ directory (as our package name starts with T). Inside this folder, if there is already another package with a name of your choice, you have to name your package differently. We create all the required files in this package.
 
+After you read this step, if you need further examples, you can refer to the [repo/packages/H/hello-world](repo/packages/H/hello-world) package.
+
 Each package has its own directory, with one subdirectory for each package revision. Each package revision directory contains the set of files necessary to create a consumable package that can be used by a DC/OS Cluster to install the package. For example, our package would look like this:
 
 ```
@@ -172,8 +181,9 @@ Each package has its own directory, with one subdirectory for each package revis
     └── ...
 ```
 
-In our case, since this is the first version of our time-server, we will create the above folder structure with only one revision (with number 0) and create the required empty files. In this section, we discuss about the mandatory fields for each of the files.
+In our case, since this is the first version of our time-server, we will create the above folder structure with only one revision (with number 0) and create the required empty files. As the versions of your package grow, this number increments by one unit. In this section, we discuss about the mandatory fields for each of the files.
 
+**Tip : When reading the schema json files, look for required json field to learn what are the required fields and what are mandatory**
 
 #### config.json
 As the name says, this file is used for any configuration purposes. As our use case is trivial and we don't have anything to configure in our time-server, we keep this file empty with minimal defaults. This is how our config.json would look like:
@@ -185,14 +195,16 @@ As the name says, this file is used for any configuration purposes. As our use c
 	}
 }
 ```
+
 You can read more about the various fields in this field [here](https://github.com/mesosphere/universe#configjson) or can refer to [`repo/meta/schema/config-schema.json`](repo/meta/schema/config-schema.json) for a full fledged definition.
 
+(Note : If you need to add a config property after the merge of the PR and CI has deployed your package, you have to bump your package version and create new package. So be sure to add all the config properties that you need.)
 
 #### resource.json
 This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects and
-images) needed to install the application.
+images) needed to install the application. It also contains the `cli` section that used to be part of `command.json` earlier.
 
-Below is the resource file that we use for our package. Note that we have provided our earlier published docker-user-name/time-server:latest image under the docker field here.
+Below is the resource file that we use for our package. We have provided our earlier published docker-user-name/time-server:latest image under the docker field here. Note that giving a docker image is optional and we can have other ways to execute the binary (E.g.: The package dcos-enterprise-cli doesn't use a docker image to install the binary.)
 
 ```
 {
@@ -212,7 +224,7 @@ You can put the icons related to your package and screenshots of your service if
 #### package.json
 Every package in Universe must have a `package.json` file which specifies the high level metadata about the package.
 
-Below is a snippet that represents our time server package.json (a version `4.0` package). This json has only the mandatory fields configured.
+Below is a snippet that represents our time server package.json (a version `4.0` package). This json has only the mandatory fields configured. As this is our first version, we fill the version field to be 1.0.0
 
 ```
 {
@@ -224,6 +236,9 @@ Below is a snippet that represents our time server package.json (a version `4.0`
   "tags": ["python", "http", "time-server"]
 }
 ```
+
+Note that the version field specifies the version of the package and this is independent of the folder number inside the `time-server` folder.
+
 You can read more about the various fields in this field [here](https://github.com/mesosphere/universe#configjson) or can see [`repo/meta/schema/package-schema.json`](repo/meta/schema/package-schema.json) for the full json schema outlining what properties are available for each corresponding version of a package.
 
 
@@ -318,9 +333,5 @@ All Pull Requests opened for Universe and the `version-3.x` branch will have the
 # TODO
 - Explain mustasche json
 - Get a docker-user-name
-- Get resources uploaded under downloads.mesosphere.io s3 bucket
-- what are v3-resource-schema and v2-resource-schema
-- Mustasche docs?
-- why & who /universe
 * [json-schema](TODO) is installed.
 - why service.name
