@@ -208,9 +208,9 @@ following order:
 ```json
 {
   "id": "foo",
-  "cpus": "1.0",
-  "mem": "1024",
-  "instances": "1",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
   "args": ["{{{foo.baz}}}"],
   "container": {
     "type": "DOCKER",

@@ -7,8 +7,5 @@ WORKDIR /package
 # Copy the current directory contents into the container at /app
 ADD . /package
 
-# Make port 8000 available to the world outside this container
-EXPOSE 8000
-
 # Run helloworld.py when the container launches
 CMD ["python", "-u", "helloworld.py"]

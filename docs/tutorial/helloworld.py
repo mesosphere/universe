@@ -1,9 +1,11 @@
 import time
 import BaseHTTPServer
+import os
 
 
 HOST_NAME = '0.0.0.0' # Host name of the http server
-PORT_NUMBER = 8000 # Port number of the http server
+# Gets the port number from $PORT0 environment variable
+PORT_NUMBER = int(os.environ['PORT0'])
 
 class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_GET(s):
@@ -14,11 +16,6 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.wfile.write("<html><head><title>Time Server</title></head>")
         s.wfile.write("<body><p>The current time is %s</p>" % time.asctime())
         s.wfile.write("</body></html>")
-
-    def do_POST(s):
-        do_GET(s)
-
-print "Server booting"
 
 if __name__ == '__main__':
     server_class = BaseHTTPServer.HTTPServer
