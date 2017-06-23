@@ -1,11 +1,11 @@
 # Use an official Python runtime as a base image
 FROM python:2
 
-# Set the working directory to /app
+# Set the working directory to the package directory
 WORKDIR /package
 
-# Copy the current directory contents into the container at /app
+# Copy the current directory contents into the container at /package
 ADD . /package
 
-# Run helloworld.py when the container launches
+# Run helloworld.py when the container launches. -u flag makes sure the output is not buffered
 CMD ["python", "-u", "helloworld.py"]
