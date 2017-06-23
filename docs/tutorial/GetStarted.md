@@ -1,9 +1,9 @@
 # Getting Started
-This document is intended as a "getting started" guide. The audience are developers looking to modify or *publish* the packages to the universe. This document is written in tutorial and walk-through format. The goal is to help you "get started". It does not go into great depth on some of the conceptual or inner details. This guide aims at making a user familiar with the concepts of what a Package is and what are the roles of marathon and universe in the package life cycle.
+This document is intended as a "getting started" guide. The audience are developers looking to modify or *publish* the packages to the Universe. This document is written in tutorial and walk-through format. The goal is to help you "get started". It does not go into great depth on some of the conceptual or inner details. This guide aims at making a user familiar with the concepts of what a Package is and what are the roles of Marathon and Universe in the package life cycle.
 
 
 ## Prerequisites
-Before the launch, make sure you have met the following conditions.
+Before starting this guide, make sure you have met the following conditions.
 
 ### Library dependencies
 * [DC/OS CLI](https://dcos.io/docs/latest/cli/install/) installed and configured.
@@ -14,10 +14,10 @@ Before the launch, make sure you have met the following conditions.
 ### Access requirements
 * Access to a running [DC/OS](https://dcos.io/docs/latest/overview/what-is-dcos/).
 * The Universe Server needs to be built and run in a location accessible by the DC/OS Cluster. There is no other way to test your package otherwise.
-* The marathon server needs to have access to the Docker Hub registry which has your universe server. In our guide, we use Docker Hub.
+* The Marathon server needs to have access to the Docker Hub registry which has your Universe server. In our guide, we use Docker Hub.
 
 ## Required nomenclature
-This guide assumes you are familiar with the basics of the concepts mentioned below. Advanced user can skip this section and jump to [Create a package](#create-a-package). If you are new to DC/OS, we recommend below reading along with the external links they provide.
+This guide assumes you are familiar with the basics of the concepts mentioned below. Advanced user can skip this section and jump to [Create a package](#create-a-package). If you are new to DC/OS, we recommend reading this sections along with the external links provided.
 
 
 ### What is Universe ?
@@ -29,14 +29,14 @@ The Universe is a DC/OS package repository that contains services like Spark, Ca
 
 
 ### What is a package ?
-There are several to deploy your service on to a running DC/OS cluster.
-  * Use DCOS marathon command in CLI
+There are several ways to deploy your service on to a running DC/OS cluster.
+  * Use DCOS Marathon command in CLI
   * Use Marathon REST API Directly and
   * Deploy your service as a package
 
 Deploying your service using the package approach makes your life easier and service management efficient. Once you have a running DC/OS cluster, you would be able to browse packages in the dashboard. A package constitutes of the four required configuration files and all the external links those configuration files point to.
 
-Package implicitly relies on marathon as the definition provided by package is converted to a marathon app template. However, marathon doesn't know about package. By the end of this guide, you will be able to build, publish, and browse your package in the cluster.
+Package implicitly relies on Marathon as the definition provided by package is converted to a Marathon app template. By the end of this guide, you will be able to build, publish, and browse your package in the cluster.
 
 
 ### This repository
@@ -47,26 +47,26 @@ Package implicitly relies on marathon as the definition provided by package is c
   - config-schema.json that refers to the schema of the config.json
   - package-schema.json that refers to the schema of the package.json
   - v3-resource-schema.json that refers to the schema of the resource.json for the v3 and v4 packages
-  - repo-schema.json files are not meant to be used by a developer.
+  - repo-schema.json files are not meant to be used by a developers and it is instead the schema for the API between Universe and DC/OS.
 
 ## Create a package
-Let us build a simple python http server, which, when receives a Get request, responds with the current time at the server. We will start with this and build a package that provides this python server as a service.
+Let us build a simple Python HTTP server, which, when receives a HTTP GET request, responds with the current time at the server. We will start with this and build a package that provides this python server as a service.
 
 
-### Step 1 : Create a simple python http server
-For the purposes of this guide, we will be using python3 and the BaseHTTPServer library it has. Let's create a file called `helloworld.py` in an empty directory called `time-server`
+### Step 1 : Create a simple Python HTTP Server
+For the purposes of this guide, we will be using Python 3 and the HTTPServer module provided by their standard library. Let's create a file called `helloworld.py` in an empty directory called `time-server-service`
 
 ```python
 import time
-import BaseHTTPServer
+import http.server
 import os
 
 
-HOST_NAME = '0.0.0.0' # Host name of the http server
+HOST_NAME = '0.0.0.0' # Host name of the HTTP server
 # Gets the port number from $PORT0 environment variable
-PORT_NUMBER = int(os.environ['PORT0'])
+PORT_NUMBER = 8000
 
-class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class MyHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(s):
         """Respond to a GET request."""
         s.send_response(200)
@@ -76,55 +76,60 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.wfile.write("<body><p>The current time is %s</p>" % time.asctime())
         s.wfile.write("</body></html>")
 
-
 if __name__ == '__main__':
-    server_class = BaseHTTPServer.HTTPServer
+    server_class = http.server.HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
-    print time.asctime(), "Server Starts - %s:%s" % (HOST_NAME, PORT_NUMBER)
+    print (time.asctime(), "Server Starts - %s:%s" % (HOST_NAME, PORT_NUMBER))
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass
     httpd.server_close()
-    print time.asctime(), "Server Stops - %s:%s" % (HOST_NAME, PORT_NUMBER)
-
+    print (time.asctime(), "Server Stops - %s:%s" % (HOST_NAME, PORT_NUMBER))
 ```
 
-The code snippet simply starts a python server and serves the get or post requests with a html text that says the current time. You should be able to run this code snippet with `python helloworld.py` and browse [localhost:8000](http://localhost:8000).
+The code snippet simply starts a Python server and serves the get requests with HTML that says the current time. You should be able to run this code snippet with `python3 helloworld.py` and browse [localhost:8000](http://localhost:8000).
 
+#### Change port mapping to be dynamic
 
-### Step 2 : Creating a docker container
-Creating a docker container is essential to distribute your service. It runs completely isolated from the host environment by default, only accessing host files and ports if configured to do so. To continue reading, you need to be familiar with docker. We recommend this [get-started](https://docs.docker.com/get-started/) guide to familiarize docker. You should have logged in to your docker account in your terminal using `docker login`.
+If we want to get a port number dynamically from available ports, Marathon provides a way to achieve this. We access the available ports using the environment variable `$PORT0`, `$PORT1`, `$PORT2` and so on. This will be explained clearly in the later section. But as of now, just change your Python snippet to read the port from an environment variable as below :
 
-We create a docker file (named Dockerfile) in the `time-server` directory created earlier. The Dockerfile should look like this:
+```python
+# Gets the port number from $PORT0 environment variable
+PORT_NUMBER = int(os.environ['PORT0'])
+```
+
+Once you do this, you can browse your server by executing `PORT0=8000 python3 helloworld.py`
+
+### Step 2 : Creating a Docker container
+Creating a Docker container is essential to distribute your service. It runs completely isolated from the host environment by default, only accessing host files and ports if configured to do so. To continue reading, you need to be familiar with docker. We recommend this [get-started](https://docs.docker.com/get-started/) guide to familiarize docker. You should have logged in to your Docker account in your terminal using `docker login`.
+
+We create a Docker file (named `Dockerfile`) in the `time-server-service` directory created earlier. The `Dockerfile` should look like this:
 
 ```
 # Use an official Python runtime as a base image
-FROM python:2
+FROM python:3
 
-# Set the working directory to /app
+# Set the working directory to the package directory
 WORKDIR /package
 
-# Copy the current directory contents into the container at /app
+# Copy the current directory contents into the container at /package
 ADD . /package
 
-# Run helloworld.py when the container launches
-CMD ["python", "-u", "helloworld.py"]
+# Run helloworld.py when the container launches. -u flag makes sure the output is not buffered
+CMD ["python3", "-u", "helloworld.py"]
 ```
-Read through the comments to understand what each step in the Dockerfile does.
+Read through the comments to understand what each line in the `Dockerfile` does.
 
 
 #### Build the container
-That’s it! You don’t need any dependencies to be installed on your system, nor will building or running this image install them on your system.
-
-Here’s what `ls` should show:
-
+*Through out the rest of this guide, we refer to `docker-user-name` as your Docker user name where you access your Docker images. You are expected to replace the keyword `docker-user-name` with your Docker user name in all commands and files*
+Now that we have everything ready, we can build our container. Here’s what `ls` should show:
 ```
 $ ls
 Dockerfile		helloworld.py
 ```
-
-Now run the build command. This creates a Docker image, which we’re going to tag using -t so it has a friendly name.
+Now run the build command. This creates a Docker image which we’re going to tag using -t so it has a friendly name.
 
 `docker build -t docker-user-name/time-server:part1 .`
 
@@ -133,47 +138,34 @@ Where is your built image? It’s in your machine’s local Docker image registr
 ```
 $ docker images
 
-REPOSITORY         TAG                 IMAGE ID
-time-server        part1              42somsoc147
+REPOSITORY                        TAG         IMAGE ID
+docker-user-name/time-server      part1       42somsoc147
 ```
 
 
 #### Test your container
 When you execute the  `docker images`, you should be able to see the your image in the displayed list. In order to make sure the image is working as expected, you can run the container by issuing the below command :
 
-`docker run -p 80:8000 -t docker-user-name/time-server:part1`
+`docker run -env PORT0=8000 -p 80:8000 -t docker-user-name/time-server:part1`
 
-The `-p` option maps the host port 80 to the container port 8000. The  `-t` flag creates a pseudoTTY and since we unbuffered the python standard i/o in our Dockerfile, we will be able to see the real time logs of the server in the console. Once you executed the above command, you should be able to browse [localhost](http://localhost:80)
+Note that we are reading the port number from the `PORT0` environment variable. Marathon sets this environment variable when launching the container and since we don't have that yet, we need to provide the environment variable manually using `-env PORT0=8000`. The `-p` option maps the host port 80 to the container port 8000. The  `-t` flag creates a pseudoTTY and since we unbuffered the python standard i/o in our Dockerfile, we will be able to see the real time logs of the server in the console. Once you executed the above command, you should be able to browse [localhost](http://localhost:80)
 
-*Through out the rest of this guide, we refer to `docker-user-name` as your docker user name where you access your docker images. You are expected to replace the keyword `docker-user-name` with your docker user name in all commands*
-
-#### Change port mapping to be dynamic
-
-If we want to get a port number dynamically from available ports, marathon provides a way to achieve this. We access the available ports using the environment variable `$PORT0`, `$PORT1`, `$PORT2` and so on. This will be explained clearly in the later section. But as of now, just change your python snippet to read the port from an environment variable as below :
-
-```python
-# Gets the port number from $PORT0 environment variable
-PORT_NUMBER = int(os.environ['PORT0'])
-```
-
-Before you continue to next step, make sure to re-build your docker image.
 
 #### Tag and publish your container
-Once you are satisfied with the functionality of your container, you can publish the docker image on to the docker registry. In our case, we execute :
+Once you are satisfied with the functionality of your container, you can publish the Docker image on to the Docker registry. In our case, we execute :
 
 `docker tag time-server docker-user-name/time-server:part1`
 
-This tags our `time-server` image with the docker repository `time-server` in your docker user name `docker-user-name` and provides an optional tag `part1`.
+This tags our `time-server` image with the Docker repository `time-server` in your Docker user name `docker-user-name` and provides an optional tag `part1`.
 
-Once we tag our image, we have to publish (synonmous with github push) to the docker registry so that marathon would be able to discover this in future using an url. We achieve this by executing the command :
+Once we tag our image, we have to publish (synonmous with github push) to the Docker registry so that Marathon would be able to discover this in future using an url. We achieve this by executing the command :
 
 `docker push docker-user-name/time-server:part1`
 
 Now that we have the container ready, in the next section we will see how to create a package!
 
-
-### Step 3 : Creating the package
-In order to create a package, you need to have forked the [universe repo](https://github.com/mesosphere/universe) and then cloned it so that it is available in your terminal. Once you do this, go to the ./repo/package/ directory and create a folder called `time-server` under the repo/package/T/ directory (as our package name starts with T). Inside this folder, if there is already another package with a name of your choice, you have to name your package differently. We create all the required files in this package.
+### Step 3 : Creating a DC/OS Package
+In order to create a package, you need to have forked the [Universe repo](https://github.com/mesosphere/universe) and then cloned it so that it is available in your terminal. Once you do this, create a folder named time-server under the repo/package/T directory (as our package name starts with the letter "t"). Inside this folder, if there is already another package with a name of your choice, you have to name your package differently. We create all the required files in this package.
 
 After you read this step, if you need further examples, you can refer to the [repo/packages/H/hello-world](repo/packages/H/hello-world) package.
 
@@ -227,15 +219,14 @@ As the name says, this file is used for any configuration purposes. This is how 
 }
 ```
 
-We have three main properties to be configured. The `name` is the actual name of the service. The cpus and mem are the amount of CPU and Memory required for each service instance. You can read more about the various fields in this field [here](https://github.com/mesosphere/universe#configjson) or can refer to [`repo/meta/schema/config-schema.json`](repo/meta/schema/config-schema.json) for a full fledged definition.
+We have three main properties to be configured. The `name` is the actual name of the service. The `cpus` and `mem` are the amount of CPU and Memory required for each service instance. You can read more about the various fields in this file [here](https://github.com/mesosphere/universe#configjson) or can refer to [`repo/meta/schema/config-schema.json`](repo/meta/schema/config-schema.json) for a full fledged definition.
 
 (Note : If you need to add a config property after the merge of the PR and CI has deployed your package, you have to bump your package version and create new package. So be sure to add all the config properties that you need.)
 
 #### resource.json
-This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects and
-images) needed to install the application. It also contains the `cli` section that can be used to allow a package to configure native CLI subcommands for several platforms and architectures.
+This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects and images) needed to install the application. It also contains the `cli` section that can be used to allow a package to configure native CLI subcommands for several platforms and architectures.
 
-Below is the resource file that we use for our package. We have provided our earlier published docker-user-name/time-server:part1 image under the docker field here. Note that giving a docker image is optional and we can have other ways to execute the binary (E.g.: The package dcos-enterprise-cli doesn't use a docker image to install the binary.)
+Below is the resource file that we use for our package. We have provided our earlier published docker-user-name/time-server:part1 image under the `docker` json field here. Note that giving a Docker image is optional and we can have other ways to execute the binary (E.g.: The package `dcos-enterprise-cli` doesn't use a Docker image to install the binary.)
 
 ```
 {
@@ -263,7 +254,7 @@ Below is a snippet that represents our time server package.json (a version `4.0`
   "name": "time-server",
   "version": "1.0.0",
   "maintainer": "https://github.com/mesosphere/universe",
-  "description": "This is a simple python http server that displays a webpage that says the current time at the server location",
+  "description": "This is a simple Python HTTP server that displays a webpage that says the current time at the server location",
   "tags": ["python", "http", "time-server"]
 }
 ```
@@ -277,7 +268,7 @@ You can read more about the various fields in this field [here](https://github.c
 This file is a [mustache template](http://mustache.github.io/) that when rendered will create a
 [Marathon](http://github.com/mesosphere/marathon) app definition capable of running your service. The first level of validation is that after Mustache substitution, the result must be a JSON document. Once the json document is produced, it will be valid request body for Marathon's `POST /v2/apps` endpoint ([Marathon API Documentation](https://mesosphere.github.io/marathon/docs/rest-api.html)).
 
-This is the marathon file that we would use :
+This is the Marathon file that we would use :
 
 ```
 {
@@ -301,7 +292,7 @@ This is the marathon file that we would use :
 }
 ```
 
-The service id, cpus and mem are populated from the config json file. The image is populated from the resource.json file. We are using HOST mode of networking to dynamically get a port from the available pool. Read [about marathon ports](https://mesosphere.github.io/marathon/docs/ports.html) to understand modes in detail.
+The service id, cpus and mem are populated from the config json file. The image is populated from the resource.json file. We are using HOST mode of networking to dynamically get a port from the available pool. Read [about Marathon ports](https://mesosphere.github.io/marathon/docs/ports.html) to understand modes in detail.
 
 
 ### Step 4 : Testing the package
@@ -313,10 +304,10 @@ You can execute the script inside the `scripts/build.sh` to make sure all the js
 
 It may throw some error if there are any unrecognized fields in the package files. Fix those error and re-execute the command until the build is successful.
 
-Now, we can run the universe server locally to test and install our package.
+Now, we can run the Universe server locally to test and install our package.
 
 
-#### Build the local universe server
+#### Build the local Universe server
 Build the Universe Server Docker image
 ```bash
 DOCKER_IMAGE="docker-user-name/universe-server" DOCKER_TAG="time-server" docker/server/build.bash
@@ -330,7 +321,7 @@ DOCKER_IMAGE="docker-user-name/universe-server" DOCKER_TAG="time-server" docker/
 ```
 
 
-#### Run the local universe server
+#### Run the local Universe server
 Using the `marathon.json` that is created when building Universe Server we can run a Universe Server in our DC/OS cluster which can then be used to install packages.
 
 Run the following commands inside the `server/target` directory to configure DC/OS to use the custom Universe Server (DC/OS 1.8+):
@@ -338,8 +329,8 @@ Run the following commands inside the `server/target` directory to configure DC/
 `dcos marathon app add marathon.json`
 
 
-#### Add the universe repo to DC/OS cluster:
-Now that you have local universe server up and running, add this to the cluster instance. You can do this from the GUI or CLI. From the `server/target` directory execute
+#### Add the Universe repo to DC/OS cluster:
+Now that you have local Universe server up and running, add this to the cluster instance. You can do this from the GUI or CLI. From the `server/target` directory execute
 
 `dcos package repo add --index=0 dev-universe http://universe.marathon.mesos:8085/repo`
 
@@ -348,9 +339,9 @@ Now that you have local universe server up and running, add this to the cluster 
 - You can search for you package using something like:
 
     `dcos package search time`
-- Once you have found our `timeserver` package, you can install it on to your cluster using
+- Once you have found our `time-server` package, you can install it on to your cluster using
 
-    `dcos package install timeserver`
+    `dcos package install time-server`
 - Install the package and if everything works, you have successfully created a package, tested and deployed it!. You can check if your package is running at
 
     `dcos marathon app list`
