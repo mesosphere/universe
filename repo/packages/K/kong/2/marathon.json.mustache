@@ -1,0 +1,95 @@
+{
+  "id": "{{service.name}}",
+  "instances": {{service.instances}},
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "cmd": "KONG_NGINX_DAEMON=\"off\" KONG_CLUSTER_ADVERTISE=$HOST:$PORT0 {{configurations.custom-envs}} kong start",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.kong-image}}",
+      "network": "BRIDGE",
+      "forcePullImage": true,
+      "portMappings": [
+        {
+          "containerPort": 7946,
+          "hostPort": 0,
+          "protocol": "udp,tcp",
+          "name": "{{service.name}}-serf"
+        },
+        {
+          "containerPort": 8443,
+          "hostPort": 0,
+          "protocol": "tcp",
+          "name": "{{service.name}}-proxy-ssl"
+        },
+        {
+          "containerPort": 8444,
+          "hostPort": 0,
+          "protocol": "tcp",
+          "name": "{{service.name}}-admin-ssl"
+        },
+        {
+          "containerPort": 8000,
+          "hostPort": 0,
+          "protocol": "tcp",
+          {{#networking.proxy.external-access}}
+          "servicePort": {{networking.proxy.service-port}},
+          {{/networking.proxy.external-access}}
+          "name": "{{service.name}}"
+        },
+        {
+          "containerPort": 8001,
+          "hostPort": 0,
+          "protocol": "tcp",
+          {{#networking.admin.external-access}}
+          "servicePort": {{networking.admin.service-port}},
+          {{/networking.admin.external-access}}
+          "name": "{{service.name}}-admin"
+        }
+      ]
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "TCP",
+      "portIndex": 1,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "acceptedResourceRoles": [
+    "{{service.role}}"
+  ],
+  "env": {
+    {{^configurations.cassandra.use-cassandra}}
+    "KONG_PG_PASSWORD": "{{configurations.postgres.password}}",
+    "KONG_PG_HOST": "{{configurations.postgres.host}}",
+    "KONG_PG_USER": "{{configurations.postgres.user}}",
+    "KONG_PG_PORT": "{{configurations.postgres.port}}",
+    {{/configurations.cassandra.use-cassandra}}
+    {{#configurations.cassandra.use-cassandra}}
+    "KONG_DATABASE": "cassandra",
+    "KONG_CASSANDRA_CONTACT_POINTS": "{{configurations.cassandra.contact-points}}",
+    "KONG_CASSANDRA_PORT": "{{configurations.cassandra.port}}",
+    "KONG_CASSANDRA_KEYSPACE": "{{configurations.cassandra.keyspace}}",
+    {{/configurations.cassandra.use-cassandra}}
+    "KONG_LOG_LEVEL": "{{configurations.log-level}}"
+  },
+  "labels": {
+    {{#networking.proxy.external-access}}
+    "HAPROXY_3_GROUP": "external",
+    "HAPROXY_3_VHOST": "{{networking.proxy.virtual-host}}",
+    "HAPROXY_3_REDIRECT_TO_HTTPS": "{{networking.proxy.https-redirect}}",
+    {{/networking.proxy.external-access}}
+    {{#networking.admin.external-access}}
+    "HAPROXY_4_GROUP": "external",
+    "HAPROXY_4_VHOST": "{{networking.admin.virtual-host}}",
+    "HAPROXY_4_REDIRECT_TO_HTTPS": "{{networking.admin.https-redirect}}",
+    {{/networking.admin.external-access}}
+    "DCOS_SERVICE_NAME": "{{service.name}}"
+  }
+}
