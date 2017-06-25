@@ -1,6 +1,35 @@
 # Getting Started
 This document is intended as a "getting started" guide. The audience are developers looking to modify or *publish* the packages to the Universe. This document is written in tutorial and walk-through format. The goal is to help you "get started". It does not go into great depth on some of the conceptual or inner details. This guide aims at making a user familiar with the concepts of what a Package is and what are the roles of Marathon and Universe in the package life cycle.
 
+#### Table of Contents
+- [Getting Started](#getting-started)
+	- [Required nomenclature](#required-nomenclature)
+		- [What is Universe?](#what-is-universe)
+		- [What is Marathon?](#what-is-marathon)
+		- [What is a package?](#what-is-a-package)
+	- [Prerequisites](#prerequisites)
+		- [Library dependencies](#library-dependencies)
+		- [Access requirements](#access-requirements)
+		- [This repository](#this-repository)
+	- [Create a package](#create-a-package)
+		- [Step 1 : Create a simple Python HTTP Server](#step-1-create-a-simple-python-http-server)
+			- [Change port mapping to be dynamic](#change-port-mapping-to-be-dynamic)
+		- [Step 2 : Creating a Docker container](#step-2-creating-a-docker-container)
+			- [Build the container](#build-the-container)
+			- [Test your container](#test-your-container)
+			- [Tag and publish your container](#tag-and-publish-your-container)
+		- [Step 3 : Creating a DC/OS Package](#step-3-creating-a-dcos-package)
+			- [config.json](#configjson)
+			- [resource.json](#resourcejson)
+			- [package.json](#packagejson)
+			- [marathon.json.mustache](#marathonjsonmustache)
+		- [Step 4 : Testing the package](#step-4-testing-the-package)
+			- [Validation using build script.](#validation-using-build-script)
+			- [Build the local Universe server](#build-the-local-universe-server)
+			- [Run the local Universe server](#run-the-local-universe-server)
+			- [Add the Universe repo to DC/OS cluster:](#add-the-universe-repo-to-dcos-cluster)
+			- [Install the package](#install-the-package)
+		- [Step 5 : Publish the package](#step-5-publish-the-package)
 
 ## Required nomenclature
 This guide assumes you are familiar with the basics of the concepts mentioned below. Advanced users can skip this section and jump to [Create a package](#create-a-package). If you are new to DC/OS, we recommend reading this sections along with the external links provided.
