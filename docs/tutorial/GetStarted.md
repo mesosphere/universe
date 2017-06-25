@@ -2,6 +2,29 @@
 This document is intended as a "getting started" guide. The audience are developers looking to modify or *publish* the packages to the Universe. This document is written in tutorial and walk-through format. The goal is to help you "get started". It does not go into great depth on some of the conceptual or inner details. This guide aims at making a user familiar with the concepts of what a Package is and what are the roles of Marathon and Universe in the package life cycle.
 
 
+## Required nomenclature
+This guide assumes you are familiar with the basics of the concepts mentioned below. Advanced users can skip this section and jump to [Create a package](#create-a-package). If you are new to DC/OS, we recommend reading this sections along with the external links provided.
+
+
+### What is Universe?
+The Universe is a DC/OS package repository that contains services like Spark, Cassandra, Jenkins, and many others. It allows users to install these services with a single click from the DC/OS UI or by a simple `dcos package install <package_name>` command from the DC/OS CLI. Many community members have already submitted their own packages to the Universe, and we encourage anyone interested to get involved with package development! It is a great way of contributing to the DC/OS ecosystem and allows users to easily get started with your favorite package.
+
+
+### What is Marathon?
+[Marathon](https://mesosphere.github.io/marathon/) is a production-grade container orchestration platform for Mesosphere’s Datacenter Operating System (DC/OS) and [Apache Mesos](https://mesos.apache.org/). In order to deploy applications on top of Mesos, one can use Marathon for Mesos. Marathon is a cluster-wide init and control system for running Linux services in cgroups and Docker containers. Marathon has a number of different deploy [features](https://mesosphere.github.io/marathon/#features) and is a very mature project. Marathon runs on top of Mesos, which is a highly scalable, battle tested and flexible resource manager. Marathon is proven to scale and runs in many production environments.
+
+
+### What is a package?
+There are several ways to deploy your service onto a running DC/OS cluster.
+  * Use the DC/OS Marathon command in the CLI,
+  * Use the Marathon REST API directly, or
+  * Deploy your service as a package.
+
+Deploying your service using the package approach makes your life easier and service management efficient. Once you have a running DC/OS cluster, you will be able to browse packages in the dashboard. A package consists of the four required configuration files and all of the external files linked from them.
+
+A package implicitly relies on Marathon; its contents are used to generate a Marathon app definition. By the end of this guide, you will be able to build, publish, and browse your package in the cluster.
+
+
 ## Prerequisites
 Before starting this guide, make sure you have met the following conditions.
 
@@ -12,31 +35,9 @@ Before starting this guide, make sure you have met the following conditions.
 * Docker is installed.
 
 ### Access requirements
-* Access to a running [DC/OS](https://dcos.io/docs/latest/overview/what-is-dcos/).
+* Access to a running [DC/OS](https://dcos.io/install/).
 * The Universe Server needs to be built and run in a location accessible by the DC/OS Cluster. There is no other way to test your package otherwise.
 * The Marathon server needs to have access to the Docker Hub registry which has your Universe server. In our guide, we use Docker Hub.
-
-## Required nomenclature
-This guide assumes you are familiar with the basics of the concepts mentioned below. Advanced user can skip this section and jump to [Create a package](#create-a-package). If you are new to DC/OS, we recommend reading this sections along with the external links provided.
-
-
-### What is Universe ?
-The Universe is a DC/OS package repository that contains services like Spark, Cassandra, Jenkins, and many others. It allows users to install these services with a single click from the DC/OS UI or by a simple `dcos package install package_name` command from the DC/OS CLI. Many community members have already submitted their own packages to the Universe, and we encourage anyone interested to get involved with package development! It is a great way of contributing to the DC/OS ecosystem and allows users to easily get started with your favorite package.
-
-
-### What is Marathon ?
-[Marathon](https://mesosphere.github.io/marathon/) is a production-grade container orchestration platform for Mesosphere’s Datacenter Operating System (DC/OS) and [Apache Mesos](https://mesos.apache.org/). In order to deploy applications on top of Mesos, one can use Marathon for Mesos. Marathon is a cluster-wide init and control system for running Linux services in cgroups and Docker containers. Marathon has a number of different deploy [features](https://mesosphere.github.io/marathon/#features) and is a very mature project. Marathon runs on top of Mesos, which is a highly scalable, battle tested and flexible resource manager. Marathon is proven to scale and runs in many production environments.
-
-
-### What is a package ?
-There are several ways to deploy your service on to a running DC/OS cluster.
-  * Use DCOS Marathon command in CLI
-  * Use Marathon REST API Directly and
-  * Deploy your service as a package
-
-Deploying your service using the package approach makes your life easier and service management efficient. Once you have a running DC/OS cluster, you would be able to browse packages in the dashboard. A package constitutes of the four required configuration files and all the external links those configuration files point to.
-
-Package implicitly relies on Marathon as the definition provided by package is converted to a Marathon app template. By the end of this guide, you will be able to build, publish, and browse your package in the cluster.
 
 
 ### This repository
