@@ -1,0 +1,31 @@
+{
+  "description": "The Gestalt Framework is a solution for building enterprise-grade cloud-native applications using containers and lambdas.",
+  "framework": false,
+  "maintainer": "team@galacticfog.com",
+  "minDcosReleaseVersion": "1.8",
+  "name": "gestalt-framework",
+  "packagingVersion" : "3.0",
+  "preInstallNotes": "This DC/OS Service is currently in preview. Requires DC/OS 1.8.5 or later. Please see the Getting started guide at http://www.galacticfog.com/gestalt.html",
+  "postInstallNotes": "The Gestalt Framework is now running on your server.",
+  "postUninstallNotes": "The gestalt-framework launcher has been uninstalled.\nIf the framework services were not shutdown from the launcher, they will need to be manually removed from Marathon.",
+  "selected": false,
+  "tags": [
+    "gestalt-framework",
+    "orchestration",
+    "lambda",
+    "policy"
+  ],
+  "version" : "1.2.0",
+  "scm" : "https://github.com/GalacticFog/gestalt-dcos.git",
+  "website" : "http://www.galacticfog.com",
+  "licenses" : [ {
+      "name" : "Apache License Version 2.0",
+      "url" : "https://github.com/GalacticFog/gestalt-dcos/blob/develop/LICENSE"
+  }, {
+      "name" : "Commercial",
+      "url" : "http://www.galacticfog.com/contact.html"
+  }, {
+      "name" : "End User License Agreement",
+      "url" : "http://www.galacticfog.com/gestalt-eula.html"
+  } ]
+}
