@@ -27,7 +27,7 @@
                 "executor_docker_image": {
                     "type": "string",
                     "description": "The docker image to launch Spark executors with.  By default, this will use this value specified in this package's resource.json",
-                    "default": "mesosphere/spark:1.0.9-2.1.0-1-hadoop-2.7"
+                    "default": "mesosphere/spark:1.1.0-2.1.0-hadoop-2.7"
                 },
                 "cores_max": {
                     "type": "string",
