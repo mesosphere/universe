@@ -1,0 +1,85 @@
+{
+   "id":"{{service.name}}",
+   "cpus":{{service.cpus}},
+   "mem":{{service.mem}},
+   "instances":1,
+   "maxLaunchDelaySeconds":36000,
+   "args":[
+      "server",
+      "-C",
+      "/config",
+      "/export"
+   ],
+   "container":{
+      "type":"DOCKER",
+      "volumes": [
+        {
+            "containerPath": "miniodata",
+            "mode": "RW",
+            "persistent": {
+            "type": "root",
+            "size" : {{storage.data-size}}
+            }
+        },
+        {
+            "containerPath": "minioconfig",
+            "mode": "RW",
+            "persistent": {
+            "type": "root",
+            "size" : {{storage.config-size}}
+            }
+        },
+        {
+            "containerPath": "/export",
+            "hostPath": "miniodata",
+            "mode": "RW"
+        },
+        {
+            "containerPath": "/config",
+            "hostPath": "minioconfig",
+            "mode": "RW"
+        }
+      ],
+      "docker":{
+         "image":"minio/minio:RELEASE.2017-05-05T01-14-51Z",
+         "network":"BRIDGE",
+         "portMappings":[
+            {
+               "containerPort":9000,
+               "hostPort":0,
+               "servicePort":{{networking.service-port}}
+            }
+         ],
+         "privileged":true,
+         "parameters":[
+
+         ],
+         "forcePullImage":true
+      }
+   },
+   "healthChecks": [
+        {
+            "protocol": "HTTP",
+            "path": "/minio/index.html",
+            "portIndex": 0,
+
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3
+        }
+   ],
+   "env": {
+          "MINIO_ACCESS_KEY": "{{credentials.access-key}}",
+          "MINIO_SECRET_KEY": "{{credentials.secret-key}}"
+   },
+   "labels":{
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_REDIRECT_TO_HTTPS":"{{networking.https-redirect}}"
+   },
+   "upgradeStrategy":{
+      "minimumHealthCapacity": 0,
+      "maximumOverCapacity": 0
+    }
+}
+

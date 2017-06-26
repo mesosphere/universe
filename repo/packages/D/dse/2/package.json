@@ -2,10 +2,10 @@
   "description": "DSE running on DCOS",
   "framework": true,
   "maintainer": "https://dcos.io/community",
-  "minDcosReleaseVersion": "1.7",
+  "minDcosReleaseVersion": "999",
   "name": "dse",
   "packagingVersion": "3.0",
-  "postInstallNotes": "DCOS DSE has been successfully installed!\n\n\tDocumentation: https://docs.mesosphere.com/usage/services/cassandra/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postInstallNotes": "DCOS DSE has been successfully installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/cassandra/\n\tIssues: https://docs.mesosphere.com/support/",
   "postUninstallNotes": "DCOS DSE service has been uninstalled. Please run the framework_cleaner to remove any persistent state if required.",
   "selected": true,
   "tags": [

@@ -1,0 +1,13 @@
+{
+  "packagingVersion": "3.0",
+  "name": "alluxio-enterprise",
+  "version": "1.0.0-1.4.0",
+  "maintainer": "info@alluxio.com",
+  "description": "Alluxio Enterprise Edition (AEE). \n\n Alluxio, formerly Tachyon, is the world's first system that unifies disparate storage systems at memory speed. With Alluxio, enterprises can manage data efficiently, accelerate business analytics, and ease the adoption of hybrid cloud. \n\n Please refer to https://alluxio.com/docs/ for a detailed operation guide. \n\n Release Notes:  \n Version 1.0.0 of the DC/OS Service is the first release of this capability. With this integration, you can deploy Alluxio in minutes and realize fast on-demand analytics. Choose between command line and GUI based installation to suit your preferences.",
+  "selected": false,
+  "framework": true,
+  "tags": ["enterprise", "alluxio"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. Please visit https://alluxio.com/products to obtain a license for Alluxio Enterprise Edition. Visit https://alluxio.com/docs/enterprise/1.4/en/Alluxio-on-DCOS.html for a detailed installation guide.",
+  "postInstallNotes": "DC/OS Alluxio is being installed!\n\n\tDocumentation: https://alluxio.com/docs/ \n\tIssues: info@aluxio.com",
+  "postUninstallNotes": "DC/OS Alluxio has been uninstalled."
+}

@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "3.0",
+  "name": "nifi",
+  "version": "1.1.1-0.1",
+  "minDcosReleaseVersion" : "1.8",
+  "scm": "https://git-wip-us.apache.org/repos/asf?p=nifi.git",
+  "maintainer": "mariusz.derela@gmail.com",
+  "website": "https://nifi.apache.org",
+  "framework": false,
+  "description": "Apache NiFi is an integrated data logistics platform for automating the movement of data between disparate systems. It provides real-time control that makes it easy to manage the movement of data between any source and any destination. It is data source agnostic, supporting disparate and distributed sources of differing formats, schemas, protocols, speeds and sizes such as machines, geo location devices, click streams, files, social feeds, log files and videos and more. It is configurable plumbing for moving data around, similar to how Fedex, UPS or other courier delivery services move parcels around. And just like those services, Apache NiFi allows you to trace your data in real time, just like you could trace a delivery. Installation instruction: https://github.com/dcos/examples/tree/master/1.8/nifi",
+  "tags": ["nifi","dataflow","apache","flow","data"],
+  "preInstallNotes":"This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Experimental packages should never be used in production!",
+  "postInstallNotes": "Nifi has been successfully installed and is accessible through Marathon-LB.\nDocumentation can be found at https://nifi.apache.org/docs.html\nPlease keep in mind that first start of nifi can take a more than 60 seconds, so please be patient. If you selected single node installation please add /nifi at the end of URL, ex.: http://NIFI_ENDOPOINT:PORT/nifi ",
+  "postUninstallNotes": "Nifi has been uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/apache/nifi/blob/master/LICENSE"
+    }
+  ],
+  "selected": false
+}

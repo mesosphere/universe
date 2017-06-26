@@ -1,0 +1,17 @@
+{
+  "description": "Apache Hadoop Distributed File System (HDFS)",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "999",
+  "name": "hdfs",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS Apache HDFS Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/hdfs/\n\tIssues: https://jira.dcos.io/projects/DCOS_HDFS",
+  "postUninstallNotes": "DC/OS Apache HDFS Service has been uninstalled.\nPlease follow the instructions at http://docs.mesosphere.com/current/usage/service-guides/hdfs/#uninstall to remove any persistent state if required.",
+  "preInstallNotes": "This DC/OS Service is currently in preview. In order for HDFS to start successfully, it requires a minimum of five nodes; each with at least 2 CPU shares and 8GB of RAM available for use by the HDFS Service.\nNote that the service is considered Preview and there may be bugs, missing features or documentation, and should be tested thoroughly before being put into production.",
+  "selected": false,
+  "tags": [
+    "hdfs",
+    "hadoop"
+  ],
+  "version": "1.2.0-2.6.0-cdh5.9.1"
+}

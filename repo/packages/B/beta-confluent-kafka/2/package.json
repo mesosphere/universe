@@ -1,0 +1,26 @@
+{
+  "description": "Apache Kafka by Confluent\n\n\tDocumentation: https://www.confluent.io/whitepaper/deploying-confluent-platform-with-mesosphere",
+  "framework": true,
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://raw.githubusercontent.com/confluentinc/kafka/trunk/LICENSE"
+    }
+  ],
+  "maintainer": "partner-support@confluent.io",
+  "minDcosReleaseVersion": "1.8",
+  "name": "beta-confluent-kafka",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "Apache Kafka by Confluent is being installed.\n\n\tDocumentation: https://www.confluent.io/whitepaper/deploying-confluent-platform-with-mesosphere\n\tCommunity Support: https://groups.google.com/forum/#!forum/confluent-platform",
+  "postUninstallNotes": "Apache Kafka by Confluent has been uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/current/usage/service-guides/kafka/uninstall to remove any persistent state if required.",
+  "preInstallNotes": "This DC/OS Service is currently in beta.  You must perform an advanced install and check the opt-in option.  Contact Mesosphere before deploying this beta candidate data service framework.  There may be bugs, incomplete features, incorrect documentation, or other discrepancies. ",  
+  "selected": false,
+  "tags": [
+    "message",
+    "broker",
+    "pubsub",
+    "kafka",
+    "confluent"
+  ],
+  "version": "1.2.2-3.2.0e-beta"
+}

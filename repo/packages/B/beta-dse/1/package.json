@@ -1,0 +1,17 @@
+{
+  "description": "Datastax Enterprise",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.8",
+  "name": "beta-dse",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS Datastax Enterprise is being installed!\n\n\tDocumentation: https://docs.datastax.com and https://gist.github.com/sascala/723e2c0451b43e3ec897d8c2098889e9\n\tIssues: https://www.datastax.com/contactus",
+  "postUninstallNotes": "DC/OS Datastax Enterprise has been uninstalled.",
+  "preInstallNotes": "This DC/OS Service is currently in beta.  You must perform an advanced install and check the opt-in option.  Contact Mesosphere before deploying this beta candidate data service framework.  There may be bugs, incomplete features, incorrect documentation, or other discrepancies. ",
+  "selected": false,
+  "tags": [
+    "datastax",
+    "dse"
+  ],
+  "version": "1.1.5-5.0.7-beta"
+}

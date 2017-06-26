@@ -1,0 +1,84 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"Name of this service instance.",
+                    "type":"string",
+                    "default":"ceph"
+                }
+            }
+        },
+        "ceph":{
+            "type": "object",
+            "description": "ceph service configuration properties",
+            "properties": {
+                "cpus": {
+                    "description": "CPU shares to allocate to each service instance.",
+                    "type": "number",
+                    "default": 1,
+                    "minimum": 0.5
+                },
+                "mem": {
+                    "description":  "Memory to allocate to each service instance.",
+                    "type": "number",
+                    "default": 2048,
+                    "minimum": 1024
+                }
+            },
+            "required": [
+                "cpus",
+                "mem"
+            ]
+        },
+        "networking":{
+            "type": "object",
+            "description": "Ceph networking configuration properties",
+            "properties": {
+                 "cluster_network":{
+                    "description": "Network where the Ceph nodes are allowed to live. This is usually the host network where the DC/OS nodes live. This network is assumed to be trusted. NOTE: by default, ALL networks are allowed.",
+                    "type": "string",
+                    "default": "0.0.0.0/0"
+                },
+                "public_network":{
+                    "description": "Network that the Ceph services are exposed on, where the Ceph clients/consumers are allowed to connect from. This is often the same as cluster_network unless Ceph is to be exposed outside the cluster. NOTE: by default, ALL networks are allowed.",
+                    "type": "string",
+                    "default": "0.0.0.0/0"
+                },
+                "ceph_api_port":{
+                    "description": "The port where the Ceph API is listening on.",
+                    "type": "number",
+                    "default": 5000
+                },
+                "external_access": {
+                    "type": "object",
+                    "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+                    "properties": {    
+                        "enable": {
+                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+                            "type": "boolean",
+                            "default": true                    
+                        },
+                        "external_access_port": {
+                            "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+                            "type": "number",
+                            "default": 5000
+                        },
+                        "virtual_host": {
+                            "description": "For external access, Virtual Host URL to be used in the external load balancer.",
+                            "type": "string",
+                            "default": "ceph.example.org"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "cluster_network",
+                "public_network"
+            ]
+        }
+    }
+}

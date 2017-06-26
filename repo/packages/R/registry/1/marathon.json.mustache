@@ -1,0 +1,94 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "env": {
+    {{#service.proxy.enable}}
+    "REGISTRY_PROXY_REMOTEURL": "{{service.proxy.remote_url}}",
+    "REGISTRY_PROXY_USERNAME": "{{service.proxy.username}}",
+    "REGISTRY_PROXY_PASSWORD": "{{service.proxy.password}}",        
+    {{/service.proxy.enable}} 
+    {{#security.enable}}
+    "REGISTRY_HTTP_TLS_CERTIFICATE": "/mnt/mesos/sandbox/{{security.http_tls_certificate_filename}}",
+    "REGISTRY_HTTP_TLS_KEY": "/mnt/mesos/sandbox/{{security.http_tls_key_filename}}",
+    {{/security.enable}}
+    {{#storage.persistence.external.enable}}          
+    "STORAGE_PATH": "{{storage.storage_path}}",
+    {{/storage.persistence.external.enable}}  
+    {{^storage.persistence.external.enable}}    
+    "REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY": "/mnt/mesos/sandbox/var/registry",
+    {{/storage.persistence.external.enable}}  
+    "FOO": "bar"
+  },
+  {{#security.enable}}
+  "uris": [
+      "http://{{security.http_tls_download_ip}}:{{security.http_tls_download_port}}/{{security.http_tls_certificate_filename}}",
+      "http://{{security.http_tls_download_ip}}:{{security.http_tls_download_port}}/{{security.http_tls_key_filename}}"
+  ],
+  {{/security.enable}}
+  "container": {
+    "type": "DOCKER",
+    "volumes": [{
+      {{^storage.persistence.enable}}
+      "containerPath": "{{storage.storage_path}}",
+      "hostPath": "{{storage.host_volume_registry}}/{{service.name}}",
+      {{/storage.persistence.enable}}
+      {{#storage.persistence.enable}}
+      {{^storage.persistence.external.enable}}
+      "containerPath": "var",
+      "persistent": {
+        "size": {{storage.persistence.volume_size_registry}}
+      },
+      {{/storage.persistence.external.enable}}
+      {{#storage.persistence.external.enable}}
+      "containerPath": "/var/lib/registry",
+      "external": {
+        "name": "{{storage.persistence.external.volume_name_registry}}",
+        "provider": "{{storage.persistence.external.provider}}",
+        "options": { "dvdi/driver": "{{storage.persistence.external.driver}}" }
+      },
+      {{/storage.persistence.external.enable}}
+      {{/storage.persistence.enable}} 
+      "mode": "RW"
+    }],
+    "docker": {
+      "image": "{{resource.assets.container.docker.registry-docker}}",
+      "network": "BRIDGE",
+      "portMappings": [{
+        "containerPort": 5000,
+        "hostPort": 0,
+        {{#networking.external_access.enable}}
+        "servicePort": {{networking.external_access.external_access_port}},
+        {{/networking.external_access.enable}}
+        "protocol": "tcp",
+        "name": "registry",
+        "labels": {
+          "VIP_0": "/{{service.name}}:{{networking.port}}"
+        }
+      }],
+      "forcePullImage": false
+    }
+  },
+  "healthChecks": [{
+    "protocol": "TCP",
+    "portIndex": 0, 
+    "gracePeriodSeconds": 300,
+    "intervalSeconds": 60,
+    "timeoutSeconds": 20,
+    "maxConsecutiveFailures": 3
+  }],
+  "labels": {
+    "DCOS_PACKAGE_VERSION": "5.7.12-0.2",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    {{#networking.external_access.enable}}
+    "HAPROXY_GROUP": "external",
+    {{/networking.external_access.enable}}
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}

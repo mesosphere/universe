@@ -1,0 +1,42 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u112-linux-x64-jce-unlimited.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
+      "hdfs-tar-gz": "https://downloads.mesosphere.com/hdfs/assets/hadoop-2.6.0-cdh5.9.1-dcos.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/hdfs/assets/1.3.1-2.6.0-cdh5.9.1-beta/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/hdfs/assets/1.3.1-2.6.0-cdh5.9.1-beta/hdfs-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/hdfs/assets/1.3.1-2.6.0-cdh5.9.1-beta/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-large.png"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"6acde3a01de99f57abc1b77b11bdbddfa6692163c286edf137ed8910349c78ac" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/hdfs/assets/1.3.1-2.6.0-cdh5.9.1-beta/dcos-hdfs-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"75c839fdb1c231ac3b7e62fb675abdff9a963aefc0358f95229bee30b1d5d5e6" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/hdfs/assets/1.3.1-2.6.0-cdh5.9.1-beta/dcos-hdfs-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"60cac93431d23e198c02cf48fec78fbbfa9b1dc761ad31966b7fa276c2154b0f" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/hdfs/assets/1.3.1-2.6.0-cdh5.9.1-beta/dcos-hdfs.exe"
+        }
+      }
+    }
+  }
+}

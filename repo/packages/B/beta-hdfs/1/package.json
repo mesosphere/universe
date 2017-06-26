@@ -1,0 +1,17 @@
+{
+  "description": "Apache Hadoop Distributed File System (HDFS)",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.8",
+  "name": "beta-hdfs",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS Apache HDFS Service is being installed.\n\n\tDocumentation: https://gist.github.com/sascala/ba6589e04e8aa8ffc5be73efdc056463#file-index-md\n\tIssues: https://jira.dcos.io/projects/DCOS_HDFS",
+  "postUninstallNotes": "DC/OS Apache HDFS Service has been uninstalled.\nPlease follow the instructions at http://docs.mesosphere.com/current/usage/service-guides/hdfs/#uninstall to remove any persistent state if required.",
+  "preInstallNotes": "This DC/OS Service is currently in beta.  You must perform an advanced install and check the opt-in option.  Contact Mesosphere before deploying this beta candidate data service framework.  There may be bugs, incomplete features, incorrect documentation, or other discrepancies. ",
+  "selected": false,
+  "tags": [
+    "hdfs",
+    "hadoop"
+  ],
+  "version": "1.3.1-2.6.0-cdh5.9.1-beta"
+}

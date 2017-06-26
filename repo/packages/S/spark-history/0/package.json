@@ -1,0 +1,25 @@
+{
+    "packagingVersion": "3.0",
+    "preInstallNotes": "This DC/OS Service is currently in preview.",
+    "postInstallNotes": "The Apache Spark History Server is being installed!",
+    "scm": "https://github.com/apache/spark.git",
+    "maintainer": "support@mesosphere.io",
+    "postUninstallNotes": "The Apache Spark History Server has been uninstalled and will no longer run.",
+    "name": "spark-history",
+    "description": "The Apache Spark History Server allows you to view the state of running and completed Spark jobs.",
+    "licenses": [
+        {
+            "name": "Apache License Version 2.0",
+            "url": "https://raw.githubusercontent.com/apache/spark/master/LICENSE"
+        }
+    ],
+    "tags": [
+        "bigdata",
+        "mapreduce",
+        "batch",
+        "analytics"
+    ],
+    "website": "https://docs.mesosphere.com/service-docs/spark/",
+    "version": "2.1.0-1",
+    "minDcosReleaseVersion": "1.7"
+}

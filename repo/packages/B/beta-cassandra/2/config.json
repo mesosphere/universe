@@ -1,0 +1,625 @@
+{
+    "type": "object",
+    "properties": {
+        "service": {
+            "type": "object",
+            "description": "DC/OS Apache Cassandra service configuration properties",
+            "properties": {
+                "name": {
+                    "description": "The name of the Cassandra service instance.",
+                    "type": "string",
+                    "default": "cassandra"
+                },
+                "secret_name": {
+                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+                    "type": "string",
+                    "default": ""
+                },
+                "principal": {
+                    "description": "The principal for the service instance.",
+                    "type": "string",
+                    "default": ""
+                },
+                "user": {
+                    "description": "The user that runs the Cassandra nodes and owns the Mesos sandbox.",
+                    "type": "string",
+                    "default": "root"
+                },
+                "mesos_api_version": {
+                    "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)",
+                    "type": "string",
+                    "default": "V0"
+                },
+                "data_center": {
+                    "description": "The name of the data center this cluster is running in",
+                    "type": "string",
+                    "default": "dc1"
+                },
+                "rack": {
+                    "description": "The name of the rack this cluster is running on",
+                    "type": "string",
+                    "default": "rac1"
+                },
+                "remote_seeds": {
+                    "description": "A comma-separated list of seed nodes from other clusters in a multi-datacenter deployment",
+                    "type": "string",
+                    "default": ""
+                },
+                "backup_restore_strategy": {
+                    "description": "Strategy to use for uploading/downloading backups {serial, parallel}",
+                    "type": "string",
+                    "enum": [
+                        "serial",
+                        "parallel"
+                    ],
+                    "default": "serial"
+                }
+            },
+            "required": [
+                "name",
+                "user"
+            ]
+        },
+        "nodes": {
+            "type": "object",
+            "description": "DC/OS Apache Cassandra node configuration properties",
+            "properties": {
+                "count": {
+                    "type": "integer",
+                    "description": "The number of Cassandra nodes in the cluster.",
+                    "default": 3
+                },
+                "cpus": {
+                    "type": "number",
+                    "description": "The number of cpu shares allocated to the Cassandra process.",
+                    "default": 0.5
+                },
+                "mem": {
+                    "type": "integer",
+                    "description": "The amount of memory, in MB, allocated to the Cassandra process.",
+                    "default": 4096
+                },
+                "disk": {
+                    "type": "integer",
+                    "description": "The amount of disk, in MB, allocated to the Cassandra process.",
+                    "default": 10240
+                },
+                "disk_type": {
+                    "type": "string",
+                    "description": "Disk type to be used for storing Cassandra data. See documentation. [ROOT, MOUNT]",
+                    "default": "ROOT"
+                },
+                "placement_constraint": {
+                    "type": "string",
+                    "description": "The Marathon-style placement constraint string controlling node placement",
+                    "default": ""
+                },
+                "heap": {
+                    "type": "object",
+                    "description": "The Cassandra process JVM heap configuration object.",
+                    "properties": {
+                        "size": {
+                            "type": "integer",
+                            "description": "The amount of JVM heap, in MB, allocated to the Cassandra process.",
+                            "default": 2048
+                        },
+                        "new": {
+                            "type": "integer",
+                            "description": "The amount of JVM new generation heap, in MB, allocated to the Cassandra process.",
+                            "default": 100
+                        },
+                        "gc": {
+                            "type": "string",
+                            "enum": [
+                                "G1",
+                                "CMS"
+                            ],
+                            "description": "The Garbage collector for JVM (Either G1 or CMS).",
+                            "default": "CMS"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                        "size",
+                        "new",
+                        "gc"
+                    ]
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "cpus",
+                "mem",
+                "disk",
+                "heap",
+                "count"
+            ]
+        },
+        "cassandra": {
+            "description": "Apache Cassandra configuration properties",
+            "type": "object",
+            "properties": {
+                "cluster_name": {
+                    "type": "string",
+                    "description": "The name of the cluster managed by the Service",
+                    "default": "cassandra"
+                },
+                "authenticator": {
+                    "type": "string",
+                    "description": "The authentication backend. It implements IAuthenticator, which is used to identify users.",
+                    "default": "AllowAllAuthenticator"
+                },
+                "authorizer": {
+                    "type": "string",
+                    "description": "The authorization backend. It implements IAuthenticator, which limits access and provides permissions.",
+                    "default": "AllowAllAuthorizer"
+                },
+                "jmx_port": {
+                    "type": "integer",
+                    "description": "The JMX port that will be used to interface with the Cassandra application.",
+                    "default": 7199
+                },
+                "num_tokens": {
+                    "type": "integer",
+                    "description": "The number of tokens assigned to each node.",
+                    "default": 256
+                },
+                "hinted_handoff_enabled": {
+                    "type": "boolean",
+                    "description": "If true, hinted handoff is enabled for the cluster.",
+                    "default": true
+                },
+                "max_hint_window_in_ms": {
+                    "type": "integer",
+                    "description": "The maximum amount of time, in ms, that hints are generates hints for an unresponsive node.",
+                    "default": 10800000
+                },
+                "hinted_handoff_throttle_in_kb": {
+                    "type": "integer",
+                    "description": "The maximum throttle per delivery thread in kilobytes per second.",
+                    "default": 1024
+                },
+                "max_hints_delivery_threads": {
+                    "type": "integer",
+                    "description": "The maximum number of delivery threads for hinted handoff.",
+                    "default": 2
+                },
+                "batchlog_replay_throttle_in_kb": {
+                    "type": "integer",
+                    "description": "The total throttle for log replay in Kpbs.",
+                    "default": 1024
+                },
+                "partitioner": {
+                    "type": "string",
+                    "description": "The partitioner used to distribute rows across the cluster. Murmur3Partitioner is the recommended setting. RandomPartitioner and ByteOrderedPartitioner are supported for legacy applications.",
+                    "default": "org.apache.cassandra.dht.Murmur3Partitioner"
+                },
+                "key_cache_save_period": {
+                    "type": "integer",
+                    "description": "The duration in seconds that keys are saved in cache. Saved caches greatly improve cold-start speeds and has relatively little effect on I/O.",
+                    "default": 14400
+                },
+                "row_cache_size_in_mb": {
+                    "type": "integer",
+                    "description": "Maximum size of the row cache in memory. Row cache can save more time than key_cache_size_in_mb, but is space-intensive because it contains the entire row. Use the row cache only for hot rows or static rows. 0 disables the row cache.",
+                    "default": 0
+                },
+                "row_cache_save_period": {
+                    "type": "integer",
+                    "description": "Duration in seconds that rows are saved in cache. 0 disables caching.",
+                    "default": 0
+                },
+                "commitlog_sync_period_in_ms": {
+                    "type": "integer",
+                    "description": "The number of milliseconds between disk fsync calls.",
+                    "default": 10000
+                },
+                "commitlog_segment_size_in_mb": {
+                    "type": "integer",
+                    "description": "The size of each commit log segment in Mb.",
+                    "default": 32
+                },
+                "concurrent_reads": {
+                    "type": "integer",
+                    "description": "For workloads with more data than can fit in memory, the bottleneck is reads fetching data from disk. Setting to (16 times the number of drives) allows operations to queue low enough in the stack so that the OS and drives can reorder them.",
+                    "default": 16
+                },
+                "concurrent_writes": {
+                    "type": "integer",
+                    "description": "Writes in Cassandra are rarely I/O bound, so the ideal number of concurrent writes depends on the number of CPU cores in your system. The recommended value is 8 times the number of cpu cores.",
+                    "default": 32
+                },
+                "concurrent_counter_writes": {
+                    "type": "integer",
+                    "description": "Counter writes read the current values before incrementing and writing them back. The recommended value is (16 times the number of drives) .",
+                    "default": 16
+                },
+                "memtable_allocation_type": {
+                    "type": "string",
+                    "description": "The type of allocations for the Cassandra memtable. heap_buffers keep all data on the JVM heap. offheap_buffers may reduce heap utilization for large string or binary values. offheap_objects may improve heap size for small integers or UUIDs as well. Both off heap options will increase read latency.",
+                    "default": "heap_buffers"
+                },
+                "index_summary_resize_interval_in_minutes": {
+                    "type": "integer",
+                    "description": "How frequently index summaries should be re-sampled in minutes. This is done periodically to redistribute memory from the fixed-size pool to SSTables proportional their recent read rates.",
+                    "default": 60
+                },
+                "storage_port": {
+                    "type": "integer",
+                    "description": "The port for inter-node communication.",
+                    "default": 7000
+                },
+                "ssl_storage_port": {
+                    "type": "integer",
+                    "description": "The port for inter-node communication over SSL.",
+                    "default": 7001
+                },
+                "start_native_transport": {
+                    "type": "boolean",
+                    "description": "If true CQL is enabled.",
+                    "default": true
+                },
+                "native_transport_port": {
+                    "type": "integer",
+                    "description": "The port for CQL communication.",
+                    "default": 9042
+                },
+                "start_rpc": {
+                    "type": "boolean",
+                    "description": "If true Thrift RPC is enable. This is deprecated by may be necessary for legacy applications.",
+                    "default": false
+                },
+                "rpc_port": {
+                    "type": "integer",
+                    "description": "The port for Thrift RPC communication.",
+                    "default": 9160
+                },
+                "rpc_keepalive": {
+                    "type": "boolean",
+                    "description": "Enables or TCP keepalive for RPC connections.",
+                    "default": true
+                },
+                "thrift_framed_transport_size_in_mb": {
+                    "type": "integer",
+                    "description": "Frame size (maximum field length) for Thrift.",
+                    "default": 15
+                },
+                "tombstone_warn_threshold": {
+                    "type": "integer",
+                    "description": "The maximum number of tombstones a query can scan before warning.",
+                    "default": 1000
+                },
+                "tombstone_failure_threshold": {
+                    "type": "integer",
+                    "description": "The maximum number of tombstones a query can scan before aborting.",
+                    "default": 100000
+                },
+                "column_index_size_in_kb": {
+                    "type": "integer",
+                    "description": "The granularity of the index of rows within a partition. For huge rows, decrease this setting to improve seek time. If you use key cache, be careful not to make this setting too large because key cache will be overwhelmed.",
+                    "default": 64
+                },
+                "batch_size_warn_threshold_in_kb": {
+                    "type": "integer",
+                    "description": "Warn the operator on a batch size exceeding this value in kilobytes. Caution should be taken on increasing the size of this threshold as it can lead to node instability.",
+                    "default": 5
+                },
+                "batch_size_fail_threshold_in_kb": {
+                    "type": "integer",
+                    "description": "Fail batch sizes exceeding this value in kilobytes. Caution should be taken on increasing the size of this threshold as it can lead to node instability.",
+                    "default": 50
+                },
+                "compaction_throughput_mb_per_sec": {
+                    "type": "integer",
+                    "description": "Throttles compaction to the specified total throughput across the node. Compaction frequency varies with direct proportion to write throughput and is necessary to limit the SSTable size. The recommended value is 16 to 32 times the rate of write throughput (in MB/second).",
+                    "default": 16
+                },
+                "sstable_preemptive_open_interval_in_mb": {
+                    "type": "integer",
+                    "description": "When compacting, the replacement opens SSTables before they are completely written and uses in place of the prior SSTables for any range previously written. This setting helps to smoothly transfer reads between the SSTables by reducing page cache churn and keeps hot rows hot.",
+                    "default": 50
+                },
+                "read_request_timeout_in_ms": {
+                    "type": "integer",
+                    "description": "The time that the coordinator waits for read operations to complete in ms.",
+                    "default": 5000
+                },
+                "range_request_timeout_in_ms": {
+                    "type": "integer",
+                    "description": "The time that the coordinator waits for range scans complete in ms.",
+                    "default": 10000
+                },
+                "write_request_timeout_in_ms": {
+                    "type": "integer",
+                    "description": "The time that the coordinator waits for write operations to complete in ms.",
+                    "default": 2000
+                },
+                "counter_write_request_timeout_in_ms": {
+                    "type": "integer",
+                    "description": "The time that the coordinator waits for counter write operations to complete in ms.",
+                    "default": 5000
+                },
+                "cas_contention_timeout_in_ms": {
+                    "type": "integer",
+                    "description": "The time for which the coordinator will retry CAS operations on the same row in ms.",
+                    "default": 1000
+                },
+                "truncate_request_timeout_in_ms": {
+                    "type": "integer",
+                    "description": "The time that the coordinator waits for truncate operations to complete in ms.",
+                    "default": 60000
+                },
+                "request_timeout_in_ms": {
+                    "type": "integer",
+                    "description": "The default timeout for all other requests in ms.",
+                    "default": 10000
+                },
+                "dynamic_snitch_update_interval_in_ms": {
+                    "type": "integer",
+                    "description": "The time, in ms, the snitch will wait before updating node scores.",
+                    "default": 100
+                },
+                "dynamic_snitch_reset_interval_in_ms": {
+                    "type": "integer",
+                    "description": "The time, in ms, the snitch will wait before resetting node scores allowing bad nodes to recover.",
+                    "default": 600000
+                },
+                "dynamic_snitch_badness_threshold": {
+                    "type": "number",
+                    "description": "Sets the performance threshold for dynamically routing client requests away from a poorly performing node.",
+                    "default": 0.1
+                },
+                "internode_compression": {
+                    "type": "string",
+                    "description": "Controls whether traffic between nodes is compressed. all compresses all traffic. none compresses no traffic. dc compresses between datacenters.",
+                    "default": "all"
+                },
+                "max_hints_file_size_in_mb": {
+                    "type": "integer",
+                    "description": "The maximum size of the hints file in Mb.",
+                    "default": 128
+                },
+                "hints_flush_period_in_ms": {
+                    "type": "integer",
+                    "description": "The time, in ms, for the period in which hints are flushed to disk.",
+                    "default": 10000
+                },
+                "concurrent_materialized_view_writes": {
+                    "type": "integer",
+                    "description": "The maximum number of concurrent writes to materialized views.",
+                    "default": 32
+                },
+                "commitlog_total_space_in_mb": {
+                    "type": "integer",
+                    "description": "The total size of the commit log in Mb.",
+                    "default": 8192
+                },
+                "roles_update_interval_in_ms": {
+                    "type": "integer",
+                    "description": "The refresh interval for the roles cache",
+                    "default": 1000
+                },
+                "permissions_update_interval_in_ms": {
+                    "type": "integer",
+                    "description": "The refresh interval for the permissions cache",
+                    "default": 1000
+                },
+                "key_cache_keys_to_save": {
+                    "type": "integer",
+                    "description": "The number of keys from the key cache to save",
+                    "default": 100
+                },
+                "row_cache_keys_to_save": {
+                    "type": "integer",
+                    "description": "The number of keys from the row cache to save",
+                    "default": 100
+                },
+                "counter_cache_keys_to_save": {
+                    "type": "integer",
+                    "description": "The number of keys from the counter cache to save",
+                    "default": 100
+                },
+                "file_cache_size_in_mb": {
+                    "type": "integer",
+                    "description": "The total memory to use for SSTable-reading buffers",
+                    "default": 512
+                },
+                "memtable_heap_space_in_mb": {
+                    "type": "integer",
+                    "description": "The amount of on-heap memory allocated for memtables",
+                    "default": 2048
+                },
+                "memtable_offheap_space_in_mb": {
+                    "type": "integer",
+                    "description": "The total amount of off-heap memory allocated for memtables",
+                    "default": 2048
+                },
+                "memtable_cleanup_threshold": {
+                    "type": "number",
+                    "description": "The ratio used for automatic memtable flush",
+                    "default": 0.11
+                },
+                "memtable_flush_writers": {
+                    "type": "integer",
+                    "description": "The number of memtable flush writer threads",
+                    "default": 8
+                },
+                "listen_on_broadcast_address": {
+                    "type": "boolean",
+                    "description": "Listen on the address set in broadcast_address property",
+                    "default": false
+                },
+                "internode_authenticator": {
+                    "type": "string",
+                    "description": "The internode authentication backend",
+                    "default": "org.apache.cassandra.auth.AllowAllInternodeAuthenticator"
+                },
+                "native_transport_max_threads": {
+                    "type": "integer",
+                    "description": "The maximum number of thread handling requests",
+                    "default": 128
+                },
+                "native_transport_max_frame_size_in_mb": {
+                    "type": "integer",
+                    "description": "The maximum allowed size of a frame",
+                    "default": 256
+                },
+                "native_transport_max_concurrent_connections": {
+                    "type": "integer",
+                    "description": "The maximum number of concurrent client connections",
+                    "default": -1
+                },
+                "native_transport_max_concurrent_connections_per_ip": {
+                    "type": "integer",
+                    "description": "The maximum number of concurrent client connections per source IP address",
+                    "default": -1
+                },
+                "rpc_min_threads": {
+                    "type": "integer",
+                    "description": "The minimum thread pool size for remote procedure calls",
+                    "default": 16
+                },
+                "rpc_max_threads": {
+                    "type": "integer",
+                    "description": "The maximum thread pool size for remote procedure calls",
+                    "default": 2048
+                },
+                "rpc_send_buff_size_in_bytes": {
+                    "type": "integer",
+                    "description": "The sending socket buffer size in bytes for remote procedure calls",
+                    "default": 16384
+                },
+                "rpc_recv_buff_size_in_bytes": {
+                    "type": "integer",
+                    "description": "The receiving socket buffer size for remote procedure calls",
+                    "default": 16384
+                },
+                "concurrent_compactors": {
+                    "type": "integer",
+                    "description": "The number of concurrent compaction processes allowed to run simultaneously on a node",
+                    "default": 1
+                },
+                "stream_throughput_outbound_megabits_per_sec": {
+                    "type": "integer",
+                    "description": "The maximum throughput of all outbound streaming file transfers on a node",
+                    "default": 200
+                },
+                "inter_dc_stream_throughput_outbound_megabits_per_sec": {
+                    "type": "integer",
+                    "description": "The maximum throughput of all streaming file transfers between datacenters",
+                    "default": 200
+                },
+                "streaming_socket_timeout_in_ms": {
+                    "type": "integer",
+                    "description": "The socket timeout for streaming operations",
+                    "default": 86400000
+                },
+                "phi_convict_threshold": {
+                    "type": "integer",
+                    "description": "The sensitivity of the failure detector on an exponential scale",
+                    "default": 8
+                },
+                "buffer_pool_use_heap_if_exhausted": {
+                    "type": "boolean",
+                    "description": "Allocate on-heap memory when the SSTable buffer pool is exhausted",
+                    "default": true
+                },
+                "disk_optimization_strategy": {
+                    "type": "string",
+                    "description": "The strategy for optimizing disk reads",
+                    "default": "ssd"
+                },
+                "max_value_size_in_mb": {
+                    "type": "integer",
+                    "description": "The maximum size of any value in SSTables",
+                    "default": 256
+                },
+                "otc_coalescing_strategy": {
+                    "type": "string",
+                    "description": "The strategy to use for coalescing network messages",
+                    "default": "TIMEHORIZON"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "cluster_name",
+                "jmx_port",
+                "num_tokens",
+                "max_hint_window_in_ms",
+                "hinted_handoff_enabled",
+                "hinted_handoff_throttle_in_kb",
+                "max_hints_delivery_threads",
+                "batchlog_replay_throttle_in_kb",
+                "partitioner",
+                "key_cache_save_period",
+                "row_cache_size_in_mb",
+                "row_cache_save_period",
+                "commitlog_sync_period_in_ms",
+                "commitlog_segment_size_in_mb",
+                "concurrent_reads",
+                "concurrent_writes",
+                "concurrent_counter_writes",
+                "memtable_allocation_type",
+                "index_summary_resize_interval_in_minutes",
+                "storage_port",
+                "start_native_transport",
+                "native_transport_port",
+                "start_rpc",
+                "rpc_port",
+                "rpc_keepalive",
+                "thrift_framed_transport_size_in_mb",
+                "tombstone_warn_threshold",
+                "tombstone_failure_threshold",
+                "column_index_size_in_kb",
+                "batch_size_warn_threshold_in_kb",
+                "batch_size_fail_threshold_in_kb",
+                "compaction_throughput_mb_per_sec",
+                "sstable_preemptive_open_interval_in_mb",
+                "read_request_timeout_in_ms",
+                "range_request_timeout_in_ms",
+                "write_request_timeout_in_ms",
+                "counter_write_request_timeout_in_ms",
+                "cas_contention_timeout_in_ms",
+                "truncate_request_timeout_in_ms",
+                "request_timeout_in_ms",
+                "dynamic_snitch_update_interval_in_ms",
+                "dynamic_snitch_reset_interval_in_ms",
+                "dynamic_snitch_badness_threshold",
+                "internode_compression",
+                "max_hints_file_size_in_mb",
+                "hints_flush_period_in_ms",
+                "concurrent_materialized_view_writes",
+                "commitlog_total_space_in_mb",
+                "roles_update_interval_in_ms",
+                "permissions_update_interval_in_ms",
+                "key_cache_keys_to_save",
+                "row_cache_keys_to_save",
+                "counter_cache_keys_to_save",
+                "file_cache_size_in_mb",
+                "memtable_heap_space_in_mb",
+                "memtable_offheap_space_in_mb",
+                "memtable_cleanup_threshold",
+                "memtable_flush_writers",
+                "listen_on_broadcast_address",
+                "internode_authenticator",
+                "native_transport_max_threads",
+                "native_transport_max_frame_size_in_mb",
+                "native_transport_max_concurrent_connections",
+                "native_transport_max_concurrent_connections_per_ip",
+                "rpc_min_threads",
+                "rpc_max_threads",
+                "rpc_send_buff_size_in_bytes",
+                "rpc_recv_buff_size_in_bytes",
+                "concurrent_compactors",
+                "stream_throughput_outbound_megabits_per_sec",
+                "inter_dc_stream_throughput_outbound_megabits_per_sec",
+                "streaming_socket_timeout_in_ms",
+                "phi_convict_threshold",
+                "buffer_pool_use_heap_if_exhausted",
+                "disk_optimization_strategy",
+                "max_value_size_in_mb",
+                "otc_coalescing_strategy"
+            ]
+        }
+    }
+}

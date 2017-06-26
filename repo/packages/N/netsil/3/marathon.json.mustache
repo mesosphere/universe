@@ -1,0 +1,175 @@
+{
+  "id": "{{netsil.name}}",
+  "cpus": {{netsil.cpus}},
+  "mem": {{netsil.mem}},
+  "disk": {{netsil.disk}},
+  "instances": {{netsil.instances}},
+  "acceptedResourceRoles": [
+    "{{netsil.role}}"
+  ],
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "zk_data",
+        "mode": "RW",
+        "persistent": {
+          "size": 250
+        }
+      },
+      {
+        "containerPath": "/opt/netsil/lite/zookeeper/data",
+        "hostPath": "zk_data",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "mysql_data",
+        "mode": "RW",
+        "persistent": {
+          "size": 250
+        }
+      },
+      {
+        "containerPath": "/var/lib/mysql",
+        "hostPath": "mysql_data",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "es_data",
+        "mode": "RW",
+        "persistent": {
+          "size": 500
+        }
+      },
+      {
+        "containerPath": "/usr/share/elasticsearch/data",
+        "hostPath": "es_data",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "redis_data",
+        "mode": "RW",
+        "persistent": {
+          "size": 500
+        }
+      },
+      {
+        "containerPath": "/var/lib/redis",
+        "hostPath": "redis_data",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "kafka-log-dir",
+        "mode": "RW",
+        "persistent": {
+          "size": 500
+        }
+      },
+      {
+        "containerPath": "/opt/netsil/kafka/kafka-log-dir",
+        "hostPath": "kafka-log-dir",
+        "mode": "RW"
+      },
+      {
+          "containerPath": "realtime-segments",
+          "mode": "RW",
+          "persistent": {
+            "size": 500
+          }
+      },
+      {
+          "containerPath": "/opt/netsil/druid/realtime-segments",
+          "hostPath": "realtime-segments",
+          "mode": "RW"
+      },
+      {
+        "containerPath": "ceph-data",
+        "mode": "RW",
+        "persistent": {
+          "size": 500
+        }
+      },
+      {
+        "containerPath": "/var/lib/ceph-data",
+        "hostPath": "ceph-data",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "ceph-conf",
+        "mode": "RW",
+        "persistent": {
+          "size": 500
+        }
+      },
+      {
+        "containerPath": "/etc/ceph",
+        "hostPath": "ceph-conf",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "licenses",
+        "mode": "RW",
+        "persistent": {
+          "size": 10
+        }
+      },
+      {
+        "containerPath": "/opt/netsil/license-manager/licenses",
+        "hostPath": "licenses",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "indexCache",
+        "mode": "RW",
+        "persistent": {
+          "size": 10
+        }
+      },
+      {
+        "containerPath": "/var/tmp/druid/indexCache",
+        "hostPath": "indexCache",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "{{resource.assets.container.docker.netsil}}:{{netsil.build_branch}}-{{netsil.version_number}}",
+      "network": "BRIDGE",
+      "portMappings": [
+          {
+              "containerPort": 80,
+              "hostPort": {{netsil.https_port}},
+              "protocol": "tcp"
+          },
+          {
+              "containerPort": 2001,
+              "hostPort": {{netsil.infra_stats_port}},
+              "protocol": "tcp"
+          },
+          {
+              "containerPort": 2003,
+              "hostPort": {{netsil.traffic_stats_port}},
+              "protocol": "udp,tcp"
+          }
+      ],
+      "privileged": false,
+      "parameters": [],
+      "forcePullImage": false
+    }
+  },
+  "args": [
+    "/root/startup.sh"
+  ],
+  "residency": {
+    "taskLostBehavior": "WAIT_FOREVER",
+    "relaunchEscalationTimeoutSeconds": 100
+  },
+  "upgradeStrategy": {
+    "maximumOverCapacity": 0,
+    "minimumHealthCapacity": 0
+  },
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{netsil.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  }
+}

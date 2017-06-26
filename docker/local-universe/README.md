@@ -52,11 +52,11 @@
 
 - I can't install CLI subcommands.
 
-    Packages are being hosted at `master.mesos:8082`. If you cannot resolve (or connect) to that from your DC/OS CLI install, you won't be able to install subcommands. If you're able to connect to port 8082 on your masters, the easiest way around this is adding the IP for one of the masters to `/etc/hosts`.
+    Packages are being hosted at `master.mesos:8082`. If you cannot resolve (or connect) to that from your DC/OS CLI install, you won't be able to install subcommands. If you're able to connect to port 8082 on your masters, the easiest way around this is adding the IP for one of the masters to `/etc/hosts`.  See also [Outside Resources](#outside-resources) below.
 
 - The images are broken!
 
-    We host everything from inside your cluster, including the images. They're getting served up by `master.mesos:8082`. If you have connectivity to that IP, you can add it to `/etc/hosts` and get the images working.
+    We host everything from inside your cluster, including the images. They're getting served up by `master.mesos:8082`. If you have connectivity to that IP, you can add it to `/etc/hosts` and get the images working.   See also [Outside Resources](#outside-resources) below.
 
 - I don't see the package I was looking for!
 
@@ -75,3 +75,128 @@
     ```bash
     $ sudo make local-universe
     ```
+
+## Building Your Own, off a non-changing universe-static base image.
+
+Mesosphere provides a `mesosphere/universe-static` Docker image, which has all of the core requirements to run a local universe.  All that must be added are your own certificates and repo contents.
+
+1. Use the make command to download the static image
+
+    ```bash
+    $ sudo make static-online
+    ## Will pull and re-tag mesosphere/universe-static to universe-static
+    ```
+
+1. Create your certs (either use `make certs` or generate your own), and add them to the static image to create a `universe-base` image
+
+    ```bash
+    $ sudo make static-base
+    ## Will add certs to universe-static and create universe-base
+    ```
+
+1. Add content (see above)
+
+    ```bash
+    $ sudo make local-universe
+    ```
+
+To generate your own static image, use and/or modify the make target `static-build` (e.g., `make static-build` instead of `make static-online`)
+
+This leaves three total options:
+
+```bash
+make base
+make local-universe
+```
+
+```bash
+make static-online
+make static-base
+make local-universe
+```
+
+```bash
+make static-build
+make static-base
+make local-universe
+```
+
+### Outside Resources
+
+As a workaround for the image and CLI resource issues in [the FAQ above](#faq), you can place those assets outside of the cluster.
+
+1. Place your CLI and image resources on a web server accessible to CLI and web UI users.
+
+2. Edit the URLs in the `resource.json` file of your package of interest to point to each of those resources, in the `images` and `cli` sections.
+
+3. Edit Makefile so the call to `local-universe.py` includes arguments `--nonlocal_images` and `--nonlocal_cli`.
+
+4. Proceed with [Building Your Own](#building-your-own) as above.
+
+## Running Local Universe as a Marathon Service
+
+Instead of deploying to each of your masters, you can easily run a local universe as a regular Marathon service.
+
+1. Edit Makefile so the call to `local-universe.py` includes the `--server_url` argument indicating your choice of internal service name and port.
+For example, if you want dev-universe, then add `--server_url http://dev-universe.marathon.mesos:8085`.
+
+2. Build a container as per [Building Your Own](#building-your-own) above.
+
+3. Deploy the container to your cluster as you would one of your regular apps.
+
+4. Launch a single instance of your universe service, specifying health checks. Here's an example Marathon app:
+
+```json
+{
+  "id": "/dev-universe",
+  "instances": 1,
+  "cpus": 0.25,
+  "mem": 128,
+  "requirePorts": true,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "network": "BRIDGE",
+      "image": "your_image_location:latest",
+      "forcePullImage": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 8085,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "volumes": []
+  },
+  "cmd": "nginx -g 'daemon off;'",
+  "fetch": [ ],
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 3,
+      "path": "/repo-empty-v3.json",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "timeoutSeconds": 5
+    }
+  ],
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ]
+}
+```
+
+## Making changes...
+
+###  ...to the `universe-static` image
+
+1. Update `Dockerfile.static` with the changes
+1. Bump the default value of `static_version` in `Makefile`
+1. Create a pull request with the above changes
+1. Once it is merged, run the [Publish universe-static image](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_2_PublishUniverseStaticImage&branch_Oss_Universe_2=%3Cdefault%3E&tab=buildTypeStatusDiv) build, providing the new version number when prompted
+1. Submit a pull request that updates the `FROM universe-static:...` line in `Dockerfile.static.base` to use the new version

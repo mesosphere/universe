@@ -1,0 +1,183 @@
+{
+  "type":"object",
+    "properties":{
+      "service":{
+        "type":"object",
+        "description": "Alluxio Enterprise Edition (AEE) service configuration properties.\nPlease obtain a license by visiting: https://alluxio.com/products. For a detailed installation guide visit https://alluxio.com/docs/.",
+        "properties":{
+          "name" : {
+            "description":"The name of the service instance",
+            "type":"string",
+            "default":"alluxio-enterprise"
+          },
+          "license":{
+            "description":"AEE license. Please obtain a license by visiting: https://alluxio.com/product.",
+            "type":"string"
+          },
+          "worker-count":{
+            "description":"Number of Alluxio workers",
+            "type":"integer",
+            "default":1
+          },
+         "ufs-address":{
+            "description":"Under file system address",
+            "type":"string",
+            "default":"/opt/mem/ramdisk/underFSStorage"
+          },
+          "docker-publish":{
+            "description":"Whether to publish Alluxio and Spark docker images",
+            "type":"boolean",
+            "default":false
+          },
+          "docker-publish-url":{
+            "description":"Docker registry to host images",
+            "type":"string",
+            "default":"registry.marathon.l4lb.thisdcos.directory:5000"
+          }
+        },
+        "required": [
+          "license",
+          "ufs-address"
+        ]
+      },
+      "master":{
+        "description":"Alluxio master configuration properties.",
+        "type":"object",
+        "properties":{
+          "cpus":{
+            "description":"Alluxio master CPU requirements",
+            "type":"number",
+            "default":1
+          },
+          "mem":{
+            "description":"Alluxio master memory requirements (in MB)",
+            "type":"integer",
+            "default":1024
+          },
+          "disk":{
+            "description":"Alluxio master persistent disk requirements (in MB)",
+            "type":"integer",
+            "default":1000
+          },
+          "disk-type":{
+            "description":"Alluxio master persistent disk type",
+            "type":"string",
+            "default":"ROOT"
+          },
+          "placement":{
+            "description":"Marathon-style placement constraint for Alluxio master",
+            "type":"string",
+            "default":"hostname:UNIQUE"
+          }
+        }
+      },
+      "worker":{
+        "description":"Alluxio worker configuration properties.",
+        "type":"object",
+        "properties":{
+          "cpus":{
+            "description":"Alluxio worker CPU requirements",
+            "type":"number",
+            "default":1
+          },
+          "mem":{
+            "description":"Alluxio worker memory requirements (in MB)",
+            "type":"integer",
+            "default":2048
+          },
+          "disk":{
+            "description":"Alluxio worker persistent disk requirements (in MB)",
+            "type":"integer",
+            "default":1000
+          },
+          "disk-type":{
+            "description":"Alluxio worker persistent disk type",
+            "type":"string",
+            "default":"ROOT"
+          },
+          "placement":{
+            "description":"Marathon-style placement constraint for Alluxio workers",
+            "type":"string",
+            "default":"hostname:UNIQUE"
+          }
+        }
+      },
+      "network": {
+        "description": "Port and network config.",
+        "type": "object",
+        "properties": {
+          "proxylite-port": {
+            "description": "Communication port for proxylite",
+            "type": "number",
+            "default": 19997
+          },
+          "master-port": {
+            "description": "Communication port for master node",
+            "type": "number",
+            "default": 19998
+          },
+          "master-web-port": {
+            "description": "Web UI port for master node",
+            "type": "number",
+            "default": 19999
+          },
+          "worker-port": {
+            "description": "Communication port for worker node",
+            "type": "number",
+            "default": 29998
+          },
+          "worker-data-port": {
+            "description": "Data port for worker node",
+            "type": "number",
+            "default": 29999
+          },
+          "worker-web-port": {
+            "description": "Web UI port for worker node",
+            "type": "number",
+            "default": 30000
+          },
+          "job-master-port": {
+            "description": "Communication port for job master node",
+            "type": "number",
+            "default": 20001
+          },
+          "job-master-web-port": {
+            "description": "Web UI port for job master node",
+            "type": "number",
+            "default": 20002
+          },
+          "job-worker-port": {
+            "description": "Communication port for job worker node",
+            "type": "number",
+            "default": 30001
+          },
+          "job-worker-data-port": {
+            "description": "Data port for job worker node",
+            "type": "number",
+            "default": 30002
+          },
+          "job-worker-web-port": {
+            "description": "Web UI port for job worker node",
+            "type": "number",
+            "default": 30003
+          }
+        } 
+      },
+      "s3a":{
+        "type":"object",
+        "description": "Configuration properties required to mount an Amazon S3 bucket.",
+        "properties":{
+         "aws-access-key":{
+            "description":"S3 Access key",
+            "type":"string",
+            "default":""
+          },
+         "aws-secret-key":{
+            "description":"S3 Secret key",
+            "type":"string",
+            "default":""
+          }
+        }
+      }
+    }
+}

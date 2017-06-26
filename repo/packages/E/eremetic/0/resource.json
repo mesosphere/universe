@@ -1,0 +1,14 @@
+{
+  "images" : {
+    "icon-small" : "https://raw.githubusercontent.com/gisjedi/eremetic/master/dcos/icon-eremetic-small.png",
+    "icon-medium" : "https://raw.githubusercontent.com/gisjedi/eremetic/master/dcos/icon-eremetic-medium.png",
+    "icon-large" : "https://raw.githubusercontent.com/gisjedi/eremetic/master/dcos/icon-eremetic-large.png"
+  },
+  "assets" : {
+    "container" : {
+      "docker" : {
+        "eremetic": "alde/eremetic:0.27.0"
+      }
+    }
+  }
+}

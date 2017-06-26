@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "spark-thrift-server",
+  "version": "2.1.0-0.1",
+  "scm": "https://github.com/NBCUAS/dcos-spark-thrift-server/",
+  "maintainer": "https://dcos.io/community",
+  "website": "https://github.com/NBCUAS/dcos-spark-thrift-server/",
+  "description": "Spark Thrift Server provides JDBC/ODBC access to Spark in DC/OS. It allows JDBC/ODBC clients to execute SQL queries over JDBC and ODBC protocols on Apache Spark. This allows one to access and manipulate data at scale by leverage the power of Spark from any tool that supports JDBC/ODBC interface. This includes clients such as DBeaver and Beeline, as well as BI tools such as Tableau and Pentaho.\n\nInstallation Documentation: https://github.com/dcos/examples/tree/master/1.9/spark-thrift-server",
+  "tags": ["spark", "thrift", "database", "jdbc", "odbc"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.",
+  "postInstallNotes": "Service installed.",
+  "postUninstallNotes": "Service uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License",
+      "url": "https://github.com/apache/spark/blob/master/LICENSE"
+    }
+  ]
+}

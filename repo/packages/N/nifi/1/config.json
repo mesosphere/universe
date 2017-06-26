@@ -1,0 +1,84 @@
+{
+    "type": "object",
+    "properties": {
+        "service": {
+            "description": "Configuration properties for the NIFI service for DC/OS.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "The name of the service to display in the DC/OS dashboard.",
+                    "type": "string",
+                    "default": "nifi"
+                },
+                "cpus": {
+                    "description": "CPU shares to allocate to each Nifi master.",
+                    "type": "number",
+                    "default": 1.0,
+                    "minimum": 0.1
+                },
+                "mem": {
+                    "description": "Memory (in MB) to allocate to each Nifi instance.",
+                    "type": "number",
+                    "default": 2048.0,
+                    "minimum": 1024.0
+                }
+            }
+        },
+        "nifi": {
+            "description": "NIFI settings which will be added to nifi.properties file.",
+            "type": "object",
+            "properties": {
+                "banner": {
+                    "description": "This is banner text that may be configured to display at the top of the User Interface. It is blank by default",
+                    "type": "string",
+                    "default": ""
+                },
+                "zookeeper": {
+                    "description": "The Connect String that is needed to connect to Apache ZooKeeper. This is a comma-separted list of hostname:port pairs.",
+                    "type": "string",
+                    "default": "zk://master.mesos:2181"
+                },
+                "zookeeper-root": {
+                    "description": "The root ZNode that should be used in ZooKeeper. ZooKeeper provides a directory-like structure for storing data. Each directory in this structure is referred to as a ZNode. This denotes the root ZNode, or directory, that should be used for storing data. The default value is /nifi. This is important to set correctly, as which cluster the NiFi instance attempts to join is determined by which ZooKeeper instance it connects to and the ZooKeeper Root Node that is specified.",
+                    "type": "string",
+                    "default": "/nifi"
+                },                
+                "cluster": {
+                    "description": "EXPERIMENTAL: Set this to true if the instance is a node in a cluster. The default value is false.",
+                    "type": "boolean",
+                    "default": false
+                }
+            }
+        },
+        "networking": {
+            "description": "Networking-related configuration properties for NIFI on DC/OS.",
+            "type": "object",
+            "properties": {
+                "service-port": {
+                    "description": "Port to be used when exposing the service in Marathon-LB.",
+                    "type": "string",
+                    "default": "10102"
+                },
+                "virtual-host": {
+                    "description": "The virtual host address to configure for integration with Marathon-lb.",
+                    "type": "string"
+                }
+            }
+        },
+        "advanced": {
+            "description": "Advanced configuration properties for the Nifi service. Under normal circumstances, you shouldn't need to modify these values.",
+            "type": "object",
+            "properties": {
+                "docker-image": {
+                    "description": "The Docker image to use for the Nifi service.",
+                    "type": "string",
+                    "default": "mderela/apache-nifi:1.1.1"
+                },
+                "docker-credentials-uri": {
+                    "description": "An optional URI to be fetched and extracted that contains docker credentials (e.g. file:///etc/docker/docker.tar.gz).",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

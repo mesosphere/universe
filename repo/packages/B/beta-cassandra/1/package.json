@@ -1,0 +1,18 @@
+{
+  "description": "An example implementation of a stateful service using the DC/OS SDK",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.8",
+  "name": "beta-cassandra",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS cassandra is being installed!\n\n\tDocumentation: https://gist.github.com/sascala/3f5ca8b2ff428c7821fd6393207eb496\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS cassandra has been uninstalled.",
+  "preInstallNotes": "This DC/OS Service is currently in beta.  You must perform an advanced install and check the opt-in option.  Contact Mesosphere before deploying this beta candidate data service framework.  There may be bugs, incomplete features, incorrect documentation, or other discrepancies. ",
+  "selected": false,
+  "tags": [
+    "example",
+    "reference",
+    "cassandra"
+  ],
+  "version": "1.0.27-3.0.10-beta"
+}

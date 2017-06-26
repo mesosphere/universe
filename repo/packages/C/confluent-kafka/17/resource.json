@@ -1,0 +1,42 @@
+{
+    "assets": {
+        "uris": {
+            "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u121-linux-x64.tar.gz",
+            "kafka_tgz": "https://packages.confluent.io/archive/3.2/confluent-3.2.1-mesos.tgz",
+            "scheduler-zip": "https://downloads.mesosphere.com/kafka/assets/1.1.19-0.10.1.0/scheduler.zip",
+            "executor-zip": "https://downloads.mesosphere.com/kafka/assets/1.1.19-0.10.1.0/executor.zip",
+            "overrider-zip": "https://downloads.mesosphere.com/kafka/assets/1.1.19-0.10.1.0/overrider.zip",
+            "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9-argus-1.1.x-3.tar.gz"
+        }
+    },
+    "images": {
+      "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-small.png",
+      "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-medium.png",
+      "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-large.png"
+    },
+    "cli":{
+        "binaries":{
+            "darwin":{
+                "x86-64":{
+                    "contentHash":[ { "algo":"sha256", "value":"660f143852b6d3d2b0b2f787fab9e5e2927f4440502a89c9e1c08488cdacc34f" } ],
+                    "kind":"executable",
+                    "url":"https://downloads.mesosphere.com/kafka/assets/1.1.19-0.10.1.0/dcos-kafka-darwin"
+                }
+            },
+            "linux":{
+                "x86-64":{
+                    "contentHash":[ { "algo":"sha256", "value":"0b26409c9760fd4d75fca1114d01f25ec069147d578d6f337c88424ebc64c808" } ],
+                    "kind":"executable",
+                    "url":"https://downloads.mesosphere.com/kafka/assets/1.1.19-0.10.1.0/dcos-kafka-linux"
+                }
+            },
+            "windows":{
+                "x86-64":{
+                    "contentHash":[ { "algo":"sha256", "value":"60d6f802412b94833cf8db217af162e7dc35c0f5e0a1eb4b587268c361500c3b" } ],
+                    "kind":"executable",
+                    "url":"https://downloads.mesosphere.com/kafka/assets/1.1.19-0.10.1.0/dcos-kafka.exe"
+                }
+            }
+        }
+    }
+}

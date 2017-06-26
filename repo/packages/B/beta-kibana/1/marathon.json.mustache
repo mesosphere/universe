@@ -1,0 +1,48 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 0.5,
+  "mem": 2048,
+  "instances": 1,
+  "cmd": "echo -e \"elasticsearch.url: $ELASTICSEARCH_URL\nelasticsearch.username: $KIBANA_USER\nelasticsearch.password: $KIBANA_PASSWORD\nserver.host: 0.0.0.0\nserver.port: $PORT_KIBANA\nserver.basePath: /service/$FRAMEWORK_NAME\" > $MESOS_SANDBOX/kibana-$ELASTIC_VERSION-linux-x86_64/config/kibana.yml; if [ \"$XPACK_ENABLED\" = true ]; then echo -e \"\nxpack.security.encryptionKey: $MESOS_FRAMEWORK_ID\nxpack.reporting.encryptionKey: $MESOS_FRAMEWORK_ID\n\" >> $MESOS_SANDBOX/kibana-$ELASTIC_VERSION-linux-x86_64/config/kibana.yml; echo 'Installing X-Pack plugin...'; $MESOS_SANDBOX/kibana-$ELASTIC_VERSION-linux-x86_64/bin/kibana-plugin install file://$MESOS_SANDBOX/x-pack-$ELASTIC_VERSION.zip; fi; env && $MESOS_SANDBOX/kibana-$ELASTIC_VERSION-linux-x86_64/bin/kibana",
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "env": {
+    "ELASTIC_VERSION": "5.4.1",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "XPACK_ENABLED": "{{kibana.xpack_enabled}}",
+    "ELASTICSEARCH_URL": "{{kibana.elasticsearch_url}}",
+    "KIBANA_USER": "{{kibana.user}}",
+    "KIBANA_PASSWORD": "{{kibana.password}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.kibana-tar-gz}}",
+    "{{resource.assets.uris.xpack-zip}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "kibana",
+      "labels": { "VIP_0": "/web.{{service.name}}:80" }
+    }
+  ],
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "description": "Elasticsearch 5, Kibana 5, and X-Pack",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.9",
+  "name": "beta-elastic",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS elastic service is being installed!\n\n\tDocumentation: https://gist.github.com/sascala/733be05f8f8df5f7641d43ed9839cbb6#file-index-md\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS elastic service has been uninstalled.",
+  "preInstallNotes": "This DC/OS Service is currently in beta.  You must perform an advanced install and check the opt-in option.  Contact Mesosphere before deploying this beta candidate data service framework.  There may be bugs, incomplete features, incorrect documentation, or other discrepancies. ",
+  "selected": false,
+  "tags": [
+    "kibana",
+    "elasticsearch",
+    "x-pack"
+  ],
+  "version": "1.0.10-5.3.0-beta"
+}

@@ -94,22 +94,22 @@
 "name": "instance"
 }
 {{#high-availability.enabled}}
-,
-{
-"port": 0,
-"protocol": "tcp",
-"name": "member"
-}
+    ,
+    {
+    "port": 0,
+    "protocol": "tcp",
+    "name": "member"
+    }
 {{/high-availability.enabled}}
 ],
 "env": {
 {{#high-availability.enabled}}
     "ART_NETWORK": "{{high-availability.network}}",
     {{^high-availability.secondary.enabled}}
-    "ART_LICENSES": "{{service.licenses}}",
-    "ART_DATABASE_CONNECTION_STRING": "{{service.database.connection-string}}",
-    "ART_DATABASE_USER":  "{{service.database.user}}",
-    "ART_DATABASE_PASSWORD":  "{{service.database.password}}"
+        "ART_LICENSES": "{{service.licenses}}",
+        "ART_DATABASE_CONNECTION_STRING": "{{service.database.connection-string}}",
+        "ART_DATABASE_USER":  "{{service.database.user}}",
+        "ART_DATABASE_PASSWORD":  "{{service.database.password}}"
     {{/high-availability.secondary.enabled}}
     {{#high-availability.secondary.enabled}}
         "ART_PRIMARY_SERVICE_NAME": "{{high-availability.secondary.name}}",
