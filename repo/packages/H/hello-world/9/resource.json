@@ -1,0 +1,55 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
+      "scheduler-zip": "https://infinity-artifacts.s3.amazonaws.com/autodelete7d/hello-world/20170602-154933-DdKIZ5ovmLvtXzdH/hello-world-scheduler.zip",
+      "executor-zip": "https://infinity-artifacts.s3.amazonaws.com/autodelete7d/hello-world/20170602-154933-DdKIZ5ovmLvtXzdH/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-small.png?raw=true",
+    "icon-medium": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-medium.png?raw=true",
+    "icon-large": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-large.png?raw=true"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "51fb17bbd9677c2451be548710cdff49e7a2d103c896325069e46164fdd1edb0"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://infinity-artifacts.s3.amazonaws.com/autodelete7d/hello-world/20170602-154933-DdKIZ5ovmLvtXzdH/dcos-hello-world-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "796c602f37bc41e85b10707df2be3e3a39fe76e95495ea84b4c345d592b5271c"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://infinity-artifacts.s3.amazonaws.com/autodelete7d/hello-world/20170602-154933-DdKIZ5ovmLvtXzdH/dcos-hello-world-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "36a0ba5568b79f799ace8bf8e4fbbe7beb78ceea71331e71275f1806670704b0"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://infinity-artifacts.s3.amazonaws.com/autodelete7d/hello-world/20170602-154933-DdKIZ5ovmLvtXzdH/dcos-hello-world.exe"
+        }
+      }
+    }
+  }
+}
