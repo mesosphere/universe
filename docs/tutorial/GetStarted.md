@@ -104,18 +104,18 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
         s.end_headers()
         s.wfile.write("<html><head><title>Time Server</title></head>")
         s.wfile.write("<body><p>The current time is {}</p>".format(time.asctime()))
-            s.wfile.write("</body></html>")
+        s.wfile.write("</body></html>")
 
 if __name__ == '__main__':
     server_class = http.server.HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
-    print (time.asctime(), "Server Starts - {}:{}".format(HOST_NAME, PORT_NUMBER))
+    print(time.asctime(), "Server Starts - {}:{}".format(HOST_NAME, PORT_NUMBER))
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass
     httpd.server_close()
-    print (time.asctime(), "Server Stops - {}:{}".format(HOST_NAME, PORT_NUMBER))
+    print(time.asctime(), "Server Stops - {}:{}".format(HOST_NAME, PORT_NUMBER))
 ```
 
 The code snippet simply starts a Python server and serves the get requests with HTML that says the current time. You should be able to run this code snippet with `python3 helloworld.py` and browse [localhost:8000](http://localhost:8000).
