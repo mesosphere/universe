@@ -1,0 +1,55 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
+      "scheduler-zip": "https://infinity-artifacts.s3.amazonaws.com/uninstalltestfixture/v2/hello-world-scheduler.zip",
+      "executor-zip": "https://infinity-artifacts.s3.amazonaws.com/uninstalltestfixture/v2/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-small.png?raw=true",
+    "icon-medium": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-medium.png?raw=true",
+    "icon-large": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-large.png?raw=true"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "4cbe6145d975bd14a3436b3113e6d626f8d683b88052a6d7d54d4024bf416bbc"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://infinity-artifacts.s3.amazonaws.com/uninstalltestfixture/v2/dcos-hello-world-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "968c3b64eb115e6b99aa93da91b5c9871249c87f99cfbbd6d6a7dc3d9084bdac"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://infinity-artifacts.s3.amazonaws.com/uninstalltestfixture/v2/dcos-hello-world-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "37796816fde99ce13eb57585494e86ad056de2bbd39348b9dfa8f8d5efbf0808"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://infinity-artifacts.s3.amazonaws.com/uninstalltestfixture/v2/dcos-hello-world.exe"
+        }
+      }
+    }
+  }
+}
