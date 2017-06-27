@@ -133,7 +133,7 @@ Once you do this, you can browse your server after executing `PORT0=8000 python3
 ### Step 2 : Creating a Docker container
 Creating a Docker container is essential to distribute _this_ service. It runs completely isolated from the host environment by default, only accessing host files and ports if configured to do so. To continue reading, you need to be familiar with Docker; we recommend this [get-started](https://docs.docker.com/get-started/) guide. You should have logged in to your Docker account in your terminal using `docker login`.
 
-_Note: Giving a Docker image is optional and we can have other ways to execute the binary (E.g.: The package `dcos-enterprise-cli` doesn't use a Docker image to install the binary)._
+_Note: Giving a Docker image is optional and we can have other ways to execute the binary (E.g.: The package `cassandra` doesn't use a Docker image to install the binary.)._
 
 We create a Docker file (named `Dockerfile`) in the `time-server-service` directory created earlier. The `Dockerfile` should look like this:
 
@@ -191,14 +191,14 @@ Once you are satisfied with the functionality of your container, you can publish
 
 This tags our `time-server` image with the Docker repository `time-server` in your Docker user name `docker-user-name` and provides an optional tag `part1`.
 
-Once we tag our image, we have to publish (synonmous with github push) to the Docker registry so that Marathon would be able to discover this in future using an url. We achieve this by executing the command :
+Once we tag our image, we have to publish (synonmous with `git push`) to the Docker registry so that Marathon will be able to discover this in the future using an URL. We achieve this by executing the command :
 
 `docker push docker-user-name/time-server:part1`
 
 Now that we have the container ready, in the next section we will see how to create a package!
 
 ### Step 3 : Creating a DC/OS Package
-In order to create a package, you need to have forked the [Universe repo](https://github.com/mesosphere/universe) and then cloned it so that it is available in your terminal. Once you do this, create a directory named time-server under the repo/package/T directory (as our package name starts with the letter "t"). Inside this directory, if there is already another package with a name of your choice, you have to name your package differently. We create all the required files in this package.
+In order to create a package, you need to have forked the [Universe repo](https://github.com/mesosphere/universe) and then cloned it so that it is available in your terminal. Once you do this, create a directory named `time-server` under the `repo/package/T` directory (as our package name starts with the letter "t"). Inside this directory, if there is already another package with a name of your choice, you have to name your package differently. We create all the required files in this package.
 
 After you read this step, if you need further examples, you can refer to the [repo/packages/H/hello-world](repo/packages/H/hello-world) package.
 
@@ -219,47 +219,47 @@ In our case, since this is the first version of our time-server, we will create 
 ***Tip : When reading the schema json files, look for `required` json field to understand what fields are mandatory***
 
 #### config.json
-As the name says, this file is used for any configuration purposes. This is how our `config.json` would look like:
+As the name says, this file specifies how our package can be configured. This is how our `config.json` should look:
 
 ```
 {
-	"$schema": "http://json-schema.org/schema#",
-	"properties": {
-		"service": {
-			"type": "object",
-			"description": "DC/OS service configuration properties",
-			"properties": {
-				"name": {
-					"description": "Name of this service instance",
-					"type": "string",
-					"default": "time-server"
-				},
-				"cpus": {
-					"description": "CPU shares to allocate to each service instance.",
-					"type": "number",
-					"default": 0.1,
-					"minimum": 0.1
-				},
-				"mem": {
-					"description":  "Memory to allocate to each service instance.",
-					"type": "number",
-					"default": 256.0,
-					"minimum": 128.0
-				}
-			}
-		}
-	}
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "Name of this service instance",
+          "type": "string",
+          "default": "time-server"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to each service instance.",
+          "type": "number",
+          "default": 0.1,
+          "minimum": 0.1
+        },
+        "mem": {
+          "description":  "Memory to allocate to each service instance.",
+          "type": "number",
+          "default": 256.0,
+          "minimum": 128.0
+        }
+      }
+    }
+  }
 }
 ```
 
-We have three main properties to be configured. The `name` is the actual name of the service. The `cpus` and `mem` are the amount of CPU and Memory required for each service instance. You can read more about the various fields in this file [here](https://github.com/mesosphere/universe#configjson) or can refer to [`repo/meta/schema/config-schema.json`](repo/meta/schema/config-schema.json) for a full fledged definition.
+We have three main properties to be configured. The `name` is the actual name of the service running in DC/OS. The `cpus` and `mem` are the amount of CPU and Memory required for each service instance. You can read more about the various fields in this file [here](https://github.com/mesosphere/universe#configjson) or can refer to [`repo/meta/schema/config-schema.json`](repo/meta/schema/config-schema.json) for a full fledged definition.
 
-(Note : If you need to add a config property after the merge of the PR and CI has deployed your package, you have to bump your package version and create new package. So be sure to add all the config properties that you need.)
+(Note : If you need to add a config property after your package revision has been committed to Universe, you have to bump your package version and create new package. So be sure to add all the config properties that you need.)
 
 #### resource.json
 This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects and images) needed to install the application. It also contains the `cli` section that can be used to allow a package to configure native CLI subcommands for several platforms and architectures.
 
-Below is the resource file that we use for our package. We have provided our earlier published docker-user-name/time-server:part1 image under the `docker` json field here. Note that giving a Docker image is optional and we can have other ways to execute the binary (E.g.: The package `dcos-enterprise-cli` doesn't use a Docker image to install the binary.)
+Below is the resource file that we use for our package. We have provided our earlier published docker-user-name/time-server:part1 image under the `docker` json field here. Note that giving a Docker image is optional and we can have other ways to execute the binary. As mentioned earlier, The package `cassandra` doesn't use a Docker image to install the binary; instead, it tells Marathon to run a shell command. It has all the dependencies it needs because they are specified as URIs in `resource.json`
 
 ```
 {
