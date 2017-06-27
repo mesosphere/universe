@@ -12,14 +12,14 @@
     },
     "service": {
       "type": "object",
-			"description": "DC/OS service configuration properties",
-			"properties": {
-				"cpus": {
-					"description": "CPU shares to allocate to each service instance.",
-					"type": "string",
-					"default": "foobar"
-				}
-			}
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "cpus": {
+          "description": "CPU shares to allocate to each service instance.",
+          "type": "string",
+          "default": "foobar"
+        }
+      }
     }
   }
 }
