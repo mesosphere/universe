@@ -1,0 +1,17 @@
+
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "flink": "mesosphere/dcos-flink:1.3.1-1.0",
+        "flink-2-11": "mesosphere/dcos-flink-2-11:1.3.1-1.0"
+
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-flink-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-flink-medium.png",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-flink-large.png"
+  }
+}
