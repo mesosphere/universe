@@ -214,9 +214,9 @@ Each package has its own directory, with one subdirectory for each package revis
     └── ...
 ```
 
-In our case, since this is the first version of our time-server, we will create the above directory structure with only one revision (with number 0) and create the required empty files. As the versions of your package grow, this number increments by one unit.
+In our case, since this is the first version of our time-server, we will create the above directory structure with only one revision (with number 0) and create the required empty files. As the versions of your package grow, this number increments by one unit. Also, once package revision has been committed to Universe, it files should never be modified. A new revision must be created for any change.
 
-***Tip : When reading the schema json files, look for `required` json field to understand what fields are mandatory***
+***Tip : When reading the schema JSON files, look for `required` JSON field to understand what fields are mandatory***
 
 #### config.json
 As the name says, this file specifies how our package can be configured. This is how our `config.json` should look:
@@ -257,9 +257,9 @@ We have three main properties to be configured. The `name` is the actual name of
 (Note : If you need to add a config property after your package revision has been committed to Universe, you have to bump your package version and create new package. So be sure to add all the config properties that you need.)
 
 #### resource.json
-This file contains all of the externally hosted resources (E.g. Docker images, HTTP objects and images) needed to install the application. It also contains the `cli` section that can be used to allow a package to configure native CLI subcommands for several platforms and architectures.
+This file contains all of the externally hosted resources (e.g. Docker images, HTTP objects and images) needed to install the application. It also contains the `cli` section that can be used to allow a package to configure native CLI subcommands for several platforms and architectures.
 
-Below is the resource file that we use for our package. We have provided our earlier published docker-user-name/time-server:part1 image under the `docker` json field here. Note that giving a Docker image is optional and we can have other ways to execute the binary. As mentioned earlier, The package `cassandra` doesn't use a Docker image to install the binary; instead, it tells Marathon to run a shell command. It has all the dependencies it needs because they are specified as URIs in `resource.json`
+Below is the resource file that we use for our package. We have provided our earlier published `docker-user-name/time-server:part1` image under the `docker` JSON field here. Note that giving a Docker image is optional and we can have other ways to execute the binary. As mentioned earlier, The package `cassandra` doesn't use a Docker image to install the binary; instead, it tells Marathon to run a shell command. It has all the dependencies it needs because they are specified as URIs in `resource.json`
 
 ```
 {
@@ -273,13 +273,13 @@ Below is the resource file that we use for our package. We have provided our ear
 }
 ```
 
-You can put the icons related to your package and screenshots of your service if needed here. You can read more about the various fields in this field [here](https://github.com/mesosphere/universe#resourcejson) or can refer to [`repo/meta/schema/v3-resource-schema.json`](repo/meta/schema/v3-resource-schema.json) for a full fledged definition.
+You can put the icons related to your package and screenshots of your service if needed here. You can read more about the various fields in this file [here](https://github.com/mesosphere/universe#resourcejson) or can refer to [`repo/meta/schema/v3-resource-schema.json`](repo/meta/schema/v3-resource-schema.json) for a full fledged definition.
 
 
 #### package.json
 Every package in Universe must have a `package.json` file which specifies the high level metadata about the package.
 
-Below is a snippet that represents our time server `package.json` (a version `4.0` package). This json has only the mandatory fields configured. As this is our first version, we fill the version field to be 1.0.0
+Below is a snippet that represents our time server `package.json` (a version `4.0` package). This JSON has only the mandatory fields configured. As this is our first version, we fill the version field to be 1.0.0
 
 ```
 {
@@ -294,12 +294,12 @@ Below is a snippet that represents our time server `package.json` (a version `4.
 
 Note that the version field specifies the version of the package and this is independent of the directory number inside the `time-server` directory.
 
-You can read more about the various fields in this field [here](https://github.com/mesosphere/universe#configjson) or can see [`repo/meta/schema/package-schema.json`](repo/meta/schema/package-schema.json) for the full json schema outlining what properties are available for each corresponding version of a package.
+You can read more about the various fields in this field [here](https://github.com/mesosphere/universe#configjson) or can see [`repo/meta/schema/package-schema.json`](repo/meta/schema/package-schema.json) for the full JSON schema outlining what properties are available for each corresponding version of a package.
 
 
 #### marathon.json.mustache
 This file is a [mustache template](http://mustache.github.io/) that when rendered will create a
-[Marathon](http://github.com/mesosphere/marathon) app definition capable of running your service. The first level of validation is that after Mustache substitution, the result must be a JSON document. Once the json document is produced, it will be valid request body for Marathon's `POST /v2/apps` endpoint ([Marathon API Documentation](https://mesosphere.github.io/marathon/docs/rest-api.html)).
+[Marathon](http://github.com/mesosphere/marathon) app definition capable of running your service. The first level of validation is that after Mustache substitution, the result must be a JSON document. Once the JSON document is produced, it will be valid request body for Marathon's `POST /v2/apps` endpoint ([Marathon API Documentation](https://mesosphere.github.io/marathon/docs/rest-api.html)).
 
 This is the Marathon file that we would use :
 
@@ -325,7 +325,7 @@ This is the Marathon file that we would use :
 }
 ```
 
-The service id, cpus and mem are populated from the config json file. The image is populated from the `resource.json` file. We are using HOST mode of networking to dynamically get a port from the available pool. Read [about Marathon ports](https://mesosphere.github.io/marathon/docs/ports.html) to understand modes in detail.
+The service `name`, `cpus` and `mem` are populated from the `config.json` file. The image is populated from the `resource.json` file. We are using HOST mode of networking to dynamically get a port from the available pool. Read [about Marathon ports](https://mesosphere.github.io/marathon/docs/ports.html) to understand modes in detail.
 
 
 ### Step 4 : Testing the package
@@ -333,7 +333,7 @@ Now that you have the package built, we need to make sure everything works as ex
 
 
 #### Validation using build script.
-You can execute the script inside the `scripts/build.sh` to make sure all the json schema comply to specifications and to install any missing libraries. This script is also executed as a precommit hook.
+You can execute the script inside the `scripts/build.sh` to make sure all the JSON schema comply to specifications and to install any missing libraries. This script is also executed as a precommit hook.
 
 It may throw some error if there are any unrecognized fields in the package files. Fix those error and re-execute the command until the build is successful.
 
