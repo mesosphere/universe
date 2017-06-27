@@ -4,14 +4,14 @@
   "properties": {
     "name": {
       "type": "string",
-      "default": "helloworld_invalid"
+      "default": "helloworld-invalid"
     },
     "port": {
       "type": "integer",
       "default": 9000
     },
     "service": {
-			"type": "object",
+      "type": "object",
 			"description": "DC/OS service configuration properties",
 			"properties": {
 				"cpus": {
