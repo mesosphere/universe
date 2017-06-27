@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "default": "helloworld_invalid"
+    },
+    "port": {
+      "type": "integer",
+      "default": 9000
+    },
+    "service": {
+			"type": "object",
+			"description": "DC/OS service configuration properties",
+			"properties": {
+				"cpus": {
+					"description": "CPU shares to allocate to each service instance.",
+					"type": "string",
+					"default": "foobar"
+				}
+			}
+    }
+  }
+}
