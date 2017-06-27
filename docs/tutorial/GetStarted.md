@@ -48,7 +48,7 @@ There are several ways to deploy your service onto a running DC/OS cluster.
   * Use the Marathon REST API directly, or
   * Deploy your service as a package.
 
-Deploying your service using the package approach makes your life easier and service management efficient. Once you have a running DC/OS cluster, you will be able to browse packages in the dashboard. A package consists of the four required configuration files and all of the external files linked from them.
+Deploying your service using the package approach makes your life easier and service management efficient. Once you have a running DC/OS cluster, you will be able to browse packages in the dashboard. A package consists of the four required configuration files(`config.json`, `package.json`, `resource.json`, and `marathon.json.mustache`) and all of the external files linked from them.
 
 A package implicitly relies on Marathon; its contents are used to generate a Marathon app definition. By the end of this guide, you will be able to build, publish, and browse your package in the cluster.
 
@@ -59,31 +59,31 @@ Before starting this guide, make sure you have met the following conditions.
 ### Library dependencies
 * [DC/OS CLI](https://dcos.io/docs/latest/cli/install/) installed and configured.
 * [jq](https://stedolan.github.io/jq/download/) is installed in your environment.
-* python3 in your environment.
+* `python3` in your environment.
 * Docker is installed.
 
 ### Access requirements
 * Access to a running [DC/OS](https://dcos.io/install/).
 * The Universe Server needs to be built and run in a location accessible by the DC/OS Cluster. There is no other way to test your package otherwise.
-* The Marathon server needs to have access to the Docker Hub registry which has your Universe server. In our guide, we use Docker Hub.
+* Mesos needs access to the Docker registry that has your Universe Server. In our guide, we use Docker Hub as the registry.
 
 
 ### This repository
 - Current packaging version is v4 and we follow this standard for this guide. This guide will be updated as and when we release a new version.
-- The packages are located in `/repo/packages` folder.
-- This tutorial is in `/tutorial` folder
-- You can refer to to **schema** in `/repo/meta/schema` folder. This folder has
-  - config-schema.json that refers to the schema of the config.json
-  - package-schema.json that refers to the schema of the package.json
-  - v3-resource-schema.json that refers to the schema of the resource.json for the v3 and v4 packages
-  - repo-schema.json files are not meant to be used by a developers and it is instead the schema for the API between Universe and DC/OS.
+- The packages are located in `repo/packages` directory.
+- This tutorial is in `tutorial` directory
+- You can refer to **schemas** in `repo/meta/schema` directory. This directory has
+  - `config-schema.json` that refers to the schema of the `config.json`
+  - `package-schema.json` that refers to the schema of the `package.json`
+  - `v3-resource-schema.json` that refers to the schema of the `resource.json` for the v3 and v4 packages
+  - `*-repo-schema.json` files are not meant to be used by package developers; they instead define the schema for the API between Universe and DC/OS.
 
 ## Create a package
-Let us build a simple Python HTTP server, which, when receives a HTTP GET request, responds with the current time at the server. We will start with this and build a package that provides this python server as a service.
+Let us build a simple Python HTTP server, which, when it receives an HTTP GET request, responds with the current time at the server. We will start with this and build a package that provides this Python server as a DC/OS service.
 
 
 ### Step 1 : Create a simple Python HTTP Server
-For the purposes of this guide, we will be using Python 3 and the HTTPServer module provided by their standard library. Let's create a file called `helloworld.py` in an empty directory called `time-server-service`
+For the purposes of this guide, we will be using Python 3 and the HTTPServer module provided by its standard library. Let's create a file called `helloworld.py` in an empty directory called `time-server-service`
 
 ```python
 import time
@@ -117,21 +117,23 @@ if __name__ == '__main__':
     print(time.asctime(), "Server Stops - {}:{}".format(HOST_NAME, PORT_NUMBER))
 ```
 
-The code snippet simply starts a Python server and serves the get requests with HTML that says the current time. You should be able to run this code snippet with `python3 helloworld.py` and browse [localhost:8000](http://localhost:8000).
+The code snippet simply starts a Python server and serves the GET requests with HTML that says the current time. You should be able to run this code snippet with `python3 helloworld.py` and browse [localhost:8000](http://localhost:8000).
 
 #### Change port mapping to be dynamic
 
-If we want to get a port number dynamically from available ports, Marathon provides a way to achieve this. We access the available ports using the environment variable `$PORT0`, `$PORT1`, `$PORT2` and so on. This will be explained clearly in the later section. But as of now, just change your Python snippet to read the port from an environment variable as below :
+If we want to get a port number dynamically from available ports, Marathon provides a way to achieve this. We access the available ports using the environment variable `$PORT0`, `$PORT1`, `$PORT2` and so on. This will be explained clearly in a later section. But for now, just change your Python snippet to read the port from an environment variable as below :
 
 ```python
 # Gets the port number from $PORT0 environment variable
 PORT_NUMBER = int(os.environ['PORT0'])
 ```
 
-Once you do this, you can browse your server by executing `PORT0=8000 python3 helloworld.py`
+Once you do this, you can browse your server after executing `PORT0=8000 python3 helloworld.py`
 
 ### Step 2 : Creating a Docker container
-Creating a Docker container is essential to distribute your service. It runs completely isolated from the host environment by default, only accessing host files and ports if configured to do so. To continue reading, you need to be familiar with docker. We recommend this [get-started](https://docs.docker.com/get-started/) guide to familiarize docker. You should have logged in to your Docker account in your terminal using `docker login`.
+Creating a Docker container is essential to distribute _this_ service. It runs completely isolated from the host environment by default, only accessing host files and ports if configured to do so. To continue reading, you need to be familiar with Docker; we recommend this [get-started](https://docs.docker.com/get-started/) guide. You should have logged in to your Docker account in your terminal using `docker login`.
+
+_Note: Giving a Docker image is optional and we can have other ways to execute the binary (E.g.: The package `dcos-enterprise-cli` doesn't use a Docker image to install the binary)._
 
 We create a Docker file (named `Dockerfile`) in the `time-server-service` directory created earlier. The `Dockerfile` should look like this:
 
@@ -152,17 +154,19 @@ Read through the comments to understand what each line in the `Dockerfile` does.
 
 
 #### Build the container
-*Through out the rest of this guide, we refer to `docker-user-name` as your Docker user name where you access your Docker images. You are expected to replace the keyword `docker-user-name` with your Docker user name in all commands and files*
+
+*Throughout the rest of this guide, we refer to `docker-user-name` as your Docker user name where you access your Docker images from a registry such as Docker Hub. You are expected to replace the keyword `docker-user-name` with your Docker user name in all commands and files*
+
 Now that we have everything ready, we can build our container. Here’s what `ls` should show:
 ```
 $ ls
 Dockerfile		helloworld.py
 ```
-Now run the build command. This creates a Docker image which we’re going to tag using -t so it has a friendly name.
+Now run the build command. This creates a Docker image which we’re going to tag using `-t` so it has a friendly name.
 
 `docker build -t docker-user-name/time-server:part1 .`
 
-Where is your built image? It’s in your machine’s local Docker image registry:
+Where is your built image? It's in your machine's local Docker daemon:
 
 ```
 $ docker images
@@ -173,11 +177,11 @@ docker-user-name/time-server      part1       42somsoc147
 
 
 #### Test your container
-When you execute the  `docker images`, you should be able to see the your image in the displayed list. In order to make sure the image is working as expected, you can run the container by issuing the below command :
+When you execute `docker images`, you should be able to see the your image in the displayed list. In order to make sure the image is working as expected, you can run the container by issuing the below command :
 
 `docker run -env PORT0=8000 -p 80:8000 -t docker-user-name/time-server:part1`
 
-Note that we are reading the port number from the `PORT0` environment variable. Marathon sets this environment variable when launching the container and since we don't have that yet, we need to provide the environment variable manually using `-env PORT0=8000`. The `-p` option maps the host port 80 to the container port 8000. The  `-t` flag creates a pseudoTTY and since we unbuffered the python standard i/o in our Dockerfile, we will be able to see the real time logs of the server in the console. Once you executed the above command, you should be able to browse [localhost](http://localhost:80)
+Note that we are reading the port number from the `PORT0` environment variable. Marathon sets this environment variable when launching the container and since we don't have that yet, we need to provide the environment variable manually using `-env PORT0=8000`. The `-p` option maps the host port 80 to the container port 8000. The  `-t` flag creates a pseudoTTY and since we unbuffered the Python standard I/O in our Dockerfile, we will be able to see the real time logs of the server in the console. Once you executed the above command, you should be able to browse [localhost](http://localhost:80).
 
 
 #### Tag and publish your container
@@ -194,7 +198,7 @@ Once we tag our image, we have to publish (synonmous with github push) to the Do
 Now that we have the container ready, in the next section we will see how to create a package!
 
 ### Step 3 : Creating a DC/OS Package
-In order to create a package, you need to have forked the [Universe repo](https://github.com/mesosphere/universe) and then cloned it so that it is available in your terminal. Once you do this, create a folder named time-server under the repo/package/T directory (as our package name starts with the letter "t"). Inside this folder, if there is already another package with a name of your choice, you have to name your package differently. We create all the required files in this package.
+In order to create a package, you need to have forked the [Universe repo](https://github.com/mesosphere/universe) and then cloned it so that it is available in your terminal. Once you do this, create a directory named time-server under the repo/package/T directory (as our package name starts with the letter "t"). Inside this directory, if there is already another package with a name of your choice, you have to name your package differently. We create all the required files in this package.
 
 After you read this step, if you need further examples, you can refer to the [repo/packages/H/hello-world](repo/packages/H/hello-world) package.
 
@@ -210,12 +214,12 @@ Each package has its own directory, with one subdirectory for each package revis
     └── ...
 ```
 
-In our case, since this is the first version of our time-server, we will create the above folder structure with only one revision (with number 0) and create the required empty files. As the versions of your package grow, this number increments by one unit.
+In our case, since this is the first version of our time-server, we will create the above directory structure with only one revision (with number 0) and create the required empty files. As the versions of your package grow, this number increments by one unit.
 
 ***Tip : When reading the schema json files, look for `required` json field to understand what fields are mandatory***
 
 #### config.json
-As the name says, this file is used for any configuration purposes. This is how our config.json would look like:
+As the name says, this file is used for any configuration purposes. This is how our `config.json` would look like:
 
 ```
 {
@@ -275,7 +279,7 @@ You can put the icons related to your package and screenshots of your service if
 #### package.json
 Every package in Universe must have a `package.json` file which specifies the high level metadata about the package.
 
-Below is a snippet that represents our time server package.json (a version `4.0` package). This json has only the mandatory fields configured. As this is our first version, we fill the version field to be 1.0.0
+Below is a snippet that represents our time server `package.json` (a version `4.0` package). This json has only the mandatory fields configured. As this is our first version, we fill the version field to be 1.0.0
 
 ```
 {
@@ -288,7 +292,7 @@ Below is a snippet that represents our time server package.json (a version `4.0`
 }
 ```
 
-Note that the version field specifies the version of the package and this is independent of the folder number inside the `time-server` folder.
+Note that the version field specifies the version of the package and this is independent of the directory number inside the `time-server` directory.
 
 You can read more about the various fields in this field [here](https://github.com/mesosphere/universe#configjson) or can see [`repo/meta/schema/package-schema.json`](repo/meta/schema/package-schema.json) for the full json schema outlining what properties are available for each corresponding version of a package.
 
@@ -321,7 +325,7 @@ This is the Marathon file that we would use :
 }
 ```
 
-The service id, cpus and mem are populated from the config json file. The image is populated from the resource.json file. We are using HOST mode of networking to dynamically get a port from the available pool. Read [about Marathon ports](https://mesosphere.github.io/marathon/docs/ports.html) to understand modes in detail.
+The service id, cpus and mem are populated from the config json file. The image is populated from the `resource.json` file. We are using HOST mode of networking to dynamically get a port from the available pool. Read [about Marathon ports](https://mesosphere.github.io/marathon/docs/ports.html) to understand modes in detail.
 
 
 ### Step 4 : Testing the package
