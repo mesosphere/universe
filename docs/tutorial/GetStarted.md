@@ -279,29 +279,29 @@ You can put the icons related to your package and screenshots of your service if
 #### package.json
 Every package in Universe must have a `package.json` file which specifies the high level metadata about the package.
 
-Below is a snippet that represents our time server `package.json` (a version `4.0` package). This JSON has only the mandatory fields configured. As this is our first version, we fill the version field to be 1.0.0
+Below is a snippet that represents our time server `package.json` (a version `4.0` package). This JSON has only the mandatory fields configured. As this is our initial version, we fill the version field to be `0.1.0`
 
 ```
 {
   "packagingVersion": "4.0",
   "name": "time-server",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "maintainer": "https://github.com/mesosphere/universe",
   "description": "This is a simple Python HTTP server that displays a webpage that says the current time at the server location",
   "tags": ["python", "http", "time-server"]
 }
 ```
 
-Note that the version field specifies the version of the package and this is independent of the directory number inside the `time-server` directory.
+Note that the version field specifies a human-readable version of the package and this is independent of the directory number inside the `time-server` directory.
 
 You can read more about the various fields in this field [here](https://github.com/mesosphere/universe#configjson) or can see [`repo/meta/schema/package-schema.json`](repo/meta/schema/package-schema.json) for the full JSON schema outlining what properties are available for each corresponding version of a package.
 
 
 #### marathon.json.mustache
 This file is a [mustache template](http://mustache.github.io/) that when rendered will create a
-[Marathon](http://github.com/mesosphere/marathon) app definition capable of running your service. The first level of validation is that after Mustache substitution, the result must be a JSON document. Once the JSON document is produced, it will be valid request body for Marathon's `POST /v2/apps` endpoint ([Marathon API Documentation](https://mesosphere.github.io/marathon/docs/rest-api.html)).
+[Marathon](http://github.com/mesosphere/marathon) app definition capable of running your service. The first level of validation is that after Mustache substitution, the result must be a JSON document. Once the JSON document is produced, it must be a valid request body for Marathon's `POST /v2/apps` endpoint ([Marathon API Documentation](https://mesosphere.github.io/marathon/docs/rest-api.html)).
 
-This is the Marathon file that we would use :
+This is the Marathon file that we will use :
 
 ```
 {
@@ -325,7 +325,7 @@ This is the Marathon file that we would use :
 }
 ```
 
-The service `name`, `cpus` and `mem` are populated from the `config.json` file. The image is populated from the `resource.json` file. We are using HOST mode of networking to dynamically get a port from the available pool. Read [about Marathon ports](https://mesosphere.github.io/marathon/docs/ports.html) to understand modes in detail.
+The service `name`, `cpus` and `mem` are populated from the default values in the `config.json` file. The image is populated from the `resource.json` file. We are using `HOST` mode of networking to dynamically get a port from the available pool. Read [about Marathon ports](https://mesosphere.github.io/marathon/docs/ports.html) to understand modes in detail.
 
 
 ### Step 4 : Testing the package
@@ -333,22 +333,22 @@ Now that you have the package built, we need to make sure everything works as ex
 
 
 #### Validation using build script.
-You can execute the script inside the `scripts/build.sh` to make sure all the JSON schema comply to specifications and to install any missing libraries. This script is also executed as a precommit hook.
+You can execute the script inside the `scripts/build.sh` to make sure all the JSON schema conform to their respective schemas and to install any missing libraries. This script is also executed as a precommit hook.
 
-It may throw some error if there are any unrecognized fields in the package files. Fix those error and re-execute the command until the build is successful.
+It may throw some errors if there are any unrecognized fields in the package files. Fix those errors and re-execute the command until the build is successful.
 
-Now, we can run the Universe server locally to test and install our package.
+Now, we can build the Universe server locally, and run in our DC/OS cluster to test and install our package.
 
 
-#### Build the local Universe server
-Build the Universe Server Docker image
+#### Build the Universe server
+Build the Universe Server Docker image:
 ```bash
 DOCKER_IMAGE="docker-user-name/universe-server" DOCKER_TAG="time-server" docker/server/build.bash
 ```
 
-This will create a Docker image `universe-server:time-server` and `docker/server/target/marathon.json` on your local machine
+This will create a Docker image `universe-server:time-server` and `docker/server/target/marathon.json` on your local machine.
 
-If you would like to publish the built Docker image, run
+If you would like to publish the built Docker image to Docker Hub, run:
 ```bash
 DOCKER_IMAGE="docker-user-name/universe-server" DOCKER_TAG="time-server" docker/server/build.bash publish
 ```
@@ -363,25 +363,25 @@ Run the following commands inside the `server/target` directory to configure DC/
 
 
 #### Add the Universe repo to DC/OS cluster:
-Now that you have local Universe server up and running, add this to the cluster instance. You can do this from the GUI or CLI. From the `server/target` directory execute
+Now that you have local Universe Server up and running, add it to the cluster's package manager as a repository. You can do this from the GUI or CLI. To achieve this from CLI, execute:
 
 `dcos package repo add --index=0 dev-universe http://universe.marathon.mesos:8085/repo`
 
 
 #### Install the package
-- You can search for you package using something like:
+- You can search for your package using something like:
 
     `dcos package search time`
-- Once you have found our `time-server` package, you can install it on to your cluster using
+- Once you have found your `time-server` package, you can install it onto your cluster using
 
     `dcos package install time-server`
-- Install the package and if everything works, you have successfully created a package, tested and deployed it!. You can check if your package is running at
+- Install the package and if everything works, you have successfully created a package, tested and deployed it! You can check if your package is running at
 
-    `dcos marathon app list`
+    `dcos marathon package list`
 
-- You can browse your endpoint by going to the cluster dashboard and clicking on Services > time-server, you will be able to see a current running task and you can click on any running task to view the endpoint url.
+- You can browse your endpoint by going to the cluster dashboard and clicking on Services > time-server, you will be able to see a current running task and you can click on any running task to view the endpoint URL.
 
-Now continue to next step to publish your package to the DC/OS community.
+Now continue to the next step to publish your package to the DC/OS community.
 
 
 ### Step 5 : Publish the package
