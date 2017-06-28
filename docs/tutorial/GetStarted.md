@@ -339,6 +339,8 @@ It may throw some errors if there are any unrecognized fields in the package fil
 
 Now, we can build the Universe server locally, and run in our DC/OS cluster to test and install our package.
 
+Universe Server is a new component introduced alongside `packagingVersion` `3.0`. In order for Universe to be able to provide packages for many versions of DC/OS at the same time, it is necessary for a server to be responsible for serving the correct set of packages to a cluster based on the cluster's version.
+
 
 #### Build the Universe server
 Build the Universe Server Docker image:
@@ -385,6 +387,6 @@ Now continue to the next step to publish your package to the DC/OS community.
 
 
 ### Step 5 : Publish the package
-Universe Server is a new component introduced alongside `packagingVersion` `3.0`. In order for Universe to be able to provide packages for many versions of DC/OS at the same time, it is necessary for a server to be responsible for serving the correct set of packages to a cluster based on the cluster's version.
+To add a package into the Universe, you will need to create a Pull Request against the `mesosphere/universe` repo, `version-3.x` branch. Once you have raised a PR, the CI(Continuous Integration) kicks in and runs automated tests to make sure everything works together. Once the CI passes all the automated tests, mesosphere reviews the PR and merges them once they are ready and your package will be ready to :rocket:.
 
-All Pull Requests opened for Universe and the `version-3.x` branch will have their Docker image built and published to the DockerHub image [`mesosphere/universe-server`](https://hub.docker.com/r/mesosphere/universe-server/). In the artifacts tab of the build results you can find `docker/server/marathon.json` which can be used to run the Universe Server for testing in your DC/OS cluster.  For each Pull Request, click the details link of the "Universe Server Docker image" status report to view the build results.
+All Pull Requests opened for Universe and the `version-3.x` branch will have their Universe Server Docker image built and published to the DockerHub image [`mesosphere/universe-server`](https://hub.docker.com/r/mesosphere/universe-server/). In the artifacts tab of the build results you can find `docker/server/marathon.json` which can be used to run the Universe Server for testing in your DC/OS cluster.  For each Pull Request, click the details link of the "Universe Server Docker image" status report to view the build results.
