@@ -1,0 +1,16 @@
+{
+  "description": "Apache Cassandra",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.8",
+  "name": "beta-cassandra",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS Cassandra is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/latest/usage/service-guides/cassandra\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS cassandra is being uninstalled.",
+  "preInstallNotes": "This DC/OS Service is currently a beta candidate undergoing testing as part of a formal beta test program. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Contact Mesosphere before deploying this beta candidate service. Product support is available to approved participants in the beta test program.",
+  "selected": false,
+  "tags": [
+    "cassandra"
+  ],
+  "version": "1.0.30-3.0.13-beta"
+}
