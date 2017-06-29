@@ -22,12 +22,12 @@
                 "uri": {
                     "type": "string",
                     "description": "A URI serving the Spark distribution to use for the local Zeppelin Spark context.  By default, this will use the value specified in this package's resource.json",
-                    "default": "https://downloads.mesosphere.com/spark/assets/spark-2.1.0-bin-2.7.tgz"
+                    "default": "https://downloads.mesosphere.com/spark/assets/spark-2.1.1-bin-2.7.tgz"
                 },
                 "executor_docker_image": {
                     "type": "string",
                     "description": "The docker image to launch Spark executors with.  By default, this will use this value specified in this package's resource.json",
-                    "default": "mesosphere/spark:1.1.0-2.1.0-hadoop-2.7"
+                    "default": "mesosphere/spark:1.1.0-2.1.1-hadoop-2.7"
                 },
                 "cores_max": {
                     "type": "string",
