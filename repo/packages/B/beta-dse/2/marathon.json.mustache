@@ -1,0 +1,595 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1,
+  "mem": 1024,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && export JAVA_OPTS=\"-Xms256M -Xmx512M\" && env && ./dse-scheduler/bin/dse ./dse-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP":"true"
+  },
+  "env": {
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_HOST": "{{service.name}}.autoip.dcos.thisdcos.directory",
+
+    "OPSC_CASSANDRA_USERNAME": "{{opscenter.cassandra_username}}",
+    "OPSC_CASSANDRA_PASSWORD": "{{opscenter.cassandra_password}}",
+    "OPSCENTER_INSTALL_DIR": "/opscenter-6.0.8",
+    "DSE_INSTALL_DIR": "/dse-5.0.7",
+    "DSE_AGENT_INSTALL_DIR": "/datastax-agent-6.0.8",
+
+    "DSE_CLUSTER_NAME": "{{cluster.cluster_name}}",
+    "DSE_DC_NAME": "{{cluster.dc_name}}",
+    "DSE_RACK_NAME": "rack1",
+    "DSE_EXTERNAL_SEEDS": "{{cluster.external_seeds}}",
+    {{#cluster.dse_search}}
+    "DSE_SEARCH_ENABLED": "{{cluster.dse_search}}",
+    {{/cluster.dse_search}}
+    "DSE_ANALYTICS_ENABLED": "{{cluster.dse_analytics}}",
+    "DSE_GRAPH_ENABLED": "{{cluster.dse_graph}}",
+
+    "DSE_NODE_POD_COUNT": "{{dsenode.count}}",
+    "DSE_NODE_PLACEMENT": "{{dsenode.placement_constraint}}",
+    "DSE_NODE_CPUS": "{{dsenode.cpus}}",
+    "DSE_NODE_MEM": "{{dsenode.mem}}",
+    "DSE_NODE_HEAP": "{{dsenode.heap}}",
+    "DSE_NODE_JVM_OPTS": "{{{dsenode.jvm_opts}}}",
+    "DSE_NODE_DISK": "{{dsenode.data_disk}}",
+    "DSE_NODE_USER": "root",
+    "DSE_NODE_DEPLOY_STRATEGY": "{{dsenode.deploy_strategy}}",
+    "DSE_NODE_AGENT_CPUS": "{{dsenode.agent_cpus}}",
+    "DSE_NODE_AGENT_MEM": "{{dsenode.agent_mem}}",
+    "DSE_DATA_DISK_TYPE": "{{dsenode.data_disk_type}}",
+    "DSE_LOG_DISK": "{{dsenode.log_disk}}",
+    "DSE_LOG_DISK_TYPE": "{{dsenode.log_disk_type}}",
+    "DSE_SOLR_DISK": "{{dsenode.solr_disk}}",
+    "DSE_SOLR_DISK_TYPE": "{{dsenode.solr_disk_type}}",
+
+    "DSE_NATIVE_PORT": "{{dsenode.native_port}}",
+    "DSE_NATIVE_SSL_PORT": "{{dsenode.native_ssl_port}}",
+    "DSE_THRIFT_PORT": "{{dsenode.thrift_port}}",
+    "DSE_INTERNODE_PORT": "{{dsenode.internode_port}}",
+    "DSE_INTERNODE_SSL_PORT": "{{dsenode.internode_ssl_port}}",
+    "DSE_INTERNODE_MESSAGING_PORT": "{{dsenode.internode_messaging_port}}",
+    "DSE_JMX_PORT": "{{dsenode.jmx_port}}",
+    "DSE_AGENT_PORT": "{{dsenode.agent_port}}",
+    "DSE_GREMLIN_AGENT_PORT": "{{dsenode.gremlin_agent_port}}",
+    "DSE_SOLR_ADMIN_PORT": "{{dsenode.solr_admin_port}}",
+    "DSE_SPARK_MASTER_PORT": "{{dsenode.spark_master_port}}",
+    "DSE_SPARK_MASTER_WEBUI_PORT": "{{dsenode.spark_master_webui_port}}",
+    "DSE_SPARK_WORKER_WEBUI_PORT": "{{dsenode.spark_worker_webui_port}}",
+
+{{^opscenter.enabled}}
+  {{^opscenter.custom_host}}
+    "NO_OPSCENTER": "true",
+  {{/opscenter.custom_host}}
+{{/opscenter.enabled}}
+
+{{#opscenter.enabled}}
+    "OPSCENTER_ENABLED": "DEFINITELY",
+{{/opscenter.enabled}}
+{{^opscenter.enabled}}
+    "OPSCENTER_HOSTNAME": "{{opscenter.custom_host}}",
+{{/opscenter.enabled}}
+    "OPSCENTER_PLACEMENT": "{{opscenter.placement_constraint}}",
+    "OPSCENTER_CPUS": "{{opscenter.cpus}}",
+    "OPSCENTER_MEM": "{{opscenter.mem}}",
+    "OPSCENTER_HEAP": "{{opscenter.heap}}",
+    "OPSCENTER_JVM_OPTS": "{{{opscenter.jvm_opts}}}",
+    "OPSCENTER_DISK": "{{opscenter.disk}}",
+    "OPSCENTER_DISK_TYPE": "{{opscenter.disk_type}}",
+    "OPSCENTER_GUI_PORT": "{{opscenter.gui_port}}",
+    "OPSCENTER_STOMP_PORT": "{{opscenter.stomp_port}}",
+    "OPSCENTER_SPARK_MASTER_PROXY_PORT": "{{opscenter.spark_master_proxy_port}}",
+    "OPSCENTER_USER": "root",
+
+    "OPSC_AUTHENTICATION_METHOD": "{{opscenter.authentication.method}}",
+    "OPSC_AUTHENTICATION_PASSWD_DB": "./passwd_db/passwd.db",
+
+    "OPSC_WEBSERVER_STATICDIR": "{{opscenter.webserver.staticdir}}",
+    "OPSC_WEBSERVER_SUB_PROCESS_TIMEOUT": "{{opscenter.webserver.sub_process_timeout}}",
+
+
+    "OPSC_HTTP_PROXY_SETTINGS_PROXY_URL": "{{opscenter.http_proxy_settings.proxy_url}}",
+    "OPSC_HTTP_PROXY_SETTINGS_PROXY_USERNAME": "{{opscenter.http_proxy_settings.proxy_username}}",
+    "OPSC_HTTP_PROXY_SETTINGS_PROXY_PASSWORD": "{{opscenter.http_proxy_settings.proxy_password}}",
+
+    "OPSC_LOGGING_RESOURCE_USAGE_INTERVAL": "{{opscenter.logging.resource_usage_interval}}",
+
+    "OPSC_DEFINITIONS_DEFINITIONS_DIR": "{{opscenter.definitions.definitions_dir}}",
+    "OPSC_DEFINITIONS_AUTO_UPDATE": "{{opscenter.definitions.auto_update}}",
+    "OPSC_DEFINITIONS_DOWNLOAD_HOST": "{{opscenter.definitions.download_host}}",
+    "OPSC_DEFINITIONS_DOWNLOAD_PORT": "{{opscenter.definitions.download_port}}",
+    "OPSC_DEFINITIONS_DOWNLOAD_FILENAME": "{{opscenter.definitions.download_filename}}",
+    "OPSC_DEFINITIONS_HASH_FILENAME": "{{opscenter.definitions.hash_filename}}",
+    "OPSC_DEFINITIONS_SLEEP": "{{opscenter.definitions.sleep}}",
+
+    "OPSC_AGENTS_CONFIG_SLEEP": "{{opscenter.agents.config_sleep}}",
+    "OPSC_AGENTS_AGENT_INSTALL_POLL_PERIOD": "{{opscenter.agents.agent_install_poll_period}}",
+    "OPSC_AGENTS_AGENT_INSTALL_MUTE_PERIOD": "{{opscenter.agents.agent_install_mute_period}}",
+    "OPSC_AGENTS_AGENT_INSTALL_TIMEOUT_PERIOD": "{{opscenter.agents.agent_install_timeout_period}}",
+    "OPSC_AGENTS_SSH_EXECUTABLE": "{{opscenter.agents.ssh_executable}}",
+    "OPSC_AGENTS_SCP_EXECUTABLE": "{{opscenter.agents.scp_executable}}",
+    "OPSC_AGENTS_SSH_KEYGEN_EXECUTABLE": "{{opscenter.agents.ssh_keygen_executable}}",
+    "OPSC_AGENTS_SSH_KEYSCAN_EXECUTABLE": "{{opscenter.agents.ssh_keyscan_executable}}",
+    "OPSC_AGENTS_SSH_USER_KNOWN_HOSTS_FILE": "{{opscenter.agents.ssh_user_known_hosts_file}}",
+    "OPSC_AGENTS_SSH_SYS_KNOWN_HOSTS_FILE": "{{opscenter.agents.ssh_sys_known_hosts_file}}",
+    "OPSC_AGENTS_TMP_DIR": "{{opscenter.agents.ssh_tmp_dir}}",
+    "OPSC_AGENTS_NOT_SEEN_THRESHOLD": "{{opscenter.agents.not_seen_threshold}}",
+    "OPSC_AGENTS_CALL_AGENT_RETRY": "{{opscenter.agents.call_agent_retry}}",
+    "OPSC_AGENTS_AGENT_AGGREGATION_FLUSH": "{{opscenter.agents.agent_aggregation_flush}}",
+    "OPSC_AGENTS_HTTP_POLL_PERIOD": "{{opscenter.agents.http_poll_period}}",
+    "OPSC_AGENTS_PATH_TO_INSTALL_SCRIPT": "{{opscenter.agents.path_to_install_script}}",
+    "OPSC_AGENTS_PATH_TO_SUDOWRAP": "{{opscenter.agents.path_to_sudowrap}}",
+
+    "OPSC_STAT_REPORTER_INITIAL_SLEEP": "{{opscenter.stat_reporter.initial_sleep}}",
+    "OPSC_STAT_REPORTER_INTERVAL": "{{opscenter.stat_reporter.interval}}",
+
+    "OPSC_REPAIR_SERVICE_PERSIST_DIRECTORY": "{{opscenter.repair_service.persist_directory}}",
+    "OPSC_REPAIR_SERVICE_PERSIST_PERIOD": "{{opscenter.repair_service.persist_period}}",
+    "OPSC_REPAIR_SERVICE_RESTART_PERIOD": "{{opscenter.repair_service.restart_period}}",
+    "OPSC_REPAIR_SERVICE_CLUSTER_STABILIZATION_PERIOD": "{{opscenter.repair_service.cluster_stabilization_period}}",
+    "OPSC_REPAIR_SERVICE_KS_UPDATE_PERIOD": "{{opscenter.repair_service.ks_update_period}}",
+    "OPSC_REPAIR_SERVICE_SINGLE_TASK_ERR_THRESHOLD": "{{opscenter.repair_service.single_task_err_threshold}}",
+    "OPSC_REPAIR_SERVICE_MAX_ERR_THRESHOLD": "{{opscenter.repair_service.max_err_threshold}}",
+    "OPSC_REPAIR_SERVICE_MAX_PARALLEL_REPAIRS": "{{opscenter.repair_service.max_parallel_repairs}}",
+    "OPSC_REPAIR_SERVICE_MAX_PENDING_REPAIRS": "{{opscenter.repair_service.max_pending_repairs}}",
+    "OPSC_REPAIR_SERVICE_ALERT_ON_REPAIR_FAILURE": "{{opscenter.repair_service.alert_on_repair_failure}}",
+    "OPSC_REPAIR_SERVICE_SINGLE_REPAIR_TIMEOUT": "{{opscenter.repair_service.single_repair_timeout}}",
+    "OPSC_REPAIR_SERVICE_MIN_REPAIR_TIME": "{{opscenter.repair_service.min_repair_time}}",
+    "OPSC_REPAIR_SERVICE_MIN_THROUGHPUT": "{{opscenter.repair_service.min_throughput}}",
+    "OPSC_REPAIR_SERVICE_NUM_RECENT_THROUGHPUTS": "{{opscenter.repair_service.num_recent_throughputs}}",
+    "OPSC_REPAIR_SERVICE_ERROR_LOGGING_WINDOW": "{{opscenter.repair_service.error_logging_window}}",
+    "OPSC_REPAIR_SERVICE_INCREMENTAL_REPAIR_TABLES": "{{opscenter.repair_service.incremental_repair_tables}}",
+    "OPSC_REPAIR_SERVICE_INCREMENTAL_RANGE_REPAIR": "{{opscenter.repair_service.incremental_range_repair}}",
+    "OPSC_REPAIR_SERVICE_INCREMENTAL_ERR_ALERT_THRESHOLD": "{{opscenter.repair_service.incremental_err_alert_threshold}}",
+    "OPSC_REPAIR_SERVICE_SNAPSHOT_OVERRIDE": "{{opscenter.repair_service.snapshot_override}}",
+
+    "OPSC_UI_DEFAULT_API_TIMEOUT": "{{opscenter.ui.default_api_timeout}}",
+    "OPSC_UI_MAX_METRICS_REQUESTS": "{{opscenter.ui.max_metrics_requests}}",
+    "OPSC_UI_NODE_DETAIL_REFRESH_DELAY": "{{opscenter.ui.node_detail_refresh_delay}}",
+    "OPSC_UI_STORAGEMAP_TTL": "{{opscenter.ui.storagemap_ttl}}",
+
+    "OPSC_REQUEST_TRACKER_QUEUE_SIZE": "{{opscenter.request_tracker.queue_size}}",
+
+    "OPSC_CLUSTERS_ADD_CLUSTER_TIMEOUT": "{{opscenter.clusters.add_cluster_timeout}}",
+    "OPSC_CLUSTERS_STARTUP_SLEEP": "{{opscenter.clusters.startup_sleep}}",
+    "OPSC_CLUSTERS_MAX_SCHEMA_AGREEMENT_WAIT": "{{opscenter.clusters.max_schema_agreement_wait}}",
+    
+
+{{#opscenter.authentication.enabled}}
+    "OPSC_AUTHENTICATION_ENABLED": "DEFINITELY",
+    "OPSC_AUTHENTICATION_LOGIN_USER": "{{opscenter.authentication.login_user}}",
+    "OPSC_AUTHENTICATION_LOGIN_PASSWORD": "{{opscenter.authentication.login_password}}",
+    "OPSC_AUTHENTICATION_TIMEOUT": "{{opscenter.authentication.timeout}}",
+    "OPSC_AUTHENTICATION_PASSWORD_HASH_TYPE": "{{opscenter.authentication.password_hash_type}}",
+    "OPSC_AUTHENTICATION_SQLITE_CONNECTION_TIMEOUT": "{{opscenter.authentication.sqlite_connection_timeout}}",
+    "OPSC_AUTHENTICATION_SQLITE_MAX_ACTIVE_CONNECTIONS": "{{opscenter.authentication.sqlite_max_active_connections}}",
+{{/opscenter.authentication.enabled}}
+
+{{#opscenter.ldap.enabled}}
+    "OPSC_LDAP_ENABLED": "DEFINITELY",
+    "OPSC_LDAP_SERVER_HOST": "{{opscenter.ldap.server_host}}",
+    "OPSC_LDAP_SERVER_PORT": "{{opscenter.ldap.server_port}}",
+    "OPSC_LDAP_SEARCH_DN": "{{{opscenter.ldap.search_dn}}}",
+    "OPSC_LDAP_SEARCH_PASSWORD": "{{opscenter.ldap.search_password}}",
+    "OPSC_LDAP_USER_SEARCH_BASE": "{{{opscenter.ldap.user_search_base}}}",
+    "OPSC_LDAP_USER_SEARCH_FILTER": "{{{opscenter.ldap.user_search_filter}}}",
+    "OPSC_LDAP_USER_MEMBEROF_ATTRIBUTE": "{{opscenter.ldap.user_memberof_attribute}}",
+    "OPSC_LDAP_GROUP_SEARCH_TYPE": "{{{opscenter.ldap.group_search_type}}}",
+    "OPSC_LDAP_GROUP_SEARCH_BASE": "{{{opscenter.ldap.group_search_base}}}",
+    "OPSC_LDAP_GROUP_SEARCH_FILTER_WITH_DN": "{{{opscenter.ldap.group_search_filter_with_dn}}}",
+    "OPSC_LDAP_GROUP_NAME_ATTRIBUTE": "{{{opscenter.ldap.group_name_attribute}}}",
+    "OPSC_LDAP_ADMIN_GROUP_NAME": "{{{opscenter.ldap.admin_group_name}}}",
+    "OPSC_LDAP_CONNECTION_TIMEOUT": "{{{opscenter.ldap.connection_timeout}}}",
+{{/opscenter.ldap.enabled}}
+
+{{#studio.enabled}}
+    "STUDIO_ENABLED": "DEFINITELY",
+{{/studio.enabled}}
+    "STUDIO_PLACEMENT": "{{studio.placement_constraint}}",
+    "STUDIO_CPUS": "{{studio.cpus}}",
+    "STUDIO_MEM": "{{studio.mem}}",
+    "STUDIO_PORT": "{{studio.port}}",
+    "STUDIO_USER": "root",
+
+    "NUM_TOKENS": "{{cassandra.num_tokens}}",
+    "ALLOCATE_TOKENS_FOR_KEYSPACE": "{{cassandra.allocate_tokens_for_keyspace}}",
+    "INITIAL_TOKEN": "{{cassandra.initial_token}}",
+    "HINTED_HANDOFF_ENABLED": "{{cassandra.hinted_handoff_enabled}}",
+    "HINTED_HANDOFF_MAX_HINT_WINDOW_IN_MS": "{{cassandra.max_hint_window_in_ms}}",
+    "HINTED_HANDOFF_THROTTLE_IN_KB": "{{cassandra.hinted_handoff_throttle_in_kb}}",
+    "HINTED_HANDOFF_MAX_HINTS_DELIVERY_THREADS": "{{cassandra.max_hints_delivery_threads}}",
+    "HINTS_DIRECTORY": "{{cassandra.hints_directory}}",
+    "HINTS_FLUSH_PERIOD_IN_MS": "{{cassandra.hints_flush_period_in_ms}}",
+    "MAX_HINTS_FILE_SIZE_IN_MB": "{{cassandra.max_hints_file_size_in_mb}}",
+    "HINTS_COMPRESSION_CLASS": "{{cassandra.hints_compression_class}}",
+    "HINTS_COMPRESSION_PARAMETER": "{{cassandra.hints_compression_parameter}}",
+    "HINTED_HANDOFF_BATCHLOG_REPLAY_THROTTLE_IN_KB": "{{cassandra.batchlog_replay_throttle_in_kb}}",
+    "AUTHENTICATOR": "{{cassandra.authenticator}}",
+    "AUTHORIZER": "{{cassandra.authorizer}}",
+    "ROLE_MANAGER": "{{cassandra.role_manager}}",
+    "ROLES_VALIDITY_IN_MS": "{{cassandra.roles_validity_in_ms}}",
+    "ROLES_UPDATE_INTERVAL_IN_MS": "{{cassandra.roles_update_interval_in_ms}}",
+    "PERMISSIONS_VALIDITY_IN_MS": "{{cassandra.permissions_validity_in_ms}}",
+    "PERMISSIONS_UPDATE_INTERVAL_IN_MS": "{{cassandra.permissions_update_interval_in_ms}}",
+    "PARTITIONER": "{{cassandra.partitioner}}",
+    "DISK_FAILURE_POLICY": "{{cassandra.disk_failure_policy}}",
+    "COMMIT_FAILURE_POLICY": "{{cassandra.commit_failure_policy}}",
+    "KEY_CACHE_SIZE_IN_MB": "{{cassandra.key_cache_size_in_mb}}",
+    "KEY_CACHE_SAVE_PERIOD": "{{cassandra.key_cache_save_period}}",
+    "KEY_CACHE_KEYS_TO_SAVE": "{{cassandra.key_cache_keys_to_save}}",
+    "ROW_CACHE_CLASS_NAME": "{{cassandra.row_cache_class_name}}",
+    "ROW_CACHE_SIZE_IN_MB": "{{cassandra.row_cache_size_in_mb}}",
+    "ROW_CACHE_SAVE_PERIOD": "{{cassandra.row_cache_save_period}}",
+    "ROW_CACHE_KEYS_TO_SAVE": "{{cassandra.row_cache_keys_to_save}}",
+    "COUNTER_CACHE_SIZE_IN_MB": "{{cassandra.counter_cache_size_in_mb}}",
+    "COUNTER_CACHE_SAVE_PERIOD": "{{cassandra.counter_cache_save_period}}",
+    "COUNTER_CACHE_KEYS_TO_SAVE": "{{cassandra.counter_cache_keys_to_save}}",
+    "COMMITLOG_SYNC": "{{cassandra.commitlog_sync}}",
+    "COMMITLOG_SYNC_PERIOD_IN_MS": "{{cassandra.commitlog_sync_period_in_ms}}",
+    "COMMITLOG_SYNC_BATCH_WINDOW_IN_MS": "{{cassandra.commitlog_sync_batch_window_in_ms}}",
+    "COMMITLOG_SEGMENT_SIZE_IN_MB": "{{cassandra.commitlog_segment_size_in_mb}}",
+    "COMMITLOG_COMPRESSION_CLASS": "{{cassandra.commitlog_compression_class}}",
+    "COMMITLOG_COMPRESSION_PARAMETER": "{{cassandra.commitlog_compression_parameter}}",
+    "CONCURRENT_READS": "{{cassandra.concurrent_reads}}",
+    "CONCURRENT_WRITES": "{{cassandra.concurrent_writes}}",
+    "CONCURRENT_COUNTER_WRITES": "{{cassandra.concurrent_counter_writes}}",
+    "CONCURRENT_MATERIALIZED_VIEW_WRITES": "{{cassandra.concurrent_materialized_view_writes}}",
+    "FILE_CACHE_SIZE_IN_MB": "{{cassandra.file_cache_size_in_mb}}",
+    "BUFFER_POOL_USE_HEAP_IF_EXHAUSTED": "{{cassandra.buffer_pool_use_heap_if_exhausted}}",
+    "DISK_OPTIMIZATION_STRATEGY": "{{cassandra.disk_optimization_strategy}}",
+    "MEMTABLE_HEAP_SPACE_IN_MB": "{{cassandra.memtable_heap_space_in_mb}}",
+    "MEMTABLE_OFFHEAP_SPACE_IN_MB": "{{cassandra.memtable_offheap_space_in_mb}}",
+    "MEMTABLE_CLEANUP_THRESHOLD": "{{cassandra.memtable_cleanup_threshold}}",
+    "MEMTABLE_ALLOCATION_TYPE": "{{cassandra.memtable_allocation_type}}",
+    "COMMITLOG_TOTAL_SPACE_IN_MB": "{{cassandra.commitlog_total_space_in_mb}}",
+    "MEMTABLE_FLUSH_WRITERS": "{{cassandra.memtable_flush_writers}}",
+    "INDEX_SUMMARY_CAPACITY_IN_MB": "{{cassandra.index_summary_capacity_in_mb}}",
+    "INDEX_SUMMARY_RESIZE_INTERVAL_IN_MINUTES": "{{cassandra.index_summary_resize_interval_in_minutes}}",
+    "TRICKLE_FSYNC": "{{cassandra.trickle_fsync}}",
+    "TRICKLE_FSYNC_INTERVAL_IN_KB": "{{cassandra.trickle_fsync_interval_in_kb}}",
+    "INTERNODE_AUTHENTICATOR": "{{cassandra.internode_authenticator}}",
+    "START_NATIVE_TRANSPORT": "{{cassandra.start_native_transport}}",
+    "NATIVE_TRANSPORT_MAX_THREADS": "{{cassandra.native_transport_max_threads}}",
+    "NATIVE_TRANSPORT_MAX_FRAME_SIZE_IN_MB": "{{cassandra.native_transport_max_frame_size_in_mb}}",
+    "NATIVE_TRANSPORT_MAX_CONCURRENT_CONNECTIONS": "{{cassandra.native_transport_max_concurrent_connections}}",
+    "NATIVE_TRANSPORT_MAX_CONCURRENT_CONNECTIONS_PER_IP": "{{cassandra.native_transport_max_concurrent_connections_per_ip}}",
+    "START_RPC": "{{cassandra.start_rpc}}",
+    "RPC_KEEPALIVE": "{{cassandra.rpc_keepalive}}",
+    "RPC_SERVER_TYPE": "{{cassandra.rpc_server_type}}",
+    "RPC_MIN_THREADS": "{{cassandra.rpc_min_threads}}",
+    "RPC_MAX_THREADS": "{{cassandra.rpc_max_threads}}",
+    "RPC_SEND_BUFF_SIZE_IN_BYTES": "{{cassandra.rpc_send_buff_size_in_bytes}}",
+    "RPC_RECV_BUFF_SIZE_IN_BYTES": "{{cassandra.rpc_recv_buff_size_in_bytes}}",
+    "INTERNODE_SEND_BUFF_SIZE_IN_BYTES": "{{cassandra.internode_send_buff_size_in_bytes}}",
+    "INTERNODE_RECV_BUFF_SIZE_IN_BYTES": "{{cassandra.internode_recv_buff_size_in_bytes}}",
+    "THRIFT_FRAMED_TRANSPORT_SIZE_IN_MB": "{{cassandra.thrift_framed_transport_size_in_mb}}",
+    "INCREMENTAL_BACKUPS": "{{cassandra.incremental_backups}}",
+    "SNAPSHOT_BEFORE_COMPACTION": "{{cassandra.snapshot_before_compaction}}",
+    "AUTO_SNAPSHOT": "{{cassandra.auto_snapshot}}",
+    "TOMBSTONE_WARN_THRESHOLD": "{{cassandra.tombstone_warn_threshold}}",
+    "TOMBSTONE_FAILURE_THRESHOLD": "{{cassandra.tombstone_failure_threshold}}",
+    "COLUMN_INDEX_SIZE_IN_KB": "{{cassandra.column_index_size_in_kb}}",
+    "BATCH_SIZE_WARN_THRESHOLD_IN_KB": "{{cassandra.batch_size_warn_threshold_in_kb}}",
+    "BATCH_SIZE_FAIL_THRESHOLD_IN_KB": "{{cassandra.batch_size_fail_threshold_in_kb}}",
+    "UNLOGGED_BATCH_ACROSS_PARTITIONS_WARN_THRESHOLD": "{{cassandra.unlogged_batch_across_partitions_warn_threshold}}",
+    "CONCURRENT_COMPACTORS": "{{cassandra.concurrent_compactors}}",
+    "COMPACTION_THROUGHPUT_MB_PER_SEC": "{{cassandra.compaction_throughput_mb_per_sec}}",
+    "COMPACTION_LARGE_PARTITION_WARNING_THRESHOLD_MB": "{{cassandra.compaction_large_partition_warning_threshold_mb}}",
+    "SSTABLE_PREEMPTIVE_OPEN_INTERVAL_IN_MB": "{{cassandra.sstable_preemptive_open_interval_in_mb}}",
+    "STREAM_THROUGHPUT_OUTBOUND_MEGABITS_PER_SEC": "{{cassandra.stream_throughput_outbound_megabits_per_sec}}",
+    "INTER_DC_STREAM_THROUGHPUT_OUTBOUND_MEGABITS_PER_SEC": "{{cassandra.inter_dc_stream_throughput_outbound_megabits_per_sec}}",
+    "READ_REQUEST_TIMEOUT_IN_MS": "{{cassandra.read_request_timeout_in_ms}}",
+    "RANGE_REQUEST_TIMEOUT_IN_MS": "{{cassandra.range_request_timeout_in_ms}}",
+    "WRITE_REQUEST_TIMEOUT_IN_MS": "{{cassandra.write_request_timeout_in_ms}}",
+    "COUNTER_WRITE_REQUEST_TIMEOUT_IN_MS": "{{cassandra.counter_write_request_timeout_in_ms}}",
+    "CAS_CONTENTION_TIMEOUT_IN_MS": "{{cassandra.cas_contention_timeout_in_ms}}",
+    "TRUNCATE_REQUEST_TIMEOUT_IN_MS": "{{cassandra.truncate_request_timeout_in_ms}}",
+    "REQUEST_TIMEOUT_IN_MS": "{{cassandra.request_timeout_in_ms}}",
+    "CROSS_NODE_TIMEOUT": "{{cassandra.cross_node_timeout}}",
+    "STREAMING_SOCKET_TIMEOUT_IN_MS": "{{cassandra.streaming_socket_timeout_in_ms}}",
+    "PHI_CONVICT_THRESHOLD": "{{cassandra.phi_convict_threshold}}",
+    "ENDPOINT_SNITCH": "{{cassandra.endpoint_snitch}}",
+    "DYNAMIC_SNITCH_UPDATE_INTERVAL_IN_MS": "{{cassandra.dynamic_snitch_update_interval_in_ms}}",
+    "DYNAMIC_SNITCH_RESET_INTERVAL_IN_MS": "{{cassandra.dynamic_snitch_reset_interval_in_ms}}",
+    "DYNAMIC_SNITCH_BADNESS_THRESHOLD": "{{cassandra.dynamic_snitch_badness_threshold}}",
+    "REQUEST_SCHEDULER": "{{cassandra.request_scheduler}}",
+    "REQUEST_SCHEDULER_THROTTLE_LIMIT": "{{cassandra.request_scheduler_throttle_limit}}",
+    "REQUEST_SCHEDULER_DEFAULT_WEIGHT": "{{cassandra.request_scheduler_default_weight}}",
+    "REQUEST_SCHEDULER_CUSTOM_WEIGHT_1": "{{cassandra.request_scheduler_custom_weight_1}}",
+    "REQUEST_SCHEDULER_CUSTOM_WEIGHT_2": "{{cassandra.request_scheduler_custom_weight_2}}",
+    "REQUEST_SCHEDULER_CUSTOM_WEIGHT_3": "{{cassandra.request_scheduler_custom_weight_3}}",
+    "REQUEST_SCHEDULER_CUSTOM_WEIGHT_4": "{{cassandra.request_scheduler_custom_weight_4}}",
+    "REQUEST_SCHEDULER_CUSTOM_WEIGHT_5": "{{cassandra.request_scheduler_custom_weight_5}}",
+    "REQUEST_SCHEDULER_ID": "{{cassandra.request_scheduler_id}}",
+    "SERVER_ENCRYPTION_INTERNODE_ENCRYPTION": "{{cassandra.server_encryption_internode_encryption}}",
+    "SERVER_ENCRYPTION_KEYSTORE": "{{cassandra.server_encryption_keystore}}",
+    "SERVER_ENCRYPTION_KEYSTORE_PASSWORD": "{{cassandra.server_encryption_keystore_password}}",
+    "SERVER_ENCRYPTION_TRUSTSTORE": "{{cassandra.server_encryption_truststore}}",
+    "SERVER_ENCRYPTION_TRUSTSTORE_PASSWORD": "{{cassandra.server_encryption_truststore_password}}",
+    "SERVER_ENCRYPTION_PROTOCOL": "{{cassandra.server_encryption_protocol}}",
+    "SERVER_ENCRYPTION_ALGORITHM": "{{cassandra.server_encryption_algorithm}}",
+    "SERVER_ENCRYPTION_STORE_TYPE": "{{cassandra.server_encryption_store_type}}",
+    "SERVER_ENCRYPTION_CIPHER_SUITES": "{{cassandra.server_encryption_cipher_suites}}",
+    "SERVER_ENCRYPTION_REQUIRE_CLIENT_AUTH": "{{cassandra.server_encryption_require_client_auth}}",
+    "CLIENT_ENCRYPTION_ENABLED": "{{cassandra.client_encryption_enabled}}",
+    "CLIENT_ENCRYPTION_OPTIONAL": "{{cassandra.client_encryption_optional}}",
+    "CLIENT_ENCRYPTION_KEYSTORE": "{{cassandra.client_encryption_keystore}}",
+    "CLIENT_ENCRYPTION_KEYSTORE_PASSWORD": "{{cassandra.client_encryption_keystore_password}}",
+    "CLIENT_ENCRYPTION_REQUIRE_CLIENT_AUTH": "{{cassandra.client_encryption_require_client_auth}}",
+    "CLIENT_ENCRYPTION_TRUSTSTORE": "{{cassandra.client_encryption_truststore}}",
+    "CLIENT_ENCRYPTION_TRUSTSTORE_PASSWORD": "{{cassandra.client_encryption_truststore_password}}",
+    "CLIENT_ENCRYPTION_PROTOCOL": "{{cassandra.client_encryption_protocol}}",
+    "CLIENT_ENCRYPTION_ALGORITHM": "{{cassandra.client_encryption_algorithm}}",
+    "CLIENT_ENCRYPTION_STORE_TYPE": "{{cassandra.client_encryption_store_type}}",
+    "CLIENT_ENCRYPTION_CIPHER_SUITES": "{{cassandra.client_encryption_cipher_suites}}",
+    "INTERNODE_COMPRESSION": "{{cassandra.internode_compression}}",
+    "INTER_DC_TCP_NODELAY": "{{cassandra.inter_dc_tcp_nodelay}}",
+    "TRACETYPE_QUERY_TTL": "{{cassandra.tracetype_query_ttl}}",
+    "TRACETYPE_REPAIR_TTL": "{{cassandra.tracetype_repair_ttl}}",
+    "GC_LOG_THRESHOLD_IN_MS": "{{cassandra.gc_log_threshold_in_ms}}",
+    "GC_WARN_THRESHOLD_IN_MS": "{{cassandra.gc_warn_threshold_in_ms}}",
+    "ENABLE_USER_DEFINED_FUNCTIONS": "{{cassandra.enable_user_defined_functions}}",
+    "ENABLE_SCRIPTED_USER_DEFINED_FUNCTIONS": "{{cassandra.enable_scripted_user_defined_functions}}",
+    "WINDOWS_TIMER_INTERVAL": "{{cassandra.windows_timer_interval}}",
+    "MAX_VALUE_SIZE_IN_MB": "{{cassandra.max_value_size_in_mb}}",
+    "OTC_COALESCING_STRATEGY": "{{cassandra.otc_coalescing_strategy}}",
+    "OTC_COALESCING_WINDOW_US": "{{cassandra.otc_coalescing_window_us}}",
+
+    "PERFORMANCE_MAX_THREADS": "{{dse.global_performance_service.performance_max_threads}}",
+    "DSE_DSEFS_DATA_DISK_TYPE": "{{dse.dsefs_data_disk_type}}",
+    "DSE_DSEFS_DISK": "{{dse.dsefs_disk}}",
+{{#dse.dsefs_enabled}}
+    "DSE_DSEFS_ENABLED": "${{dse.dsefs_enabled}}",
+{{/dse.dsefs_enabled}}
+
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "INIT_CLUSTER_URI": "{{resource.assets.uris.opscenter-init-zip}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "DSE_STUDIO_URI": "{{resource.assets.uris.dse-studio-tar-gz}}",
+    "OPSCENTER_DOCKER_IMAGE": "{{resource.assets.container.docker.opscenter}}",
+    "DSE_DOCKER_IMAGE": "{{resource.assets.container.docker.dse}}",
+{{#dse.ldap.enabled}}
+    "LDAP_ENABLED": "{{dse.ldap.enabled}}",
+    "LDAP_OPTIONS_SERVER_HOST": "{{dse.ldap.server_host}}",
+    "LDAP_OPTIONS_SERVER_PORT": "{{dse.ldap.server_port}}",
+
+    "LDAP_OPTIONS_SEARCH_DN": "{{{dse.ldap.search_dn}}}",
+    "LDAP_OPTIONS_SEARCH_PASSWORD": "{{dse.ldap.search_password}}",
+
+    "LDAP_OPTIONS_USER_SEARCH_BASE": "{{{dse.ldap.user_search_base}}}",
+    "LDAP_OPTIONS_USER_SEARCH_FILTER": "{{{dse.ldap.user_search_filter}}}",
+    "LDAP_OPTIONS_USER_MEMBEROF_ATTRIBUTE": "{{{dse.ldap.user_memberof_attribute}}}",
+    "LDAP_OPTIONS_GROUP_SEARCH_TYPE": "{{dse.ldap.group_search_type}}",
+    "LDAP_OPTIONS_GROUP_SEARCH_BASE": "{{{dse.ldap.group_search_base}}}",
+    "LDAP_OPTIONS_GROUP_SEARCH_FILTER": "{{{dse.ldap.group_search_filter}}}",
+    "LDAP_OPTIONS_GROUP_NAME_ATTRIBUTE": "{{{dse.ldap.group_name_attribute}}}",
+    "LDAP_OPTIONS_CREDENTIALS_VALIDITY_IN_MS": "{{dse.ldap.credentials_validity_in_ms}}",
+    "LDAP_OPTIONS_SEARCH_VALIDITY_IN_SECONDS": "{{dse.ldap.search_validity_in_seconds}}",
+    "LDAP_OPTIONS_CONNECTION_POOL_MAX_ACTIVE": "{{dse.ldap.connection_pool_max_active}}",
+    "LDAP_OPTIONS_CONNECTION_POOL_MAX_IDLE": "{{dse.ldap.connection_pool_max_idle}}",
+{{/dse.ldap.enabled}}
+
+{{#dse.advanced_replication.enabled}}
+    "ADV_REPLICATION_ENABLED": "{{dse.advanced_replication.enabled}}",
+    "AR_CONF_DRIVER_PWD_ENCRYPTION_ENABLED": "{{dse.advanced_replication.conf_driver_pwd_encryption_enabled}}",
+    "AR_SECURITY_BASE_PATH": "{{dse.advanced_replication.security_base_path}}",
+{{/dse.advanced_replication.enabled}}
+
+    "MAX_MEMORY_TO_LOCK_FRACTION": "{{dse.max_memory_to_lock_fraction}}",
+{{#dse.max_memory_to_lock_mb}}
+    "MAX_MEMORY_TO_LOCK_MB": "{{dse.max_memory_to_lock_mb}}",
+{{/dse.max_memory_to_lock_mb}}
+    "HIVE_META_STORE_ENABLED": "{{dse.hive_meta_store_enabled}}",
+    "TTL_INDEX_REBUILD_OPTIONS_FIXED_RATE_PERIOD": "{{dse.ttl_index_rebuild_options_fixed_rate_period}}",
+    "TTL_INDEX_REBUILD_OPTIONS_INITIAL_DELAY": "{{dse.ttl_index_rebuild_options_initial_delay}}",
+    "TTL_INDEX_REBUILD_OPTIONS_MAX_DOCS_PER_BATCH": "{{dse.ttl_index_rebuild_options_max_docs_per_batch}}",
+    "TTL_INDEX_REBUILD_OPTIONS_THREAD_POOL_SIZE": "{{dse.ttl_index_rebuild_options_thread_pool_size}}",
+    "SOLR_RESOURCE_UPLOAD_LIMIT_MB": "{{dse.solr_resource_upload_limit_mb}}",
+    "SHARD_TRANSPORT_OPTIONS_TYPE": "{{dse.shard_transport_options_type}}",
+    "SHARD_TRANSPORT_OPTIONS_NETTY_SERVER_PORT": "{{dse.shard_transport_options_netty_server_port}}",
+
+{{#dse.max_solr_concurrency_per_core}}
+    "MAX_SOLR_CONCURRENCY_PER_CORE": "{{dse.max_solr_concurrency_per_core}}",
+{{/dse.max_solr_concurrency_per_core}}
+{{#dse.enable_back_pressure_adaptive_nrt_commit}}
+    "ENABLE_BACK_PRESSURE_ADAPTIVE_NRT_COMMIT": "{{dse.enable_back_pressure_adaptive_nrt_commit}}",
+{{/dse.enable_back_pressure_adaptive_nrt_commit}}
+{{#dse.back_pressure_threshold_per_core}}
+    "BACK_PRESSURE_THRESHOLD_PER_CORE": "{{dse.back_pressure_threshold_per_core}}",
+{{/dse.back_pressure_threshold_per_core}}
+{{#dse.flush_max_time_per_core}}
+    "FLUSH_MAX_TIME_PER_CORE": "{{dse.flush_max_time_per_core}}",
+{{/dse.flush_max_time_per_core}}
+{{#dse.load_max_time_per_core}}
+    "LOAD_MAX_TIME_PER_CORE": "{{dse.load_max_time_per_core}}",
+{{/dse.load_max_time_per_core}}
+{{#dse.enable_index_disk_failure_policy}}
+    "ENABLE_INDEX_DISK_FAILURE_POLICY": "{{dse.enable_index_disk_failure_policy}}",
+{{/dse.enable_index_disk_failure_policy}}
+{{#dse.solr_data_dir}}
+    "SOLR_DATA_DIR": "{{dse.solr_data_dir}}",
+{{/dse.solr_data_dir}}
+{{#dse.solr_field_cache_enabled}}
+    "SOLR_FIELD_CACHE_ENABLED": "{{dse.solr_field_cache_enabled}}",
+{{/dse.solr_field_cache_enabled}}
+{{#dse.cql_solr_query_executor_threads}}
+    "CQL_SOLR_QUERY_EXECUTOR_THREADS": "{{dse.cql_solr_query_executor_threads}}",
+{{/dse.cql_solr_query_executor_threads}}
+{{#dse.cql_solr_query_row_timeout}}
+    "CQL_SOLR_QUERY_ROW_TIMEOUT": "{{dse.cql_solr_query_row_timeout}}",
+{{/dse.cql_solr_query_row_timeout}}
+{{#dse.performance_max_threads}}
+    "PERFORMANCE_MAX_THREADS": "{{dse.performance_max_threads}}",
+{{/dse.performance_max_threads}}
+
+    "GRAPH_EVENTS_TTL_SECONDS": "{{dse.graph_events_ttl_seconds}}",
+    "CQL_SLOW_LOG_OPTIONS_ENABLED": "{{dse.cql_slow_log_options_enabled}}",
+    "CQL_SLOW_LOG_OPTIONS_THRESHOLD": "{{dse.cql_slow_log_options_threshold}}",
+    "CQL_SLOW_LOG_OPTIONS_MINIMUM_SAMPLES": "{{dse.cql_slow_log_options_minimum_samples}}",
+    "CQL_SLOW_LOG_OPTIONS_TTL_SECONDS": "{{dse.cql_slow_log_options_ttl_seconds}}",
+    "CQL_SYSTEM_INFO_OPTIONS_ENABLED": "{{dse.cql_system_info_options_enabled}}",
+    "CQL_SYSTEM_INFO_OPTIONS_REFRESH_RATE_MS": "{{dse.cql_system_info_options_refresh_rate_ms}}",
+    "RESOURCE_LEVEL_LATENCY_TRACKING_OPTIONS_ENABLED": "{{dse.resource_level_latency_tracking_options_enabled}}",
+    "RESOURCE_LEVEL_LATENCY_TRACKING_OPTIONS_REFRESH_RATE_MS": "{{dse.resource_level_latency_tracking_options_refresh_rate_ms}}",
+    "DB_SUMMARY_STATS_OPTIONS_ENABLED": "{{dse.db_summary_stats_options_enabled}}",
+    "DB_SUMMARY_STATS_OPTIONS_REFRESH_RATE_MS": "{{dse.db_summary_stats_options_refresh_rate_ms}}",
+    "CLUSTER_SUMMARY_STATS_OPTIONS_ENABLED": "{{dse.cluster_summary_stats_options_enabled}}",
+    "CLUSTER_SUMMARY_STATS_OPTIONS_REFRESH_RATE_MS": "{{dse.cluster_summary_stats_options_refresh_rate_ms}}",
+    "SPARK_CLUSTER_INFO_OPTIONS_ENABLED": "{{dse.spark_cluster_info_options_enabled}}",
+    "SPARK_CLUSTER_INFO_OPTIONS_REFRESH_RATE_MS": "{{dse.spark_cluster_info_options_refresh_rate_ms}}",
+    "SPARK_APPLICATION_INFO_OPTIONS_ENABLED": "{{dse.spark_application_info_options_enabled}}",
+    "SPARK_APPLICATION_INFO_OPTIONS_REFRESH_RATE_MS": "{{dse.spark_application_info_options_refresh_rate_ms}}",
+    "SPARK_APPLICATION_INFO_OPTIONS_DRIVER_SINK": "{{dse.spark_application_info_options_driver_sink}}",
+    "SPARK_APPLICATION_INFO_OPTIONS_DRIVER_CONNECTORSOURCE": "{{dse.spark_application_info_options_driver_connector_source}}",
+    "SPARK_APPLICATION_INFO_OPTIONS_DRIVER_JVMSOURCE": "{{dse.spark_application_info_options_driver_jvm_source}}",
+    "SPARK_APPLICATION_INFO_OPTIONS_DRIVER_STATESOURCE": "{{dse.spark_application_info_options_driver_state_source}}",
+    "SPARK_APPLICATION_INFO_OPTIONS_EXECUTOR_SINK": "{{dse.spark_application_info_options_executor_sink}}",
+    "SPARK_APPLICATION_INFO_OPTIONS_EXECUTOR_CONNECTORSOURCE": "{{dse.spark_application_info_options_executor_connector_source}}",
+    "SPARK_APPLICATION_INFO_OPTIONS_EXECUTOR_JVMSOURCE": "{{dse.spark_application_info_options_executor_jvm_source}}",
+    "HISTOGRAM_DATA_OPTIONS_ENABLED": "{{dse.histogram_data_options_enabled}}",
+    "HISTOGRAM_DATA_OPTIONS_REFRESH_RATE_MS": "{{dse.histogram_data_options_refresh_rate_ms}}",
+    "HISTOGRAM_DATA_OPTIONS_RETENTION_COUNT": "{{dse.histogram_data_options_retention_count}}",
+    "USER_LEVEL_LATENCY_TRACKING_OPTIONS_ENABLED": "{{dse.user_level_latency_tracking_options_enabled}}",
+    "USER_LEVEL_LATENCY_TRACKING_OPTIONS_REFRESH_RATE_MS": "{{dse.user_level_latency_tracking_options_refresh_rate_ms}}",
+    "USER_LEVEL_LATENCY_TRACKING_OPTIONS_TOP_STATS_LIMIT": "{{dse.user_level_latency_tracking_options_top_stats_limit}}",
+    "USER_LEVEL_LATENCY_TRACKING_OPTIONS_QUANTILES": "{{dse.user_level_latency_tracking_options_quantiles}}",
+    "SOLR_INDEXING_ERROR_LOG_OPTIONS_ENABLED": "{{dse.solr_indexing_error_log_options_enabled}}",
+    "SOLR_INDEXING_ERROR_LOG_OPTIONS_TTL_SECONDS": "{{dse.solr_indexing_error_log_options_ttl_seconds}}",
+    "SOLR_INDEXING_ERROR_LOG_OPTIONS_ASYNC_WRITERS": "{{dse.solr_indexing_error_log_options_async_writers}}",
+    "SOLR_SLOW_SUB_QUERY_LOG_OPTIONS_ENABLED": "{{dse.solr_slow_sub_query_log_options_enabled}}",
+    "SOLR_SLOW_SUB_QUERY_LOG_OPTIONS_TTL_SECONDS": "{{dse.solr_slow_sub_query_log_options_ttl_seconds}}",
+    "SOLR_SLOW_SUB_QUERY_LOG_OPTIONS_ASYNC_WRITERS": "{{dse.solr_slow_sub_query_log_options_async_writers}}",
+    "SOLR_SLOW_SUB_QUERY_LOG_OPTIONS_THRESHOLD_MS": "{{dse.solr_slow_sub_query_log_options_threshold_ms}}",
+    "SOLR_UPDATE_HANDLER_METRICS_OPTIONS_ENABLED": "{{dse.solr_update_handler_metrics_options_enabled}}",
+    "SOLR_UPDATE_HANDLER_METRICS_OPTIONS_TTL_SECONDS": "{{dse.solr_update_handler_metrics_options_ttl_seconds}}",
+    "SOLR_UPDATE_HANDLER_METRICS_OPTIONS_REFRESH_RATE_MS": "{{dse.solr_update_handler_metrics_options_refresh_rate_ms}}",
+    "SOLR_REQUEST_HANDLER_METRICS_OPTIONS_ENABLED": "{{dse.solr_request_handler_metrics_options_enabled}}",
+    "SOLR_REQUEST_HANDLER_METRICS_OPTIONS_TTL_SECONDS": "{{dse.solr_request_handler_metrics_options_ttl_seconds}}",
+    "SOLR_REQUEST_HANDLER_METRICS_OPTIONS_REFRESH_RATE_MS": "{{dse.solr_request_handler_metrics_options_refresh_rate_ms}}",
+    "SOLR_INDEX_STATS_OPTIONS_ENABLED": "{{dse.solr_index_stats_options_enabled}}",
+    "SOLR_INDEX_STATS_OPTIONS_TTL_SECONDS": "{{dse.solr_index_stats_options_ttl_seconds}}",
+    "SOLR_INDEX_STATS_OPTIONS_REFRESH_RATE_MS": "{{dse.solr_index_stats_options_refresh_rate_ms}}",
+    "SOLR_CACHE_STATS_OPTIONS_ENABLED": "{{dse.solr_cache_stats_options_enabled}}",
+    "SOLR_CACHE_STATS_OPTIONS_TTL_SECONDS": "{{dse.solr_cache_stats_options_ttl_seconds}}",
+    "SOLR_CACHE_STATS_OPTIONS_REFRESH_RATE_MS": "{{dse.solr_cache_stats_options_refresh_rate_ms}}",
+    "SOLR_LATENCY_SNAPSHOT_OPTIONS_ENABLED": "{{dse.solr_latency_snapshot_options_enabled}}",
+    "SOLR_LATENCY_SNAPSHOT_OPTIONS_TTL_SECONDS": "{{dse.solr_latency_snapshot_options_ttl_seconds}}",
+    "SOLR_LATENCY_SNAPSHOT_OPTIONS_REFRESH_RATE_MS": "{{dse.solr_latency_snapshot_options_refresh_rate_ms}}",
+    "NODE_HEALTH_OPTIONS_REFRESH_RATE_MS": "{{dse.node_health_options_refresh_rate_ms}}",
+    "NODE_HEALTH_OPTIONS_UPTIME_RAMP_UP_PERIOD_SECONDS": "{{dse.node_health_options_uptime_ramp_up_period_seconds}}",
+    "NODE_HEALTH_OPTIONS_DROPPED_MUTATION_WINDOW_MINUTES": "{{dse.node_health_options_dropped_mutation_window_minutes}}",
+    "ENABLE_HEALTH_BASED_ROUTING": "{{dse.enable_health_based_routing}}",
+    "ASYNC_BOOTSTRAP_REINDEX": "{{dse.async_bootstrap_reindex}}",
+    "LEASE_METRICS_OPTIONS_ENABLED": "{{dse.lease_metrics_options_enabled}}",
+    "LEASE_METRICS_OPTIONS_TTL_SECONDS": "{{dse.lease_metrics_options_ttl_seconds}}",
+    "CONFIG_ENCRYPTION_ACTIVE": "{{dse.config_encryption_active}}",
+    "INITIAL_SPARK_WORKER_RESOURCES": "{{dse.initial_spark_worker_resources}}",
+    "SPARK_SHARED_SECRET_BIT_LENGTH": "{{dse.spark_shared_secret_bit_length}}",
+    "SPARK_SECURITY_ENABLED": "{{dse.spark_security_enabled}}",
+    "SPARK_SECURITY_ENCRYPTION_ENABLED": "{{dse.spark_security_encryption_enabled}}",
+{{#dse.spark_daemon_readiness_assertion_interval}}
+    "SPARK_DAEMON_READINESS_ASSERTION_INTERVAL": "{{dse.spark_daemon_readiness_assertion_interval}}",
+{{/dse.spark_daemon_readiness_assertion_interval}}
+    "AUDIT_LOGGING_OPTIONS_ENABLED": "{{dse.audit_logging_options_enabled}}",
+    "AUDIT_LOGGING_OPTIONS_LOGGER": "{{dse.audit_logging_options_logger}}",
+{{#dse.audit_logging_options_included_categories}}
+    "AUDIT_LOGGING_OPTIONS_INCLUDED_CATEGORIES": "{{dse.audit_logging_options_included_categories}}",
+{{/dse.audit_logging_options_included_categories}}
+{{#dse.audit_logging_options_excluded_categories}}
+    "AUDIT_LOGGING_OPTIONS_EXCLUDED_CATEGORIES": "{{dse.audit_logging_options_excluded_categories}}",
+{{/dse.audit_logging_options_excluded_categories}}
+{{#dse.audit_logging_options_included_keyspaces}}
+    "AUDIT_LOGGING_OPTIONS_INCLUDED_KEYSPACES": "{{dse.audit_logging_options_included_keyspaces}}",
+{{/dse.audit_logging_options_included_keyspaces}}
+{{#dse.audit_logging_options_excluded_keyspaces}}
+    "AUDIT_LOGGING_OPTIONS_EXCLUDED_KEYSPACES": "{{dse.audit_logging_options_excluded_keyspaces}}",
+{{/dse.audit_logging_options_excluded_keyspaces}}
+    "AUDIT_LOGGING_OPTIONS_RETENTION_TIME": "{{dse.audit_logging_options_retention_time}}",
+    "AUDIT_LOGGING_OPTIONS_CASSANDRA_AUDIT_WRITER_OPTIONS_MODE": "{{dse.audit_logging_options_cassandra_audit_writer_options_mode}}",
+    "AUDIT_LOGGING_OPTIONS_CASSANDRA_AUDIT_WRITER_OPTIONS_BATCH_SIZE": "{{dse.audit_logging_options_cassandra_audit_writer_options_batch_size}}",
+    "AUDIT_LOGGING_OPTIONS_CASSANDRA_AUDIT_WRITER_OPTIONS_FLUSH_TIME": "{{dse.audit_logging_options_cassandra_audit_writer_options_flush_time}}",
+    "AUDIT_LOGGING_OPTIONS_CASSANDRA_AUDIT_WRITER_OPTIONS_NUM_WRITERS": "{{dse.audit_logging_options_cassandra_audit_writer_options_num_writers}}",
+    "AUDIT_LOGGING_OPTIONS_CASSANDRA_AUDIT_WRITER_OPTIONS_QUEUE_SIZE": "{{dse.audit_logging_options_cassandra_audit_writer_options_queue_size}}",
+    "AUDIT_LOGGING_OPTIONS_CASSANDRA_AUDIT_WRITER_OPTIONS_WRITE_CONSISTENCY": "{{dse.audit_logging_options_cassandra_audit_writer_options_write_consistency}}",
+{{#dse.audit_logging_options_cassandra_audit_writer_options_dropped_event_log}}
+    "AUDIT_LOGGING_OPTIONS_CASSANDRA_AUDIT_WRITER_OPTIONS_DROPPED_EVENT_LOG": "{{dse.audit_logging_options_cassandra_audit_writer_options_dropped_event_log}}",
+{{/dse.audit_logging_options_cassandra_audit_writer_options_dropped_event_log}}
+{{#dse.audit_logging_options_cassandra_audit_writer_options_day_partition_millis}}
+    "AUDIT_LOGGING_OPTIONS_CASSANDRA_AUDIT_WRITER_OPTIONS_DAY_PARTITION_MILLIS": "{{dse.audit_logging_options_cassandra_audit_writer_options_day_partition_millis}}",
+{{/dse.audit_logging_options_cassandra_audit_writer_options_day_partition_millis}}
+    "HIVE_OPTIONS_INSERT_MAX_RETRIES": "{{dse.hive_options_insert_max_retries}}",
+    "HIVE_OPTIONS_INSERT_RETRY_SLEEP_PERIOD": "{{dse.hive_options_insert_retry_sleep_period}}",
+    "CQL_SOLR_QUERY_PAGING": "{{dse.cql_solr_query_paging}}",
+{{#dse.internode_messaging_options_frame_length_in_mb}}
+    "INTERNODE_MESSAGING_OPTIONS_FRAME_LENGTH_IN_MB": "{{dse.internode_messaging_options_frame_length_in_mb}}",
+{{/dse.internode_messaging_options_frame_length_in_mb}}
+{{#dse.internode_messaging_options_server_acceptor_threads}}
+    "INTERNODE_MESSAGING_OPTIONS_SERVER_ACCEPTOR_THREADS": "{{dse.internode_messaging_options_server_acceptor_threads}}",
+{{/dse.internode_messaging_options_server_acceptor_threads}}
+{{#dse.internode_messaging_options_server_worker_threads}}
+    "INTERNODE_MESSAGING_OPTIONS_SERVER_WORKER_THREADS": "{{dse.internode_messaging_options_server_worker_threads}}",
+{{/dse.internode_messaging_options_server_worker_threads}}
+{{#dse.internode_messaging_options_client_max_connections}}
+    "INTERNODE_MESSAGING_OPTIONS_CLIENT_MAX_CONNECTIONS": "{{dse.internode_messaging_options_client_max_connections}}",
+{{/dse.internode_messaging_options_client_max_connections}}
+{{#dse.internode_messaging_options_client_worker_threads}}
+    "INTERNODE_MESSAGING_OPTIONS_CLIENT_WORKER_THREADS": "{{dse.internode_messaging_options_client_worker_threads}}",
+{{/dse.internode_messaging_options_client_worker_threads}}
+{{#dse.internode_messaging_options_handshake_timeout_seconds}}
+    "INTERNODE_MESSAGING_OPTIONS_HANDSHAKE_TIMEOUT_SECONDS": "{{dse.internode_messaging_options_handshake_timeout_seconds}}",
+{{/dse.internode_messaging_options_handshake_timeout_seconds}}
+    "GRAPH_ADJACENCY_CACHE_CLEAN_RATE": "{{dse.graph_adjacency_cache_clean_rate}}",
+    "GRAPH_ADJACENCY_CACHE_MAX_ENTRY_SIZE_IN_MB": "{{dse.graph_adjacency_cache_max_entry_size_in_mb}}",
+    "GRAPH_ADJACENCY_CACHE_SIZE_IN_MB": "{{dse.graph_adjacency_cache_size_in_mb}}",
+    "GRAPH_ANALYTIC_EVALUATION_TIMEOUT_IN_MINUTES": "{{dse.graph_analytic_evaluation_timeout_in_minutes}}",
+    "GRAPH_GREMLIN_SERVER_ENABLED": "{{dse.graph_gremlin_server_enabled}}",
+    "GRAPH_INDEX_CACHE_CLEAN_RATE": "{{dse.graph_index_cache_clean_rate}}",
+    "GRAPH_INDEX_CACHE_MAX_ENTRY_SIZE_IN_MB": "{{dse.graph_index_cache_max_entry_size_in_mb}}",
+    "GRAPH_INDEX_CACHE_SIZE_IN_MB": "{{dse.graph_index_cache_size_in_mb}}",
+    "GRAPH_MAX_QUERY_QUEUE": "{{dse.graph_max_query_queue}}",
+    "GRAPH_REALTIME_EVALUATION_TIMEOUT_IN_SECONDS": "{{dse.graph_realtime_evaluation_timeout_in_seconds}}",
+    "GRAPH_SCHEMA_AGREEMENT_TIMEOUT_IN_MS": "{{dse.graph_schema_agreement_timeout_in_ms}}",
+    "GRAPH_SCHEMA_MODE": "{{dse.graph_schema_mode}}",
+    "GRAPH_SYSTEM_EVALUATION_TIMEOUT_IN_SECONDS": "{{dse.graph_system_evaluation_timeout_in_seconds}}",
+    "GRAPH_WINDOW_SIZE": "{{dse.graph_window_size}}",
+    "GRAPH_BLOCK_RENEW": "{{dse.graph_ids_block_renew}}",
+    "GRAPH_COMMUNITY_REUSE": "{{dse.graph_ids_community_reuse}}",
+    "GRAPH_ID_HASH_MODULUS": "{{dse.graph_ids_id_hash_modulus}}",
+    "GRAPH_MEMBER_BLOCK_SIZE": "{{dse.graph_ids_member_block_size}}",
+    "GRAPH_MSG_GRAPH_MSG_TIMEOUT_IN_MS": "{{dse.graph_msg_graph_msg_timeout_in_ms}}",
+    "GRAPH_SHARED_DATA_REFRESH_INTERVAL_IN_MS": "{{dse.graph_shared_data_refresh_interval_in_ms}}",
+    "GRAPH_GREMLIN_SERVER_THREADPOOLWORKER": "{{dse.graph_gremlin_server_threadPoolWorker}}",
+    "GRAPH_GREMLIN_SERVER_MAXCONTENTLENGTH": "{{dse.graph_gremlin_server_maxContentLength}}",
+    "GRAPH_GREMLIN_SERVER_MAXCHUNKSIZE": "{{dse.graph_gremlin_server_maxChunkSize}}",
+    "GRAPH_GREMLIN_SERVER_MAXINITIALLINELENGTH": "{{dse.graph_gremlin_server_maxInitialLineLength}}",
+    "GRAPH_GREMLIN_SERVER_MAXHEADERSIZE": "{{dse.graph_gremlin_server_maxHeaderSize}}",
+    "GRAPH_GREMLIN_SERVER_MAXACCUMULATIONBUFFERCOMPONENTS": "{{dse.graph_gremlin_server_maxAccumulationBufferComponents}}",
+    "GRAPH_GREMLIN_SERVER_RESULTITERATIONBATCHSIZE": "{{dse.graph_gremlin_server_resultIterationBatchSize}}",
+    "GRAPH_GREMLIN_SERVER_USEEPOLLEVENTLOOP": "{{dse.graph_gremlin_server_useEpollEventLoop}}",
+    "GRAPH_GREMLIN_SERVER_GREMLINPOOL": "{{dse.graph_gremlin_server_gremlinPool}}",
+
+    "CONFIG_TEMPLATE_PATH": "dse-scheduler"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}
