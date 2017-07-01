@@ -1,0 +1,49 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "opscenter": "gmflau/opscenter-docker-608:1.2",
+        "dse": "gmflau/dse-docker-507:1.2"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
+      "dse-studio-tar-gz": "https://s3-us-west-2.amazonaws.com/dcos-dse-install/datastax-studio-1.0.2.tar.gz",
+      "opscenter-init-zip": "https://downloads.mesosphere.com/dse/assets/1.1.6-5.0.7-beta/opscenter-init.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.io/dse/assets/bootstrap//bootstrap_0191.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/dse/assets/1.1.6-5.0.7-beta/dse-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/dse/assets/0.0.1-5.0.3/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Small.jpg",
+    "icon-medium": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Medium.jpg",
+    "icon-large": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Big.png"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"5ce6c6f0c0a00c89b0c1bcdb532b591b0da7dc4b9b7e293736d3c2d497dc3072" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/dse/assets/1.1.6-5.0.7-beta/dcos-dse-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"09b9e795fc3f6e0d37316a1383a196af71540ae35506db74e3c0360b2a976f62" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/dse/assets/1.1.6-5.0.7-beta/dcos-dse-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"f451d8af1738110f9974a6a0b2b991d6970f791aeb4f39a54869a9a9f1ed17e0" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/dse/assets/1.1.6-5.0.7-beta/dcos-dse.exe"
+        }
+      }
+    }
+  }
+}
