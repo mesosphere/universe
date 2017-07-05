@@ -63,27 +63,27 @@
                 "health_check_delay_sec":{
                     "description":"The period of time (in seconds) waited before the health-check begins execution.",
                     "type":"number",
-                    "default":15
+                    "default":30
                 },
                 "health_check_interval_sec":{
                     "description":"The period of time (in seconds) between health-check executions.",
                     "type":"number",
-                    "default":10
+                    "default":30
                 },
                 "health_check_timeout_sec":{
                     "description":"The duration (in seconds) allowed for a health-check to complete before it is considered a failure.",
                     "type":"number",
-                    "default":20
+                    "default":10
                 },
                 "health_check_grace_period_sec":{
                     "description":"The period of time after the delay (in seconds) before health-check failures count towards the maximum consecutive failures.",
                     "type":"number",
-                    "default":10
+                    "default":120
                 },
                 "health_check_max_consecutive_failures":{
                     "description":"The the number of consecutive failures which cause a Broker process to exit.",
                     "type":"number",
-                    "default":3
+                    "default":2
                 }
             },
             "required":[
@@ -101,8 +101,9 @@
                     "default":1.0
                 },
                 "mem":{
-                    "description":"Broker mem requirements",
+                    "description":"Broker mem requirements.  Amount should be at least 512 MB more than JVM Heap allocation for broker process.",
                     "type":"integer",
+                    "minimum":1536,
                     "default":3072
                 },
                 "heap":{
@@ -111,7 +112,8 @@
                     "properties":{
                         "size": {
                             "type":"integer",
-                            "description":"The amound of JVM heap, in MB, allocated to the Kafka broker process.",
+                            "description":"The amound memory, in MB, allocated to the Kafka broker JVM heap.  Amount should NOT exceed {broker_container_mem - 512}.",
+                            "minimum":1024,
                             "default": 2048
                         }
                     },
@@ -121,13 +123,13 @@
                     ]
                 },
                 "disk":{
-                    "description":"Broker disk requirements (only respected with persistent volumes)",
+                    "description":"Persistent disk capacity, in MB, for kafka log storage on the broker",
                     "type":"integer",
                     "default":5000
                 },
                 "disk_type": {
                     "type": "string",
-                    "description": "Disk type to be used for storing broker data. See documentation. [ROOT, MOUNT]",
+                    "description": "Disk type to be used for persistent disk capacity. Supported options are [ROOT, MOUNT] (see documentation)",
                     "default": "ROOT"
                 },
                 "count":{
