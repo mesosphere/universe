@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "3.0",
+  "name": "confluent-connect",
+  "version": "1.0.0-3.2.2",
+  "scm": "https://github.com/confluentinc/kafka",
+  "description": "Confluent Connect worker\n\n\tDocumentation: http://docs.confluent.io/3.2.2/connect/managing.html",
+  "maintainer": "partner-support@confluent.io",
+  "tags": ["kafka", "confluent", "connect"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. Preparing to install confluent-connect",
+  "postInstallNotes": "confluent-connect has been installed.",
+  "postUninstallNotes": "confluent-connect was uninstalled successfully.",
+  "minDcosReleaseVersion" : "1.8",
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}
