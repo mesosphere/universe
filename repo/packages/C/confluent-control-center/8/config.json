@@ -23,7 +23,7 @@
         "mem": {
           "default": 4096,
           "description": "Memory (MB) to allocate to each control-center task.",
-          "minimum": 2048,
+          "minimum": 4096,
           "type": "number"
         },
         "role": {
