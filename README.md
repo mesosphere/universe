@@ -27,8 +27,10 @@ Mesosphere Universe registry of packages made available for DC/OS Clusters.
   * [Consumption Protocol](#consumption-protocol)
   * [Supported DC/OS Versions](#supported-dcos-versions)
 
+
 ## Universe Purpose
-This git repo facilitates three necessary functions to publish, store and consume packages.
+You can publish and store packages in the Universe repository. The packages can then be consumed by DC/OS. This git repo facilitates these three necessary functions - to publish, store and consume packages. You can publish and store packages in the Universe repository. The packages can then be consumed by DC/OS. If you are not familiar with packages, we recommend this [Get Started Guide](docs/tutorial/GetStarted.md).
+
 
 ### Publish a Package
 
@@ -208,9 +210,9 @@ following order:
 ```json
 {
   "id": "foo",
-  "cpus": "1.0",
-  "mem": "1024",
-  "instances": "1",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
   "args": ["{{{foo.baz}}}"],
   "container": {
     "type": "DOCKER",

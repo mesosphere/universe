@@ -1,0 +1,19 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.timeserverimage}}",
+      "network": "HOST"
+    }
+  },
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp"
+    }
+  ]
+}

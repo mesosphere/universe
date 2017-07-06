@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "Name of this service instance",
+          "type": "string",
+          "default": "time-server"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to each service instance.",
+          "type": "number",
+          "default": 0.1,
+          "minimum": 0.1
+        },
+        "mem": {
+          "description":  "Memory to allocate to each service instance.",
+          "type": "number",
+          "default": 256.0,
+          "minimum": 128.0
+        }
+      }
+    }
+  }
+}
