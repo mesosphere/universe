@@ -1,0 +1,413 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "Alluxio Enterprise Edition (AEE) service configuration properties.\nPlease obtain a license by visiting: https://alluxio.com/products. For a detailed installation guide visit https://alluxio.com/docs/.",
+      "properties": {
+        "name": {
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "alluxio-enterprise"
+        },
+        "principal": {
+          "description": "Service principal",
+          "type": "string",
+          "default": "alluxio-enterprise-principal"
+        },
+        "user": {
+          "description": "Service user",
+          "type": "string",
+          "default": "root"
+        },
+        "secret_name": {
+          "description": "Secret name",
+          "type": "string",
+          "default": ""
+        },
+        "license": {
+          "description": "AEE license. Please obtain a license by visiting: https://alluxio.com/product.",
+          "type": "string"
+        },
+        "alluxio-version": {
+          "description": "AEE Version",
+          "type": "string",
+          "default": "1.5.0"
+        },
+        "alluxio-distribution": {
+          "description": "AEE Distribution",
+          "type": "string",
+          "default": "hadoop-2.7"
+        },
+        "worker-count": {
+          "description": "Number of Alluxio workers",
+          "type": "integer",
+          "default": 1
+        },
+        "ufs-address": {
+          "description": "Under file system address",
+          "type": "string",
+          "default": "/dev/shm/underFSStorage"
+        },
+        "docker-publish": {
+          "description": "Whether to publish docker images to a registry",
+          "type": "boolean",
+          "default": false
+        },
+        "docker-publish-url": {
+          "description": "Docker registry to host images",
+          "type": "string",
+          "default": "registry.marathon.l4lb.thisdcos.directory:5000"
+        },
+        "offline-mode": {
+          "description": "Whether installing Alluxio in an environment with no internet access",
+          "type": "boolean",
+          "default": false
+        },
+        "offline-mode-download-url": {
+          "description": "URL to download Alluxio binaries from",
+          "type": "string",
+          "default": "http://myserver:port/alluxio-enterprise-1.5.0-hadoop2.7.tar.gz"
+        },
+        "log-level": {
+          "description": "Log level for Alluxio console logger",
+          "type": "string",
+          "default": "INFO"
+        }
+      },
+      "required": [
+        "license",
+        "ufs-address"
+      ]
+    },
+    "master": {
+      "description": "Alluxio master configuration properties.",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "Alluxio master CPU requirements",
+          "type": "number",
+          "default": 2
+        },
+        "mem": {
+          "description": "Alluxio master memory requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk": {
+          "description": "Alluxio master persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 2048
+        },
+        "disk-type": {
+          "description": "Alluxio master persistent disk type",
+          "type": "string",
+          "default": "ROOT"
+        },
+        "placement": {
+          "description": "Marathon-style placement constraint for Alluxio master",
+          "type": "string",
+          "default": "hostname:UNIQUE"
+        }
+      }
+    },
+    "worker": {
+      "description": "Alluxio worker configuration properties.",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "Alluxio worker CPU requirements",
+          "type": "number",
+          "default": 2
+        },
+        "mem": {
+          "description": "Alluxio worker memory requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk": {
+          "description": "Alluxio worker persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 2048
+        },
+        "disk-type": {
+          "description": "Alluxio worker persistent disk type",
+          "type": "string",
+          "default": "ROOT"
+        },
+        "placement": {
+          "description": "Marathon-style placement constraint for Alluxio workers",
+          "type": "string",
+          "default": "hostname:UNIQUE"
+        }
+      }
+    },
+    "security": {
+      "type": "object",
+      "description": "Security configuration.",
+      "properties": {
+        "authentication-type": {
+          "description": "Authentication type: NOSASL, SIMPLE, KERBEROS",
+          "type": "string",
+          "default": "NOSASL"
+        },
+        "authorization-permission-enabled": {
+          "description": "Access control based on file permission",
+          "type": "boolean",
+          "default": false
+        },
+        "download-keytab": {
+          "description": "Whether to download keytab",
+          "type": "boolean",
+          "default": false
+        },
+        "keytab-uri": {
+          "description": "Keytab URI",
+          "type": "string",
+          "default": ""
+        },
+        "kerberos-primary": {
+          "description": "Kerberos primary",
+          "type": "string",
+          "default": "hdfs"
+        },
+        "kerberos-instance": {
+          "description": "Kerberos instance",
+          "type": "string",
+          "default": "alluxio"
+        },
+        "kerberos-realm": {
+          "description": "Kerberos realm",
+          "type": "string",
+          "default": "ALLUXIO.COM"
+        },
+        "krb5-uri": {
+          "description": "Krb5 URI",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "docker": {
+      "type": "object",
+      "description": "Configuration properties for building docker images.",
+      "properties": {
+        "alluxio-client": {
+          "description": "Whether to build a docker image to use as an Alluxio client.",
+          "type": "boolean",
+          "default": true
+        },
+        "alluxio-client-apk-add-bash": {
+          "description": "Whether to add bash to alpine image",
+          "type": "boolean",
+          "default": true
+        },
+        "alluxio-client-base": {
+          "description": "Base docker image to build on",
+          "type": "string",
+          "default": "openjdk:7-jdk-alpine"
+        },
+        "spark-client": {
+          "description": "Whether to build a Spark docker image with Alluxio client.",
+          "type": "boolean",
+          "default": true
+        },
+        "spark-client-base": {
+          "description": "Base docker image to build on",
+          "type": "string",
+          "default": "mesosphere/spark:1.0.6-2.0.2-hadoop-2.6"
+        },
+        "spark-dist-home": {
+          "description": "Spark distribution home in the base docker image",
+          "type": "string",
+          "default": "/opt/spark/dist"
+        }
+      }
+    },
+    "advanced": {
+      "description": "Advanced configuration properties.",
+      "type": "object",
+      "properties": {
+        "extra-java-opts": {
+          "description": "Common JAVA VM options",
+          "type": "string",
+          "default": ""
+        },
+        "extra-client-properties": {
+          "description": "Client site properties",
+          "type": "string",
+          "default": ""
+        },
+        "extra-user-java-opts": {
+          "description": "User JAVA VM options",
+          "type": "string",
+          "default": ""
+        },
+        "extra-master-java-opts": {
+          "description": "Master JAVA VM options",
+          "type": "string",
+          "default": ""
+        },
+        "extra-worker-java-opts": {
+          "description": "Worker JAVA VM options",
+          "type": "string",
+          "default": ""
+        },
+        "extra-job-master-java-opts": {
+          "description": "JobMaster JAVA VM options",
+          "type": "string",
+          "default": ""
+        },
+        "extra-job-worker-java-opts": {
+          "description": "JobWorker JAVA VM options",
+          "type": "string",
+          "default": ""
+        },
+        "extra-env": {
+          "description": "Configure environment variables",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "network": {
+      "description": "Port and network config.",
+      "type": "object",
+      "properties": {
+        "proxylite-port": {
+          "description": "Communication port for proxylite",
+          "type": "number",
+          "default": 19997
+        },
+        "master-port": {
+          "description": "Communication port for master node",
+          "type": "number",
+          "default": 19998
+        },
+        "master-web-port": {
+          "description": "Web UI port for master node",
+          "type": "number",
+          "default": 19999
+        },
+        "worker-port": {
+          "description": "Communication port for worker node",
+          "type": "number",
+          "default": 29998
+        },
+        "worker-data-port": {
+          "description": "Data port for worker node",
+          "type": "number",
+          "default": 29999
+        },
+        "worker-web-port": {
+          "description": "Web UI port for worker node",
+          "type": "number",
+          "default": 30000
+        },
+        "job-master-port": {
+          "description": "Communication port for job master node",
+          "type": "number",
+          "default": 20001
+        },
+        "job-master-web-port": {
+          "description": "Web UI port for job master node",
+          "type": "number",
+          "default": 20002
+        },
+        "job-worker-port": {
+          "description": "Communication port for job worker node",
+          "type": "number",
+          "default": 30001
+        },
+        "job-worker-data-port": {
+          "description": "Data port for job worker node",
+          "type": "number",
+          "default": 30002
+        },
+        "job-worker-web-port": {
+          "description": "Web UI port for job worker node",
+          "type": "number",
+          "default": 30003
+        }
+      }
+    },
+    "hdfs": {
+      "type": "object",
+      "description": "Configuration properties required to setup HDFS UFS.",
+      "properties": {
+        "enable-endpoints": {
+          "description": "Enable downloading HDFS configuration",
+          "type": "boolean",
+          "default": false
+        },
+        "service-endpoints": {
+          "description": "HDFS Service Endpoint",
+          "type": "string",
+          "default": "api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
+        },
+        "kerberos": {
+          "description": "Is Kerberos ON",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "s3a": {
+      "type": "object",
+      "description": "Configuration properties required to mount an Amazon S3 bucket.",
+      "properties": {
+        "aws-access-key": {
+          "description": "S3 Access key",
+          "type": "string",
+          "default": ""
+        },
+        "aws-secret-key": {
+          "description": "S3 Secret key",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "swift": {
+      "type": "object",
+      "description": "Configuration properties required to mount a Swift container",
+      "properties": {
+        "swift-user": {
+          "description": "Swift User",
+          "type": "string",
+          "default": ""
+        },
+        "swift-tenant": {
+          "description": "Swift Tenant",
+          "type": "string",
+          "default": ""
+        },
+        "swift-auth-url": {
+          "description": "Swift Authentication URL",
+          "type": "string",
+          "default": "http://<hostname>:<port>/auth/1.0"
+        },
+        "swift-password": {
+          "description": "Swift Password",
+          "type": "string",
+          "default": ""
+        },
+        "swift-use-public-url": {
+          "description": "Swift Use Public URL",
+          "type": "boolean",
+          "default": true
+        },
+        "swift-auth-method": {
+          "description": "Swift Authentication Method",
+          "type": "string",
+          "default": "swiftauth"
+        },
+        "swift-region": {
+          "description": "Preferred region when using Keystone authentication",
+          "type": "string",
+          "default": ""
+        }
+      }
+    }
+  }
+}
