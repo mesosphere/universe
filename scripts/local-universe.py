@@ -65,18 +65,17 @@ def main():
         help='Set this to leave CLI resource URLs untouched.')
     parser.add_argument(
         '--dcos_version',
+        required=True,
         help='Set this to the version of DC/OS under which the local universe '
         'will operate. Ensures that only package versions compatible with '
-        'that DC/OS version are included. If unset, the latest version of '
-        'each package will be included.'
+        'that DC/OS version are included. This parameter is required.'
     )
 
     args = parser.parse_args()
 
     package_names = [name for name in args.include.split(',') if name != '']
 
-    dcos_version = distutils.version.LooseVersion(args.dcos_version) \
-        if args.dcos_version else None
+    dcos_version = distutils.version.LooseVersion(args.dcos_version)
 
     with tempfile.TemporaryDirectory() as dir_path, \
             run_docker_registry(dir_path / pathlib.Path("registry")):

@@ -30,6 +30,6 @@ static-base:
 local-universe: clean
 	python3 $(REPO_BASE_DIR)/scripts/local-universe.py \
 		--repository $(REPO_BASE_DIR)/repo/packages/ \
-		--selected && \
+		--selected --dcos_version $(DCOS_VERSION) && \
 	docker save -o local-universe.tar mesosphere/universe:latest && \
 	gzip local-universe.tar
