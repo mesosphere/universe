@@ -246,7 +246,7 @@ As the name says, this file specifies how your package can be configured. This i
 }
 ```
 
-In this example, there are three main properties to be configured. The `name` is the actual name of the service running in DC/OS. The `cpus` and `mem` are the amount of CPU and Memory required for each service instance. You can read more about the various fields in this file [here](https://github.com/mesosphere/universe#configjson) or can refer to [`repo/meta/schema/config-schema.json`](repo/meta/schema/config-schema.json) for a full fledged definition.
+In this example, there are three main properties to be configured. The `name` is the actual name of the service running in DC/OS. The `cpus` and `mem` are the amount of CPU and Memory required for each service instance. You can read more about the various fields in this file [here](https://github.com/mesosphere/universe#configjson) or can refer to [`repo/meta/schema/config-schema.json`](/repo/meta/schema/config-schema.json) for a full fledged definition.
 
 (Note : If you need to add a config property after your package revision has been committed to Universe, you have to bump your package version and create new package. So be sure to add all the config properties that you need.)
 
@@ -267,7 +267,7 @@ Below is the resource file that you use for the `time-server` package. You can p
 }
 ```
 
-You can put the icons related to your package and screenshots of your service if needed here. You can read more about the various fields in this file [here](https://github.com/mesosphere/universe#resourcejson) or can refer to [`repo/meta/schema/v3-resource-schema.json`](repo/meta/schema/v3-resource-schema.json) for a full fledged definition.
+You can put the icons related to your package and screenshots of your service if needed here. You can read more about the various fields in this file [here](https://github.com/mesosphere/universe#resourcejson) or can refer to [`repo/meta/schema/v3-resource-schema.json`](/repo/meta/schema/v3-resource-schema.json) for a full fledged definition.
 
 
 #### package.json
@@ -288,7 +288,7 @@ Below is a snippet that represents your time server `package.json` (a version `4
 
 Note that the version field specifies a human-readable version of the package and this is independent of the directory number inside the `time-server` directory.
 
-You can read more about the various fields in this file [here](https://github.com/mesosphere/universe#configjson) or can see [`repo/meta/schema/package-schema.json`](repo/meta/schema/package-schema.json) for the full JSON schema outlining what properties are available for each corresponding version of a package.
+You can read more about the various fields in this file [here](https://github.com/mesosphere/universe#configjson) or can see [`repo/meta/schema/package-schema.json`](/repo/meta/schema/package-schema.json) for the full JSON schema outlining what properties are available for each corresponding version of a package.
 
 
 #### marathon.json.mustache
@@ -321,7 +321,7 @@ This is how the Marathon file should look like:
 
 The service `name`, `cpus` and `mem` are populated from the default values in the `config.json` file. The image is populated from the `resource.json` file. Here, `HOST` mode of networking is used to dynamically get a port from the available pool. Read [about Marathon ports](https://mesosphere.github.io/marathon/docs/ports.html) to understand modes in detail.
 
-If you need further examples, you can refer to the [repo/packages/H/hello-world](repo/packages/H/hello-world) package.
+If you need further examples, you can refer to the [repo/packages/H/hello-world](/repo/packages/H/hello-world) package.
 
 ### Step 4 : Testing the package
 Now that the package is built, you need to make sure everything works as expected before publishing to the community.
