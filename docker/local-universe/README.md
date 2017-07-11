@@ -1,7 +1,7 @@
 
 ## Using
 
-1. For each of your masters, download the [local-universe](https://downloads.mesosphere.com/universe/public/local-universe.tar.gz) container to them.
+1. If you're using the latest stable release of DC/OS, then download the [local-universe](https://downloads.mesosphere.com/universe/public/local-universe.tar.gz) container to each of your masters. Otherwise, you'll need to build the container for your DC/OS version (see the "Building Your Own" section below) and copy it to each of your masters.
 
 1. Load the container into the local docker instance on each master:
 
@@ -60,7 +60,7 @@
 
 - I don't see the package I was looking for!
 
-    By default, we only bundle the `selected` packages. If you'd like to get something else, run the build your own instructions yourself.
+    By default, we only bundle the `selected` packages. If you'd like to include something else, please see the "Building Your Own" section below.
 
 ## Building Your Own
 
@@ -70,10 +70,10 @@
     $ sudo make base
     ```
 
-1. Once you've build the "universe-base" container, you'll be able to create a local-universe one. To keep size and time down, it is common to select only what you'd like to see. By default, `selected` applications are the only ones included. You can pass a list in if you'd like to see something more than that.
+1. Once you've built the "universe-base" container, you'll be able to create a local-universe one. To keep size and time down, it is common to select only what you'd like to see. By default, `selected` applications are the only ones included. You can pass a list in if you'd like to see something more than that.
 
     ```bash
-    $ sudo make local-universe
+    $ sudo make DCOS_VERSION=<your DC/OS version> local-universe
     ```
 
 ## Building Your Own, off a non-changing universe-static base image.
@@ -97,7 +97,7 @@ Mesosphere provides a `mesosphere/universe-static` Docker image, which has all o
 1. Add content (see above)
 
     ```bash
-    $ sudo make local-universe
+    $ sudo make DCOS_VERSION=<your DC/OS version> local-universe
     ```
 
 To generate your own static image, use and/or modify the make target `static-build` (e.g., `make static-build` instead of `make static-online`)
@@ -106,19 +106,19 @@ This leaves three total options:
 
 ```bash
 make base
-make local-universe
+make DCOS_VERSION=<your DC/OS version> local-universe
 ```
 
 ```bash
 make static-online
 make static-base
-make local-universe
+make DCOS_VERSION=<your DC/OS version> local-universe
 ```
 
 ```bash
 make static-build
 make static-base
-make local-universe
+make DCOS_VERSION=<your DC/OS version> local-universe
 ```
 
 ### Outside Resources
