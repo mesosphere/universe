@@ -8,7 +8,7 @@
   "description": "DCOS implementation of the Mesos-Elasticsearch framework",
   "scm": "https://github.com/mesos/elasticsearch.git",
   "website": "https://github.com/mesos/elasticsearch",
-  "preInstallNotes":"This DC/OS Service is currently in preview. The ElasticSearch DCOS Service implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
+  "preInstallNotes":"This DC/OS Service is no longer maintained. See beta-elastic. The ElasticSearch DCOS Service implementation is alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
   "postInstallNotes": "Elasticsearch is staging. Check Marathon and the ES management front-end for status.",
   "licenses": [
     {
