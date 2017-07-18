@@ -12,7 +12,7 @@ UNIVERSE_DIR = os.path.join(SCRIPTS_DIR, "..")
 PKG_DIR = os.path.join(UNIVERSE_DIR, "repo/packages")
 SCHEMA_DIR = os.path.join(UNIVERSE_DIR, "repo/meta/schema")
 LETTER_PATTERN = re.compile("^[A-Z]$")
-PACKAGE_FOLDER_PATTERN = re.compile("^[a-z][a-z0-9-]+[a-z0-9]$")
+PACKAGE_FOLDER_PATTERN = re.compile("^[a-z][a-z0-9-]*[a-z0-9]$")
 
 
 def eprint(*args, **kwargs):
@@ -36,7 +36,8 @@ def main():
         if not LETTER_PATTERN.match(letter):
             sys.exit(
                 "\tERROR\n\n"
-                "Invalid name for directory : {}".format(letter)
+                "Invalid name for directory : {}\nName should match the "
+                "pattern {}".format(letter, LETTER_PATTERN.pattern)
             )
         prefix_path = os.path.join(PKG_DIR, letter)
         # traverse each package dir directory (ie "cassandra")
@@ -145,11 +146,18 @@ def _validate_revision(given_package, revision, path):
 
 
 def _validate_package_with_directory(given_package, actual_package_name):
-    if(not PACKAGE_FOLDER_PATTERN.match(given_package)
-       or given_package != actual_package_name):
+    if not PACKAGE_FOLDER_PATTERN.match(given_package):
         sys.exit(
             "\tERROR\n\n"
-            "Package name mismatch : Directory : {}, Parsed Name : {}"
+            "Invalid name for package directory : {}. Name should match"
+            "the pattern : {}"
+            .format(given_package, PACKAGE_FOLDER_PATTERN.pattern)
+        )
+    if given_package != actual_package_name:
+        sys.exit(
+            "\tERROR\n\n"
+            "The name parameter in package.json should match with the name of "
+            "the package directory.\nDirectory : {}, Parsed Name : {}"
             .format(given_package, actual_package_name)
         )
 
