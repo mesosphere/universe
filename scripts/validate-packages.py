@@ -33,23 +33,18 @@ V3_RESOURCE_JSON_SCHEMA = _get_json_schema('v3-resource-schema.json')
 def main():
     # traverse prefix dirs ("A", "B", etc)
     for letter in os.listdir(PKG_DIR):
+        if not LETTER_PATTERN.match(letter):
+            sys.exit(
+                "\tERROR\n\n"
+                "Invalid name for directory : {}".format(letter)
+            )
         prefix_path = os.path.join(PKG_DIR, letter)
         # traverse each package dir directory (ie "cassandra")
         for given_package in os.listdir(prefix_path):
-            _validate_package_directory(letter, given_package)
             package_path = os.path.join(prefix_path, given_package)
             _validate_package(given_package, package_path)
 
     eprint("\nEverything OK!")
-
-
-def _validate_package_directory(letter, given_package):
-    if(not LETTER_PATTERN.match(letter)
-       or not PACKAGE_FOLDER_PATTERN.match(given_package)):
-        sys.exit(
-            "\tERROR\n\n"
-            "Invalid name for package : {}/{}".format(letter, given_package)
-        )
 
 
 def _validate_package(given_package, path):
@@ -67,6 +62,8 @@ def _validate_revision(given_package, revision, path):
     if not os.path.isfile(package_json_path):
         sys.exit("\tERROR\n\nMissing required package.json file")
     package_json = _validate_json(package_json_path, PACKAGE_JSON_SCHEMA)
+    package_name = package_json.get("name")
+    _validate_package_with_directory(given_package, package_name)
     eprint("\tOK")
 
     packaging_version = package_json.get("packagingVersion", "2.0")
@@ -138,13 +135,23 @@ def _validate_revision(given_package, revision, path):
         eprint("\tOK")
 
     # Validate that we don't drop information during the conversion
-    oldPackage = LooseVersion(
+    old_package = LooseVersion(
         package_json.get('minDcosReleaseVersion', "1.0")) < LooseVersion("1.8")
-    if (oldPackage and resource_json and 'cli' in resource_json and
+    if (old_package and resource_json and 'cli' in resource_json and
             command_json is None):
         sys.exit('\tERROR\n\nA package with CLI specified in resource.json is '
                  'only supported when minDcosReleaseVersion is greater than '
                  '1.8.')
+
+
+def _validate_package_with_directory(given_package, actual_package_name):
+    if(not PACKAGE_FOLDER_PATTERN.match(given_package)
+       or given_package != actual_package_name):
+        sys.exit(
+            "\tERROR\n\n"
+            "Package name mismatch : Directory : {}, Parsed Name : {}"
+            .format(given_package, actual_package_name)
+        )
 
 
 def _validate_json(path, schema):
