@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "control-center": {
+      "properties": {
+        "name": {
+          "default": "control-center",
+          "description": "Name for this control-center application",
+          "type": "string"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 2,
+          "description": "CPU shares to allocate to each control-center instance.",
+          "minimum": 2,
+          "type": "number"
+        },
+        "mem": {
+          "default": 4096,
+          "description": "Memory (MB) to allocate to each control-center task.",
+          "minimum": 4096,
+          "type": "number"
+        },
+        "role": {
+          "default": "*",
+          "description": "Deploy control-center only on nodes with this role.",
+          "type": "string"
+        },
+        "kafka-service": {
+          "default": "confluent-kafka",
+          "description": "Target Apache Kafka by Confluent service to which these tasks will connect. ",
+          "type": "string"
+        },
+        "connect-service": {
+          "default": "connect",
+          "description": "Service name of Kafka Connect Workers to which this instance will deploy connectors.",
+          "type": "string"
+        },
+        "confluent-controlcenter-internal-topics-partitions": {
+          "default": 3,
+          "description": "Parition count for internal control-center kafka topics",
+          "type": "number"
+        },
+        "confluent-controlcenter-internal-topics-replication": {
+          "default": 2,
+          "description": "Replication factor for internal control-center kafka topics",
+          "type": "number"
+        },
+        "confluent-monitoring-interceptor-topic-partitions": {
+          "default": 3,
+          "description": "Parition count for kafka topics used to store data from the interceptor classes",
+          "type": "number"
+        },
+        "confluent-monitoring-interceptor-topic-replication": {
+          "default": 2,
+          "description": "Replication factor for kafka topics used to store data from the interceptor classes",
+          "type": "number"
+        },
+        "confluent-license": {
+          "default": "",
+          "description": "License key for Confluent Enterprise (default is 30-day trial)",
+          "type": "string"
+        },
+        "zookeeper-connect": {
+          "default": "master.mesos:2181/dcos-service-confluent-kafka",
+          "description": "Zookeeper Connect string for service cluster. Format is comma-separated list of <zk-host>:<zkport>/<kservice>",
+          "type": "string"
+        }
+      },
+      "required": ["cpus", "mem", "instances", "name"],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}
