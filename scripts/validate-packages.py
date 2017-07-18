@@ -3,6 +3,7 @@
 import json
 import jsonschema
 import os
+import re
 import sys
 from distutils.version import LooseVersion
 
@@ -10,7 +11,8 @@ SCRIPTS_DIR = os.path.dirname(os.path.realpath(__file__))
 UNIVERSE_DIR = os.path.join(SCRIPTS_DIR, "..")
 PKG_DIR = os.path.join(UNIVERSE_DIR, "repo/packages")
 SCHEMA_DIR = os.path.join(UNIVERSE_DIR, "repo/meta/schema")
-
+LETTER_PATTERN = re.compile("^[A-Z]$")
+PACKAGE_FOLDER_PATTERN = re.compile("^[a-z][a-z0-9-]+[a-z0-9]$")
 
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
@@ -33,10 +35,20 @@ def main():
         prefix_path = os.path.join(PKG_DIR, letter)
         # traverse each package dir directory (ie "cassandra")
         for given_package in os.listdir(prefix_path):
+            _validate_package_directory(letter, given_package)
             package_path = os.path.join(prefix_path, given_package)
             _validate_package(given_package, package_path)
 
     eprint("\nEverything OK!")
+
+
+def _validate_package_directory(letter, given_package):
+    if(not LETTER_PATTERN.match(letter)
+       or not PACKAGE_FOLDER_PATTERN.match(given_package)):
+        sys.exit(
+            "\tERROR\n\n"
+            "Invalid name for package : {}/{}".format(letter, given_package)
+        )
 
 
 def _validate_package(given_package, path):
