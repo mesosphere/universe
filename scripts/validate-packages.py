@@ -14,6 +14,7 @@ SCHEMA_DIR = os.path.join(UNIVERSE_DIR, "repo/meta/schema")
 LETTER_PATTERN = re.compile("^[A-Z]$")
 PACKAGE_FOLDER_PATTERN = re.compile("^[a-z][a-z0-9-]+[a-z0-9]$")
 
+
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
