@@ -37,7 +37,7 @@ def main():
             sys.exit(
                 "\tERROR\n\n"
                 "Invalid name for directory : {}\nName should match the "
-                "pattern {}".format(letter, LETTER_PATTERN.pattern)
+                "pattern : {}".format(letter, LETTER_PATTERN.pattern)
             )
         prefix_path = os.path.join(PKG_DIR, letter)
         # traverse each package dir directory (ie "cassandra")
