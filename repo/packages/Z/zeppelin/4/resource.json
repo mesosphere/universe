@@ -8,11 +8,11 @@
     "container": {
       "docker": {
         "zeppelin": "jshenguru/dcos-zeppelin:0.7.0",
-        "spark": "mesosphere/spark:1.1.0-2.1.0-hadoop-2.7"
+        "spark": "mesosphere/spark:1.1.0-2.1.1-hadoop-2.7"
       }
     },
     "uris": {
-      "spark": "https://downloads.mesosphere.com/spark/assets/spark-2.1.0-bin-2.7.tgz"
+      "spark": "https://downloads.mesosphere.com/spark/assets/spark-2.1.1-bin-2.7.tgz"
     }
   }
 }
