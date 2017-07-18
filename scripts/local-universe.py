@@ -195,16 +195,23 @@ def enumerate_dcos_packages(
                     only_selected,
                     dcos_version
                 ):
-                    # Mutation. Run...
-                    pending_packages.remove(
-                        [package_json['name'], package_json['version']]
-                    )
+                    # *Mutation*. We enumerated the package so let's remove
+                    # it from our pending list if it exists. It may not exists
+                    # if --selected is used.
+                    key = [package_json['name'], package_json['version']]
+                    if key in pending_packages:
+                        pending_packages.remove(key)
 
                     yield (
                         package_json['name'],
                         package_json['version'],
                         revision_path
                     )
+
+    if pending_packages:
+        print("Error: couldn't find the following packages")
+        print(pending_packages)
+        sys.exit(1)
 
 
 def include_revision(package_json, packages, only_selected, dcos_version):
