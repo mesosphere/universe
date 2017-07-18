@@ -149,8 +149,8 @@ def _validate_package_with_directory(given_package, actual_package_name):
     if not PACKAGE_FOLDER_PATTERN.match(given_package):
         sys.exit(
             "\tERROR\n\n"
-            "Invalid name for package directory : {}. Name should match"
-            "the pattern : {}"
+            "Invalid name for package directory : {}"
+            "\nName should match the pattern : {}"
             .format(given_package, PACKAGE_FOLDER_PATTERN.pattern)
         )
     if given_package != actual_package_name:
