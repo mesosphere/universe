@@ -1,0 +1,28 @@
+{
+  "assets": {},
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"e9b29e4789c0c832fab8fbf0c5a5a5ee139a35f98dc83db7f565d911275bb046" } ],
+          "kind":"executable",
+          "url":"https://github.com/dcos-labs/dcos-aws-cli/raw/master/artifacts/dcos-aws-cli-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"4f8ceca30f62b163e5ebc9cb1aae11edf8e506b2ec82e3f232707fc402509880" } ],
+          "kind":"executable",
+          "url":"https://github.com/dcos-labs/dcos-aws-cli/raw/master/artifacts/dcos-aws-cli-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"f45a26c626d8abc05cec72442781dfd77818cb606f0f2dc064026a326342e9dc" } ],
+          "kind":"executable",
+          "url":"https://github.com/dcos-labs/dcos-aws-cli/raw/master/artifacts/dcos-aws-cli.exe"
+        }
+      }
+    }
+  }
+}
