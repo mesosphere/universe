@@ -1,0 +1,21 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.8",
+  "name": "arangodb3",
+  "version": "3.2.x",
+  "scm": "https://github.com/arangodb/arangodb3-dcos.git",
+  "maintainer": "info@arangodb.com",
+  "description": "A distributed free and open-source database with a flexible data model for documents, graphs, and key-values. Build high performance applications using a convenient SQL-like query language or JavaScript extensions. Guidance on how to install can be found here: https://github.com/dcos/examples/tree/master/arangodb",
+  "framework": true,
+  "tags": [ "arangodb", "NoSQL", "database" ],
+  "preInstallNotes": "The default configuration requires at least 3 nodes having 4.75 CPU, 22GB of memory and 20GB of persistent disk storage in total.",
+  "postInstallNotes": "The ArangoDB DCOS Service has been successfully installed!\n\n\tDocumentation: https://github.com/arangodb/arangodb3-dcos\n\tIssues: https://github.com/arangodb/arangodb3-dcos/issues",
+  "postUninstallNotes": "The ArangoDB DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at https://github.com/arangodb/arangodb3-dcos to clean up any persisted state.",
+    "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/arangodb/arangodb-dcos/master/LICENSE"
+    }
+  ],
+  "selected": true
+}
