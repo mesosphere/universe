@@ -103,7 +103,7 @@ something more than that.
     $ sudo make DCOS_VERSION=<your DC/OS version> DCOS_PACKAGE_INCLUDE="cassandra:1.0.25-3.0.10,cassandra:1.0.24-3.0.10,marathon:1.4.2" local-universe
     ```
 
-## Building Your Own, off a non-changing universe-static base image.
+### Building Your Own, off a non-changing universe-static base image.
 
 Mesosphere provides a `mesosphere/universe-static` Docker image, which has all of the core
 requirements to run a local universe.  All that must be added are your own certificates and repo
@@ -150,6 +150,16 @@ make DCOS_VERSION=<your DC/OS version> local-universe
 make static-build
 make static-base
 make DCOS_VERSION=<your DC/OS version> local-universe
+```
+
+### Building an old version of Local Universe
+The latest version of Local Universe has changed directory structure in a way that is not
+compatible with the old version of Local Universe. If you are interested in creating an old version
+of Local Universe with the old directory structure you must use the following command instead of
+the `local-universe` make target describe previously.
+
+```bash
+$ sudo make DCOS_VERSION=<your DC/OS version> old-local-universe
 ```
 
 ### Outside Resources

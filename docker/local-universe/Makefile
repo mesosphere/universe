@@ -44,3 +44,11 @@ endif
 local-universe: gen-universe clean
 	docker save -o local-universe.tar mesosphere/universe:latest
 	gzip local-universe.tar
+
+old-local-universe: clean
+	python3 $(REPO_BASE_DIR)/scripts/old-local-universe.py \
+		--repository $(REPO_BASE_DIR)/repo/packages/ \
+		--selected \
+		--dcos_version "$(DCOS_VERSION)"
+	docker save -o local-universe.tar mesosphere/universe:latest
+	gzip local-universe.tar
