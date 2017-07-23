@@ -45,7 +45,7 @@ def main():
     parser.add_argument(
         '--include',
         default='',
-        help='Command (,) separated list of packages to include. For each '
+        help='Comma (,) separated list of packages to include. For each '
         'package specify both the name and version by separating them with a '
         'colon (:). E.g. --include="marathon:1.4.2,chronos:2.5.0"')
     parser.add_argument(
@@ -74,7 +74,7 @@ def main():
     args = parser.parse_args()
 
     packages = [
-        spec.split(':')
+        tuple(spec.split(':'))
         for spec in args.include.split(',') if spec != ''
     ]
 
@@ -165,9 +165,10 @@ def enumerate_dcos_packages(
 
     :param packages_path: the path to the root of the packages
     :type packages_path: pathlib.Path
-    :param packages: list of the name and version of packages to include. empty
-                     list means all packages
-    :type packages: [[str]]
+    :param packages: list of the name and version of packages to include. The
+                     first field in the tuple is the name the second field is
+                     the version.
+    :type packages: [(str, str)]
     :param only_selected: filter the list of packages to only ones that are
                           selected
     :type only_selected: boolean
@@ -186,19 +187,19 @@ def enumerate_dcos_packages(
             revision_paths = list(package_path.iterdir())
             revision_paths.sort(key=lambda r: int(r.name), reverse=True)
 
-            # Include only the first acceptable revision
-            for revision_path in revision_paths:
+            for index, revision_path in enumerate(revision_paths):
                 package_json = load_json(revision_path / 'package.json')
                 if include_revision(
                     package_json,
                     pending_packages,
                     only_selected,
-                    dcos_version
+                    dcos_version,
+                    index == 0  # Latest package will always have an index of 0
                 ):
                     # *Mutation*. We enumerated the package so let's remove
                     # it from our pending list if it exists. It may not exists
                     # if --selected is used.
-                    key = [package_json['name'], package_json['version']]
+                    key = (package_json['name'], package_json['version'])
                     if key in pending_packages:
                         pending_packages.remove(key)
 
@@ -214,9 +215,20 @@ def enumerate_dcos_packages(
         sys.exit(1)
 
 
-def include_revision(package_json, packages, only_selected, dcos_version):
+def include_revision(
+    package_json,
+    packages,
+    only_selected,
+    dcos_version,
+    is_latest
+):
     version_pass = version_check(package_json, dcos_version)
-    selected_pass = selected_check(package_json, packages, only_selected)
+    selected_pass = selected_check(
+        package_json,
+        packages,
+        only_selected,
+        is_latest
+    )
 
     return version_pass and selected_pass
 
@@ -231,14 +243,19 @@ def version_check(package_json, dcos_version):
     return True
 
 
-def selected_check(package_json, packages, only_selected):
+def selected_check(package_json, packages, only_selected, is_latest):
+    """Return true when:
+    1) The package is selected, "only_selected" is true and it is the latest
+       package.
+    2) The package name and version matches one of the tuples in "packages"
+    """
     package_name = package_json['name']
     package_version = package_json['version']
 
     if only_selected:
-        return package_json.get('selected', False)
+        return is_latest and package_json.get('selected', False)
 
-    return [package_name, package_version] in packages
+    return (package_name, package_version) in packages
 
 
 def load_json(json_path):
