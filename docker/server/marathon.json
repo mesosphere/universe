@@ -32,5 +32,9 @@
   ],
   "constraints": [
     ["hostname", "UNIQUE"]
-  ]
+  ],
+  "labels": {
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "universe.dev.dessrakuten.com"
+  }
 }
