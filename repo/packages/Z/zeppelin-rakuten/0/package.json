@@ -1,0 +1,18 @@
+{
+  "packagingVersion": "3.0",
+  "name": "zeppelin-rakuten",
+  "version": "0.0.1",
+  "scm": "https://github.com/apache/zeppelin",
+  "description": "Apache Zeppelin Rakuten Build",
+  "maintainer": "qiang.a.wang@rakuten.com",
+  "tags": ["zeppelin", "spark", "pyspark", "sparkr"],
+  "preInstallNotes": "We recommend a minimum of 2 CPUs and 4196 MB of RAM available for the Marathon Service.",
+  "postInstallNotes": "zeppelin service has been successfully installed!",
+  "postUninstallNotes": "zeppelin service has been uninstalled and will no longer run.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/apache/zeppelin/blob/master/LICENSE"
+    }
+  ]
+}

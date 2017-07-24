@@ -1,0 +1,44 @@
+{
+  "id": "/{{zeppelin.name}}/{{zeppelin.user}}",
+  "cmd": "ZEPPELIN_PORT=$PORT0 /usr/local/zeppelin/bin/zeppelin.sh",
+  "cpus": {{zeppelin.cpus}},
+  "mem": {{zeppelin.mem}},
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.zeppelin}}",
+      "network": "HOST",
+      "privileged": false,
+      "forcePullImage": true
+    }
+  },
+  "env": {
+    "MASTER": "{{zeppelin.master}}",
+    "ZEPPELIN_JAVA_OPTS": "-Dspark.executor.memory=20g -Dspark.cores.max={{zeppelin.slave_cores}}",
+    "SPARK_APP_NAME": "zepplin-{{zeppelin.user}}",
+    "SPARK_HOME": "/usr/local/spark",
+    "ZEPPELIN_NOTEBOOK_DIR": "dev/notebooks",
+    "ZEPPELIN_NOTEBOOK_S3_BUCKET": "r-dess-zeppelin-notebooks",
+    "ZEPPELIN_NOTEBOOK_S3_USER": "zeppelin/{{zeppelin.user}}",
+    "ZEPPELIN_NOTEBOOK_STORAGE": "org.apache.zeppelin.notebook.repo.S3NotebookRepo",
+    "ZEPPELIN_USER_NAME": "{{zeppelin.user}}",
+    "ZEPPELIN_PASSWORD": "test",
+    "SPARK_SUBMIT_OPTIONS": "--conf spark.master={{zeppelin.master}} --conf spark.driver.maxResultSize=1g --conf spark.mesos.coarse=true --conf spark.mesos.executor.docker.image={{zeppelin.spark_image}} --conf spark.mesos.executor.home=/usr/local/spark --conf spark.task.maxFailures=3 --conf spark.sql.parquet.compression.codec=gzip --conf spark.serializer=org.apache.spark.serializer.KryoSerializer --conf spark.kryoserializer.buffer.max=1g --conf spark.executor.extraClassPath=/usr/local/spark/extra_jars/* --conf spark.driver.extraClassPath=/usr/local/spark/extra_jars/* --conf spark.shuffle.spill=true"
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/",
+      "gracePeriodSeconds": 5,
+      "intervalSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "labels": {
+      "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "{{zeppelin.name}}-{{zeppelin.user}}.dev.dessrakuten.com"
+  }
+}
