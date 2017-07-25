@@ -1,0 +1,57 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-reservation-refinement.tar.gz",
+      "scheduler-zip": "https://downloads.mesosphere.com/cockroachdb/assets/1.0.1-1.0.2/cockroachdb-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/cockroachdb/assets/1.0.1-1.0.2/executor.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/cockroachdb/assets/1.0.1-1.0.2/bootstrap.zip",
+      "cockroach-binary": "https://binaries.cockroachdb.com"
+    }
+  },
+  "images": {
+    "icon-small": "http://i.imgur.com/FsEREZI.png",
+    "icon-medium": "http://i.imgur.com/1DvX5di.png?1",
+    "icon-large": "http://i.imgur.com/P1mjjGK.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "230a87bf99e4e1960043d28181b01cf99d42a134e34ce488746d951e82512c63"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cockroachdb/assets/1.0.1-1.0.2/dcos-cockroachdb-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "0ff205c06464cbf952125bc98e10d08f95747879b1fe721e530ae61ead6bf281"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cockroachdb/assets/1.0.1-1.0.2/dcos-cockroachdb-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "01deb6d6c3edc6df898c83920fdce108fd32deabb097785be60ac6e558d20ef6"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cockroachdb/assets/1.0.1-1.0.2/dcos-cockroachdb.exe"
+        }
+      }
+    }
+  }
+}
