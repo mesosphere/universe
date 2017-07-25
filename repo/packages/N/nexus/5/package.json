@@ -1,0 +1,30 @@
+{
+  "packagingVersion": "4.0",
+  "name": "nexus",
+  "version": "3.4.0-01",
+  "minDcosReleaseVersion" : "1.8",
+  "scm": "https://github.com/sonatype/docker-nexus3",
+  "maintainer": "cloud-ops@sonatype.com",
+  "website": "https://www.sonatype.com/",
+  "framework": false,
+  "description": "Nexus Repository Manager is the world's only repository manager with FREE support for popular formats. It supports Bower, Docker, Maven 2, npm, NuGet, PyPI, and Raw site repositories. Installation documentation can be found at https://github.com/dcos/examples/tree/master/1.8/nexus.",
+  "tags": [
+    "artifact",
+    "maven",
+    "npm",
+    "package",
+    "repository",
+    "bower",
+    "nuget",
+    "pypi"
+  ],
+  "preInstallNotes": "This DC/OS Service is currently in preview. **WARNING** The Nexus package is configured without persistent storage by default. Please follow the instructions below to set up a local or external persistent volume. Advanced Installation will allow customization of the persistent volume.\n\nIn order to use a persistent local volume, the directory specified by host volume must exist on the task agent and be owned by UID 200. Failure to do so will cause the service to fail to scale up. To setup the default directory, connect to the agent's machine then run\n\n`mkdir /nexus-data && chown -R 200:200 /nexus-data`\n\nIn a multi-agent setup, there is no guarantee that the agent which originally ran Nexus will be used for future Nexus instances. As such, the local volume may not be available on the running node. Set a pinned-hostname value to ensure that Nexus is always ran on the same node, use a mount point to a shared file system, or use an external volume to ensure a single persistent data source.\n\nThe default credentials are admin/admin123. When changing them, update the task's health check to utilize the new credentials.",
+  "postInstallNotes": "Nexus has been installed. Documentation can be found at http://books.sonatype.com/nexus-book/.",
+  "postUninstallNotes": "Nexus has been uninstalled. Note that any data persisted still exists and will need to be manually removed.",
+  "licenses": [
+    {
+      "name": "Eclipse Public License Version 1.0",
+      "url": "https://github.com/sonatype/nexus-public/blob/master/header.txt"
+    }
+  ]
+}
