@@ -1,0 +1,27 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 2,
+  "container": {
+    "type": "DOCKER",
+     "volumes": [
+     {
+       "containerPath": "/tmp/kafka-logs",
+       "hostPath": "/var/lib/bde/kafka-logs",
+       "mode": "RW"
+     }
+     ],
+    "docker": {
+      "image": "{{resource.assets.container.docker.mesoskafkaimage}}",
+      "network": "BRIDGE",
+      "privileged":true,
+      "portMappings": [
+         { "containerPort": 9092, "hostPort": 9092}
+       ]
+    }
+  },
+  "ports":[9092],
+  "requirePorts":true,
+  "constraints":[["hostname","UNIQUE",""]]
+}
