@@ -1,0 +1,59 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64-jce-unlimited.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "hdfs-tar-gz": "https://downloads.mesosphere.com/hdfs/assets/hadoop-2.6.0-cdh5.11.0.tar.gz",
+      "hdfs-bin-tar-gz": "https://s3-us-west-2.amazonaws.com/mrbrowning-dev/hdfs-bin.tar.gz",
+      "hdfs-jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64-jce-unlimited.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/hdfs/assets/1.3.3-2.6.0-cdh5.11.0-beta/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/hdfs/assets/1.3.3-2.6.0-cdh5.11.0-beta/hdfs-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/hdfs/assets/1.3.3-2.6.0-cdh5.11.0-beta/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "34493b3cf1da906117c94faa0bd4d6706fd459cc57022b0e026b10b5b05a29ec"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hdfs/assets/1.3.3-2.6.0-cdh5.11.0-beta/dcos-hdfs-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "b6246da2f4da9316d5d79b4d8ecfe2e9bfc926a7a3677ec89f292c283f15ffc0"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hdfs/assets/1.3.3-2.6.0-cdh5.11.0-beta/dcos-hdfs-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "19070f44d0dba02dc7d47f4a424eeab44ff9038718ab534057f5a534aa133434"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hdfs/assets/1.3.3-2.6.0-cdh5.11.0-beta/dcos-hdfs.exe"
+        }
+      }
+    }
+  }
+}
