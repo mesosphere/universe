@@ -3,12 +3,15 @@
   "cpus": {{service.cpus}},
   "mem": {{service.mem}},
   "instances": 2,
+  "env": {
+      "KAFKA_ZOOKEEPER_CONNECT": "{{service.master}}"
+  },
   "container": {
     "type": "DOCKER",
      "volumes": [
      {
        "containerPath": "/tmp/kafka-logs",
-       "hostPath": "/var/lib/bde/kafka-logs",
+       "hostPath": "/var/lib/kafka-logs",
        "mode": "RW"
      }
      ],

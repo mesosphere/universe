@@ -1,5 +1,5 @@
-DOCKER_TAG?=0.0.1
-DOCKER_IMAGE?=localhost:5000/mesosphere/universe-rakuten
+DOCKER_TAG?=0.0.2.1
+DOCKER_IMAGE?=swapnil3667/universe-rakuten
 
 build:
 	scripts/build.sh
