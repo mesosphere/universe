@@ -1,0 +1,105 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "user": "{{service.user}}",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" &&  ./hello-world-scheduler/bin/helloworld ./hello-world-scheduler/{{service.spec_file}}",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.secret_name}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.secret_name}}"
+    }
+  },
+  {{/service.secret_name}}
+  "env": {
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+    "SERVICE_PRINCIPAL": "{{service.principal}}",
+    "SERVICE_USER": "{{service.user}}",
+    "HELLO_COUNT": "{{hello.count}}",
+    "HELLO_CPUS": "{{hello.cpus}}",
+    "HELLO_GPUS": "{{hello.gpus}}",
+    "HELLO_MEM": "{{hello.mem}}",
+    "HELLO_DISK": "{{hello.disk}}",
+    "HELLO_PLACEMENT": "{{hello.placement}}",
+    "WORLD_COUNT": "{{world.count}}",
+    "WORLD_CPUS": "{{world.cpus}}",
+    "WORLD_MEM": "{{world.mem}}",
+    "WORLD_DISK": "{{world.disk}}",
+    "WORLD_PLACEMENT": "{{world.placement}}",
+    "SLEEP_DURATION": "{{service.sleep}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    {{#service.secret_name}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    {{/service.secret_name}}
+    {{#hello.secret1}}
+    "HELLO_SECRET1" : "{{hello.secret1}}",
+    {{/hello.secret1}}
+    {{#hello.secret2}}
+    "HELLO_SECRET2" : "{{hello.secret2}}",
+    {{/hello.secret2}}
+    {{#world.secret1}}
+    "WORLD_SECRET1" : "{{world.secret1}}",
+    {{/world.secret1}}
+    {{#world.secret2}}
+    "WORLD_SECRET2" : "{{world.secret2}}",
+    {{/world.secret2}}
+    {{#world.secret3}}
+    "WORLD_SECRET3" : "{{world.secret3}}",
+    {{/world.secret3}}
+
+    "MESOS_API_VERSION": "{{service.mesos_api_version}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/deploy",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    },
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/recovery",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}
