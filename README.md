@@ -8,6 +8,7 @@ Mesosphere Universe registry of packages made available for DC/OS Clusters.
 
 #### Table of Contents
 * [Universe Purpose](#universe-purpose)
+  * [Library Dependencies](#library-dependencies)
 * [Publish a Package](#publish-a-package-1)
   * [Creating a Package](#creating-a-package)
     * [`package.json`](#packagejson)
@@ -31,6 +32,10 @@ Mesosphere Universe registry of packages made available for DC/OS Clusters.
 ## Universe Purpose
 You can publish and store packages in the Universe repository. The packages can then be consumed by DC/OS. This git repo facilitates these three necessary functions - to publish, store and consume packages. You can publish and store packages in the Universe repository. The packages can then be consumed by DC/OS. If you are not familiar with packages, we recommend this [Get Started Guide](docs/tutorial/GetStarted.md).
 
+### Library dependencies
+* [jq](https://stedolan.github.io/jq/download/) is installed in your environment.
+* `python3` is installed in your environment.
+* Docker is installed in your environment.
 
 ### Publish a Package
 
