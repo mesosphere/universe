@@ -126,39 +126,74 @@
       "type":"object",
       "properties": {
         "enabled": {
-          "default":true,
           "description":"Set to true to enable HA.",
-          "type":"boolean"
+          "type":"boolean",
+          "default":true
         },
         "cluster-id": {
-          "default":"/default",
-          "description":"The ID of the Flink cluster, used to separate multiple Flink clusters.",
-          "type":"string"
+          "description":"The ID of the Flink cluster, used to separate multiple Flink clusters.Note: The suffix -<service.name> will be added to the id value.",
+          "type":"string",
+          "default":"/default"
         },
         "storage-dir": {
-          "default":"hdfs://hdfs/flink/recovery",
-          "description":"File system path (URI) where Flink persists metadata in high-availability setups.",
-          "type":"string"
+          "description":"File top system path (URI) where Flink persists metadata in high-availability setups. Note: the service name will be added to the final path.",
+          "type":"string",
+          "default":"hdfs://hdfs/flink/recovery"
         },
         "jobmanager-delay": {
           "description":"The time before a JobManager after a fail over recovers the current jobs. Value must be a valid duration such as: '10 s' or '1 min', use no quotes. Default: akka.ask.timeout",
-          "default": "10 s",
-          "type":"string"
+          "type":"string",
+          "default": "10 s"
         },
         "jobmanager-port": {
-          "default": "0",
           "description":"Port range list used by the job manager in high-availability mode. eg. 50000-50050,50100-50200,51234. Default is: 0, pick a random port",
-          "type":"string"
+          "type":"string",
+          "default": "0"
         },
         "zookeeper-quorum": {
-          "default":"master.mesos:2181",
           "description":"The ZooKeeper quorum to use, when running Flink in a high-availability mode with ZooKeeper.",
-          "type":"string"
+          "type":"string",
+          "default":"master.mesos:2181"
         },
         "zookeeper-path-root": {
+          "description":"The root path under which Flink stores its entries in ZooKeeper. Note: <service.name> will be added to the final path value.",
+          "type":"string",
+          "default": "/dcos-service-flink"
+        },
+        "zookeeper-path-latch": {
+          "description":"ZooKeeper root path (ZNode) for the leader latch.",
+          "type":"string",
+          "default": "/leaderlatch"
+        },
+        "zookeeper-path-jobgraphs": {
+          "description":"ZooKeeper root path (ZNode) for job graphs.",
+          "type":"string",
+          "default": "/jobgraphs"
+        },
+        "zookeeper-path-leader": {
+          "description":"ZooKeeper root path (ZNode) for the leader.",
+          "type":"string",
+          "default": "/leader"
+        },
+        "zookeeper-path-checkpoints": {
+          "description":"ZooKeeper root path (ZNode) for completed checkpoints.",
+          "type":"string",
+          "default": "/checkpoints"
+        },
+        "zookeeper-path-checkpoint-counter": {
+          "description":"ZooKeeper root path (ZNode) for checkpoint counters.",
+          "type":"string",
+          "default": "/checkpoint-counter"
+        },
+        "zookeeper-path-meros-workers": {
+          "description":"ZooKeeper root path (ZNode) for Mesos workers.",
+          "type":"string",
+          "default": "/mesos-workers"
+        },
+        "zookeeper-path-running-registry": {
           "description":"The root path under which Flink stores its entries in ZooKeeper.",
-          "default": "/flink",
-          "type":"string"
+          "type":"string",
+          "default": "/running_job_registry/"
         },
         "zookeeper-client-session-timeout": {
           "description":"Defines the session timeout for the ZooKeeper session in ms.",
@@ -180,9 +215,9 @@
           "default": 3,
           "type":"integer"
         },
-        "zookeeper-path-running-registry": {
-          "description":"The root path under which Flink stores its entries in ZooKeeper.",
-          "default": "/running_job_registry/",
+        "zookeeper-client-acl": {
+          "description":"The acl to use for the zk client.",
+          "default": "open",
           "type":"string"
         }
       },
