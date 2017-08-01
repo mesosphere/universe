@@ -76,7 +76,7 @@ function gzipJsonFiles {(
 function build {(
 
   # Check if the jq processor is installed correctly
-  if ! which jq > /dev/null 2>&1; then
+  if ! command -v jq > /dev/null 2>&1; then
     echo "jq is required. Please install!"
     exit 1
   fi
