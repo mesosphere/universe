@@ -1,0 +1,45 @@
+{
+    "id": "{{service.name}}-{{gitlab-runner.executor}}",
+    "cpus": {{service.cpus}},
+    "mem": {{service.mem}},
+    "instances": {{service.instances}},
+    "env": {
+        "GITLAB_SERVICE_NAME": "{{gitlab.service-name}}",
+        "REGISTRATION_TOKEN": "{{gitlab.registration-token}}",
+        "RUNNER_EXECUTOR": "{{gitlab-runner.executor}}",
+        "RUNNER_TAG_LIST": "{{gitlab-runner.tag-list}}",
+        "RUNNER_CONCURRENT_BUILDS": "{{gitlab-runner.concurrent-builds}}"
+        {{#gitlab-runner.docker-default-image}},
+        "DOCKER_IMAGE": "{{gitlab-runner.docker-default-image}}"
+        {{/gitlab-runner.docker-default-image}}
+        {{#gitlab-runner.docker-insecure-registry}},
+        "DOCKER_EXTRA_OPTS": "--insecure-registry {{gitlab-runner.docker-insecure-registry}}"
+        {{/gitlab-runner.docker-insecure-registry}}
+    },
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.gitlab-runner}}",
+            "network": "HOST",
+            "forcePullImage": true,
+            "privileged": true
+        }
+    },
+    "acceptedResourceRoles": [ "{{service.role}}" ],
+    "labels": {
+        "DCOS_SERVICE_NAME": "{{service.name}}"
+    },
+     "healthChecks": [
+        {
+          "protocol": "COMMAND",
+          "command": { "value": "gitlab-runner verify" },
+          "gracePeriodSeconds": 300,
+          "intervalSeconds": 60,
+          "timeoutSeconds": 20,
+          "maxConsecutiveFailures": 5
+        }
+    ]
+    {{#service.one-instance-per-host}},
+    "constraints": [["hostname", "UNIQUE"]]
+    {{/service.one-instance-per-host}}
+}

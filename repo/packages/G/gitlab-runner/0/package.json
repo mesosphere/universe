@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "3.0",
+  "name": "gitlab-runner",
+  "version": "1.0-1.8.1",
+  "minDcosReleaseVersion" : "1.8",
+  "scm": "https://github.com/mesosphere/dcos-gitlab-runner-service.git",
+  "maintainer": "support@gitlab.com",
+  "website": "https://about.gitlab.com/gitlab-ci/",
+  "framework": false,
+  "description": "GitLab Runner is the open-source continuous integration (CI) service included with GitLab that coordinates the testing.",
+  "tags": ["gitlab", "ci", "cd", "runner", "build", "test", "integration", "git", "continuous-integration", "vcs", "version-control-software"],
+  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. You need a running instance of either GitLab CE or EE. Also, you need to specify the Runner Token (available on GitLab -> Admin -> Runners), otherwise the runners cannot connect to the GitLab instance.",
+  "postInstallNotes": "GitLab Runner has been installed.",
+  "postUninstallNotes": "GitLab Runner has been uninstalled.",
+  "licenses": [
+    {
+      "name": "MIT License",
+      "url": "https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/blob/master/LICENSE"
+    }
+  ],
+  "selected": false
+}
