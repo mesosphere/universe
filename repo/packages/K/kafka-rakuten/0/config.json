@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "kafka": {
+      "properties": {
+        "cpus": {
+          "default": 7.5,
+          "description": "CPU shares to allocate to each kafka instance.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 13312.0,
+          "description": "Memory (MB) to allocate to each marathon task.",
+          "minimum": 2048.0,
+          "type": "number"
+        },
+        "instances": {
+          "default": 3,
+          "description": "The instance number of the kafka serivce",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "name": {
+          "default": "kafka",
+          "description": "Name for this LB instance",
+          "type": "string"
+        },
+        "user": {
+          "default": "data-eng",
+          "description": "Deploy kafka with this user.",
+          "type": "string"
+        },
+        "zookeeper": {
+          "default": "master.mesos:2181/apache-kafka",
+          "description": "Deploy kafka with this zookeeper.",
+          "type": "string"
+        },
+        "port": {
+          "description": "Port for broker to listen on",
+          "type": "integer",
+          "default": 9092
+        },
+        "kafka_log_dir": {
+          "default": "/mnt/kafka",
+          "description": "The dir all volumes should mounted under, such as data1, data2...",
+          "type": "string"
+        },
+        "mesos_agent_app_lable": {
+          "default": "kafka",
+          "description": "The app lable of the mesos agenets that will run kafka service",
+          "type": "string"
+        }
+      },
+      "required": ["cpus", "mem", "name"],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

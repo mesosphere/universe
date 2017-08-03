@@ -1,0 +1,18 @@
+{
+  "packagingVersion": "3.0",
+  "name": "kafka-rakuten",
+  "version": "0.0.1",
+  "scm": "https://github.com/apache/kafka",
+  "description": "Apache Kafka Rakuten Build",
+  "maintainer": "jintao.ye@rakuten.com",
+  "tags": ["message", "broker", "kafka", "pubsub"],
+  "preInstallNotes": "A zookeeper cluster is running. The mesos agent that will run kafka should have a lable app=kafka and mount some volumes under dirs /mnt/kafka/data1,/mnt/kafka/data2, ...",
+  "postInstallNotes": "kafka service has been successfully installed!",
+  "postUninstallNotes": "kafka service has been uninstalled and will no longer run. All node in zookeper is deleted. all data in mesos agent is deleted",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}

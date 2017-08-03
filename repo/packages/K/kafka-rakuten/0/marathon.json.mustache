@@ -1,0 +1,39 @@
+{
+  "id": "/{{kafka.name}}/{{kafka.user}}",
+  "cpus": {{kafka.cpus}},
+  "mem": {{kafka.mem}},
+  "instances": {{kafka.instances}},
+  "container": {
+      "type": "DOCKER",
+      "volumes": [
+      {
+              "containerPath": "{{kafka.kafka_log_dir}}",
+              "hostPath": "{{kafka.kafka_log_dir}}",
+              "mode": "RW"
+      }
+      ],
+      "docker": {
+          "network": "HOST",
+          "image": "{{resource.assets.container.docker.kafka}}",
+          "forcePullImage": true,
+          "privileged":true
+      }
+  },
+  "ports":[{{kafka.port}}],
+  "requirePorts":true,
+  "constraints":[
+    ["hostname","UNIQUE"],
+    ["app", "LIKE", "{{kafka.mesos_agent_app_lable}}"]
+  ],
+  "env": {
+      "KAFKA_ZOOKEEPER_CONNECT": "{{kafka.zookeeper}}",
+      "KAFKA_LOG_PARENT_DIR": "{{kafka.kafka_log_dir}}"
+  },
+  "healthChecks":[
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "nc -zv $HOST $PORT0" },
+      "intervalSeconds": 5
+    }
+  ]
+}
