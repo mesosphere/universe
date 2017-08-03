@@ -7,8 +7,8 @@
       "type": "DOCKER",
       "volumes": [
       {
-              "containerPath": "{{kafka.kafka_log_dir}}",
-              "hostPath": "{{kafka.kafka_log_dir}}",
+              "containerPath": "{{broker.log_dir}}",
+              "hostPath": "{{broker.log_dir}}",
               "mode": "RW"
       }
       ],
@@ -19,20 +19,25 @@
           "privileged":true
       }
   },
-  "ports":[{{kafka.port}}],
+  "ports":[{{broker.port}}, {{broker.jmx_port}}],
   "requirePorts":true,
   "constraints":[
     ["hostname","UNIQUE"],
     ["app", "LIKE", "{{kafka.mesos_agent_app_lable}}"]
   ],
   "env": {
-      "KAFKA_ZOOKEEPER_CONNECT": "{{kafka.zookeeper}}",
-      "KAFKA_LOG_PARENT_DIR": "{{kafka.kafka_log_dir}}"
+      "KAFKA_ZOOKEEPER_CONNECT": "{{broker.zookeeper}}",
+      "KAFKA_LOG_PARENT_DIR": "{{broker.log_dir}}"
   },
   "healthChecks":[
     {
       "protocol": "COMMAND",
       "command": { "value": "nc -zv $HOST $PORT0" },
+      "intervalSeconds": 5
+    },
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "nc -zv $HOST $PORT1" },
       "intervalSeconds": 5
     }
   ]

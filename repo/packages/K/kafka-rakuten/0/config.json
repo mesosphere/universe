@@ -1,10 +1,13 @@
 {
   "$schema": "http://json-schema.org/schema#",
+  "type": "object",
   "properties": {
     "kafka": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
       "properties": {
         "cpus": {
-          "default": 7.5,
+          "default": 7,
           "description": "CPU shares to allocate to each kafka instance.",
           "minimum": 1,
           "type": "number"
@@ -31,6 +34,18 @@
           "description": "Deploy kafka with this user.",
           "type": "string"
         },
+        "mesos_agent_app_lable": {
+          "default": "kafka",
+          "description": "The app lable of the mesos agenets that will run kafka service",
+          "type": "string"
+        }
+      },
+      "required": ["cpus", "mem", "name"]
+    },
+    "broker": {
+      "description":"Kafka broker configuration properties",
+      "type":"object",
+      "properties": {
         "zookeeper": {
           "default": "master.mesos:2181/apache-kafka",
           "description": "Deploy kafka with this zookeeper.",
@@ -41,20 +56,22 @@
           "type": "integer",
           "default": 9092
         },
-        "kafka_log_dir": {
+        "jmx_port": {
+          "description": "Port for kafka jmx",
+          "type": "integer",
+          "default": 7071
+        },
+        "log_dir": {
           "default": "/mnt/kafka",
           "description": "The dir all volumes should mounted under, such as data1, data2...",
           "type": "string"
         },
-        "mesos_agent_app_lable": {
-          "default": "kafka",
-          "description": "The app lable of the mesos agenets that will run kafka service",
+        "heap_opts": {
+          "default": "-Xmx8g -Xms8g -XX:MetaspaceSize=96m -XX:+UseG1GC -XX:MaxGCPauseMillis=20 -XX:InitiatingHeapOccupancyPercent=35 -XX:G1HeapRegionSize=16M -XX:MinMetaspaceFreeRatio=50 -XX:MaxMetaspaceFreeRatio=80",
+          "description": "The jmx heap opts",
           "type": "string"
         }
-      },
-      "required": ["cpus", "mem", "name"],
-      "type": "object"
+      }
     }
-  },
-  "type": "object"
+  }
 }
