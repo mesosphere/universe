@@ -369,7 +369,8 @@ Service health check information can be surfaced in the DC/OS services UI tab by
        "timeoutSeconds": 10,
        "maxConsecutiveFailures": 3
    }
-]```
+]
+```
 
 You can learn more about `healthChecks` parameter at [Marathon API](https://mesosphere.github.io/marathon/docs/health-checks.html) page.
 
@@ -378,7 +379,8 @@ In this guide, the `time-server` is not a Mesos framework. If your service is a 
 ```json
 "labels": {
 	"DCOS_PACKAGE_FRAMEWORK_NAME": "time-server"
- }```
+ }
+ ```
 
  In order to expose the `time-server` service as an endpoint and add health checks to it, add the above mentioned labels. Your new `marathon.json.mustache` should look like this :
 
