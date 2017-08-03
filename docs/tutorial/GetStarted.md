@@ -301,7 +301,7 @@ This file is a [mustache template](http://mustache.github.io/) that when rendere
 
 This is how the Marathon file should look like:
 
-```json
+```
 {
   "id": "{{service.name}}",
   "cpus": {{service.cpus}},
@@ -358,7 +358,7 @@ Tasks running in nested [Marathon app groups](https://mesosphere.github.io/marat
 
 Service health check information can be surfaced in the DC/OS services UI tab by defining one or more healthChecks in the Service’s Marathon template. For example:
 
-```json
+```
 "healthChecks": [
    {
        "path": "/",
@@ -382,7 +382,7 @@ In this guide, the `time-server` is not a Mesos framework. If your service is a 
 
  In order to expose the `time-server` service as an endpoint and add health checks to it, add the above mentioned labels. Your new `marathon.json.mustache` should look like this :
 
- ```json
+ ```
  {
    "id": "{{service.name}}",
    "cpus": {{service.cpus}},
