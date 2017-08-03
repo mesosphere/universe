@@ -1,4 +1,4 @@
-DOCKER_TAG?=0.0.1
+DOCKER_TAG?=0.0.2
 DOCKER_IMAGE?=localhost:5000/mesosphere/universe-rakuten
 
 build:
