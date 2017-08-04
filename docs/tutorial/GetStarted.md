@@ -181,7 +181,7 @@ When you execute `docker images`, you should be able to see the your image in th
 
 `docker run --env PORT0=8000 -p 80:8000 -t docker-user-name/time-server:part1`
 
-Note that you are reading the port number from the `PORT0` environment variable. Marathon sets this environment variable when launching the container and since you don't have that yet, you need to provide the environment variable manually using `-env PORT0=8000`. The `-p` option maps the host port 80 to the container port 8000. The  `-t` flag creates a pseudoTTY and since you unbuffered the Python standard I/O in your Dockerfile, you will be able to see the real time logs of the server in the console. Once you executed the above command, you should be able to browse [localhost](http://localhost:80). You can test the url with `curl` command using `curl localhost:8000` and your server should return the current time.
+Note that you are reading the port number from the `PORT0` environment variable. Marathon sets this environment variable when launching the container and since you don't have that yet, you need to provide the environment variable manually using `--env PORT0=8000`. The `-p` option maps the host port 80 to the container port 8000. The  `-t` flag creates a pseudoTTY and since you unbuffered the Python standard I/O in your Dockerfile, you will be able to see the real time logs of the server in the console. Once you have executed the above command, you should be able to browse [localhost](http://localhost:80). You can test the url with `curl localhost:8000` and your server should return the current time.
 
 
 #### Tag and publish your container
@@ -331,11 +331,11 @@ If you need further examples, you can refer to the [repo/packages/H/hello-world]
 
 By default, a DC/OS service is deployed on a [private agent node](https://dcos.io/docs/1.9/overview/concepts/#private-agent-node). To allow configuration control or monitoring of a service by a user, the Admin Router can act as a reverse proxy by proxying calls on the master node to the service in a private node on the cluster.
 
-The Admin Router currently supports only one reverse proxy destination. This step is optional, if you don't want to do expose your service endpoint, you can skip to next step.
+The Admin Router currently supports only one reverse proxy destination. This step is optional, if you don't want to expose your service endpoint, you can skip to the next step.
 
 #### Service Endpoints
 
-The Admin Router allows Marathon tasks to define custom service UI and HTTP endpoints, which are made available as /service/<service-name>. Set the following Marathon task labels to enable this:
+The Admin Router allows Marathon tasks to define custom service UI and HTTP endpoints, which are made available as `/service/<service-name>`. Set the following Marathon task labels to enable this:
 
 ```json
 "labels": {
@@ -403,22 +403,22 @@ In this guide, the `time-server` is not a Mesos framework. If your service is a 
        "protocol": "tcp"
      }
    ],
-   "labels": {
+	 "labels": {
      "DCOS_SERVICE_NAME": "{{service.name}}",
      "DCOS_SERVICE_PORT_INDEX": "0",
      "DCOS_SERVICE_SCHEME": "http"
    },
-	 "healthChecks": [
-	    {
-	        "path": "/",
-	        "portIndex": 0,
-	        "protocol": "HTTP",
-	        "gracePeriodSeconds": 5,
-	        "intervalSeconds": 60,
-	        "timeoutSeconds": 10,
-	        "maxConsecutiveFailures": 3
-	    }
-	 ]
+   "healthChecks": [
+     {
+       "path": "/",
+       "portIndex": 0,
+       "protocol": "HTTP",
+       "gracePeriodSeconds": 5,
+       "intervalSeconds": 60,
+       "timeoutSeconds": 10,
+       "maxConsecutiveFailures": 3
+     }
+   ]
  }
  ```
 
