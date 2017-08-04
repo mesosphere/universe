@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "framework": {
+      "description":"DC/OS framwork configuration properties",
+      "type":"object",
+      "properties": {
+        "webUiPort": {
+          "description": "The web UI port",
+          "type": "integer",
+          "default": 31105
+        }
+      }
+    },
+    "scheduler": {
+      "type": "object",
+      "description": "DC/OS scheduler configuration properties",
+      "properties": {
+        "instances": {
+          "default": 1,
+          "description": "The instance number of the sheduler",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 0.2,
+          "description": "CPU shares to allocate to scheduler.",
+          "minimum": 0.2,
+          "type": "number"
+        },
+        "mem": {
+          "default": 512.0,
+          "description": "Memory (MB) to allocate to scheduler.",
+          "minimum": 512.0,
+          "type": "number"
+        },
+        "name": {
+          "default": "elasticsearch",
+          "description": "Name for this LB instance",
+          "type": "string"
+        },
+        "user": {
+          "default": "data-eng",
+          "description": "Deploy Elasticsearch with this user.",
+          "type": "string"
+        },
+        "java_opts": {
+          "default": "-Xms128m -Xmx256m",
+          "description": "The java opts for running scheduler",
+          "type": "string"
+        }
+      },
+      "required": ["cpus", "mem", "name"]
+    },
+    "task": {
+      "description":"Kafka broker configuration properties",
+      "type":"object",
+      "properties": {
+        "zookeeper": {
+          "default": "zk://master.mesos:2181/mesos",
+          "description": "Deploy elasticsearch with this zookeeper.",
+          "type": "string"
+        },
+        "nodes": {
+          "default": 3,
+          "description": "The marathon task number of the elasticsearch",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 1.0,
+          "description": "CPU shares to allocate to each marathon task.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 2048,
+          "description": "Memory (MB) to allocate to each marathon task.",
+          "minimum": 2048.0,
+          "type": "number"
+        },
+        "disk": {
+          "default": 1024,
+          "description": "hard disk to allocate to each marathon task.",
+          "minimum": 1024,
+          "type": "number"
+        }
+      },
+      "required": ["cpus", "mem", "disk"]
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "id": "/{{scheduler.name}}/{{scheduler.user}}",
+  "connected": false,
+  "recovered": false,
+  "TASK_UNREACHABLE": 0,
+  "args": [
+    "--zookeeperMesosUrl",
+    "{{task.zookeeper}}",
+    "--zookeeperMesosTimeout",
+    "20000",
+    "--webUiPort",
+    "{{framework.webUiPort}}",
+    "--frameworkFailoverTimeout",
+    "2592000.0",
+    "--frameworkName",
+    "elasticsearch",
+    "--elasticsearchNodes",
+    "{{task.nodes}}",
+    "--elasticsearchClusterName",
+    "mesos-ha",
+    "--elasticsearchCpu",
+    "{{task.cpus}}",
+    "--elasticsearchDisk",
+    "{{task.disk}}",
+    "--elasticsearchRam",
+    "{{task.mem}}",
+    "--executorForcePullImage",
+    "true",
+    "--executorName",
+    "elasticsearch-executor",
+    "--elasticsearchDockerImage",
+    "{{resource.assets.container.docker.elasticsearch-task}}",
+    "--useIpAddress",
+    "true"
+  ],
+  "instances": {{scheduler.instances}},
+  "cpus": {{scheduler.cpus}},
+  "mem": {{scheduler.mem}},
+  "disk": 0,
+  "gpus": 0,
+  "backoffSeconds": 1,
+  "backoffFactor": 1.15,
+  "maxLaunchDelaySeconds": 3600,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.elasticsearch-scheduler}}",
+      "network": "HOST",
+      "privileged": false,
+      "forcePullImage": true
+    }
+  },
+  "ports":[{{framework.webUiPort}}],
+  "requirePorts":true,
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 30,
+      "timeoutSeconds": 5,
+      "maxConsecutiveFailures": 0,
+      "portIndex": 0,
+      "path": "/",
+      "protocol": "HTTP",
+      "ignoreHttp1xx": false
+    }
+  ],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 1,
+    "maximumOverCapacity": 1
+  },
+  "unreachableStrategy": {
+    "inactiveAfterSeconds": 300,
+    "expungeAfterSeconds": 600
+  },
+  "killSelection": "YOUNGEST_FIRST",
+  "requirePorts": true,
+  "labels": {
+    "DCOS_PACKAGE_RELEASE": "2",
+    "DCOS_PACKAGE_SOURCE": "https://universe.mesosphere.com/repo",
+    "DCOS_PACKAGE_METADATA": "eyJwYWNrYWdpbmdWZXJzaW9uIjoiMy4wIiwibmFtZSI6ImVsYXN0aWNzZWFyY2giLCJ2ZXJzaW9uIjoiMS4wLjEtMiIsIm1haW50YWluZXIiOiJwbndAdHJpZm9yay5jb20iLCJkZXNjcmlwdGlvbiI6IkRDT1MgaW1wbGVtZW50YXRpb24gb2YgdGhlIE1lc29zLUVsYXN0aWNzZWFyY2ggZnJhbWV3b3JrIiwidGFncyI6WyJlbGFzdGljIiwibW9uaXRvcmluZyIsImRlYnVnIl0sInNlbGVjdGVkIjpmYWxzZSwic2NtIjoiaHR0cHM6Ly9naXRodWIuY29tL21lc29zL2VsYXN0aWNzZWFyY2guZ2l0Iiwid2Vic2l0ZSI6Imh0dHBzOi8vZ2l0aHViLmNvbS9tZXNvcy9lbGFzdGljc2VhcmNoIiwiZnJhbWV3b3JrIjp0cnVlLCJwcmVJbnN0YWxsTm90ZXMiOiJUaGlzIERDL09TIFNlcnZpY2UgaXMgbm8gbG9uZ2VyIG1haW50YWluZWQuIFNlZSBiZXRhLWVsYXN0aWMuIFRoZSBFbGFzdGljU2VhcmNoIERDT1MgU2VydmljZSBpbXBsZW1lbnRhdGlvbiBpcyBhbHBoYSBhbmQgdGhlcmUgbWF5IGJlIGJ1Z3MsIGluY29tcGxldGUgZmVhdHVyZXMsIGluY29ycmVjdCBkb2N1bWVudGF0aW9uIG9yIG90aGVyIGRpc2NyZXBhbmNpZXMuIiwicG9zdEluc3RhbGxOb3RlcyI6IkVsYXN0aWNzZWFyY2ggaXMgc3RhZ2luZy4gQ2hlY2sgTWFyYXRob24gYW5kIHRoZSBFUyBtYW5hZ2VtZW50IGZyb250LWVuZCBmb3Igc3RhdHVzLiIsImxpY2Vuc2VzIjpbeyJuYW1lIjoiQXBhY2hlIExpY2Vuc2UgVmVyc2lvbiAyLjAiLCJ1cmwiOiJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vbWVzb3MvZWxhc3RpY3NlYXJjaC9tYXN0ZXIvTElDRU5TRSJ9XSwiaW1hZ2VzIjp7Imljb24tc21hbGwiOiJodHRwczovL2Rvd25sb2Fkcy5tZXNvc3BoZXJlLmNvbS91bml2ZXJzZS9hc3NldHMvaWNvbi1zZXJ2aWNlLWVsYXN0aWNzZWFyY2gtc21hbGwucG5nIiwiaWNvbi1tZWRpdW0iOiJodHRwczovL2Rvd25sb2Fkcy5tZXNvc3BoZXJlLmNvbS91bml2ZXJzZS9hc3NldHMvaWNvbi1zZXJ2aWNlLWVsYXN0aWNzZWFyY2gtbWVkaXVtLnBuZyIsImljb24tbGFyZ2UiOiJodHRwczovL2Rvd25sb2Fkcy5tZXNvc3BoZXJlLmNvbS91bml2ZXJzZS9hc3NldHMvaWNvbi1zZXJ2aWNlLWVsYXN0aWNzZWFyY2gtbGFyZ2UucG5nIn19",
+    "DCOS_PACKAGE_REGISTRY_VERSION": "3.0",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "elasticsearch",
+    "DCOS_PACKAGE_VERSION": "1.0.1-2",
+    "DCOS_PACKAGE_NAME": "elasticsearch",
+    "DCOS_PACKAGE_IS_FRAMEWORK": "true"
+  },
+  "env": {
+    "JAVA_OPTS": "{{scheduler.java_opts}}"
+  }
+}
