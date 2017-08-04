@@ -1,0 +1,266 @@
+{
+  "type": "object",
+    "properties": {
+      "service": {
+        "type": "object",
+        "description": "DC/OS service configuration properties",
+        "properties": {
+          "name": {
+            "title": "Service name",
+            "description": "The name of the service instance",
+            "type": "string",
+            "default": "portworx"
+          },
+          "principal": {
+            "title": "Custom principal (optional)",
+            "description": "The principal for the service instance, or empty to use the default.",
+            "type": "string",
+            "default": ""
+          },
+          "secret_name": {
+            "title": "Credential secret name (optional)",
+            "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+            "type": "string",
+            "default": ""
+          }
+        },
+        "required":[
+          "name"
+        ]
+      },
+      "node": {
+        "description": "Portworx Node properties",
+        "type": "object",
+        "properties": {
+          "portworx_cluster": {
+            "title": "Portworx Cluster Name",
+            "type": "string",
+            "default":"portworx-dcos"
+          },
+          "portworx_image": {
+            "title": "Portworx Image name",
+            "type": "string",
+            "default":"portworx/px-dev:1.2.9"
+          },
+          "portworx_options": {
+            "title": "Portworx Options",
+            "type": "string",
+            "default":"-a"
+          },
+          "kvdb_servers": {
+            "title":"KVDB servers",
+            "description": "Comma seperated IP:PORT entries for the key value database (etcd or consul). If the etcd server is started using the pacakge this will be ignored",
+            "type": "string",
+            "default": ""
+          },
+          "count": {
+            "title": "Node count",
+            "description": "Number of Portworx nodes to run",
+            "type": "integer",
+            "default":3
+          },
+          "placement_constraint": {
+            "title": "Placement constraint",
+            "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+            "type": "string",
+            "default": "hostname:UNIQUE"
+          }
+        },
+        "required":[
+          "count",
+          "portworx_cluster",
+          "portworx_image",
+          "portworx_options"
+        ]
+      },
+      "etcd": {
+        "description": "Start a 3 node etcd cluster. Required for Portworx if you don't have either etcd or consul already running",
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "title": "Start etcd",
+            "description": "If disabled, please enter the external etcd server IP on the service tab.",
+            "type": "boolean",
+            "default":true
+          },
+          "placement_constraint": {
+            "title": "Placement constraint",
+            "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+            "type": "string",
+            "default": "hostname:UNIQUE"
+          },
+          "image": {
+            "title": "Etcd Image name",
+            "type": "string",
+            "default":"mesosphere/etcd-mesos:latest"
+          },
+          "cpus": {
+            "title": "CPU count",
+            "description": "CPU requirements",
+            "type": "number",
+            "default":0.3
+          },
+          "mem": {
+            "title": "Memory size (MB)",
+            "description": "Mem requirements (in MB)",
+            "type": "integer",
+            "default":1024
+          },
+          "disk_type": {
+            "title": "Type of disk to use for persisting data",
+            "description": "ROOT or MOUNT",
+            "type": "string",
+            "default": "ROOT"
+          },
+          "disk_size": {
+            "title": "Dize of disk (MB)",
+            "type": "integer",
+            "default": 5120
+          },
+          "node_advertise_port": {
+            "title": "Cluster Node advertise port",
+            "description": "Port on which the etcd cluster nodes will listen",
+            "type": "integer",
+            "default":1026
+          },
+          "node_peer_port": {
+            "title": "Cluster Node peer port",
+            "description": "Port on which the etcd cluster nodes will communicate with each other",
+            "type": "integer",
+            "default":1027
+          },
+          "proxy_advertise_port": {
+            "title": "Cluster Proxy advertise port",
+            "description": "Port on which the etcd proxy will listen",
+            "type": "integer",
+            "default":2379
+          }
+        },
+        "required":[
+          "cpus",
+          "mem",
+          "disk_type",
+          "disk_size",
+          "node_advertise_port",
+          "node_peer_port",
+          "proxy_advertise_port",
+          "image"
+        ]
+      },
+      "influxdb": {
+        "description": "InfluxDB properties. This service is required to store Portworx cluster statistics by the Lightouse service",
+        "type": "object",
+        "properties": {
+          "placement_constraint": {
+            "title": "Placement constraint",
+            "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+            "type": "string",
+            "default": ""
+          },
+          "cpus": {
+            "title": "CPU count",
+            "description": "CPU requirements",
+            "type": "number",
+            "default":0.3
+          },
+          "mem": {
+            "title": "Memory size (MB)",
+            "description": "Mem requirements (in MB)",
+            "type": "integer",
+            "default": 1024
+          },
+          "disk_type": {
+            "title": "Type of disk to use for persisting data",
+            "description": "ROOT or MOUNT",
+            "type": "string",
+            "default": "ROOT"
+          },
+          "disk_size": {
+            "title": "Dize of disk (MB)",
+            "type": "integer",
+            "default": 1024
+          },
+          "image": {
+            "title": "Influxdb Image name",
+            "type": "string",
+            "default":"influxdb:latest"
+          },
+          "listen_port": {
+            "title": "The port on which influxdb listens for incoming requests",
+            "type": "integer",
+            "default": 8086
+          }
+
+        },
+        "required":[
+          "cpus",
+          "mem",
+          "disk_type",
+          "disk_size",
+          "image",
+          "listen_port"
+        ]
+      },
+      "lighthouse": {
+        "description": "Lighthouse exposes the web UI for Portworx. Start this if you don't want to connect to the central Portworx Lighthouse",
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "title": "Start Lighthouse",
+            "description": "Start the Lighthouse service. If this is disabled the influxdb service will also be disabled.",
+            "type": "boolean",
+            "default":true
+          },
+          "placement_constraint": {
+            "title": "Placement constraint",
+            "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+            "type": "string",
+            "default": ""
+          },
+          "cpus": {
+            "title": "CPU count",
+            "description": "CPU requirements",
+            "type": "number",
+            "default":0.3
+          },
+          "mem": {
+            "title": "Memory size (MB)",
+            "description": "Mem requirements (in MB)",
+            "type": "integer",
+            "default": 1024
+          },
+          "image": {
+            "title": "Lighthouse Image name",
+            "type": "string",
+            "default":"portworx/px-lighthouse:latest"
+          },
+          "webui_port": {
+            "title": "WebUI Port",
+            "description": "",
+            "type": "integer",
+            "default": 8085
+          },
+          "company_name": {
+            "title": "Company Name",
+            "description": "Company Name to use for creating Lighthouse account",
+            "type": "string",
+            "default": "Portworx"
+          },
+          "admin_email": {
+            "title": "Administrator Email/Login",
+            "description": "Email to use for the Lighthouse account. Default password is admin and can be changed after first login. Used for resetting password and sending alerts.",
+            "type": "string",
+            "default": "portworx@yourcompany.com"
+          }
+        },
+        "required":[
+          "cpus",
+          "mem",
+          "webui_port",
+          "company_name",
+          "admin_email",
+          "image"
+        ]
+      }
+   }
+}
