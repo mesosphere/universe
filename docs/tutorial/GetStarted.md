@@ -378,8 +378,8 @@ In this guide, the `time-server` is not a Mesos framework. If your service is a 
 
 ```json
 "labels": {
-	"DCOS_PACKAGE_FRAMEWORK_NAME": "time-server"
- }
+  "DCOS_PACKAGE_FRAMEWORK_NAME": "time-server"
+}
  ```
 
  In order to expose the `time-server` service as an endpoint and add health checks to it, add the above mentioned labels. Your new `marathon.json.mustache` should look like this :
@@ -486,7 +486,7 @@ Now that you have local Universe Server up and running, add it to the cluster's 
 
 If you have followed the earlier instructions in configuring a [service endpoint](#service-endpoints), then you can test the url with `curl` command using:
 
- 	`curl https://<DC/OS-Cluster>/service/time-server`
+    `curl https://<DC/OS-Cluster>/service/time-server`
 
 or just open up the url in your favorite browser and you should be able to see the current time.
 
