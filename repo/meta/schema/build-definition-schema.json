@@ -91,64 +91,6 @@
       "additionalProperties": false
     },
 
-
-    "v20resource": {
-      "additionalProperties": false,
-      "type": "object",
-      "properties": {
-        "assets": {
-          "type": "object",
-          "properties": {
-            "uris": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "string"
-              }
-            },
-            "container": {
-              "type": "object",
-              "properties": {
-                "docker": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                }
-              },
-              "additionalProperties": false
-            }
-          },
-          "additionalProperties": false
-        },
-        "images": {
-          "type": "object",
-          "properties": {
-            "icon-small": {
-              "type": "string",
-              "description": "PNG icon URL, preferably 48 by 48 pixels."
-            },
-            "icon-medium": {
-              "type": "string",
-              "description": "PNG icon URL, preferably 128 by 128 pixels."
-            },
-            "icon-large": {
-              "type": "string",
-              "description": "PNG icon URL, preferably 256 by 256 pixels."
-            },
-            "screenshots": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "description": "PNG screen URL, preferably 1024 by 1024 pixels."
-              }
-            }
-          },
-          "additionalProperties": false
-        }
-      }
-    },
-
-
     "v30resource": {
       "additionalProperties": false,
       "type": "object",
@@ -279,107 +221,7 @@
     },
 
 
-
-    "v20Package": {
-      "properties": {
-        "packagingVersion": {
-          "type": "string",
-          "enum": ["2.0"]
-        },
-        "name": {
-          "type": "string"
-        },
-        "version": {
-          "type": "string"
-        },
-        "scm": {
-          "type": "string"
-        },
-        "maintainer": {
-          "type": "string"
-        },
-        "website": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "framework": {
-          "type": "boolean",
-          "default": false,
-          "description": "True if this package installs a new Mesos framework."
-        },
-        "preInstallNotes": {
-          "type": "string",
-          "description": "Pre installation notes that would be useful to the user of this package."
-        },
-        "postInstallNotes": {
-          "type": "string",
-          "description": "Post installation notes that would be useful to the user of this package."
-        },
-        "postUninstallNotes": {
-          "type": "string",
-          "description": "Post uninstallation notes that would be useful to the user of this package."
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^[^\\s]+$"
-          }
-        },
-        "licenses": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "The name of the license. For example one of [Apache License Version 2.0 | MIT License | BSD License | Proprietary]"
-              },
-              "url": {
-                "$ref": "#/definitions/url"
-              }
-            },
-            "additionalProperties": false,
-            "required": [
-              "name",
-              "url"
-            ]
-          }
-        },
-        "marathon": {
-          "$ref": "#/definitions/marathon"
-        },
-        "resource": {
-          "oneOf": [
-            {"$ref": "#/definitions/v20resource"},
-            {"$ref": "#/definitions/localReference"}
-          ]
-        },
-        "config": {
-          "oneOf": [
-            {"$ref": "#/definitions/config"},
-            {"$ref": "#/definitions/localReference"}
-          ]
-        },
-        "command": {
-          "$ref": "#/definitions/command"
-        }
-      },
-      "required": [
-        "packagingVersion",
-        "name",
-        "version",
-        "maintainer",
-        "marathon",
-        "description",
-        "tags"
-      ],
-      "additionalProperties": false
-    },
-
-    "v30Package": {
+    "v30BuildDef": {
       "properties": {
         "packagingVersion": {
           "type": "string",
@@ -484,7 +326,7 @@
       "additionalProperties": false
     },
 
-    "v40Package": {
+    "v40BuildDef": {
       "properties": {
         "packagingVersion": {
           "type": "string",
@@ -604,8 +446,7 @@
 
   "type": "object",
   "oneOf": [
-    { "$ref": "#/definitions/v20Package" },
-    { "$ref": "#/definitions/v30Package" },
-    { "$ref": "#/definitions/v40Package" }
+    { "$ref": "#/definitions/v30BuildDef" },
+    { "$ref": "#/definitions/v40BuildDef" }
   ]
 }
