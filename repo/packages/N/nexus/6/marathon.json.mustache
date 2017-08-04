@@ -1,0 +1,70 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "acceptedResourceRoles": [ "{{service.resource-role}}" ],
+
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.nexus3}}",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 8081, 
+          "hostPort": {{networking.host-port}} 
+        }
+      ]
+    },
+    "volumes": [
+      {{#storage.persist}}
+      {{^storage.external-volume.enable}}
+      {
+        "containerPath": "/nexus-data",
+        "hostPath": "{{storage.local-volume.host-volume}}",
+        "mode": "RW"
+      }
+      {{/storage.external-volume.enable}}
+      {{#storage.external-volume.enable}}
+      {
+        "containerPath": "/nexus-data",
+        "external": {
+          "name": "{{storage.external-volume.volume-name}}",
+          "provider": "dvdi",
+          "options": { "dvdi/driver": "rexray" }
+        },
+        "mode": "RW"
+      }
+      {{/storage.external-volume.enable}}
+      {{/storage.persist}}
+    ]
+  },
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": { 
+        "value": "curl --user admin:admin123 --fail --request GET ${HOST}:${PORT0}/service/metrics/ping" 
+      },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 5
+    }
+  ],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true"
+  }
+  {{#networking.pinned-hostname}},
+  "constraints": [
+    [
+      "hostname", "CLUSTER", "{{networking.pinned-hostname}}"
+    ]
+  ]
+  {{/networking.pinned-hostname}}
+}
