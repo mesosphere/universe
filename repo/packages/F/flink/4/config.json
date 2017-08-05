@@ -1,0 +1,321 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "DC/OS Flink service configuration properties.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "default": "flink",
+          "description": "The Flink Job Manager will register with Mesos with this as framework name. This service will be available at http://<dcos_url>/service/<name>/",
+          "type": "string"
+        },
+        "slots": {
+          "description": "A processing slot allows Flink to execute a distributed DataSet transformation, such as a data source or a map-transformation. As a general recommendation, the number of available CPU cores is a good default.",
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        },
+        "parallelism-default": {
+          "description": "The parallelism used for programs that did not specify any other parallelism.",
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        },
+        "role":{
+           "description":"The Dispatcher component will register with Mesos with this role.",
+           "type":"string",
+           "default":"*"
+        },
+        "principal":{
+           "description":"The Dispatcher component will register with Mesos with this principal.",
+           "type":"string",
+           "default":""
+        },
+        "secret":{
+           "description":"The Dispatcher component will register with mesos with this secret.",
+           "type":"string",
+           "default":""
+        },
+        "user":{
+           "description":"Tasks will run as this user.",
+           "type":"string",
+           "default":"root"
+        },
+        "log-level":{
+           "type":"string",
+           "description":"log4j log level for Flink cluster.  May be set to any valid log4j log level: https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/Level.html",
+           "default":"INFO"
+        },
+        "extra-args":{
+           "description":"Use -D<KEY>=<VALUE> format to provide any additional Flink configuration options.",
+           "type":"string",
+           "default":""
+        },
+        "scala-2-11": {
+          "description":"Use flink compiled for scala-2.11 rather than the default scala-2.10",
+          "type":"boolean",
+          "default":false
+        }
+      }
+    },
+
+    "app-master": {
+      "description": "Properties configuring the Flink AppMaster/JobManager.",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares of AppMaster.",
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "memory": {
+          "default": 1024,
+          "description": "Memory (MB) of AppMaster.",
+          "minimum": 1024,
+          "type": "number"
+        },
+        "heap": {
+          "description": "Heap size (MB) for the AppMaster JVM. This value has to be less or equal than memory.",
+          "type": "number",
+          "default": 256,
+          "minimum": 1
+        }
+      }
+    },
+
+    "task-managers": {
+      "description": "Properties configuring the Flink TaskManagers.",
+      "type": "object",
+      "properties": {
+        "count": {
+          "description": "Number of task managers to spawn.",
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        },
+        "cpus": {
+          "description": "CPU shares of each TaskManager.",
+          "type": "number",
+          "default": 1,
+          "minimum": 0.01
+        },
+        "memory": {
+          "description": "Memory (MB) for each task manager.",
+          "type": "number",
+          "default": 1024,
+          "minimum": 256
+        },
+        "heap": {
+          "description": "Heap size (MB) for the TaskManager JVM. This value has to be less or equal than memory.",
+          "type": "number",
+          "default": 512,
+          "minimum": 1
+        },
+        "memory-preallocation": {
+          "description": "Specify whether TaskManager-memory should be allocated when starting up (checked) or when memory is required in the memory manager (unchecked).",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+
+    "high-availability": {
+      "description":"Flink high availability options.",
+      "type":"object",
+      "properties": {
+        "enabled": {
+          "description":"Set to true to enable HA.",
+          "type":"boolean",
+          "default":true
+        },
+        "cluster-id": {
+          "description":"The ID of the Flink cluster, used to separate multiple Flink clusters.Note: The suffix -<service.name> will be added to the id value.",
+          "type":"string",
+          "default":"/default"
+        },
+        "storage-dir": {
+          "description":"File top system path (URI) where Flink persists metadata in high-availability setups. Note: the service name will be added to the final path.",
+          "type":"string",
+          "default":"hdfs://hdfs/flink/recovery"
+        },
+        "jobmanager-delay": {
+          "description":"The time before a JobManager after a fail over recovers the current jobs. Value must be a valid duration such as: '10 s' or '1 min', use no quotes. Default: akka.ask.timeout",
+          "type":"string",
+          "default": "10 s"
+        },
+        "jobmanager-port": {
+          "description":"Port range list used by the job manager in high-availability mode. eg. 50000-50050,50100-50200,51234. Default is: 0, pick a random port",
+          "type":"string",
+          "default": "0"
+        },
+        "zookeeper-quorum": {
+          "description":"The ZooKeeper quorum to use, when running Flink in a high-availability mode with ZooKeeper.",
+          "type":"string",
+          "default":"master.mesos:2181"
+        },
+        "zookeeper-path-root": {
+          "description":"The root path under which Flink stores its entries in ZooKeeper. Note: <service.name> will be added to the final path value.",
+          "type":"string",
+          "default": "/dcos-service-flink"
+        },
+        "zookeeper-path-latch": {
+          "description":"ZooKeeper root path (ZNode) for the leader latch.",
+          "type":"string",
+          "default": "/leaderlatch"
+        },
+        "zookeeper-path-jobgraphs": {
+          "description":"ZooKeeper root path (ZNode) for job graphs.",
+          "type":"string",
+          "default": "/jobgraphs"
+        },
+        "zookeeper-path-leader": {
+          "description":"ZooKeeper root path (ZNode) for the leader.",
+          "type":"string",
+          "default": "/leader"
+        },
+        "zookeeper-path-checkpoints": {
+          "description":"ZooKeeper root path (ZNode) for completed checkpoints.",
+          "type":"string",
+          "default": "/checkpoints"
+        },
+        "zookeeper-path-checkpoint-counter": {
+          "description":"ZooKeeper root path (ZNode) for checkpoint counters.",
+          "type":"string",
+          "default": "/checkpoint-counter"
+        },
+        "zookeeper-path-meros-workers": {
+          "description":"ZooKeeper root path (ZNode) for Mesos workers.",
+          "type":"string",
+          "default": "/mesos-workers"
+        },
+        "zookeeper-path-running-registry": {
+          "description":"The root path under which Flink stores its entries in ZooKeeper.",
+          "type":"string",
+          "default": "/running_job_registry/"
+        },
+        "zookeeper-client-session-timeout": {
+          "description":"Defines the session timeout for the ZooKeeper session in ms.",
+          "default": 60000,
+          "type":"integer"
+        },
+        "zookeeper-client-connection-timeout": {
+          "description":"Defines the connection timeout for ZooKeeper in ms.",
+          "default": 15000,
+          "type":"integer"
+        },
+        "zookeeper-client-retry-wait": {
+          "description":"Defines the pause between consecutive retries in ms.",
+          "default": 5000,
+          "type":"integer"
+        },
+        "zookeeper-client-max-retry-attempts": {
+          "description":"Defines the number of connection retries before the client gives up.",
+          "default": 3,
+          "type":"integer"
+        },
+        "zookeeper-client-acl": {
+          "description":"The acl to use for the zk client.",
+          "default": "open",
+          "type":"string"
+        }
+      },
+      "required": [
+        "storage-dir",
+        "zookeeper-quorum"
+      ]
+    },
+
+    "security":{
+      "description":"Flink security configuration properties",
+      "type":"object",
+      "properties":{
+        "kerberos": {
+          "description": "Flink Kerberos configuration.",
+          "type": "object",
+          "properties": {
+            "krb5conf": {
+              "description": "Base64 encoded krb5.conf file.  Copied to JMs and TMs so that they may access your KDC.",
+              "type": "string",
+              "default": ""
+            },
+            "use-ticket-cache":{
+              "description":"Indicates whether to read from the user's kerberos ticket cache.",
+              "type":"boolean",
+              "default":true
+            },
+            "keytab":{
+              "description":"Base64 encoded keytab file. Flink cluster and job will run under this identity.",
+              "type":"string",
+              "default":""
+            },
+            "principal":{
+              "description":"Kerberos principal name associated with the keytab.",
+              "type":"string",
+              "default":""
+            }
+          }
+        },
+        "ssl":{
+          "description":"Flink SSL certificates and private key configuration.",
+          "type":"object",
+          "properties":{
+            "enabled":{
+              "default":false,
+              "description":"Set to true to enable SSL.",
+              "type":"boolean"
+            },
+            "keyStoreBase64":{
+              "default":"",
+              "description":"Base64 encoded blob containing a Java keystore.",
+              "type":"string"
+            },
+            "trustStoreBase64":{
+              "default":"",
+              "description":"Base64 encoded blob containing a Java truststore.",
+              "type":"string"
+            },
+            "keyPassword":{
+              "default":"",
+              "description":"An optional password for the private key in the keystore.",
+              "type":"string"
+            },
+            "keyStorePassword":{
+              "default":"",
+              "description":"An optional password for the keystore (and the key if keyPassword is not given).",
+              "type":"string"
+            },
+            "trustStorePassword":{
+              "default":"",
+              "description":"An optional password for the truststore.",
+              "type":"string"
+            },
+            "enabledAlgorithms":{
+              "default":"TLS_RSA_WITH_AES_128_CBC_SHA",
+              "description":"A comma-separared list of allowed ciphers.",
+              "type":"string"
+            },
+            "enableArtifactServerSSL":{
+              "default":false,
+              "description":"Set to true to enable SSL for Artifact server.",
+              "type":"boolean"
+            }
+          }
+        }
+      }
+    },
+
+    "hdfs": {
+      "description": "Flink Hadoop configuration properties",
+      "type": "object",
+      "properties": {
+        "config-url": {
+          "type": "string",
+          "description": "Base URL that serves HDFS config files (hdfs-site.xml, core-site.xml).",
+          "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
+        }
+      }
+    }
+  }
+}
