@@ -403,7 +403,7 @@ In this guide, the `time-server` is not a Mesos framework. If your service is a 
        "protocol": "tcp"
      }
    ],
-	 "labels": {
+   "labels": {
      "DCOS_SERVICE_NAME": "{{service.name}}",
      "DCOS_SERVICE_PORT_INDEX": "0",
      "DCOS_SERVICE_SCHEME": "http"
