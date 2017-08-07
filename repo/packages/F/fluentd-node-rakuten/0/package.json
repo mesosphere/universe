@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "fluentd-node-rakuten",
+  "version": "0.12.39-0.1",
+  "scm": "https://github.com/fluent/fluentd",
+  "maintainer": "https://dcos.io/community",
+  "website": "https://www.fluentd.org/",
+  "description": "Fluentd: Unified Logging Layer (project under CNCF) ",
+  "tags": ["fluentd", "elk"],
+  "preInstallNotes": "This is setting up fluentd on all slave nodes",
+ "postInstallNotes": "Service installed.",
+ "postUninstallNotes": "Service uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License",
+      "url": "https://github.com/fluent/fluentd/blob/master/COPYING"
+    }
+  ]
+}

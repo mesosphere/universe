@@ -1,0 +1,17 @@
+{
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_icon.png",
+    "icon-medium": "https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_icon.png",
+    "icon-large": "https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_icon.png",
+  "screenshots": [
+    "https://docs.fluentd.org/images/fluentd-architecture.png"
+   ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "fluentd-docker": "localhost:5000/dess/fluentd:0.0.2"
+      }
+    }
+  }
+}

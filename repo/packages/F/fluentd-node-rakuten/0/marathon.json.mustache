@@ -1,0 +1,49 @@
+{
+  "id": "{{fluentd.name}}",
+  "cmd": "/bin/entrypoint.sh fluentd -c /fluentd/etc/${FLUENTD_CONF} -p /fluentd/plugins $FLUENTD_OPT",
+  "args": null,
+  "user": null,
+  "env": {
+    "ES_HOST": "{{fluentd.es_host}}",
+    "ES_PORT": "{{fluentd.es_port}}"
+  },
+  "cpus": {{fluentd.cpus}},
+  "mem": {{fluentd.mem}},
+  "instances": {{fluentd.instances}},
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.fluentd-docker}}",
+      "forcePullImage": false,
+      "privileged": false,
+      "network": "HOST"
+    }
+  },
+  "ports": [24224],
+  "requirePorts": true,
+  "healthChecks": [
+    {
+      "protocol": "TCP",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "acceptedResourceRoles": [
+    "*",
+    "slave_public"
+  ],
+  "labels": {
+    "DCOS_PACKAGE_VERSION": "0.24.1-0.1",
+    "DCOS_SERVICE_NAME": "{{fluentd.name}}",
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  }
+}
