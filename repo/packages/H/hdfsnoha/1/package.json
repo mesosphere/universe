@@ -1,0 +1,15 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.8",
+  "name": "hdfs-noha",
+  "version": "0.1-2.8.1",
+  "maintainer": "fmarchand@agaetis.fr",
+  "scm" : "https://github.com/fmarchand/dcos-commons.git",
+  "website" : "https://github.com/fmarchand/dcos-commons/tree/master/frameworks/hdfsnoha",
+  "description": "A simple HDFS service without HA. Minimal installation of the HDFS Service with High Availability is prohibitive when you just want to provide a small HDFS cluster to few datascientists or just to test a simple program using HDFS. This DC/OS service was designed for that. It offers a minimal installation of a HDFS cluster without all the HA components (journal nodes, zkfc's or second namenode) and without any update or replace strategies for namenodes or datanodes.",
+  "selected": false,
+  "framework": true,
+  "tags": ["hdfsnoha", "hdfs","hadoop", "dfs"],
+  "postInstallNotes": "HDFS Non-HA is being installed!\n\n\t",
+  "postUninstallNotes": "DC/OS HDFS Non-HA is being uninstalled."
+}

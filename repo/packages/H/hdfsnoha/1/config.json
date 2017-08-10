@@ -1,0 +1,202 @@
+{
+  "type": "object",
+    "properties": {
+      "service": {
+        "type": "object",
+        "description": "DC/OS service configuration properties",
+        "properties": {
+          "name": {
+            "title": "Service name",
+            "description": "The name of the service instance",
+            "type": "string",
+            "default": "hdfsnoha"
+          },
+          "user": {
+            "title": "User",
+            "description": "The user that the service will run as.",
+            "type": "string",
+            "default": "root"
+          },
+          "principal": {
+            "title": "Custom principal (optional)",
+            "description": "The principal for the service instance, or empty to use the default.",
+            "type": "string",
+            "default": ""
+          },
+          "virtual_networks": {
+            "description": "Enable DC/OS Virtual Networking",
+            "type": "boolean",
+            "default": false
+          },
+          "log_level": {
+            "description": "The log level for the DC/OS service.",
+            "type": "string",
+            "enum": ["OFF", "FATAL", "ERROR", "WARN", "INFO", "DEBUG", "TRACE", "ALL"],
+            "default": "INFO"
+          }
+        },
+        "required":[
+          "name",
+          "user"
+        ]
+      },
+      "namenode": {
+        "description": "HDFS Namenode configuration properties",
+        "type": "object",
+        "properties": {
+          "placement_constraint": {
+            "title": "Placement constraint for namenode",
+            "description": "Marathon-style placement constraint for the namenode. Example: 'hostname:UNIQUE' or 'hostname:LIKE:172.16.2.8[5-7]'",
+            "type": "string",
+            "default": ""
+          },
+          "virtual_network": {
+            "description": "Name of virtual network to join",
+            "type": "string",
+            "default": "dcos"
+          },
+          "cpus": {
+            "title": "CPU count",
+            "description": "CPU count for the namenode",
+            "type": "number",
+            "default":0.2
+          },
+          "mem": {
+            "title": "Memory size (MB) for the  namenode",
+            "description": "Memory size (MB) for the namenode",
+            "type": "integer",
+            "default":512
+          },
+          "disk": {
+            "title": "Disk size (MB)",
+            "description": "Template pod persistent disk requirements (in MB)",
+            "type": "integer",
+            "default":1024
+          },
+          "disk_type": {
+            "title": "Disk type [ROOT, MOUNT]",
+            "description": "Mount volumes require preconfiguration in DC/OS",
+            "enum": [
+              "ROOT",
+              "MOUNT"
+            ],
+            "default": "ROOT"
+          }
+        },
+        "required":[
+          "cpus",
+          "mem",
+          "disk",
+          "disk_type"
+        ]
+      },
+      "datanode": {
+        "description": "HDFS Datanode configuration properties",
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Node count",
+            "description": "Number of datanodes in the HDFS cluster",
+            "type": "integer",
+            "default":1
+          },
+          "placement_constraint": {
+            "title": "Placement constraint",
+            "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+            "type": "string",
+            "default": "hostname:UNIQUE"
+          },
+          "virtual_network": {
+            "description": "Name of virtual network to join",
+            "type": "string",
+            "default": "dcos"
+          },
+          "cpus": {
+            "title": "CPU count",
+            "description": "Template pod CPU requirements",
+            "type": "number",
+            "default":0.2
+          },
+          "mem": {
+            "title": "Memory size (MB) per datanode",
+            "description": "Memory size (MB) per datanode",
+            "type": "integer",
+            "default":512
+          },
+          "disk": {
+            "title": "Disk size (MB)",
+            "description": "Template pod persistent disk requirements (in MB)",
+            "type": "integer",
+            "default":1024
+          },
+          "disk_type": {
+            "title": "Disk type [ROOT, MOUNT]",
+            "description": "Mount volumes require preconfiguration in DC/OS",
+            "enum": [
+              "ROOT",
+              "MOUNT"
+            ],
+            "default": "ROOT"
+          },
+          "strategy": {
+            "title": "The strategy used to deploy datanodes",
+            "description": "The strategy used to deploy datanodes : parallel (default) or serial",
+            "type": "string",
+            "default":"parallel"
+          }
+        },
+        "required":[
+          "count",
+          "cpus",
+          "mem",
+          "disk",
+          "strategy",
+          "disk_type"
+        ]
+      },
+      "hdfs": {
+        "type": "object",
+        "description": "HDFS File System configuration options",
+        "properties": {
+          "dfs_replication": {
+            "type": "integer",
+            "description": "HDFS Replica factor.",
+            "default": 1
+          },
+          "name_node_rpc_port": {
+            "type": "integer",
+            "description": "The RPC port for HDFS Name Nodes.",
+            "default": 9001
+          },
+          "name_node_http_port": {
+            "type": "integer",
+            "description": "The HTTP port for HDFS Name Nodes. ",
+            "default": 9002
+          },
+          "data_node_rpc_port": {
+            "type": "integer",
+            "description": "The RPC port used by Data Nodes.",
+            "default": 9003
+          },
+          "data_node_http_port": {
+            "type": "integer",
+            "description": "The HTTP port used by Data Nodes.",
+            "default": 9004
+          },
+          "data_node_ipc_port": {
+            "type": "integer",
+            "description": "The IPC port used by Data Nodes.",
+            "default": 9005
+          }
+        },
+        "required": [
+          "dfs_replication",
+          "name_node_rpc_port",
+          "name_node_http_port",
+          "data_node_rpc_port",
+          "data_node_http_port",
+          "data_node_ipc_port"
+        ]
+      }
+    }
+}

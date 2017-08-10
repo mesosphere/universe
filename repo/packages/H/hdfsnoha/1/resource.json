@@ -1,0 +1,42 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "scheduler-zip": "http://downloads.agaetis.fr/hdfsnoha/assets/0.1-2.8.1/hdfsnoha-scheduler.zip",
+      "executor-zip": "http://downloads.agaetis.fr/hdfsnoha/assets/0.1-2.8.1/executor.zip",
+      "bootstrap-zip": "http://downloads.agaetis.fr/hdfsnoha/assets/0.1-2.8.1/bootstrap.zip",
+      "hadoop-bundle-uri" : "http://downloads.agaetis.fr/hdfsnoha/assets/hadoop-2.8.1.tar.gz"
+    }
+  },
+  "images": {
+    "icon-small": "http://downloads.agaetis.fr/hdfsnoha/assets/icon-service-hdfsnoha-small.png",
+    "icon-medium": "http://downloads.agaetis.fr/hdfsnoha/assets/icon-service-hdfsnoha-medium.png",
+    "icon-large": "http://downloads.agaetis.fr/hdfsnoha/assets/icon-service-hdfsnoha-large.png"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"{{sha256:dcos-hdfsnoha-darwin}}" } ],
+          "kind":"executable",
+          "url":"http://downloads.agaetis.fr/hdfsnoha/assets/0.1-2.8.1/dcos-hdfsnoha-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"{{sha256:dcos-hdfsnoha-linux}}" } ],
+          "kind":"executable",
+          "url":"http://downloads.agaetis.fr/hdfsnoha/assets/0.1-2.8.1/dcos-hdfsnoha-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"{{sha256:dcos-hdfsnoha.exe}}" } ],
+          "kind":"executable",
+          "url":"http://downloads.agaetis.fr/hdfsnoha/assets/0.1-2.8.1/dcos-hdfsnoha.exe"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" &&  ./hdfsnoha-scheduler/bin/hdfsnoha ./hdfsnoha-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.secret_name}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.secret_name}}"
+    }
+  },
+  {{/service.secret_name}}
+  "env": {
+    "HDFS_VERSION": "hadoop-2.8.1",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "SLEEP_DURATION": "{{service.sleep}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.principal}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+
+    "NODE_COUNT": "{{datanode.count}}",
+    "NODE_PLACEMENT": "{{datanode.placement_constraint}}",
+    {{#service.virtual_networks}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{datanode.virtual_network}}",
+    {{/service.virtual_networks}}
+    "NODE_CPUS": "{{datanode.cpus}}",
+    "NODE_MEM": "{{datanode.mem}}",
+    "NODE_STRATEGY": "{{datanode.strategy}}",
+    "NODE_DISK": "{{datanode.disk}}",
+    "NODE_DISK_TYPE": "{{datanode.disk_type}}",
+
+    "TASKCFG_ALL_NAME_NODE_RPC_PORT":"{{hdfs.name_node_rpc_port}}",
+    "TASKCFG_ALL_NAME_NODE_HTTP_PORT":"{{hdfs.name_node_http_port}}",
+    "TASKCFG_ALL_DATA_NODE_RPC_PORT":"{{hdfs.data_node_rpc_port}}",
+    "TASKCFG_ALL_DATA_NODE_HTTP_PORT":"{{hdfs.data_node_http_port}}",
+    "TASKCFG_ALL_DATA_NODE_IPC_PORT":"{{hdfs.data_node_ipc_port}}",
+
+    "NAME_PLACEMENT": "{{namenode.placement_constraint}}",
+    {{#service.virtual_networks}}
+        "ENABLE_VIRTUAL_NETWORK": "yes",
+        "VIRTUAL_NETWORK_NAME": "{{namenode.virtual_network}}",
+    {{/service.virtual_networks}}
+    "NAME_CPUS": "{{namenode.cpus}}",
+    "NAME_MEM": "{{namenode.mem}}",
+    "NAME_DISK": "{{namenode.disk}}",
+    "NAME_DISK_TYPE": "{{namenode.disk_type}}",
+
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    {{#service.secret_name}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    {{/service.secret_name}}
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "HADOOP_BUNDLE_URI": "{{resource.assets.uris.hadoop-bundle-uri}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "CONFIG_TEMPLATE_PATH": "hdfsnoha-scheduler",
+    "HDFS_DFS_REPLICATION" : "{{hdfs.dfs_replication}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/deploy",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    },
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/recovery",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}
