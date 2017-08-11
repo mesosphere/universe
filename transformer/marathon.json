@@ -1,0 +1,26 @@
+{
+  "id": "/transform",
+  "instances": 1,
+  "cpus": 0.25,
+  "mem": 128,
+  "requirePorts": true,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "takirala/transformer:v1",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 7373,
+          "hostPort": 0,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "labels": {
+    "DCOS_SERVICE_NAME": "transform",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  }
+}

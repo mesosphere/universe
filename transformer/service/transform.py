@@ -3,6 +3,7 @@
 import gen_universe
 import json
 import logging
+import os
 import re
 
 from http import HTTPStatus
@@ -11,16 +12,21 @@ from urllib.parse import parse_qsl, urlparse
 from urllib.request import Request, urlopen
 
 
-# TODO move somewhere or read from env variables
-HOST_NAME = '0.0.0.0'
-PORT_NUMBER = 7373
+# Binds to all available interfaces
+HOST_NAME = ''
+# Gets the port number from $PORT0 environment variable
+PORT_NUMBER = int(os.environ['PORT0'])
 
+# Constants
 header_user_agent = 'User-Agent'
 header_accept = 'Accept'
+header_content_type = 'Content-Type'
+param_charset = 'charset'
+default_charset = 'utf-8'
+
+json_key_packages = 'packages'
 param_url = 'url'
 url_path = '/transform'
-default_charset = 'utf-8'
-header_content_type = 'Content-Type'
 
 
 def run_server(server_class=HTTPServer):
@@ -96,11 +102,9 @@ def handle(decoded_url, user_agent, accept):
     req.add_header(header_user_agent, user_agent)
     req.add_header(header_accept, accept)
     res = urlopen(req)
-    charset = res.info().get_param('charset') or default_charset
-    packages = json.loads(res.read().decode(charset)).get('packages')
-    return render_json(packages,
-                       dcos_version,
-                       repo_version)
+    charset = res.info().get_param(param_charset) or default_charset
+    packages = json.loads(res.read().decode(charset)).get(json_key_packages)
+    return render_json(packages, dcos_version, repo_version)
 
 
 def render_json(packages, dcos_version, repo_version):
@@ -119,7 +123,7 @@ def render_json(packages, dcos_version, repo_version):
         packages,
         dcos_version
     )
-    updated_json_data = json.dumps({'packages': processed_packages})
+    updated_json_data = json.dumps({json_key_packages: processed_packages})
     errors = gen_universe.validate_repo_with_schema(
         json.loads(updated_json_data),
         repo_version
@@ -132,16 +136,16 @@ def render_json(packages, dcos_version, repo_version):
 
 def _get_repo_version(accept_header):
     """Returns the version of the universe repo parsed.
-    # TODO May be support versions of two digits ?
+    # TODO Should support versions of two digits - y/n ?
     :param accept_header: String
     :return repo version as str or Error
     :rtype str
     """
-    result = re.findall(r'\bversion=v\d', accept_header)
+    result = re.findall(r'\bversion=v\d{1,2}', accept_header)
     if result is None or len(result) is 0:
         raise ValueError(ErrorResponse.UNABLE_PARSE)
     result.sort(reverse=True)
-    return result[0].split('=')[1]
+    return str(result[0].split('=')[1])
 
 
 def _get_dcos_version(user_agent_header):
@@ -151,10 +155,10 @@ def _get_dcos_version(user_agent_header):
     :return dcos version as str or Error
     :rtype str
     """
-    result = re.search(r'\bdcos\/\b\d\.\d{1,2}', user_agent_header)
+    result = re.search(r'\bdcos/\b\d\.\d{1,2}', user_agent_header)
     if result is None:
         raise ValueError(ErrorResponse.UNABLE_PARSE)
-    return result.group().split('/')[1]
+    return str(result.group().split('/')[1])
 
 
 class ErrorResponse:
@@ -167,5 +171,5 @@ class ErrorResponse:
 
 if __name__ == '__main__':
     logger = logging.getLogger(__name__)
-    logging.basicConfig(level=logging.WARNING, format='%(asctime)s %(message)s')
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s')
     run_server()

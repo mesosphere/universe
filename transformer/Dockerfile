@@ -10,7 +10,8 @@ ADD scripts/gen_universe.py                 /transformer
 ADD repo/meta/schema                        /transformer/repo/meta/schema
 ADD scripts/requirements/requirements.txt   /transformer/requirements.txt
 
+# Install the required depen
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Run transform.py when the container launches. -u flag makes sure the output is not buffered
+# Run transform.py when the container launches. -u to 'unbuffer' the output
 CMD ["python3", "-u", "transform.py"]
