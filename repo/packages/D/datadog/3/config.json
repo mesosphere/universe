@@ -1,0 +1,54 @@
+{
+    "properties": {
+        "datadog": {
+            "description": "Datadog specific configuration properties",
+            "properties": {
+                "api_key": {
+                    "description": "Your Datadog API key.",
+                    "type": "string"
+                },
+                "app_id": {
+                    "default": "datadog-agent",
+                    "description": "Marathon Application ID",
+                    "type": "string"
+                },
+                "cpus": {
+                    "default": 0.05,
+                    "description": "CPU shares to allocate to each Marathon instance.",
+                    "minimum": 0.0,
+                    "type": "number"
+                },
+                "instances": {
+                    "default": 1,
+                    "description": "Number of Marathon instances to run.",
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "mem": {
+                    "default": 256.0,
+                    "description": "Memory (MB) to allocate to each Marathon task.",
+                    "minimum": 256.0,
+                    "type": "number"
+                },
+                "statsd_port": {
+                    "default": 8125,
+                    "description": "statsD port",
+                    "type": "integer"
+                },
+                "supervisor_port": {
+                    "default": 9001,
+                    "description": "Agent supervisord port",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "api_key"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "datadog"
+    ],
+    "type": "object"
+}
