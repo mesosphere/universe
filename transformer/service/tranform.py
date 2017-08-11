@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
 from http.server import HTTPServer, BaseHTTPRequestHandler
-from urllib.parse import urlparse, parse_qsl
+from urllib.parse import parse_qsl, urlparse
 from urllib.request import Request, urlopen
+import json
 import re
 import time
+import gen_universe
 
 # TODO move somewhere / read from somewhere
 HOST_NAME = '0.0.0.0'
@@ -14,7 +16,8 @@ header_user_agent = 'User-Agent'
 header_accept = 'Accept'
 param_url = 'url'
 url_path = '/transform'
-
+default_charset = 'utf-8'
+header_content_type = 'Content-Type'
 
 def main():
     run_server()
@@ -57,25 +60,47 @@ class Handler(BaseHTTPRequestHandler):
         accept = s.headers.get(header_accept)
         decoded_url = query.get(param_url)
         try:
-            handle(decoded_url, user_agent, accept)
+            json_response = handle(decoded_url, user_agent, accept)
+            s.send_response(200)
+            content_header = gen_universe.format_universe_repo_content_type(
+                get_repo_version(accept))
+            s.send_header(header_content_type, content_header)
+            s.end_headers()
+            s.wfile.write(json_response.encode())
         except Exception as e:
             s.send_error(400, str(e))
 
 
 def handle(decoded_url, user_agent, accept):
-    max_version = get_max_version(accept)
+    repo_version = get_repo_version(accept)
     dcos_version = get_dcos_version(user_agent)
     print('Url {} \nAgent {} \nAccept {} \nVersion {} \nDCOS {}'.format(
-        decoded_url, user_agent, accept, max_version, dcos_version))
+        decoded_url, user_agent, accept, repo_version, dcos_version))
+
     req = Request(decoded_url)
     req.add_header(header_user_agent, user_agent)
     req.add_header(header_accept, accept)
-    json_data = urlopen(req).read()
-    #print(json_data)
-    pass
+    res = urlopen(req)
+    charset = res.info().get_param('charset') or default_charset
+
+    json_data = json.loads(res.read().decode(charset))
+    packages = json_data.get('packages')
+    processed_packages = gen_universe.filter_and_downgrade_packages_by_version(
+       packages,
+       dcos_version
+    )
+    updated_json_data = json.dumps({'packages': processed_packages})
+    errors = gen_universe.validate_repo_with_schema(
+        json.loads(updated_json_data),
+        repo_version
+    )
+
+    if len(errors) != 0:
+        raise ValueError(ErrorResponse.VALIDATION_ERROR)
+    return updated_json_data
 
 
-def get_max_version(accept_header):
+def get_repo_version(accept_header):
     # TODO May be support versions of two digits ?
     result = re.findall(r'\bversion=v\d', accept_header)
     if result is None or len(result) is 0:
@@ -96,6 +121,8 @@ class ErrorResponse:
     INVALID_HEADERS = 'Headers are invalid'
     INVALID_PARAMETER = 'Request parameters are invalid'
     UNABLE_PARSE = 'Unable to parse headers'
+    VALIDATION_ERROR = 'Repo version and validation error mismatch'
+
 
 if __name__ == '__main__':
     main()
