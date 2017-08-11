@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "3.0",
+  "name": "prometheus-node-exporter-rakuten",
+  "version": "0.0.1",
+  "scm": "https://github.com/prometheus/node_exporter",
+  "description": "Host node exporter for prometheus\n\n\tDocumentation: https://github.com/prometheus/node_exporter/blob/master/README.md",
+  "maintainer": "commity",
+  "tags": ["prometheus", "monitoring", "alert", "node-exporter"],
+  "preInstallNotes": "Preparing to install node-exporter",
+  "postInstallNotes": "node-exporter has been installed.",
+  "postUninstallNotes": "node-exporter was uninstalled successfully.",
+  "minDcosReleaseVersion" : "1.8",
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://github.com/prometheus/node_exporter/blob/master/LICENSE"
+    }
+  ]
+}

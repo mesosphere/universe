@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "service": {
+      "properties": {
+        "name": {
+          "default": "node-exporter",
+          "description": "Service name for the node-exporter instance(s)",
+          "type": "string"
+        },
+        "instances": {
+          "default": 256,
+          "description": "Number of instances to run (currently limited to 1).",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 0.1,
+          "description": "CPU shares to allocate to each mesos-exporter instance.",
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 512,
+          "description": "Memory (MB) to allocate to each mesos-exporter instance.",
+          "minimum": 256,
+          "type": "number"
+        }
+      },
+      "required": ["cpus", "mem", "instances", "name"],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}
