@@ -5,9 +5,12 @@ FROM python:3
 WORKDIR /transformer
 
 # Copy the required contents into the container at /transformer
-ADD ./service/transform.py      /transformer
-ADD ./scripts/gen_universe.py   /transformer
-ADD ./repo/meta/schema          /transformer/repo/meta/schema
+ADD transformer/service/transform.py        /transformer
+ADD scripts/gen_universe.py                 /transformer
+ADD repo/meta/schema                        /transformer/repo/meta/schema
+ADD scripts/requirements/requirements.txt   /transformer/requirements.txt
+
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Run transform.py when the container launches. -u flag makes sure the output is not buffered
 CMD ["python3", "-u", "transform.py"]
