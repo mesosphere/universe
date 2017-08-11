@@ -9,17 +9,8 @@
     "DCOS_COMMONS_UNINSTALL": "true",
     "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
     "MARATHON_SINGLE_INSTANCE_APP": "true",
-    "DCOS_SERVICE_NAME": "{{service.name}}",
-    "DCOS_SERVICE_PORT_INDEX": "0",
-    "DCOS_SERVICE_SCHEME": "http"
+    "DCOS_SERVICE_NAME": "{{service.name}}"
   },
-  {{#service.secret_name}}
-  "secrets": {
-    "serviceCredential": {
-      "source": "{{service.secret_name}}"
-    }
-  },
-  {{/service.secret_name}}
   "env": {
     "HDFS_VERSION": "hadoop-2.8.1",
     "FRAMEWORK_NAME": "{{service.name}}",
@@ -45,6 +36,7 @@
     "TASKCFG_ALL_DATA_NODE_RPC_PORT":"{{hdfs.data_node_rpc_port}}",
     "TASKCFG_ALL_DATA_NODE_HTTP_PORT":"{{hdfs.data_node_http_port}}",
     "TASKCFG_ALL_DATA_NODE_IPC_PORT":"{{hdfs.data_node_ipc_port}}",
+    "TASKCFG_ALL_HDFS_DFS_MIN_REPLICATION" : "{{hdfs.dfs_min_replication}}",
 
     "NAME_PLACEMENT": "{{namenode.placement_constraint}}",
     {{#service.virtual_networks}}
@@ -66,8 +58,7 @@
     "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
     "HADOOP_BUNDLE_URI": "{{resource.assets.uris.hadoop-bundle-uri}}",
     "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
-    "CONFIG_TEMPLATE_PATH": "hdfsnoha-scheduler",
-    "HDFS_DFS_REPLICATION" : "{{hdfs.dfs_replication}}"
+    "CONFIG_TEMPLATE_PATH": "hdfsnoha-scheduler"
   },
   "uris": [
     "{{resource.assets.uris.jre-tar-gz}}",

@@ -139,7 +139,7 @@
             "default": "ROOT"
           },
           "strategy": {
-            "title": "The strategy used to deploy datanodes",
+            "title": "Datanodes deployment strategy",
             "description": "The strategy used to deploy datanodes : parallel (default) or serial",
             "type": "string",
             "default":"parallel"
@@ -158,9 +158,9 @@
         "type": "object",
         "description": "HDFS File System configuration options",
         "properties": {
-          "dfs_replication": {
+          "dfs_min_replication": {
             "type": "integer",
-            "description": "HDFS Replica factor.",
+            "description": "HDFS minimum replication factor.",
             "default": 1
           },
           "name_node_rpc_port": {
@@ -190,7 +190,7 @@
           }
         },
         "required": [
-          "dfs_replication",
+          "dfs_min_replication",
           "name_node_rpc_port",
           "name_node_http_port",
           "data_node_rpc_port",
