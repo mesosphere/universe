@@ -1,0 +1,172 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "cockroachdb"
+        },
+        "user": {
+          "title": "User",
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "root"
+        },
+        "principal": {
+          "title": "Custom principal (optional)",
+          "description": "The principal for the service instance, or empty to use the default.",
+          "type": "string",
+          "default": ""
+        },
+        "secret_name": {
+          "title": "Credential secret name (optional)",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "version": {
+          "title": "CockroachDB version",
+          "description": "Production release version of CockroachDB",
+          "type": "string",
+          "default": "1.0.2"
+        },
+        "http_port": {
+          "title": "CockroachDB HTTP Port",
+          "description": "Port for CockroachDB admin UI",
+          "type": "number",
+          "default": 80
+        },
+        "pg_port": {
+          "title": "CockroachDB PG Port",
+          "description": "Port for CockroachDB client communication",
+          "type": "number",
+          "default": 26257
+        },
+        "container_http_port": {
+          "title": "Container HTTP Port",
+          "description": "Container port for CockroachDB admin UI. This port MUST be available on the host machine.",
+          "type": "number",
+          "default": 8123
+        },
+        "container_pg_port": {
+          "title": "Container PG Port",
+          "description": "Container port for CockroachDB client communication. This port MUST be available on the host machine.",
+          "type": "number",
+          "default": 26257
+        },
+        "virtual_network": {
+          "description": "Enable DC/OS Virtual Network",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "name",
+        "user"
+      ]
+    },
+    "node": {
+      "description": "Template pod configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of Template pods to run",
+          "type": "integer",
+          "default": 3
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": "hostname:UNIQUE"
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Template pod CPU requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Template pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 3000
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "Template pod persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 5000
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "disk_type"
+      ]
+    },
+    "side": {
+      "description": "Template pod configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of Template pods to run",
+          "type": "integer",
+          "default": 1
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Template pod CPU requirements",
+          "type": "number",
+          "default": 1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Template pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 1000
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "Template pod persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 5000
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "disk_type"
+      ]
+    }
+  }
+}
