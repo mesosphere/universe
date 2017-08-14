@@ -1,4 +1,4 @@
-# Getting Started
+# Get Started Creating a DC/OS Package
 This tutorials provides a walkthrough of creating a Universe package. The audience is developers who want to modify or *publish* packages to the Universe. This tutorial will familiarize you with package concepts and the roles of Marathon and Universe in the package life cycle. It does not go into great depth on some of the conceptual or inner details. This guide aims at making a user familiar with the concepts of what a Package is and what are the roles of Marathon and Universe in the package life cycle.
 
 #### Table of Contents
@@ -22,12 +22,16 @@ This tutorials provides a walkthrough of creating a Universe package. The audien
 		- [resource.json](#resourcejson)
 		- [package.json](#packagejson)
 		- [marathon.json.mustache](#marathonjsonmustache)
+	- [Step 3.1 : DC/OS Integration](#step-31--dcos-integration)
+		- [Service Endpoints](#service-endpoints)
+		- [Health Checks](#health-checks)
 	- [Step 4 : Testing the package](#step-4--testing-the-package)
 		- [Validation using build script.](#validation-using-build-script)
-		- [Build the local Universe server](#build-the-local-universe-server)
+		- [Build the Universe server](#build-the-universe-server)
 		- [Run the local Universe server](#run-the-local-universe-server)
 		- [Add the Universe repo to DC/OS cluster:](#add-the-universe-repo-to-dcos-cluster)
 		- [Install the package](#install-the-package)
+		- [Test the package](#test-the-package)
 	- [Step 5 : Publish the package](#step-5--publish-the-package)
 
 ## Required Terminology
@@ -133,7 +137,7 @@ _Note: Giving a Docker image is optional and you can have other ways to execute 
 
 Create a Docker file (named `Dockerfile`) in the `time-server-service` directory created earlier. The `Dockerfile` should look like this:
 
-```
+```bash
 # Use an official Python runtime as a base image
 FROM python:3
 
@@ -173,11 +177,13 @@ docker-user-name/time-server      part1       42somsoc147
 
 
 #### Test your container
-When you execute `docker images`, you should be able to see the your image in the displayed list. To make sure the image is working as expected, you can run the container by executing the below command :
+When you execute `docker images`, you should be able to see the your image in the displayed list. To make sure the image is working as expected, you can run the container by executing the command below :
 
-`docker run -env PORT0=8000 -p 80:8000 -t docker-user-name/time-server:part1`
+`docker run --env PORT0=8000 -p 80:8000 -t docker-user-name/time-server:part1`
 
-Note that you are reading the port number from the `PORT0` environment variable. Marathon sets this environment variable when launching the container and since you don't have that yet, you need to provide the environment variable manually using `-env PORT0=8000`. The `-p` option maps the host port 80 to the container port 8000. The  `-t` flag creates a pseudoTTY and since you unbuffered the Python standard I/O in your Dockerfile, you will be able to see the real time logs of the server in the console. Once you executed the above command, you should be able to browse [localhost](http://localhost:80).
+**Note**: You must set the value of `PORT0` explicitly because Marathon sets this value when it launches the container, which has not happened yet.
+
+The `-p` option maps the host port 80 to the container port 8000. The  `-t` flag creates a pseudoTTY and since you unbuffered the Python standard I/O in your `Dockerfile`, you will be able to see the real time logs of the server in the console. Once you have executed the above command, you should be able to browse [localhost](http://localhost:80). You can test the url with `curl localhost:8000` and your server should return the current time.
 
 
 #### Tag and publish your container
@@ -215,7 +221,7 @@ In this guide, since this is the first version of the time-server, you will crea
 #### config.json
 As the name says, this file specifies how your package can be configured. This is how your `config.json` should look:
 
-```
+```json
 {
   "$schema": "http://json-schema.org/schema#",
   "properties": {
@@ -255,7 +261,7 @@ This file contains all of the externally hosted resources (e.g. Docker images, H
 
 Below is the resource file that you use for the `time-server` package. You can provide the earlier published `docker-user-name/time-server:part1` image under the `docker` JSON field here. Note that giving a Docker image is optional and you can have other ways to execute the binary. As mentioned earlier, The package `cassandra` doesn't use a Docker image to install the binary; instead, it tells Marathon to run a shell command. It has all the dependencies it needs because they are specified as URIs in `resource.json`
 
-```
+```json
 {
   "assets": {
     "container": {
@@ -275,7 +281,7 @@ Every package in Universe must have a `package.json` file which specifies the hi
 
 Below is a snippet that represents your time server `package.json` (a version `4.0` package). This JSON has only the mandatory fields configured. As this is your initial version, you can fill the version field to be `0.1.0`
 
-```
+```json
 {
   "packagingVersion": "4.0",
   "name": "time-server",
@@ -323,11 +329,109 @@ The service `name`, `cpus` and `mem` are populated from the default values in th
 
 If you need further examples, you can refer to the [repo/packages/H/hello-world](/repo/packages/H/hello-world) package.
 
+### Step 3.1 : DC/OS Integration
+
+By default, a DC/OS service is deployed on a [private agent node](https://dcos.io/docs/1.9/overview/concepts/#private-agent-node). To allow a user to control configuration or monitor a service, use the admin router as a reverse proxy. Admin router can proxy calls on the master node to a service on a private node.
+
+The Admin Router currently supports only one reverse proxy destination. This step is optional. If you don't want to expose your service endpoint, you can skip to the next step.
+
+#### Service Endpoints
+
+The Admin Router allows Marathon tasks to define custom service UI and HTTP endpoints, which are made available as `/service/<service-name>`. Set the following Marathon task labels to enable this:
+
+```json
+"labels": {
+    "DCOS_SERVICE_NAME": "<service-name>",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  }
+```
+
+To enable the forwarding to work reliably across task failures, we recommend co-locating the endpoints with the task. This way, if the task is restarted on another host and with different ports, Admin Router will pick up the new labels and update the routing. **Note**: Due to caching, there can be an up to 30-second delay before the new routing is working.
+
+We recommend having only a single task setting these labels for a given service name. If multiple task instances have the same service name label, Admin Router will pick one of the task instances deterministically, but this might make debugging issues more difficult.
+
+Since the paths to resources for clients connecting to Admin Router will differ from those paths the service actually has, ensure the service is configured to run behind a proxy. This often means relative paths are preferred to absolute paths. In particular, resources expected to be used by a UI should be verified to work through a proxy.
+
+Tasks running in nested [Marathon app groups](https://mesosphere.github.io/marathon/docs/application-groups.html) will be available only using their service name (i.e., `/service/<service-name>`), not by the Marathon app group name (i.e., `/service/app-group/<service-name>`).
+
+
+#### Health Checks
+
+Service health check information can be surfaced in the DC/OS services UI tab by defining one or more `healthChecks` in the Service’s Marathon template. For example:
+
+```
+"healthChecks": [
+   {
+       "path": "/",
+       "portIndex": 0,
+       "protocol": "HTTP",
+       "gracePeriodSeconds": 5,
+       "intervalSeconds": 60,
+       "timeoutSeconds": 10,
+       "maxConsecutiveFailures": 3
+   }
+]
+```
+
+See the [health checks documentation](https://mesosphere.github.io/marathon/docs/health-checks.html) for more information.
+
+In this guide, the `time-server` is not a Mesos framework. If your service is a framework and you want the tasks to show up in the UI, then you need to set the label `DCOS_PACKAGE_FRAMEWORK_NAME` to the name of the framework.
+
+```json
+"labels": {
+  "DCOS_PACKAGE_FRAMEWORK_NAME": "time-server"
+}
+ ```
+
+ In order to expose the `time-server` service as an endpoint and add health checks to it, add the above-mentioned labels. Your new `marathon.json.mustache` should look like this :
+
+ ```
+ {
+   "id": "{{service.name}}",
+   "cpus": {{service.cpus}},
+   "mem": {{service.mem}},
+   "instances": 1,
+   "container": {
+     "type": "DOCKER",
+     "docker": {
+       "image": "{{resource.assets.container.docker.timeserverimage}}",
+       "network": "HOST"
+     }
+   },
+   "portDefinitions": [
+     {
+       "port": 0,
+       "protocol": "tcp"
+     }
+   ],
+   "labels": {
+     "DCOS_SERVICE_NAME": "{{service.name}}",
+     "DCOS_SERVICE_PORT_INDEX": "0",
+     "DCOS_SERVICE_SCHEME": "http"
+   },
+   "healthChecks": [
+     {
+       "path": "/",
+       "portIndex": 0,
+       "protocol": "HTTP",
+       "gracePeriodSeconds": 5,
+       "intervalSeconds": 60,
+       "timeoutSeconds": 10,
+       "maxConsecutiveFailures": 3
+     }
+   ]
+ }
+ ```
+
+
 ### Step 4 : Testing the package
+
 Now that the package is built, you need to make sure everything works as expected before publishing to the community.
 
 
-#### Validation using build script.
+#### Validation using build script
+
 You can execute the script inside the `scripts/build.sh` to make sure all the JSON schema conform to their respective schemas and to install any missing libraries. This script is also executed as a precommit hook.
 
 It may throw some errors if there are any unrecognized fields in the package files. Fix those errors and re-execute the command until the build is successful.
@@ -338,6 +442,7 @@ Universe Server is a new component introduced alongside `packagingVersion` `3.0`
 
 
 #### Build the Universe server
+
 Build the Universe Server Docker image:
 ```bash
 DOCKER_IMAGE="docker-user-name/universe-server" DOCKER_TAG="time-server" docker/server/build.bash
@@ -377,6 +482,16 @@ Now that you have local Universe Server up and running, add it to the cluster's 
     `dcos package list`
 
 - You can browse your endpoint by going to the cluster dashboard and clicking on Services > time-server, you will be able to see a current running task and you can click on any running task to view the endpoint URL.
+
+
+#### Test the package
+
+If you have followed the earlier instructions in configuring a [service endpoint](#service-endpoints), then you can test the url with `curl` command using:
+
+    `curl https://<DC/OS-Cluster>/service/time-server`
+
+or just open up the url in your favorite browser and you should be able to see the current time.
+
 
 Now continue to the next step to publish your package to the DC/OS community.
 

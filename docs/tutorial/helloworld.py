@@ -13,9 +13,9 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
         s.send_response(200)
         s.send_header("Content-type", "text/html")
         s.end_headers()
-        s.wfile.write("<html><head><title>Time Server</title></head>")
-        s.wfile.write("<body><p>The current time is {}</p>".format(time.asctime()))
-        s.wfile.write("</body></html>")
+        s.wfile.write("<html><head><title>Time Server</title></head>".encode())
+        s.wfile.write("<body><p>The current time is {}</p>".format(time.asctime()).encode())
+        s.wfile.write("</body></html>".encode())
 
 if __name__ == '__main__':
     server_class = http.server.HTTPServer
