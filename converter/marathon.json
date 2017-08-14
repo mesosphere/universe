@@ -7,17 +7,21 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "mesosphere/universe-converter:dev",
-      "network": "BRIDGE",
-      "portMappings": [
-        {
-          "containerPort": 7373,
-          "hostPort": 8086,
-          "protocol": "tcp"
-        }
-      ]
+      "image": "mesosphere/universe-converter:dev"
     }
   },
+  "networks" : [
+    {
+      "mode": "HOST"
+    }
+  ],
+  "portDefinitions": [
+    {
+      "name" : "universeconverter",
+      "port" : 8086,
+      "protocol" : "tcp"
+    }
+  ],
   "labels": {
     "DCOS_SERVICE_NAME": "transform",
     "DCOS_SERVICE_PORT_INDEX": "0",
