@@ -1,0 +1,77 @@
+{
+  "id": "{{service.name}}",
+  "cmd": "/usr/bin/cadvisor",
+  "args": null,
+  "user": null,
+  "env": null,
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": {{service.instances}},
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.cadvisor-docker}}",
+      "forcePullImage": false,
+      "privileged": false,      
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 18080,
+          "name": "cadvisor",
+          "protocol": "tcp"
+        }
+      ],
+      "network": "BRIDGE"
+    },
+    "ports": [18080],
+    "requirePorts": true,
+    "volumes": [
+      {
+        "containerPath": "/rootfs",
+        "hostPath": "/",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/var/run",
+        "hostPath": "/var/run",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/sys",
+        "hostPath": "/sys",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/var/lib/docker",
+        "hostPath": "{{service.docker-dir}}",
+        "mode": "RO"
+      }
+    ]
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/",
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "acceptedResourceRoles": [
+    "*",
+    "slave_public"
+  ],
+  "labels": {
+    "DCOS_PACKAGE_VERSION": "0.24.1-0.1",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  }
+}
