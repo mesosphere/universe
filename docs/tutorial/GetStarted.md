@@ -177,11 +177,13 @@ docker-user-name/time-server      part1       42somsoc147
 
 
 #### Test your container
-When you execute `docker images`, you should be able to see the your image in the displayed list. To make sure the image is working as expected, you can run the container by executing the below command :
+When you execute `docker images`, you should be able to see the your image in the displayed list. To make sure the image is working as expected, you can run the container by executing the command below :
 
 `docker run --env PORT0=8000 -p 80:8000 -t docker-user-name/time-server:part1`
 
-Note that you are reading the port number from the `PORT0` environment variable. Marathon sets this environment variable when launching the container and since you don't have that yet, you need to provide the environment variable manually using `--env PORT0=8000`. The `-p` option maps the host port 80 to the container port 8000. The  `-t` flag creates a pseudoTTY and since you unbuffered the Python standard I/O in your Dockerfile, you will be able to see the real time logs of the server in the console. Once you have executed the above command, you should be able to browse [localhost](http://localhost:80). You can test the url with `curl localhost:8000` and your server should return the current time.
+**Note**: You must set the value of `PORT0` explicitly because Marathon sets this value when it launches the container, which has not happened yet.
+
+The `-p` option maps the host port 80 to the container port 8000. The  `-t` flag creates a pseudoTTY and since you unbuffered the Python standard I/O in your `Dockerfile`, you will be able to see the real time logs of the server in the console. Once you have executed the above command, you should be able to browse [localhost](http://localhost:80). You can test the url with `curl localhost:8000` and your server should return the current time.
 
 
 #### Tag and publish your container
@@ -331,7 +333,7 @@ If you need further examples, you can refer to the [repo/packages/H/hello-world]
 
 By default, a DC/OS service is deployed on a [private agent node](https://dcos.io/docs/1.9/overview/concepts/#private-agent-node). To allow configuration control or monitoring of a service by a user, the Admin Router can act as a reverse proxy by proxying calls on the master node to the service in a private node on the cluster.
 
-The Admin Router currently supports only one reverse proxy destination. This step is optional, if you don't want to expose your service endpoint, you can skip to the next step.
+The Admin Router currently supports only one reverse proxy destination. This step is optional. If you don't want to expose your service endpoint, you can skip to the next step.
 
 #### Service Endpoints
 
@@ -345,7 +347,7 @@ The Admin Router allows Marathon tasks to define custom service UI and HTTP endp
   }
 ```
 
-To enable the forwarding to work reliably across task failures, we recommend co-locating the endpoints with the task. This way, if the task is restarted on another host and with different ports, Admin Router will pick up the new labels and update the routing. Note: Due to caching, there can be an up to 30-second delay before the new routing is working.
+To enable the forwarding to work reliably across task failures, we recommend co-locating the endpoints with the task. This way, if the task is restarted on another host and with different ports, Admin Router will pick up the new labels and update the routing. **Note**: Due to caching, there can be an up to 30-second delay before the new routing is working.
 
 We recommend having only a single task setting these labels for a given service name. If multiple task instances have the same service name label, Admin Router will pick one of the task instances deterministically, but this might make debugging issues more difficult.
 
@@ -356,7 +358,7 @@ Tasks running in nested [Marathon app groups](https://mesosphere.github.io/marat
 
 #### Health Checks
 
-Service health check information can be surfaced in the DC/OS services UI tab by defining one or more healthChecks in the Service’s Marathon template. For example:
+Service health check information can be surfaced in the DC/OS services UI tab by defining one or more `healthChecks` in the Service’s Marathon template. For example:
 
 ```
 "healthChecks": [
@@ -372,7 +374,7 @@ Service health check information can be surfaced in the DC/OS services UI tab by
 ]
 ```
 
-You can learn more about `healthChecks` parameter at [Marathon API](https://mesosphere.github.io/marathon/docs/health-checks.html) page.
+See the [health checks documentation](https://mesosphere.github.io/marathon/docs/health-checks.html) for more information.
 
 In this guide, the `time-server` is not a Mesos framework. If your service is a framework and you want the tasks to show up in the UI, then you need to set the label `DCOS_PACKAGE_FRAMEWORK_NAME` to the name of the framework.
 
@@ -382,7 +384,7 @@ In this guide, the `time-server` is not a Mesos framework. If your service is a 
  }
  ```
 
- In order to expose the `time-server` service as an endpoint and add health checks to it, add the above mentioned labels. Your new `marathon.json.mustache` should look like this :
+ In order to expose the `time-server` service as an endpoint and add health checks to it, add the above-mentioned labels. Your new `marathon.json.mustache` should look like this :
 
  ```
  {
