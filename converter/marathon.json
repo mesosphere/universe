@@ -7,7 +7,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "takirala/transformer:v1",
+      "image": "mesosphere/universe-converter:dev",
       "network": "BRIDGE",
       "portMappings": [
         {
