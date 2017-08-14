@@ -331,7 +331,7 @@ If you need further examples, you can refer to the [repo/packages/H/hello-world]
 
 ### Step 3.1 : DC/OS Integration
 
-By default, a DC/OS service is deployed on a [private agent node](https://dcos.io/docs/1.9/overview/concepts/#private-agent-node). To allow configuration control or monitoring of a service by a user, the Admin Router can act as a reverse proxy by proxying calls on the master node to the service in a private node on the cluster.
+By default, a DC/OS service is deployed on a [private agent node](https://dcos.io/docs/1.9/overview/concepts/#private-agent-node). To allow a user to control configuration or monitor a service, use the admin router as a reverse proxy. Admin router can proxy calls on the master node to a service on a private node.
 
 The Admin Router currently supports only one reverse proxy destination. This step is optional. If you don't want to expose your service endpoint, you can skip to the next step.
 
