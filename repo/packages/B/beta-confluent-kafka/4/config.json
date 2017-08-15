@@ -519,13 +519,13 @@
         "inter_broker_protocol_version": {
           "type": "string",
           "title": "inter.broker.protocol.version",
-          "description": "Specify which version of the inter-broker protocol will be used, which must align with log.message.format.version. This is typically bumped after all brokers were upgraded to a new version. Example of some valid values are: 0.8.0, 0.8.1, 0.8.1.1, 0.8.2, 0.8.2.0, 0.8.2.1, 0.9.0.0, 0.9.0.1, 0.10.0.0. Check ApiVersion for the full list.",
+          "description":"Specify which version of the inter-broker protocol will be used, which must align with log.message.format.version. This is typically bumped serially one broker at a time, *after* all brokers were upgraded to a new version. Example of some valid values are: 0.8.0, 0.8.1, 0.8.1.1, 0.8.2, 0.8.2.0, 0.8.2.1, 0.9.0.0, 0.9.0.1, 0.10.0.0, 0.10.1.x, 0.10.2.x, 0.11.0.0. Check ApiVersion for the full list.",
           "default": "0.11.0"
         },
         "log_message_format_version": {
           "type": "string",
           "title": "log.message.format.version",
-          "description": "Specify which version of the log message format will be used, which must align with inter.broker.protocol.version. This is a new setting as of 0.10.0.0, and should be left at 0.9.0 until clients are updated to 0.10.0.x. Clients on earlier versions may see a performance penalty if this is increased before they've upgraded. See the latest Kafka documentation for details.",
+          "description":"Specify which version of the log message format will be used, which must align with inter.broker.protocol.version. This is a new setting as of 0.10.0.0, and should be left at 0.9.0 until clients are updated to 0.10.0.x. Similarly it should be left at 0.10.0 until all clients are updated to 0.11.0. This is typically bumped *serially* one broker at a time, *after* all inter-protocol versions are updated. Clients on earlier versions may see a performance penalty if this is increased before they've upgraded. See the latest Kafka documentation for details.",
           "default": "0.11.0"
         },
         "log_cleaner_backoff_ms": {
