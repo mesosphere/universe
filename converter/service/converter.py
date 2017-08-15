@@ -22,6 +22,7 @@ PORT_NUMBER = int(os.environ['PORT_UNIVERSECONVERTER'])
 
 # Constants
 MAX_TIMEOUT = 60
+MAX_BYTES = 10 * 1024 * 1024
 
 header_user_agent = 'User-Agent'
 header_accept = 'Accept'
@@ -55,22 +56,12 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(s):
         """
         Respond to the GET request. The expected format of this request is:
-                http://<host>:<port>/transform?url=<url> along with `User-Agent`
+                http://<host>:<port>/transform?url=<url> with `User-Agent`
                 and `Accept` headers
         """
-        if not urlparse(s.path).path == url_path:
-            s.send_error(HTTPStatus.BAD_REQUEST, ErrorResponse
-                         .INVALID_PATH.to_msg(s.path))
-            return
-
-        if header_user_agent not in s.headers:
-            s.send_error(HTTPStatus.BAD_REQUEST, ErrorResponse
-                         .HEADER_NOT_PRESENT.to_msg(header_user_agent))
-            return
-
-        if header_accept not in s.headers:
-            s.send_error(HTTPStatus.BAD_REQUEST, ErrorResponse
-                         .HEADER_NOT_PRESENT.to_msg(header_accept))
+        errors = _validate_request(s)
+        if errors:
+            s.send_error(HTTPStatus.BAD_REQUEST, errors)
             return
 
         query = dict(parse_qsl(urlparse(s.path).query))
@@ -118,7 +109,14 @@ def handle(decoded_url, user_agent, accept):
     try:
         res = urlopen(req, timeout=MAX_TIMEOUT)
         charset = res.info().get_param(param_charset) or default_charset
-        packages = json.loads(res.read().decode(charset)).get(json_key_packages)
+        raw_data = res.read()
+        if len(raw_data) > MAX_BYTES:
+            logging.info('%s response exceeded the size limit %d',
+                         decoded_url,
+                         len(raw_data)
+                         )
+            raise ValueError(ErrorResponse.MAX_SIZE.to_msg())
+        packages = json.loads(raw_data.decode(charset)).get(json_key_packages)
     except (HTTPError, URLError) as error:
         logger.info("Request protocol error %s", decoded_url)
         logger.exception(error)
@@ -154,6 +152,24 @@ def render_json(packages, dcos_version, repo_version):
     return updated_json_data
 
 
+def _validate_request(s):
+    """
+
+    :param s: The in built base http request handler
+    :type s: BaseHTTPRequestHandler
+    :return Error message (if any)
+    :rtype String or None
+    """
+    if not urlparse(s.path).path == url_path:
+        return ErrorResponse.INVALID_PATH.to_msg(s.path)
+
+    if header_user_agent not in s.headers:
+        return ErrorResponse.HEADER_NOT_PRESENT.to_msg(header_user_agent)
+
+    if header_accept not in s.headers:
+        return ErrorResponse.HEADER_NOT_PRESENT.to_msg(header_accept)
+
+
 def _get_repo_version(accept_header):
     """Returns the version of the universe repo parsed.
     # TODO Should support versions of two digits - y/n ?
@@ -187,8 +203,9 @@ class ErrorResponse(Enum):
     PARAM_NOT_PRESENT = 'Request parameter {} is missing'
     UNABLE_PARSE = 'Unable to parse header {}'
     VALIDATION_ERROR = 'Validation errors during processing {}'
+    MAX_SIZE = 'Endpoint response exceeds maximum content size'
 
-    def to_msg(self, args):
+    def to_msg(self, args={}):
         return self.value.format(args)
 
 
