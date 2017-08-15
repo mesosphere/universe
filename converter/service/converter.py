@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from enum import Enum
 
 import gen_universe
 import json
@@ -8,6 +9,8 @@ import re
 
 from http import HTTPStatus
 from http.server import HTTPServer, BaseHTTPRequestHandler
+from requests import HTTPError
+from urllib.error import URLError
 from urllib.parse import parse_qsl, urlparse
 from urllib.request import Request, urlopen
 
@@ -15,9 +18,11 @@ from urllib.request import Request, urlopen
 # Binds to all available interfaces
 HOST_NAME = ''
 # Gets the port number from $PORT0 environment variable
-PORT_NUMBER = int(os.environ['PORT0'])
+PORT_NUMBER = int(os.environ['PORT_UNIVERSECONVERTER'])
 
 # Constants
+MAX_TIMEOUT = 60
+
 header_user_agent = 'User-Agent'
 header_accept = 'Accept'
 header_content_type = 'Content-Type'
@@ -54,16 +59,24 @@ class Handler(BaseHTTPRequestHandler):
                 and `Accept` headers
         """
         if not urlparse(s.path).path == url_path:
-            s.send_error(HTTPStatus.BAD_REQUEST, ErrorResponse.INVALID_PATH)
+            s.send_error(HTTPStatus.BAD_REQUEST, ErrorResponse
+                         .INVALID_PATH.to_msg(s.path))
             return
 
-        if not (header_user_agent in s.headers and header_accept in s.headers):
-            s.send_error(HTTPStatus.BAD_REQUEST, ErrorResponse.INVALID_HEADERS)
+        if header_user_agent not in s.headers:
+            s.send_error(HTTPStatus.BAD_REQUEST, ErrorResponse
+                         .HEADER_NOT_PRESENT.to_msg(header_user_agent))
+            return
+
+        if header_accept not in s.headers:
+            s.send_error(HTTPStatus.BAD_REQUEST, ErrorResponse
+                         .HEADER_NOT_PRESENT.to_msg(header_accept))
             return
 
         query = dict(parse_qsl(urlparse(s.path).query))
         if param_url not in query:
-            s.send_error(HTTPStatus.BAD_REQUEST, ErrorResponse.INVALID_PARAM)
+            s.send_error(HTTPStatus.BAD_REQUEST,
+                         ErrorResponse.PARAM_NOT_PRESENT.to_msg(param_url))
             return
 
         user_agent = s.headers.get(header_user_agent)
@@ -93,17 +106,24 @@ def handle(decoded_url, user_agent, accept):
     :return Requested json data
     :rtype str (a valid json object)
     """
+    logger.debug('Url : %s\n\tUser-Agent : %s\n\tAccept : %s',
+                 decoded_url, user_agent, accept)
     repo_version = _get_repo_version(accept)
     dcos_version = _get_dcos_version(user_agent)
-    logger.debug('Url %s\nAgent %s\nAccept %s\nVersion %s\nDC/OS %s',
-                 decoded_url, user_agent, accept, repo_version, dcos_version)
+    logger.debug('Version %s\nDC/OS %s', repo_version, dcos_version)
 
     req = Request(decoded_url)
     req.add_header(header_user_agent, user_agent)
     req.add_header(header_accept, accept)
-    res = urlopen(req)
-    charset = res.info().get_param(param_charset) or default_charset
-    packages = json.loads(res.read().decode(charset)).get(json_key_packages)
+    try:
+        res = urlopen(req, timeout=MAX_TIMEOUT)
+        charset = res.info().get_param(param_charset) or default_charset
+        packages = json.loads(res.read().decode(charset)).get(json_key_packages)
+    except (HTTPError, URLError) as error:
+        logger.info("Request protocol error %s", decoded_url)
+        logger.exception(error)
+        raise error
+
     return render_json(packages, dcos_version, repo_version)
 
 
@@ -130,7 +150,7 @@ def render_json(packages, dcos_version, repo_version):
     )
     if len(errors) != 0:
         logger.error(errors)
-        raise ValueError(ErrorResponse.VALIDATION_ERROR)
+        raise ValueError(ErrorResponse.VALIDATION_ERROR.to_msg(errors))
     return updated_json_data
 
 
@@ -143,7 +163,7 @@ def _get_repo_version(accept_header):
     """
     result = re.findall(r'\bversion=v\d{1,2}', accept_header)
     if result is None or len(result) is 0:
-        raise ValueError(ErrorResponse.UNABLE_PARSE)
+        raise ValueError(ErrorResponse.UNABLE_PARSE.to_msg(accept_header))
     result.sort(reverse=True)
     return str(result[0].split('=')[1])
 
@@ -157,19 +177,23 @@ def _get_dcos_version(user_agent_header):
     """
     result = re.search(r'\bdcos/\b\d\.\d{1,2}', user_agent_header)
     if result is None:
-        raise ValueError(ErrorResponse.UNABLE_PARSE)
+        raise ValueError(ErrorResponse.UNABLE_PARSE.to_msg(user_agent_header))
     return str(result.group().split('/')[1])
 
 
-class ErrorResponse:
-    INVALID_PATH = 'URL Path is invalid'
-    INVALID_HEADERS = 'Headers are invalid'
-    INVALID_PARAM = 'Request parameters are invalid'
-    UNABLE_PARSE = 'Unable to parse headers'
-    VALIDATION_ERROR = 'Repo version and validation error mismatch'
+class ErrorResponse(Enum):
+    INVALID_PATH = 'URL Path {} is invalid. Expected path /transform'
+    HEADER_NOT_PRESENT = 'Header {} is missing'
+    PARAM_NOT_PRESENT = 'Request parameter {} is missing'
+    UNABLE_PARSE = 'Unable to parse header {}'
+    VALIDATION_ERROR = 'Validation errors during processing {}'
+
+    def to_msg(self, args):
+        return self.value.format(args)
 
 
 if __name__ == '__main__':
     logger = logging.getLogger(__name__)
-    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s')
+    logging.basicConfig(level=logging.DEBUG,
+                        format='%(asctime)s [%(levelname)s] %(message)s')
     run_server()
