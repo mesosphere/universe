@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "service": {
+      "properties": {
+        "name": {
+          "default": "mesos-master-exporter",
+          "description": "Service name for the mesos-master-exporter instance(s)",
+          "type": "string"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run (currently limited to 1).",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 0.1,
+          "description": "CPU shares to allocate to each mesos-exporter instance.",
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 512,
+          "description": "Memory (MB) to allocate to each mesos-master-exporter instance.",
+          "minimum": 256,
+          "type": "number"
+        },
+        "role": {
+          "default": "*",
+          "description": "Deploy mesos-master-exporter only on nodes with this role.",
+          "type": "string"
+        },
+        "discovery-interval": {
+          "default": 60,
+          "description": "time interval for discovery in sec.",
+          "minimum": 30,
+          "maximum": 300,
+          "type": "integer"
+        },
+        "exporter-interval": {
+          "default": 15,
+          "description": "time interval for exportering in sec.",
+          "minimum": 10,
+          "maximum": 300,
+          "type": "integer"
+        },
+        "mesos-master": {
+          "default": "http://master.mesos:5050",
+          "description": "url of meoss leading master",
+          "type": "string"
+        }
+      },
+      "required": ["cpus", "mem", "instances", "name", "mesos-master"],
+      "type": "object"
+    },
+    "haproxy": {
+      "properties": {
+        "name": {
+          "default": "mesos-master-exporter",
+          "description": "Service name for haproxy record.",
+          "type": "string"
+        },
+        "domain": {
+          "default": "dev.dessrakuten.com",
+          "description": "Root domain of haproxy record.",
+          "type": "string"
+        }
+      },
+      "required": ["name", "domain"],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

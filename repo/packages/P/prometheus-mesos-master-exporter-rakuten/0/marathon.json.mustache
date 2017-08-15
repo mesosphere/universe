@@ -1,0 +1,46 @@
+{
+  "id": "/{{service.name}}",
+  "instances": {{service.instances}},
+  "cmd": "/bin/mesos-exporter -master {{service.mesos-master}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "maintainer": "qiang.a.wangt@rakuten.com", 
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}",
+      "forcePullImage": true,
+      "network": "BRIDGE",    
+      "portMappings": [ {
+          "containerPort": 9105,
+          "hostPort": 0,
+          "protocol": "tcp"
+      } ]
+    }
+  },
+  "ports": [0],
+  "env": {
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/",
+      "gracePeriodSeconds": 60,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "acceptedResourceRoles": [
+    "{{service.role}}"
+  ],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "{{haproxy.name}}.{{haproxy.domain}}"
+  }
+}

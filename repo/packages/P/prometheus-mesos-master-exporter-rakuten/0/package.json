@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "3.0",
+  "name": "prometheus-mesos-master-exporter-rakuten",
+  "version": "0.0.1",
+  "scm": "https://github.com/mesosphere/mesos_exporter",
+  "description": "Mesos metrics exporter for prometheus\n\n\tDocumentation: https://github.com/mesosphere/mesos_exporter/blob/master/README.md",
+  "maintainer": "commity",
+  "tags": ["prometheus", "monitoring", "alert", "mesos", "mesos-exporter", "master"],
+  "preInstallNotes": "Preparing to install mesos-exporter",
+  "postInstallNotes": "mesos-exporter has been installed.",
+  "postUninstallNotes": "mesos-exporter was uninstalled successfully.",
+  "minDcosReleaseVersion" : "1.8",
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://github.com/mesosphere/mesos_exporter/blob/master/LICENSE"
+    }
+  ]
+}
