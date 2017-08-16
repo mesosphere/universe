@@ -10,6 +10,9 @@
       "image": "mesosphere/universe-converter:dev"
     }
   },
+  "env" : {
+    "MAX_REPO_SIZE" : 20
+  },
   "networks" : [
     {
       "mode": "HOST"

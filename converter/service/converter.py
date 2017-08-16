@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from enum import Enum
 
 import gen_universe
 import json
@@ -7,6 +6,7 @@ import logging
 import os
 import re
 
+from enum import Enum
 from http import HTTPStatus
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from requests import HTTPError
@@ -19,10 +19,11 @@ from urllib.request import Request, urlopen
 HOST_NAME = ''
 # Gets the port number from $PORT0 environment variable
 PORT_NUMBER = int(os.environ['PORT_UNIVERSECONVERTER'])
+MAX_REPO_SIZE = int(os.environ.get('MAX_REPO_SIZE', 20))
 
 # Constants
 MAX_TIMEOUT = 60
-MAX_BYTES = 10 * 1024 * 1024
+MAX_BYTES = MAX_REPO_SIZE * 1024 * 1024
 
 header_user_agent = 'User-Agent'
 header_accept = 'Accept'
@@ -44,12 +45,12 @@ def run_server(server_class=HTTPServer):
     """
     server_address = (HOST_NAME, PORT_NUMBER)
     httpd = server_class(server_address, Handler)
-    logger.warning('Server Starts - %s:%s', HOST_NAME, PORT_NUMBER)
+    logger.warning('Server Starts on port - %s', PORT_NUMBER)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         httpd.server_close()
-        logger.warning('Server Stops - %s:%s', HOST_NAME, PORT_NUMBER)
+        logger.warning('Server Stops on port - %s', PORT_NUMBER)
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -113,8 +114,7 @@ def handle(decoded_url, user_agent, accept):
         if len(raw_data) > MAX_BYTES:
             logging.info('%s response exceeded the size limit %d',
                          decoded_url,
-                         len(raw_data)
-                         )
+                         len(raw_data))
             raise ValueError(ErrorResponse.MAX_SIZE.to_msg())
         packages = json.loads(raw_data.decode(charset)).get(json_key_packages)
     except (HTTPError, URLError) as error:
