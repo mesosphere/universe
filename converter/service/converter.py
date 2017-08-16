@@ -9,8 +9,7 @@ import re
 from enum import Enum
 from http import HTTPStatus
 from http.server import HTTPServer, BaseHTTPRequestHandler
-from requests import HTTPError
-from urllib.error import URLError
+from urllib.error import URLError, HTTPError
 from urllib.parse import parse_qsl, urlparse
 from urllib.request import Request, urlopen
 
@@ -19,7 +18,7 @@ from urllib.request import Request, urlopen
 HOST_NAME = ''
 # Gets the port number from $PORT0 environment variable
 PORT_NUMBER = int(os.environ['PORT_UNIVERSECONVERTER'])
-MAX_REPO_SIZE = int(os.environ.get('MAX_REPO_SIZE', 20))
+MAX_REPO_SIZE = int(os.environ.get('MAX_REPO_SIZE', '20'))
 
 # Constants
 MAX_TIMEOUT = 60
