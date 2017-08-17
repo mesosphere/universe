@@ -109,7 +109,7 @@ def handle(decoded_url, user_agent, accept):
     try:
         res = urlopen(req, timeout=MAX_TIMEOUT)
         charset = res.info().get_param(param_charset) or default_charset
-        raw_data = res.read()
+        raw_data = res.read(MAX_BYTES+1)
         if len(raw_data) > MAX_BYTES:
             logging.info('%s response exceeded the size limit %d',
                          decoded_url,
