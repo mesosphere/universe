@@ -1,0 +1,18 @@
+{
+  "description": "CockroachDB is a distributed relational database that is scalable, survivable, and strongly consistent. Service Guide is available at: https://github.com/dcos/examples/tree/master/cockroachdb/1.9. The source code for CockroachDB Enterprise is packaged in the same binary as CockroachDB Core.\n\n\tCustomers interested in the CockroachDB Enterprise license should contact https://www.cockroachlabs.com/pricing/sales/",
+  "framework": true,
+  "maintainer": "support@cockroachlabs.com",
+  "minDcosReleaseVersion": "1.9",
+  "name": "cockroachdb",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "CockroachDB is being installed!\n\n\tDocumentation: https://www.cockroachlabs.com/docs\n\tIssues: contact https://www.cockroachlabs.com/docs/support-resources.html\n\tRelease Notes:https://www.cockroachlabs.com/docs/v1.0.2.html",
+  "postUninstallNotes": "CockroachDB has been uninstalled.",
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Preview packages should never be used in production! For a replicated cluster, please use at least 3 nodes to ensure availability with 1 CPU and 2 GB of RAM per node.",
+  "selected": false,
+  "tags": [
+    "cockroachdb",
+    "sql",
+    "database"
+  ],
+  "version": "1.0.0-1.0.2"
+}
