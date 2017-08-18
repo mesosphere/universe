@@ -1,0 +1,20 @@
+{
+    "packagingVersion": "2.0",
+    "name": "zeppelin",
+    "version": "0.5.6-2",
+    "scm": "https://github.com/apache/incubator-zeppelin",
+    "maintainer": "https://dcos.io/community/",
+    "description": "Zeppelin is a web-based notebook that enables interactive data analytics",
+    "framework": true,
+    "tags": [
+        "nflabs",
+        "framework",
+        "bigdata",
+        "spark",
+        "notebook",
+        "interactive"
+    ],
+    "website": "https://github.com/mesosphere/dcos-zeppelin",
+    "preInstallNotes": "This DC/OS Service is currently in preview.",
+    "postInstallNotes": "DC/OS Zeppelin is being installed!\n\n\tDocumentation: https://github.com/dcos/examples/tree/master/1.8/zeppelin/\n\tIssues: https://dcos.io/community/"
+}
