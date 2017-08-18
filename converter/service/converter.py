@@ -18,7 +18,7 @@ from urllib.request import Request, urlopen
 HOST_NAME = ''
 # Gets the port number from $PORT0 environment variable
 PORT_NUMBER = int(os.environ['PORT_UNIVERSECONVERTER'])
-MAX_REPO_SIZE = int(os.environ.get('MAX_REPO_SIZE', '20'))
+MAX_REPO_SIZE = int(os.environ.get('MAX_REPO_SIZE', '1'))
 
 # Constants
 MAX_TIMEOUT = 60
@@ -27,6 +27,7 @@ MAX_BYTES = MAX_REPO_SIZE * 1024 * 1024
 header_user_agent = 'User-Agent'
 header_accept = 'Accept'
 header_content_type = 'Content-Type'
+header_content_length = 'Content-Length'
 param_charset = 'charset'
 default_charset = 'utf-8'
 
@@ -61,14 +62,16 @@ class Handler(BaseHTTPRequestHandler):
         """
         errors = _validate_request(s)
         if errors:
-            s.send_error(HTTPStatus.BAD_REQUEST, errors)
+            s.send_error(HTTPStatus.BAD_REQUEST, explain=errors)
             return
 
         query = dict(parse_qsl(urlparse(s.path).query))
         if param_url not in query:
             s.send_error(HTTPStatus.BAD_REQUEST,
-                         ErrorResponse.PARAM_NOT_PRESENT.to_msg(param_url))
+                         explain=ErrorResponse.PARAM_NOT_PRESENT.to_msg(param_url))
             return
+
+        logging.debug(">>>>>>>>>")
 
         user_agent = s.headers.get(header_user_agent)
         accept = s.headers.get(header_accept)
@@ -76,18 +79,21 @@ class Handler(BaseHTTPRequestHandler):
 
         try:
             json_response = handle(decoded_url, user_agent, accept)
-            s.send_response(HTTPStatus.OK)
-            content_header = gen_universe.format_universe_repo_content_type(
-                _get_repo_version(accept))
-            s.send_header(header_content_type, content_header)
-            s.end_headers()
-            s.wfile.write(json_response.encode())
         except Exception as e:
-            s.send_error(HTTPStatus.BAD_REQUEST, str(e))
+            s.send_error(HTTPStatus.BAD_REQUEST, explain=str(e))
+            return
+
+        s.send_response(HTTPStatus.OK)
+        content_header = gen_universe.format_universe_repo_content_type(
+            _get_repo_version(accept))
+        s.send_header(header_content_type, content_header)
+        s.send_header(header_content_length, len(json_response))
+        s.end_headers()
+        s.wfile.write(json_response.encode())
 
 
 def handle(decoded_url, user_agent, accept):
-    """Results in either an error or the requested json data
+    """Returns the requested json data. May raise an error instead, if it fails.
 
     :param decoded_url: The url to be fetched from
     :type decoded_url: str
@@ -109,12 +115,14 @@ def handle(decoded_url, user_agent, accept):
     try:
         res = urlopen(req, timeout=MAX_TIMEOUT)
         charset = res.info().get_param(param_charset) or default_charset
-        raw_data = res.read(MAX_BYTES+1)
-        if len(raw_data) > MAX_BYTES:
-            logging.info('%s response exceeded the size limit %d',
-                         decoded_url,
-                         len(raw_data))
+
+        if header_content_length not in res.headers:
+            raise ValueError(ErrorResponse.ENDPOINT_HEADER_MISS.to_msg())
+
+        if int(res.headers.get(header_content_length)) > MAX_BYTES:
             raise ValueError(ErrorResponse.MAX_SIZE.to_msg())
+
+        raw_data = res.read(MAX_BYTES)
         packages = json.loads(raw_data.decode(charset)).get(json_key_packages)
     except (HTTPError, URLError) as error:
         logger.info("Request protocol error %s", decoded_url)
@@ -140,15 +148,15 @@ def render_json(packages, dcos_version, repo_version):
         packages,
         dcos_version
     )
-    updated_json_data = json.dumps({json_key_packages: processed_packages})
+    packages_dict = {json_key_packages: processed_packages}
     errors = gen_universe.validate_repo_with_schema(
-        json.loads(updated_json_data),
+        packages_dict,
         repo_version
     )
     if len(errors) != 0:
         logger.error(errors)
         raise ValueError(ErrorResponse.VALIDATION_ERROR.to_msg(errors))
-    return updated_json_data
+    return json.dumps(packages_dict)
 
 
 def _validate_request(s):
@@ -171,12 +179,12 @@ def _validate_request(s):
 
 def _get_repo_version(accept_header):
     """Returns the version of the universe repo parsed.
-    # TODO Should support versions of two digits - y/n ?
+
     :param accept_header: String
-    :return repo version as str or Error
-    :rtype str
+    :return repo version as a string or raises Error
+    :rtype str or raises an Error
     """
-    result = re.findall(r'\bversion=v\d{1,2}', accept_header)
+    result = re.findall(r'\bversion=v\d', accept_header)
     if result is None or len(result) is 0:
         raise ValueError(ErrorResponse.UNABLE_PARSE.to_msg(accept_header))
     result.sort(reverse=True)
@@ -187,8 +195,8 @@ def _get_dcos_version(user_agent_header):
     """Parses the version of dcos from the specified header.
 
     :param user_agent_header: String
-    :return dcos version as str or Error
-    :rtype str
+    :return dcos version as a string or raises an Error
+    :rtype str or raises an Error
     """
     result = re.search(r'\bdcos/\b\d\.\d{1,2}', user_agent_header)
     if result is None:
@@ -203,8 +211,9 @@ class ErrorResponse(Enum):
     UNABLE_PARSE = 'Unable to parse header {}'
     VALIDATION_ERROR = 'Validation errors during processing {}'
     MAX_SIZE = 'Endpoint response exceeds maximum content size'
+    ENDPOINT_HEADER_MISS = 'Endpoint doesn\'t return Content-Length header'
 
-    def to_msg(self, args={}):
+    def to_msg(self, *args):
         return self.value.format(args)
 
 
