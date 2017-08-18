@@ -6,6 +6,7 @@ import os
 import re
 import sys
 from distutils.version import LooseVersion
+from urllib.parse import urlparse
 
 SCRIPTS_DIR = os.path.dirname(os.path.realpath(__file__))
 UNIVERSE_DIR = os.path.join(SCRIPTS_DIR, "..")
@@ -50,12 +51,13 @@ def main():
 
 def _validate_package(given_package, path):
     eprint("Validating {}...".format(given_package))
-    for rev in os.listdir(path):
+    revs = sorted(os.listdir(path), key=lambda s: int(s))
+    for rev in revs[0:-1]:
         _validate_revision(given_package, rev, os.path.join(path, rev))
+    _validate_revision(given_package, revs[-1], os.path.join(path, revs[-1]), True)
 
-
-def _validate_revision(given_package, revision, path):
-    eprint("\tValidating revision {}...".format(revision))
+def _validate_revision(given_package, revision, path, latest_revision=False):
+    eprint("\tValidating revision {} {}...".format(revision, '(LATEST)' if latest_revision else ''))
 
     # validate package.json
     package_json_path = os.path.join(path, 'package.json')
@@ -133,7 +135,10 @@ def _validate_revision(given_package, revision, path):
             resource_json = _validate_json(
                 resource_json_path,
                 V3_RESOURCE_JSON_SCHEMA)
-        eprint("\tOK")
+        if (not latest_revision or _validate_resource_assets(resource_json)):
+            eprint("\tOK")
+        else:
+            eprint("")
 
     # Validate that we don't drop information during the conversion
     old_package = LooseVersion(
@@ -144,6 +149,22 @@ def _validate_revision(given_package, revision, path):
                  'only supported when minDcosReleaseVersion is greater than '
                  '1.8.')
 
+def _validate_resource_assets(resource_json):
+    all_good = True
+    for (type, uri) in resource_json.get('assets',{}).get('uris',{}).items():
+
+        # Check for non-https assets
+        if (urlparse(uri).scheme != 'https'):
+            all_good = False
+            eprint("\n\t\t\tWARNING non-https link: {}".format(uri), end='')
+
+        # check for links on downloads downloads.mesosphere.com that do not point
+        # to a dedicated sub dir.
+        if (urlparse(uri).hostname == 'downloads.mesosphere.com' and not urlparse(uri).path.startswith('/universe/assets/') ):
+            all_good = False
+            eprint("\n\t\t\tWARNING downloads.mesosphere.com asset in stray directory: {}".format(uri), end='')
+
+    return all_good
 
 def _validate_package_with_directory(given_package, actual_package_name):
     if not PACKAGE_FOLDER_PATTERN.match(given_package):
