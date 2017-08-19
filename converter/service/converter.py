@@ -18,7 +18,7 @@ from urllib.request import Request, urlopen
 HOST_NAME = ''
 # Gets the port number from $PORT0 environment variable
 PORT_NUMBER = int(os.environ['PORT_UNIVERSECONVERTER'])
-MAX_REPO_SIZE = int(os.environ.get('MAX_REPO_SIZE', '1'))
+MAX_REPO_SIZE = int(os.environ.get('MAX_REPO_SIZE', '20'))
 
 # Constants
 MAX_TIMEOUT = 60
@@ -113,16 +113,16 @@ def handle(decoded_url, user_agent, accept):
     req.add_header(header_user_agent, user_agent)
     req.add_header(header_accept, accept)
     try:
-        res = urlopen(req, timeout=MAX_TIMEOUT)
-        charset = res.info().get_param(param_charset) or default_charset
+        with urlopen(req, timeout=MAX_TIMEOUT) as res:
+            charset = res.info().get_param(param_charset) or default_charset
 
-        if header_content_length not in res.headers:
-            raise ValueError(ErrorResponse.ENDPOINT_HEADER_MISS.to_msg())
+            if header_content_length not in res.headers:
+                raise ValueError(ErrorResponse.ENDPOINT_HEADER_MISS.to_msg())
 
-        if int(res.headers.get(header_content_length)) > MAX_BYTES:
-            raise ValueError(ErrorResponse.MAX_SIZE.to_msg())
+            if int(res.headers.get(header_content_length)) > MAX_BYTES:
+                raise ValueError(ErrorResponse.MAX_SIZE.to_msg())
 
-        raw_data = res.read(MAX_BYTES)
+            raw_data = res.read()
         packages = json.loads(raw_data.decode(charset)).get(json_key_packages)
     except (HTTPError, URLError) as error:
         logger.info("Request protocol error %s", decoded_url)
