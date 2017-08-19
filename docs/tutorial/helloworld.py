@@ -7,6 +7,7 @@ HOST_NAME = '0.0.0.0' # Host name of the http server
 # Gets the port number from $PORT0 environment variable
 PORT_NUMBER = int(os.environ['PORT0'])
 
+
 class MyHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(s):
         """Respond to a GET request."""

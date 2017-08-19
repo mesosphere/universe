@@ -78,8 +78,8 @@ def render_universe_by_version(outdir, packages, version):
 
     :param outdir: Path to the directory to use to store all universe objects
     :type outdir: str
-    :param package: package dictionary
-    :type package: dict
+    :param packages: package dictionary
+    :type packages: dict
     :param version: DC/OS version
     :type version: str
     :rtype: None
@@ -145,26 +145,39 @@ def render_json_by_version(outdir, packages, version):
 
     :param outdir: Path to the directory to use to store all universe objects
     :type outdir: str
-    :param package: package dictionary
-    :type package: dict
+    :param packages: package dictionary
+    :type packages: dict
     :param version: DC/OS version
     :type version: str
     :return: the path where the universe was stored
     :rtype: str
     """
 
-    packages = [
-        package for package in packages if filter_by_version(package, version)
-    ]
-
-    if LooseVersion(version) < LooseVersion('1.10'):
-        packages = [downgrade_package_to_v3(package) for package in packages]
+    packages = filter_and_downgrade_packages_by_version(packages, version)
 
     json_file_path = outdir / 'repo-up-to-{}.json'.format(version)
     with json_file_path.open('w', encoding='utf-8') as universe_file:
         json.dump({'packages': packages}, universe_file)
 
     return json_file_path
+
+
+def filter_and_downgrade_packages_by_version(packages, version):
+    """Filter packages by `version` and the downgrade if needed
+    :param packages: package dictionary
+    :type packages: dict
+    :param version: DC/OS version
+    :type version: str
+    :return packages filtered (and may be downgraded) on `version`
+    :rtype package dictionary
+    """
+    packages = [
+        package for package in packages if filter_by_version(package, version)
+    ]
+
+    if LooseVersion(version) < LooseVersion('1.10'):
+        packages = [downgrade_package_to_v3(package) for package in packages]
+    return packages
 
 
 def render_zip_universe_by_version(outdir, packages, version):
@@ -373,19 +386,18 @@ def generate_package(
 
 
 def enumerate_dcos_packages(packages_path):
-    """Enumarate all of the package and release version to include
+    """Enumerate all of the package and release version to include
 
     :param packages_path: the path to the root of the packages
-    :type pacakges_path: str
+    :type packages_path: str
     :returns: generator of package name and release version
     :rtype: gen((str, int))
     """
 
     for letter_path in packages_path.iterdir():
-        assert len(letter_path.name) == 1 and letter_path.name.isupper()
-        for package_path in letter_path.iterdir():
-            for release_version in package_path.iterdir():
-                yield (package_path.name, int(release_version.name))
+        for package in letter_path.iterdir():
+            for release_version in package.iterdir():
+                yield (package.name, int(release_version.name))
 
 
 def render_universe_zip(zip_file, packages):
@@ -629,6 +641,17 @@ def downgrade_package_to_v3(package):
         return v4_to_v3_package(package)
 
 
+def validate_repo_with_schema(repo_json_data, repo_version):
+    """Validates a repo and its version against the corresponding schema
+
+    :param repo_json_data: The json of repo
+    :param repo_version: version of the repo (e.g.: v4)
+    :return: list of validation errors ( length == zero => No errors)
+    """
+    validator = jsonschema.Draft4Validator(_load_jsonschema(repo_version))
+    return list(validator.iter_errors(repo_json_data))
+
+
 def _validate_repo(file_path, version):
     """Validates a repo JSON file against the given version.
 
@@ -644,12 +667,10 @@ def _validate_repo(file_path, version):
     else:
         repo_version = 'v3'
 
-    validator = jsonschema.Draft4Validator(_load_jsonschema(repo_version))
-
     with file_path.open(encoding='utf-8') as repo_file:
         repo = json.loads(repo_file.read())
 
-    errors = list(validator.iter_errors(repo))
+    errors = validate_repo_with_schema(repo, repo_version)
     if len(errors) != 0:
         sys.exit(
             'ERROR\n\nRepo {} version {} validation error: {}'.format(
@@ -663,8 +684,8 @@ def _validate_repo(file_path, version):
 def _load_jsonschema(repo_version):
     """Opens and parses the repo schema based on the version provided.
 
-    :param version: repo schema version. E.g. v3 vs v4
-    :type version: str
+    :param repo_version: repo schema version. E.g. v3 vs v4
+    :type repo_version: str
     :return: the schema dictionary
     :rtype: dict
     """

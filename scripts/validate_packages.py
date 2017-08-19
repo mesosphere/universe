@@ -40,7 +40,7 @@ def main():
                 "pattern : {}".format(letter, LETTER_PATTERN.pattern)
             )
         prefix_path = os.path.join(PKG_DIR, letter)
-        # traverse each package dir directory (ie "cassandra")
+        # traverse each package dir directory (e.g., "cassandra")
         for given_package in os.listdir(prefix_path):
             package_path = os.path.join(prefix_path, given_package)
             _validate_package(given_package, package_path)
