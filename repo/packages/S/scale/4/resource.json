@@ -1,0 +1,17 @@
+{
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/ngageoint/scale/gh-pages/demo/images/icon-service-scale-small.png",
+    "icon-medium": "https://raw.githubusercontent.com/ngageoint/scale/gh-pages/demo/images/icon-service-scale-medium.png",
+    "icon-large": "https://raw.githubusercontent.com/ngageoint/scale/gh-pages/demo/images/icon-service-scale-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+         "scale": "geoint/scale:5.1.0",
+         "db": "mdillon/postgis:9.5",
+         "logstash": "geoint/scale-logstash:5.1.0",
+         "rabbitmq": "rabbitmq:3.6-management"
+      }
+    }
+  }
+}
