@@ -1,0 +1,36 @@
+{
+  "id": "{{kinesis-to-kafka-rakuten.name}}",
+  "cpus": {{kinesis-to-kafka-rakuten.cpus}},
+  "mem": {{kinesis-to-kafka-rakuten.mem}},
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.kinesis-to-kafka-rakuten}}",
+      "network": "HOST",
+      "forcePullImage": {{kinesis-to-kafka-rakuten.force-pull-image}}
+    }
+  },
+  "env": {
+    "ARTIFACTS_DOWNLOAD": "{{kinesis-to-kafka-rakuten.amazon-s3-bucket}}/{{kinesis-to-kafka-rakuten.name}}/{{kinesis-to-kafka-rakuten.app-version}}/{{kinesis-to-kafka-rakuten.jar-file}},{{kinesis-to-kafka-rakuten.amazon-s3-bucket}}/{{kinesis-to-kafka-rakuten.name}}/{{kinesis-to-kafka-rakuten.app-version}}/{{kinesis-to-kafka-rakuten.spark-config-file}}"
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 5,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "delaySeconds": 15,
+      "command": {
+        "value": "wget $HOST:4040"
+      },
+      "protocol": "COMMAND"
+    }
+  ],
+  "ports": [{{kinesis-to-kafka-rakuten.port}}],
+  "labels": {
+    "DCOS_SERVICE_NAME":"{{kinesis-to-kafka-rakuten.name}}",
+    "DCOS_SERVICE_SCHEME":"http",
+    "DCOS_SERVICE_PORT_INDEX":"0"
+  }
+}

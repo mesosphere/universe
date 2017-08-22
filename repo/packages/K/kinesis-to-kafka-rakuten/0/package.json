@@ -1,0 +1,11 @@
+{
+  "packagingVersion": "2.0",
+  "name": "kinesis-to-kafka-rakuten",
+  "version": "0.4",
+  "tags": ["kinesis-to-kafka-rakuten", "kinesis-consumer"],
+  "maintainer": "swapnil.kumar@rakuten.com",
+  "description": "DCOS package for deploying kinesis-consumer and publishing the result to kafka topic vikilitics_events.",
+  "scm": "https://github.com/viki-org/kinesis-to-kafka",
+  "preInstallNotes": "This DC/OS Service is currently in preview. Kinesis-to-kafka on DC/OS is in alpha and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
+  "postInstallNotes": "Kinesis-to-kafka service has been installed. Check the DC/OS UI for status."
+}

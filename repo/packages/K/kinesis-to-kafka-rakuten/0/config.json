@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "kinesis-to-kafka-rakuten": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "master": {
+          "default": "master.mesos:2181/dcos-service-kafka",
+          "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard host:port patterns, like localhost:5050 or 10.0.0.5:5050,10.0.0.6:5050, are also acceptable.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of this service instance",
+          "type": "string",
+          "default": "kinesis-to-kafka-rakuten"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to each service instance.",
+          "type": "number",
+          "default": 1,
+          "minimum": 1
+        },
+        "port": {
+          "description": "Port number of spark job.",
+          "type": "number",
+          "default": 4040
+        },
+        "mem": {
+          "description":  "Memory to allocate to each service instance.",
+          "type": "number",
+          "default": 2048,
+          "minimum": 1024
+        },
+        "amazon-s3-bucket":{
+          "default":"s3://r-dess-artifacts/deploy",
+          "description":"Amazon S3 Downloads bucket.",
+          "type":"string"
+        },
+        "app-version": {
+          "description": "Name of this app version",
+          "type": "string",
+          "default": "0.4"
+        },
+        "jar-file":{
+          "default":"kinesis_stream-assembly-0.1.0.jar",
+          "description":"Spark Jar",
+          "type":"string"
+        },
+        "spark-config-file":{
+          "default":"spark_config.yaml",
+          "description":"Spark config file",
+          "type":"string"
+        },
+        "force-pull-image":{
+          "default":true,
+          "description":"Forces docker to re-pull the image.",
+          "type":"boolean"
+        }
+      }
+    }
+  }
+}
