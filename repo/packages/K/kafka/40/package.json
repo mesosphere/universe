@@ -7,7 +7,7 @@
   "packagingVersion": "4.0",
   "postInstallNotes": "DC/OS Apache Kafka Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/current/usage/service-guides/kafka\n\tIssues: https://dcosjira.atlassian.net/projects/KAFKA/issues",
   "postUninstallNotes": "DC/OS Apache Kafka Service is being uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/current/usage/service-guides/kafka/uninstall to remove any persistent state if required.",
-  "preInstallNotes": "This DC/OS Service is currently a beta candidate undergoing testing as part of a formal beta test program.\n\nThere may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nDefault configuration requires 3 agent nodes each with: 1.0 CPU | 2048 MB MEM | 1 5000 MB Disk\n\nContact Mesosphere before deploying this beta candidate service. Product support is available to approved participants in the beta test program.",
+  "preInstallNotes": "Default configuration requires 3 agent nodes each with: 1.0 CPU | 2048 MB MEM | 1 5000 MB Disk",
   "selected": false,
   "tags": [
     "message",
