@@ -7,7 +7,7 @@
   "assets": {
     "container": {
       "docker": {
-        "kinesis-to-kafka-rakuten": "localhost:5000/dess/dev/spark-submit-kinesis:0.4"
+        "kinesis-to-kafka-rakuten": "localhost:5000/dess/dev/spark-mesos-submit:2.1.1"
       }
     }
   }

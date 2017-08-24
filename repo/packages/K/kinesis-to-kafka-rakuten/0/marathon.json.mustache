@@ -11,6 +11,7 @@
       "forcePullImage": {{kinesis-to-kafka-rakuten.force-pull-image}}
     }
   },
+  "cmd": "{{kinesis-to-kafka-rakuten.cmd}}",
   "env": {
     "ARTIFACTS_DOWNLOAD": "{{kinesis-to-kafka-rakuten.amazon-s3-bucket}}/{{kinesis-to-kafka-rakuten.name}}/{{kinesis-to-kafka-rakuten.app-version}}/{{kinesis-to-kafka-rakuten.jar-file}},{{kinesis-to-kafka-rakuten.amazon-s3-bucket}}/{{kinesis-to-kafka-rakuten.name}}/{{kinesis-to-kafka-rakuten.app-version}}/{{kinesis-to-kafka-rakuten.spark-config-file}}"
   },
@@ -22,7 +23,7 @@
       "maxConsecutiveFailures": 3,
       "delaySeconds": 15,
       "command": {
-        "value": "wget $HOST:4040"
+        "value": "wget $HOST:$PORT0"
       },
       "protocol": "COMMAND"
     }

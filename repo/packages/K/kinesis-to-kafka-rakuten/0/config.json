@@ -21,6 +21,11 @@
           "default": 1,
           "minimum": 1
         },
+        "cmd": {
+          "description": "The cmd to run spark application.",
+          "type": "string",
+          "default": "bin/submit-wrapper.sh --class com.rakuten.dess.KinesisToKafka --conf spark.mesos.coarse=true --conf spark.mesos.executor.docker.image=localhost:5000/dess/dev/spark-mesos:2.1.1 --conf spark.mesos.executor.home=/usr/local/spark  --conf spark.ui.port=$PORT0 --conf spark.cores.max=12 kinesis_stream-assembly-0.1.0.jar  spark_config.yaml"
+        },
         "port": {
           "description": "Port number of spark job.",
           "type": "number",
