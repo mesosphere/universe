@@ -1,0 +1,45 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "kafka-jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.30.0/bootstrap.zip",
+      "kafka-tgz": "https://packages.confluent.io/archive/3.3/confluent-3.3.0-2.11.tar.gz",
+      "kafka-scheduler-zip": "https://downloads.mesosphere.com/confluent-kafka/assets/2.0.0-3.3.0e/confluent-kafka-scheduler.zip",
+      "executor-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.30.0/executor.zip",
+      "kafka-statsd-jar": "http://downloads.mesosphere.com/kafka/assets/kafka-statsd-metrics2-0.5.3.jar",
+      "statsd-client-jar": "http://downloads.mesosphere.com/kafka/assets/java-dogstatsd-client-2.3.jar"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-large.png"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"a5133295fbc3020cf777355aa8bd9ec3599958b893af28be07d507d417574bb5" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/confluent-kafka/assets/2.0.0-3.3.0e/dcos-confluent-kafka-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"b73db4878f2fa079d8a046afce0d23c5e4d289b7c330cc2f530617031cb214c1" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/confluent-kafka/assets/2.0.0-3.3.0e/dcos-confluent-kafka-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"71f1342209d4e50c3332ef4b000f0bd112e1e86b2b41a3faa5ef0988ec7c19b5" } ],
+          "kind":"executable",
+          "url":"https://downloads.mesosphere.com/confluent-kafka/assets/2.0.0-3.3.0e/dcos-confluent-kafka.exe"
+        }
+      }
+    }
+  }
+}
