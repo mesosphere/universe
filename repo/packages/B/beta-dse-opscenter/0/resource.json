@@ -1,0 +1,62 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "opscenter": "mesosphere/dse-opscenter:6.1.2"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "opscenter-init-zip": "https://downloads.mesosphere.com/dse-opscenter/assets/1.1.8-6.1.2-beta/opscenter-init.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.30.0/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/dse-opscenter/assets/1.1.8-6.1.2-beta/dse-opscenter-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.30.0/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Small.jpg",
+    "icon-medium": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Medium.jpg",
+    "icon-large": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Big.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "3c75df31cb32eec718875e81efa23cee0817c9e32554c24d91e8a8e7b9db01c3"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/dse-opscenter/assets/1.1.8-6.1.2-beta/dcos-dse-opscenter-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "77b52c1c093babd70366efdd4b23351ee1448639509d7da1bf17c1d9cd2e7c2b"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/dse-opscenter/assets/1.1.8-6.1.2-beta/dcos-dse-opscenter-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "03d3d7b41abf7635895750cd62964865d30019af6874dcd354a3ad9221ed1e7d"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/dse-opscenter/assets/1.1.8-6.1.2-beta/dcos-dse-opscenter.exe"
+        }
+      }
+    }
+  }
+}
