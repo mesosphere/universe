@@ -1,0 +1,35 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.timeserverimage}}",
+      "network": "HOST"
+    }
+  },
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp"
+    }
+  ],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "healthChecks": [
+     {
+         "path": "/",
+         "portIndex": 0,
+         "protocol": "HTTP",
+         "gracePeriodSeconds": 5,
+         "intervalSeconds": 60,
+         "timeoutSeconds": 10,
+         "maxConsecutiveFailures": 3
+     }
+  ]
+}
