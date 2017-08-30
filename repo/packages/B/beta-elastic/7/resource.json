@@ -1,0 +1,61 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "executor-zip": "https://downloads.mesosphere.com/elastic/assets/1.0.16-5.5.1-beta/executor.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/elastic/assets/1.0.16-5.5.1-beta/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/elastic/assets/1.0.16-5.5.1-beta/elastic-scheduler.zip",
+      "statsd-plugin-zip": "https://github.com/mesosphere/elasticsearch-statsd-plugin/releases/download/5.5.1.0/elasticsearch-statsd-5.5.1.0.zip",
+      "elasticsearch-jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "elasticsearch-tar-gz": "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.5.1.tar.gz",
+      "xpack-zip": "https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.5.1.zip",
+      "diagnostics-zip": "https://github.com/elastic/elasticsearch-support-diagnostics/releases/download/5.12/support-diagnostics-5.12-dist.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/elasticsearch-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/elasticsearch-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/elasticsearch-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "5603c5dfd55204b65229de45b1cf27a1f47225c452fd0acec724bfbe53f47442"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/elastic/assets/1.0.16-5.5.1-beta/dcos-elastic-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "afdc8c0ab4bd44110ba4790bb1756d73b76070d357cb943b80f0723ad527ab4e"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/elastic/assets/1.0.16-5.5.1-beta/dcos-elastic-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "4448cf8aa0900c352d5e037ceba403e17f6f83a0bb5316bc98cb74327850e29f"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/elastic/assets/1.0.16-5.5.1-beta/dcos-elastic.exe"
+        }
+      }
+    }
+  }
+}
