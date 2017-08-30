@@ -1,0 +1,16 @@
+{
+  "description": "Apache Cassandra",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.9",
+  "name": "beta-cassandra",
+  "packagingVersion": "4.0",
+  "postInstallNotes": "DC/OS Cassandra is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/latest/usage/service-guides/cassandra\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS cassandra is being uninstalled.",
+  "preInstallNotes": "This DC/OS Service is currently a beta candidate undergoing testing as part of a formal beta test program.\n\nThere may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nDefault configuration requires 3 agent nodes each with: 0.5 CPU | 4096 MB MEM | 1 10240 MB Disk\n\nContact Mesosphere before deploying this beta candidate service. Product support is available to approved participants in the beta test program.",
+  "selected": false,
+  "tags": [
+    "cassandra"
+  ],
+  "version": "1.0.32-3.0.14-beta"
+}
