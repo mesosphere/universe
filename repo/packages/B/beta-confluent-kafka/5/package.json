@@ -22,5 +22,7 @@
         "kafka",
         "confluent"
     ],
-    "version": "1.2.4-3.3.0e-beta"
+    "version": "1.2.4-3.3.0e-beta",
+    "upgradesFrom": ["1.2.3-3.3.0e-beta"],
+    "downgradesTo": ["1.2.3-3.3.0e-beta"]
 }
