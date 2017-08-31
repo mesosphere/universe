@@ -40,19 +40,18 @@
             "minimum": 1,
             "type": "integer"
         },
-        "secret0": {
-            "default": "",
-            "description": "ovpn_username",
+        "ovpn_username": {
+            "default": "admin",
+            "description": "OpenVPN REST interface username",
             "minimum": 1,
             "type": "string"
         },
-         "secret1": {
+        "ovpn_password": {
             "default": "",
-            "description": "ovpn_password",
+            "description": "OpenVPN REST interface password",
             "minimum": 1,
             "type": "string"
-        }
-      }
+        },
     }
   },
   "additionalProperties": false
