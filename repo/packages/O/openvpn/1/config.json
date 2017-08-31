@@ -28,17 +28,29 @@
             "minimum": 1,
             "type": "integer"
         },
+        "admin_port": {
+            "default": 5000,
+            "description": "TCP port to bind to.",
+            "minimum": 1,
+            "type": "integer"
+        },
         "server_port": {
             "default": 1194,
             "description": "UDP port to bind to.",
             "minimum": 1,
             "type": "integer"
         },
-        "admin_port": {
-            "default": 5000,
-            "description": "TCP port to bind to.",
+        "secret0": {
+            "default": "",
+            "description": "ovpn_username",
             "minimum": 1,
-            "type": "integer"
+            "type": "string"
+        },
+         "secret1": {
+            "default": "",
+            "description": "ovpn_password",
+            "minimum": 1,
+            "type": "string"
         }
       }
     }

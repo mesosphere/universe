@@ -2,6 +2,15 @@
   "id": "{{openvpn.framework-name}}",
   "cpus": {{openvpn.cpus}},
   "mem": {{openvpn.mem}},
+  "secrets": [ {
+    "secret0": {
+      "source": "ovpn_username"
+    },
+    "secret1": { 
+      "source": "ovpn_password"
+    }
+  } 
+  ],
   "instances": {{openvpn.instances}},
   "acceptedResourceRoles": ["slave_public"],
   "constraints": [
@@ -15,13 +24,13 @@
       "network": "BRIDGE",
       "privileged": true,
       "portMappings": [
-        { "hostPort": {{openvpn.admin_port}}, "containerPort": 5000, "protocol": "tcp" },
-        { "hostPort": {{openvpn.server_port}}, "containerPort": 1194, "protocol": "udp" }
-
+        { "containerPort": 5000, "protocol": "tcp" },
+        { "containerPort": 1194, "protocol": "udp" }
       ]
     }
   },
-  "healthChecks": {
+  "healthChecks": [
+    {
       "gracePeriodSeconds": 120,
       "intervalSeconds": 30,
       "timeoutSeconds": 5,
@@ -30,10 +39,13 @@
       "portIndex": 0,
       "protocol": "MESOS_HTTPS",
       "ignoreHttp1xx": false
-  },
+    }
+  ],
   "env": {
     "MESOS_CONFIG": "zk://master.mesos:2181/mesos",
-    "FRAMEWORK_NAME": "{{openvpn.framework-name}}"
+    "FRAMEWORK_NAME": "{{openvpn.framework-name}}",
+    "OVPN_USERNAME": "{{openvpn.secret0}}",
+    "OVPN_PASSWORD": "{{openvpn.secret1}}"
   },
   "labels": {
     "DCOS_PACKAGE_FRAMEWORK_NAME": "{{openvpn.framework-name}}"
