@@ -12,5 +12,7 @@
   "tags": [
     "cassandra"
   ],
-  "version": "1.0.32-3.0.14-beta"
+  "version": "1.0.32-3.0.14-beta",
+  "upgradesFrom": ["1.0.31-3.0.13-beta"],
+  "downgradesTo": ["1.0.31-3.0.13-beta"]
 }
