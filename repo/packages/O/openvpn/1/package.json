@@ -6,9 +6,9 @@
   "description": "OpenVPN server and REST admin interface - community package",
   "maintainer": "https://dcos.io/community/",
   "tags": ["vpn", "remote-access"],
-  "preInstallNotes": "This version merges the openvpn and openvpn-admin 0.0.0-0.1 packages, please remove the openvpn-admin package if installed",
-  "postInstallNotes": "OpenVPN DCOS Service has been successfully installed!\nSee https://github.com/dcos-labs/dcos-openvpn on how to create users.",
-  "postUninstallNotes": "OpenVPN DCOS Service has been uninstalled and will no longer run.\nSee https://github.com/dcos-labs/dcos-openvpn on how to remove persisted state.",
+  "preInstallNotes": "This release supercedes and merges both the openvpn and openvpn-admin 0.0.0-0.1 packages.\nPlease remove the openvpn-admin package if installed.\nNew features include basic auth, TLS and Zookeeper znode ACL.\n Please ensure you configure the ovpn_username and ovpn_password environment variables before deployment,\nas these are essential for access control to the REST interface and Zookeeper.\nPlease read the installation notes on https://github.com/dcos-labs/dcos-openvpn on how to create users.",
+  "postInstallNotes": "OpenVPN has been successfully installed.\nPlease review https://github.com/dcos-labs/dcos-openvpn on how to create users.",
+  "postUninstallNotes": "OpenVPN has been uninstalled.\nPlease review https://github.com/dcos-labs/dcos-openvpn on how to remove persisted state.",
   "licenses": [
     {
       "name": "GNU General Public License version 2",
