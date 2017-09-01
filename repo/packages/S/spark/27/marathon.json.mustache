@@ -54,7 +54,12 @@
     "container": {
         "type": "DOCKER",
         "docker": {
+          {{#service.docker-image}}
+            "image": "{{service.docker-image}}",
+          {{/service.docker-image}}
+          {{^service.docker-image}}
             "image": "{{resource.assets.container.docker.spark_docker}}",
+          {{/service.docker-image}}
             "network": "HOST",
 {{#service.user}}
             "parameters": [
