@@ -15,5 +15,7 @@
     "kibana",
     "x-pack"
   ],
-  "version": "1.0.16-5.5.1-beta"
+  "version": "1.0.16-5.5.1-beta",
+  "upgradesFrom": ["1.0.15-5.5.1-beta"],
+  "downgradesTo": ["1.0.15-5.5.1-beta"]
 }
