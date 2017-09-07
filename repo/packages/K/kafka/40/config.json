@@ -40,16 +40,6 @@
           "type": "boolean",
           "default": false
         },
-        "tls": {
-          "description": "Enable TLS support (requires Enterprise DC/OS running in strict security mode).",
-          "type": "boolean",
-          "default": false
-        },
-        "tls_allow_plaintext": {
-          "description": "Keep the plaintext port open when the TLS is enabled. (Allows clients to connect using a non-encrypted connection and takes effect only if the TLS is enabled.)",
-          "type": "boolean",
-          "default": false
-        },
         "virtual_network_name": {
           "description": "The name of the virtual network to join",
           "type": "string",
@@ -142,11 +132,6 @@
         },
         "port": {
           "description": "Port for broker to listen on",
-          "type": "integer",
-          "default": 0
-        },
-        "port_tls": {
-          "description": "Port for broker to listen on for TLS connections, if the TLS is enabled",
           "type": "integer",
           "default": 0
         },
