@@ -3,7 +3,7 @@
   "framework": true,
   "maintainer": "support@portworx.com",
   "minDcosReleaseVersion": "1.8",
-  "name": "cassandra-portworx",
+  "name": "portworx-cassandra",
   "packagingVersion": "3.0",
   "postInstallNotes": "DC/OS Cassandra is being installed!\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/cassandra.html",
   "postUninstallNotes": "DC/OS cassandra is being uninstalled.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required.",

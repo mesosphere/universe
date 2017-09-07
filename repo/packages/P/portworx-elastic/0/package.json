@@ -3,7 +3,7 @@
   "framework": true,
   "maintainer": "support@portworx.com",
   "minDcosReleaseVersion": "1.9",
-  "name": "elastic-portworx",
+  "name": "portworx-elastic",
   "packagingVersion": "3.0",
   "postInstallNotes": "DC/OS elastic service is being installed!\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/elasticsearch.html",
   "postUninstallNotes": "DC/OS elastic service is being uninstalled\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required.",
