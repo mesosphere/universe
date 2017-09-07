@@ -1,0 +1,20 @@
+{
+  "description": "Apache Kafka",
+  "framework": true,
+  "maintainer": "support@portworx.com",
+  "minDcosReleaseVersion": "1.8",
+  "name": "kafka-portworx",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS Apache Kafka Service is being installed.\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/kafka.html",
+  "postUninstallNotes": "DC/OS Apache Kafka Service is being uninstalled.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required.",
+  "preInstallNotes": "Community packages are unverified and unreviewed content from the community.\n\nDefault configuration requires 3 agent nodes each with: 1.0 CPU | 2048 MB MEM\n\nContact Mesosphere before deploying this beta candidate service. Product support is available to approved participants in the beta test program.",
+  "selected": false,
+  "tags": [
+    "message",
+    "broker",
+    "kafka",
+    "pubsub",
+    "portworx"
+  ],
+  "version": "1.0-0.10.2.1-c2ddff7"
+}
