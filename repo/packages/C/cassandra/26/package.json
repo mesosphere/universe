@@ -1,0 +1,16 @@
+{
+  "description": "Apache Cassandra",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.9",
+  "name": "cassandra",
+  "packagingVersion": "4.0",
+  "postInstallNotes": "DC/OS Cassandra is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/latest/usage/service-guides/cassandra\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS cassandra is being uninstalled.",
+  "preInstallNotes": "Default configuration requires 3 agent nodes each with: 0.5 CPU | 4096 MB MEM | 1 10240 MB Disk",
+  "selected": false,
+  "tags": [
+    "cassandra"
+  ],
+  "version": "2.0.0-3.0.14"
+}
