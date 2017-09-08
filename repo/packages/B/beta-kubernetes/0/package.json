@@ -1,0 +1,22 @@
+{
+    "packagingVersion": "4.0",
+    "minDcosReleaseVersion": "1.10",
+    "upgradesFrom": [
+        "*"
+    ],
+    "downgradesTo": [
+        "*"
+    ],
+    "name": "beta-kubernetes",
+    "version": "0.1.0-1.7.5-beta",
+    "maintainer": "support@mesosphere.com",
+    "description": "Manage multi-tenant, secure and highly-available Kubernetes clusters on top of DC/OS",
+    "selected": false,
+    "framework": true,
+    "tags": [
+        "kubernetes"
+    ],
+    "preInstallNotes": "This DC/OS Service is currently in preview and should not be used in production.",
+    "postInstallNotes": "DC/OS Kubernetes is being installed!\n\n\tDocumentation: http://github.com/mesosphere/dcos-kubernetes\n\tIssues: http://github.com/mesosphere/dcos-kubernetes/issues",
+    "postUninstallNotes": "DC/OS Kubernetes has been uninstalled."
+}
