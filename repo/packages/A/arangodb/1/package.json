@@ -6,15 +6,19 @@
   "maintainer": "info@arangodb.com",
   "description": "A distributed free and open-source database with a flexible data model for documents, graphs, and key-values. Build high performance applications using a convenient SQL-like query language or JavaScript extensions.",
   "framework": true,
-  "tags": [ "arangodb", "NoSQL", "database" ],
+  "tags": [
+    "arangodb",
+    "NoSQL",
+    "database"
+  ],
   "preInstallNotes": "Note that the ArangoDB DCOS Service is beta and there may be bugs, incomplete features, incorrect documentation or other discrepancies.\nThe default configuration requires 4 nodes each with 1.0 CPU shares, 1GB of memory and 1GB of disk. You need at least Version 1.3 of DCOS, because we need at least Apache Mesos Version 0.23 with the support for persistent volumes.",
   "postInstallNotes": "The ArangoDB DCOS Service has been successfully installed!\n\n\tDocumentation: https://github.com/arangodb/arangodb-dcos\n\tIssues: https://github.com/arangodb/arangodb-dcos/issues",
   "postUninstallNotes": "The ArangoDB DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at https://github.com/arangodb/arangodb-dcos to clean up any persisted state.",
-    "licenses": [
+  "licenses": [
     {
       "name": "Apache License Version 2.0",
       "url": "https://raw.githubusercontent.com/arangodb/arangodb-dcos/master/LICENSE"
     }
   ],
-  "selected": true
+  "selected": false
 }
