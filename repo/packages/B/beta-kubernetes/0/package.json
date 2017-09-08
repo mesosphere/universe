@@ -1,0 +1,22 @@
+{
+    "packagingVersion": "4.0",
+    "minDcosReleaseVersion": "1.10",
+    "upgradesFrom": [
+        "*"
+    ],
+    "downgradesTo": [
+        "*"
+    ],
+    "name": "beta-kubernetes",
+    "version": "0.1.0-1.7.5-beta",
+    "maintainer": "support@mesosphere.com",
+    "description": "Highly Available Kubernetes",
+    "selected": false,
+    "framework": true,
+    "tags": [
+        "kubernetes"
+    ],
+    "preInstallNotes": "Kubernetes on DC/OS is currently in Beta and should not be used in production.\n\nDefault configuration requires 3 agent nodes each with: 6 CPU | 5654 MB MEM | 615 MB Disk\n\nPlease visit our quickstart repository (https://github.com/mesosphere/dcos-kubernetes-quickstart) for example deployments.",
+    "postInstallNotes": "DC/OS Kubernetes is being installed!\n\n\tDocumentation: https://github.com/mesosphere/dcos-kubernetes-quickstart\n\tIssues: https://jira.mesosphere.com",
+    "postUninstallNotes": "DC/OS Kubernetes has been uninstalled."
+}

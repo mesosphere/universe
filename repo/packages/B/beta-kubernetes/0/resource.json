@@ -1,0 +1,55 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u144-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "scheduler-zip": "https://downloads.mesosphere.com/kubernetes/assets/0.1.0-1.7.5-beta/kubernetes-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.30.0/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/kubernetes/assets/k8s-small-48x48.png",
+    "icon-medium": "https://downloads.mesosphere.com/kubernetes/assets/k8s-medium-96x96.png",
+    "icon-large": "https://downloads.mesosphere.com/kubernetes/assets/k8s-large-256x256.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "3dbe3c52f2c50087a42ead9df86d912f2b7e0918a65e474b5ebb6df1977581d3"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/0.1.0-1.7.5-beta/dcos-kubernetes-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "d584606f3e5b18a56a890af1a212c48bee6a3c86f77468a1c5edfb3bdcaab58a"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/0.1.0-1.7.5-beta/dcos-kubernetes-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "cb33ec97e04bfaf65136c1f32aaa4c9d68ac8f131dfa5766397564290f03ba76"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/0.1.0-1.7.5-beta/dcos-kubernetes.exe"
+        }
+      }
+    }
+  }
+}
