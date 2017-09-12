@@ -7,7 +7,7 @@
   "packagingVersion": "3.0",
   "postInstallNotes": "DC/OS Cassandra is being installed!\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/cassandra.html",
   "postUninstallNotes": "DC/OS cassandra is being uninstalled.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required.",
-  "preInstallNotes": "Community packages are unverified and unreviewed content from the community.\n\nDefault configuration requires 3 agent nodes each with: 0.5 CPU | 4096 MB MEM",
+  "preInstallNotes": "Default configuration requires 3 agent nodes each with: 0.5 CPU | 4096 MB MEM\n\nPortworx should be installed on the Private Agents to be able to provision volumes.\n\nCommunity packages are unverified and unreviewed content from the community.",
   "selected": false,
   "tags": [
     "cassandra",
