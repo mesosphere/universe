@@ -51,8 +51,8 @@
             "minimum": 1,
             "type": "string"
         }
-      }
+      },
+      "required": ["ovpn_password"]
     }
-  },
-  "required": ["openvpn"]
+  }
 }
