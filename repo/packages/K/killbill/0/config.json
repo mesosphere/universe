@@ -1,0 +1,102 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "Configuration properties for the Kill Bill service for DC/OS.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of the service to display in the DC/OS dashboard.",
+          "type": "string",
+          "default": "killbill"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to this Kill Bill instance.",
+          "type": "number",
+          "default": 1,
+          "minimum": 1
+        },
+        "mem": {
+          "description": "Memory (in MB) to allocate to this Kill Bill instance.",
+          "type": "number",
+          "default": 2048.0,
+          "minimum": 2048.0
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem"
+      ]
+    },
+    "database": {
+      "description": "MySQL database properties.",
+      "type": "object",
+      "properties": {
+        "host": {
+          "description": "Database host name and port (e.g. 1.2.3.4:3306).",
+          "type": "string",
+          "default": "mysql.marathon.mesos:3306"
+        },
+        "name": {
+          "description": "Database name.",
+          "type": "string",
+          "default": "killbill"
+        },
+        "user": {
+          "description": "Database username.",
+          "type": "string",
+          "default": "killbill"
+        },
+        "password": {
+          "description": "Database password.",
+          "type": "string",
+          "default": "killbill"
+        }
+      },
+      "required": [
+        "host",
+        "name",
+        "user",
+        "password"
+      ]
+    },
+    "networking": {
+      "description": "Networking-related configuration properties for Kaui on DC/OS.",
+      "type": "object",
+      "properties": {
+        "external_access": {
+          "type": "object",
+          "description": "Enable access from outside the cluster through Marathon-LB.",
+          "properties": {
+            "enable": {
+              "description": "Enable or disable creating a VIP for access through a public node running Marathon-LB.",
+              "type": "boolean",
+              "default": true
+            },
+            "external_access_port": {
+              "description": "Port number to be used for clear communication in the Marathon-LB load balancer",
+              "type": "number",
+              "default": 10080
+            },
+            "group": {
+              "description": "The HAProxy group to configure for integration with Marathon-lb.",
+              "type": "string",
+              "default": "internal"
+            },
+            "virtual-host": {
+              "description": "The virtual host address to configure for integration with Marathon-lb.",
+              "type": "string",
+              "default": "killbill.dcos"
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "service",
+    "database",
+    "networking"
+  ]
+}

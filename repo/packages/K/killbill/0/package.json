@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "4.0",
+  "name": "killbill",
+  "version": "0.1.0",
+  "scm": "https://github.com/killbill/killbill-cloud.git",
+  "maintainer": "https://groups.google.com/forum/#!forum/killbilling-users",
+  "website": "https://killbill.io/",
+  "description": "Kill Bill is the open-source subscription billing and payments platform.",
+  "tags": ["subscription", "payment", "billing"],
+  "preInstallNotes": "Make sure MySQL has been installed and configured first.",
+  "postInstallNotes": "Kill Bill has been installed.",
+  "postUninstallNotes": "Kill Bill has been uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}
