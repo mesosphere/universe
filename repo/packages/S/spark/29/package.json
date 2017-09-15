@@ -1,0 +1,25 @@
+{
+    "packagingVersion": "3.0",
+    "postInstallNotes": "DC/OS Spark is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/spark/\n\tIssues: https://docs.mesosphere.com/support/",
+    "scm": "https://github.com/apache/spark.git",
+    "maintainer": "support@mesosphere.io",
+    "postUninstallNotes": "The Apache Spark DC/OS Service has been uninstalled and will no longer run.\nPlease follow the instructions at https://docs.mesosphere.com/current/usage/service-guides/spark/uninstall/ to clean up any persisted state.",
+    "name": "spark",
+    "description": "Spark is a fast and general cluster computing system for Big Data.  Documentation: https://docs.mesosphere.com/service-docs/spark/",
+    "licenses": [
+        {
+            "name": "Apache License Version 2.0",
+            "url": "https://raw.githubusercontent.com/apache/spark/master/LICENSE"
+        }
+    ],
+    "tags": [
+        "bigdata",
+        "mapreduce",
+        "batch",
+        "analytics"
+    ],
+    "website": "https://docs.mesosphere.com/current/usage/service-guides/spark/",
+    "selected": true,
+    "version": "2.0.1-2.2.0-1",
+    "minDcosReleaseVersion": "1.8"
+}
