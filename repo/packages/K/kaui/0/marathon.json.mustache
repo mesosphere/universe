@@ -1,0 +1,57 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "env": {
+      "KAUI_KILLBILL_URL": "{{killbill.url}}",
+      "KAUI_CONFIG_DAO_URL": "jdbc:mysql://{{database.host}}/{{database.name}}",
+      "KAUI_CONFIG_DAO_USER": "{{database.user}}",
+      "KAUI_CONFIG_DAO_PASSWORD": "{{database.password}}"
+  },
+  "container": {
+       "type": "DOCKER",
+       "docker": {
+           "image": "{{resource.assets.container.docker.kaui}}",
+           "network": "BRIDGE",
+           "portMappings": [
+              {
+                "containerPort": 8080,
+                "hostPort": 0,
+                {{#networking.external_access.enable}}
+                "servicePort": {{networking.external_access.external_access_port}},
+                {{/networking.external_access.enable}}
+                "protocol": "tcp",
+                "name": "kaui",
+                "labels": {
+                  "VIP_0": "/{{service.name}}:{{networking.port}}"
+                }
+              }
+          ]
+       }
+   },
+   "healthChecks": [
+    {
+      "path": "/",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "labels": {
+    {{#networking.external_access.enable}}
+    "HAPROXY_GROUP":"{{networking.external_access.group}}",
+    "HAPROXY_0_VHOST":"{{networking.external_access.virtual-host}}",
+    {{/networking.external_access.enable}}
+    "DCOS_SERVICE_NAME" : "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX"  : "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}

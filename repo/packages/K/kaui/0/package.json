@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "4.0",
+  "name": "kaui",
+  "version": "0.1.0",
+  "scm": "https://github.com/killbill/killbill-cloud.git",
+  "maintainer": "https://groups.google.com/forum/#!forum/killbilling-users",
+  "website": "https://killbill.io/",
+  "description": "Administrative UI for Kill Bill, the open-source subscription billing and payments platform.",
+  "tags": ["subscription", "payment", "billing"],
+  "preInstallNotes": "Make sure both MySQL and Kill Bill have been installed and configured first.",
+  "postInstallNotes": "Kaui has been installed.",
+  "postUninstallNotes": "Kaui has been uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}
