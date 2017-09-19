@@ -1,0 +1,14 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "a11d1631f99d": "datadog/docker-dd-agent:12.2.5172"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-datadog-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-datadog-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-datadog-large.png"
+  }
+}
