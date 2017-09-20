@@ -31,7 +31,7 @@
         "docker-image": {
             "description": "Docker image to run in.  See https://hub.docker.com/r/mesosphere/spark/tags/ for options.",
             "type": "string",
-            "default": "mesosphere/spark:1.0.8-2.1.0-1-hadoop-2.6"
+            "default": "mesosphere/spark:1.1.0-2.1.1-hadoop-2.6"
         },
         "hdfs-config-url": {
             "type": "string",
