@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "3.0",
+  "name": "jenkins",
+  "version": "3.2.1-2.60.1",
+  "minDcosReleaseVersion": "1.8",
+  "scm": "https://github.com/mesosphere/dcos-jenkins-service.git",
+  "maintainer": "support@mesosphere.io",
+  "website": "https://jenkins.io",
+  "framework": true,
+  "description": "Jenkins is an award-winning, cross-platform, continuous integration and continuous delivery application that increases your productivity. Use Jenkins to build and test your software projects continuously making it easier for developers to integrate changes to the project, and making it easier for users to obtain a fresh build. It also allows you to continuously deliver your software by providing powerful ways to define your build pipelines and integrating with a large number of testing and deployment technologies.",
+  "tags": ["continuous-integration", "ci", "jenkins"],
+  "preInstallNotes": "WARNING: If you didn't provide a value for `storage.host-volume` (either using the CLI or via the Advanced Install dialog),\nYOUR DATA WILL NOT BE SAVED IN ANY WAY.\n",
+  "postInstallNotes": "Jenkins has been installed.",
+  "postUninstallNotes": "Jenkins has been uninstalled. Note that any data persisted to a NFS share still exists and will need to be manually removed.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/mesosphere/dcos-jenkins-service/blob/master/LICENSE"
+    }
+  ],
+  "selected": true
+}

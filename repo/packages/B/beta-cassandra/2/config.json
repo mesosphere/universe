@@ -53,18 +53,11 @@
                         "parallel"
                     ],
                     "default": "serial"
-                },
-                "beta-optin": {
-                    "default": "",
-                    "title": "Agree to Beta terms",
-                    "type": "boolean",
-                    "description": "I have been invited to the Beta Program and accept all the terms of the Beta Agreement."
                 }
             },
             "required": [
                 "name",
-                "user",
-                "beta-optin"
+                "user"
             ]
         },
         "nodes": {

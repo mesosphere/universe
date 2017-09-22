@@ -1,0 +1,22 @@
+{
+  "images": {
+    "icon-small": "https://minio.io/img/icons/minio/minio_dark_sm_ic.png",
+    "icon-medium": "https://minio.io/img/icons/minio/minio_dark_md_ic.png",
+    "icon-large": "https://minio.io/img/icons/minio/minio_dark_lg_ic.png",
+    "screenshots": [
+      "https://minio.io/img/browser/1.png",
+      "https://minio.io/img/browser/2.png",
+      "https://minio.io/img/browser/3.png",
+      "https://minio.io/img/browser/4.png",
+      "https://minio.io/img/browser/5.png",
+      "https://minio.io/img/browser/6.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "minio-docker-RELEASE": "minio/minio:RELEASE.2017-08-05T00-00-53Z"
+      }
+    }
+  }
+}

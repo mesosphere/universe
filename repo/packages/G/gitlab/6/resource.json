@@ -1,0 +1,15 @@
+{
+  "images": {
+    "icon-small": "https://secure.gravatar.com/avatar/6edd0acaf80f784fab3dd2c31d604e74.jpg?s=40&r=g&d=mm",
+    "icon-medium": "https://secure.gravatar.com/avatar/6edd0acaf80f784fab3dd2c31d604e74.jpg?s=80&r=g&d=mm",
+    "icon-large": "https://secure.gravatar.com/avatar/6edd0acaf80f784fab3dd2c31d604e74.jpg?s=200&r=g&d=mm"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "gitlab-ce": "gitlab/gitlab-ce:9.1.0-ce.0",
+        "gitlab-ee": "gitlab/gitlab-ee:9.1.0-ee.0"
+      }
+    }
+  }
+}

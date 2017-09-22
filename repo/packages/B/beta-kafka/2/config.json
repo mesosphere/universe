@@ -39,18 +39,10 @@
                     "description": "Deployment phase strategy. See documentation. [serial, serial-canary, parallel-canary, parallel]",
                     "type": "string",
                     "default": "serial"
-                },
-                "beta-optin": {
-                    "title": "Agree to Beta terms",
-                    "type": "boolean",
-                    "enum": [true],
-                    "default": "",
-                    "description": "I have been invited to the Beta Program and accept all the terms of the Beta Agreement."
                 }
             },
             "required": [
-                "deploy_strategy",
-                "beta-optin"
+                "deploy_strategy"
             ]
         },
         "brokers": {

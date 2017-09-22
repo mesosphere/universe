@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "required": ["linkerd"],
+  "properties": {
+    "linkerd": {
+      "type": "object",
+      "required": ["admin-port", "cpus", "instances", "internal-port", "marathon-host", "marathon-port", "mem", "routing-port"],
+      "properties": {
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "admin-port": {
+          "default": 9990,
+          "description": "Admin port. Provides an administrative UI for this instance.",
+          "type": "integer"
+        },
+        "internal-port": {
+          "default": 4141,
+          "description": "Internal routing port.",
+          "type": "integer"
+        },
+        "routing-port": {
+          "default": 4140,
+          "description": "Routing port.",
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 0.25,
+          "description": "CPU shares to allocate to each linkerd instance.",
+          "minimum": 0.25,
+          "type": "number"
+        },
+        "mem": {
+          "default": 256.0,
+          "description": "Memory (MB) to allocate to each linkerd task.",
+          "minimum": 256.0,
+          "type": "number"
+        },
+        "marathon-host": {
+          "default": "leader.mesos",
+          "description": "DC/OS leader hostname, for Marathon API access.",
+          "type": "string"
+        },
+        "marathon-port": {
+          "default": 8080,
+          "description": "DC/OS leader port, for Marathon API access.",
+          "type": "integer"
+        },
+        "marathon-uri-prefix": {
+          "default": "",
+          "description": "Marathon API prefix. Typically left blank, or '/marathon'.",
+          "type": "string"
+        },
+        "secret_name": {
+          "default": "",
+          "description": "Enterprise Only. Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed. For more information see https://docs.mesosphere.com/1.8/administration/id-and-access-mgt/service-auth/custom-service-auth/",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

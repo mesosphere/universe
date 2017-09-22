@@ -1,0 +1,30 @@
+{
+  "images": {
+    "icon-large": "https://s3.amazonaws.com/gfi.misc/Gestalt-Icon-Large.png",
+    "icon-medium": "https://s3.amazonaws.com/gfi.misc/Gestalt-Icon-Medium.png",
+    "icon-small": "https://s3.amazonaws.com/gfi.misc/Gestalt-Icon-Small.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "gestalt-dcos":               "galacticfog/gestalt-dcos:1.2.0",
+        "rabbit":                     "galacticfog/rabbit:release-1.2.0",
+        "kong":                       "galacticfog/kong:release-1.2.0",
+        "data":                       "galacticfog/postgres_repl:release-1.2.0",
+        "api-gateway":                "galacticfog/gestalt-api-gateway:release-1.2.0",
+        "laser":                      "galacticfog/gestalt-laser:release-1.2.0",
+        "meta":                       "galacticfog/gestalt-meta:release-1.2.0",
+        "policy":                     "galacticfog/gestalt-policy:release-1.2.0",
+        "security":                   "galacticfog/gestalt-security:release-1.2.0",
+        "ui-react":                   "galacticfog/gestalt-ui-react:release-1.2.0",
+        "laser-ruby-executor":        "galacticfog/gestalt-laser-executor-ruby:release-1.2.0",
+        "laser-js-executor":          "galacticfog/gestalt-laser-executor-js:release-1.2.0",
+        "laser-golang-executor":      "galacticfog/gestalt-laser-executor-golang:release-1.2.0",
+        "laser-python-executor":      "galacticfog/gestalt-laser-executor-python:release-1.2.0",
+        "laser-jvm-executor":         "galacticfog/gestalt-laser-executor-jvm:release-1.2.0",
+        "laser-dotnet-executor":      "galacticfog/gestalt-laser-executor-dotnet:release-1.2.0"
+      }
+    },
+    "uris": {}
+  }
+}

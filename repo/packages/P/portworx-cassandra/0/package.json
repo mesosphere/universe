@@ -1,0 +1,17 @@
+{
+  "description": "Apache Cassandra backed by Portworx volumes",
+  "framework": true,
+  "maintainer": "support@portworx.com",
+  "minDcosReleaseVersion": "1.8",
+  "name": "portworx-cassandra",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS Cassandra is being installed!\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/cassandra.html",
+  "postUninstallNotes": "DC/OS cassandra is being uninstalled.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required.",
+  "preInstallNotes": "Default configuration requires 3 agent nodes each with: 0.5 CPU | 4096 MB MEM\n\nPortworx should be installed on the Private Agents to be able to provision volumes.\n\nCommunity packages are unverified and unreviewed content from the community.",
+  "selected": false,
+  "tags": [
+    "cassandra",
+    "portworx"
+  ],
+  "version": "1.0-3.0.10-c2ddff7"
+}

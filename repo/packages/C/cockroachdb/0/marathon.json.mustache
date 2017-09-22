@@ -1,0 +1,98 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" &&  ./cockroachdb-scheduler/bin/cockroachdb ./cockroachdb-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.secret_name}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.secret_name}}"
+    }
+  },
+  {{/service.secret_name}}
+  "env": {
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "CONFIG_TEMPLATE_PATH": "cockroachdb-scheduler",
+
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.principal}}",
+    "COCKROACH_URI": "{{resource.assets.uris.cockroach-binary}}/cockroach-v{{service.version}}.linux-amd64.tgz",
+    "COCKROACH_VERSION": "cockroach-v{{service.version}}.linux-amd64",
+    "COCKROACH_HTTP_PORT": "{{service.http_port}}",
+    "COCKROACH_PG_PORT": "{{service.pg_port}}",
+    "CONTAINER_HTTP_PORT": "{{service.container_http_port}}",
+    "CONTAINER_PG_PORT": "{{service.container_pg_port}}",
+
+    "NODE_COUNT": "{{node.count}}",
+    "NODE_PLACEMENT": "{{node.placement_constraint}}",
+    {{#service.virtual_network}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    {{/service.virtual_network}}
+    "NODE_CPUS": "{{node.cpus}}",
+    "NODE_MEM": "{{node.mem}}",
+    "NODE_DISK": "{{node.disk}}",
+    "NODE_DISK_TYPE": "{{node.disk_type}}",
+
+    "SIDE_COUNT": "{{side.count}}",
+    "SIDE_CPUS": "{{side.cpus}}",
+    "SIDE_MEM": "{{side.mem}}",
+    "SIDE_DISK": "{{side.disk}}",
+    "SIDE_DISK_TYPE": "{{side.disk_type}}",
+
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    {{#service.secret_name}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    {{/service.secret_name}}
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/deploy",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    },
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/recovery",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64-jce-unlimited.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "hdfs-tar-gz": "https://downloads.mesosphere.com/hdfs/assets/hadoop-2.6.0-cdh5.11.0.tar.gz",
+      "hdfs-bin-tar-gz": "https://s3-us-west-2.amazonaws.com/mrbrowning-dev/hdfs-bin.tar.gz",
+      "hdfs-jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64-jce-unlimited.tar.gz",
+      "bootstrap-zip": "https://px-dcos.s3.amazonaws.com/portworx-hadoop/assets/1.0-2.6.0-cdh5.11.0-c2ddff7/bootstrap.zip",
+      "scheduler-zip": "https://px-dcos.s3.amazonaws.com/portworx-hadoop/assets/1.0-2.6.0-cdh5.11.0-c2ddff7/hdfs-scheduler.zip",
+      "executor-zip": "https://px-dcos.s3.amazonaws.com/portworx-hadoop/assets/1.0-2.6.0-cdh5.11.0-c2ddff7/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "905c9504b7b73a44fdced76bb0618d0227cb42fbcd572f88bde998dd10871cf5"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-hadoop/assets/1.0-2.6.0-cdh5.11.0-c2ddff7/dcos-hdfs-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "b0fdc191bdf44ee90155fb72648fadb7daefff5620efcdccee37d3a7a31f4735"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-hadoop/assets/1.0-2.6.0-cdh5.11.0-c2ddff7/dcos-hdfs-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "5186484f1648f67a3565aa28c19a347dbb50e010e71a6ab6e84cabe18649c341"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-hadoop/assets/1.0-2.6.0-cdh5.11.0-c2ddff7/dcos-hdfs.exe"
+        }
+      }
+    }
+  }
+}

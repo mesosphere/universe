@@ -1,0 +1,17 @@
+{
+  "description": "Apache Hadoop Distributed File System (HDFS)",
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.9",
+  "name": "beta-hdfs",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS Apache HDFS Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/current/usage/service-guides/hdfs/\n\tIssues: https://jira.dcos.io/projects/DCOS_HDFS",
+  "postUninstallNotes": "DC/OS Apache HDFS Service is being uninstalled.\nPlease follow the instructions at http://docs.mesosphere.com/current/usage/service-guides/hdfs/#uninstall to remove any persistent state if required.",
+  "preInstallNotes": "This DC/OS Service is currently a beta candidate undergoing testing as part of a formal beta test program.\n\nThere may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nDefault configuration requires 5 agent nodes each with: CPU: 0.9 | Memory: 6144MB | Disk: 10000MB\n\nMore specifically, each instance type requires:\n\nJournal node: 3 instances | 0.3 CPU | 2048 MB MEM | 1 5000 MB Disk\n\nName node: 2 instances | 0.3 CPU | 2048 MB MEM | 1 5000 MB Disk\n\nZKFC node: 2 instances | 0.3 CPU | 2048 MB MEM\n\nData node: 3 instances | 0.3 CPU | 2048 MB MEM | 1 5000 MB Disk\n\nContact Mesosphere before deploying this beta candidate service. Product support is available to approved participants in the beta test program.",
+  "selected": false,
+  "tags": [
+    "hdfs",
+    "hadoop"
+  ],
+  "version": "1.3.3-2.6.0-cdh5.11.0-beta"
+}

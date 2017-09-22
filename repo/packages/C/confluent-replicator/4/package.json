@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "3.0",
+  "name": "confluent-replicator",
+  "version": "1.0.0-3.2.2",
+  "scm": "https://github.com/confluentinc/kafka",
+  "description": "Confluent Enterprise Replicator for multi-data center synchronization of topic data\n\n\tDocumentation: http://docs.confluent.io/3.2.2/connect/connect-replicator/docs/index.html",
+  "maintainer": "partner-support@confluent.io",
+  "tags": ["kafka", "confluent", "connect", "replicator"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. Preparing to install Replicator service",
+  "postInstallNotes": "Replicator service has been installed.",
+  "postUninstallNotes": "Replicator service was uninstalled successfully.",
+  "minDcosReleaseVersion" : "1.8",
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}

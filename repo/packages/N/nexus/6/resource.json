@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://cdn.sonatype.com/brand/logo/nexus-repo-48.png",
+    "icon-medium": "https://cdn.sonatype.com/brand/logo/nexus-repo-96.png",
+    "icon-large": "https://cdn.sonatype.com/brand/logo/nexus-repo-256.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "nexus3": "sonatype/nexus3:3.5.0"
+      }
+    }
+  }
+}

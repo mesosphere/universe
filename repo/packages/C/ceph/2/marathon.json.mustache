@@ -14,7 +14,7 @@
         "MESOS_MASTER": "leader.mesos:5050",
         "CEPH_MON_INIT_PORT": "6789"        
     },
-    "uris": ["https://dl.bintray.com/vivint-smarthome/ceph-on-mesos/ceph-on-mesos-0.2.11.tgz"],
+    "uris": ["{{resource.assets.uris.ceph-tgz}}"],
     "cmd": "cd /mnt/mesos/sandbox/ceph-on-mesos-*\nbin/ceph-on-mesos --api-port=$PORT0",
     "container": {
         "type": "DOCKER",

@@ -3,6 +3,7 @@
 import argparse
 import concurrent.futures
 import contextlib
+import distutils.version
 import fnmatch
 import json
 import os
@@ -44,9 +45,9 @@ def main():
     parser.add_argument(
         '--include',
         default='',
-        help='Command separated list of packages to include. If this option '
-        'is not specified then all packages are downloaded. E.g. '
-        '--include="marathon,chronos"')
+        help='Comma (,) separated list of packages to include. For each '
+        'package specify both the name and version by separating them with a '
+        'colon (:). E.g. --include="marathon:1.4.2,chronos:2.5.0"')
     parser.add_argument(
         '--selected',
         action='store_true',
@@ -62,10 +63,22 @@ def main():
         action='store_true',
         default=False,
         help='Set this to leave CLI resource URLs untouched.')
+    parser.add_argument(
+        '--dcos_version',
+        required=True,
+        help='Set this to the version of DC/OS under which the local universe '
+        'will operate. Ensures that only package versions compatible with '
+        'that DC/OS version are included. This parameter is required.'
+    )
 
     args = parser.parse_args()
 
-    package_names = [name for name in args.include.split(',') if name != '']
+    packages = [
+        tuple(spec.split(':'))
+        for spec in args.include.split(',') if spec != ''
+    ]
+
+    dcos_version = distutils.version.LooseVersion(args.dcos_version)
 
     with tempfile.TemporaryDirectory() as dir_path, \
             run_docker_registry(dir_path / pathlib.Path("registry")):
@@ -84,10 +97,11 @@ def main():
         failed_packages = []
 
         def handle_package(opts):
-            package, path = opts
+            package, version, path = opts
             try:
                 prepare_repository(
                     package,
+                    version,
                     path,
                     pathlib.Path(args.repository),
                     repo_artifacts,
@@ -98,6 +112,7 @@ def main():
 
                 for url, archive_path in enumerate_http_resources(
                     package,
+                    version,
                     path,
                     args.nonlocal_images,
                     args.nonlocal_cli
@@ -119,8 +134,9 @@ def main():
                 handle_package,
                 enumerate_dcos_packages(
                     pathlib.Path(args.repository),
-                    package_names,
-                    args.selected)):
+                    packages,
+                    args.selected,
+                    dcos_version)):
                 print("Completed: {}".format(package))
 
         build_repository(
@@ -140,72 +156,149 @@ def main():
             print("These packages are not included in the image.")
 
 
-def enumerate_dcos_packages(packages_path, package_names, only_selected):
+def enumerate_dcos_packages(
+        packages_path,
+        packages,
+        only_selected,
+        dcos_version):
     """Enumarate all of the package and revision to include
 
     :param packages_path: the path to the root of the packages
-    :type pacakges_path: str
-    :param package_names: list of package to include. empty list means all
-                         packages
-    :type package_names: [str]
+    :type packages_path: pathlib.Path
+    :param packages: list of the name and version of packages to include. The
+                     first field in the tuple is the name the second field is
+                     the version.
+    :type packages: [(str, str)]
     :param only_selected: filter the list of packages to only ones that are
                           selected
     :type only_selected: boolean
-    :returns: generator of package name and revision
-    :rtype: gen((str, str))
+    :param: dcos_version: filter the list of packages to only ones compatible
+                          with this DC/OS version; if None, do not filter
+    :type dcos_version: distutils.version.LooseVersion | None
+    :returns: generator of package name, package version and path
+    :rtype: gen((str, str, pathlib.Path))
     """
 
+    pending_packages = packages.copy()
     for letter_path in packages_path.iterdir():
         assert len(letter_path.name) == 1 and letter_path.name.isupper()
+
         for package_path in letter_path.iterdir():
+            revision_paths = list(package_path.iterdir())
+            revision_paths.sort(key=lambda r: int(r.name), reverse=True)
 
-            largest_revision = max(
-                package_path.iterdir(),
-                key=lambda revision: int(revision.name))
+            for index, revision_path in enumerate(revision_paths):
+                package_json = load_json(revision_path / 'package.json')
+                if include_revision(
+                    package_json,
+                    pending_packages,
+                    only_selected,
+                    dcos_version,
+                    index == 0  # Latest package will always have an index of 0
+                ):
+                    # *Mutation*. We enumerated the package so let's remove
+                    # it from our pending list if it exists. It may not exists
+                    # if --selected is used.
+                    key = (package_json['name'], package_json['version'])
+                    if key in pending_packages:
+                        pending_packages.remove(key)
 
-            if only_selected:
-                json_path = largest_revision / 'package.json'
-                with json_path.open(encoding='utf-8') as json_file:
-                    if json.load(json_file).get('selected', False):
-                        yield (package_path.name, largest_revision)
+                    yield (
+                        package_json['name'],
+                        package_json['version'],
+                        revision_path
+                    )
 
-            elif not package_names or package_path.name in package_names:
-                # Enumerate package if list is empty or package name in list
-                yield (package_path.name, largest_revision)
+    if pending_packages:
+        print("Error: couldn't find the following packages")
+        print(pending_packages)
+        sys.exit(1)
 
 
-def enumerate_http_resources(package, package_path, skip_images, skip_cli):
-    resource_path = package_path / 'resource.json'
-    with resource_path.open(encoding='utf-8') as json_file:
-        resource = json.load(json_file)
+def include_revision(
+    package_json,
+    packages,
+    only_selected,
+    dcos_version,
+    is_latest
+):
+    version_pass = version_check(package_json, dcos_version)
+    selected_pass = selected_check(
+        package_json,
+        packages,
+        only_selected,
+        is_latest
+    )
+
+    return version_pass and selected_pass
+
+
+def version_check(package_json, dcos_version):
+    if dcos_version:
+        raw_version = package_json.get('minDcosReleaseVersion')
+        if raw_version:
+            min_version = distutils.version.LooseVersion(raw_version)
+            if dcos_version < min_version:
+                return False
+    return True
+
+
+def selected_check(package_json, packages, only_selected, is_latest):
+    """Return true when:
+    1) The package is selected, "only_selected" is true and it is the latest
+       package.
+    2) The package name and version matches one of the tuples in "packages"
+    """
+    package_name = package_json['name']
+    package_version = package_json['version']
+
+    if only_selected:
+        return is_latest and package_json.get('selected', False)
+
+    return (package_name, package_version) in packages
+
+
+def load_json(json_path):
+    with json_path.open(encoding='utf-8') as json_file:
+        return json.load(json_file)
+
+
+def enumerate_http_resources(
+    package,
+    version,
+    package_path,
+    skip_images,
+    skip_cli
+):
+    resource = load_json(package_path / 'resource.json')
 
     if not skip_images:
         for name, url in resource.get('images', {}).items():
             if name != 'screenshots':
-                yield url, pathlib.Path(package, 'images')
+                yield url, pathlib.Path(package, version, 'images')
 
     for name, url in resource.get('assets', {}).get('uris', {}).items():
-        yield url, pathlib.Path(package, 'uris')
+        yield url, pathlib.Path(package, version, 'uris')
 
     if not skip_cli:
         for os_type, arch_dict in \
                 resource.get('cli', {}).get('binaries', {}).items():
             for arch in arch_dict.items():
-                yield arch[1]['url'], pathlib.Path(package, 'uris', os_type)
+                yield (
+                    arch[1]['url'],
+                    pathlib.Path(package, version, 'uris', os_type)
+                )
 
     command_path = (package_path / 'command.json')
     if command_path.exists():
-        with command_path.open(encoding='utf-8') as json_file:
-            commands = json.load(json_file)
+        commands = load_json(command_path)
 
         for url in commands.get("pip", []):
-            yield url, pathlib.Path(package, 'commands')
+            yield url, pathlib.Path(package, version, 'commands')
 
 
 def enumerate_docker_images(package_path):
-    resource_path = package_path / 'resource.json'
-    with resource_path.open(encoding='utf-8') as json_file:
-        resource = json.load(json_file)
+    resource = load_json(package_path / 'resource.json')
 
     dockers = resource.get('assets', {}).get('container', {}).get('docker', {})
 
@@ -280,8 +373,11 @@ def add_http_resource(dir_path, url, base_path):
 
 
 def prepare_repository(
-    package, package_path,
-    source_repo, dest_repo,
+    package,
+    version,
+    package_path,
+    source_repo,
+    dest_repo,
     http_root,
     skip_images,
     skip_cli
@@ -289,18 +385,16 @@ def prepare_repository(
     dest_path = dest_repo / package_path.relative_to(source_repo)
     shutil.copytree(str(package_path), str(dest_path))
 
-    source_resource = package_path / 'resource.json'
     dest_resource = dest_path / 'resource.json'
-    with source_resource.open(encoding='utf-8') as source_file, \
-            dest_resource.open('w', encoding='utf-8') as dest_file:
-        resource = json.load(source_file)
+    with dest_resource.open('w', encoding='utf-8') as dest_file:
+        resource = load_json(package_path / 'resource.json')
 
         # Change the root for images (ignore screenshots)
         if not skip_images and 'images' in resource:
             resource["images"] = {
                 n: urllib.parse.urljoin(
                     http_root, str(pathlib.PurePath(
-                        package, "images", pathlib.Path(uri).name)))
+                        package, version, "images", pathlib.Path(uri).name)))
                 for n, uri in resource.get("images", {}).items() if 'icon' in n}
 
         # Change the root for asset uris.
@@ -308,7 +402,7 @@ def prepare_repository(
             resource["assets"]["uris"] = {
                 n: urllib.parse.urljoin(
                     http_root, str(pathlib.PurePath(
-                        package, "uris", pathlib.Path(uri).name)))
+                        package, version, "uris", pathlib.Path(uri).name)))
                 for n, uri in resource["assets"].get("uris", {}).items()}
 
         # Change the root for cli uris.
@@ -322,6 +416,7 @@ def prepare_repository(
                         str(
                             pathlib.PurePath(
                                 package,
+                                version,
                                 "uris",
                                 os_type,
                                 pathlib.Path(uri).name)))
@@ -341,14 +436,21 @@ def prepare_repository(
         return
 
     dest_command = dest_path / 'command.json'
-    with command_path.open(encoding='utf-8') as source_file, \
-            dest_command.open('w', encoding='utf-8') as dest_file:
-        command = json.load(source_file)
+    with dest_command.open('w', encoding='utf-8') as dest_file:
+        command = load_json(command_path)
 
         command['pip'] = [
             urllib.parse.urljoin(
-                http_root, str(pathlib.PurePath(
-                    package, "commands", pathlib.Path(uri).name)))
+                http_root,
+                str(
+                    pathlib.PurePath(
+                        package,
+                        version,
+                        "commands",
+                        pathlib.Path(uri).name
+                    )
+                )
+            )
             for uri in command.get("pip", [])
         ]
         json.dump(command, dest_file, indent=4)
