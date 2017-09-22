@@ -1,0 +1,19 @@
+{
+    "packagingVersion": "4.0",
+    "minDcosReleaseVersion": "1.9",
+    "name": "kafka",
+    "version": "2.0.1-0.11.0",
+    "maintainer": "support@mesosphere.io",
+    "description": "Apache Kafka",
+    "selected": true,
+    "framework": true,
+    "tags": [
+        "message",
+        "broker",
+        "kafka",
+        "pubsub"
+    ],
+    "preInstallNotes": "Default configuration requires 3 agent nodes each with: 1.0 CPU | 2048 MB MEM | 1 5000 MB Disk",
+    "postInstallNotes": "DC/OS Apache Kafka Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/kafka/\n\tIssues: https://docs.mesosphere.com/support/",
+    "postUninstallNotes": "DC/OS Apache Kafka Service is being uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/current/usage/service-guides/kafka/uninstall to remove any persistent state if required."
+}
