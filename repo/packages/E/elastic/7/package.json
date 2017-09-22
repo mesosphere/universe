@@ -1,5 +1,7 @@
 {
     "packagingVersion": "4.0",
+    "upgradesFrom": ["2.0.0-5.5.1"],
+    "downgradesTo": ["2.0.0-5.5.1"],
     "minDcosReleaseVersion": "1.9",
     "name": "elastic",
     "version": "2.0.1-5.5.1",
