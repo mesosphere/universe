@@ -1,5 +1,7 @@
 {
     "packagingVersion": "4.0",
+    "upgradesFrom": ["2.0.0-3.0.14"],
+    "downgradesTo": ["2.0.0-3.0.14"],
     "minDcosReleaseVersion": "1.9",
     "name": "cassandra",
     "version": "2.0.1-3.0.14",
