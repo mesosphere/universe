@@ -1,19 +1,19 @@
 {
   "additionalProperties" : false,
-  "description" : "Marathon DCOS Service properties",
+  "description" : "Marathon DC/OS Service properties",
   "properties" : {
     "service" : {
       "additionalProperties" : false,
       "description" : "Marathon app configuration properties.",
       "properties" : {
         "name" : {
-          "description" : "The name of this Marathon service inside DCOS base Marathon.\nIf not specified otherwise, this name will also be used for the framework name, dcos service name, zk path and mesos role.\nTo create a nested path, please specify a group.",
+          "description" : "The name of this Marathon service inside DC/OS base Marathon.\nIf not specified otherwise, this name will also be used for the framework name, dcos service name, zk path and mesos role.\nTo create a nested path, please specify a group.",
           "type" : "string",
           "default" : "marathon-user",
           "pattern" : "^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$"
         },
         "group" : {
-          "description" : "The group of this Marathon service inside DCOS base Marathon. If a group is defined, the id of this service will be group/name",
+          "description" : "The group of this Marathon service inside DC/OS base Marathon. If a group is defined, the id of this service will be group/name",
           "type" : "string",
           "pattern" : "^[/]?(([a-z0-9])([a-z0-9\\-]*[a-z0-9]))([/](([a-z0-9])([a-z0-9\\-]*[a-z0-9])))*$"
         },
