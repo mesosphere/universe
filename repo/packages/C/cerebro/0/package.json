@@ -1,0 +1,25 @@
+{
+  "description": "Cerebro is a Elastic web administration tool formerly known as Kopf. Cerebro is a standalone application (not an Elastic plugin) complatible with Elastic 5.x or newer.",
+  "framework": false,
+  "maintainer": "https://dcos.io/community",
+  "minDcosReleaseVersion": "1.9",
+  "name": "cerebro",
+  "packagingVersion": "4.0",
+  "postInstallNotes": "Service installed.\n\nYou should be able to access the UI through the endpoint created in Marathon-LB.",
+  "postUninstallNotes": "DC/OS Cerebro service is being uninstalled.",
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Preview packages should never be used in production!\n\n Requires Elastic 5.x or newer.",
+  "selected": false,
+  "tags": [
+    "elastic",
+    "elasticsearch",
+    "cerebro",
+    "kopf"
+  ],
+  "version": "1.0.0-0.6.7",
+  "licenses": [
+    {
+      "name": "MIT",
+      "url": "https://github.com/lmenezes/cerebro"
+    }
+  ]
+}
