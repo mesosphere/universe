@@ -1,0 +1,59 @@
+{
+	"id": "{{geoserver.framework-name}}",
+	"cpus": 0.1,
+	"mem": 8,
+	"instances": 1,
+	"container": {
+		"type": "DOCKER",
+		"docker": {
+			"image": "{{resource.assets.container.docker.geoserver-sync}}",
+			"network": "BRIDGE",
+			"portMappings": [{
+				"containerPort": 8000,
+				"hostPort": 0,
+				"servicePort": 0,
+				"protocol": "tcp"
+			}],
+			"forcePullImage": true
+		},
+		"volumes": [{
+			"containerPath": "/etc/geoserver",
+			"hostPath": "{{geoserver.data-dir}}",
+			"mode": "RW"
+		}]
+	},
+	"healthChecks": [{
+		"path": "/sync-health/",
+		"portIndex": 0,
+		"protocol": "HTTP",
+		"gracePeriodSeconds": 360,
+		"intervalSeconds": 30,
+		"maxConsecutiveFailures": 3,
+		"timeoutSeconds": 10
+	}],
+	"env": {
+		{{#geoserver.auth-uri}}
+		"AUTH_URI": "{{geoserver.auth-uri}}",
+		{{/geoserver.auth-uri}}
+		"ENABLE_CORS": "{{geoserver.enable-cors}}",
+		"FILE_BLACKLIST": "{{sync.file-blacklist}}",
+		"FRAMEWORK_NAME": "{{geoserver.framework-name}}",
+		"GEOSERVER_CPUS": "{{geoserver.cpus}}",
+		"GEOSERVER_IMAGE": "{{resource.assets.container.docker.geoserver-app}}",
+		"GEOSERVER_INSTANCES": "{{geoserver.instances}}",
+		"GEOSERVER_MEMORY": "{{geoserver.memory}}",
+		"GEOSERVER_EXTENSION_TARBALL_URI": "{{geoserver.extension-tarball-uri}}",
+		"GEOSERVER_WEB_XML_URI": "{{geoserver.web-xml-uri}}",
+		"GOSU_USER": "{{geoserver.data-dir-owner}}",
+		"HAPROXY_VHOST": "{{geoserver.virtual-host}}",
+		"HOST_GEOSERVER_DATA_DIR": "{{geoserver.data-dir}}",
+		"HOST_SUPPLEMENTAL_DATA_DIRS": "{{geoserver.supplemental-data-dirs}}",
+		"POLLING_INTERVAL": "{{sync.polling-interval}}"
+	},
+	{{#geoserver.auth-uri}}
+	"fetch": [{ "uri": "{{geoserver.auth-uri}}" }],
+	{{/geoserver.auth-uri}}
+	"labels": {
+		"DCOS_PACKAGE_FRAMEWORK_NAME": "{{geoserver.framework-name}}"
+	}
+}
