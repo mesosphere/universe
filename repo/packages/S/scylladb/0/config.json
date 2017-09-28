@@ -1,28 +1,101 @@
 {
-  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
   "properties": {
-    "service": {
+    "container": {
       "type": "object",
-      "description": "DC/OS service configuration properties",
+      "description": "DC/OS container specifications",
       "properties": {
         "name": {
-          "description": "Name of scylla instance",
+          "description": "Name of scylla instances as seen in DC/OS.",
           "type": "string",
-          "default": "scylladb"
+          "default": "scylla"
+        },
+        "nodes": {
+          "description": "How many nodes the cluster will have in total",
+          "type": "number",
+          "default": "3"
         },
         "cpus": {
           "description": "CPU shares to allocate to each service instance.",
           "type": "number",
-          "default": 0.1,
-          "minimum": 0.1
+          "default": 0.5
         },
         "mem": {
-          "description":  "Memory to allocate to each service instance.",
+          "description":  "Memory in Mb to allocate to each service instance.",
           "type": "number",
           "default": 256.0,
           "minimum": 128.0
         }
+      },
+    "required": [
+      "cpus",
+      "mem"
+      ]
+    },
+    "general":{
+      "type": "object",
+      "description": "Define general scylla settings",
+      "properties": {
+        "Overprovisioned": {
+          "description": "Choose if you want to run in an overprovisioned environment.",
+          "type": "boolean",
+          "default": false
+        },
+        "Experimental": {
+          "description": "Run with experimental settings or not (not recommended for production).",
+          "type": "boolean",
+          "default": true
+        },
+        "Cluster name": {
+          "description": "Name of the cluster",
+          "type": "string",
+          "default": "aCoolScyllaCluster"
+        }
       }
+    },
+    "disks":{
+      "type": "object",
+      "description": "Configure how to store data",
+      "properties": {
+        "Use host disks": {
+          "description": "Use disks on host. Should be formatted as XFS and have the same path on all nodes",
+          "type": "boolean",
+          "default": true
+        }
+        "Data file directories": {
+          "description": "Path on host to use for data storage. Comma-separate if you have more than one per host. [/mnt/scylla/data1,/mnt/scylla/data2,...]",
+          "type": "string",
+          "default": "/mnt/scylla/data"
+        },
+        "commitlog_directories": {
+          "description": "Path on host to use for commitlog",
+          "type": "string",
+          "default": "/mnt/scylla/commitlog"
+        },
+        "Use DC/OS local persistance": {
+          "description": "See DC/OS documentation for more information",
+          "type": "boolean",
+          "default": true
+        },
+        "Local persistance size": {
+          "description": "Size of local volume in Mb",
+          "type": "number",
+          "default": ""
+        }
+      }
+    },
+
+
+
+    "network":{
+    
     }
+
+    "security":{
+
+    }
+
+        
+          
   }
 }
