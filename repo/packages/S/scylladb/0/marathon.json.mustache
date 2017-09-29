@@ -1,74 +1,136 @@
 {
-    "id": "{{service.name}}",
-    "cpus": {{scylladb.cpus}},
-    "mem": {{scylladb.mem}},
-    "instances": 1,
-    "env": {
-        {{#scylladb.database.name}}
-        "MARIADB_DATABASE": "{{scylladb.database.name}}",
-        {{#scylladb.database.username}}
-        "MARIADB_USER": "{{scylladb.database.username}}",
-        "MARIADB_PASSWORD": "{{scylladb.database.password}}",
-        {{/scylladb.database.username}}
-        {{/scylladb.database.name}}
-        "MARIADB_ROOT_PASSWORD": "{{scylladb.root_password}}",
-        "ALLOW_EMPTY_PASSWORD": "yes"
-    },
-    "container": {
-        "type": "DOCKER",
-        "docker": {
-            "image": "{{resource.assets.container.docker.scylladb-docker}}",
-            "forcePullImage": true,
-            {{#scylladb.bridge}}
-            "network": "BRIDGE",
-            "portMappings": [{
-                "containerPort": 3306,
-                "hostPort": 0,
-                "protocol": "tcp"
-            }]
-            {{/scylladb.bridge}}
-            {{^scylladb.bridge}}
-            "network": "HOST"
-            {{/scylladb.bridge}}
-        },
-        "volumes": [
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": {{service.nodes}},
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.scylladb}}",
+      "forcePullImage": true,
+      "network": "BRIDGE",
+      "portMappings": [
         {
-            "containerPath": "/var/lib/scylla",
-            "hostPath": "{{scylladb.host_volume}}",
-            "mode": "RW"
+          "containerPort": 10000,
+          "hostPort": 10000,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 7000,
+          "hostPort": 7000,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 9180,
+          "hostPort": 9180,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 9042,
+          "hostPort": 9042,
+          "protocol": "tcp"
+          {{#network.cql_vip_port}}
+          "name": "cql",
+          "labels": {
+            "VIP_0": "/{{service.name}}:{{network.cql_vip_port}}"
+          }
+          {{/network.cql_vip_port}}
+        },
+        {
+          "containerPort": 9160,
+          "hostPort": 9160,
+          "protocol": "tcp"
+          {{#network.thrift_vip_port}}
+          "name": "thrift",
+          "labels": {
+            "VIP_1": "/{{service.name}}:{{network.thrift_vip_port}}"
+          }
+          {{/network.thrift_vip_port}}
         }
-        ]
+      ]
     },
-    {{^scylladb.bridge}}
-    "portDefinitions": [
+    {{#disks.use_host_disks}}
+    "volumes": [
+      {
+        "containerPath": "/var/lib/scylla",
+        "hostPath": "{{disks.host_directory}}"
+        "mode": "RW"
+      }
+    ]
+    {{/disks.use_host_disks}}
+    {{#disks.use_dcos_local_persistance}}
+    "volumes": [
+      {
+        "containerPath": "scylladata",
+        "mode": "RW"
+        "persistant": {
+          "size": "{{disks.local_persistance_volume_size}}"
+        }
+      },
+      {
+        "containerPath": "/var/lib/scylla",
+        "hostPath": "scylladata",
+        "mode": "RW"
+      }
+    ]
+    {{/disks.use_dcos_local_persistance}}
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
     {
-            "port": 3306,
-            "protocol": "tcp",
-            "name": "mysql",
-            "labels": {}
+      "protocol": "TCP",
+      "portIndex": 0,
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 1
     }
-    ],
-    "requirePorts": true,
-    {{/scylladb.bridge}}
-    "healthChecks": [
-    {
-        "protocol": "TCP",
-        "portIndex": 0,
-        "gracePeriodSeconds": 300,
-        "intervalSeconds": 60,
-        "timeoutSeconds": 20,
-        "maxConsecutiveFailures": 3,
-        "ignoreHttp1xx": false
-    }
-    ],
-    "labels": {
-        "DCOS_SERVICE_NAME": "{{service.name}}",
-        "DCOS_SERVICE_SCHEME": "http",
-        "DCOS_SERVICE_PORT_INDEX": "0",
-        "MARATHON_SINGLE_INSTANCE_APP":"true"
+  ],
+  "uris": [
+    {{#security.download_my_keys.enable}}
+    "{{security.download_my_keys.path}}" 
+    {{/security.download_my_keys.enable}}
+  ],
+  "env": {
+    "SCYLLA_SMP": "{{service.smp}}",
+    "SCYLLA_MEM": "{{service.mem}}",
+    "SCYLLA_CLUSTER_NAME": "{{general.cluster_name}},
+    "SCYLLA_OVERPROVISIONED": "{{general.overprovisioned}},
+    "SCYLLA_EXPERIMENTAL": "{{general.experimental}}",
+    "SCYLLA_ENDPOINT_SNITCH": "{{general.endpoint_snitch}}",
+    "SCYLLA_SEEDS": "{{general.number_of_seeds}}",
+    "SCYLLA_NEW_RACK": "{{general.each_node_is_a_new_rack}}",
+    "SCYLLA_DATACENTER_NAME": "{{general.data_center_name}}",
+    "SCYLLA_BATCH_SIZE_WARN": "{{general.batch_size_warning_threshold_in_kb}}",
+    "SCYLLA_BATCH_SIZE_FAIL": "{{general.batch_size_fail_threshold_in_kb}}",
+    "SCYLLA_AUTHENTICATOR": "{{security.authenticator}}",
+    "SCYLLA_USERNAME": "{{security.username}}",
+    "SCYLLA_PASSWORD": "{{security.password}},
+    {{#security.client_encryption.enable}}
+    {{^security.download_my_keys.enable}}
+    "SCYLLA_CLIENT_CERT_PATH": "{{security.client_encryption.certificate_path}}",
+    "SCYLLA_CLIENT_KEY_PATH": "{{security.client_encryption.key_path}}",
+    {{/security.download_my_keys.enable}}
+    {{/security.client_encryption.enable}}
+    {{#security.node_to_node_encryption.enable}}
+    "SCYLLA_NODE_LEVEL": "{{security.node_to_node_encryption.level}}",
+    {{^security.download_my_keys.enable}}
+    "SCYLLA_NODE_CERT_PATH": "{{security.node_to_node_encryption.certificate_path}}",
+    "SCYLLA_NODE_KEY_PATH": "{{security.node_to_node_encryption.key_path}}",
+    "SCYLLA_NODE_TRUST_STORE": "{{security.node_to_node_encryption.trust_store}}"
+    {{#security.download_my_keys.enable}}
+    "SCYLLA_DOWNLOAD_KEYS": "true"
+    {{/security.node_to_node_encryption.enable}}
     },
-    "upgradeStrategy":{
-        "minimumHealthCapacity": 0,
-        "maximumOverCapacity": 0
-    }
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SCYLLA_VERSION": "{{resource.assets.container.docker.scylladb}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true"
+    {{#network.external_access_port}}
+    "HAPROXY_GROUP": "external"
+    {{/network.external_access_port}}
+  }
 }

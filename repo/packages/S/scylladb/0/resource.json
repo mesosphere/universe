@@ -1,8 +1,13 @@
 {
+  "images": {
+    "icon-small": "",
+    "icon-medium": "",
+    "icon-large": ""
+  },
   "assets": {
     "container": {
       "docker": {
-        "timeserverimage": "scylladb/scylla"
+        "2546288dc727": "scylladb/scylla:1.7.5"
       }
     }
   }
