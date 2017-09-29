@@ -1,0 +1,686 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "Apache Kafka",
+          "type": "string",
+          "default": "kafka"
+        },
+        "mesos_api_version": {
+          "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)",
+          "type": "string",
+          "default": "V0"
+        },
+        "user": {
+          "type": "string",
+          "description": "The user that the service will run as.",
+          "default": "nobody"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "placement_constraint": {
+          "description": "Marathon-style placement constraint for Broker nodes. Example: rack_id:LIKE:rack-foo-.*,rack_id:MAX_PER:2",
+          "type": "string",
+          "default": "hostname:MAX_PER:1"
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        },
+        "deploy_strategy": {
+          "description": "Deployment phase strategy. See documentation. [serial, serial-canary, parallel-canary, parallel]",
+          "type": "string",
+          "default": "serial",
+          "enum": [
+            "serial",
+            "serial-canary",
+            "parallel-canary",
+            "parallel"
+          ]
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        }
+      },
+      "required": [
+        "deploy_strategy"
+      ]
+    },
+    "brokers": {
+      "description": "Kafka broker configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "Broker cpu requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "description": "Broker mem requirements",
+          "type": "integer",
+          "default": 2048
+        },
+        "heap": {
+          "description": "The Kafka process JVM heap configuration object",
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "integer",
+              "description": "The amount of JVM heap, in MB, allocated to the Kafka broker process.",
+              "default": 512
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "size"
+          ]
+        },
+        "disk": {
+          "description": "Broker disk requirements (only respected with persistent volumes)",
+          "type": "integer",
+          "default": 5000
+        },
+        "disk_type": {
+          "type": "string",
+          "description": "Disk type to be used for storing broker data. See documentation. [ROOT, MOUNT]",
+          "default": "ROOT"
+        },
+        "disk_path": {
+          "type": "string",
+          "description": "Relative path of consistent disk",
+          "default": "kafka-broker-data"
+        },
+        "count": {
+          "description": "Number of brokers to run",
+          "type": "number",
+          "default": 3
+        },
+        "port": {
+          "description": "Port for broker to listen on",
+          "type": "integer",
+          "default": 0
+        },
+        "kill_grace_period": {
+          "description": "The number of seconds of grace to await a clean shutdown following SIGTERM before sending SIGKILL, default: `30`",
+          "type": "integer",
+          "default": 30
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk",
+        "count"
+      ]
+    },
+    "kafka": {
+      "description": "Kafka service configuration properties",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kafka_zookeeper_uri": {
+          "title": "Custom Zookeeper path",
+          "description": "The address of the cluster to be used by Kafka, or empty to use DC/OS' instance. Example: myhost:2181/mynode",
+          "type": "string",
+          "default": ""
+        },
+        "auto_create_topics_enable": {
+          "title": "auto.create.topics.enable",
+          "description": "Enables auto creation of topic on the server",
+          "type": "boolean",
+          "default": true
+        },
+        "kafka_advertise_host_ip": {
+          "description": "Automatically configure advertised.host.name with the tasks' IP address",
+          "type": "boolean",
+          "default": true
+        },
+        "auto_leader_rebalance_enable": {
+          "title": "auto.leader.rebalance.enable",
+          "description": "Enables auto leader balancing. A background thread checks and triggers leader balance if required at regular intervals",
+          "type": "boolean",
+          "default": true
+        },
+        "background_threads": {
+          "title": "background.threads",
+          "description": "The number of threads to use for various background processing tasks",
+          "type": "integer",
+          "default": 10
+        },
+        "compression_type": {
+          "title": "compression.type",
+          "description": "Specify the final compression type for a given topic. This configuration accepts the standard compression codecs ('gzip', 'snappy', lz4). It additionally accepts 'uncompressed' which is equivalent to no compression; and 'producer' which means retain the original compression codec set by the producer.",
+          "type": "string",
+          "default": "producer"
+        },
+        "delete_topic_enable": {
+          "title": "delete.topic.enable",
+          "description": "Enables delete topic. Delete topic through the admin tool will have no effect if this config is turned off",
+          "type": "boolean",
+          "default": false
+        },
+        "leader_imbalance_check_interval_seconds": {
+          "title": "leader.imbalance.check.interval.seconds",
+          "description": "The frequency with which the partition rebalance check is triggered by the controller",
+          "type": "integer",
+          "default": 300
+        },
+        "leader_imbalance_per_broker_percentage": {
+          "title": "leader.imbalance.per.broker.percentage",
+          "description": "The ratio of leader imbalance allowed per broker. The controller would trigger a leader balance if it goes above this value per broker. The value is specified in percentage.",
+          "type": "integer",
+          "default": 10
+        },
+        "log_flush_interval_messages": {
+          "title": "log.flush.interval.messages",
+          "description": "The number of messages accumulated on a log partition before messages are flushed to disk",
+          "type": "string",
+          "default": "9223372036854775807"
+        },
+        "log_flush_offset_checkpoint_interval_ms": {
+          "title": "log.flush.offset.checkpoint.interval.ms",
+          "description": "The frequency with which we update the persistent record of the last flush which acts as the log recovery point",
+          "type": "integer",
+          "default": 60000
+        },
+        "log_flush_scheduler_interval_ms": {
+          "title": "log.flush.scheduler.interval.ms",
+          "description": "The frequency in ms that the log flusher checks whether any log needs to be flushed to disk",
+          "type": "string",
+          "default": "9223372036854775807"
+        },
+        "log_retention_bytes": {
+          "title": "log.retention.bytes",
+          "description": "The maximum size of the log before deleting it",
+          "type": "string",
+          "default": "-1"
+        },
+        "log_retention_hours": {
+          "title": "log.retention.hours",
+          "description": "The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property",
+          "type": "integer",
+          "default": 168
+        },
+        "log_roll_hours": {
+          "title": "log.roll.hours",
+          "description": "The maximum time before a new log segment is rolled out (in hours), secondary to log.roll.ms property",
+          "type": "integer",
+          "default": 168
+        },
+        "log_roll_jitter_hours": {
+          "title": "log.roll.jitter.hours",
+          "description": "The maximum jitter to subtract from logRollTimeMillis (in hours), secondary to log.roll.jitter.ms property",
+          "type": "integer",
+          "default": 0
+        },
+        "log_segment_bytes": {
+          "title": "log.segment.bytes",
+          "description": "The maximum size of a single log file",
+          "type": "integer",
+          "default": 1073741824
+        },
+        "log_segment_delete_delay_ms": {
+          "title": "log.segment.delete.delay.ms",
+          "description": "The amount of time to wait before deleting a file from the filesystem",
+          "type": "integer",
+          "default": 60000
+        },
+        "message_max_bytes": {
+          "title": "message.max.bytes",
+          "description": "The maximum size of message that the server can receive",
+          "type": "integer",
+          "default": 1000012
+        },
+        "min_insync_replicas": {
+          "title": "min.insync.replicas",
+          "description": "define the minimum number of replicas in ISR needed to satisfy a produce request with required.acks=-1 (or all)",
+          "type": "integer",
+          "default": 1
+        },
+        "num_io_threads": {
+          "title": "num.io.thread",
+          "description": "The number of io threads that the server uses for carrying out network requests",
+          "type": "integer",
+          "default": 8
+        },
+        "num_network_threads": {
+          "title": "num.network.threads",
+          "description": "The number of network threads that the server uses for handling network requests",
+          "type": "integer",
+          "default": 3
+        },
+        "num_recovery_threads_per_data_dir": {
+          "title": "num.recovery.threads.per.data.dir",
+          "description": "The number of threads per data directory to be used for log recovery at startup and flushing at shutdown",
+          "type": "integer",
+          "default": 1
+        },
+        "num_replica_fetchers": {
+          "title": "num.replica.fetchers",
+          "description": "Number of fetcher threads used to replicate messages from a source broker. Increasing this value can increase the degree of I/O parallelism in the follower broker.",
+          "type": "integer",
+          "default": 1
+        },
+        "offset_metadata_max_bytes": {
+          "title": "offset.metadata.max.bytes",
+          "description": "The maximum size for a metadata entry associated with an offset commit",
+          "type": "integer",
+          "default": 4096
+        },
+        "offsets_commit_required_acks": {
+          "title": "offsets.commit.required.acks",
+          "description": "The required acks before the commit can be accepted. In general, the default (-1) should not be overridden",
+          "type": "integer",
+          "default": -1
+        },
+        "offsets_commit_timeout_ms": {
+          "title": "offsets.commit.timeout.ms",
+          "description": "Offset commit will be delayed until all replicas for the offsets topic receive the commit or this timeout is reached. This is similar to the producer request timeout.",
+          "type": "integer",
+          "default": 5000
+        },
+        "offsets_load_buffer_size": {
+          "title": "offsets.load.buffer.size",
+          "description": "Batch size for reading from the offsets segments when loading offsets into the cache.",
+          "type": "integer",
+          "default": 5242880
+        },
+        "offsets_retention_check_interval_ms": {
+          "title": "offsets.retention.check.interval.ms",
+          "description": "Frequency at which to check for stale offsets",
+          "type": "integer",
+          "default": 600000
+        },
+        "offsets_retention_minutes": {
+          "title": "offsets.retention.minutes",
+          "description": "Log retention window in minutes for offsets topic",
+          "type": "integer",
+          "default": 1440
+        },
+        "offsets_topic_compression_codec": {
+          "title": "offsets.topic.compression.codec",
+          "description": "Compression codec for the offsets topic - compression may be used to achieve 'atomic' commits",
+          "type": "integer",
+          "default": 0
+        },
+        "offsets_topic_num_partitions": {
+          "title": "offsets.topic.num.partitions",
+          "description": "The number of partitions for the offset commit topic (should not change after deployment).",
+          "type": "integer",
+          "default": 50
+        },
+        "offsets_topic_replication_factor": {
+          "title": "offsets.topic.replication.factor",
+          "description": "The replication factor for the offsets topic (set higher to ensure availability). To ensure that the effective replication factor of the offsets topic is the configured value, the number of alive brokers has to be at least the replication factor at the time of the first request for the offsets topic. If not, either the offsets topic creation will fail or it will get a replication factor of min(alive brokers, configured replication factor)",
+          "type": "integer",
+          "default": 3
+        },
+        "offsets_topic_segment_bytes": {
+          "title": "offsets.topic.segment.bytes",
+          "description": "The offsets topic segment bytes should be kept relatively small in order to facilitate faster log compaction and cache loads",
+          "type": "integer",
+          "default": 104857600
+        },
+        "queued_max_requests": {
+          "title": "queued.max.requests",
+          "description": "The number of queued requests allowed before blocking the network threads ",
+          "type": "integer",
+          "default": 500
+        },
+        "quota_consumer_default": {
+          "title": "quota.consumer.default",
+          "description": "Any consumer distinguished by clientId/consumer group will get throttled if it fetches more bytes than this value per-second",
+          "type": "string",
+          "default": "9223372036854775807"
+        },
+        "quota_producer_default": {
+          "title": "quota.producer.default",
+          "description": "Any producer distinguished by clientId will get throttled if it produces more bytes than this value per-second",
+          "type": "string",
+          "default": "9223372036854775807"
+        },
+        "replica_fetch_max_bytes": {
+          "title": "replica.fetch.max.bytes",
+          "description": "The number of byes of messages to attempt to fetch",
+          "type": "integer",
+          "default": 1048576
+        },
+        "replica_fetch_min_bytes": {
+          "title": "replica.fetch.min.bytes",
+          "description": "Minimum bytes expected for each fetch response. If not enough bytes, wait up to replicaMaxWaitTimeMs",
+          "type": "integer",
+          "default": 1
+        },
+        "replica_fetch_wait_max_ms": {
+          "title": "replica.fetch.wait.max.ms",
+          "description": "Max wait time for each fetcher request issued by follower replicas. This value should always be less than the replica.lag.time.max.ms at all times to prevent frequent shrinking of ISR for low throughput topics",
+          "type": "integer",
+          "default": 500
+        },
+        "replica_high_watermark_checkpoint_interval_ms": {
+          "title": "replica.high.watermark.checkpoint.interval.ms",
+          "description": "The frequency with which the high watermark is saved out to disk",
+          "type": "integer",
+          "default": 5000
+        },
+        "replica_lag_time_max_ms": {
+          "title": "replica.lag.time.max.ms",
+          "description": "If a follower hasn't sent any fetch requests or hasn't consumed up to the leaders log end offset for at least this time, the leader will remove the follower from isr",
+          "type": "integer",
+          "default": 10000
+        },
+        "replica_socket_receive_buffer_bytes": {
+          "title": "replica.socket.receive.buffer.bytes",
+          "description": "The socket receive buffer for network requests",
+          "type": "integer",
+          "default": 65536
+        },
+        "replica_socket_timeout_ms": {
+          "title": "replica.socket.timeout.ms",
+          "description": "The socket timeout for network requests. Its value should be at least replica.fetch.wait.max.ms",
+          "type": "integer",
+          "default": 30000
+        },
+        "request_timeout_ms": {
+          "title": "request.timeout.ms",
+          "description": "The configuration controls the maximum amount of time the client will wait for the response of a request. If the response is not received before the timeout elapses the client will resend the request if necessary or fail the request if retries are exhausted.",
+          "type": "integer",
+          "default": 30000
+        },
+        "socket_receive_buffer_bytes": {
+          "title": "socket.receive.buffer.bytes",
+          "description": "The SO_RCVBUF buffer of the socket sever sockets",
+          "type": "integer",
+          "default": 102400
+        },
+        "socket_request_max_bytes": {
+          "title": "socket.request.max.bytes",
+          "description": "The maximum number of bytes in a socket request",
+          "type": "integer",
+          "default": 104857600
+        },
+        "socket_send_buffer_bytes": {
+          "title": "socket.send.buffer.bytes",
+          "description": "The SO_SNDBUF buffer of the socket sever sockets",
+          "type": "integer",
+          "default": 102400
+        },
+        "unclean_leader_election_enable": {
+          "title": "unclean.leader.election.enable",
+          "description": "Indicates whether to enable replicas not in the ISR set to be elected as leader as a last resort, even though doing so may result in data loss",
+          "type": "boolean",
+          "default": true
+        },
+        "zookeeper_session_timeout_ms": {
+          "title": "zookeeper.session.timeout.ms",
+          "description": "Zookeeper session timeout",
+          "type": "integer",
+          "default": 6000
+        },
+        "connections_max_idle_ms": {
+          "title": "connections.max.idle.ms",
+          "description": "Idle connections timeout: the server socket processor threads close the connections that idle more than this",
+          "type": "integer",
+          "default": 600000
+        },
+        "controlled_shutdown_enable": {
+          "title": "controlled.shutdown.enable",
+          "description": "Enable controlled shutdown of the server",
+          "type": "boolean",
+          "default": true
+        },
+        "controlled_shutdown_max_retries": {
+          "title": "controlled.shutdown.max.retries",
+          "description": "Controlled shutdown can fail for multiple reasons. This determines the number of retries when such failure happens",
+          "type": "integer",
+          "default": 3
+        },
+        "controlled_shutdown_retry_backoff_ms": {
+          "title": "controlled.shutdown.retry.backoff.ms",
+          "description": "Before each retry, the system needs time to recover from the state that caused the previous failure (Controller fail over, replica lag etc). This config determines the amount of time to wait before retrying.",
+          "type": "integer",
+          "default": 5000
+        },
+        "controller_socket_timeout_ms": {
+          "title": "controller.socket.timeout.ms",
+          "description": "The socket timeout for controller-to-broker channels",
+          "type": "integer",
+          "default": 30000
+        },
+        "default_replication_factor": {
+          "title": "default.replication.factor",
+          "description": "Default replication factors for automatically created topics",
+          "type": "integer",
+          "default": 1
+        },
+        "fetch_purgatory_purge_interval_requests": {
+          "title": "fetch.purgatory.purge.interval.requests",
+          "description": "The purge interval (in number of requests) of the fetch request purgatory",
+          "type": "integer",
+          "default": 1000
+        },
+        "group_max_session_timeout_ms": {
+          "title": "group.max.session.timeout.ms",
+          "description": "The maximum allowed session timeout for registered consumers",
+          "type": "integer",
+          "default": 300000
+        },
+        "group_min_session_timeout_ms": {
+          "title": "group.min.session.timeout.ms",
+          "description": "The minimum allowed session timeout for registered consumers",
+          "type": "integer",
+          "default": 6000
+        },
+        "inter_broker_protocol_version": {
+          "type": "string",
+          "title": "inter.broker.protocol.version",
+          "description": "Specify which version of the inter-broker protocol will be used, which must align with log.message.format.version. This is typically bumped *serially* one broker at a time, *after* all brokers were upgraded to a new version. Example of some valid values are: 0.8.0, 0.8.1, 0.8.1.1, 0.8.2, 0.8.2.0, 0.8.2.1, 0.9.0.0, 0.9.0.1, 0.10.0.0, 0.10.1.x, 0.10.2.x, 0.11.0.0. Check ApiVersion for the full list.",
+          "default": "0.11.0.0"
+        },
+        "log_message_format_version": {
+          "type": "string",
+          "title": "log.message.format.version",
+          "description": "Specify which version of the log message format will be used, which must align with inter.broker.protocol.version. This is a new setting as of 0.10.0.0, and should be left at 0.9.0 until clients are updated to 0.10.0.x. Similarly it should be left at 0.10.0 until all clients are updated to 0.11.0. This is typically bumped *serially* one broker at a time, *after* all inter-protocol versions are updated. Clients on earlier versions may see a performance penalty if this is increased before they've upgraded. See the latest Kafka documentation for details.",
+          "default": "0.11.0"
+        },
+        "log_cleaner_backoff_ms": {
+          "title": "log.cleaner.backoff.ms",
+          "description": "The amount of time to sleep when there are no logs to clean",
+          "type": "integer",
+          "default": 15000
+        },
+        "log_cleaner_dedupe_buffer_size": {
+          "title": "log.cleaner.dedupe.buffer.size",
+          "description": "The total memory used for log deduplication across all cleaner threads",
+          "type": "integer",
+          "default": 134217728
+        },
+        "log_cleaner_delete_retention_ms": {
+          "title": "log.cleaner.delete.retention.ms",
+          "description": "How long are delete records retained?",
+          "type": "integer",
+          "default": 86400000
+        },
+        "log_cleaner_enable": {
+          "title": "log.cleaner.enable",
+          "description": "Enable the log cleaner process to run on the server? Should be enabled if using any topics with a cleanup.policy=compact including the internal offsets topic. If disabled those topics will not be compacted and continually grow in size.",
+          "type": "boolean",
+          "default": true
+        },
+        "log_cleaner_io_buffer_load_factor": {
+          "title": "log.cleaner.io.buffer.load.factor",
+          "description": "Log cleaner dedupe buffer load factor. The percentage full the dedupe buffer can become. A higher value will allow more log to be cleaned at once but will lead to more hash collisions",
+          "type": "number",
+          "default": 0.9
+        },
+        "log_cleaner_io_buffer_size": {
+          "title": "log.cleaner.io.buffer.size",
+          "description": "The total memory used for log cleaner I/O buffers across all cleaner threads",
+          "type": "integer",
+          "default": 524288
+        },
+        "log_cleaner_io_max_bytes_per_second": {
+          "title": "log.cleaner.io.max.bytes.per.second",
+          "description": "The log cleaner will be throttled so that the sum of its read and write i/o will be less than this value on average",
+          "type": "number",
+          "default": 1.7976931348623157e+308
+        },
+        "log_cleaner_min_cleanable_ratio": {
+          "title": "log.cleaner.min.cleanable.ratio",
+          "description": "The minimum ratio of dirty log to total log for a log to eligible for cleaning",
+          "type": "number",
+          "default": 0.5
+        },
+        "log_cleaner_threads": {
+          "title": "log.cleaner.threads",
+          "description": "The number of background threads to use for log cleaning",
+          "type": "integer",
+          "default": 1
+        },
+        "log_cleanup_policy": {
+          "type": "string",
+          "title": "log.cleanup.policy",
+          "description": "The default cleanup policy for segments beyond the retention window, must be either 'delete' or 'compact'",
+          "default": "delete"
+        },
+        "log_index_interval_bytes": {
+          "title": "log.index.interval.bytes",
+          "description": "The interval with which we add an entry to the offset index",
+          "type": "integer",
+          "default": 4096
+        },
+        "log_index_size_max_bytes": {
+          "title": "log.index.size.max.bytes",
+          "description": "The maximum size in bytes of the offset index",
+          "type": "integer",
+          "default": 10485760
+        },
+        "log_preallocate": {
+          "title": "log.preallocate",
+          "description": "Should pre allocate file when create new segment? If you are using Kafka on Windows, you probably need to set it to true.",
+          "type": "boolean",
+          "default": false
+        },
+        "log_retention_check_interval_ms": {
+          "title": "log.retention.check.interval.ms",
+          "description": "The frequency in milliseconds that the log cleaner checks whether any log is eligible for deletion",
+          "type": "integer",
+          "default": 300000
+        },
+        "max_connections_per_ip": {
+          "title": "max.connections.per.ip",
+          "description": "mum number of connections we allow from each ip address",
+          "type": "integer",
+          "default": 2147483647
+        },
+        "max_connections_per_ip_overrides": {
+          "type": "string",
+          "title": "max.connections.per.ip.overrides",
+          "description": "Per-ip or hostname overrides to the default maximum number of connections",
+          "default": ""
+        },
+        "num_partitions": {
+          "title": "num.partitions",
+          "description": "The default number of log partitions per topic",
+          "type": "integer",
+          "default": 1
+        },
+        "producer_purgatory_purge_interval_requests": {
+          "title": "producer.purgatory.purge.interval.requests",
+          "description": "The purge interval (in number of requests) of the producer request purgatory",
+          "type": "integer",
+          "default": 1000
+        },
+        "replica_fetch_backoff_ms": {
+          "title": "replica.fetch.backoff.ms",
+          "description": "The amount of time to sleep when fetch partition error occurs.",
+          "type": "integer",
+          "default": 1000
+        },
+        "reserved_broker_max_id": {
+          "title": "reserved.broker.max.id",
+          "description": "Max number that can be used for a broker.id",
+          "type": "integer",
+          "default": 1000
+        },
+        "kafka_metrics_reporters": {
+          "title": "kafka.metric.reporters",
+          "description": "Old style metrics reporter",
+          "type": "string",
+          "default": "com.airbnb.kafka.kafka08.StatsdMetricsReporter"
+        },
+        "metric_reporters": {
+          "title": "metric.reporters",
+          "description": "Java class to collect/report broker metrics",
+          "type": "string",
+          "default": "com.airbnb.kafka.kafka09.StatsdMetricsReporter"
+        },
+        "metrics_num_samples": {
+          "title": "metrics.num.samples",
+          "description": "The number of samples maintained to compute metrics.",
+          "type": "integer",
+          "default": 2
+        },
+        "metrics_sample_window_ms": {
+          "title": "metrics.sample.window.ms",
+          "description": "The number of samples maintained to compute metrics.",
+          "type": "integer",
+          "default": 30000
+        },
+        "quota_window_num": {
+          "title": "quota.window.num",
+          "description": "The number of samples to retain in memory",
+          "type": "integer",
+          "default": 11
+        },
+        "quota_window_size_seconds": {
+          "title": "quota.window.size.seconds",
+          "description": "The time span of each sample",
+          "type": "integer",
+          "default": 1
+        },
+        "zookeeper_sync_time_ms": {
+          "title": "zookeeper.sync.time.ms",
+          "description": "How far a ZK follower can be behind a ZK leader",
+          "type": "integer",
+          "default": 2000
+        }
+      }
+    }
+  }
+}

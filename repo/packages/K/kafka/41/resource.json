@@ -1,0 +1,60 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/kafka/assets/2.0.1-0.11.0/bootstrap.zip",
+      "kafka-tgz": "https://downloads.mesosphere.com/kafka/assets/kafka_2.11-0.11.0.0.tgz",
+      "kafka-jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "kafka-scheduler-zip": "https://downloads.mesosphere.com/kafka/assets/2.0.1-0.11.0/kafka-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/kafka/assets/2.0.1-0.11.0/executor.zip",
+      "kafka-statsd-jar": "http://downloads.mesosphere.com/kafka/assets/kafka-statsd-metrics2-0.5.3.jar",
+      "statsd-client-jar": "http://downloads.mesosphere.com/kafka/assets/java-dogstatsd-client-2.3.jar"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "8a7e0e868cfa4d5c7beb2cf0e748cc728a451a6ee05e83eb92bb667eab520f69"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kafka/assets/2.0.1-0.11.0/dcos-kafka-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "8328b3f3432a1214364d11b7c31dd19d2a598785157d9cf709fc4202e4f830bf"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kafka/assets/2.0.1-0.11.0/dcos-kafka-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "23ebe4655df04667b7c36b980f138144847bbb09d8844e1913738fdf341a3436"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kafka/assets/2.0.1-0.11.0/dcos-kafka.exe"
+        }
+      }
+    }
+  }
+}
