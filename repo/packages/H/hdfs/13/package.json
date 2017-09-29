@@ -1,0 +1,19 @@
+{
+    "packagingVersion": "4.0",
+    "upgradesFrom": ["2.0.0-2.6.0-cdh5.11.0"],
+    "downgradesTo": ["2.0.0-2.6.0-cdh5.11.0"],
+    "minDcosReleaseVersion": "1.9",
+    "name": "hdfs",
+    "version": "2.0.1-2.6.0-cdh5.11.0",
+    "maintainer": "support@mesosphere.io",
+    "description": "Apache Hadoop Distributed File System (HDFS)",
+    "selected": true,
+    "framework": true,
+    "tags": [
+        "hdfs",
+        "hadoop"
+    ],
+    "postInstallNotes": "DC/OS Apache HDFS Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/hdfs/\n\tIssues: https://docs.mesosphere.com/support/",
+    "postUninstallNotes": "DC/OS Apache HDFS Service is being uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/service-docs/hdfs/#uninstall to remove any persistent state if required.",
+    "preInstallNotes": "Default configuration requires 5 agent nodes each with: CPU: 0.9 | Memory: 6144MB | Disk: 10000MB\n\nMore specifically, each instance type requires:\n\nJournal node: 3 instances | 0.3 CPU | 2048 MB MEM | 1 5000 MB Disk\n\nName node: 2 instances | 0.3 CPU | 2048 MB MEM | 1 5000 MB Disk\n\nZKFC node: 2 instances | 0.3 CPU | 2048 MB MEM\n\nData node: 3 instances | 0.3 CPU | 2048 MB MEM | 1 5000 MB Disk"
+}
