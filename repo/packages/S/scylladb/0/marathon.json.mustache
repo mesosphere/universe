@@ -129,6 +129,8 @@
     "DCOS_SERVICE_NAME": "{{service.name}}",
     "DCOS_SCYLLA_VERSION": "{{resource.assets.container.docker.scylladb}}",
     "MARATHON_SINGLE_INSTANCE_APP": "true"
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
     {{#network.external_access_port}}
     "HAPROXY_GROUP": "external"
     {{/network.external_access_port}}

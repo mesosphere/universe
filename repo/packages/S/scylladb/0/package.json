@@ -1,12 +1,11 @@
 {
   "packagingVersion": "4.0",
-  "minDcsoReleaseVersion": "1.9",
   "name": "scylladb",
   "version": "1.7.5",
   "maintainer": "petter.hultin@laketide.com",
   "description": "Scylla DB",
-  "website": "https://www.scylladb.com",
   "tags": ["scylladb", "database", "nosql"],
+  "minDcosReleaseVersion": "1.9.0",
   "preInstallNotes": "This DC/OS package uses ScyllaDB version 1.7.5",
   "postInstallNotes": "ScyllaDB installed!",
   "postUninstallNotes": "ScyllaDB uninstalled!"
