@@ -27,7 +27,7 @@
         },
         {
           "containerPort": 9042,
-          "hostPort": 9042,
+          "hostPort": {{network.cql_port}},
           "protocol": "tcp"
           {{#network.cql_vip_port}}
           "name": "cql",
@@ -38,7 +38,7 @@
         },
         {
           "containerPort": 9160,
-          "hostPort": 9160,
+          "hostPort": {{network.thrift_port}},
           "protocol": "tcp"
           {{#network.thrift_vip_port}}
           "name": "thrift",
@@ -99,6 +99,7 @@
     "SCYLLA_MEM": "{{service.mem}}",
     "SCYLLA_CLUSTER_NAME": "{{general.cluster_name}},
     "SCYLLA_OVERPROVISIONED": "{{general.overprovisioned}},
+		"SCYLLA_DEVELOPER_MODE": "{{general.developer_mode}}",
     "SCYLLA_EXPERIMENTAL": "{{general.experimental}}",
     "SCYLLA_ENDPOINT_SNITCH": "{{general.endpoint_snitch}}",
     "SCYLLA_SEEDS": "{{general.number_of_seeds}}",
@@ -109,13 +110,17 @@
     "SCYLLA_AUTHENTICATOR": "{{security.authenticator}}",
     "SCYLLA_USERNAME": "{{security.username}}",
     "SCYLLA_PASSWORD": "{{security.password}},
+		"SCYLLA_CQL_PORT": "{{network.cql_port}}",
+		"SCYLLA_THRIFT_PORT": {{network.thrift_port}}",
     {{#security.client_encryption.enable}}
+		"SCYLLA_CLIENT_SSL_ENABLE": {{security.client_encryption.enable}},
     {{^security.download_my_keys.enable}}
     "SCYLLA_CLIENT_CERT_PATH": "{{security.client_encryption.certificate_path}}",
     "SCYLLA_CLIENT_KEY_PATH": "{{security.client_encryption.key_path}}",
     {{/security.download_my_keys.enable}}
     {{/security.client_encryption.enable}}
     {{#security.node_to_node_encryption.enable}}
+		"SCYLLA_NODE_SSL_ENABLE": {{security.node_to_node_encryption.enable}},
     "SCYLLA_NODE_LEVEL": "{{security.node_to_node_encryption.level}}",
     {{^security.download_my_keys.enable}}
     "SCYLLA_NODE_CERT_PATH": "{{security.node_to_node_encryption.certificate_path}}",

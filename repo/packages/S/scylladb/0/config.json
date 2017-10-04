@@ -52,6 +52,11 @@
           "type": "boolean",
           "default": false
         },
+        "developer_mode": {
+          "description": "Enable to skip some setup options. Not for production!",
+          "type": "boolean",
+          "default": false
+        },
         "experimental": {
           "description": "Run with experimental settings or not (not recommended for production).",
           "type": "boolean",
@@ -120,10 +125,20 @@
       "type": "object",
       "description": "Network settings for scylla on DC/OS",
       "properties": {
+        "cql_port": {
+          "description": "Port to used for cql communication",
+          "type": "number",
+          "default": 9042
+        },
         "cql_vip_port": {
           "description": "If set, other apps can use cql with scylla on instancename.marathon.l4lb.thisdcos.directory:PORT.",
           "type": "number",
           "default": 9042
+        },
+        "thrift_port": {
+          "description": "Port to be used for thrift communication",
+          "type": "number",
+          "default": 9160
         },
         "thrift_vip_port": {
           "description": "If set, other apps can use thrift with scylla on instancename.marathon.l4lb.thisdcos.directory:PORT.",
