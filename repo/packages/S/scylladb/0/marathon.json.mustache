@@ -6,7 +6,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "{{resource.assets.container.docker.scylladb}}",
+      "image": "{{resource.assets.container.docker.2546288dc727}}",
       "forcePullImage": true,
       "network": "BRIDGE",
       "portMappings": [
@@ -132,7 +132,7 @@
     },
   "labels": {
     "DCOS_SERVICE_NAME": "{{service.name}}",
-    "DCOS_SCYLLA_VERSION": "{{resource.assets.container.docker.scylladb}}",
+    "DCOS_SCYLLA_VERSION": "{{resource.assets.container.docker.2546288dc727}}",
     "MARATHON_SINGLE_INSTANCE_APP": "true"
     "DCOS_SERVICE_PORT_INDEX": "0",
     "DCOS_SERVICE_SCHEME": "http"
