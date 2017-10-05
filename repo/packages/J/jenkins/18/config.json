@@ -26,6 +26,11 @@
                     "description": "The user that the service will run as. In 'strict' security mode, running tasks as root is disabled by default. Ensure that this user exists on each of the agents in your DC/OS cluster.",
                     "type": "string",
                     "default": "root"
+                },
+                "port": {
+                    "description": "Optional argument to pass port to Jenkins",
+                    "type": "number",
+                    "default": 0
                 }
             },
             "required": [
@@ -66,6 +71,10 @@
                     "description": "Whether Marathon-lb should redirect HTTP traffic to HTTPS. This requires 'virtual-host' to be set. By default, this is false.",
                     "type": "boolean",
                     "default": false
+                },
+                "jenkins-agent-port": {
+                    "description": "Optional argument to pass jenkins slave agent port to Jenkins",
+                    "type": "integer"
                 }
             }
         },

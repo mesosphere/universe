@@ -24,14 +24,20 @@
       {{#networking.virtual-host}}
       "JENKINS_ROOT_URL": "{{#networking.https-redirect}}https://{{/networking.https-redirect}}{{^networking.https-redirect}}http://{{/networking.https-redirect}}{{networking.virtual-host}}/service/{{service.name}}",
       {{/networking.virtual-host}}
+      {{#networking.jenkins-slave-agent-port}}
+            "JENKINS_SLAVE_AGENT_PORT": "{{networking.jenkins-slave-agent-port}}",
+      {{/networking.jenkins-slave-agent-port}}
       "JVM_OPTS": "{{advanced.jvm-opts}}",
       "JENKINS_OPTS": "{{advanced.jenkins-opts}}",
       "SSH_KNOWN_HOSTS": "{{networking.known-hosts}}"
   },
   "portDefinitions": [
-      {"port": 0, "protocol": "tcp", "name": "nginx"},
+      {"port": {{service.port}}, "protocol": "tcp", "name": "nginx"},
       {"port": 0, "protocol": "tcp", "name": "jenkins"}
   ],
+  {{#service.port}}
+  "requirePorts" : true,
+  {{/service.port}}
   "container": {
        "type": "DOCKER",
        "docker": {
