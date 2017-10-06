@@ -66,6 +66,11 @@
                     "description": "Whether Marathon-lb should redirect HTTP traffic to HTTPS. This requires 'virtual-host' to be set. By default, this is false.",
                     "type": "boolean",
                     "default": false
+                },
+                "agent-port": {
+                    "description": "Additional agent port parameter to pass to Jenkins.",
+                    "type": "integer",
+                    "default": 50000
                 }
             }
         },

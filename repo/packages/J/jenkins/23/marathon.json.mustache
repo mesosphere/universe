@@ -13,6 +13,7 @@
   "env": {
       "JENKINS_AGENT_ROLE": "{{roles.jenkins-agent-role}}",
       "JENKINS_AGENT_USER": "{{service.user}}",
+      "JENKINS_SLAVE_AGENT_PORT": "{{networking.agent-port}}",
       "JENKINS_FRAMEWORK_NAME": "{{service.name}}",
       {{#security.secret-name}}
           "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
