@@ -71,6 +71,8 @@
   {{#marathon-lb.strict-mode}}
     "--strict-mode",
   {{/marathon-lb.strict-mode}}
+    "--max-reload-retries", "{{marathon-lb.max-reload-retries}}",
+    "--reload-interval", "{{marathon-lb.reload-interval}}",
     "--group", "{{marathon-lb.haproxy-group}}"
   ],
   "requirePorts":true,
@@ -85,6 +87,9 @@
     "HAPROXY_GLOBAL_DEFAULT_OPTIONS": "{{marathon-lb.haproxy_global_default_options}}",
     {{/marathon-lb.haproxy_global_default_options}}
     "HAPROXY_SSL_CERT": "{{marathon-lb.ssl-cert}}",
+    {{#marathon-lb.container-syslogd}}
+    "HAPROXY_SYSLOGD": "{{marathon-lb.container-syslogd}}",
+    {{/marathon-lb.container-syslogd}}
     "HAPROXY_SYSCTL_PARAMS": "{{marathon-lb.sysctl-params}}"
   },
   {{#marathon-lb.secret_name}}

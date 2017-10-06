@@ -102,6 +102,21 @@
           "description": "sysctl params to set at startup for HAProxy.",
           "type": "string"
         },
+        "container-syslogd": {
+          "default": false,
+          "description": "Enable verbose syslogd logging to container stdout. This will also capture all HAProxy http connection and other logs.",
+          "type": "boolean"
+        },
+        "max-reload-retries": {
+          "default": 10,
+          "description": "Max reload retries before failure. Reloads happen every --reload-interval seconds. Set to 0 to disable or -1 for infinite retries.",
+          "type": "integer"
+        },
+        "reload-interval": {
+          "default": 10,
+          "description": "When retry-reload enabled, wait this long before attempting another reload.",
+          "type": "integer"
+        },
         "template-url": {
           "default": "",
           "description": "URL to tarball containing a directory templates/ to customize haproxy config.",
