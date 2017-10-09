@@ -68,7 +68,7 @@
                     "default": false
                 },
                 "agent-port": {
-                    "description": "Additional agent port parameter to pass to Jenkins.",
+                    "description": "The port that Jenkins agents will use to connect to the master. The default port is set to "50000". A value of "0" will result in a random port being chosen. This value will be set with the JENKINS_SLAVE_AGENT_PORT environment variable.",
                     "type": "integer",
                     "default": 50000
                 }
