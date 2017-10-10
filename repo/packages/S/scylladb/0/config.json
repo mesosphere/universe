@@ -45,7 +45,7 @@
         "cluster_name": {
           "description": "Name of the cluster",
           "type": "string",
-          "default": "aCoolScyllaCluster"
+          "default": "charybdis"
         },
         "overprovisioned": {
           "description": "Choose if you want to run in an overprovisioned environment.",
@@ -81,7 +81,7 @@
         "data_center_name": {
           "description": "Give a name to your data center",
           "type": "string",
-          "default": "theCoolestScyllaDataCenter"
+          "default": "dc1"
         }, 
         "batch_size_warning_threshold_in_kb": {
           "description": "Set warning threshold for batch sizes larger than X kb",
