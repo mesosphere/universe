@@ -1,0 +1,59 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64-jce-unlimited.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "hdfs-tar-gz": "https://downloads.mesosphere.com/hdfs/assets/hadoop-2.6.0-cdh5.11.0.tar.gz",
+      "hdfs-bin-tar-gz": "https://s3-us-west-2.amazonaws.com/mrbrowning-dev/hdfs-bin.tar.gz",
+      "hdfs-jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64-jce-unlimited.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/hdfs/assets/2.0.2-2.6.0-cdh5.11.0/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/hdfs/assets/2.0.2-2.6.0-cdh5.11.0/hdfs-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/hdfs/assets/2.0.2-2.6.0-cdh5.11.0/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "1d1783d3b6fbc06d8193ab6cde081b0c0074c7e9371a043e0b2df07186a0280d"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hdfs/assets/2.0.2-2.6.0-cdh5.11.0/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "ccf93f2ca04ac03df99dad6bec8468474fdc26bde6780ba1b02b38343076ce33"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hdfs/assets/2.0.2-2.6.0-cdh5.11.0/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "ea9fcc7da9f81530431a2c19f4404fa178148743afb180f73eb3533963276dc4"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hdfs/assets/2.0.2-2.6.0-cdh5.11.0/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
