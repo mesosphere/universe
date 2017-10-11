@@ -1,0 +1,116 @@
+{
+    "id": "{{service.name}}",
+    "cpus": {{service.cpus}},
+    "mem": {{service.mem}},
+    "cmd": "/sbin/init.sh",
+    "env": {
+{{#security.kerberos.krb5conf}}
+        "SPARK_MESOS_KRB5_CONF_BASE64": "{{security.kerberos.krb5conf}}",
+{{/security.kerberos.krb5conf}}
+        "NO_BOOTSTRAP": "true",
+{{#security.ssl.enabled}}
+        "SPARK_SSL_ENABLED": "{{security.ssl.enabled}}",
+        "SPARK_SSL_KEYSTOREBASE64": "{{security.ssl.keyStoreBase64}}",
+        "SPARK_SSL_TRUSTSTOREBASE64": "{{security.ssl.trustStoreBase64}}",
+        "SPARK_SSL_KEYSTOREPASSWORD": "{{security.ssl.keyStorePassword}}",
+        "SPARK_SSL_KEYPASSWORD": "{{security.ssl.keyPassword}}",
+        "SPARK_SSL_TRUSTSTOREPASSWORD": "{{security.ssl.keyStorePassword}}",
+        "SPARK_SSL_PROTOCOL": "{{security.ssl.protocol}}",
+        "SPARK_SSL_ENABLEDALGORITHMS": "{{security.ssl.enabledAlgorithms}}",
+{{/security.ssl.enabled}}
+
+{{#service.service_account_secret}}
+        "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+        "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+        "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+{{/service.service_account_secret}}
+
+{{#service.spark-history-server-url}}
+        "SPARK_HISTORY_SERVER_URL": "{{service.spark-history-server-url}}",
+{{/service.spark-history-server-url}}
+
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",
+        "SPARK_USER": "{{service.user}}",
+        "SPARK_DISPATCHER_MESOS_ROLE": "{{service.role}}",
+        "SPARK_DISPATCHER_MESOS_PRINCIPAL": "{{service.service_account}}",
+        "SPARK_DISPATCHER_MESOS_SECRET": "{{service.secret}}",
+        "SPARK_LOG_LEVEL": "{{service.log-level}}"
+    },
+
+{{#service.service_account_secret}}
+    "secrets": {
+        "serviceCredential": {
+            "source": "{{service.service_account_secret}}"
+        }
+    },
+{{/service.service_account_secret}}
+
+    "ports": [
+        0,
+        0,
+        0
+    ],
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+{{#service.docker-image}}
+            "image": "{{service.docker-image}}",
+{{/service.docker-image}}
+{{^service.docker-image}}
+            "image": "{{resource.assets.container.docker.spark_docker}}",
+{{/service.docker-image}}
+            "network": "HOST",
+{{#service.user}}
+            "parameters": [
+               {
+                 "key": "user",
+                 "value": "{{service.user}}"
+               }
+            ],
+{{/service.user}}
+            "forcePullImage": true
+        }
+    },
+    "healthChecks": [
+        {
+{{#security.ssl.enabled}}
+            "protocol": "COMMAND",
+            "command": { "value": "curl -f -k https://$HOST:$PORT2/" },
+{{/security.ssl.enabled}}
+{{^security.ssl.enabled}}
+            "path": "/",
+            "portIndex": 2,
+            "protocol": "HTTP",
+{{/security.ssl.enabled}}
+            "gracePeriodSeconds": 5,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 10,
+            "maxConsecutiveFailures": 3
+        }
+    ],
+    "labels": {
+{{#hdfs.config-url}}
+        "SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",
+{{/hdfs.config-url}}
+        "SPARK_URI": "{{service.spark-dist-uri}}",
+        "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "DCOS_SERVICE_PORT_INDEX": "2",
+{{#security.ssl.enabled}}
+        "DCOS_SERVICE_SCHEME": "https"
+{{/security.ssl.enabled}}
+{{^security.ssl.enabled}}
+        "DCOS_SERVICE_SCHEME": "http"
+{{/security.ssl.enabled}}
+    },
+{{#service.user}}
+    "user": "{{service.user}}",
+{{/service.user}}
+    "uris": [
+    {{#hdfs.config-url}}
+    "{{hdfs.config-url}}/hdfs-site.xml",
+    "{{hdfs.config-url}}/core-site.xml"
+    {{/hdfs.config-url}}
+    ]
+}
