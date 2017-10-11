@@ -1,12 +1,18 @@
 {
   "id": "{{service.name}}",
-  "cpus": {{service.cpus}},
+  "cpus": {{service.smp}},
   "mem": {{service.mem}},
   "instances": {{service.nodes}},
+	"constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "{{resource.assets.container.docker.2546288dc727}}",
+      "image": "{{resource.assets.container.docker.8514d8bf433f}}",
       "forcePullImage": true,
       "network": "BRIDGE",
       "portMappings": [
@@ -76,8 +82,8 @@
     {{/disks.use_dcos_local_persistance}}
   },
   "upgradeStrategy":{
-    "minimumHealthCapacity": 0,
-    "maximumOverCapacity": 0
+    "minimumHealthCapacity": 1,
+    "maximumOverCapacity": 1
   },
   "healthChecks": [
     {
@@ -133,7 +139,7 @@
     },
   "labels": {
     "DCOS_SERVICE_NAME": "{{service.name}}",
-    "DCOS_SCYLLA_VERSION": "{{resource.assets.container.docker.2546288dc727}}",
+    "DCOS_SCYLLA_VERSION": "{{resource.assets.container.docker.8514d8bf433f}}",
     "MARATHON_SINGLE_INSTANCE_APP": "true"
     "DCOS_SERVICE_PORT_INDEX": "0",
     "DCOS_SERVICE_SCHEME": "http"
