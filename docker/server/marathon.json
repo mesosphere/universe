@@ -9,6 +9,7 @@
     "docker": {
       "network": "BRIDGE",
       "image": "mesosphere/universe-server:$tag",
+      "forcePullImage": true,
       "portMappings": [
         {
           "containerPort": 80,
