@@ -1,0 +1,43 @@
+{
+    "assets": {},
+    "cli": {
+        "binaries": {
+            "darwin": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "80b6641ca433e6b3ea081f2ffa1594e222f66e2884b70f560e36b4460aebcb20"
+                        }
+                    ],
+                    "kind": "zip",
+                    "url": "https://downloads.mesosphere.io/cli/binaries/darwin/x86-64/1.3.0/80b6641ca433e6b3ea081f2ffa1594e222f66e2884b70f560e36b4460aebcb20/dcos-enterprise-cli"
+                }
+            },
+            "linux": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "b6b7fbf7ea705e40badbe6ec7a978790fbd1e77449d2cd7e4c8fe52b8c5de925"
+                        }
+                    ],
+                    "kind": "zip",
+                    "url": "https://downloads.mesosphere.io/cli/binaries/linux/x86-64/1.3.0/b6b7fbf7ea705e40badbe6ec7a978790fbd1e77449d2cd7e4c8fe52b8c5de925/dcos-enterprise-cli"
+                }
+            },
+            "windows": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "c302b8da0171d4aa9d377213298bb4b71938511fbc9aa76a8c49c5f345e42862"
+                        }
+                    ],
+                    "kind": "zip",
+                    "url": "https://downloads.mesosphere.io/cli/binaries/windows/x86-64/1.3.0/c302b8da0171d4aa9d377213298bb4b71938511fbc9aa76a8c49c5f345e42862/dcos-enterprise-cli"
+                }
+            }
+        }
+    }
+}
