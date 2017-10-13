@@ -1,0 +1,101 @@
+{
+  "properties": {
+    "exhibitor": {
+      "additionalProperties": false,
+      "description": "Exhibitor specific configuration properties",
+      "properties": {
+        "app-id": {
+          "default": "/exhibitor-dcos",
+          "description": "Name of the Exhibitor task in Marathon",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares to allocate to each Exhibitor instance.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "http-port": {
+          "default": 31885,
+          "description": "The port on which the exhibitor UI listens.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "instances": {
+          "default": 3,
+          "description": "Number of Exhibitor instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "jvm_opts": {
+          "default": "-Xmx512m",
+          "description": "JVM opts for Exhibitor",
+          "type": "string"
+        },
+        "mem": {
+          "default": 3072.0,
+          "description": "Memory (MiB) to allocate to each Exhibitor instance.",
+          "minimum": 1024.0,
+          "type": "number"
+        },
+        "volume-size": {
+          "default": 10240,
+          "description": "Size of data volume (MiB) to allocate to each Exhibitor instance.",
+          "minimum": 1024,
+          "type": "number"
+        },
+        "zk_servers": {
+          "default": "master.mesos:2181",
+          "description": "Parent ZooKeeper URL for storing state. The framework name is joined to the path of this value. Format: zk://host1:port1,host2:port2,.../path",
+          "type": "string"
+        },
+        "zookeeper": {
+          "description": "ZooKeeper specific configuration properties",
+          "properties": {
+            "jvm_opts": {
+              "default": "-XX:+PrintCommandLineFlags -XX:+PrintGC -XX:+PrintGCCause -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:+PrintGCApplicationConcurrentTime -XX:+PrintGCApplicationStoppedTime -XX:+PrintTenuringDistribution -XX:+PrintAdaptiveSizePolicy -Xmx2g -Xms2g -XX:+AlwaysPreTouch -Xss512k",
+              "description": "JVM opts for Exhibitor",
+              "type": "string"
+            },
+            "client-port": {
+              "default": 31886,
+              "description": "The port clients use to talk to the zookeeper cluster.",
+              "minimum": 1,
+              "type": "integer"
+            },
+            "peer-port": {
+              "default": 31887,
+              "description": "The port zookeeper peers talk with eachother on.",
+              "minimum": 1,
+              "type": "integer"
+            },
+            "leader-port": {
+              "default": 31888,
+              "description": "The port zookeeper peers talk to the leader on.",
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "jvm_opts",
+            "client-port",
+            "peer-port",
+            "leader-port"
+          ],
+          "type":"object"
+        }
+      },
+      "required": [
+        "app-id",
+        "cpus",
+        "http-port",
+        "instances",
+        "zk_servers",
+        "jvm_opts",
+        "mem"
+      ],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}
