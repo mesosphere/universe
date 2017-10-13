@@ -1,0 +1,14 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "exhibitor-dcos-docker": "mesosphere/exhibitor-dcos:latest"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-exhibitor-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-exhibitor-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-exhibitor-large.png"
+  }
+}
