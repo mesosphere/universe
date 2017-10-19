@@ -1,11 +1,9 @@
 # Mesosphere Universe
 
-
 | Build | Status |
 |---|---|
 |CI   | [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)|
 | Universe Server | [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_UniverseServer)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_UniverseServer&guest=1)|
-
 
 Mesosphere Universe registry of packages made available for DC/OS Clusters.
 
@@ -78,13 +76,11 @@ the package.
 
 #### `package.json`
 
-
 | Packaging Version |          |
 | ----------------- | -------- |
 |         2.0       | required |
 |         3.0       | required |
 |         4.0       | required |
-
 
 Every package in Universe must have a `package.json` file which specifies the high level metadata about the package.
 
@@ -110,6 +106,7 @@ what properties are available for each corresponding version of a package.
 ```
 
 ###### `.minDcosReleaseVersion`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|not supported|
@@ -120,6 +117,7 @@ When `.minDcosReleaseVersion` is specified the package will only be made availab
 Release Version greater than or equal to (`>=`) the value specified.
 
 #### `config.json`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|optional|
