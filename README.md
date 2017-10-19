@@ -4,6 +4,7 @@
 |---|---|
 |CI   | [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)|
 | Universe Server | [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_UniverseServer)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_UniverseServer&guest=1)|
+
 Mesosphere Universe registry of packages made available for DC/OS Clusters.
 
 #### Table of Contents
@@ -81,6 +82,7 @@ the package.
 
 
 #### `package.json`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|required|
@@ -118,6 +120,7 @@ what properties are available for each corresponding version of a package.
 For the first version of the package, add this line to the beginning of `preInstallNotes`: ```This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Preview packages should never be used in production!``` It will be removed once the package has been tested and used by the community.
 
 ###### `.minDcosReleaseVersion`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|not supported|
@@ -131,6 +134,7 @@ Release Version greater than or equal to (`>=`) the value specified.
 For example, `"minDcosReleaseVersion" : "1.8"` will prevent the package from being installed on clusters older than DC/OS 1.8.
 
 ###### `.upgradesFrom`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|not supported|
@@ -143,6 +147,7 @@ the versions listed in the property. It is the resposibility of the package crea
 is indeed the case.
 
 ###### `.downgradesTo`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|not supported|
@@ -155,6 +160,7 @@ the versions listed in the property. It is the resposibility of the package crea
 is indeed the case.
 
 #### `config.json`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|optional|
@@ -194,6 +200,7 @@ DC/OS UI (since DC/OS 1.7).
 
 
 #### `marathon.json.mustache`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|required|
@@ -242,6 +249,7 @@ See the
 for more detailed instruction on app definitions.
 
 #### `command.json`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|optional|
@@ -266,6 +274,7 @@ Packaging version 4.0 does not support command.json. The presence of command.jso
 directory will fail the universe validation.
 
 #### `resource.json`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|optional|
@@ -326,6 +335,7 @@ For example, the icon `icon-cassandra-small.png` would have a retina-ready
 alternate image named `icon-cassandra-small@2x.png`.
 
 ##### CLI Resources
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|not supported|
