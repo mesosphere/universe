@@ -74,10 +74,11 @@ the package.
 
 
 #### `package.json`
-|Packaging Version|   |
-|-----------------|---|
-|2.0|required|
-|3.0|required|
+|Packaging Version|        |
+|-----------------|--------|
+|        2.0      |required|
+|        3.0      |required|
+|        4.0      |required|
 
 Every package in Universe must have a `package.json` file which specifies the high level metadata about the package.
 
