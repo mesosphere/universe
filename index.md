@@ -76,11 +76,11 @@ the package.
 
 #### `package.json`
 
-| Packaging Version |          |
-| ----------------- | -------- |
-|         2.0       | required |
-|         3.0       | required |
-|         4.0       | required |
+|Packaging Version|   |
+|-----------------|---|
+|2.0|required|
+|3.0|required|
+|4.0|required|
 
 Every package in Universe must have a `package.json` file which specifies the high level metadata about the package.
 
@@ -156,6 +156,7 @@ DC/OS UI (since DC/OS 1.7).
 
 
 #### `marathon.json.mustache`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|required|
@@ -203,6 +204,7 @@ See the
 for more detailed instruction on app definitions.
 
 #### `command.json`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|optional|
@@ -223,6 +225,7 @@ format of a Pip requirements file where each element in the array is a line in t
 ```
 
 #### `resource.json`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|optional|
@@ -278,6 +281,7 @@ For example, the icon `icon-cassandra-small.png` would have a retina-ready
 alternate image named `icon-cassandra-small@2x.png`.
 
 ##### CLI Resources
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|not supported|
