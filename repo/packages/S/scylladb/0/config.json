@@ -13,7 +13,7 @@
         "nodes": {
           "description": "How many nodes the cluster will have in total",
           "type": "number",
-          "default": "3"
+          "default": 3
         },
         "smp": {
           "description": "Number of logical cores to allocate to each service instance.",
@@ -110,15 +110,15 @@
           "type": "string",
           "default": "/mnt/scylla"
         },
-        "use_dcos_local_persistance": {
+        "use_dcos_local_persistence": {
           "description": "See DC/OS documentation for more information",
           "type": "boolean",
           "default": false
         },
-        "local_persistance_volume_size": {
+        "local_persistent_volume_size": {
           "description": "Size of local volume in Mb",
           "type": "number",
-          "default": ""
+          "default": 0
         }
       }
     },
@@ -148,8 +148,7 @@
         },
         "external_access_port": {
           "description": "If set, applications outside the cluster can reach scylla on host-ip:PORT. Remember to open up firewall etc.",
-          "type": "number",
-          "default": ""
+          "type": "number"
         }
       },
 			"required": [
@@ -186,13 +185,11 @@
             },
             "certificate_path": {
               "description": "Absolute path on host to certificate. Make sure scylla has privileges to read file",
-              "type": "string",
-              "default": ""
+              "type": "string"
             },
             "key_path": {
               "description": "Absolute path on host to key. Make sure scylla has privileges to read file",
-              "type": "string",
-              "default": ""
+              "type": "string"
             }
           }
         },
@@ -207,23 +204,19 @@
             },
             "level": {
               "description": "Choose what traffic should be encrypted. [all, dc, rack]",
-              "type": "string",
-              "default": ""
+              "type": "string"
             },
             "certificate_path": {
               "description": "Absolute path on host to certificate. Make sure scylla has privileges to read file",
-              "type": "string",
-              "default": ""
+              "type": "string"
             },
             "key_path": {
               "description": "Absolute path on host to key. Make sure scylla has privileges to read file",
-              "type": "string",
-              "default": ""
+              "type": "string"
             }, 
             "trust_store": {
               "description": "Absolute path on host to truststore. Make sure scylla has privileges to read file",
-              "type": "string",
-              "default": ""
+              "type": "string"
             }
           }
         },
@@ -238,8 +231,7 @@
             },
             "path": {
               "description": "The uri to the files to download",
-              "type": "string",
-              "default": ""
+              "type": "string"
             }
           }
         }
