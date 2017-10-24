@@ -193,7 +193,7 @@
         "arangodb-docker-image": {
           "description": "Docker image to run arangodb.",
           "type": "string",
-          "default": "arangodb/arangodb-mesos:3.2"
+          "default": "arangodb/arangodb-mesos:3.2_port"
         },
 
         "arangodb-privileged-image": {
