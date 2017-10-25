@@ -29,18 +29,18 @@
           "default": ""
         },
         "virtual_network_enabled": {
-          "type": "boolean",
           "description": "Enable virtual networking",
+          "type": "boolean",
           "default": false
         },
         "virtual_network_name": {
-          "type": "string",
           "description": "The name of the virtual network to join",
-          "default": "docs"
+          "type": "string",
+          "default": "dcos"
         },
         "virtual_network_plugin_labels": {
-          "type": "string",
           "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
           "default": ""
         },
         "log_level": {
@@ -145,7 +145,7 @@
         "port": {
           "title": "Port",
           "description": "The port Parameter Servers will use for gRPC.",
-          "type": "number",
+          "type": "integer",
           "default": 2223
         },
         "cpus": {
@@ -204,7 +204,7 @@
         "port": {
           "title": "Port",
           "description": "The port Workers (and GPU Workers) will use for gRPC.",
-          "type": "number",
+          "type": "integer",
           "default": 2222
         },
         "cpus": {
@@ -303,7 +303,7 @@
         "port": {
           "title": "Port",
           "description": "The port on which TensorBoard will run.",
-          "type": "number",
+          "type": "integer",
           "default": 6006
         },
         "cpus": {
