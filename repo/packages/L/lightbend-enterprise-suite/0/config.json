@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "properties": {
+    "conductr": {
+      "type": "object",
+      "description": "DC/OS ConductR configuration properties",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the ConductR service instance.",
+          "default": "conductr"
+        },
+        "cpus": {
+          "type": "number",
+          "description": "The cpu shares used by the ConductR service scheduler.",
+          "default": 1.0
+        },
+        "mem": {
+          "type": "integer",
+          "description": "The memory used by the ConductR service scheduler in Mb.",
+          "default": 1024
+        },
+        "disk": {
+          "type": "integer",
+          "description": "The disk space used by the ConductR service scheduler in Mb.",
+          "default": 10240
+        },
+        "zookeeper_uris" : {
+          "type": "string",
+          "description": "The ZooKeeper URIs to bootstrap the ConductR cluster.",
+          "default": "--zk zk://zk-1.zk:2181/mesos --zk zk://zk-2.zk:2181/mesos --zk zk://zk-3.zk:2181/mesos --zk zk://zk-4.zk:2181/mesos --zk zk://zk-5.zk:2181/mesos"
+        },
+        "akka_remoting_port" : {
+          "type": "integer",
+          "description": "The port that the ConductR service is started on.",
+          "default": 9004
+        },
+        "control_protocol_port" : {
+          "type": "integer",
+          "description": "The port that the ConductR control protocol is started on.",
+          "default": 9005
+        },
+        "bundle_stream_server_port" : {
+          "type": "integer",
+          "description": "The port that the ConductR bundle stream server is started on.",
+          "default": 9006
+        },
+        "status_server_port" : {
+          "type": "integer",
+          "description": "The port that the ConductR status server is started on.",
+          "default": 9007
+        },
+        "service_locator_port" : {
+          "type": "integer",
+          "description": "The port that the ConductR service locator is started on.",
+          "default": 9008
+        }
+      }
+    }
+  }
+}
