@@ -23,12 +23,12 @@
                     "type": "string"
                 },
                 "collector_endpoint": {
-                    "default": "collector.sysdigcloud.com",
+                    "default": "",
                     "description": "Collector endpoint - only modify if you are running Sysdig Enterprise On-premise",
                     "type": "string"
                 },
                 "collector_port": {
-                    "default": "6666",
+                    "default": "",
                     "description": "Collector endpoint port - only modify if you are running Sysdig Enterprise On-premise",
                     "type": "string"
                 },
