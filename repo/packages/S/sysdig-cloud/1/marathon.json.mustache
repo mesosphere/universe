@@ -8,7 +8,7 @@
         {
             "protocol": "COMMAND",
             "command": { "value": "exit 0" },
-            "gracePeriodSeconds": 300,
+            "gracePeriodSeconds": 120,
             "intervalSeconds": 60,
             "timeoutSeconds": 20,
             "maxConsecutiveFailures": 3
@@ -29,6 +29,7 @@
             "image": "{{resource.assets.container.docker.agent}}",
             "network": "HOST",
             "privileged": true,
+            "forcePullImage": true,
             "parameters": [
                 {
                     "key": "name", "value": "sysdig-agent"
