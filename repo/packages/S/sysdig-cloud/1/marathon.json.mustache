@@ -1,5 +1,5 @@
 {
-  "id": "/sysdig-agent",
+  "id": "{{sysdigcloud.app_id}}",
   "acceptedResourceRoles": [
     "slave_public",
     "*"
@@ -47,7 +47,7 @@
       }
     ],
     "docker": {
-      "image": "sysdig/agent:latest",
+      "image": "{{resource.assets.container.docker.agent}}",
       "forcePullImage": false,
       "privileged": true,
       "parameters": [
@@ -62,7 +62,7 @@
       ]
     }
   },
-  "cpus": 0.5,
+  "cpus": {{sysdigcloud.cpus}},
   "disk": 0,
   "env": {
     "COLLECTOR": "{{sysdigcloud.collector_endpoint}}",
@@ -90,7 +90,7 @@
     "DCOS_PACKAGE_NAME": "sysdig-cloud"
   },
   "maxLaunchDelaySeconds": 3600,
-  "mem": 500,
+  "mem": {{sysdigcloud.mem}},
   "gpus": 0,
   "networks": [
     {

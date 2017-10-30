@@ -4,7 +4,7 @@
             "description": "Sysdig Cloud for DC/OS settings",
             "properties": {
                 "access_key": {
-                    "default": "a3910b63-a379-4244-86f1-c8bbff26611a",
+                    "default": "",
                     "description": "Your Sysdig Cloud Access Key (found in your Settings in the Sysdig Cloud app)",
                     "type": "string"
                 },
@@ -24,22 +24,22 @@
                     "type": "string"
                 },
                 "collector_endpoint": {
-                    "default": "54.67.51.9",
+                    "default": "",
                     "description": "Collector endpoint - only modify if you are running Sysdig Enterprise On-premise",
                     "type": "string"
                 },
                 "collector_port": {
-                    "default": "6443",
+                    "default": "",
                     "description": "Collector endpoint port - only modify if you are running Sysdig Enterprise On-premise",
                     "type": "string"
                 },
                 "agent_secure": {
-                    "default": "true",
+                    "default": "",
                     "description": "Agent secure connection  (true/false) - only modify if you are running Sysdig Enterprise On-premise",
                     "type": "string"
                 },
                 "agent_check_cert": {
-                    "default": "false",
+                    "default": "",
                     "description": "Agent secure verify cert (true/false) - set false if you are running Sysdig Enterprise On-premise",
                     "type": "string"
                 },
