@@ -1,9 +1,23 @@
 {
     "id": "{{sysdigcloud.app_id}}",
     "cpus": {{sysdigcloud.cpus}},
-    "constraints": [["hostname", "UNIQUE"]],
+    "constraints": [
+        ["hostname", "UNIQUE"],
+        ["hostname", "GROUP_BY"]
+    ],
+    "healthChecks": [
+        {
+            "protocol": "COMMAND",
+            "command": { "value": "exit 0" },
+            "gracePeriodSeconds": 120,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 5,
+            "maxConsecutiveFailures": 10
+        }
+    ],
     "mem": {{sysdigcloud.mem}},
     "instances": {{sysdigcloud.instances}},
+    "acceptedResourceRoles": ["slave_public", "*"],
     "env": {
         "ACCESS_KEY": "{{sysdigcloud.access_key}}",
         "COLLECTOR": "{{sysdigcloud.collector_endpoint}}",
@@ -64,16 +78,6 @@
                 "mode": "RO"
             }
         ]
-    },
-    "healthChecks": [
-        {
-            "protocol": "COMMAND",
-            "command": { "value": "exit 0" },
-            "gracePeriodSeconds": 120,
-            "intervalSeconds": 60,
-            "timeoutSeconds": 5,
-            "maxConsecutiveFailures": 10
-        }
-    ],
-    "acceptedResourceRoles": ["slave_public", "*"]
+    }
 }
+
