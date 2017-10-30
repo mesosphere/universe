@@ -27,6 +27,21 @@
                     "description": "Collector endpoint - only modify if you are running Sysdig Enterprise On-premise",
                     "type": "string"
                 },
+                "collector_port": {
+                    "default": "6666",
+                    "description": "Collector endpoint port - only modify if you are running Sysdig Enterprise On-premise",
+                    "type": "string"
+                },
+                "agent_secure": {
+                    "default": "true",
+                    "description": "Agent secure connection  (true/false) - only modify if you are running Sysdig Enterprise On-premise",
+                    "type": "string"
+                },
+                "agent_check_cert": {
+                    "default": "true",
+                    "description": "Agent secure verify cert (true/false) - set false if you are running Sysdig Enterprise On-premise",
+                    "type": "string"
+                },
                 "cpus": {
                     "default": 0.05,
                     "description": "CPU (shares) to allocate to each Sysdig Cloud agent task",
@@ -57,3 +72,4 @@
     ],
     "type": "object"
 }
+

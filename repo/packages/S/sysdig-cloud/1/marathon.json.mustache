@@ -1,83 +1,112 @@
 {
-    "id": "{{sysdigcloud.app_id}}",
-    "cpus": {{sysdigcloud.cpus}},
-    "constraints": [
-        ["hostname", "UNIQUE"],
-        ["hostname", "GROUP_BY"]
+  "id": "/sysdig-agent",
+  "acceptedResourceRoles": [
+    "slave_public",
+    "*"
+  ],
+  "backoffFactor": 1.15,
+  "backoffSeconds": 1,
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/host/var/run/docker.sock",
+        "hostPath": "/var/run/docker.sock",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/host/dev",
+        "hostPath": "/dev",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/host/proc",
+        "hostPath": "/proc",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/host/boot",
+        "hostPath": "/boot",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/host/lib/modules",
+        "hostPath": "/lib/modules",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/host/usr",
+        "hostPath": "/usr",
+        "mode": "RO"
+      }
     ],
-    "healthChecks": [
+    "docker": {
+      "image": "sysdig/agent:latest",
+      "forcePullImage": false,
+      "privileged": true,
+      "parameters": [
         {
-            "protocol": "COMMAND",
-            "command": { "value": "exit 0" },
-            "gracePeriodSeconds": 120,
-            "intervalSeconds": 60,
-            "timeoutSeconds": 5,
-            "maxConsecutiveFailures": 10
-        }
-    ],
-    "mem": {{sysdigcloud.mem}},
-    "instances": {{sysdigcloud.instances}},
-    "acceptedResourceRoles": ["slave_public", "*"],
-    "env": {
-        "ACCESS_KEY": "{{sysdigcloud.access_key}}",
-        "COLLECTOR": "{{sysdigcloud.collector_endpoint}}",
-        "COLLECTOR_PORT": "{{sysdigcloud.collector_port}}",
-        "SECURE": "{{sysdigcloud.agent_secure}}",
-        "CHECK_CERTIFICATE": "{{sysdigcloud.agent_check_cert}}",        
-        "TAGS": "{{sysdigcloud.agent_tags}}",
-        "ADDITIONAL_CONF": "{{sysdigcloud.add_conf}}"
-    },
-    "container": {
-        "type": "DOCKER",
-        "docker": {
-            "image": "{{resource.assets.container.docker.agent}}",
-            "network": "HOST",
-            "privileged": true,
-            "forcePullImage": true,
-            "parameters": [
-                {
-                    "key": "name", "value": "sysdig-agent"
-                },
-                {
-                    "key": "pid", "value": "host"
-                },
-                {  
-                    "key": "shm-size","value": "350m"
-                }
-            ]
+          "key": "pid",
+          "value": "host"
         },
-        "volumes": [
-            {
-                "containerPath": "/host/var/run/docker.sock",
-                "hostPath": "/var/run/docker.sock",
-                "mode": "RW"
-            },
-            {
-                "containerPath": "/host/dev",
-                "hostPath": "/dev",
-                "mode": "RW"
-            },
-            {
-                "containerPath": "/host/proc",
-                "hostPath": "/proc",
-                "mode": "RO"
-            },
-            {
-                "containerPath": "/host/boot",
-                "hostPath": "/boot",
-                "mode": "RO"
-            },
-            {
-                "containerPath": "/host/lib/modules",
-                "hostPath": "/lib/modules",
-                "mode": "RO"
-            },
-            {
-                "containerPath": "/host/usr",
-                "hostPath": "/usr",
-                "mode": "RO"
-            }
-        ]
+        {
+          "key": "shm-size",
+          "value": "350m"
+        }
+      ]
     }
+  },
+  "cpus": 0.5,
+  "disk": 0,
+  "env": {
+    "COLLECTOR": "{{sysdigcloud.collector_endpoint}}",
+    "SECURE": "{{sysdigcloud.agent_secure}}",
+    "COLLECTOR_PORT": "{{sysdigcloud.collector_port}}",
+    "TAGS": "{{sysdigcloud.agent_tags}}",
+    "CHECK_CERTIFICATE": "{{sysdigcloud.agent_check_cert}}",
+    "ACCESS_KEY": "{{sysdigcloud.access_key}}"
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 10,
+      "timeoutSeconds": 5,
+      "delaySeconds": 15,
+      "protocol": "COMMAND",
+      "command": {
+        "value": "exit 0"
+      }
+    }
+  ],
+  "instances": 1,
+  "labels": {
+    "DCOS_PACKAGE_NAME": "sysdig-cloud"
+  },
+  "maxLaunchDelaySeconds": 3600,
+  "mem": 500,
+  "gpus": 0,
+  "networks": [
+    {
+      "mode": "host"
+    }
+  ],
+  "portDefinitions": [],
+  "requirePorts": false,
+  "upgradeStrategy": {
+    "maximumOverCapacity": 1,
+    "minimumHealthCapacity": 1
+  },
+  "killSelection": "YOUNGEST_FIRST",
+  "unreachableStrategy": {
+    "inactiveAfterSeconds": 300,
+    "expungeAfterSeconds": 600
+  },
+  "fetch": []
 }
-
