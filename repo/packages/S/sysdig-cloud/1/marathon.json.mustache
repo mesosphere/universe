@@ -4,16 +4,6 @@
     "constraints": [["hostname", "UNIQUE"]],
     "mem": {{sysdigcloud.mem}},
     "instances": {{sysdigcloud.instances}},
-    "healthChecks": [
-        {
-            "protocol": "COMMAND",
-            "command": { "value": "exit 0" },
-            "gracePeriodSeconds": 120,
-            "intervalSeconds": 60,
-            "timeoutSeconds": 20,
-            "maxConsecutiveFailures": 3
-        }
-    ],
     "env": {
         "ACCESS_KEY": "{{sysdigcloud.access_key}}",
         "COLLECTOR": "{{sysdigcloud.collector_endpoint}}",
@@ -75,5 +65,15 @@
             }
         ]
     },
+    "healthChecks": [
+        {
+            "protocol": "COMMAND",
+            "command": { "value": "exit 0" },
+            "gracePeriodSeconds": 120,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 5,
+            "maxConsecutiveFailures": 10
+        }
+    ],
     "acceptedResourceRoles": ["slave_public", "*"]
 }
