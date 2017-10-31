@@ -17,6 +17,6 @@
         "cassandra"
     ],
     "preInstallNotes": "Default configuration requires 3 agent nodes each with: 0.5 CPU | 4096 MB MEM | 1 10240 MB Disk",
-    "postInstallNotes": "The DC/OS Apache Cassandra service is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/cassandra/\n\tIssues: https://docs.mesosphere.com/support/",
-    "postUninstallNotes": "The DC/OS Apache Cassandra service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/cassandra/uninstall to remove any persistent state if required."
+    "postInstallNotes": "The DC/OS Apache Cassandra service is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/cassandra/\n\tIssues: https://docs.mesosphere.com/support/\n\n\tIf you installed from the UI, enter `dcos package install cassandra --cli` from the DC/OS CLI to install the Cassandra CLI subcommands.",
+    "postUninstallNotes": "The DC/OS Apache Cassandra service is being uninstalled.\n\nFor DC/OS versions from 1.10, no further action is required. For older DC/OS versions, follow the instructions at https://docs.mesosphere.com/service-docs/cassandra/uninstall to remove any persistent state if required."
 }

@@ -18,6 +18,6 @@
         "hadoop"
     ],
     "preInstallNotes": "Default configuration requires 5 agent nodes each with: CPU: 0.9 | Memory: 6144MB | Disk: 10000MB\n\nMore specifically, each instance type requires:\n\nJournal node: 3 instances | 0.3 CPU | 2048 MB MEM | 1 5000 MB Disk\n\nName node: 2 instances | 0.3 CPU | 2048 MB MEM | 1 5000 MB Disk\n\nZKFC node: 2 instances | 0.3 CPU | 2048 MB MEM\n\nData node: 3 instances | 0.3 CPU | 2048 MB MEM | 1 5000 MB Disk",
-    "postInstallNotes": "The DC/OS Apache HDFS service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/hdfs/\n\tIssues: https://docs.mesosphere.com/support/",
-    "postUninstallNotes": "The DC/OS Apache HDFS service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/hdfs/uninstall to remove any persistent state if required."
+    "postInstallNotes": "The DC/OS Apache HDFS service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/hdfs/\n\tIssues: https://docs.mesosphere.com/support/\n\n\tIf you installed from the UI, enter `dcos package install hdfs --cli` from the DC/OS CLI to install the HDFS CLI subcommands.",
+    "postUninstallNotes": "The DC/OS Apache HDFS service is being uninstalled.\n\nFor DC/OS versions from 1.10, no further action is required. For older DC/OS versions, follow the instructions at https://docs.mesosphere.com/service-docs/hdfs/uninstall to remove any persistent state if required."
 }
