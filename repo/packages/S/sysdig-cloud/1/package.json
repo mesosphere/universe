@@ -1,0 +1,23 @@
+{
+    "packagingVersion": "2.0",
+    "description": "Sysdig Cloud is the first and only monitoring, alerting, and troubleshooting solution designed from the ground up to provide unprecedented visibility into containerized infrastructures. Sysdig Cloud comes with built-in, first class support for Mesos, Marathon, and DC/OS.\n\nThis package will automatically deploy the Sysdig Cloud agent container on each Mesos Agent (aka Slave) node in your cluster. Note, for maximum functionality, including full metadata support, you'll still need to manually install the Sysdig Cloud agent container on each of your Mesos Master nodes as well. See the docs for complete instructions: http://support.sysdigcloud.com/hc/en-us/articles/207886103",
+    "framework": false,
+    "licenses": [
+        {
+            "name": "Sysdig Cloud license",
+            "url": "https://sysdig.com/wp-content/uploads/2016/03/Sysdig-Cloud-License-Agreement.pdf"
+        }
+    ],
+    "maintainer": "support@sysdig.com",
+    "name": "sysdig-cloud",
+    "postInstallNotes": "Sysdig Cloud for DC/OS installed successfully on Mesos Agent nodes. Your cluster metrics will be available shortly at https://app.sysdigcloud.com.\n\nNote, for maximum functionality, including full metadata support, you'll still need to manually install the Sysdig Cloud agent container on each of your Mesos Master nodes as well. See the docs for complete instructions: http://support.sysdigcloud.com/hc/en-us/articles/207886103",
+    "postUninstallNotes": "Sysdig Cloud for DC/OS uninstalled successfully from all Mesos Agent nodes.\n\nNote, if you manually installed the Sysdig Cloud agent container on any Mesos Master nodes, you'll need to manually uninstall there as well.",
+    "preInstallNotes": "This DC/OS Service is currently in preview. To complete the install, you'll need to provide your Sysdig Cloud Access Key. Sign up for a two week free trial at http://www.sysdig.com, or if you have an acccount already, you can find your key here: https://app.sysdigcloud.com/#/settings/user.\n\nYou'll also need to indicate the number of Sysdig Cloud agent containers to deploy - for this figure you should provide the total number of Mesos Agent nodes in your cluster. Marathon will automatically ensure that only one agent container is installed per node.",
+    "tags": [
+        "sysdig",
+        "sysdigcloud",
+        "monitoring"
+    ],
+    "version": "latest",
+    "website": "https://sysdig.com"
+}
