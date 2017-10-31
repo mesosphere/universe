@@ -1,0 +1,19 @@
+{
+    "packagingVersion": "3.0",
+    "name": "dynatrace",
+    "version": "1.0",
+    "tags": [ "dynatrace", "apm", "monitoring" ],
+    "description": "Dynatrace is cloud-native monitoring for highly dynamic container and cluster environments. Dynatrace allows you to better optimize your container deployments and memory allocations by using real-time usage data. Dynatrace is the only solution capable of automatically pinpointing application and infrastructure issues in seconds using artificial intelligence",
+    "maintainer": "alois.mayr@dynatrace.com",
+    "framework": false,
+    "licenses": [
+        {
+            "name": "MIT License",
+            "url": "https://github.com/Dynatrace/Dynatrace-Docker/blob/master/LICENSE"
+        }
+    ],
+    "postInstallNotes": "Dynatrace has been installed on DC/OS agents.\nLog in to your Dynatrace account and monitor your DC/OS cluster. You will shorty see your cluster and container insights in Dynatrace.",
+    "postUninstallNotes": "Dynatrace has been uninstalled from your DC/OS agents and will no longer run.",
+    "preInstallNotes": "This DC/OS Service is currently in preview.\nPass your Dynatrace OneAgent Download URL and number of DC/OS agent nodes as package options.\nBy default Marathon will allcoate 0.1 CPU and 400m memory per Dynatrace OneAgent task.",
+    "website": "https://www.dynatrace.com/technologies/cloud-and-microservices/dcos-monitoring/"
+}
