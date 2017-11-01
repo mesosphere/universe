@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.8",
+  "name": "mariadb",
+  "version": "10.1.22",
+  "scm": "https://github.com/MariaDB/server.git",
+  "maintainer": "kevin@fat.sh",
+  "website": "https://mariadb.org",
+  "description": "MariaDB is one of the most popular database servers in the world. It’s made by the original developers of MySQL and guaranteed to stay open source. Notable users include Wikipedia, Facebook and Google. MariaDB is developed as open source software and as a relational database it provides an SQL interface for accessing data. The latest versions of MariaDB also include GIS and JSON features.",
+  "tags": ["database", "mysql", "mariadb", "sql"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Preview packages should never be used in production! In order for MariaDB service to start successfully it requires atleast 1 CPU and 1024MB of RAM including ports.\n\nIf you didn't provide a value for `host_volume` in the CLI,\nYOUR DATA WILL NOT BE SAVED IN ANY WAY.\n",
+  "postInstallNotes": "Service installed.\n\nDefault login: `admin`/`password`.",
+  "postUninstallNotes": "MariaDB has been uninstalled. Note that any data persisted to a NFS share still exists and will need to be manually removed.",
+  "licenses": [
+    {
+      "name": "GNU GENERAL PUBLIC LICENSE",
+      "url": "https://github.com/MariaDB/server/blob/10.1/COPYING"
+    }
+  ]
+}
