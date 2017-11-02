@@ -394,21 +394,21 @@ Full Instructions:
   git clone https://github.com/<user>/universe.git /path/to/universe
   ```
 
-3. Run the verification and build script:
+2. Run the verification and build script:
 
   ```bash
   scripts/build.sh
   ```
 
-4. Verify all build steps completed successfully
-5. Submit a pull request against the `version-3.x` branch with your changes. Every pull request opened will have a set
+3. Verify all build steps completed successfully
+4. Submit a pull request against the `version-3.x` branch with your changes. Every pull request opened will have a set
    of automated verifications run against it. These automated verification are reported against the pull request using
    the GitHub status API. All verifications must pass in order for a pull request to be eligible for merge.
 
-6. Respond to manual review feedback provided by the DC/OS Community.
+5. Respond to manual review feedback provided by the DC/OS Community.
   * Each Pull Request to Universe will also be manually reviewed by a member of the DC/OS Community. To ensure your
     package is able to be made available to users as quickly as possible be sure to respond to the feedback provided.
-7. Add a getting started example of how to install and use the DC/OS package. To add the example, fork the [`examples`](https://github.com/dcos/examples) repo and send in a pull request. Re-use the format from the existing examples there.
+6. Add a getting started example of how to install and use the DC/OS package. To add the example, fork the [`examples`](https://github.com/dcos/examples) repo and send in a pull request. Re-use the format from the existing examples there.
 
 
 ## Repository Consumption
