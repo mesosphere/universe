@@ -16,7 +16,7 @@
     "tags": [
         "kubernetes"
     ],
-    "preInstallNotes": "Kubernetes on DC/OS is currently in Beta and should not be used in production.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/beta-kubernetes\n\tIssues: https://github.com/mesosphere/dcos-kubernetes-quickstart/issues",
+    "preInstallNotes": "Kubernetes on DC/OS is currently in Beta and should not be used in production.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/beta-kubernetes\n\tIssues: https://github.com/mesosphere/dcos-kubernetes-quickstart/issues\n\n\tIf you installed from the UI, enter `dcos package install beta-kubernetes --cli` from the DC/OS CLI to install the Beta Kubernetes CLI subcommands.",
     "postInstallNotes": "DC/OS Kubernetes is being installed!",
-    "postUninstallNotes": "DC/OS Kubernetes has been uninstalled."
+    "postUninstallNotes": "DC/OS Kubernetes is being uninstalled."
 }

@@ -7,8 +7,8 @@
     "name": "beta-confluent-kafka",
     "packagingVersion": "4.0",
     "preInstallNotes": "This DC/OS Service is currently a beta candidate undergoing testing as part of a formal beta test program. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Contact Mesosphere and Confluent before deploying this beta candidate service. Product support is available to approved participants in the beta test program. Mutual Mesosphere and Confluent customers are eligible to participate in the beta program.  Contact your rep at either company or partner-support@confluent.io.",
-    "postInstallNotes": "Apache Kafka by Confluent is being installed.\n\n\tDocumentation: https://www.confluent.io/whitepaper/deploying-confluent-platform-with-mesosphere\n\tCommunity Support: https://groups.google.com/forum/#!forum/confluent-platform",
-    "postUninstallNotes": "Apache Kafka by Confluent has been uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/current/usage/service-guides/kafka/uninstall to remove any persistent state if required.",
+    "postInstallNotes": "Apache Kafka by Confluent is being installed.\n\n\tDocumentation: https://www.confluent.io/whitepaper/deploying-confluent-platform-with-mesosphere\n\tCommunity Support: https://groups.google.com/forum/#!forum/confluent-platform\n\n\tIf you installed from the UI, enter `dcos package install beta-confluent-kafka --cli` from the DC/OS CLI to install the Beta Confluent Kafka CLI subcommands.",
+    "postUninstallNotes": "Apache Kafka by Confluent is being uninstalled.\nFor DC/OS versions from 1.10, no further action is required. For older DC/OS versions, follow the instructions at https://docs.mesosphere.com/1.9/deploying-services/uninstall/#framework-cleaner to remove any persistent state if required.",
     "licenses": [
         {
             "name": "Apache License v2",
