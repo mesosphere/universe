@@ -1,0 +1,63 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "cassandra": "mesosphere/cassandra:1.0.26-3.0.10"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "cassandra-jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "scheduler-zip": "https://px-dcos.s3.amazonaws.com/portworx-cassandra/assets/1.1-3.0.14-bf399c5/cassandra-scheduler.zip",
+      "cassandra-tar-gz": "https://downloads.mesosphere.com/cassandra/assets/apache-cassandra-3.0.14-bin-dcos.tar.gz",
+      "bootstrap-zip": "https://px-dcos.s3.amazonaws.com/portworx-cassandra/assets/1.1-3.0.14-bf399c5/bootstrap.zip",
+      "executor-zip": "https://px-dcos.s3.amazonaws.com/portworx-cassandra/assets/1.1-3.0.14-bf399c5/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "78fe1089743b289ddce4ef81a45dfb015551610fe5bbec10e622dc00b12c2445"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-cassandra/assets/1.1-3.0.14-bf399c5/dcos-portworx-cassandra-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "978c6ed91297e1e821eedc059072963c4b4d31a5aeab15880a14e230fb8fd0d7"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-cassandra/assets/1.1-3.0.14-bf399c5/dcos-portworx-cassandra-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "1bee6dab43d56137ed0cd12f6da0e36681520b686e9e1a5a5e5aeda32f6f6bbe"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-cassandra/assets/1.1-3.0.14-bf399c5/dcos-portworx-cassandra.exe"
+        }
+      }
+    }
+  }
+}
