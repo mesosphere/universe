@@ -1,0 +1,17 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-cadvisor-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-cadvisor-medium.png",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-cadvisor-large.png",
+  "screenshots": [
+     "https://3.bp.blogspot.com/-o9DqyR-EegY/VMbnOAJcETI/AAAAAAAAAy0/WxfIMxxrxk0/s1600/cAdvisorScreenshot.png"
+   ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "cadvisor-docker": "google/cadvisor:v0.27.2"
+      }
+    }
+  }
+}
