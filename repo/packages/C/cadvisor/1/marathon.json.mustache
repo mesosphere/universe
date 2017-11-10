@@ -1,6 +1,6 @@
 {
   "id": "{{service.name}}",
-  "cmd": "/usr/bin/cadvisor -storage_driver=influxdb -storage_driver_db=cadvisor -storage_driver_host={{networking.influxdb_host}}:{{networking.influxdb_port}}",
+  "cmd": "/usr/bin/cadvisor --logtostderr=true -storage_driver=influxdb -storage_driver_db=cadvisor -storage_driver_host={{networking.influxdb_host}}:{{networking.influxdb_port}}",
   "args": null,
   "user": null,
   "env": null,
