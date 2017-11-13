@@ -1,0 +1,24 @@
+{
+    "packagingVersion": "4.0",
+    "minDcosReleaseVersion": "1.9",
+    "upgradesFrom": [
+        "*"
+    ],
+    "downgradesTo": [
+        "*"
+    ],
+    "name": "hello-world",
+    "version": "2.0.3-0.30.3",
+    "maintainer": "support@mesosphere.io",
+    "description": "An example implementation of a stateful service using the DC/OS SDK",
+    "selected": false,
+    "framework": true,
+    "tags": [
+        "example",
+        "reference",
+        "hello-world"
+    ],
+    "preInstallNotes": "This DC/OS Service is currently in preview.",
+    "postInstallNotes": "The DC/OS hello-world service is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/hello-world/\n\tIssues: https://docs.mesosphere.com/support/",
+    "postUninstallNotes": "The DC/OS hello-world service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/deploying-services/uninstall/#framework-cleaner to remove any persistent state if required."
+}
