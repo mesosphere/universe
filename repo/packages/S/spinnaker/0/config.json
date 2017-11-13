@@ -1,0 +1,429 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "spinnaker"
+        },
+        "user": {
+          "title": "User",
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "root"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "title": "Credential secret name (optional)",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "name",
+        "user"
+      ]
+    },
+    "redis": {
+      "description": "configuration properties",
+      "type": "object",
+      "properties": {
+        "port": {
+          "title": "port number",
+          "description": "service port number",
+          "type": "integer",
+          "default": 6379
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "pod CPU requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 2048
+        }
+      },
+      "required": [
+        "port",
+        "cpus",
+        "mem"
+      ]
+    },
+    "front": {
+      "description": "configuration properties",
+      "type": "object",
+      "properties": {
+        "config": {
+          "title": "front50-local yml config",
+          "description": "front50-local.yml config as flat string",
+          "type": "string",
+          "default": ""
+        },
+        "port": {
+          "title": "port number",
+          "description": "service port number",
+          "type": "integer",
+          "default": 8080
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "pod CPU requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 2048
+        },
+        "secrets_enabled": {
+          "description": "enable usage of secrets for s3 or gcs",
+          "type": "boolean",
+          "default": true
+        },
+        "aws_access_key_id": {
+          "title": "aws access key id",
+          "description": "aws access key id",
+          "type": "string",
+          "default": ""
+        },
+        "aws_secret_access_key": {
+          "title": "aws secret access key",
+          "description": "aws secret access key",
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "config",
+        "port",
+        "cpus",
+        "mem"
+      ]
+    },
+    "fiat": {
+      "description": "configuration properties",
+      "type": "object",
+      "properties": {
+        "config": {
+          "title": "fiat-local yml config",
+          "description": "fiat-local.yml config as flat string",
+          "type": "string",
+          "default": ""
+        },
+        "port": {
+          "title": "port number",
+          "description": "service port number",
+          "type": "integer",
+          "default": 7003
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "pod CPU requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 2048
+        }
+      },
+      "required": [
+        "port",
+        "cpus",
+        "mem"
+      ]
+    },
+    "clouddriver": {
+      "description": "configuration properties",
+      "type": "object",
+      "properties": {
+        "config": {
+          "title": "clouddriver-local yml config",
+          "description": "clouddriver-local.yml config as flat string",
+          "type": "string",
+          "default": ""
+        },
+        "port": {
+          "title": "port number",
+          "description": "service port number",
+          "type": "integer",
+          "default": 7002
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "pod CPU requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 2048
+        }
+      },
+      "required": [
+        "config",
+        "port",
+        "cpus",
+        "mem"
+      ]
+    },
+    "orca": {
+      "description": "configuration properties",
+      "type": "object",
+      "properties": {
+        "config": {
+          "title": "orca-local yml config",
+          "description": "orca-local.yml config as flat string",
+          "type": "string",
+          "default": ""
+        },
+        "port": {
+          "title": "port number",
+          "description": "service port number",
+          "type": "integer",
+          "default": 8083
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "pod CPU requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 2048
+        }
+      },
+      "required": [
+        "port",
+        "cpus",
+        "mem"
+      ]
+    },
+    "gate": {
+      "description": "configuration properties",
+      "type": "object",
+      "properties": {
+        "config": {
+          "title": "gate-local yml config",
+          "description": "gate-local.yml config as flat string",
+          "type": "string",
+          "default": ""
+        },
+        "port": {
+          "title": "port number",
+          "description": "service port number",
+          "type": "integer",
+          "default": 8084
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "pod CPU requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 2048
+        }
+      },
+      "required": [
+        "port",
+        "cpus",
+        "mem"
+      ]
+    },
+    "deck": {
+      "description": "configuration properties",
+      "type": "object",
+      "properties": {
+        "port": {
+          "title": "port number",
+          "description": "service port number",
+          "type": "integer",
+          "default": 9000
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "pod CPU requirements",
+          "type": "number",
+          "default": 0.1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 512
+        }
+      },
+      "required": [
+        "port",
+        "cpus",
+        "mem"
+      ]
+    },
+    "echo": {
+      "description": "configuration properties",
+      "type": "object",
+      "properties": {
+        "config": {
+          "title": "echo-local yml config",
+          "description": "echo-local.yml config as flat string",
+          "type": "string",
+          "default": ""
+        },
+        "port": {
+          "title": "port number",
+          "description": "service port number",
+          "type": "integer",
+          "default": 8089
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "pod CPU requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 2048
+        }
+      },
+      "required": [
+        "port",
+        "cpus",
+        "mem"
+      ]
+    },
+    "igor": {
+      "description": "configuration properties",
+      "type": "object",
+      "properties": {
+        "config": {
+          "title": "igor-local yml config",
+          "description": "igor-local.yml config as flat string",
+          "type": "string",
+          "default": ""
+        },
+        "port": {
+          "title": "port number",
+          "description": "service port number",
+          "type": "integer",
+          "default": 8088
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "pod CPU requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 2048
+        }
+      },
+      "required": [
+        "port",
+        "cpus",
+        "mem"
+      ]
+    }
+  }
+}
