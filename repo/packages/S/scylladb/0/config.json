@@ -89,6 +89,16 @@
           "description": "Set fail threshold for batch sizes larger than X kb",
           "type": "number",
           "default": 50
+        },
+        "partitioner": {
+          "description": "Set the partitoner used. [Murmur3Partitioner, RandomPartitioner, ByteOrderedPartitioner]",
+          "type": "string",
+          "default": "org.apache.cassandra.dht.Murmur3Partitioner"
+        },
+        "cql_load_balance": {
+          "description": "Load balance CQL queries to cluster or not. [none, round-robin]",
+          "type": "string",
+          "default": "none"
         }
       },
 			"required": [
