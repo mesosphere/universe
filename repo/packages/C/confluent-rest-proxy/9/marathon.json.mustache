@@ -32,7 +32,9 @@
     "KAFKAREST_HEAP_OPTS": "-Xmx{{proxy.heap}}M",
     "KAFKA_REST_BOOTSTRAP_SERVERS": "broker.{{proxy.kafka-service}}.l4lb.thisdcos.directory:9092",
     "KAFKA_REST_ZOOKEEPER_CONNECT": "{{proxy.zookeeper-connect}}",
-    "KAFKA_REST_SCHEMA_REGISTRY_URL": "http://{{proxy.schema-registry-service}}.marathon.l4lb.thisdcos.directory:8081"
+    "KAFKA_REST_SCHEMA_REGISTRY_URL": "http://{{proxy.schema-registry-service}}.marathon.l4lb.thisdcos.directory:8081",
+    "KAFKA_REST_ACCESS_CONTROL_ALLOW_METHODS": "{{proxy.access-control-allow-methods}}",
+    "KAFKA_REST_ACCESS_CONTROL_ALLOW_ORIGIN": "{{proxy.access-control-allow-origin}}"
   },
   "healthChecks": [
     {

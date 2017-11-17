@@ -31,7 +31,9 @@
   "env": {
     "SCHEMA_REGISTRY_HEAP_OPTS": "-Xmx{{registry.heap}}M",
     "SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL": "{{registry.zookeeper-master}}/{{registry.kafkastore}}",
-    "SCHEMA_REGISTRY_SCHEMA_REGISTRY_ZK_NAMESPACE": "{{registry.kafkastore}}/{{registry.name}}"
+    "SCHEMA_REGISTRY_SCHEMA_REGISTRY_ZK_NAMESPACE": "{{registry.kafkastore}}/{{registry.name}}",
+    "SCHEMA_REGISTRY_ACCESS_CONTROL_ALLOW_METHODS": "{{registry.access-control-allow-methods}}",
+    "SCHEMA_REGISTRY_ACCESS_CONTROL_ALLOW_ORIGIN": "{{registry.access-control-allow-origin}}"
   },
   "healthChecks": [
     {

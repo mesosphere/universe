@@ -50,7 +50,16 @@
         "schema-registry-service": {
           "default": "schema-registry",
           "description": "Schema Registry service to be used by REST Proxy workers. The named VIP associated with this service will be used to specify the converter-schema-registry-url's",
-
+          "type": "string"
+        },
+        "access-control-allow-methods": {
+          "default": "",
+          "description": "Set value to Jetty Access-Control-Allow-Origin header for specified methods",
+          "type": "string"
+        },
+        "access-control-allow-origin": {
+          "default": "",
+          "description": "Set value for Jetty Access-Control-Allow-Origin header",
           "type": "string"
         }
       },

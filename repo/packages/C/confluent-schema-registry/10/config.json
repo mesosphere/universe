@@ -47,6 +47,16 @@
           "default": "dcos-service-confluent-kafka",
           "description": "Name of the Kafka service hosting the storage for this Schema Registry edition.",
           "type": "string"
+        },
+        "access-control-allow-methods": {
+          "default": "",
+          "description": "Set value to Jetty Access-Control-Allow-Origin header for specified methods",
+          "type": "string"
+        },
+        "access-control-allow-origin": {
+          "default": "",
+          "description": "Set value for Jetty Access-Control-Allow-Origin header",
+          "type": "string"
         }
       },
       "required": ["cpus", "mem", "instances", "name"],
