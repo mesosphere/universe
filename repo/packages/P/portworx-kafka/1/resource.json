@@ -1,0 +1,60 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "bootstrap-zip": "https://px-dcos.s3.amazonaws.com/portworx-kafka/assets/1.1-0.11.0.1-bf399c5/bootstrap.zip",
+      "kafka-tgz": "https://downloads.mesosphere.com/kafka/assets/kafka_2.11-0.11.0.1.tgz",
+      "kafka-jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "kafka-scheduler-zip": "https://px-dcos.s3.amazonaws.com/portworx-kafka/assets/1.1-0.11.0.1-bf399c5/kafka-scheduler.zip",
+      "executor-zip": "https://px-dcos.s3.amazonaws.com/portworx-kafka/assets/1.1-0.11.0.1-bf399c5/executor.zip",
+      "kafka-statsd-jar": "http://downloads.mesosphere.com/kafka/assets/kafka-statsd-metrics2-0.5.3.jar",
+      "statsd-client-jar": "http://downloads.mesosphere.com/kafka/assets/java-dogstatsd-client-2.3.jar"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "27eb3e3a9b441ad2f10adb076ce9df52c0b464e9e27c7851e30d3dac6e541fc9"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-kafka/assets/1.1-0.11.0.1-bf399c5/dcos-portworx-kafka-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "513d2a1b88a778f6a30d598db79dca43a7fdca3b5e0e1d392a7b53443244e25c"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-kafka/assets/1.1-0.11.0.1-bf399c5/dcos-portworx-kafka-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "7770aa05f671846c6d215b81248be2b29a6948c2bc20facdf2e6b65a9485e1c7"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-kafka/assets/1.1-0.11.0.1-bf399c5/dcos-portworx-kafka.exe"
+        }
+      }
+    }
+  }
+}
