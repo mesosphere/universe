@@ -94,21 +94,19 @@
           "description": "Set the partitoner used. [Murmur3Partitioner, RandomPartitioner, ByteOrderedPartitioner]",
           "type": "string",
           "default": "org.apache.cassandra.dht.Murmur3Partitioner"
-        },
-        "cql_load_balance": {
-          "description": "Load balance CQL queries to cluster or not. [none, round-robin]",
-          "type": "string",
-          "default": "none"
         }
       },
 			"required": [
+				"cluster_name",
 				"endpoint_snitch",
-				"number_of_seeds"
+				"number_of_seeds",
+				"data_center_name",
+				"partitioner"
 			]
     },
     "disks":{
       "type": "object",
-      "description": "Configure how to store data",
+      "description": "Configure how to store data. If neither host disks or local persistence is chosen, no data is saved outside of the container. I.e. data loss is very possible. You can only choose one of the two.",
       "properties": {
         "use_host_disks": {
           "description": "Use disks on host. Should be formatted as XFS and have the same path on all nodes",
@@ -157,7 +155,7 @@
           "default": 9160
         },
         "external_access_port": {
-          "description": "If set, applications outside the cluster can reach scylla on host-ip:PORT. Remember to open up firewall etc.",
+          "description": "If set, applications outside the cluster can reach scylla on host-ip:PORT. Remember to open up firewall etc. Marathon-LB needs to be installed prior to setting this port.",
           "type": "number"
         }
       },
@@ -170,45 +168,31 @@
       "description": "Set security level of cluster",
       "properties": {
         "authenticator": {
-          "description": "Choose whether to allow all authenticators or use user+password authenticaton. [AllowAllAuthenticator, PasswordAuthenticator",
+          "description": "Choose whether to allow all authenticators or use user+password authenticaton. If password authentication is chosen, the default user is cassandra with password cassandra. [AllowAllAuthenticator, PasswordAuthenticator]",
           "type": "string",
           "default": "AllowAllAuthenticator"
         },
-        "username": {
-          "description": "Only applicable if PasswordAuthenticator is set.",
-          "type": "string",
-          "default": "cassandra"
-        },
-        "password": {
-          "description": "Only applicable if PasswordAuthenticator is set.",
-          "type": "string",
-          "default": "cassandra"
-        },
         "client_encryption":{
           "type": "object",
-          "description": "Use client SSL encryption or not. The certificate files must be available at the hosts before deployment in a directory or through download",
+          "description": "Use client SSL encryption or not. The certificate files must be available at the hosts before deployment in a directory or through download. OBS! Key files MUST be named scylladb.crt, scylladb.key",
           "properties": {
             "enable": {
               "description": "If enabled you must provide certificate and key below",
               "type": "boolean",
               "default": false
             },
-            "certificate_path": {
-              "description": "Absolute path on host to certificate. Make sure scylla has privileges to read file",
-              "type": "string"
-            },
-            "key_path": {
-              "description": "Absolute path on host to key. Make sure scylla has privileges to read file",
+            "path": {
+              "description": "Absolute path to directory on host containing files: scylladb.crt, scylladb.key",
               "type": "string"
             }
           }
         },
         "node_to_node_encryption":{
           "type": "object",
-          "description": "Use SSL encryption between nodes or not. The certificate files must be available at the hosts before deployment in a directory or through download",
+          "description": "Use SSL encryption between nodes or not. The certificate files must be available at the hosts before deployment in a directory or through download. OBS! Key files MUST be named scylladb.crt, scylladb.key, ca-scylladb.pem",
           "properties": {
             "enable": {
-              "description": "If enabled you must provide certificate, key and truststore below",
+              "description": "If enabled you must provide path to cert, key and truststore files below",
               "type": "boolean",
               "default": false
             },
@@ -216,16 +200,8 @@
               "description": "Choose what traffic should be encrypted. [all, dc, rack]",
               "type": "string"
             },
-            "certificate_path": {
-              "description": "Absolute path on host to certificate. Make sure scylla has privileges to read file",
-              "type": "string"
-            },
-            "key_path": {
-              "description": "Absolute path on host to key. Make sure scylla has privileges to read file",
-              "type": "string"
-            }, 
-            "trust_store": {
-              "description": "Absolute path on host to truststore. Make sure scylla has privileges to read file",
+            "path": {
+              "description": "Absolute path to directory on host containing files: scylladb.crt, scylladb.key, ca-scylladb.pem",
               "type": "string"
             }
           }
