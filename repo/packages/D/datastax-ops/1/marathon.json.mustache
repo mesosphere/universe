@@ -1,0 +1,225 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1,
+  "mem": 1024,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && export JAVA_OPTS=\"-Xms256M -Xmx512M\" && env && ./datastax-ops-scheduler/bin/datastax-ops ./datastax-ops-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http",
+    "MARATHON_SINGLE_INSTANCE_APP":"true"
+  },
+  {{#service.service_secret_name}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_secret_name}}"
+    }
+  },
+  {{/service.service_secret_name}}
+  "env": {
+    "TASKCFG_ALL_DS_LICENSE": "accept",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "SERVICE_USER": "{{service.user}}",
+    "SERVICE_PRINCIPAL": "{{service.service_account}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "OPSCENTER_DOCKER_IMAGE": "{{resource.assets.container.docker.opscenter}}",
+
+    {{#service.virtual_networks}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME_OPSCENTER": "{{opscenter.virtual_network}}",
+    "CNI_PLUGIN_LABELS_OPSCENTER": "{{opscenter.cni_plugin_labels}}",
+    {{/service.virtual_networks}}
+
+    {{#service.service_secret_name}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    {{/service.service_secret_name}}
+
+    "OPSC_CASSANDRA_USERNAME": "{{opscenter.cassandra_username}}",
+    "OPSC_CASSANDRA_PASSWORD": "{{opscenter.cassandra_password}}",
+    "OPSCENTER_INSTALL_DIR": "opscenter",
+    "DSE_INSTALL_DIR": "dse",
+
+    "DSE_CLUSTER_NAME": "{{cluster.cluster_name}}",
+    "DSE_DC_NAME": "{{cluster.dc_name}}",
+    "DSE_RACK_NAME": "rack1",
+
+    "OPSCENTER_PLACEMENT": "{{opscenter.placement_constraint}}",
+    "OPSCENTER_CPUS": "{{opscenter.cpus}}",
+    "OPSCENTER_MEM": "{{opscenter.mem}}",
+    "OPSCENTER_HEAP": "{{opscenter.heap}}",
+    "OPSCENTER_JVM_OPTS": "{{{opscenter.jvm_opts}}}",
+    "OPSCENTER_DISK": "{{opscenter.disk}}",
+    "OPSCENTER_DISK_TYPE": "{{opscenter.disk_type}}",
+    "OPSCENTER_GUI_PORT": "{{opscenter.gui_port}}",
+    "OPSCENTER_STOMP_PORT": "{{opscenter.stomp_port}}",
+    "OPSCENTER_SPARK_MASTER_PROXY_PORT": "{{opscenter.spark_master_proxy_port}}",
+
+    "OPSC_AUTHENTICATION_METHOD": "{{opscenter.authentication.method}}",
+    "OPSC_AUTHENTICATION_PASSWD_DB": "./passwd_db/passwd.db",
+
+    "OPSC_WEBSERVER_STATICDIR": "{{opscenter.webserver.staticdir}}",
+    "OPSC_WEBSERVER_SUB_PROCESS_TIMEOUT": "{{opscenter.webserver.sub_process_timeout}}",
+
+
+    "OPSC_HTTP_PROXY_SETTINGS_PROXY_URL": "{{opscenter.http_proxy_settings.proxy_url}}",
+    "OPSC_HTTP_PROXY_SETTINGS_PROXY_USERNAME": "{{opscenter.http_proxy_settings.proxy_username}}",
+    "OPSC_HTTP_PROXY_SETTINGS_PROXY_PASSWORD": "{{opscenter.http_proxy_settings.proxy_password}}",
+
+    "OPSC_LOGGING_RESOURCE_USAGE_INTERVAL": "{{opscenter.logging.resource_usage_interval}}",
+
+    "OPSC_DEFINITIONS_DEFINITIONS_DIR": "{{opscenter.definitions.definitions_dir}}",
+    "OPSC_DEFINITIONS_AUTO_UPDATE": "{{opscenter.definitions.auto_update}}",
+    "OPSC_DEFINITIONS_DOWNLOAD_HOST": "{{opscenter.definitions.download_host}}",
+    "OPSC_DEFINITIONS_DOWNLOAD_PORT": "{{opscenter.definitions.download_port}}",
+    "OPSC_DEFINITIONS_DOWNLOAD_FILENAME": "{{opscenter.definitions.download_filename}}",
+    "OPSC_DEFINITIONS_HASH_FILENAME": "{{opscenter.definitions.hash_filename}}",
+    "OPSC_DEFINITIONS_SLEEP": "{{opscenter.definitions.sleep}}",
+
+    "OPSC_AGENTS_CONFIG_SLEEP": "{{opscenter.agents.config_sleep}}",
+    "OPSC_AGENTS_AGENT_INSTALL_POLL_PERIOD": "{{opscenter.agents.agent_install_poll_period}}",
+    "OPSC_AGENTS_AGENT_INSTALL_MUTE_PERIOD": "{{opscenter.agents.agent_install_mute_period}}",
+    "OPSC_AGENTS_AGENT_INSTALL_TIMEOUT_PERIOD": "{{opscenter.agents.agent_install_timeout_period}}",
+    "OPSC_AGENTS_SSH_EXECUTABLE": "{{opscenter.agents.ssh_executable}}",
+    "OPSC_AGENTS_SCP_EXECUTABLE": "{{opscenter.agents.scp_executable}}",
+    "OPSC_AGENTS_SSH_KEYGEN_EXECUTABLE": "{{opscenter.agents.ssh_keygen_executable}}",
+    "OPSC_AGENTS_SSH_KEYSCAN_EXECUTABLE": "{{opscenter.agents.ssh_keyscan_executable}}",
+    "OPSC_AGENTS_SSH_USER_KNOWN_HOSTS_FILE": "{{opscenter.agents.ssh_user_known_hosts_file}}",
+    "OPSC_AGENTS_SSH_SYS_KNOWN_HOSTS_FILE": "{{opscenter.agents.ssh_sys_known_hosts_file}}",
+    "OPSC_AGENTS_TMP_DIR": "{{opscenter.agents.ssh_tmp_dir}}",
+    "OPSC_AGENTS_NOT_SEEN_THRESHOLD": "{{opscenter.agents.not_seen_threshold}}",
+    "OPSC_AGENTS_CALL_AGENT_RETRY": "{{opscenter.agents.call_agent_retry}}",
+    "OPSC_AGENTS_AGENT_AGGREGATION_FLUSH": "{{opscenter.agents.agent_aggregation_flush}}",
+    "OPSC_AGENTS_HTTP_POLL_PERIOD": "{{opscenter.agents.http_poll_period}}",
+    "OPSC_AGENTS_PATH_TO_INSTALL_SCRIPT": "{{opscenter.agents.path_to_install_script}}",
+    "OPSC_AGENTS_PATH_TO_SUDOWRAP": "{{opscenter.agents.path_to_sudowrap}}",
+
+    "OPSC_STAT_REPORTER_INITIAL_SLEEP": "{{opscenter.stat_reporter.initial_sleep}}",
+    "OPSC_STAT_REPORTER_INTERVAL": "{{opscenter.stat_reporter.interval}}",
+
+    "OPSC_REPAIR_SERVICE_PERSIST_DIRECTORY": "{{opscenter.repair_service.persist_directory}}",
+    "OPSC_REPAIR_SERVICE_PERSIST_PERIOD": "{{opscenter.repair_service.persist_period}}",
+    "OPSC_REPAIR_SERVICE_RESTART_PERIOD": "{{opscenter.repair_service.restart_period}}",
+    "OPSC_REPAIR_SERVICE_CLUSTER_STABILIZATION_PERIOD": "{{opscenter.repair_service.cluster_stabilization_period}}",
+    "OPSC_REPAIR_SERVICE_SINGLE_TASK_ERR_THRESHOLD": "{{opscenter.repair_service.single_task_err_threshold}}",
+    "OPSC_REPAIR_SERVICE_MAX_PARALLEL_REPAIRS": "{{opscenter.repair_service.max_parallel_repairs}}",
+    "OPSC_REPAIR_SERVICE_MAX_PENDING_REPAIRS": "{{opscenter.repair_service.max_pending_repairs}}",
+    "OPSC_REPAIR_SERVICE_SINGLE_REPAIR_TIMEOUT": "{{opscenter.repair_service.single_repair_timeout}}",
+    "OPSC_REPAIR_SERVICE_MIN_REPAIR_TIME": "{{opscenter.repair_service.min_repair_time}}",
+    "OPSC_REPAIR_SERVICE_MIN_THROUGHPUT": "{{opscenter.repair_service.min_throughput}}",
+    "OPSC_REPAIR_SERVICE_NUM_RECENT_THROUGHPUTS": "{{opscenter.repair_service.num_recent_throughputs}}",
+    "OPSC_REPAIR_SERVICE_ERROR_LOGGING_WINDOW": "{{opscenter.repair_service.error_logging_window}}",
+    "OPSC_REPAIR_SERVICE_INCREMENTAL_REPAIR_TABLES": "{{opscenter.repair_service.incremental_repair_tables}}",
+    "OPSC_REPAIR_SERVICE_INCREMENTAL_ERR_ALERT_THRESHOLD": "{{opscenter.repair_service.incremental_err_alert_threshold}}",
+    "OPSC_REPAIR_SERVICE_SNAPSHOT_OVERRIDE": "{{opscenter.repair_service.snapshot_override}}",
+    "OPSC_REPAIR_SERVICE_INCREMENTAL_SLEEP": "{{opscenter.repair_service.incremental_sleep}}",
+    "OPSC_REPAIR_SERVICE_INCREMENTAL_THRESHOLD": "{{opscenter.repair_service.incremental_threshold}}",
+    "OPSC_REPAIR_SERVICE_PRIORITIZATION_PAGE_SIZE": "{{opscenter.repair_service.prioritization_page_size}}",
+    "OPSC_REPAIR_SERVICE_OFFLINE_SPLITS": "{{opscenter.repair_service.offline_splits}}",
+    "OPSC_REPAIR_SERVICE_IGNORE_KEYSPACES": "{{opscenter.repair_service.ignore_keyspaces}}",
+    "OPSC_REPAIR_SERVICE_IGNORE_TABLE": "{{opscenter.repair_service.ignore_table}}",
+    "OPSC_REPAIR_SERVICE_TIME_TO_COMPLETION_TARGET_PERCENTAGE": "{{opscenter.repair_service.time_to_completion_target_percentage}}",
+    "OPSC_REPAIR_SERVICE_INCREMENTAL_REPAIR_DATACENTERS": "{{opscenter.repair_service.incremental_repair_datacenters}}",
+    "OPSC_REPAIR_SERVICE_TOKENRANGES_HTTP_TIMEOUT": "{{opscenter.repair_service.tokenranges_http_timeout}}",
+    "OPSC_REPAIR_SERVICE_MAX_DOWN_NODE_RETRY": "{{opscenter.repair_service.max_down_node_retry}}",
+
+    "OPSC_UI_DEFAULT_API_TIMEOUT": "{{opscenter.ui.default_api_timeout}}",
+    "OPSC_UI_MAX_METRICS_REQUESTS": "{{opscenter.ui.max_metrics_requests}}",
+    "OPSC_UI_NODE_DETAIL_REFRESH_DELAY": "{{opscenter.ui.node_detail_refresh_delay}}",
+    "OPSC_UI_STORAGEMAP_TTL": "{{opscenter.ui.storagemap_ttl}}",
+
+    "OPSC_REQUEST_TRACKER_QUEUE_SIZE": "{{opscenter.request_tracker.queue_size}}",
+
+    "OPSC_CLUSTERS_ADD_CLUSTER_TIMEOUT": "{{opscenter.clusters.add_cluster_timeout}}",
+    "OPSC_CLUSTERS_STARTUP_SLEEP": "{{opscenter.clusters.startup_sleep}}",
+    "OPSC_CLUSTERS_MAX_SCHEMA_AGREEMENT_WAIT": "{{opscenter.clusters.max_schema_agreement_wait}}",
+
+{{#opscenter.authentication.enabled}}
+    "OPSC_AUTHENTICATION_ENABLED": "DEFINITELY",
+    "OPSC_AUTHENTICATION_LOGIN_USER": "{{opscenter.authentication.login_user}}",
+    "OPSC_AUTHENTICATION_LOGIN_PASSWORD": "{{opscenter.authentication.login_password}}",
+    "OPSC_AUTHENTICATION_TIMEOUT": "{{opscenter.authentication.timeout}}",
+    "OPSC_AUTHENTICATION_PASSWORD_HASH_TYPE": "{{opscenter.authentication.password_hash_type}}",
+    "OPSC_AUTHENTICATION_SQLITE_CONNECTION_TIMEOUT": "{{opscenter.authentication.sqlite_connection_timeout}}",
+    "OPSC_AUTHENTICATION_SQLITE_MAX_ACTIVE_CONNECTIONS": "{{opscenter.authentication.sqlite_max_active_connections}}",
+{{/opscenter.authentication.enabled}}
+
+{{#opscenter.ldap.enabled}}
+    "OPSC_LDAP_ENABLED": "DEFINITELY",
+    "OPSC_LDAP_SERVER_HOST": "{{opscenter.ldap.server_host}}",
+    "OPSC_LDAP_SERVER_PORT": "{{opscenter.ldap.server_port}}",
+    "OPSC_LDAP_SEARCH_DN": "{{{opscenter.ldap.search_dn}}}",
+    "OPSC_LDAP_SEARCH_PASSWORD": "{{opscenter.ldap.search_password}}",
+    "OPSC_LDAP_USER_SEARCH_BASE": "{{{opscenter.ldap.user_search_base}}}",
+    "OPSC_LDAP_USER_SEARCH_FILTER": "{{{opscenter.ldap.user_search_filter}}}",
+    "OPSC_LDAP_USER_MEMBEROF_ATTRIBUTE": "{{opscenter.ldap.user_memberof_attribute}}",
+    "OPSC_LDAP_GROUP_SEARCH_TYPE": "{{{opscenter.ldap.group_search_type}}}",
+    "OPSC_LDAP_GROUP_SEARCH_BASE": "{{{opscenter.ldap.group_search_base}}}",
+    "OPSC_LDAP_GROUP_SEARCH_FILTER_WITH_DN": "{{{opscenter.ldap.group_search_filter_with_dn}}}",
+    "OPSC_LDAP_GROUP_NAME_ATTRIBUTE": "{{{opscenter.ldap.group_name_attribute}}}",
+    "OPSC_LDAP_ADMIN_GROUP_NAME": "{{{opscenter.ldap.admin_group_name}}}",
+    "OPSC_LDAP_LDAP_SECURITY": "{{opscenter.ldap.ldap_security}}",
+    "OPSC_LDAP_CONNECTION_TIMEOUT": "{{opscenter.ldap.connection_timeout}}",
+{{/opscenter.ldap.enabled}}
+
+    "DSE_SEED_NODE_HOSTNAME0": "{{dse.seed_hostname1}}",
+    "DSE_SEED_NODE_HOSTNAME1": "{{dse.seed_hostname2}}",
+    "DSE_CLUSTER_NAME": "{{dse.cluster_name}}",
+    "DSE_JMX_PORT": "{{dse.jmx_port}}",
+    "DSE_AGENT_PORT": "{{dse.agent_port}}",
+    "DSE_NATIVE_PORT": "{{dse.native_port}}",
+    "DSE_THRIFT_PORT": "{{dse.thrift_port}}",
+    "DSE_SPARK_MASTER_WEBUI_PORT": "{{dse.spark_master_webui_port}}",
+
+    "INIT_CLUSTER_URI": "{{resource.assets.uris.opscenter-init-zip}}",
+
+    "CONFIG_TEMPLATE_PATH": "datastax-ops-scheduler"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+   {
+     "protocol": "HTTP",
+     "path": "/v1/plans/deploy",
+     "gracePeriodSeconds": 900,
+     "intervalSeconds": 30,
+     "portIndex": 0,
+     "timeoutSeconds": 30,
+     "maxConsecutiveFailures": 0
+   },
+   {
+     "protocol": "HTTP",
+     "path": "/v1/plans/recovery",
+     "gracePeriodSeconds": 900,
+     "intervalSeconds": 30,
+     "portIndex": 0,
+     "timeoutSeconds": 30,
+     "maxConsecutiveFailures": 0
+   }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}

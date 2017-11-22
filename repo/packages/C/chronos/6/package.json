@@ -1,0 +1,23 @@
+{
+  "packagingVersion": "4.0",
+  "name": "chronos",
+  "version": "2.5.0-1",
+  "scm": "https://github.com/mesos/chronos.git",
+  "maintainer": "support@mesosphere.io",
+  "description": "A fault tolerant job scheduler for Mesos which handles dependencies and ISO8601 based schedules.",
+  "framework": true,
+  "minDcosReleaseVersion": "1.9",
+  "upgradesFrom": ["2.4.0"],
+  "downgradesTo": ["2.4.0"],
+  "tags": ["cron", "analytics", "batch"],
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/mesos/chronos/blob/master/LICENSE"
+    }
+  ],
+  "preInstallNotes": "We recommend a minimum of one node with at least 1 CPU and 2GB of RAM available for the Chronos Service.",
+  "postInstallNotes": "Chronos DCOS Service has been successfully installed!\n\n\tDocumentation: http://mesos.github.io/chronos\n\tIssues: https://github.com/mesos/chronos/issues",
+  "postUninstallNotes": "The Chronos DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at https://docs.mesosphere.com/latest/deploying-services/uninstall/ to clean up any persisted state.",
+  "selected": true
+}

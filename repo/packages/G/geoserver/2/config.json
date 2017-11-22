@@ -1,0 +1,104 @@
+{
+	"type": "object",
+	"description": "GeoServer DCOS Service properties",
+	"properties": {
+		"geoserver": {
+			"description": "GeoServer shared configuration properties.",
+			"properties": {
+				"framework-name": {
+					"type": "string",
+					"description": "Mesos Framework Name",
+					"default": "geoserver"
+				},
+				"instances": {
+					"type": "integer",
+					"description": "Number of GeoServer instances to launch. These are the tasks that actually provide OGC service handlers.",
+					"default": 2,
+					"minimum": 1
+				},
+				"cpus": {
+					"type": "integer",
+					"description": "Number of cores allocated per GeoServer instance",
+					"default": 2,
+					"minimum": 1
+				},
+				"memory": {
+					"type": "integer",
+					"description": "Amount of memory in MiBs to allocate per GeoServer instance.",
+					"default": 1024,
+					"minimum": 512
+				},
+				"virtual-host": {
+					"type": "string",
+					"description": "External address for access to the GeoServer cluster. This should be added to your DNS as an A record targeting your marathon-lb public slave.",
+					"default": "geoserver.marathon.mesos"
+				},
+				"data-dir": {
+					"description": "Absolute path present on all Mesos nodes for GeoServer configuration storage. This location must be shared across all Mesos nodes to ensure consistent GeoServer configuration.",
+					"type": "string",
+					"default": "/shared/geoserver",
+					"pattern": "^['\"]?(?:\/[^\/]+)*['\"]?$"
+				},
+				"data-dir-owner": {
+					"description": "User ID and group ID ownership of GeoServer configuration storage. Used within containers to match host ownership by way of gosu.",
+					"type": "string",
+					"default": "root:root",
+					"pattern": "^([a-zA-Z0-9]+)((:[a-zA-Z0-9]+)){0,1}$"
+				},
+				"supplemental-data-dirs": {
+					"description": "Absolute path present on Mesos nodes of data for serving via GeoServer. Multiple values can be given delimited by commas.",
+					"type": "string",
+					"default": "",
+					"pattern": "^['\"]?(?:\/[^\/]+)*['\"]?$"
+				},
+				"auth-uri": {
+					"description": "URI to file for private Docker registry authentication",
+					"type": "string"
+				},
+				"enable-cors": {
+					"description": "CORS headers added to response (true/false)",
+					"default": false,
+					"type": "boolean"
+				},
+				"extension-tarball-uri": {
+					"description": "URI of tarballed JARs to inject into GeoServer instances",
+					"type": "string"
+				},
+				"web-xml-uri": {
+					"description": "URI of web.xml to inject into GeoServer instances",
+					"type": "string"
+				}
+			},
+			"required": [
+				"data-dir",
+				"data-dir-owner"
+			],
+			"type": "object"
+		},
+		"sync": {
+			"description": "Settings used to tune the synchronization of GeoServer slaves on configuration updates.",
+			"properties": {
+				"polling-interval": {
+					"description": "Interval between GeoServer configuration directory file system polls.",
+					"type": "integer",
+					"default": 5
+				},
+				"file-blacklist": {
+					"description": "Comma delimited string of file name snippets that should be ignored. Snippets are compared to file names using contains.",
+					"default": ".log",
+					"pattern": "^[a-zA-Z0-9\\.\\-\\_ ]+$",
+					"type": "string"
+				}
+			},
+			"required": [
+				"polling-interval",
+				"file-blacklist"
+			],
+			"type": "object"
+		}
+	},
+	"required": [
+		"geoserver",
+		"sync"
+	]
+}

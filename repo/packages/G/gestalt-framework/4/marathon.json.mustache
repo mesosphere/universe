@@ -1,0 +1,42 @@
+{
+  "id": "/{{service.name}}/dcos-launcher",
+  "maintainer": "support@galacticfog.com",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "galacticfog/gestalt-dcos:{{service.framework-version}}",
+      "network": "HOST",
+      "forcePullImage": true
+    }
+  },
+  "env": {
+    "JVM_OPTS": "-Xmx384m",
+    "GESTALT_FRAMEWORK_VERSION": "{{service.framework-version}}"
+  },
+  "cmd": "./bin/gestalt-dcos -Dhttp.port=$PORT0 -Dmeta.company-name=\"{{meta.company-name}}\" -Dmarathon.url={{service.marathon-url}} -Dmarathon.app-group={{service.name}} -Dlaser.scale-down-timeout={{laser.scale-down-timeout}} -Dlaser.max-port-range={{laser.max-port-range}} -Dlaser.min-port-range={{laser.min-port-range}} -Dlaser.min-cool-executors={{laser.min-cool-executors}} -Dlaser.enable-js-runtime={{laser.enable-js-runtime}} -Dlaser.enable-jvm-runtime={{laser.enable-jvm-runtime}} -Dlaser.enable-dotnet-runtime={{laser.enable-dotnet-runtime}} -Dlaser.enable-golang-runtime={{laser.enable-golang-runtime}} -Dlaser.enable-python-runtime={{laser.enable-python-runtime}} -Dlaser.enable-ruby-runtime={{laser.enable-ruby-runtime}} -Dsecurity.username={{security.admin-username}} -Dsecurity.password=\"{{security.admin-password}}\" {{#service.debug-logging}}-Dlogger.resource=debug-logging.xml{{/service.debug-logging}} {{#service.lb-url}}-Dmarathon.lb-url={{service.lb-url}}{{/service.lb-url}} {{#service.tld}}-Dmarathon.tld={{service.tld}}{{/service.tld}} {{#database.hostname}}-Ddatabase.hostname={{database.hostname}}{{/database.hostname}} {{#database.num-secondaries}}-Ddatabase.num-secondaries={{database.num-secondaries}}{{/database.num-secondaries}} {{#database.port}}-Ddatabase.port={{database.port}}{{/database.port}} {{#database.prefix}}-Ddatabase.prefix={{database.prefix}}{{/database.prefix}} -Ddatabase.username={{database.username}} -Ddatabase.password=\"{{database.password}}\" -Ddatabase.provision={{database.provision}} {{#database.provisioned-size}}-Ddatabase.provisioned-size={{database.provisioned-size}}{{/database.provisioned-size}}",
+  "cpus": 0.5,
+  "mem": 512,
+  "instances": 1,
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  },
+  "requirePorts":true,
+  "ports": [
+    0
+  ],
+  {{#service.role}}
+     "acceptedResourceRoles": [
+       "{{service.role}}"
+     ],
+  {{/service.role}}
+  "healthChecks": [{
+    "protocol": "HTTP",
+    "path": "/_gfhealth",
+    "portIndex": 0,
+    "gracePeriodSeconds": 60,
+    "intervalSeconds": 30,
+    "maxConsecutiveFailures": 0
+  }]
+}

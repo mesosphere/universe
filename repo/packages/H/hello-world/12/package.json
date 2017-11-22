@@ -1,0 +1,24 @@
+{
+  "description": "An example implementation of a stateful service using the DC/OS SDK",
+  "downgradesTo": [
+    "*"
+  ],
+  "framework": true,
+  "maintainer": "support@mesosphere.io",
+  "minDcosReleaseVersion": "1.8",
+  "name": "hello-world",
+  "packagingVersion": "4.0",
+  "postInstallNotes": "DC/OS hello-world is being installed!\n\n\tDocumentation: https://github.com/mesosphere/dcos-commons/tree/master/frameworks/helloworld\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS hello-world is being uninstalled.",
+  "preInstallNotes": "This DC/OS Service is currently in preview.",
+  "selected": false,
+  "tags": [
+    "example",
+    "reference",
+    "hello-world"
+  ],
+  "upgradesFrom": [
+    "*"
+  ],
+  "version": "2.0.0-0.30.0"
+}

@@ -1,0 +1,180 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "user": "{{service.user}}",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && ./hdfs-scheduler/bin/hdfs ./hdfs-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.secret_name}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.secret_name}}"
+    }
+  },
+  {{/service.secret_name}}
+  "env": {
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+    "HDFS_VERSION": "hadoop-2.6.0-cdh5.11.0",
+    "JRE_VERSION": "jre1.8.0_131",
+    "TASKCFG_ALL_JRE_VERSION": "jre1.8.0_131",
+    "DEPLOY_STRATEGY": "{{service.deploy_strategy}}",
+    "UPDATE_STRATEGY": "{{service.update_strategy}}",
+    "SERVICE_PRINCIPAL": "{{service.principal}}",
+    "JOURNAL_CPUS": "{{journal_node.cpus}}",
+    "JOURNAL_MEM": "{{journal_node.mem}}",
+    "JOURNAL_DISK": "{{journal_node.disk}}",
+    "JOURNAL_DISK_DOCKER_VOLUME_NAME": "{{{journal_node.portworx_volume_name}}}",
+    "JOURNAL_DISK_DOCKER_DRIVER_OPTIONS": "{{{journal_node.portworx_volume_options}}}",
+    "NAME_CPUS": "{{name_node.cpus}}",
+    "NAME_MEM": "{{name_node.mem}}",
+    "NAME_DISK": "{{name_node.disk}}",
+    "NAME_DISK_DOCKER_VOLUME_NAME": "{{{name_node.portworx_volume_name}}}",
+    "NAME_DISK_DOCKER_DRIVER_OPTIONS": "{{{name_node.portworx_volume_options}}}",
+    "ZKFC_CPUS": "{{zkfc_node.cpus}}",
+    "ZKFC_MEM": "{{zkfc_node.mem}}",
+    "DATA_COUNT": "{{data_node.count}}",
+    "DATA_CPUS": "{{data_node.cpus}}",
+    "DATA_MEM": "{{data_node.mem}}",
+    "DATA_DISK": "{{data_node.disk}}",
+    "DATA_DISK_DOCKER_VOLUME_NAME": "{{{data_node.portworx_volume_name}}}",
+    "DATA_DISK_DOCKER_DRIVER_OPTIONS": "{{{data_node.portworx_volume_options}}}",
+    "YARN_CPUS": "{{yarn_node.cpus}}",
+    "YARN_MEM": "{{yarn_node.mem}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "HDFS_URI": "{{resource.assets.uris.hdfs-tar-gz}}",
+    "HDFS_BIN_URI": "{{resource.assets.uris.hdfs-bin-tar-gz}}",
+    "HDFS_JAVA_URI": "{{resource.assets.uris.hdfs-jre-tar-gz}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+
+    {{#service.virtual_networks}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME_JOURNAL": "{{journal_node.virtual_network}}",
+    "CNI_PLUGIN_LABELS_JOURNAL": "{{journal_node.cni_plugin_labels}}",
+    "VIRTUAL_NETWORK_NAME_NAME": "{{name_node.virtual_network}}",
+    "CNI_PLUGIN_LABELS_NAME": "{{name_node.cni_plugin_labels}}",
+    "VIRTUAL_NETWORK_NAME_DATA": "{{data_node.virtual_network}}",
+    "CNI_PLUGIN_LABELS_DATA": "{{data_node.cni_plugin_labels}}",
+    {{/service.virtual_networks}}
+
+    {{#service.secret_name}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    {{/service.secret_name}}
+
+    {{#service.tls.enabled}}
+    "TLS_ENABLED": "{{service.tls.enabled}}",
+    "TASKCFG_ALL_TLS_ENABLED": "{{service.tls.enabled}}",
+    {{/service.tls.enabled}}
+
+    {{#journal_node.enable_readiness_check}}
+    "JOURNAL_READINESS_CHECK_ENABLED": "{{journal_node.enable_readiness_check}}",
+    "TASKCFG_ALL_JOURNAL_READINESS_CHECK_ENABLED": "{{journal_node.enable_readiness_check}}",
+    {{/journal_node.enable_readiness_check}}
+
+
+    {{#service.kerberos.enabled}}
+    "KEYTABS_URI": "{{service.kerberos.keytabs_uri}}",
+    "KRB5_CONF_URI": "{{service.kerberos.krb5_conf_uri}}",
+    "TASKCFG_ALL_SECURE_MODE": "{{service.kerberos.enabled}}",
+    "TASKCFG_ALL_KERBEROS_PRIMARY": "{{service.kerberos.primary}}",
+    "TASKCFG_ALL_KERBEROS_PRIMARY_HTTP": "{{service.kerberos.primary_http}}",
+    "TASKCFG_ALL_KERBEROS_REALM": "{{service.kerberos.realm}}",
+    {{/service.kerberos.enabled}}
+    "TASKCFG_ALL_ADMINISTRATORS": "{{hdfs.administrators}}",
+    "TASKCFG_ALL_NAME_NODE_RPC_PORT":"{{hdfs.name_node_rpc_port}}",
+    "TASKCFG_ALL_NAME_NODE_HTTP_PORT":"{{hdfs.name_node_http_port}}",
+    "TASKCFG_ALL_ZKFC_PORT": "{{hdfs.zkfc_port}}",
+    "TASKCFG_ALL_JOURNAL_NODE_RPC_PORT":"{{hdfs.journal_node_rpc_port}}",
+    "TASKCFG_ALL_JOURNAL_NODE_HTTP_PORT":"{{hdfs.journal_node_http_port}}",
+    "TASKCFG_ALL_DATA_NODE_RPC_PORT":"{{hdfs.data_node_rpc_port}}",
+    "TASKCFG_ALL_DATA_NODE_HTTP_PORT":"{{hdfs.data_node_http_port}}",
+    "TASKCFG_ALL_DATA_NODE_IPC_PORT":"{{hdfs.data_node_ipc_port}}",
+    "TASKCFG_ALL_DATA_NODE_BALANCE_BANDWIDTH_PER_SEC":"41943040",
+    "TASKCFG_ALL_NAME_NODE_SAFEMODE_THRESHOLD_PCT":"0.9",
+    "TASKCFG_ALL_DATA_NODE_HANDLER_COUNT":"10",
+    "TASKCFG_ALL_NAME_NODE_HANDLER_COUNT":"20",
+    "TASKCFG_ALL_PERMISSIONS_ENABLED":"{{hdfs.permissions_enabled}}",
+    "TASKCFG_ALL_NAME_NODE_HEARTBEAT_RECHECK_INTERVAL":"{{hdfs.name_node_heartbeat_recheck_interval}}",
+    "TASKCFG_ALL_IMAGE_COMPRESS":"{{hdfs.compress_image}}",
+    "TASKCFG_ALL_IMAGE_COMPRESSION_CODEC":"{{hdfs.image_compression_codec}}",
+    "TASKCFG_ALL_NAME_NODE_INVALIDATE_WORK_PCT_PER_ITERATION":"0.95",
+    "TASKCFG_ALL_NAME_NODE_REPLICATION_MIN":"3",
+    "TASKCFG_ALL_NAME_NODE_REPLICATION_WORK_MULTIPLIER_PER_ITERATION":"4",
+    "TASKCFG_ALL_CLIENT_READ_SHORTCIRCUIT":"true",
+    "TASKCFG_ALL_CLIENT_READ_SHORTCIRCUIT_PATH":"dn_socket",
+    "TASKCFG_ALL_CLIENT_READ_SHORTCIRCUIT_STREAMS_CACHE_SIZE":"1000",
+    "TASKCFG_ALL_CLIENT_READ_SHORTCIRCUIT_STREAMS_CACHE_SIZE_EXPIRY_MS":"1000",
+    "TASKCFG_ALL_NAME_NODE_DATA_NODE_REGISTRATION_IP_HOSTNAME_CHECK": "false",
+    "TASKCFG_ALL_HA_FENCING_METHODS": "shell(/bin/true)",
+    "TASKCFG_ALL_HA_AUTOMATIC_FAILURE": "true",
+    "TASKCFG_ALL_CLIENT_FAILOVER_PROXY_PROVIDER_HDFS": "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider",
+    "TASKCFG_ALL_HADOOP_PROXYUSER_HUE_HOSTS": "*",
+    "TASKCFG_ALL_HADOOP_PROXYUSER_HUE_GROUPS": "*",
+    "TASKCFG_ALL_HADOOP_PROXYUSER_ROOT_HOSTS": "*",
+    "TASKCFG_ALL_HADOOP_PROXYUSER_ROOT_GROUPS": "*",
+    "TASKCFG_ALL_HADOOP_PROXYUSER_HTTPFS_GROUPS": "*",
+    "TASKCFG_ALL_HADOOP_PROXYUSER_HTTPFS_HOSTS": "*",
+    "TASKCFG_ALL_HADOOP_ROOT_LOGGER": "{{hdfs.hadoop_root_logger}}",
+    "TASKCFG_ALL_TASK_USER": "{{service.user}}",
+    "TASKCFG_ALL_YARN_NODE_SCHED_MIN_ALLOC_MB": "{{yarn_node.scheduler_min_allocation_mb}}",
+    "TASKCFG_ALL_YARN_NODE_SCHED_MAX_ALLOC_MB": "{{yarn_node.scheduler_max_allocation_mb}}",
+    "TASKCFG_ALL_YARN_NODE_SCHED_MIN_ALLOC_VCORES": "{{yarn_node.scheduler_min_allocation_vcores}}",
+    "TASKCFG_ALL_YARN_NODE_SCHED_MAX_ALLOC_VCORES": "{{yarn_node.scheduler_max_allocation_vcores}}",
+    "TASKCFG_ALL_YARN_NODE_MANAGER_MEM_MB": "{{yarn_node.nodemanager_memory_mb}}",
+    "TASKCFG_ALL_YARN_NODE_MANAGER_CPU_VCORES": "{{yarn_node.nodemanager_cpu_vcores}}",
+    "CONFIG_TEMPLATE_PATH": "hdfs-scheduler"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    {{#service.kerberos.enabled}}
+    "{{service.kerberos.krb5_conf_uri}}",
+    {{/service.kerberos.enabled}}
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/deploy",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    },
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/recovery",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}

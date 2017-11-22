@@ -1,0 +1,271 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of the service instance.",
+          "type": "string",
+          "default": "kubernetes"
+        },
+        "sleep": {
+          "description": "The sleep duration in seconds before tasks exit.",
+          "type": "number",
+          "default": 1000
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of the Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "title": "Credential secret name (optional)",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "kubernetes": {
+      "description": "Kubernetes general properties",
+      "type": "object",
+      "properties": {
+        "version": {
+          "title": "Version",
+          "description": "Kubernetes version, e.g. 'v1.7.5'.",
+          "type": "string",
+          "default": "v1.7.5"
+        },
+        "service_cidr": {
+          "title": "Service CIDR",
+          "description": "Kubernetes Service CIDR block, e.g. '10.100.0.0/16'. It MUST NOT overlap with DC/OS VIP CIDR block.",
+          "type": "string",
+          "default": "10.100.0.0/16"
+        },
+        "node_count": {
+          "title": "Node Count",
+          "description": "Number of desired Kubernetes nodes.",
+          "type": "integer",
+          "default": 3
+        },
+        "node_placement": {
+          "title": "Node Placement",
+          "description": "Marathon-style placement constraint for nodes, e.g. 'hostname:UNIQUE'.",
+          "type": "string",
+          "default": "hostname:UNIQUE"
+        },
+        "node_disk": {
+          "title": "Node Disk size (MB)",
+          "description": "Kubernetes node persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 1024
+        }
+      }
+    },
+    "etcd": {
+      "description": "etcd properties",
+      "type": "object",
+      "properties": {
+        "version": {
+          "title": "Version",
+          "description": "etcd version, e.g. 'v3.2.6'.",
+          "type": "string",
+          "default": "v3.2.6"
+        },
+        "count": {
+          "title": "Node count",
+          "description": "Number of etcd nodes to run.",
+          "type": "integer",
+          "default": 3
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes, e.g. 'hostname:UNIQUE'.",
+          "type": "string",
+          "default": "hostname:UNIQUE"
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "etcd node CPU requirements.",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "etcd node RAM requirements (in MB).",
+          "type": "integer",
+          "default": 512
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "etcd node persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 512
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require pre-configuration in DC/OS.",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        }
+      },
+      "required": [
+        "version"
+      ]
+    },
+    "scheduler": {
+      "description": "Kubernetes Scheduler properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Instance count",
+          "description": "Number of Scheduler instances to run.",
+          "type": "integer",
+          "default": 3
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes, e.g. 'hostname:UNIQUE'.",
+          "type": "string",
+          "default": "hostname:UNIQUE"
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Scheduler instance CPU requirements.",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Scheduler instance RAM requirements (in MB).",
+          "type": "integer",
+          "default": 256
+        }
+      }
+    },
+    "controllermanager": {
+      "description": "Kubernetes Controller Manager properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Instance count",
+          "description": "Number of Controller Manager instances to run.",
+          "type": "integer",
+          "default": 3
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes, e.g. 'hostname:UNIQUE'.",
+          "type": "string",
+          "default": "hostname:UNIQUE"
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Controller Manager instance CPU requirements.",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Controller Manager instance RAM requirements (in MB).",
+          "type": "integer",
+          "default": 256
+        }
+      }
+    },
+    "apiserver": {
+      "description": "Kubernetes API Server properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of API Server instances to run.",
+          "type": "integer",
+          "default": 3
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes., e.g. 'hostname:UNIQUE'.",
+          "type": "string",
+          "default": "hostname:UNIQUE"
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "API Server instance CPU requirements.",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "API Server instance RAM requirements (in MB).",
+          "type": "integer",
+          "default": 512
+        }
+      }
+    },
+    "kube-proxy": {
+      "description": "Kubernetes kube-proxy properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "title": "CPU count",
+          "description": "kube-proxy instance CPU requirements.",
+          "type": "number",
+          "default": 0.1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "kube-proxy instance RAM requirements (in MB).",
+          "type": "integer",
+          "default": 128
+        }
+      }
+    },
+    "kubelet": {
+      "description": "Kubernetes kubelet properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "title": "CPU count",
+          "description": "kubelet instance CPU requirements.",
+          "type": "number",
+          "default": 2
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "kubelet instance RAM requirements (in MB).",
+          "type": "integer",
+          "default": 2048
+        }
+      },
+      "required": [
+        "cpus",
+        "mem"
+      ]
+    }
+  }
+}

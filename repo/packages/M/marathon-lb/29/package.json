@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "2.0",
+  "name": "marathon-lb",
+  "version": "1.8.1",
+  "scm": "https://github.com/mesosphere/marathon-lb",
+  "description": "HAProxy configured using Marathon state",
+  "maintainer": "support@mesosphere.io",
+  "tags": ["loadbalancer", "service-discovery", "reverse-proxy", "proxy", "haproxy"],
+  "preInstallNotes": "We recommend at least 2 CPUs and 1GiB of RAM for each Marathon-LB instance. \n\n*NOTE*: ```Enterprise Edition``` DC/OS requires setting up the Service Account in all security modes. \nFollow these instructions to setup a Service Account: https://docs.mesosphere.com/administration/id-and-access-mgt/service-auth/mlb-auth/",
+  "postInstallNotes": "Marathon-lb DC/OS Service has been successfully installed!\nSee https://github.com/mesosphere/marathon-lb for documentation.",
+  "postUninstallNotes": "Marathon-lb DC/OS Service has been uninstalled and will no longer run.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/mesosphere/marathon/blob/master/LICENSE"
+    },
+    {
+      "name": "GNU General Public License version 2",
+      "url": "http://www.haproxy.org/download/1.6/doc/LICENSE"
+    }
+  ]
+}

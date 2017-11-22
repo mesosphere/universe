@@ -1,0 +1,57 @@
+{
+  "assets": {
+    "uris": {
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.30.2/bootstrap.zip",
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u144-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "scheduler-zip": "https://downloads.mesosphere.com/tensorflow/assets/0.1.0-1.3.0-beta/tensorflow-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.30.2/executor.zip",
+      "examples-zip": "https://downloads.mesosphere.com/tensorflow/assets/0.1.0-1.3.0-beta/tensorflow-examples.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/tensorflow-dcos/img/tensorflow-small.jpg",
+    "icon-medium": "https://downloads.mesosphere.com/tensorflow-dcos/img/tensorflow-medium.jpg",
+    "icon-large": "https://downloads.mesosphere.com/tensorflow-dcos/img/tensorflow-large.jpg"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "401cf7ccbe5b538fe25dffdffc917453e013424fa9cd747188d28e91cbff588d"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/tensorflow/assets/0.1.0-1.3.0-beta/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "dcc7bcf8c04be278221fe36417bc718afb15563675e201fab0ca095ee297a706"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/tensorflow/assets/0.1.0-1.3.0-beta/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "e31698174288d28b81b167ba79d085ca95aaa7c4eb1e8f55ebc65bdae17c8e84"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/tensorflow/assets/0.1.0-1.3.0-beta/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

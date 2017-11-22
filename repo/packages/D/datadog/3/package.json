@@ -1,0 +1,24 @@
+{
+    "packagingVersion": "3.0",
+    "minDcosReleaseVersion" : "1.8",
+    "description": "Datadog is a hosted monitoring service for cloud-scale infrastructure and applications",
+    "framework": false,
+    "licenses": [
+        {
+            "name": "Simplified BSD license",
+            "url": "https://raw.githubusercontent.com/DataDog/dd-agent/master/LICENSE"
+        }
+    ],
+    "maintainer": "package@datadoghq.com",
+    "name": "datadog",
+    "postInstallNotes": "Datadog on DCOS successfully installed.\nHead over to https://app.datadoghq.com to monitor your DCOS cluster.",
+    "postUninstallNotes": "Datadog on DCOS successfully uninstalled.\n.",
+    "preInstallNotes": "This DC/OS Service is currently in preview. \n Pass your API key as a package option (datadog.api_key), which you can find at https://app.datadoghq.com/account/settings#api \nAlso pass the number of Mesos slaves as an option (datadog.instances).\nMarathon will make sure that the Datadog Agent runs only once per slave.",
+    "scm": "https://github.com/datadog/dd-agent.git",
+    "tags": [
+        "datadog",
+        "monitoring"
+    ],
+    "version": "5.16.0",
+    "website": "https://www.datadoghq.com/"
+}

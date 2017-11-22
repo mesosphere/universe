@@ -1,0 +1,57 @@
+{
+  "assets": {
+    "uris": {
+      "bootstrap-zip": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/1.1.0-1.5.0/bootstrap.zip",
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64-jce-unlimited.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
+      "alluxio-bootstrap": "https://alluxio-dcos-release.s3.amazonaws.com/agent/v1.5.0/bootstrap-dcos.sh",
+      "scheduler-zip": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/1.1.0-1.5.0/alluxio-enterprise-scheduler.zip",
+      "executor-zip": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/1.1.0-1.5.0/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://alluxio-dcos-release.s3.amazonaws.com/icons/v1.0.0/alluxio_logo_small.png?raw=true",
+    "icon-medium": "https://alluxio-dcos-release.s3.amazonaws.com/icons/v1.0.0/alluxio_logo_medium.png?raw=true",
+    "icon-large": "https://alluxio-dcos-release.s3.amazonaws.com/icons/v1.0.0/alluxio_logo_large.png?raw=true"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "0d8bcefbc9e66dbff3d9f443fc63a326b2a627d9d46182ada8734d100c6cd8be"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/1.1.0-1.5.0/dcos-alluxio-enterprise-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "260dcb917164702d9a1b78e307cfc36fcbd0d16d45d7e060bfafccbde22f16cf"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/1.1.0-1.5.0/dcos-alluxio-enterprise-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "8a6d4ff7fcbbaecb3d4e089e8ba87063b0081c1aea9daad9fa76c4098387b693"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/1.1.0-1.5.0/dcos-alluxio-enterprise.exe"
+        }
+      }
+    }
+  }
+}

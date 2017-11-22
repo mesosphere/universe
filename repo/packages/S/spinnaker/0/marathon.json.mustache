@@ -1,0 +1,140 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" &&  ./spinnaker-scheduler/bin/spinnaker ./spinnaker-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1510444853893",
+    "PACKAGE_BUILD_TIME_STR": "Sun Nov 12 2017 00:00:53 +0000",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+
+    {{#service.virtual_network_enabled}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    {{/service.service_account_secret}}
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "CONFIG_TEMPLATE_PATH": "spinnaker-scheduler",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+
+    "REDIS_PORT": "{{redis.port}}",
+    "REDIS_CPUS": "{{redis.cpus}}",
+    "REDIS_MEM": "{{redis.mem}}",
+    "REDIS_PLACEMENT": "{{redis.placement_constraint}}",
+    "FRONT_PORT": "{{front.port}}",
+    "FRONT_CPUS": "{{front.cpus}}",
+    "FRONT_MEM": "{{front.mem}}",
+    "FRONT_CONFIG": "{{front.config}}",
+    "FRONT_PLACEMENT": "{{front.placement_constraint}}",
+    "FRONT_DOCKER_IMAGE": "{{resource.assets.container.docker.front}}",
+    "FIAT_PORT": "{{fiat.port}}",
+    "FIAT_CPUS": "{{fiat.cpus}}",
+    "FIAT_MEM": "{{fiat.mem}}",
+    "FIAT_CONFIG": "{{fiat.config}}",
+    "FIAT_PLACEMENT": "{{fiat.placement_constraint}}",
+    "FIAT_DOCKER_IMAGE": "{{resource.assets.container.docker.fiat}}",
+    "CLOUDDRIVER_PORT": "{{clouddriver.port}}",
+    "CLOUDDRIVER_CPUS": "{{clouddriver.cpus}}",
+    "CLOUDDRIVER_MEM": "{{clouddriver.mem}}",
+    "CLOUDDRIVER_CONFIG": "{{clouddriver.config}}",
+    "CLOUDDRIVER_PLACEMENT": "{{clouddriver.placement_constraint}}",
+    "CLOUDDRIVER_DOCKER_IMAGE": "{{resource.assets.container.docker.clouddriver}}",
+    "ORCA_PORT": "{{orca.port}}",
+    "ORCA_CPUS": "{{orca.cpus}}",
+    "ORCA_MEM": "{{orca.mem}}",
+    "ORCA_CONFIG": "{{orca.config}}",
+    "ORCA_PLACEMENT": "{{orca.placement_constraint}}",
+    "ORCA_DOCKER_IMAGE": "{{resource.assets.container.docker.orca}}",
+    "GATE_PORT": "{{gate.port}}",
+    "GATE_CPUS": "{{gate.cpus}}",
+    "GATE_MEM": "{{gate.mem}}",
+    "GATE_CONFIG": "{{gate.config}}",
+    "GATE_PLACEMENT": "{{gate.placement_constraint}}",
+    "GATE_DOCKER_IMAGE": "{{resource.assets.container.docker.gate}}",
+    "DECK_PORT": "{{deck.port}}",
+    "DECK_CPUS": "{{deck.cpus}}",
+    "DECK_MEM": "{{deck.mem}}",
+    "DECK_PLACEMENT": "{{deck.placement_constraint}}",
+    "DECK_DOCKER_IMAGE": "{{resource.assets.container.docker.deck}}",
+    "ECHO_PORT": "{{echo.port}}",
+    "ECHO_CPUS": "{{echo.cpus}}",
+    "ECHO_MEM": "{{echo.mem}}",
+    "ECHO_CONFIG": "{{echo.config}}",
+    "ECHO_PLACEMENT": "{{echo.placement_constraint}}",
+    "ECHO_DOCKER_IMAGE": "{{resource.assets.container.docker.echo}}",
+    "IGOR_PORT": "{{igor.port}}",
+    "IGOR_CPUS": "{{igor.cpus}}",
+    "IGOR_MEM": "{{igor.mem}}",
+    "IGOR_CONFIG": "{{igor.config}}",
+    "IGOR_PLACEMENT": "{{igor.placement_constraint}}",
+    "IGOR_DOCKER_IMAGE": "{{resource.assets.container.docker.igor}}",
+
+    "FRONT_SECRETS_ENABLED": "{{front.secrets_enabled}}",
+    "FRONT_AWS_ACCESS_KEY_ID": "{{front.aws_access_key_id}}",
+    "FRONT_AWS_SECRET_ACCESS_KEY": "{{front.aws_secret_access_key}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/deploy",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    },
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/recovery",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}

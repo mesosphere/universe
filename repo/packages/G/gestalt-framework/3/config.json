@@ -1,0 +1,220 @@
+{
+  "properties": {
+    "service": {
+      "description": "Gestalt framework-wide configuration properties",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the framework scheduler inside the base Marathon.",
+          "default": "gestalt-framework",
+          "pattern" : "^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$"
+        },
+        "accept-eula": {
+          "type": "string",
+          "description": "Must enter \"yes\"",
+          "default": "[empty]",
+          "pattern": "yes"
+        },
+        "marathon-url": {
+          "type": "string",
+          "description": "The base URL for accessing Marathon by the launcher.",
+          "default": "http://marathon.mesos:8080"
+        },
+        "lb-url": {
+           "type": "string",
+           "description": "The base URL for a marathon-lb instance, for accessing services by their assigned service ports.",
+           "default": ""
+        },
+        "tld": {
+          "type": "string",
+          "description": "Top-level domain for creating marathon-lb virtual hosts for framework services."
+        },
+        "framework-version": {
+          "type": "string",
+          "description": "Version of the Gestalt framework to install",
+          "default": "1.1.0"
+        },
+        "role": {
+          "description": "Deploy gestalt-framework-scheduler only on nodes with this role.",
+          "type": "string"
+        },
+        "debug-logging": {
+          "description": "Enable debug logging.",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "name",
+        "accept-eula",
+        "framework-version",
+        "marathon-url",
+        "debug-logging"
+      ],
+      "type": "object"
+    },
+    "meta": {
+      "description": "gestalt-framework metadata",
+      "properties": {
+        "company-name": {
+          "description": "Preconfigured company name",
+          "default": "A Galactic Fog Customer",
+          "type": "string",
+          "pattern": "^.+$"
+        }
+      },
+      "required": [
+        "company-name"
+      ],
+      "type": "object"
+    },
+    "database" : {
+      "description": "database configuration properties",
+      "properties": {
+        "provision": {
+          "type": "boolean",
+          "description": "Provision a database server for use by the framework services. Otherwise, requires a pre-existing database server.",
+          "default": true
+        },
+        "num-secondaries": {
+          "type": "integer",
+          "description": "When provisioning the database, number of redundant secondaries to be provisioned.",
+          "default": 0
+        },
+        "provisioned-size": {
+          "type": "integer",
+          "description": "When provisioning the database, size for the persistent volume in MB.",
+          "default": 100
+        },
+        "hostname": {
+          "type": "string",
+          "description": "The hostname for the database (only if pre-existing)."
+        },
+        "port": {
+          "type": "integer",
+          "description": "The port for the database (only if pre-existing).",
+          "minimum": 1,
+          "maximum": 32000
+        },
+        "username": {
+          "type": "string",
+          "description": "The username for the database (provisioned or pre-existing)",
+          "default": "gestaltdev"
+        },
+        "password": {
+          "type": "string",
+          "description": "The password for the database (provisioned or pre-existing)",
+          "default": "letmein"
+        },
+        "prefix": {
+          "type": "string",
+          "description": "A prefix for database names for the database (only if pre-existing)",
+          "default": "gestalt-"
+        }
+      },
+      "required": [
+        "provision",
+        "username",
+        "password",
+        "prefix"
+      ],
+      "type": "object"
+    },
+    "security" : {
+      "description": "gestalt-security configuration properties",
+      "properties": {
+        "admin-username": {
+          "type": "string",
+          "description": "The username for the bootstrapped admin account.",
+          "default": "gestalt-admin"
+        },
+        "admin-password": {
+          "type": "string",
+          "description": "The password for the bootstrapped admin account (leave blank for none/no-login).",
+          "default": "letmein"
+        }
+      },
+      "required": [
+        "admin-username",
+        "admin-password"
+      ],
+      "type": "object"
+    },
+    "laser" : {
+      "description": "gestalt-laser lambda scheduler configuration properties",
+      "properties": {
+        "min-cool-executors": {
+          "type": "integer",
+          "description": "Minimum number of cool executors.",
+          "default" : 1,
+          "minimum" : 1
+        },
+        "scale-down-timeout": {
+          "type": "integer",
+          "description": "Lambda executor scale down timeout (seconds)",
+          "default" : 15,
+          "minimum" : 1
+        },
+        "min-port-range": {
+          "type": "integer",
+          "description": "Minimum port number for scheduler listening sockets.",
+          "default" : 60000,
+          "minimum" : 1
+        },
+        "max-port-range": {
+          "type": "integer",
+          "description": "Maximum port number for scheduler listening sockets.",
+          "default" : 60500,
+          "minimum" : 1
+        },
+        "enable-js-runtime": {
+          "description": "Enable javascript lambda runtime.",
+          "type": "boolean",
+          "default": true
+        },
+        "enable-jvm-runtime": {
+          "description": "Enable Java/Scala lambda runtime.",
+          "type": "boolean",
+          "default": true
+        },
+        "enable-dotnet-runtime": {
+          "description": "Enable .NET CLR lambda runtime.",
+          "type": "boolean",
+          "default": true
+        },
+        "enable-golang-runtime": {
+          "description": "Enable Go lambda runtime.",
+          "type": "boolean",
+          "default": true
+        },
+        "enable-python-runtime": {
+          "description": "Enable Python lambda runtime.",
+          "type": "boolean",
+          "default": true
+        },
+        "enable-ruby-runtime": {
+          "description": "Enable Ruby lambda runtime.",
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": [
+        "min-cool-executors",
+        "scale-down-timeout",
+        "min-port-range",
+        "max-port-range",
+        "enable-js-runtime",
+        "enable-jvm-runtime",
+        "enable-dotnet-runtime",
+        "enable-golang-runtime",
+        "enable-python-runtime",
+        "enable-ruby-runtime"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "service", "database", "security", "laser", "meta"
+  ],
+  "type": "object"
+}

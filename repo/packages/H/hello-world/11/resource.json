@@ -1,0 +1,56 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/hello-world/assets/1.3.1-0.20.1/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/hello-world/assets/1.3.1-0.20.1/hello-world-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/hello-world/assets/1.3.1-0.20.1/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-small.png?raw=true",
+    "icon-medium": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-medium.png?raw=true",
+    "icon-large": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-large.png?raw=true"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "12f249066c7169404aed7f312d304049b8265546884cd1f17a2f228ed1e00e3e"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hello-world/assets/1.3.1-0.20.1/dcos-hello-world-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "0781aab7ad17912e2e9f1713eb10f1fbd9d1bc6ee64183aff4440a3ddc1dabcc"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hello-world/assets/1.3.1-0.20.1/dcos-hello-world-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "8211d3919e8b6137a8a33cdc7657733821a0f4fd044e18b793844776bad33ba7"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hello-world/assets/1.3.1-0.20.1/dcos-hello-world.exe"
+        }
+      }
+    }
+  }
+}

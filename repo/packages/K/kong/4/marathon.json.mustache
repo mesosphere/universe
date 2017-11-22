@@ -1,0 +1,110 @@
+{
+  "id": "{{service.name}}",
+  "instances": {{service.instances}},
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  {{^configurations.database.migrations}}
+  "cmd": "export KONG_NGINX_DAEMON=\"off\" {{configurations.custom-envs}} && kong prepare -p /usr/local/kong/ && /usr/local/openresty/nginx/sbin/nginx -c /usr/local/kong/nginx.conf -p /usr/local/kong/ ",
+  {{/configurations.database.migrations}}
+  {{#configurations.database.migrations}}
+  "cmd": "export KONG_NGINX_DAEMON=\"off\" {{configurations.custom-envs}} && kong migrations up && kong prepare -p /usr/local/kong/ && /usr/local/openresty/nginx/sbin/nginx -c /usr/local/kong/nginx.conf -p /usr/local/kong/ ",
+  {{/configurations.database.migrations}}
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.kong-image}}",
+      "network": "BRIDGE",
+      "forcePullImage": true,
+      "portMappings": [
+        {
+          "containerPort": 8443,
+          "hostPort": 0,
+          "protocol": "tcp",
+          "name": "{{service.name}}-proxy-ssl",
+          "labels": {
+            "VIP_0": "/{{service.name}}:{{networking.proxy.vip-port-ssl}}"
+          }
+        },
+        {
+          "containerPort": 8444,
+          "hostPort": 0,
+          "protocol": "tcp",
+          "name": "{{service.name}}-admin-ssl",
+          "labels": {
+            "VIP_1": "/{{service.name}}:{{networking.admin.vip-port-ssl}}"
+          }
+        },
+        {
+          "containerPort": 8000,
+          "hostPort": 0,
+          "protocol": "tcp",
+          {{#networking.proxy.external-access}}
+          "servicePort": {{networking.proxy.service-port}},
+          {{/networking.proxy.external-access}}
+          "name": "{{service.name}}",
+          "labels": {
+            "VIP_2": "/{{service.name}}:{{networking.proxy.vip-port}}"
+          }
+        },
+        {
+          "containerPort": 8001,
+          "hostPort": 0,
+          "protocol": "tcp",
+          {{#networking.admin.external-access}}
+          "servicePort": {{networking.admin.service-port}},
+          {{/networking.admin.external-access}}
+          "name": "{{service.name}}-admin",
+          "labels": {
+            "VIP_3": "/{{service.name}}:{{networking.admin.vip-port}}"
+          }
+        }
+      ]
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "TCP",
+      "portIndex": 1,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "acceptedResourceRoles": [
+    "{{service.role}}"
+  ],
+  "env": {
+    {{^configurations.database.use-cassandra}}
+    "KONG_PG_PASSWORD": "{{configurations.postgres.password}}",
+    "KONG_PG_HOST": "{{configurations.postgres.host}}",
+    "KONG_PG_USER": "{{configurations.postgres.user}}",
+    "KONG_PG_PORT": "{{configurations.postgres.port}}",
+    {{/configurations.database.use-cassandra}}
+    {{#configurations.database.use-cassandra}}
+    "KONG_DATABASE": "cassandra",
+    "KONG_CASSANDRA_CONTACT_POINTS": "{{configurations.cassandra.contact-points}}",
+    "KONG_CASSANDRA_PORT": "{{configurations.cassandra.port}}",
+    "KONG_CASSANDRA_KEYSPACE": "{{configurations.cassandra.keyspace}}",
+    {{/configurations.database.use-cassandra}}
+    "KONG_LOG_LEVEL": "{{configurations.log-level}}",
+    "KONG_PROXY_ACCESS_LOG": "/dev/stdout",
+    "KONG_ADMIN_ACCESS_LOG": "/dev/stdout",
+    "KONG_PROXY_ERROR_LOG": "/dev/stderr",
+    "KONG_ADMIN_ERROR_LOG": "/dev/stderr"
+  },
+  "labels": {
+    {{#networking.proxy.external-access}}
+    "HAPROXY_2_GROUP": "external",
+    "HAPROXY_2_VHOST": "{{networking.proxy.virtual-host}}",
+    "HAPROXY_2_REDIRECT_TO_HTTPS": "{{networking.proxy.https-redirect}}",
+    {{/networking.proxy.external-access}}
+    {{#networking.admin.external-access}}
+    "HAPROXY_3_GROUP": "external",
+    "HAPROXY_3_VHOST": "{{networking.admin.virtual-host}}",
+    "HAPROXY_3_REDIRECT_TO_HTTPS": "{{networking.admin.https-redirect}}",
+    {{/networking.admin.external-access}}
+    "DCOS_SERVICE_NAME": "{{service.name}}"
+  }
+}

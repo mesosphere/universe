@@ -1,0 +1,28 @@
+{
+  "packagingVersion": "4.0",
+  "name": "openvpn",
+  "version": "0.0.0-0.2",
+  "scm": "https://github.com/dcos-labs/dcos-openvpn",
+  "description": "OpenVPN server and REST admin interface - community package",
+  "maintainer": "https://dcos.io/community/",
+  "tags": ["vpn", "remote-access"],
+  "preInstallNotes": "Community packages are unverified and unreviewed content from the community.\nThis release supercedes and merges both the openvpn and openvpn-admin 0.0.0-0.1 packages.\nPlease remove the openvpn-admin package if installed.\nNew features include basic auth, TLS and Zookeeper znode ACL.\n Please ensure you configure the ovpn_username and ovpn_password environment variables before deployment,\nas these are essential for access control to the REST interface and Zookeeper.\nPlease read the installation notes on https://github.com/dcos-labs/dcos-openvpn.",
+  "postInstallNotes": "OpenVPN has been successfully installed.\nPlease review https://github.com/dcos-labs/dcos-openvpn on how to create users.",
+  "postUninstallNotes": "OpenVPN has been uninstalled.\nPlease review https://github.com/dcos-labs/dcos-openvpn on how to remove persisted state.",
+  "licenses": [
+    {
+      "name": "GNU General Public License version 2",
+      "url": "https://github.com/OpenVPN/openvpn/blob/master/COPYING"
+    },
+    {
+      "name": "The MIT License (MIT)",
+      "url": "https://github.com/kylemanna/docker-openvpn/blob/master/LICENSE"
+    },
+        {
+      "name": "Apache License 2.0",
+      "url": "https://github.com/dcos-labs/dcos-openvpn/blob/master/LICENSE"
+    }
+  ]
+}
+
+

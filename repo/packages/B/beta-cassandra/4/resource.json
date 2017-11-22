@@ -1,0 +1,63 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "cassandra": "mesosphere/cassandra:1.0.26-3.0.10"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "cassandra-jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "scheduler-zip": "https://downloads.mesosphere.com/cassandra/assets/1.0.31-3.0.13-beta/cassandra-scheduler.zip",
+      "cassandra-tar-gz": "https://downloads.mesosphere.com/cassandra/assets/apache-cassandra-3.0.13-bin-dcos.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/cassandra/assets/1.0.31-3.0.13-beta/bootstrap.zip",
+      "executor-zip": "https://downloads.mesosphere.com/cassandra/assets/1.0.31-3.0.13-beta/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/cassandra-mesos/assets/cassandra-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "01b4ff5cdf20ca5db7e25a73bd6c2d201ee91823722af581be39220e221ec008"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cassandra/assets/1.0.31-3.0.13-beta/dcos-cassandra-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "8551f745e01f5ca3ada8b1aca96074be881dbbbeb73a60e19caf437309be46da"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cassandra/assets/1.0.31-3.0.13-beta/dcos-cassandra-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "f87e737b2075b773ac65c35e084fc9a4876432fd8c16508126f95c18e6fab7b6"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cassandra/assets/1.0.31-3.0.13-beta/dcos-cassandra.exe"
+        }
+      }
+    }
+  }
+}

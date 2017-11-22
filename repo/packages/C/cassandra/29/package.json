@@ -1,0 +1,22 @@
+{
+    "packagingVersion": "4.0",
+    "upgradesFrom": [
+        "2.0.2-3.0.14"
+    ],
+    "downgradesTo": [
+        "2.0.2-3.0.14"
+    ],
+    "minDcosReleaseVersion": "1.9",
+    "name": "cassandra",
+    "version": "2.0.3-3.0.14",
+    "maintainer": "support@mesosphere.io",
+    "description": "Apache Cassandra",
+    "selected": true,
+    "framework": true,
+    "tags": [
+        "cassandra"
+    ],
+    "preInstallNotes": "Default configuration requires 3 agent nodes each with: 0.5 CPU | 4096 MB MEM | 1 10240 MB Disk",
+    "postInstallNotes": "The DC/OS Apache Cassandra service is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/cassandra/\n\tIssues: https://docs.mesosphere.com/support/",
+    "postUninstallNotes": "The DC/OS Apache Cassandra service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/cassandra/uninstall to remove any persistent state if required."
+}

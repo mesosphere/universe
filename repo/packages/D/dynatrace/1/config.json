@@ -1,0 +1,54 @@
+{
+    "type": "object",
+    "properties": {
+        "dynatrace": {
+            "description": "Dynatrace configuration properties",
+            "properties": {
+                "downloadurl": {
+                    "description": "Dynatrace OneAgent download URL",
+                    "type": "string"
+                },
+                "skipcertcheck": {
+                    "description": "Skip SSL certificate checks for download",
+                    "type": "boolean",
+                    "default": false
+                },
+                "parameters": {
+                    "description": "Add installer parameters in the format 'key=value key2=value2'",
+                    "type": "string",
+                    "default": "APP_LOG_CONTENT_ACCESS=1"
+                },
+                "app_id": {
+                    "default": "dynatrace-oneagent",
+                    "description": "Marathon Application ID",
+                    "type": "string"
+                },
+                "cpus": {
+                    "default": 0.1,
+                    "description": "CPU shares to allocate to each Dynatrace OneAgent task",
+                    "minimum": 0.1,
+                    "type": "number"
+                },
+                "instances": {
+                    "default": 1,
+                    "description": "Number of nodes in your cluster",
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "mem": {
+                    "default": 400.0,
+                    "description": "Memory (MB) to allocate to each Dynatrace OneAgent task.",
+                    "minimum": 400.0,
+                    "type": "number"
+                }
+            },
+            "required": [
+                "downloadurl"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "dynatrace"
+    ]
+}

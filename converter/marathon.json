@@ -1,0 +1,34 @@
+{
+  "id": "/transform",
+  "instances": 1,
+  "cpus": 0.25,
+  "mem": 128,
+  "requirePorts": true,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "mesosphere/universe-converter:dev"
+    }
+  },
+  "env" : {
+    "MAX_REPO_SIZE" : "20",
+    "LOGLEVEL" : "INFO"
+  },
+  "networks" : [
+    {
+      "mode": "HOST"
+    }
+  ],
+  "portDefinitions": [
+    {
+      "name" : "universeconverter",
+      "port" : 8086,
+      "protocol" : "tcp"
+    }
+  ],
+  "labels": {
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "universe-converter.mesosphere.com",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "true"
+  }
+}

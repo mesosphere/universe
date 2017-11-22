@@ -1,0 +1,293 @@
+{
+  "type": "object",
+  "properties": {
+
+    "mesos": {
+      "description": "Mesos specific configuration properties",
+      "type": "object",
+      "properties": {
+        "master": {
+          "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard URLs like http://localhost are also acceptable.",
+          "type": "string",
+          "default": "zk://master.mesos:2181/mesos"
+        }
+      },
+      "required": [
+        "master"
+      ]
+    },
+
+    "arangodb": {
+      "description": "ArangoDB specific configuration properties",
+      "type": "object",
+      "properties": {
+
+        "framework-name": {
+          "description": "Identifier for the cluster.",
+          "type": "string",
+          "default": "arangodb3"
+        },
+
+        "useDocker": {
+          "description": "Whether to run on docker or mesos containers.",
+          "type": "boolean",
+          "default": true
+        },
+
+        "zk": {
+          "description": "ZooKeeper URL for storing state. Format: zk://host1:port1,host2:port2,.../path. Please note that the id is appended to the path.",
+          "type": "string",
+          "default": "zk://master.mesos:2181/arangodb3"
+        },
+
+        "webui-host": {
+          "description": "For debugging: use this host for WEBUI request.",
+          "type": "string",
+          "default": ""
+        },
+
+        "proxy-port": {
+          "description": "Proxy port, use '0' to let Mesos select a port for you.",
+          "type": "integer",
+          "default": 0
+        },
+
+        "framework-port": {
+          "description": "Framework port, use '0' to let Mesos select a port for you.",
+          "type": "integer",
+          "default": 0
+        },
+
+        "framework-cpus": {
+          "description": "cpus resources needed for each framework instance.",
+          "type": "number",
+          "default": 0.25
+        },
+
+        "framework-mem": {
+          "description": "mem resources needed for each framework instance.",
+          "type": "number",
+          "default": 512.0
+        },
+
+        "framework-instances": {
+          "description": "number of instances of the framework to run.",
+          "type": "integer",
+          "default": 1
+        },
+
+        "framework-user": {
+          "description": "user under which to run the framework tasks",
+          "type": "string",
+          "default": ""
+        },
+
+        "principal": {
+          "description": "Principal for persistent volumes",
+          "type": "string",
+          "default": "arangodb3"
+        },
+
+        "mode": {
+          "description": "Mode for framework, possible values: \"standalone\", \"cluster\"",
+          "type": "string",
+          "default": "cluster"
+        },
+
+        "async-replication": {
+          "description": "Whether we do asynchronous replication, possible values: \"true\", \"false\"",
+          "type": "boolean",
+          "default": false
+        },
+
+        "role": {
+          "description": "Role for framework",
+          "type": "string",
+          "default": "arangodb3"
+        },
+
+        "minimal-resources-agent": {
+          "description": "Minimal mesos resources for an agent",
+          "type": "string",
+          "default": "mem(*):2048;cpus(*):0.25;disk(*):2048"
+        },
+
+        "minimal-resources-coordinator": {
+          "description": "Minimal mesos resources for a coordinator",
+          "type": "string",
+          "default": "mem(*):4096;cpus(*):1;disk(*):1024"
+        },
+
+        "minimal-resources-dbserver": {
+          "description": "Minimal mesos resources for a DBserver",
+          "type": "string",
+          "default": "mem(*):4096;cpus(*):1;disk(*):4096"
+        },
+
+        "minimal-resources-secondary": {
+          "description": "Minimal mesos resources for a secondary DBserver",
+          "type": "string",
+          "default": "mem(*):4096;cpus(*):1;disk(*):4096"
+        },
+
+        "nr-agents": {
+          "description": "Number of Agents",
+          "type": "integer",
+          "default": 3
+        },
+
+        "nr-dbservers": {
+          "description": "Initial number of DBservers",
+          "type": "integer",
+          "default": 2
+        },
+
+        "nr-coordinators": {
+          "description": "Initial number of coordinators",
+          "type": "integer",
+          "default": 2
+        },
+
+        "failover-timeout": {
+          "description": "Timeout after which an automatic failover is done.",
+          "type": "number",
+          "default": 604800
+        },
+
+        "mesos-authenticate": {
+          "description": "If true use authentication with Mesos master.",
+          "type": "boolean",
+          "default": false
+        },
+
+        "secret": {
+          "description": "Secret for authentication with Mesos.",
+          "type": "string",
+          "default": ""
+        },
+
+        "secondaries-with-dbservers": {
+          "description": "Flag, if each secondary must run on a node with a DBServer",
+          "type": "boolean",
+          "default": false
+        },
+
+        "coordinators-with-dbservers": {
+          "description": "Flag, if each coordinator must run on a node with a DBServer",
+          "type": "boolean",
+          "default": false
+        },
+
+        "offer-limit": {
+          "description": "Maximum number of outstanding offers to look at",
+          "type": "integer",
+          "default": 10
+        },
+
+        "refuse-seconds": {
+          "description": "Number of seconds that declined offers will be put back to mesos",
+          "type": "integer",
+          "default": 20
+        },
+
+        "arangodb-docker-image": {
+          "description": "Docker image to run arangodb.",
+          "type": "string",
+          "default": "arangodb/arangodb-mesos:3.2_port"
+        },
+
+        "arangodb-privileged-image": {
+          "description": "Run arangodb image in privileged mode.",
+          "type": "boolean",
+          "default": false
+        },
+
+        "arangodb-force-pull-image": {
+          "description": "Forcefully pull arangodb image.",
+          "type": "boolean",
+          "default": true
+        },
+
+        "arangodb-ssl-keyfile": {
+          "description": "Enable SSL using this base64 encoded SSL keyfile (see ArangoDB docs for keyfile specification)",
+          "type": "string",
+          "default": ""
+        },
+        "arangodb-enterprise-key": {
+          "description": "Use enterprise edition using the following key",
+          "type": "string",
+          "default": ""
+        },
+        "arangodb-storage-engine": {
+          "description": "Storage engine to use: rocksdb, mmfiles",
+          "type": "string",
+          "default": "auto"
+        },
+        "arangodb-encryption-keyfile": {
+          "description": "Enable data encryption (implies rocksdb storage engine). Provide a base64 encoded 32 byte long key. ENTERPRISE ONLY",
+          "type": "string",
+          "default": ""
+        },
+        "arangodb-storage-engine": {
+          "description": "Storage engine to use: rocksdb, mmfiles",
+          "type": "string",
+          "default": "auto"
+        },
+        "arangodb-encryption-keyfile": {
+          "description": "Enable data encryption (implies rocksdb storage engine). Provide a base64 encoded 32 byte long key. ENTERPRISE ONLY",
+          "type": "string",
+          "default": ""
+        },
+        "arangodb-additional-agent-args": {
+          "description": "Additional arangod arguments to use when starting an agent (see arangod --help)",
+          "type": "string",
+          "default": ""
+        },
+        "arangodb-additional-dbserver-args": {
+          "description": "Additional arangod arguments to use when starting a dbserver (see arangod --help)",
+          "type": "string",
+          "default": ""
+        },
+        "arangodb-additional-secondary-args": {
+          "description": "Additional arangod arguments to use when starting a secondary dbserver (see arangod --help)",
+          "type": "string",
+          "default": ""
+        },
+        "arangodb-additional-coordinator-args": {
+          "description": "Additional arangod arguments to use when starting a coordinator (see arangod --help)",
+          "type": "string",
+          "default": ""
+        }
+      },
+
+      "required": [
+        "arangodb-docker-image",
+        "arangodb-privileged-image",
+        "async-replication",
+        "failover-timeout",
+        "framework-cpus",
+        "framework-instances",
+        "framework-mem",
+        "framework-name",
+        "framework-port",
+        "mesos-authenticate",
+        "minimal-resources-agent",
+        "minimal-resources-coordinator",
+        "minimal-resources-dbserver",
+        "minimal-resources-secondary",
+        "mode",
+        "nr-agents",
+        "nr-coordinators",
+        "nr-dbservers",
+        "role",
+        "secondaries-with-dbservers",
+        "zk"
+      ]
+    }
+  },
+
+  "required": [
+      "mesos",
+      "arangodb"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "images" : {
+    "icon-small" : "https://raw.githubusercontent.com/AppliedIS/universe-assets/master/geoserver/icon-small-geoserver.png",
+    "icon-medium" : "https://raw.githubusercontent.com/AppliedIS/universe-assets/master/geoserver/icon-medium-geoserver.png",
+    "icon-large" : "https://raw.githubusercontent.com/AppliedIS/universe-assets/master/geoserver/icon-large-geoserver.png"
+  },
+  "assets" : {
+    "container" : {
+      "docker" : {
+        "geoserver-sync" : "appliedis/dcos-geoserver:1.2.1",
+        "geoserver-app" : "appliedis/geoserver:2.11.2"
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "scheduler-zip": "http://cockroach-artifacts.s3-us-west-2.amazonaws.com/cockroachdb/assets/1.0.0-1.0.2/cockroachdb-scheduler.zip",
+      "executor-zip": "http://cockroach-artifacts.s3-us-west-2.amazonaws.com/cockroachdb/assets/1.0.0-1.0.2/executor.zip",
+      "bootstrap-zip": "http://cockroach-artifacts.s3-us-west-2.amazonaws.com/cockroachdb/assets/1.0.0-1.0.2/bootstrap.zip",
+      "cockroach-binary": "https://binaries.cockroachdb.com"
+    }
+  },
+  "images": {
+    "icon-small": "http://i.imgur.com/FsEREZI.png",
+    "icon-medium": "http://i.imgur.com/1DvX5di.png?1",
+    "icon-large": "http://i.imgur.com/P1mjjGK.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "a5d7a01ee36ac8b839f5873ca7ba62be1d31841f5750e9b07a0cb0c47861fc0b"
+            }
+          ],
+          "kind": "executable",
+          "url": "http://cockroach-artifacts.s3-us-west-2.amazonaws.com/cockroachdb/assets/1.0.0-1.0.2/dcos-cockroachdb-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "8786ca9b48235662775a971349a1a41aad24854921418304d0af4efb0e6fe46c"
+            }
+          ],
+          "kind": "executable",
+          "url": "http://cockroach-artifacts.s3-us-west-2.amazonaws.com/cockroachdb/assets/1.0.0-1.0.2/dcos-cockroachdb-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "5f9fda10961f8016bd6896d56c9878a4381eeb9e1f60dc1319a031849a11106e"
+            }
+          ],
+          "kind": "executable",
+          "url": "http://cockroach-artifacts.s3-us-west-2.amazonaws.com/cockroachdb/assets/1.0.0-1.0.2/dcos-cockroachdb.exe"
+        }
+      }
+    }
+  }
+}

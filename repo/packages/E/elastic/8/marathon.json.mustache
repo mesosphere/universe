@@ -1,0 +1,353 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 0.5,
+  "mem": 2048,
+  "instances": 1,
+  "user":"{{service.user}}",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx1024M -XX:-HeapDumpOnOutOfMemoryError\" &&  ./elastic-scheduler/bin/elastic ./elastic-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    "ELASTIC_VERSION": "5.6.2",
+    "STATSD_URI": "{{resource.assets.uris.statsd-plugin-zip}}",
+    "ELASTICSEARCH_URI" : "{{resource.assets.uris.elasticsearch-tar-gz}}",
+    "ELASTICSEARCH_JAVA_URI" : "{{resource.assets.uris.elasticsearch-jre-tar-gz}}",
+    "XPACK_URI" : "{{resource.assets.uris.xpack-zip}}",
+    "DIAGNOSTICS_URI" : "{{resource.assets.uris.diagnostics-zip}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "SCHEDULER_URI": "{{resource.assets.uris.scheduler-zip}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    {{/service.service_account_secret}}
+
+    {{#service.virtual_network_enabled}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+
+    "DEPLOY_STRATEGY": "{{service.deploy_strategy}}",
+    "TASKCFG_ALL_XPACK_ENABLED": "{{elasticsearch.xpack_enabled}}",
+    "ELASTICSEARCH_HEALTH_USER": "{{elasticsearch.health_user}}",
+    "ELASTICSEARCH_HEALTH_USER_PASSWORD": "{{elasticsearch.health_user_password}}",
+    "TASKCFG_ALL_ELASTICSEARCH_PLUGINS": "{{elasticsearch.plugins}}",
+    "TASKCFG_ALL_GATEWAY_RECOVER_AFTER_TIME": "{{elasticsearch.gateway_recover_after_time}}",
+    {{#elasticsearch.script_allowed_contexts}}
+    "TASKCFG_ALL_SCRIPT_ALLOWED_CONTEXTS": "{{elasticsearch.script_allowed_contexts}}",
+    {{/elasticsearch.script_allowed_contexts}}
+    {{#elasticsearch.script_allowed_types}}
+    "TASKCFG_ALL_SCRIPT_ALLOWED_TYPES": "{{elasticsearch.script_allowed_types}}",
+    {{/elasticsearch.script_allowed_types}}
+    {{#elasticsearch.repositories_url_allowed_urls}}
+    "TASKCFG_ALL_REPOSITORIES_URL_ALLOWED_URLS": "{{elasticsearch.repositories_url_allowed_urls}}",
+    {{/elasticsearch.repositories_url_allowed_urls}}
+    "TASKCFG_ALL_NETWORK_TCP_NO_DELAY": "{{elasticsearch.network_tcp_no_delay}}",
+    "TASKCFG_ALL_NETWORK_TCP_KEEP_ALIVE": "{{elasticsearch.network_tcp_keep_alive}}",
+    "TASKCFG_ALL_NETWORK_TCP_REUSE_ADDRESS": "{{elasticsearch.network_tcp_reuse_address}}",
+    {{#elasticsearch.network_tcp_send_buffer_size}}
+    "TASKCFG_ALL_NETWORK_TCP_SEND_BUFFER_SIZE": "{{elasticsearch.network_tcp_send_buffer_size}}",
+    {{/elasticsearch.network_tcp_send_buffer_size}}
+    {{#elasticsearch.network_tcp_receive_buffer_size}}
+    "TASKCFG_ALL_NETWORK_TCP_RECEIVE_BUFFER_SIZE": "{{elasticsearch.network_tcp_receive_buffer_size}}",
+    {{/elasticsearch.network_tcp_receive_buffer_size}}
+    "TASKCFG_ALL_TRANSPORT_TCP_CONNECT_TIMEOUT": "{{elasticsearch.transport_tcp_connect_timeout}}", 
+    "TASKCFG_ALL_TRANSPORT_TCP_COMPRESS": "{{elasticsearch.transport_tcp_compress}}",
+    "TASKCFG_ALL_TRANSPORT_PING_SCHEDULE": "{{elasticsearch.transport_ping_schedule}}",
+    "TASKCFG_ALL_HTTP_ENABLED": "{{elasticsearch.http_enabled}}",
+    "TASKCFG_ALL_HTTP_MAX_CONTENT_LENGTH": "{{elasticsearch.http_max_content_length}}",
+    "TASKCFG_ALL_HTTP_MAX_INITIAL_LINE_LENGTH": "{{elasticsearch.http_max_initial_line_length}}",
+    "TASKCFG_ALL_HTTP_MAX_HEADER_SIZE": "{{elasticsearch.http_max_header_size}}",
+    "TASKCFG_ALL_HTTP_COMPRESSION": "{{elasticsearch.http_compression}}",
+    "TASKCFG_ALL_HTTP_COMPRESSION_LEVEL": "{{elasticsearch.http_compression_level}}",
+    "TASKCFG_ALL_HTTP_CORS_ENABLED": "{{elasticsearch.http_cors_enabled}}",
+    {{#elasticsearch.http_cors_allow_origin}}
+    "TASKCFG_ALL_HTTP_CORS_ALLOW_ORIGIN": "{{elasticsearch.http_cors_allow_origin}}",
+    {{/elasticsearch.http_cors_allow_origin}}
+    "TASKCFG_ALL_HTTP_CORS_MAX_AGE": "{{elasticsearch.http_cors_max_age}}",
+    "TASKCFG_ALL_HTTP_CORS_ALLOW_METHODS": "{{elasticsearch.http_cors_allow_methods}}",
+    "TASKCFG_ALL_HTTP_CORS_ALLOW_HEADERS": "{{elasticsearch.http_cors_allow_headers}}",
+    "TASKCFG_ALL_HTTP_CORS_ALLOW_CREDENTIALS": "{{elasticsearch.http_cors_allow_credentials}}",
+    "TASKCFG_ALL_HTTP_DETAILED_ERRORS_ENABLED": "{{elasticsearch.http_detailed_errors_enabled}}",
+    "TASKCFG_ALL_HTTP_PIPELINING": "{{elasticsearch.http_pipelining}}",
+    "TASKCFG_ALL_HTTP_PIPELINING_MAX_EVENTS": "{{elasticsearch.http_pipelining_max_events}}",
+    "TASKCFG_ALL_HTTP_CONTENT_TYPE_REQUIRED": "{{elasticsearch.http_content_type_required}}",
+    {{#elasticsearch.thread_pool_index_size}}
+    "TASKCFG_ALL_THREAD_POOL_INDEX_SIZE": "{{elasticsearch.thread_pool_index_size}}",
+    {{/elasticsearch.thread_pool_index_size}}
+    "TASKCFG_ALL_THREAD_POOL_INDEX_QUEUE_SIZE": "{{elasticsearch.thread_pool_index_queue_size}}",
+    {{#elasticsearch.thread_pool_search_size}}
+    "TASKCFG_ALL_THREAD_POOL_SEARCH_SIZE": "{{elasticsearch.thread_pool_search_size}}",
+    {{/elasticsearch.thread_pool_search_size}}
+    "TASKCFG_ALL_THREAD_POOL_SEARCH_QUEUE_SIZE": "{{elasticsearch.thread_pool_search_queue_size}}",
+    {{#elasticsearch.thread_pool_get_size}}
+    "TASKCFG_ALL_THREAD_POOL_GET_SIZE": "{{elasticsearch.thread_pool_get_size}}",
+    {{/elasticsearch.thread_pool_get_size}}
+    "TASKCFG_ALL_THREAD_POOL_GET_QUEUE_SIZE": "{{elasticsearch.thread_pool_get_queue_size}}",
+    {{#elasticsearch.thread_pool_bulk_size}}
+    "TASKCFG_ALL_THREAD_POOL_BULK_SIZE": "{{elasticsearch.thread_pool_bulk_size}}",
+    {{/elasticsearch.thread_pool_bulk_size}}
+    "TASKCFG_ALL_THREAD_POOL_BULK_QUEUE_SIZE": "{{elasticsearch.thread_pool_bulk_queue_size}}",
+    {{#elasticsearch.thread_pool_listener_size}}
+    "TASKCFG_ALL_THREAD_POOL_LISTENER_SIZE": "{{elasticsearch.thread_pool_listener_size}}",
+    {{/elasticsearch.thread_pool_listener_size}}
+    {{#elasticsearch.thread_pool_listener_queue_size}}
+    "TASKCFG_ALL_THREAD_POOL_LISTENER_QUEUE_SIZE": "{{elasticsearch.thread_pool_listener_queue_size}}",
+    {{/elasticsearch.thread_pool_listener_queue_size}}
+    {{#elasticsearch.thread_pool_warmer_core}}
+    "TASKCFG_ALL_THREAD_POOL_WARMER_CORE": "{{elasticsearch.thread_pool_warmer_core}}",
+    {{/elasticsearch.thread_pool_warmer_core}}
+    {{#elasticsearch.thread_pool_warmer_max}}
+    "TASKCFG_ALL_THREAD_POOL_WARMER_MAX": "{{elasticsearch.thread_pool_warmer_max}}",
+    {{/elasticsearch.thread_pool_warmer_max}}
+    "TASKCFG_ALL_THREAD_POOL_WARMER_KEEP_ALIVE": "{{elasticsearch.thread_pool_warmer_keep_alive}}",
+    {{#elasticsearch.thread_pool_snapshot_core}}
+    "TASKCFG_ALL_THREAD_POOL_SNAPSHOT_CORE": "{{elasticsearch.thread_pool_snapshot_core}}",
+    {{/elasticsearch.thread_pool_snapshot_core}}
+    {{#elasticsearch.thread_pool_snapshot_max}}
+    "TASKCFG_ALL_THREAD_POOL_SNAPSHOT_MAX": "{{elasticsearch.thread_pool_snapshot_max}}",
+    {{/elasticsearch.thread_pool_snapshot_max}}
+    "TASKCFG_ALL_THREAD_POOL_SNAPSHOT_KEEP_ALIVE": "{{elasticsearch.thread_pool_snapshot_keep_alive}}",
+    {{#elasticsearch.thread_pool_refresh_core}}
+    "TASKCFG_ALL_THREAD_POOL_REFRESH_CORE": "{{elasticsearch.thread_pool_refresh_core}}",
+    {{/elasticsearch.thread_pool_refresh_core}}
+    {{#elasticsearch.thread_pool_refresh_max}}
+    "TASKCFG_ALL_THREAD_POOL_REFRESH_MAX": "{{elasticsearch.thread_pool_refresh_max}}",
+    {{/elasticsearch.thread_pool_refresh_max}}
+    "TASKCFG_ALL_THREAD_POOL_REFRESH_KEEP_ALIVE": "{{elasticsearch.thread_pool_refresh_keep_alive}}",
+    {{#elasticsearch.thread_pool_generic_core}}
+    "TASKCFG_ALL_THREAD_POOL_GENERIC_CORE": "{{elasticsearch.thread_pool_generic_core}}",
+    {{/elasticsearch.thread_pool_generic_core}}
+    {{#elasticsearch.thread_pool_generic_max}}
+    "TASKCFG_ALL_THREAD_POOL_GENERIC_MAX": "{{elasticsearch.thread_pool_generic_max}}",
+    {{/elasticsearch.thread_pool_generic_max}}
+    "TASKCFG_ALL_THREAD_POOL_GENERIC_KEEP_ALIVE": "{{elasticsearch.thread_pool_generic_keep_alive}}",
+    {{#elasticsearch.indices_breaker_total_limit}}
+    "TASKCFG_ALL_INDICES_BREAKER_TOTAL_LIMIT": "{{elasticsearch.indices_breaker_total_limit}}",
+    {{/elasticsearch.indices_breaker_total_limit}}
+    {{#elasticsearch.indices_breaker_fielddata_limit}}
+    "TASKCFG_ALL_INDICES_BREAKER_FIELDDATA_LIMIT": "{{elasticsearch.indices_breaker_fielddata_limit}}",
+    {{/elasticsearch.indices_breaker_fielddata_limit}}
+    {{#elasticsearch.indices_breaker_fielddata_overhead}}
+    "TASKCFG_ALL_INDICES_BREAKER_FIELDDATA_OVERHEAD": "{{elasticsearch.indices_breaker_fielddata_overhead}}",
+    {{/elasticsearch.indices_breaker_fielddata_overhead}}
+    {{#elasticsearch.network_breaker_inflight_requests_limit}}
+    "TASKCFG_ALL_NETWORK_BREAKER_INGLIGHT_REQUESTS_LIMITS": "{{elasticsearch.network_breaker_inflight_requests_limit}}",
+    {{/elasticsearch.network_breaker_inflight_requests_limit}}
+    {{#elasticsearch.network_breaker_inflight_requests_overhead}}
+    "TASKCFG_ALL_NETWORK_BREAKER_INGLIGHT_REQUESTS_OVERHEAD": "{{elasticsearch.network_breaker_inflight_requests_overhead}}",
+    {{/elasticsearch.network_breaker_inflight_requests_overhead}}
+    {{#elasticsearch.script_max_compilations_per_minute}}
+    "TASKCFG_ALL_SCRIPTS_MAX_COMPILATIONS_PER_MINUTE": "{{elasticsearch.scripts_max_compilations_per_minute}}",
+    {{/elasticsearch.script_max_compilations_per_minute}}
+    {{#elasticsearch.indices_fielddata_cache_size}}
+    "TASKCFG_ALL_INDICES_FIELDDATA_CACHE_SIZE": "{{elasticsearch.indices_fielddata_cache_size}}",
+    {{/elasticsearch.indices_fielddata_cache_size}}
+    {{#elasticsearch.indices_queries_cache_size}}
+    "TASKCFG_ALL_INDICES_QUERIES_CACHE_SIZE": "{{elasticsearch.indices_queries_cache_size}}",
+    {{/elasticsearch.indices_queries_cache_size}}
+    {{#elasticsearch.indices_memory_index_buffer_size}}
+    "TASKCFG_ALL_INDICES_MEMORY_INDEX_BUFFER_SIZE": "{{elasticsearch.indices_memory_index_buffer_size}}",
+    {{/elasticsearch.indices_memory_index_buffer_size}}
+    {{#elasticsearch.indices_memory_min_index_buffer_size}}
+    "TASKCFG_ALL_INDICES_MEMORY_MIN_INDEX_BUFFER_SIZE": "{{elasticsearch.indices_memory_min_index_buffer_size}}",
+    {{/elasticsearch.indices_memory_min_index_buffer_size}}
+    {{#elasticsearch.indices_memory_max_index_buffer_size}}
+    "TASKCFG_ALL_INDICES_MEMORY_MAX_INDEX_BUFFER_SIZE": "{{elasticsearch.indices_memory_max_index_buffer_size}}",
+    {{/elasticsearch.indices_memory_max_index_buffer_size}}
+    {{#elasticsearch.indices_recovery_max_bytes_per_sec}}
+    "TASKCFG_ALL_INDICES_RECOVERY_MAX_BYTES_PER_SEC": "{{elasticsearch.indices_recovery_max_bytes_per_sec}}",
+    {{/elasticsearch.indices_recovery_max_bytes_per_sec}}
+    {{#elasticsearch.search_remote_connections_per_cluster}}
+    "TASKCFG_ALL_SEARCH_REMOTE_CONNECTIONS_PER_CLUSTER": "{{elasticsearch.search_remote_connections_per_cluster}}",
+    {{/elasticsearch.search_remote_connections_per_cluster}}
+    {{#elasticsearch.search_remote_initial_connect_timeout}}
+    "TASKCFG_ALL_SEARCH_REMOTE_INITIAL_CONNECT_TIMEOUT": "{{elasticsearch.search_remote_initial_connect_timeout}}",
+    {{/elasticsearch.search_remote_initial_connect_timeout}}
+    {{#elasticsearch.search_remote_connect}}
+    "TASKCFG_ALL_SEARCH_REMOTE_CONNECT": "{{elasticsearch.search_remote_connect}}",
+    {{/elasticsearch.search_remote_connect}}
+    {{#elasticsearch.indices_query_bool_max_clause_count}}
+    "TASKCFG_ALL_INDICES_QUERY_BOOL_MAX_CLAUSE_COUNT": "{{elasticsearch.indices_query_bool_max_clause_count}}",
+    {{/elasticsearch.indices_query_bool_max_clause_count}} 
+    {{#elasticsearch.discovery_zen_ping_unicast_hosts}}
+    "TASKCFG_ALL_DISCOVERY_ZEN_PING_UNICAST_HOSTS": "{{elasticsearch.discovery_zen_ping_unicast_hosts}}",
+    {{/elasticsearch.discovery_zen_ping_unicast_hosts}}
+    {{#elasticsearch.discovery_zen_ping_unicast_hosts_resolve_timeout}}
+    "TASKCFG_ALL_DISCOVERY_ZEN_PING_UNICAST_HOSTS_RESOLVE_TIMEOUT": "{{elasticsearch.discovery_zen_ping_unicast_hosts_resolve_timeout}}",
+    {{/elasticsearch.discovery_zen_ping_unicast_hosts_resolve_timeout}}
+    {{#elasticsearch.discovery_zen_fd_ping_interval}}
+    "TASKCFG_ALL_DISCOVERY_ZEN_FD_PING_INTERVAL": "{{elasticsearch.discovery_zen_fd_ping_interval}}",
+    {{/elasticsearch.discovery_zen_fd_ping_interval}}
+    {{#elasticsearch.discovery_zen_fd_ping_timeout}}
+    "TASKCFG_ALL_DISCOVERY_ZEN_FD_PING_TIMEOUT": "{{elasticsearch.discovery_zen_fd_ping_timeout}}",
+    {{/elasticsearch.discovery_zen_fd_ping_timeout}}
+    {{#elasticsearch.discovery_zen_fd_ping_retries}}
+    "TASKCFG_ALL_DISCOVERY_ZEN_FD_PING_RETRIES": "{{elasticsearch.discovery_zen_fd_ping_retries}}",
+    {{/elasticsearch.discovery_zen_fd_ping_retries}}
+    {{#elasticsearch.discovery_zen_no_master_block}}
+    "TASKCFG_ALL_DISCOVERY_ZEN_NO_MASTER_BLOCK": "{{elasticsearch.discovery_zen_no_master_block}}",
+    {{/elasticsearch.discovery_zen_no_master_block}}
+    {{#elasticsearch.cluster_blocks_read_only}}
+    "TASKCFG_ALL_CLUSTER_BLOCKS_READ_ONLY": "{{elasticsearch.cluster_blocks_read_only}}",
+    {{/elasticsearch.cluster_blocks_read_only}}
+    {{#elasticsearch.cluster_blocks_read_only_allow_delete}}
+    "TASKCFG_ALL_CLUSTER_BLOCKS_READ_ONLY_ALLOW_DELETE": "{{elasticsearch.cluster_blocks_read_only_allow_delete}}",
+    {{/elasticsearch.cluster_blocks_read_only_allow_delete}}
+    {{#elasticsearch.cluster_indices_tombstones_size}}
+    "TASKCFG_ALL_CLUSTER_INDICES_TOMBSTONES_SIZE": "{{elasticsearch.cluster_indices_tombstones_size}}",
+    {{/elasticsearch.cluster_indices_tombstones_size}}
+    {{#elasticsearch.index_routing_allocation_total_shards_per_node}}
+    "TASKCFG_ALL_INDEX_ROUTING_ALLOCATION_TOTAL_SHARDS_PER_NODE": "{{elasticsearch.index_routing_allocation_total_shards_per_node}}",
+    {{/elasticsearch.index_routing_allocation_total_shards_per_node}}
+    {{#elasticsearch.cluster_routing_allocation_total_shards_per_node}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_TOTAL_SHARDS_PER_NODE": "{{elasticsearch.cluster_routing_allocation_total_shards_per_node}}",
+    {{/elasticsearch.cluster_routing_allocation_total_shards_per_node}}
+    {{#elasticsearch.cluster_routing_allocation_awareness_attributes}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_AWARENESS_ATTRIBUTES": "{{elasticsearch.cluster_routing_allocation_awareness_attributes}}",
+    {{/elasticsearch.cluster_routing_allocation_awareness_attributes}}
+    {{#elasticsearch.cluster_routing_allocation_disk_threshold_enabled}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_DISK_THRESHOLD_ENABLED": "{{elasticsearch.cluster_routing_allocation_disk_threshold_enabled}}",
+    {{/elasticsearch.cluster_routing_allocation_disk_threshold_enabled}}
+    {{#elasticsearch.cluster_routing_allocation_disk_watermark_low}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_DISK_WATERMARK_LOW": "{{elasticsearch.cluster_routing_allocation_disk_watermark_low}}",
+    {{/elasticsearch.cluster_routing_allocation_disk_watermark_low}}
+    {{#elasticsearch.cluster_routing_allocation_disk_watermark_high}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_DISK_WATERMARK_HIGH": "{{elasticsearch.cluster_routing_allocation_disk_watermark_high}}",
+    {{/elasticsearch.cluster_routing_allocation_disk_watermark_high}}
+    {{#elasticsearch.cluster_info_update_interval}}
+    "TASKCFG_ALL_CLUSTER_INFO_UPDATE_INTERVAL": "{{elasticsearch.cluster_info_update_interval}}",
+    {{/elasticsearch.cluster_info_update_interval}}
+    {{#elasticsearch.cluster_routing_allocation_disk_include_relocations}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_DISK_INCLUDE_RELOCATIONS": "{{elasticsearch.cluster_routing_allocation_disk_include_relocations}}",
+    {{/elasticsearch.cluster_routing_allocation_disk_include_relocations}}
+    {{#elasticsearch.cluster_routing_allocation_enable}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_ENABLE": "{{elasticsearch.cluster_routing_allocation_enable}}",
+    {{/elasticsearch.cluster_routing_allocation_enable}}
+    {{#elasticsearch.cluster_routing_allocation_node_concurrent_incoming_recoveries}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_NODE_CONCURRENT_INCOMING_RECOVERIES": "{{elasticsearch.cluster_routing_allocation_node_concurrent_incoming_recoveries}}",
+    {{/elasticsearch.cluster_routing_allocation_node_concurrent_incoming_recoveries}}
+    {{#elasticsearch.cluster_routing_allocation_node_concurrent_recoveries}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_NODE_CONCURRENT_RECOVERIES": "{{elasticsearch.cluster_routing_allocation_node_concurrent_recoveries}}",
+    {{/elasticsearch.cluster_routing_allocation_node_concurrent_recoveries}}
+    {{#elasticsearch.cluster_routing_allocation_node_concurrent_outgoing_recoveries}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_NODE_CONCURRENT_OUTGOING_RECOVERIES": "{{elasticsearch.cluster_routing_allocation_node_concurrent_outgoing_recoveries}}",
+    {{/elasticsearch.cluster_routing_allocation_node_concurrent_outgoing_recoveries}}
+    {{#elasticsearch.cluster_routing_allocation_node_initial_primaries_recoveries}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_NODE_INITIAL_PRIMARIES_RECOVERIES": "{{elasticsearch.cluster_routing_allocation_node_initial_primaries_recoveries}}",
+    {{/elasticsearch.cluster_routing_allocation_node_initial_primaries_recoveries}}
+    {{#elasticsearch.cluster_routing_allocation_same_shard_host}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_SAME_SHARD_HOST": "{{elasticsearch.cluster_routing_allocation_same_shard_host}}",
+    {{/elasticsearch.cluster_routing_allocation_same_shard_host}}
+    {{#elasticsearch.cluster_routing_rebalance_enable}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_REBALANCE_ENABLE": "{{elasticsearch.cluster_routing_rebalance_enable}}",
+    {{/elasticsearch.cluster_routing_rebalance_enable}}
+    {{#elasticsearch.cluster_routing_allocation_allow_rebalance}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_ALLOW_REBALANCE": "{{elasticsearch.cluster_routing_allocation_allow_rebalance}}",
+    {{/elasticsearch.cluster_routing_allocation_allow_rebalance}}
+    {{#elasticsearch.cluster_routing_allocation_cluster_concurrent_rebalance}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_CLUSTER_CONCURRENT_REBALANCE": "{{elasticsearch.cluster_routing_allocation_cluster_concurrent_rebalance}}",
+    {{/elasticsearch.cluster_routing_allocation_cluster_concurrent_rebalance}}
+    {{#elasticsearch.cluster_routing_allocation_balance_shard}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_BALANCE_SHARD": "{{elasticsearch.cluster_routing_allocation_balance_shard}}",
+    {{/elasticsearch.cluster_routing_allocation_balance_shard}}
+    {{#elasticsearch.cluster_routing_allocation_balance_index}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_BALANCE_INDEX": "{{elasticsearch.cluster_routing_allocation_balance_index}}",
+    {{/elasticsearch.cluster_routing_allocation_balance_index}}
+    {{#elasticsearch.cluster_routing_allocation_balance_threshold}}
+    "TASKCFG_ALL_CLUSTER_ROUTING_ALLOCATION_BALANCE_THRESHOLD": "{{elasticsearch.cluster_routing_allocation_balance_threshold}}",
+    {{/elasticsearch.cluster_routing_allocation_balance_threshold}}
+    {{#elasticsearch.indices_requests_cache_size}}
+    "TASKCFG_ALL_INDICES_REQUESTS_CACHE_SIZE": "{{elasticsearch.indices_requests_cache_size}}",
+    {{/elasticsearch.indices_requests_cache_size}}
+    "MASTER_NODE_CPUS": "{{master_nodes.cpus}}",
+    "MASTER_NODE_MEM": "{{master_nodes.mem}}",
+    "MASTER_NODE_PLACEMENT": "{{master_nodes.placement}}",
+    "MASTER_NODE_HEAP_MB": "{{master_nodes.heap.size}}",
+    "MASTER_NODE_DISK": "{{master_nodes.disk}}",
+    "MASTER_NODE_DISK_TYPE": "{{master_nodes.disk_type}}",
+    "MASTER_NODE_TRANSPORT_PORT": "{{master_nodes.transport_port}}",
+    "DATA_NODE_COUNT": "{{data_nodes.count}}",
+    "DATA_NODE_CPUS": "{{data_nodes.cpus}}",
+    "DATA_NODE_MEM": "{{data_nodes.mem}}",
+    "DATA_NODE_PLACEMENT": "{{data_nodes.placement}}",
+    "DATA_NODE_HEAP_MB": "{{data_nodes.heap.size}}",
+    "DATA_NODE_DISK": "{{data_nodes.disk}}",
+    "DATA_NODE_DISK_TYPE": "{{data_nodes.disk_type}}",
+    "INGEST_NODE_COUNT": "{{ingest_nodes.count}}",
+    "INGEST_NODE_CPUS": "{{ingest_nodes.cpus}}",
+    "INGEST_NODE_MEM": "{{ingest_nodes.mem}}",
+    "INGEST_NODE_PLACEMENT": "{{ingest_nodes.placement}}",
+    "INGEST_NODE_HEAP_MB": "{{ingest_nodes.heap.size}}",
+    "INGEST_NODE_DISK": "{{ingest_nodes.disk}}",
+    "INGEST_NODE_DISK_TYPE": "{{ingest_nodes.disk_type}}",
+    "COORDINATOR_NODE_COUNT": "{{coordinator_nodes.count}}",
+    "COORDINATOR_NODE_CPUS": "{{coordinator_nodes.cpus}}",
+    "COORDINATOR_NODE_MEM": "{{coordinator_nodes.mem}}",
+    "COORDINATOR_NODE_PLACEMENT": "{{coordinator_nodes.placement}}",
+    "COORDINATOR_NODE_HEAP_MB": "{{coordinator_nodes.heap.size}}",
+    "COORDINATOR_NODE_DISK": "{{coordinator_nodes.disk}}",
+    "COORDINATOR_NODE_DISK_TYPE": "{{coordinator_nodes.disk_type}}",
+    "CONFIG_TEMPLATE_PATH": "elastic-scheduler"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/deploy",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    },
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/recovery",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}

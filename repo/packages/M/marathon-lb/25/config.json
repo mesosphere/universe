@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "marathon-lb": {
+      "properties": {
+        "auto-assign-service-ports": {
+          "default": false,
+          "description": "Auto assign service ports for tasks which use IP-per-task. See https://github.com/mesosphere/marathon-lb#mesos-with-ip-per-task-support for details.",
+          "type": "boolean"
+        },
+        "bind-http-https": {
+          "default": true,
+          "description": "Reserve ports 80 and 443 for the LB. Use this if you intend to use virtual hosts.",
+          "type": "boolean"
+        },
+        "cpus": {
+          "default": 2,
+          "description": "CPU shares to allocate to each marathon-lb instance.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "haproxy_global_default_options": {
+          "description": "Default global options for HAProxy.",
+          "type": "string",
+          "default": "redispatch,http-server-close,dontlognull"
+        },
+        "haproxy-group": {
+          "default": "external",
+          "description": "HAProxy group parameter. Matches with HAPROXY_GROUP in the app labels.",
+          "type": "string"
+        },
+        "haproxy-map": {
+          "default": true,
+          "description": "Enable HAProxy VHost maps for fast VHost routing.",
+          "type": "boolean"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "mem": {
+          "default": 1024.0,
+          "description": "Memory (MB) to allocate to each marathon-lb task.",
+          "minimum": 256.0,
+          "type": "number"
+        },
+        "minimumHealthCapacity": {
+          "default": 0.5,
+          "description": "Minimum health capacity.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "maximumOverCapacity": {
+          "default": 0.2,
+          "description": "Maximum over capacity.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "name": {
+          "default": "marathon-lb",
+          "description": "Name for this LB instance",
+          "type": "string"
+        },
+        "parameters": {
+            "description": "Docker parameters",
+            "type": "array",
+            "items": {
+               "type": "object",
+               "properties": {
+                   "key": {
+                       "type": "string"
+                   },
+                   "value": {
+                       "type": "string"
+                   }
+               },
+               "required": [
+                   "key",
+                   "value"
+               ]
+           },
+           "default": []
+        },
+        "role": {
+          "default": "slave_public",
+          "description": "Deploy marathon-lb only on nodes with this role.",
+          "type": "string"
+        },
+        "ssl-cert": {
+          "description": "TLS Cert and private key for HTTPS.",
+          "type": "string"
+        },
+        "strict-mode": {
+          "default": false,
+          "description": "Enable strict mode. This requires that you explicitly enable each backend with `HAPROXY_{n}_ENABLED=true`.",
+          "type": "boolean"
+        },
+        "sysctl-params": {
+          "default": "net.ipv4.tcp_tw_reuse=1 net.ipv4.tcp_fin_timeout=30 net.ipv4.tcp_max_syn_backlog=10240 net.ipv4.tcp_max_tw_buckets=400000 net.ipv4.tcp_max_orphans=60000 net.core.somaxconn=10000",
+          "description": "sysctl params to set at startup for HAProxy.",
+          "type": "string"
+        },
+        "template-url": {
+          "default": "",
+          "description": "URL to tarball containing a directory templates/ to customize haproxy config.",
+          "type": "string"
+        },
+        "marathon-uri": {
+          "default": "http://marathon.mesos:8080",
+          "description": "URI of Marathon instance",
+          "type": "string"
+        },
+        "secret_name": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": ["cpus", "mem", "haproxy-group", "instances", "name"],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

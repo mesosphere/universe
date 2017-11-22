@@ -1,0 +1,59 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
+      "executor-zip": "https://downloads.mesosphere.com/elastic/assets/1.0.12-5.4.0-beta/executor.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/elastic/assets/1.0.12-5.4.0-beta/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/elastic/assets/1.0.12-5.4.0-beta/elastic-scheduler.zip",
+      "elasticsearch-tar-gz": "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.4.0.tar.gz",
+      "xpack-zip": "https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.4.0.zip",
+      "diagnostics-zip": "https://github.com/elastic/elasticsearch-support-diagnostics/releases/download/5.12/support-diagnostics-5.12-dist.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/elasticsearch-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/elasticsearch-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/elasticsearch-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "0f5db30939287d40f0b544bf1359369e17a35fff83e34e962d2386384db0f3ad"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/elastic/assets/1.0.12-5.4.0-beta/dcos-elastic-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "74a8d61d25e13c814651495f902306955c716e5193899d50992237b06f9a4f49"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/elastic/assets/1.0.12-5.4.0-beta/dcos-elastic-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "d83f0cc4a0046912149903ef77db9fa6078266e1e65f5be13547b89cf0f548e7"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/elastic/assets/1.0.12-5.4.0-beta/dcos-elastic.exe"
+        }
+      }
+    }
+  }
+}

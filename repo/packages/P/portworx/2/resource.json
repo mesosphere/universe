@@ -1,0 +1,50 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u121-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.9.0-rc2-1.2.0-rc2-1.tar.gz",
+      "scheduler-zip": "https://px-dcos.s3.amazonaws.com/portworx/assets/8688ecd-1.2.9/portworx-scheduler.zip",
+      "executor-zip": "https://px-dcos.s3.amazonaws.com/portworx/assets/8688ecd-1.2.9/executor.zip",
+      "bootstrap-zip": "https://px-dcos.s3.amazonaws.com/portworx/assets/8688ecd-1.2.9/bootstrap.zip",
+      "jq-bin": "https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64"
+    },
+    "container": {
+      "docker": {
+        "portworx": "portworx/px-dev:1.2.9",
+        "lighthouse": "portworx/px-lighthouse:latest",
+        "influxdb": "influxdb:latest",
+        "etcd": "mesosphere/etcd-mesos:latest"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/portworx/px-dev/master/images/px-small.png",
+    "icon-medium": "https://raw.githubusercontent.com/portworx/px-dev/master/images/px-medium.png",
+    "icon-large": "https://raw.githubusercontent.com/portworx/px-dev/master/images/px-large.png"
+  },
+  "cli":{
+    "binaries":{
+      "darwin":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"c97f99134f18bf58b4dfda1352de3bb82e35f13741ae4c0578037bb8add6b622" } ],
+          "kind":"executable",
+          "url":"https://px-dcos.s3.amazonaws.com/portworx/assets/8688ecd-1.2.9/dcos-portworx-darwin"
+        }
+      },
+      "linux":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"c31f41a3cd7be9e9ad47e89841b8cf663b7c38d616539dfb0a528f3e6675ebd6" } ],
+          "kind":"executable",
+          "url":"https://px-dcos.s3.amazonaws.com/portworx/assets/8688ecd-1.2.9/dcos-portworx-linux"
+        }
+      },
+      "windows":{
+        "x86-64":{
+          "contentHash":[ { "algo":"sha256", "value":"5edddaf236095eb03f46e64a6e69d7e717e2c7b3925a402a8c84208feae35406" } ],
+          "kind":"executable",
+          "url":"https://px-dcos.s3.amazonaws.com/portworx/assets/8688ecd-1.2.9/dcos-portworx.exe"
+        }
+      }
+    }
+  }
+}

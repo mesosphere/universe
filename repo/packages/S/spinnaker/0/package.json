@@ -1,0 +1,22 @@
+{
+    "packagingVersion": "4.0",
+    "minDcosReleaseVersion": "1.10",
+    "upgradesFrom": [
+        "*"
+    ],
+    "downgradesTo": [
+        "*"
+    ],
+    "name": "spinnaker",
+    "version": "0.1.0-1.4.2",
+    "maintainer": "https://dcos.io/community/",
+    "description": "DC/OS Spinnaker is an automated service that makes it easy to deploy and manage Spinnaker on DC/OS. Spinnaker is an open source, multi-cloud continuous delivery platform for releasing software changes with high velocity and confidence. Created at Netflix, it has been battle-tested in production by hundreds of teams over millions of deployments. It combines a powerful and flexible pipeline management system with integrations to the major cloud providers. \n\n\tDocumentation: https://github.com/dcos/examples/tree/master/spinnaker",
+    "selected": false,
+    "framework": true,
+    "tags": [
+        "spinnaker"
+    ],
+    "preInstallNotes": "\n\nThe DC/OS Spinnaker service currently only works with DC/OS Enterprise.\n\nThis is a community package. Community packages are unverified and unreviewed content from the community.\n\n",
+    "postInstallNotes": "DC/OS Spinnaker is being installed!\n\n\tDocumentation: https://github.com/dcos/examples/tree/master/spinnaker\n\tIssues: https://dcos.io/community/",
+    "postUninstallNotes": "DC/OS Spinnaker is being uninstalled."
+}

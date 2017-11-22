@@ -1,0 +1,64 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "scheduler-zip": "https://px-dcos.s3.amazonaws.com/portworx/assets/1.0-1.2.10-8e408e5/portworx-scheduler.zip",
+      "executor-zip": "https://px-dcos.s3.amazonaws.com/portworx/assets/1.0-1.2.10-8e408e5/executor.zip",
+      "bootstrap-zip": "https://px-dcos.s3.amazonaws.com/portworx/assets/1.0-1.2.10-8e408e5/bootstrap.zip"
+    },
+    "container": {
+      "docker": {
+        "portworx": "portworx/px-enterprise:1.2.10",
+        "lighthouse": "portworx/px-lighthouse:1.1.8",
+        "influxdb": "influxdb:latest",
+        "etcd": "mesosphere/etcd-mesos:latest"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/portworx/px-dev/master/images/px-small.png",
+    "icon-medium": "https://raw.githubusercontent.com/portworx/px-dev/master/images/px-medium.png",
+    "icon-large": "https://raw.githubusercontent.com/portworx/px-dev/master/images/px-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "26f74411ce010818f468bc69af68fad630dc3538d04ae9c6153c290ef6efc3d9"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx/assets/1.0-1.2.10-8e408e5/dcos-portworx-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "6c02f0478adbf9a917886fa11bb6fae582cbe6de2ed00bafcc05ee1b6869adcb"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx/assets/1.0-1.2.10-8e408e5/dcos-portworx-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "f81fbb01e480a23d78d3a683b089c7af68ff05a49b9c95e109f839b6e35c1df8"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx/assets/1.0-1.2.10-8e408e5/dcos-portworx.exe"
+        }
+      }
+    }
+  }
+}

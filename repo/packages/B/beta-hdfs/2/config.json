@@ -80,17 +80,8 @@
                             "default": "LOCAL"
                         }
                     }
-                },
-                "beta-optin": {
-                    "title": "Agree to Beta terms",
-                    "type": "boolean",
-                    "default": "",
-                    "description": "I have been invited to the Beta Program and accept all the terms of the Beta Agreement."
                 }
-            },
-            "required": [
-                "beta-optin"
-            ]
+            }
         },
         "journal_node": {
             "description": "HDFS configuration properties.",

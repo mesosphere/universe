@@ -2,13 +2,18 @@
   "packagingVersion": "3.0",
   "name": "gitlab",
   "version": "1.0-9.0.0",
-  "minDcosReleaseVersion" : "1.8",
+  "minDcosReleaseVersion": "1.8",
   "scm": "https://gitlab.com/gitlab-org/gitlab-ce",
   "maintainer": "support@gitlab.com",
   "website": "https://about.gitlab.com/",
   "framework": false,
   "description": "Collaboration and source control management: code, test, and deploy together! Installation Guide: https://github.com/dcos/examples/tree/master/1.8/gitlab",
-  "tags": ["continuous-integration", "ci", "vcs", "version-control-software"],
+  "tags": [
+    "continuous-integration",
+    "ci",
+    "vcs",
+    "version-control-software"
+  ],
   "preInstallNotes": "Having Marathon-lb installed and setting a virtual host in the config is required for being able to access GitLab. Setting the pinned hostname is required if using the single-node install (the default).",
   "postInstallNotes": "GitLab has been installed.",
   "postUninstallNotes": "GitLab has been uninstalled. Note that any data persisted to a NFS share still exists and will need to be manually removed.",
@@ -22,5 +27,5 @@
       "url": "https://gitlab.com/gitlab-org/gitlab-ee/raw/master/LICENSE"
     }
   ],
-  "selected": true
+  "selected": false
 }

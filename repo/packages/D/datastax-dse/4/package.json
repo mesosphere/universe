@@ -1,0 +1,26 @@
+{
+    "packagingVersion": "4.0",
+    "name": "datastax-dse",
+    "version": "2.0.4-5.1.2",
+    "upgradesFrom": [
+        "2.0.3-5.1.2"
+    ],
+    "downgradesTo": [
+        "2.0.3-5.1.2"
+    ],
+    "maintainer": "techpartner@datastax.com",
+    "minDcosReleaseVersion": "1.9",
+    "description": "DataStax Enterprise",
+    "selected": true,
+    "framework": true,
+    "tags": [
+        "datastax",
+        "dse",
+        "database",
+        "enterprise",
+        "nosql"
+    ],
+    "preInstallNotes": "This DC/OS Service is maintained by DataStax and available to mutual DataStax and Mesosphere customers (eval and production) and prospects (eval) .\n\nDefault configuration requires 3 agent nodes each with: 2.5 CPU | 8500 MB MEM | 11240 MB Disk\n\nContact Mesosphere and DataStax before deploying this service to ensure proper support channels are made available. Contact your rep at either company or techpartner@datastax.com. By using this service you agree to the license terms here: https://gist.github.com/012345/d1df9d43a0dfaa49e628c7bfbc9ffb52\n\nVersions: DataStax Enterprise 5.1.2 (Standard and Max) & OpsCenter 6.1.2",
+    "postInstallNotes": "DC/OS Datastax Enterprise is being installed!\n\n\tDocumentation: https://docs.datastax.com\n\tIssues: https://www.datastax.com/contactus\n\n\tIf you installed from the UI, enter `dcos package install datastax-dse --cli` from the DC/OS CLI to install the DataStax Enterprise CLI subcommands.",
+    "postUninstallNotes": "DC/OS Datastax Enterprise is being uninstalled.\n\nFor DC/OS versions from 1.10, no further action is required. For older DC/OS versions, follow the instructions at https://docs.mesosphere.com/service-docs/dse/v2.0.0-5.1.2/uninstall/ to remove any persistent state if required."
+}

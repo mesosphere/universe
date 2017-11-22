@@ -1,0 +1,54 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "spark_docker": "mesosphere/spark:2.0.0-2.2.0-1-hadoop-2.6"
+      }
+    }
+  },
+  "images": {
+    "icon-medium": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-medium.png",
+    "icon-small": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-small.png",
+    "icon-large": "https://downloads.mesosphere.io/spark/assets/icon-service-spark-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "84e73d7e76b91afc550a94f9b54e3c886f8e752e361a9c39f11cae93f9c5639b"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/spark/assets/2.0.0-2.2.0-1/dcos-spark-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "00f09bc39842a5c2c4b1c486de04121cfa7ba3edccc2486dda9fdac5fa3d7003"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/spark/assets/2.0.0-2.2.0-1/dcos-spark-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "7209b51f486e14601fc4c99fbd572ace99aaaa1c82f84359882a656d23d57854"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/spark/assets/2.0.0-2.2.0-1/dcos-spark.exe"
+        }
+      }
+    }
+  }
+}

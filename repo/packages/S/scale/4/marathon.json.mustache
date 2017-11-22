@@ -1,0 +1,58 @@
+{
+    "id": "/{{scale.name}}",
+    "cpus": 1.0,
+    "mem": 1024.0,
+    "instances": 1,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.scale}}",
+            "network": "HOST",
+            "forcePullImage": true
+        }
+    },
+    "constraints": [["hostname", "UNIQUE"]],
+    "healthChecks": [{
+        "protocol": "COMMAND",
+        "command": { "value": "if [[ `ps -ef | grep \"scale_scheduler\" | grep -v grep | wc -l` -gt 1 ]]; then exit 0; else exit 1; fi" },
+        "gracePeriodSeconds": 300,
+        "intervalSeconds": 30,
+        "timeoutSeconds": 20,
+        "maxConsecutiveFailures": 3
+    }],
+    "labels":{
+      "DCOS_PACKAGE_FRAMEWORK_NAME": "{{scale.name}}"
+    },
+    "env": {
+      {{#scale.docker-credentials}}
+      "CONFIG_URI": "{{scale.docker-credentials}}",
+      {{/scale.docker-credentials}}
+      "DB_DOCKER_IMAGE": "{{resource.assets.container.docker.db}}",
+      "DCOS_OAUTH_TOKEN": "{{dcos.service-token}}",
+      "DCOS_PACKAGE_FRAMEWORK_NAME": "{{scale.name}}",
+      "DEPLOY_WEBSERVER": "true",
+      "ENABLE_BOOTSTRAP": "true",
+      "LOGSTASH_DOCKER_IMAGE": "{{resource.assets.container.docker.logstash}}",
+      "RABBITMQ_DOCKER_IMAGE": "{{resource.assets.container.docker.rabbitmq}}",
+      "SCALE_BROKER_URL": "{{messaging.broker-url}}",
+      "SCALE_DB_HOST": "{{db.db-host}}",
+      "SCALE_DB_NAME": "{{db.db-name}}",
+      "SCALE_DB_PASS": "{{db.db-pass}}",
+      "SCALE_DB_PORT": "{{db.db-port}}",
+      "SCALE_DB_USER": "{{db.db-user}}",
+      "SCALE_ELASTICSEARCH_URLS": "{{logging.elasticsearch-urls}}",
+      "SCALE_ELASTICSEARCH_LB": "{{logging.elasticsearch-lb}}",
+      "SCALE_LOGGING_ADDRESS": "{{logging.logstash-address}}",
+      "SCALE_VHOST": "{{scale.virtual-host}}",
+      "SCALE_WEBSERVER_CPU": "{{webserver.cpu}}",
+      "SCALE_WEBSERVER_MEMORY": "{{webserver.memory}}"
+    },
+    "args": [
+    "scale_scheduler"
+    ]
+    {{#scale.docker-credentials}},
+    "uris": [
+      "{{scale.docker-credentials}}"
+    ]
+    {{/scale.docker-credentials}}
+}

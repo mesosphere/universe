@@ -1,0 +1,119 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "user":"{{service.user}}",
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx512M\" &&  ./portworx-scheduler/bin/portworx ./portworx-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.secret_name}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.secret_name}}"
+    }
+  },
+  {{/service.secret_name}}
+  "env": {
+    "SERVICE_NAME": "{{service.name}}",
+    "SERVICE_USER": "{{service.user}}",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.principal}}",
+
+    "NODE_COUNT": "{{node.count}}",
+    "NODE_PLACEMENT": "{{node.placement_constraint}}",
+    "PORTWORX_CLUSTER_NAME": "{{node.portworx_cluster}}",
+    "PORTWORX_IMAGE_NAME": "{{{node.portworx_image}}}",
+    "PORTWORX_OPTIONS": "{{{node.portworx_options}}}",
+    {{#etcd.enabled}}
+    "ETCD_ENABLED": "{{etcd.enabled}}",
+    "PORTWORX_KVDB": "etcd://etcd-proxy-0-start.{{service.name}}.mesos:2379",
+    {{/etcd.enabled}}
+    {{^etcd.enabled}}
+    "PORTWORX_KVDB": "{{node.kvdb_servers}}",
+    {{/etcd.enabled}}
+
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    {{#service.secret_name}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    {{/service.secret_name}}
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+
+    "ETCD_PLACEMENT": "{{etcd.placement_constraint}}",
+    "ETCD_CPUS": "{{etcd.cpus}}",
+    "ETCD_MEM": "{{etcd.mem}}",
+    "ETCD_DISK_TYPE": "{{etcd.disk_type}}",
+    "ETCD_DISK_SIZE": "{{etcd.disk_size}}",
+    "ETCD_IMAGE": "{{etcd.image}}",
+    "ETCD_NODE_ADVERTISE_PORT": "{{etcd.node_advertise_port}}",
+    "ETCD_NODE_PEER_PORT": "{{etcd.node_peer_port}}",
+    "ETCD_PROXY_ADVERTISE_PORT": "{{etcd.proxy_advertise_port}}",
+
+    "INFLUXDB_PLACEMENT": "{{influxdb.placement_constraint}}",
+    "INFLUXDB_CPUS": "{{influxdb.cpus}}",
+    "INFLUXDB_MEM": "{{influxdb.mem}}",
+    "INFLUXDB_DISK_TYPE": "{{influxdb.disk_type}}",
+    "INFLUXDB_DISK_SIZE": "{{influxdb.disk_size}}",
+    "INFLUXDB_IMAGE": "{{influxdb.image}}",
+    "INFLUXDB_LISTEN_PORT": "{{influxdb.listen_port}}",
+
+    {{#lighthouse.enabled}}
+    "LIGHTHOUSE_ENABLED": "{{lighthouse.enabled}}",
+    {{/lighthouse.enabled}}
+    "LIGHTHOUSE_PLACEMENT": "{{lighthouse.placement_constraint}}",
+    "LIGHTHOUSE_CPUS": "{{lighthouse.cpus}}",
+    "LIGHTHOUSE_MEM": "{{lighthouse.mem}}",
+    "LIGHTHOUSE_IMAGE": "{{lighthouse.image}}",
+    "LIGHTHOUSE_WEBUI_PORT": "{{lighthouse.webui_port}}",
+    "LIGHTHOUSE_COMPANY_NAME": "{{lighthouse.company_name}}",
+    "LIGHTHOUSE_ADMIN_EMAIL": "{{lighthouse.admin_email}}",
+    "LIGHTHOUSE_ADMIN_PASSWORD": "{{lighthouse.admin_password}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/deploy",
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 3
+    },
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/recovery",
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}

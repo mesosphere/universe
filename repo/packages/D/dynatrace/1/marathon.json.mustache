@@ -1,0 +1,33 @@
+{
+  "id": "{{dynatrace.app_id}}",
+  "instances": {{dynatrace.instances}},
+  "cpus": {{dynatrace.cpus}},
+  "mem": {{dynatrace.mem}},
+  "constraints": [["hostname", "UNIQUE"], ["hostname", "GROUP_BY"]],
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/mnt/root",
+        "hostPath": "/",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "{{resource.assets.container.docker.agent}}",
+      "forcePullImage": true,
+      "network": "HOST",
+      "privileged": true,
+      "parameters": [
+        { "key": "pid", "value": "host" },
+        { "key": "ipc", "value": "host" },
+        { "key": "env", "value": "ONEAGENT_INSTALLER_SCRIPT_URL={{dynatrace.downloadurl}}" },
+        { "key": "env", "value": "ONEAGENT_INSTALLER_SKIP_CERT_CHECK={{dynatrace.skipcertcheck}}"}
+      ]
+    }
+  },
+  "args": [
+    "{{dynatrace.parameters}}"
+  ],
+  "acceptedResourceRoles": ["slave_public", "*"]
+}

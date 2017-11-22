@@ -1,0 +1,20 @@
+{
+  "description": "Elasticsearch 5, and optionally X-Pack",
+  "framework": true,
+  "maintainer": "support@portworx.com",
+  "minDcosReleaseVersion": "1.9",
+  "name": "portworx-elastic",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "DC/OS elastic service is being installed!\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/elasticsearch.html",
+  "postUninstallNotes": "DC/OS elastic service is being uninstalled\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required.",
+  "preInstallNotes": "Default configuration requires 3 agent nodes each with: CPU: 4.5 | Memory: 11264MB\n\nMore specifically, each instance type requires:\n\nMaster node: 3 instances | 1.0 CPU | 2048 MB MEM\n\nData node: 2 instances | 1.0 CPU | 4096 MB MEM\n\nIngest node: 1 instance | 0.5 CPU | 2048 MB MEM\n\nCoordinator node: 1 instance | 1.0 CPU | 2048 MB MEM\n\nPortworx should be installed on the Private Agents to be able to provision volumes.\n\nCommunity packages are unverified and unreviewed content from the community.",
+  "selected": false,
+  "tags": [
+    "elastic",
+    "elasticsearch",
+    "kibana",
+    "x-pack",
+    "portworx"
+  ],
+  "version": "1.0-5.5.1-c2ddff7"
+}

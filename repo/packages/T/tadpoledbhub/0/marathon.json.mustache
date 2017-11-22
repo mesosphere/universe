@@ -1,0 +1,68 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "env": {
+    "TADPOLEDBHUB_VERSION": "1.7.4"
+  },
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.tadpoledbhub}}",
+      "network": "BRIDGE",
+      "portMappings": [
+        { "containerPort": 8080, "hostPort": 0 }
+      ]
+    },
+    "volumes": [
+{{#storage.enable-persistent-storage}}
+      {
+        "containerPath": "tadpoledata",
+        "mode": "RW",
+        "persistent": {
+          "type": "root",
+          "size": {{storage.volume-size}}
+        }
+      },
+      {
+        "containerPath": "/usr/local/tomcat/work/Catalina/localhost/ROOT/eclipse/configuration/tadpole/db",
+        "hostPath": "tadpoledata",
+        "mode": "RW"
+      }
+{{/storage.enable-persistent-storage}}
+    ]
+  },
+  "healthChecks": [
+    {
+      "path": "/",
+      "portIndex": 0,
+      "protocol": "MESOS_HTTP",
+      "gracePeriodSeconds": 180,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "labels": {
+{{#networking.virtual-host}}
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "{{networking.virtual-host}}",
+    "HAPROXY_0_MODE": "http",
+{{/networking.virtual-host}}
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME" : "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX"  : "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+{{#storage.enable-persistent-storage}}
+  "residency": {
+    "taskLostBehavior": "WAIT_FOREVER"
+  },
+  "constraints": [["hostname", "CLUSTER", "{{storage.pinned-hostname}}"]],
+{{/storage.enable-persistent-storage}}
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}

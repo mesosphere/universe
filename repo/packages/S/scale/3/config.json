@@ -1,0 +1,97 @@
+{
+  "properties": {
+    "scale": {
+      "properties": {
+        "name": {
+          "description": "Name of this service instance. MUST BE LOWERCASE! Will also be used as a prefix in all supporting services.",
+          "default": "scale",
+          "type": "string"
+        },
+        "virtual-host": {
+          "description": "Virtual Hostname for Marathon-LB webserver exposure outside cluster.",
+          "default": "scale.marathon.slave.mesos",
+          "type": "string"
+        },
+        "docker-credentials": {
+          "description": "URI to .dockercfg file with Docker credentials for retrieving private images.",
+          "type": "string"
+        }
+      },
+      "required": ["name"],
+      "type": "object"
+    },
+    "logging":{
+      "properties":{
+        "logstash-address": {
+          "description": "Address for logstash service. When left empty logstash will deployed into the cluster.",
+          "type": "string"
+        },
+        "elasticsearch-urls": {
+          "description": "ElasticSearch URL's for Scale. Note: Not needed if you use DCOS ElasticSearch package.",
+          "type": "string"
+        }
+      }
+    },
+    "webserver":{
+      "properties":{
+        "cpu": {
+          "description": "Allocation of CPU resources for Scale web server.",
+          "default": 1,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "memory": {
+          "description": "Allocation of Memory (MiB) resources for Scale web server.",
+          "default": 2048,
+          "minimum": 512,
+          "type": "integer"
+        }
+      }
+    },
+    "messaging":{
+      "properties":{
+        "broker-url": {
+          "description": "URL to message broker in Kombu connection format. When left empty, RabbitMQ will be deployed into the cluster. THIS DEFAULT SHOULD NEVER BE USED FOR PRODUCTION!",
+          "type": "string"
+        }
+      }
+    },
+    "dcos":{
+      "properties":{
+        "service-token": {
+          "description": "DCOS service token for deployment of supporting Marathon apps. Normally needed, unless DCOS is in disabled security mode.",
+          "type": "string"
+        }
+      }
+    },
+    "db": {
+      "properties":{
+        "db-host": {
+          "description": "Hostname to the database server. When left empty a sample database will be deployed. THIS DEFAULT SHOULD NEVER BE USED FOR PRODUCTION!",
+          "type": "string"
+        },
+        "db-name": {
+          "description": "DB Name. This database must have the postgis extension already installed.",
+          "default": "scale",
+          "type": "string"
+        },
+        "db-port": {
+          "description": "DB Port",
+          "default": 5432,
+          "type": "integer"
+        },
+        "db-user": {
+          "description": "DB User",
+          "default": "scale",
+          "type": "string"
+        },
+        "db-pass": {
+          "description": "DB Pass",
+          "default": "scale",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "type": "object"
+}
