@@ -1,0 +1,17 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-influxdb-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-influxdb-medium.png",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-influxdb-large.png",
+     "screenshots": [
+     "https://raw.githubusercontent.com/Kentik/docker-monitor/master/screenshots/influxdb-screenshot.png"
+   ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "influxdb-docker": "influxdb:1.4"
+      }
+    }
+  }
+}
