@@ -1,0 +1,329 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "tensorflow"
+        },
+        "user": {
+          "title": "User",
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "nobody"
+        },
+        "service_account": {
+          "type": "string",
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "default": ""
+        },
+        "service_account_secret": {
+          "title": "Credential secret name (optional)",
+          "type": "string",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "default": ""
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "type": "string",
+          "description": "The log level for the DC/OS service.",
+          "default": "INFO",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ]
+        },
+        "job_url": {
+          "title": "Job URL",
+          "description": "URL for the TensorFlow job you want to run on DC/OS (ZIPs are okay).",
+          "type": "string",
+          "default": ""
+        },
+        "job_path": {
+          "title": "Job Path (Optional)",
+          "description": "Path to your TensorFlow job (assume job_url has already been downloaded/unpacked to the current directory). This path will be added to PYTHONPATH at runtime.",
+          "type": "string",
+          "default": ""
+        },
+        "job_name": {
+          "title": "Job Name",
+          "description": "Name of the module (without extension) whose main function should be executed.",
+          "type": "string",
+          "default": ""
+        },
+        "job_context": {
+          "title": "Job Context (Optional)",
+          "description": "A dictionary to pass to your job's main function (intended for run-time configuration options like batch_size, learning_rate, etc.).",
+          "type": "string",
+          "default": "{}"
+        },
+        "shared_filesystem": {
+          "title": "Shared Filesystem",
+          "description": "Distributed TensorFlow relies on a shared filesystem (GCS, HDFS, etc.) for summaries/checkpoints. Please set up one of these filesystems before using this package, and specify the location here (eg. 'gs://your/directory' or 'hdfs://namenode:port/your/directory').",
+          "type": "string",
+          "default": ""
+        },
+        "gcs_key": {
+          "title": "GCS Key",
+          "description": "Stringified contents of JSON key for Google Cloud Storage service account. Only use this field if use_gcs_key_secret is set to False.",
+          "type": "string",
+          "default": ""
+        },
+        "use_gcs_key_secret": {
+          "description": "A DC/OS secret called gcs_key exists and should be consumed by this framework.",
+          "type": "boolean",
+          "default": false
+        },
+        "use_tensorboard": {
+          "description": "Should the framework also launch an instance of Tensorboard? Make sure you have a shared filesystem set up first! You can still run Tensorboard locally if this is set to false",
+          "type": "boolean",
+          "default": false
+        },
+        "tf_image": {
+          "title": "TensorFlow Docker Image",
+          "description": "Name of the TensorFlow Docker Image in which Worker/PS tasks will be run (usr/img:version).",
+          "type": "string",
+          "default": "mesosphere/dcos-tensorflow:2.7.4-1.3.0"
+        },
+        "gpu_tf_image": {
+          "title": "TensorFlow GPU Docker Image",
+          "description": "Name of the TensorFlow Docker Image in which GPU Worker tasks will be run (usr/img:version).",
+          "type": "string",
+          "default": "mesosphere/dcos-tensorflow:2.7.4-1.3.0-gpu"
+        }
+      },
+      "required": [
+        "name",
+        "user",
+        "job_url",
+        "job_name",
+        "tf_image",
+        "gpu_tf_image"
+      ]
+    },
+    "parameter_server": {
+      "description": "TF Parameter Server configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of TF ps tasks to run",
+          "type": "integer",
+          "default": 2
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "port": {
+          "title": "Port",
+          "description": "The port Parameter Servers will use for gRPC.",
+          "type": "integer",
+          "default": 2223
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "TF PS CPU requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "TF PS mem requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "TF PS persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "port",
+        "disk",
+        "disk_type"
+      ]
+    },
+    "worker": {
+      "description": "TF Worker configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of TF Workers to run",
+          "type": "integer",
+          "default": 3
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "port": {
+          "title": "Port",
+          "description": "The port Workers (and GPU Workers) will use for gRPC.",
+          "type": "integer",
+          "default": 2222
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "TF Worker CPU requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "TF Worker mem requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "TF Worker persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "disk_type"
+      ]
+    },
+    "gpu_worker": {
+      "description": "TF GPU Worker configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of TF GPU Workers to run",
+          "type": "integer",
+          "default": 0
+        },
+        "gpus": {
+          "title": "GPU count",
+          "description": "TF GPU Worker GPU requirements",
+          "type": "integer",
+          "default": 1
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "TF GPU Worker CPU requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "TF GPU Worker mem requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "TF GPU Worker persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        }
+      },
+      "required": [
+        "count",
+        "gpus",
+        "cpus",
+        "mem",
+        "disk",
+        "disk_type"
+      ]
+    },
+    "tensorboard": {
+      "description": "TensorBoard configuration properties",
+      "type": "object",
+      "properties": {
+        "port": {
+          "title": "Port",
+          "description": "The port on which TensorBoard will run.",
+          "type": "integer",
+          "default": 6006
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "TensorBoard CPU requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "TensorBoard mem requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        }
+      },
+      "required": [
+        "port",
+        "cpus",
+        "mem"
+      ]
+    }
+  }
+}
