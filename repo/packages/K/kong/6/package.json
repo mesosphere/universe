@@ -1,0 +1,25 @@
+{
+  "packagingVersion": "3.0",
+  "name": "kong",
+  "version": "0.11.2",
+  "scm": "https://github.com/Kong/kong",
+  "maintainer": "https://getkong.org/community/",
+  "website": "https://getkong.org/",
+  "description": "Kong is open-source API Gateway and Microservices Management Layer, delivering high performance and reliability.",
+  "framework": false,
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Preview packages should never be used in production! You need to have Kong supported DB and Marathon-LB instances running. Please check https://github.com/dcos/examples/tree/master/kong for more information.",
+  "postInstallNotes": "Kong has been installed.",
+  "postUninstallNotes": "Kong has been uninstalled.",
+  "tags": [
+    "microservices",
+    "proxy",
+    "api-layer",
+    "api-management"
+  ],
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/Kong/kong/blob/master/LICENSE"
+    }
+  ]
+}
