@@ -152,6 +152,11 @@
           "description": "Expose Marathon apps by default in Traefik.",
           "type": "boolean"
         },
+        "respect-readiness-checks": {
+          "default": true,
+          "description": "During deployment Traefik will respect readiness checks if defined in Marathon.",
+          "type": "boolean"
+        },
         "groups-as-subdomains": {
           "default": false,
           "description": "Convert Marathon groups to subdomains.",
