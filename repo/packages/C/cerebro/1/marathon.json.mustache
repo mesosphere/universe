@@ -1,0 +1,59 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "user": "{{service.user}}",
+  "instances": {{service.instances}},
+  "cmd": "export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx${CEREBRO_HEAP}M -XX:-HeapDumpOnOutOfMemoryError -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap\" && bash bootstrap.sh && ./cerebro-${CEREBRO_VERSION}/bin/cerebro -Dhttp.port=$PORT0 -Dconfig.file=$CEREBRO_CONFIG -Dorg.sqlite.tmpdir=/tmp -Dapplication.home=$MESOS_SANDBOX",
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.cerebro-tar-gz}}",
+    "{{resource.assets.uris.bootstrap-sh}}"
+  ],
+  "env": {
+    "CEREBRO_CONFIG": "{{cerebro.config_path}}",
+    "CEREBRO_HEAP": "{{service.heap}}",
+    "CEREBRO_SECRET": "{{cerebro.secret}}",
+    "CEREBRO_DB_URL": "{{cerebro.db_url}}",
+    "CEREBRO_DB_DRIVER": "{{cerebro.db_driver}}",
+    "CEREBRO_REST_HIST_SIZE": "{{cerebro.hist_size}}",
+    "CEREBRO_AUTH": "{{authentication.type}}",
+    "CEREBRO_BASIC_USER": "{{authentication.basic.user}}",
+    "CEREBRO_BASIC_PASS": "{{authentication.basic.password}}",
+    "CEREBRO_LDAP_URL": "{{authentication.ldap.url}}",
+    "CEREBRO_LDAP_BASE": "{{authentication.ldap.base}}",
+    "CEREBRO_LDAP_METHOD": "{{authentication.ldap.method}}",
+    "CEREBRO_LDAP_DOMAIN": "{{authentication.ldap.domain}}",
+    "CEREBRO_VERSION": "0.7.1",
+    "ES_1": "{{elastic.cluster_1}}",
+    "ES_2": "{{elastic.cluster_2}}",
+    "ES_3": "{{elastic.cluster_3}}",
+    "ES_4": "{{elastic.cluster_4}}",
+    "ES_5": "{{elastic.cluster_5}}"
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 0,
+      "path": "/",
+      "portIndex": 0,
+      "protocol": "MESOS_HTTP",
+      "timeoutSeconds": 5
+    }
+  ],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_PACKAGE_VERSION": "1.1.0-0.7.1",
+    "HAPROXY_GROUP": "external",
+    {{#networking.external_access.port}}
+    "HAPROXY_0_PORT": "{{networking.external_access.port}}",
+    {{/networking.external_access.port}}
+    {{#networking.external_access.virtual_host}}
+    "HAPROXY_0_VHOST": "{{networking.external_access.virtual_host}}",
+    {{/networking.external_access.virtual_host}}
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  }
+}
