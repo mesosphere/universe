@@ -87,7 +87,7 @@
           "type" : "array"
         }
       },
-      "required": ["cpus", "mem", "instances", "BK_zkServers"],
+      "required": ["cpus", "mem", "instances", "BK_BOOKIE_EXTRA_OPTS", "BK_zkServers", "BK_bookiePort", "BK_journalDirectory", "BK_ledgerDirectories",  "BK_indexDirectories" ],
       "type": "object"
     }
   },

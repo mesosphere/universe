@@ -8,7 +8,7 @@
     "type": "DOCKER",
     "volumes": [
       {
-        "containerPath": "/bookkeeper/data/journal",
+        "containerPath": "{{bookkeeper.BK_journalDirectory}}",
         "hostPath": "journal",
         "mode": "RW"
       },
@@ -21,7 +21,7 @@
       },
 
       {
-        "containerPath": "/bookkeeper/data/index",
+        "containerPath": "{{bookkeeper.BK_indexDirectories}}",
         "hostPath": "index",
         "mode": "RW"
       },
@@ -34,7 +34,7 @@
       },
 
       {
-        "containerPath": "/bookkeeper/data/ledgers",
+        "containerPath": "{{bookkeeper.BK_ledgerDirectories}}",
         "hostPath": "ledgers",
         "mode": "RW"
       },
