@@ -2,13 +2,13 @@
   "assets": {
     "container": {
       "docker": {
-        "bookkeeper": "zhaijia/bookie:nov16"
+        "bookkeeper": "apache/bookkeeper:4.5.1"
       }
     }
   },
   "images": {
     "icon-small": "http://bookkeeper.apache.org/img/bookkeeper_blk40.png",
     "icon-medium": "http://bookkeeper.apache.org/img/bookkeeper_blk40.png",
-    "icon-large": "http://bookkeeper.apache.org/img/bookkeeper_blk40.png"
+    "icon-large": "http://bookkeeper.apache.org/img/bk-logo.png"
   }
 }
