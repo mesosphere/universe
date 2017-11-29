@@ -9,15 +9,15 @@
           "type": "string"
         },
         "cpus": {
-          "default": 2,
+          "default": 1,
           "description": "CPU shares to allocate to each Traefik instance.",
           "minimum": 1,
           "type": "number"
         },
         "mem": {
-          "default": 512.0,
+          "default": 128.0,
           "description": "Memory (MB) to allocate to each Traefik task.",
-          "minimum": 256.0,
+          "minimum": 64.0,
           "type": "number"
         },
         "instances": {
