@@ -1,0 +1,66 @@
+{
+	"$schema": "http://json-schema.org/schema#",
+	"properties": {
+		"service": {
+			"type": "object",
+			"description": "DC/OS service configuration properties",
+			"properties": {
+				"name": {
+					"description": "Name of this service instance",
+					"type": "string",
+					"default": "cadvisor"
+				},
+				"instances": {
+					"description": "Number of service instances to run in the cluster. A single instance will be run per node in the cluster. Normally, this number should be equal or higher than the number of nodes in the cluster.",
+					"type": "number",
+					"default": 256,
+					"minimum": 1
+				},
+				"cpus": {
+					"description": "CPU shares to allocate to each service instance.",
+					"type": "number",
+					"default": 0.1,
+					"minimum": 0.1
+				},
+				"mem": {
+					"description":  "Memory to allocate to each service instance.",
+					"type": "number",
+					"default": 128.0,
+					"minimum": 128.0
+				}
+			}
+		},
+		"networking": {
+			"type": "object",
+			"description": "cadvisor networking configuration properties",
+			"properties": {
+    			"influxdb_host": {
+					"description":  "Hostname or IP address of the host running InfluxDB for metrics storage.",
+					"type": "string",
+					"default": "influxdb.marathon.l4lb.thisdcos.directory"
+				},
+    			"influxdb_port": {
+					"description":  "TCP port where the influxdb_host is listening.",
+					"type": "number",
+					"default": 8086
+				},
+				"external_access": {
+					"type": "object",
+					"description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+						"properties": {
+							"enable": {
+								"description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+								"type": "boolean",
+								"default": false
+							},
+							"external_access_port": {
+								"description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+								"type": "number",
+								"default": 18080
+							}
+						}
+				}
+			}
+		}
+	}
+}

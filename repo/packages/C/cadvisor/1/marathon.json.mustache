@@ -1,0 +1,89 @@
+{
+  "id": "{{service.name}}",
+  "cmd": "/usr/bin/cadvisor --logtostderr=true -storage_driver=influxdb -storage_driver_db=cadvisor -storage_driver_host={{networking.influxdb_host}}:{{networking.influxdb_port}}",
+  "args": null,
+  "user": null,
+  "env": null,
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": {{service.instances}},
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.cadvisor-docker}}",
+      "forcePullImage": false,
+      "privileged": false,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "name": "cadvisor",
+          {{#networking.external_access.enable}}
+          "servicePort": {{networking.external_access.external_access_port}},
+          {{/networking.external_access.enable}}
+          "protocol": "tcp"
+        }
+      ],
+      "network": "BRIDGE"
+    },
+    "volumes": [
+      {
+        "containerPath": "/rootfs",
+        "hostPath": "/",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/var/run",
+        "hostPath": "/var/run",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/sys",
+        "hostPath": "/sys",
+        "mode": "RO"
+      },
+      {
+        "containerPath": "/var/lib/docker",
+        "hostPath": "/var/lib/docker",
+        "mode": "RO"
+      }
+    ]
+  },
+  "portDefinitions": [
+    {
+      "port": 18080,
+      "protocol": "tcp",
+      "labels": {}
+    }
+  ],
+  "requirePorts": false,
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/",
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "acceptedResourceRoles": [
+    "*",
+    "slave_public"
+  ],
+  "labels": {
+    "DCOS_PACKAGE_VERSION": "0.3.0-0.27.2",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    {{#networking.external_access.enable}}
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_STICKY": "true",
+    {{/networking.external_access.enable}}
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  }
+}
