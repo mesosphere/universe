@@ -15,7 +15,16 @@
         {{#networking.external_access.enable}}
             "servicePort": {{networking.external_access.external_access_port}},
         {{/networking.external_access.enable}}
-        "name": "influxdb-api"
+        "name": "beakerx"
+        },
+        {
+            "containerPort": 8080,
+            "hostPort": 0,
+            "labels": {
+            "VIP_0": "/{{service.name}}:8080"
+        },
+        "protocol": "tcp",
+        "name": "nginx"
         }
     ],
     "type": "MESOS",
@@ -53,16 +62,21 @@
         "ignoreHttp1xx": false,
         "intervalSeconds": 60,
         "maxConsecutiveFailures": 3,
-        "portIndex": 0,
+        "portIndex": 1,
         "timeoutSeconds": 20,
         "delaySeconds": 15,
         "protocol": "HTTP",
         "path": "/"
     }
   ],
+  "env": {
+    "CONTEXT": "{{service.name}}"
+  },
   "labels": {
-    "DCOS_PACKAGE_VERSION": "0.8.1",
+    "DCOS_PACKAGE_VERSION": "0.9.1",
     "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "1",
+    "DCOS_SERVICE_SCHEME": "http",
     "MARATHON_SINGLE_INSTANCE_APP": "true",
     {{#networking.external_access.enable}}
     "HAPROXY_GROUP": "external",
