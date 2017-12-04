@@ -100,7 +100,7 @@
     },
     "disks":{
       "type": "object",
-      "description": "Configure how to store data. If neither host disks or local persistence is chosen, no data is saved outside of the container. I.e. data loss is very possible. You can only choose one of the two.",
+      "description": "Configure how to store data. If neither host disks or local persistence is chosen, no data is saved outside of the container. I.e. data loss is very possible. You can only choose one of the two. We strongly advise using XFS formatted host disks for performance.",
       "properties": {
         "use_host_disks": {
           "description": "Use disks on host. Should be formatted as XFS and have the same path on all nodes",
