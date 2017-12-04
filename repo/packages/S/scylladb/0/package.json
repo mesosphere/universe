@@ -1,12 +1,12 @@
 {
   "packagingVersion": "4.0",
   "name": "scylladb",
-  "version": "1.1",
+  "version": "2.0",
   "maintainer": "petter.hultin@laketide.com",
-  "description": "Scylla DB",
+  "description": "ScyllaDB for DC/OS. To get started, please visit:\nhttps://github.com/dcos/examples/tree/master/scylladb/1.10",
   "tags": ["scylladb", "database", "nosql"],
   "minDcosReleaseVersion": "1.9.0",
-  "preInstallNotes": "This DC/OS package uses ScyllaDB version 2.0!",
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\n*Storage*\nBy default this package uses mounted volumes for the host as storage. Please configure the path if it anything other than /mnt/scylla. Remember that if no storage alternative is chosen, no data will be persisted outside of the container.\n\n*Security*\nScylla supports both node-to-node and client TLS as well as User/Password authentication and table authorization. To generate keys for Scylla to use, follow this guide:\nhttp://docs.scylladb.com/tls-ssl/\nIf you use PasswordAuthentication Scylla automatically replicates the `system_auth` keyspace to all nodes on startup according to:\nhttp://docs.scylladb.com/operating-scylla/authentication/\nIt also per default use authorization, which means you need to explicitly give access to new users.\nRemember that the default user is `cassandra` with password `cassandra`. These are needed when connecting to the database:\n`cqlsh ip-of-a-node -u cassandra -p cassandra`.",
   "postInstallNotes": "ScyllaDB installed!",
   "postUninstallNotes": "ScyllaDB uninstalled!"
 }

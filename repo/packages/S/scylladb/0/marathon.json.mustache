@@ -93,23 +93,11 @@
           "protocol": "tcp"
         },
         {
-          {{#network.cql_vip_port}}
-          "name": "cql",
-          "labels": {
-            "VIP_0": "/{{service.name}}:{{network.cql_vip_port}}"
-          },
-          {{/network.cql_vip_port}}
           "containerPort": 9042,
           "hostPort": {{network.cql_port}},
           "protocol": "tcp"
         },
         {
-          {{#network.thrift_vip_port}}
-          "name": "thrift",
-          "labels": {
-            "VIP_1": "/{{service.name}}:{{network.thrift_vip_port}}"
-          },
-          {{/network.thrift_vip_port}}
           "containerPort": 9160,
           "hostPort": {{network.thrift_port}},
           "protocol": "tcp"
@@ -151,10 +139,7 @@
     "SCYLLA_DATACENTER_NAME": "{{general.data_center_name}}",
     "SCYLLA_BATCH_SIZE_WARN": "{{general.batch_size_warning_threshold_in_kb}}",
     "SCYLLA_BATCH_SIZE_FAIL": "{{general.batch_size_fail_threshold_in_kb}}",
-		"SCYLLA_PARTITIONER": "{{general.partitioner}}",
     "SCYLLA_AUTHENTICATOR": "{{security.authenticator}}",
-    "SCYLLA_USERNAME": "{{security.username}}",
-    "SCYLLA_PASSWORD": "{{security.password}}",
 		"SCYLLA_CQL_PORT": "{{network.cql_port}}",
 		"SCYLLA_THRIFT_PORT": "{{network.thrift_port}}",
 		"SCYLLA_CLIENT_SSL_ENABLE": "{{security.client_encryption.enable}}",

@@ -3,7 +3,7 @@
   "properties": {
     "service": {
       "type": "object",
-      "description": "DC/OS ScyllaDB service specifications",
+      "description": "DC/OS container service specifications",
       "properties": {
         "name": {
           "description": "Name of scylla instances as seen in DC/OS.",
@@ -27,13 +27,13 @@
           "default": 12000,
           "minimum": 4000
         }
-      },
-			"required": [
+     	},
+    	"required": [
 				"name",
-				"nodes",
-				"smp",
+      	"nodes",
+      	"smp",
 				"mem"
-			]
+      ]
     },
     "general":{
       "type": "object",
@@ -42,7 +42,7 @@
         "cluster_name": {
           "description": "Name of the cluster",
           "type": "string",
-          "default": ""
+          "default": "charybdis"
         },
         "overprovisioned": {
           "description": "Choose if you want to run in an overprovisioned environment. This is recommended for all nodes that share host resources with other applications.",
@@ -78,7 +78,7 @@
         "data_center_name": {
           "description": "Give a name to your data center",
           "type": "string",
-          "default": ""
+          "default": "dc1"
         }, 
         "batch_size_warning_threshold_in_kb": {
           "description": "Set warning threshold for batch sizes larger than X kb",
@@ -89,13 +89,19 @@
           "description": "Set fail threshold for batch sizes larger than X kb",
           "type": "number",
           "default": 50
+        },
+        "partitioner": {
+          "description": "Set the partitoner used. [Murmur3Partitioner, RandomPartitioner, ByteOrderedPartitioner]",
+          "type": "string",
+          "default": "org.apache.cassandra.dht.Murmur3Partitioner"
         }
       },
 			"required": [
 				"cluster_name",
 				"endpoint_snitch",
 				"number_of_seeds",
-				"data_center_name"
+				"data_center_name",
+				"partitioner"
 			]
     },
     "disks":{
@@ -133,8 +139,18 @@
           "type": "number",
           "default": 9042
         },
+        "cql_vip_port": {
+          "description": "If set, other apps can use cql with scylla on instancename.marathon.l4lb.thisdcos.directory:PORT.",
+          "type": "number",
+          "default": 9042
+        },
         "thrift_port": {
           "description": "Port to be used for thrift communication",
+          "type": "number",
+          "default": 9160
+        },
+        "thrift_vip_port": {
+          "description": "If set, other apps can use thrift with scylla on instancename.marathon.l4lb.thisdcos.directory:PORT.",
           "type": "number",
           "default": 9160
         },
