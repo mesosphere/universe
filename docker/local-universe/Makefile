@@ -11,7 +11,7 @@ certs:
 		-subj "/CN=master.mesos"
 
 base: clean certs
-	docker build -t universe-base -f Dockerfile.base .
+	docker build --build-arg "http_proxy=${http_proxy}" --build-arg "https_proxy=${https_proxy}" -t universe-base -f Dockerfile.base .
 
 clean:
 	rm -rf certs
