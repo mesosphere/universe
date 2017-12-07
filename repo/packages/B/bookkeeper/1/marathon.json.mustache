@@ -1,0 +1,97 @@
+{
+  "id": "{{bookkeeper.name}}",
+  "cpus":{{bookkeeper.cpus}},
+  "mem": {{bookkeeper.mem}},
+  "instances": {{bookkeeper.instances}},
+  "constraints": [["hostname", "UNIQUE"]],
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "{{bookkeeper.BK_journalDirectory}}",
+        "hostPath": "journal",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "journal",
+        "mode": "RW",
+        "persistent": {
+          "size": {{bookkeeper.journal_volume_size}}
+        }
+      },
+
+      {
+        "containerPath": "{{bookkeeper.BK_indexDirectories}}",
+        "hostPath": "index",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "index",
+        "mode": "RW",
+        "persistent": {
+          "size": {{bookkeeper.index_volume_size}}
+        }
+      },
+
+      {
+        "containerPath": "{{bookkeeper.BK_ledgerDirectories}}",
+        "hostPath": "ledgers",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "ledgers",
+        "mode": "RW",
+        "persistent": {
+          "size": {{bookkeeper.ledgers_volume_size}}
+        }
+      }
+    ],
+
+    "docker": {
+      "image": "{{resource.assets.container.docker.bookkeeper}}",
+      "network": "HOST"
+    }
+  },
+
+  "args": {{bookkeeper.bookkeeper_cmd}},
+
+  "residency": {
+    "taskLostBehavior": "WAIT_FOREVER"
+  },
+
+  "portDefinitions": [
+    {
+      "protocol": "tcp",
+      "port": {{bookkeeper.BK_bookiePort}}
+    }
+   ],
+  "requirePorts": true,
+
+  "env": {
+    "BK_BOOKIE_EXTRA_OPTS": "{{bookkeeper.BK_BOOKIE_EXTRA_OPTS}}",
+    "BK_bookiePort": "{{bookkeeper.BK_bookiePort}}",
+    "BK_journalDirectory": "{{bookkeeper.BK_journalDirectory}}",
+    "BK_ledgerDirectories": "{{bookkeeper.BK_ledgerDirectories}}",
+    "BK_indexDirectories": "{{bookkeeper.BK_indexDirectories}}",
+    "BK_zkServers":  "{{bookkeeper.BK_zkServers}}",
+    "BK_statsProviderClass": "org.apache.bookkeeper.stats.NullStatsProvider"
+  },
+
+  "healthChecks": [
+  {
+      "protocol": "TCP",
+      "port": {{bookkeeper.BK_bookiePort}},
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 0,
+      "ignoreHttp1xx": false
+  }
+  ],
+
+  "upgradeStrategy": {
+    "maximumOverCapacity": 0,
+    "minimumHealthCapacity": 0
+  }
+
+} 
