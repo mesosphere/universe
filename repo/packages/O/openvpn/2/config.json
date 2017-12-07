@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "openvpn": {
+      "type": "object",
+      "properties": {
+        "framework-name": {
+            "default": "openvpn",
+            "description": "openvpn framework name",
+            "type": "string"
+        },
+        "cpus": {
+            "default": 1,
+            "description": "CPU shares to allocate to each openvpn instance.",
+            "minimum": 1,
+            "type": "number"
+        },
+        "mem": {
+            "default": 128.0,
+            "description": "Memory (MB) to allocate to each openvpn task.",
+            "minimum": 64.0,
+            "type": "number"
+        },
+        "instances": {
+            "default": 1,
+            "description": "Number of openvpn instances to run.",
+            "minimum": 1,
+            "type": "integer"
+        },
+        "admin_port": {
+            "default": 5000,
+            "description": "TCP port to bind to.",
+            "minimum": 1,
+            "type": "integer"
+        },
+        "server_port": {
+            "default": 1194,
+            "description": "UDP port to bind to.",
+            "minimum": 1,
+            "type": "integer"
+        },
+        "ovpn_username": {
+            "default": "admin",
+            "description": "OpenVPN REST interface username",
+            "minimum": 1,
+            "type": "string"
+        },
+        "ovpn_password": {
+            "default": "",
+            "description": "OpenVPN REST interface password",
+            "minimum": 1,
+            "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
