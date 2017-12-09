@@ -287,7 +287,7 @@ def read_marathon_template(path):
 
 
 def read_config(path):
-    """Reads the resource.json as a dict
+    """Reads the config.json as a dict
 
     :param path: path to the package
     :type path: pathlib.Path
