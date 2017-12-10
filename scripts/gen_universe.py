@@ -86,29 +86,6 @@ def render_universe_by_version(outdir, packages, version):
     :rtype: None
     """
 
-    # Prior to 1.10, Cosmos had a rendering bug that required
-    # stringified JSON to be doubly escaped. This was corrected
-    # in 1.10, but it means that packages with stringified JSON parameters
-    # that need to bridge versions must be accomodated.
-    #
-    # < 1.9 style escaping:
-    # \\\"field\\\": \\\"value\\\"
-    #
-    # >= 1.10 style escaping:
-    # \"field\": \"value\"
-    if LooseVersion(version) < LooseVersion("1.10"):
-        for package in packages:
-            if "config" in package and "properties" in package["config"]:
-                # The rough shape of a config file is:
-                # {
-                #   "schema": ...,
-                #   "properties": { }
-                # }
-                # Send just the top level properties in to the recursive
-                # function json_escape_compatibility.
-                package["config"]["properties"] = json_escape_compatibility(
-                    package["config"]["properties"])
-
     if LooseVersion(version) < LooseVersion("1.8"):
         render_zip_universe_by_version(outdir, packages, version)
     else:
@@ -227,6 +204,27 @@ def filter_and_downgrade_packages_by_version(packages, version):
     ]
 
     if LooseVersion(version) < LooseVersion('1.10'):
+        # Prior to 1.10, Cosmos had a rendering bug that required
+        # stringified JSON to be doubly escaped. This was corrected
+        # in 1.10, but it means that packages with stringified JSON parameters
+        # that need to bridge versions must be accomodated.
+        #
+        # < 1.9 style escaping:
+        # \\\"field\\\": \\\"value\\\"
+        #
+        # >= 1.10 style escaping:
+        # \"field\": \"value\"
+        for package in packages:
+            if "config" in package and "properties" in package["config"]:
+                # The rough shape of a config file is:
+                # {
+                #   "schema": ...,
+                #   "properties": { }
+                # }
+                # Send just the top level properties in to the recursive
+                # function json_escape_compatibility.
+                package["config"]["properties"] = json_escape_compatibility(
+                    package["config"]["properties"])
         packages = [downgrade_package_to_v3(package) for package in packages]
     return packages
 
