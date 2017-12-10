@@ -115,9 +115,9 @@ def json_escape_compatibility(schema: collections.OrderedDict) -> collections.Or
         if "description" in value:
             value["description"] = escape_json_string(value["description"])
 
-        if value["type"] == "string":
+        if value["type"] == "string" and "default" in value:
             value["default"] = escape_json_string(value["default"])
-        elif value["type"] == "object":
+        elif value["type"] == "object" and "properties" in value:
             value["properties"] = json_escape_compatibility(value["properties"])
 
     return schema
