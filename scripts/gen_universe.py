@@ -98,7 +98,16 @@ def render_universe_by_version(outdir, packages, version):
     # \"field\": \"value\"
     if LooseVersion(version) < LooseVersion("1.10"):
         for package in packages:
-            package["config"] = json_escape_compatibility(package["config"])
+            if "config" in package and "properties" in package["config"]:
+                # The rough shape of a config file is:
+                # {
+                #   "schema": ...,
+                #   "properties": { }
+                # }
+                # Send just the top level properties in to the recursive
+                # function json_escape_compatibility.
+                package["config"]["properties"] = json_escape_compatibility(
+                    package["config"]["properties"])
 
     if LooseVersion(version) < LooseVersion("1.8"):
         render_zip_universe_by_version(outdir, packages, version)
@@ -115,10 +124,11 @@ def json_escape_compatibility(schema: collections.OrderedDict) -> collections.Or
         if "description" in value:
             value["description"] = escape_json_string(value["description"])
 
-        if value["type"] == "string" and "default" in value:
-            value["default"] = escape_json_string(value["default"])
-        elif value["type"] == "object" and "properties" in value:
-            value["properties"] = json_escape_compatibility(value["properties"])
+        if "type" in value:
+            if value["type"] == "string" and "default" in value:
+                value["default"] = escape_json_string(value["default"])
+            elif value["type"] == "object" and "properties" in value:
+                value["properties"] = json_escape_compatibility(value["properties"])
 
     return schema
 
