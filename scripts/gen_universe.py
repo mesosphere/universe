@@ -12,6 +12,7 @@ import pathlib
 import shutil
 import sys
 import tempfile
+import re
 import zipfile
 
 
@@ -85,12 +86,52 @@ def render_universe_by_version(outdir, packages, version):
     :rtype: None
     """
 
+    # Prior to 1.10, Cosmos had a rendering bug that required
+    # stringified JSON to be doubly escaped. This was corrected
+    # in 1.10, but it means that packages with stringified JSON parameters
+    # that need to bridge versions must be accomodated.
+    #
+    # < 1.9 style escaping:
+    # \\\"field\\\": \\\"value\\\"
+    #
+    # >= 1.10 style escaping:
+    # \"field\": \"value\"
+    if LooseVersion(version) < LooseVersion("1.10"):
+        for package in packages:
+            package["config"] = json_escape_compatibility(package["config"])
+
     if LooseVersion(version) < LooseVersion("1.8"):
         render_zip_universe_by_version(outdir, packages, version)
     else:
         file_path = render_json_by_version(outdir, packages, version)
         _validate_repo(file_path, version)
         render_content_type_file_by_version(outdir, version)
+
+
+def json_escape_compatibility(schema: collections.OrderedDict) -> collections.OrderedDict:
+    """ Further escape any singly escaped stringified JSON in config """
+
+    for value in schema.values():
+        if "description" in value:
+            value["description"] = escape_json_string(value["description"])
+
+        if value["type"] == "string":
+            value["default"] = escape_json_string(value["default"])
+        elif value["type"] == "object":
+            value["properties"] = json_escape_compatibility(value["properties"])
+
+    return schema
+
+
+def escape_json_string(string: str) -> str:
+    """ Makes any single escaped double quotes doubly escaped. """
+
+    def escape_underescaped_slash(matchobj):
+        """ Return adjacent character + extra escaped double quote. """
+        return matchobj.group(1) + "\\\""
+
+    # This regex means: match .\" except \\\" while capturing `.`
+    return re.sub('([^\\\\])\\\"', escape_underescaped_slash, string)
 
 
 def render_content_type_file_by_version(outdir, version):
