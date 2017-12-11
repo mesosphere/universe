@@ -1,0 +1,77 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "kubedns": "gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.5",
+        "kubedns-dnsmasq": "gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.5",
+        "kubedns-sidecar": "gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.5",
+        "heapster": "gcr.io/google_containers/heapster-amd64:v1.4.2",
+        "dashboard": "gcr.io/google_containers/kubernetes-dashboard-amd64:v1.6.3",
+        "pause": "gcr.io/google_containers/pause-amd64:3.0"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u144-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "scheduler-zip": "https://downloads.mesosphere.com/kubernetes/assets/0.3.0-1.7.10-beta/kubernetes-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.30.2/executor.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.30.2/bootstrap.zip",
+      "kubelet-wrapper": "https://downloads.mesosphere.com/kubernetes/assets/0.3.0-1.7.10-beta/kubelet-wrapper.sh",
+      "install-addon-sh": "https://downloads.mesosphere.com/kubernetes/assets/0.3.0-1.7.10-beta/install_addon.sh",
+      "etcd-uri": "https://storage.googleapis.com/etcd/v3.2.8/etcd-v3.2.8-linux-amd64.tar.gz",
+      "apiserver-uri": "https://storage.googleapis.com/kubernetes-release/release/v1.7.10/bin/linux/amd64/kube-apiserver",
+      "controllermanager-uri": "https://storage.googleapis.com/kubernetes-release/release/v1.7.10/bin/linux/amd64/kube-controller-manager",
+      "scheduler-uri": "https://storage.googleapis.com/kubernetes-release/release/v1.7.10/bin/linux/amd64/kube-scheduler",
+      "kube-proxy-uri": "https://storage.googleapis.com/kubernetes-release/release/v1.7.10/bin/linux/amd64/kube-proxy",
+      "kubelet-uri": "https://storage.googleapis.com/kubernetes-release/release/v1.7.10/bin/linux/amd64/kubelet",
+      "docker-uri": "https://get.docker.com/builds/Linux/x86_64/docker-17.05.0-ce.tgz",
+      "socat-uri": "https://downloads.mesosphere.com/kubernetes/socat/socat.d-1.7.3.2-2.fc26.tar.gz",
+      "kubectl-uri": "https://storage.googleapis.com/kubernetes-release/release/v1.7.10/bin/linux/amd64/kubectl"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/kubernetes/assets/k8s-small-48x48.png",
+    "icon-medium": "https://downloads.mesosphere.com/kubernetes/assets/k8s-medium-96x96.png",
+    "icon-large": "https://downloads.mesosphere.com/kubernetes/assets/k8s-large-256x256.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "dbe3ab3b4b4854ec190a6e78d5017f7ded3849e9d5e2d582dc58ae4ab1c589ae"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/0.3.0-1.7.10-beta/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "e47ac9cd432bacd3708cbc9cd28f47164b3017e3eb3eb5e8488def2a02d93257"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/0.3.0-1.7.10-beta/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "64bc699d32e14e126dd16f5fbbcbda4708692746ff24593a607d98a277bb45e8"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/0.3.0-1.7.10-beta/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

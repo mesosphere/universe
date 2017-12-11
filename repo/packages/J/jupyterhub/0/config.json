@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "Name of this service instance",
+          "type": "string",
+          "default": "jupyterhub"
+        },
+        "constraints": {
+          "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "attribute": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string",
+                "enum": ["UNIQUE", "CLUSTER", "GROUP_BY", "LIKE", "UNLIKE"]
+              },
+              "value": {
+                "type": "string"
+              },
+              "last": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          },
+          "default": []
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to each service instance.",
+          "type": "number",
+          "default": 0.5,
+          "minimum": 0.1
+        },
+        "mem": {
+          "description":  "Memory to allocate to each service instance.",
+          "type": "number",
+          "default": 512.0,
+          "minimum": 256.0
+        },
+        "env_vars": {
+          "description": "The list of environment variables for JupyterHub as a.",
+          "type": "array",
+          "additionalProperties": false,
+          "items": {
+            "type": "object",
+            "properties": {
+              "var_name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "var_name",
+              "value"
+            ]
+          }
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem"
+      ]
+    },
+    "notebook": {
+      "type": "object",
+      "description": "JupyterHub service configuration properties.",
+      "properties": {
+        "cpus": {
+          "description": "CPU to allocate to each notebook instance.",
+          "type": "number",
+          "default": 2.0,
+          "minimum": 1.0
+        },
+        "mem": {
+          "description": "Memory to allocate to each notebook instance.",
+          "type": "number",
+          "default": 2048.0,
+          "minimum": 1024.0
+        },
+        "docker-image": {
+          "description": "The docker image to be used for the users' notebook.",
+          "type": "string",
+          "default": "jupyterhub/singleuser"
+        }
+      }
+    },
+    "networking": {
+      "description": "Networking-related configuration properties for JupyterHub on DC/OS.",
+      "type": "object",
+      "properties": {
+        "virtual-host": {
+          "description": "The virtual host address to configure for integration with Marathon-lb.",
+          "type": "string"
+        },
+        "ssl-cert": {
+          "description": "The path to the SSL certificate for the domain.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

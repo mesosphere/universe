@@ -1,0 +1,65 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "env": {
+    "NOTEBOOK_CPU_LIMIT": "{{notebook.cpus}}",
+    "NOTEBOOK_MEMORY_LIMIT": "{{notebook.mem}}",
+    "NB_DOCKER_IMAGE": "{{notebook.docker-image}}"
+    {{#service.env_vars}}
+    ,"{{env_vars.var_name}}": "{{env_vars.value}}"
+    {{/service.env_vars}}
+  },
+  "container": {
+      "type": "DOCKER",
+      "docker": {
+         "image": "{{resource.assets.container.docker.jupyterhub}}",
+         "network": "BRIDGE",
+         "portMappings": [
+            { "containerPort": 8000, "hostPort": 0 },
+            { "containerPort": 8081, "hostPort": 0 }
+        ]
+      }
+  },
+  "healthChecks": [
+    {
+      "portIndex": 0,
+      "protocol": "TCP",
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  {{#service.constraints}}
+  "constraints": [
+    {{#.}}
+      [
+        "{{attribute}}"
+       ,"{{operator}}"
+       {{#value}},"{{value}}"{{/value}}
+      ]{{^last}},{{/last}}
+    {{/.}}
+  ],
+  {{/service.constraints}}
+  "labels": {
+    {{#networking.virtual-host}}
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_VHOST":"{{networking.virtual-host}}",
+    {{#networking.ssl-cert}}
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "true",
+    "HAPROXY_0_USE_HSTS": "true",
+    "HAPROXY_0_SSL_CERT": "{{networking.ssl-cert}}"
+    {{/networking.ssl-cert}}
+    {{/networking.virtual-host}}
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}
