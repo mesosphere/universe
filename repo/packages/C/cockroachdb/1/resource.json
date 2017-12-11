@@ -1,0 +1,57 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "scheduler-zip": "https://alex-dcos-exhibitors3bucket-gx95x7buf8qx.s3.amazonaws.com/autodelete7d/cockroachdb/20171211-155615-47t1v0qgnMlVgIVS/cockroachdb-scheduler.zip",
+      "executor-zip": "https://alex-dcos-exhibitors3bucket-gx95x7buf8qx.s3.amazonaws.com/autodelete7d/cockroachdb/20171211-155615-47t1v0qgnMlVgIVS/executor.zip",
+      "bootstrap-zip": "https://alex-dcos-exhibitors3bucket-gx95x7buf8qx.s3.amazonaws.com/autodelete7d/cockroachdb/20171211-155615-47t1v0qgnMlVgIVS/bootstrap.zip",
+      "cockroach-binary": "https://binaries.cockroachdb.com"
+    }
+  },
+  "images": {
+    "icon-small": "http://i.imgur.com/FsEREZI.png",
+    "icon-medium": "http://i.imgur.com/1DvX5di.png?1",
+    "icon-large": "http://i.imgur.com/P1mjjGK.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "b3c91c3c5b058015d85fa079f246dd6869d2ca454b32ff55a7ae9283300d3038"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://alex-dcos-exhibitors3bucket-gx95x7buf8qx.s3.amazonaws.com/autodelete7d/cockroachdb/20171211-155615-47t1v0qgnMlVgIVS/dcos-cockroachdb-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "84a6786ef013b59d5c6411685d042eaaf47a9a7c57edb2b2c2b746e34c76baa9"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://alex-dcos-exhibitors3bucket-gx95x7buf8qx.s3.amazonaws.com/autodelete7d/cockroachdb/20171211-155615-47t1v0qgnMlVgIVS/dcos-cockroachdb-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "0118fa48af299250af664bbad06d8b995b06d26a9209d41571a5320bf658d40a"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://alex-dcos-exhibitors3bucket-gx95x7buf8qx.s3.amazonaws.com/autodelete7d/cockroachdb/20171211-155615-47t1v0qgnMlVgIVS/dcos-cockroachdb.exe"
+        }
+      }
+    }
+  }
+}
