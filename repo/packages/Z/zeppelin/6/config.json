@@ -1,0 +1,54 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "service": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "default": "zeppelin"
+                },
+                "constraints": {
+                  "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "attribute": {
+                        "type": "string"
+                      },
+                      "operator": {
+                        "type": "string",
+                        "enum": ["UNIQUE", "CLUSTER", "GROUP_BY", "LIKE", "UNLIKE"]
+                      },
+                      "value": {
+                        "type": "string"
+                      },
+                      "last": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "default": []
+                }
+            }
+        },
+        "spark": {
+            "type": "object",
+            "properties": {
+                "cores_max": {
+                    "type": "string",
+                    "description": "Sets spark.cores.max",
+                    "default": ""
+                },
+                "executor_memory": {
+                    "type": "string",
+                    "description": "Sets spark.executor.memory",
+                    "default": "512m"
+                }
+            }
+        }
+    }
+}

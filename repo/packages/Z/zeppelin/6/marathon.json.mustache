@@ -1,0 +1,43 @@
+{
+    "id": "/zeppelin",
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.zeppelin}}",
+            "forcePullImage": true,
+            "network": "HOST"
+        }
+    },
+    "healthChecks": [{
+        "protocol": "TCP",
+        "gracePeriodSeconds": 300,
+        "intervalSeconds": 60,
+        "portIndex": 0,
+        "timeoutSeconds": 15,
+        "maxConsecutiveFailures": 3
+    }],
+    "labels": {
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "DCOS_SERVICE_SCHEME": "http",
+        "DCOS_SERVICE_PORT_INDEX": "0"
+    },
+    {{#service.constraints}}
+    "constraints": [
+      {{#.}}
+        [
+          "{{attribute}}"
+         ,"{{operator}}"
+         {{#value}},"{{value}}"{{/value}}
+        ]{{^last}},{{/last}}
+      {{/.}}
+    ],
+    {{/service.constraints}}
+    "env": {
+        "SPARK_CORES_MAX": "{{spark.cores_max}}",
+        "SPARK_EXECUTOR_MEMORY": "{{spark.executor_memory}}"
+    },
+    "cmd": "sed \"s#<value>8080</value>#<value>$PORT0</value>#\" < conf/zeppelin-site.xml.template > conf/zeppelin-site.xml && sed -i \"s#<value>-1</value>#<value>$PORT1</value>#\" conf/zeppelin-site.xml && bin/zeppelin.sh start",
+    "ports": [0, 0],
+    "cpus": 1,
+    "mem": 2048.0
+}

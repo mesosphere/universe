@@ -1,0 +1,15 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/zeppelin/assets/icon-service-zeppelin-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/zeppelin/assets/icon-service-zeppelin-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/zeppelin/assets/icon-service-zeppelin-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "zeppelin": "cdpqleo/dcos-zeppelin",
+        "spark": "mesosphere/spark:2.1.0-2.2.0-1-hadoop-2.6"
+      }
+    }
+  }
+}
