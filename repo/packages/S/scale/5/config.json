@@ -96,6 +96,22 @@
           "type": "string"
         }
       }
+    },
+    "secrets": {
+      "properties": {
+        "ssl-warnings": {
+          "description": "Should secrets SSL warnings be raised?",
+          "type": "boolean"
+        },
+        "token": {
+          "description": "Authentication token for secrets service",
+          "type": "string"
+        },
+        "url": {
+          "description": "API endpoint for a secrets service",
+          "type": "string"
+        }
+      }
     }
   },
   "type": "object"
