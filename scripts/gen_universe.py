@@ -12,6 +12,7 @@ import pathlib
 import shutil
 import sys
 import tempfile
+import re
 import zipfile
 
 
@@ -91,6 +92,33 @@ def render_universe_by_version(outdir, packages, version):
         file_path = render_json_by_version(outdir, packages, version)
         _validate_repo(file_path, version)
         render_content_type_file_by_version(outdir, version)
+
+
+def json_escape_compatibility(schema: collections.OrderedDict) -> collections.OrderedDict:
+    """ Further escape any singly escaped stringified JSON in config """
+
+    for value in schema.values():
+        if "description" in value:
+            value["description"] = escape_json_string(value["description"])
+
+        if "type" in value:
+            if value["type"] == "string" and "default" in value:
+                value["default"] = escape_json_string(value["default"])
+            elif value["type"] == "object" and "properties" in value:
+                value["properties"] = json_escape_compatibility(value["properties"])
+
+    return schema
+
+
+def escape_json_string(string: str) -> str:
+    """ Makes any single escaped double quotes doubly escaped. """
+
+    def escape_underescaped_slash(matchobj):
+        """ Return adjacent character + extra escaped double quote. """
+        return matchobj.group(1) + "\\\""
+
+    # This regex means: match .\" except \\\" while capturing `.`
+    return re.sub('([^\\\\])\\\"', escape_underescaped_slash, string)
 
 
 def render_content_type_file_by_version(outdir, version):
@@ -176,6 +204,27 @@ def filter_and_downgrade_packages_by_version(packages, version):
     ]
 
     if LooseVersion(version) < LooseVersion('1.10'):
+        # Prior to 1.10, Cosmos had a rendering bug that required
+        # stringified JSON to be doubly escaped. This was corrected
+        # in 1.10, but it means that packages with stringified JSON parameters
+        # that need to bridge versions must be accomodated.
+        #
+        # < 1.9 style escaping:
+        # \\\"field\\\": \\\"value\\\"
+        #
+        # >= 1.10 style escaping:
+        # \"field\": \"value\"
+        for package in packages:
+            if "config" in package and "properties" in package["config"]:
+                # The rough shape of a config file is:
+                # {
+                #   "schema": ...,
+                #   "properties": { }
+                # }
+                # Send just the top level properties in to the recursive
+                # function json_escape_compatibility.
+                package["config"]["properties"] = json_escape_compatibility(
+                    package["config"]["properties"])
         packages = [downgrade_package_to_v3(package) for package in packages]
     return packages
 
@@ -287,7 +336,7 @@ def read_marathon_template(path):
 
 
 def read_config(path):
-    """Reads the resource.json as a dict
+    """Reads the config.json as a dict
 
     :param path: path to the package
     :type path: pathlib.Path
