@@ -95,6 +95,10 @@
         {
           "containerPort": 9042,
           "hostPort": {{network.cql_port}},
+					{{#network.external_access_port}}
+					"servicePort": {{network.external_access_port}},
+					"name": "cqlpublic",
+					{{/network.external_access_port}}
           "protocol": "tcp"
         },
         {
@@ -113,7 +117,12 @@
   "healthChecks": [
     {
       "protocol": "TCP",
-      "portIndex": 4,
+			{{^security.node_to_node_encryption.enable}}
+      "portIndex": 3,
+			{{/security.node_to_node_encryption.enable}}
+			{{#security.node_to_node_encryption.enable}}
+			"portIndex": 4,
+			{{/security.node_to_node_encryption.enable}}
       "gracePeriodSeconds": 900,
       "intervalSeconds": 30,
       "timeoutSeconds": 30,
