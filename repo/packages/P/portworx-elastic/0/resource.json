@@ -1,0 +1,61 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "executor-zip": "https://px-dcos.s3.amazonaws.com/portworx-elastic/assets/1.0-5.5.1-c2ddff7/executor.zip",
+      "bootstrap-zip": "https://px-dcos.s3.amazonaws.com/portworx-elastic/assets/1.0-5.5.1-c2ddff7/bootstrap.zip",
+      "scheduler-zip": "https://px-dcos.s3.amazonaws.com/portworx-elastic/assets/1.0-5.5.1-c2ddff7/elastic-scheduler.zip",
+      "statsd-plugin-zip": "https://github.com/mesosphere/elasticsearch-statsd-plugin/releases/download/5.5.1.0/elasticsearch-statsd-5.5.1.0.zip",
+      "elasticsearch-jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "elasticsearch-tar-gz": "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.5.1.tar.gz",
+      "xpack-zip": "https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.5.1.zip",
+      "diagnostics-zip": "https://github.com/elastic/elasticsearch-support-diagnostics/releases/download/5.12/support-diagnostics-5.12-dist.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/elasticsearch-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/elasticsearch-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/elasticsearch-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "5d970be53a25f53704af924882aa3b717f49e9d4d919bda81674de27c2040487"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-elastic/assets/1.0-5.5.1-c2ddff7/dcos-elastic-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "3460e89efae66f32da157c48683b11fc0db8c449640d38df47b421e84b6e429a"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-elastic/assets/1.0-5.5.1-c2ddff7/dcos-elastic-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "45d8c536ee9deef04c4c26f03084c1c9a8fa9411fc0d351a225cf12d8ae52ac8"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-elastic/assets/1.0-5.5.1-c2ddff7/dcos-elastic.exe"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "id": "{{openvpn.framework-name}}",
+  "cpus": {{openvpn.cpus}},
+  "mem": {{openvpn.mem}},
+  "instances": {{openvpn.instances}},
+  "acceptedResourceRoles": ["slave_public"],
+  "constraints": [
+    ["hostname", "UNIQUE"]
+  ],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.openvpn-docker}}",
+      "forcePullImage": true,
+      "network": "BRIDGE",
+      "privileged": true,
+      "portMappings": [
+        { "hostPort": {{openvpn.admin_port}}, "containerPort": 5000, "protocol": "tcp" },
+        { "hostPort": {{openvpn.server_port}}, "containerPort": 1194, "protocol": "udp" }
+      ]
+    }
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 30,
+      "timeoutSeconds": 5,
+      "maxConsecutiveFailures": 3,
+      "path": "/status",
+      "portIndex": 0,
+      "protocol": "MESOS_HTTPS",
+      "ignoreHttp1xx": false
+    }
+  ],
+  "env": {
+    "MESOS_CONFIG": "zk://master.mesos:2181/mesos",
+    "FRAMEWORK_NAME": "{{openvpn.framework-name}}",
+    "OVPN_USERNAME": "{{openvpn.ovpn_username}}",
+    "OVPN_PASSWORD": "{{openvpn.ovpn_password}}"
+  },
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{openvpn.framework-name}}"
+  }
+}

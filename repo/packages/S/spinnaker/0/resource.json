@@ -1,0 +1,68 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "echo": "quay.io/spinnaker/echo:version-0.6.0",
+        "clouddriver": "quay.io/spinnaker/clouddriver:version-0.8.1",
+        "deck": "quay.io/spinnaker/deck:version-1.6.2",
+        "fiat": "quay.io/spinnaker/fiat:version-0.4.1",
+        "front": "quay.io/spinnaker/front50:version-0.7.0",
+        "gate": "quay.io/spinnaker/gate:v3.56.0",
+        "igor": "quay.io/spinnaker/igor:version-0.7.0",
+        "orca": "quay.io/spinnaker/orca:version-0.8.1"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u144-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "scheduler-zip": "https://mbgl-bucket.s3.amazonaws.com/spinnaker/assets/0.1.0-1.4.2/spinnaker-scheduler.zip",
+      "executor-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.30.2/executor.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.30.2/bootstrap.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://s3-us-west-1.amazonaws.com/mbgl-bucket/spinnaker/assets/spin-small.png",
+    "icon-medium": "https://s3-us-west-1.amazonaws.com/mbgl-bucket/spinnaker/assets/spin-medium.png",
+    "icon-large": "https://s3-us-west-1.amazonaws.com/mbgl-bucket/spinnaker/assets/spin-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "aa32035e0efe92847f6bffb4832e9615cbc0e6af314508cd6d68ace5b1952038"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://mbgl-bucket.s3.amazonaws.com/spinnaker/assets/0.1.0-1.4.2/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "d25cc3cacd62fa513d6a69a3eeac7ef2e652224d6b7b78a7308bb5619ae89299"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://mbgl-bucket.s3.amazonaws.com/spinnaker/assets/0.1.0-1.4.2/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "47f1d9c9429d99c4a285354694b3ec4daa89674700f08a8ec4aa3039e495210e"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://mbgl-bucket.s3.amazonaws.com/spinnaker/assets/0.1.0-1.4.2/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

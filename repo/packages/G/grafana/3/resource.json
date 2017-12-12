@@ -1,0 +1,19 @@
+{
+  "images": {
+    "icon-small": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-grafana-small.png",
+    "icon-medium": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-grafana-medium.png",
+    "icon-large": "https://s3.amazonaws.com/downloads.mesosphere.io/universe/assets/icon-service-grafana-large.png",
+   "screenshots": [
+     "http://grafana.org/assets/img/blog/v3.0/wP-Screenshot-dash-web.png",
+     "https://prometheus.io/assets/grafana_prometheus-cbb943f0bb3.png",
+     "https://grafana.com/blog/img/docs/v45/query_inspector.png"
+   ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "grafana-docker": "grafana/grafana:4.6.2"
+      }
+    }
+  }
+}

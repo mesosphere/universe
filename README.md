@@ -4,10 +4,12 @@
 |---|---|
 |CI   | [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)|
 | Universe Server | [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_UniverseServer)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_UniverseServer&guest=1)|
+
 Mesosphere Universe registry of packages made available for DC/OS Clusters.
 
 #### Table of Contents
 * [Universe Purpose](#universe-purpose)
+  * [Library Dependencies](#library-dependencies)
 * [Publish a Package](#publish-a-package-1)
   * [Creating a Package](#creating-a-package)
     * [`package.json`](#packagejson)
@@ -29,8 +31,12 @@ Mesosphere Universe registry of packages made available for DC/OS Clusters.
 
 
 ## Universe Purpose
-You can publish and store packages in the Universe repository. The packages can then be consumed by DC/OS. This git repo facilitates these three necessary functions - to publish, store and consume packages. You can publish and store packages in the Universe repository. The packages can then be consumed by DC/OS. If you are not familiar with packages, we recommend this [Get Started Guide](docs/tutorial/GetStarted.md).
+You can publish and store packages in the Universe repository. The packages can then be consumed by DC/OS. This git repo facilitates these three necessary functions - to publish, store and consume packages. You can publish and store packages in the Universe repository. The packages can then be consumed by DC/OS. If you are new to Universe and Packages, this [Get Started Guide](docs/tutorial/GetStarted.md) is highly recommended.
 
+### Library dependencies
+* [jq](https://stedolan.github.io/jq/download/) is installed in your environment.
+* `python3` is installed in your environment.
+* Docker is installed in your environment.
 
 ### Publish a Package
 
@@ -76,6 +82,7 @@ the package.
 
 
 #### `package.json`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|required|
@@ -113,6 +120,7 @@ what properties are available for each corresponding version of a package.
 For the first version of the package, add this line to the beginning of `preInstallNotes`: ```This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Preview packages should never be used in production!``` It will be removed once the package has been tested and used by the community.
 
 ###### `.minDcosReleaseVersion`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|not supported|
@@ -126,6 +134,7 @@ Release Version greater than or equal to (`>=`) the value specified.
 For example, `"minDcosReleaseVersion" : "1.8"` will prevent the package from being installed on clusters older than DC/OS 1.8.
 
 ###### `.upgradesFrom`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|not supported|
@@ -138,6 +147,7 @@ the versions listed in the property. It is the resposibility of the package crea
 is indeed the case.
 
 ###### `.downgradesTo`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|not supported|
@@ -150,6 +160,7 @@ the versions listed in the property. It is the resposibility of the package crea
 is indeed the case.
 
 #### `config.json`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|optional|
@@ -189,6 +200,7 @@ DC/OS UI (since DC/OS 1.7).
 
 
 #### `marathon.json.mustache`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|required|
@@ -237,6 +249,7 @@ See the
 for more detailed instruction on app definitions.
 
 #### `command.json`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|optional|
@@ -261,6 +274,7 @@ Packaging version 4.0 does not support command.json. The presence of command.jso
 directory will fail the universe validation.
 
 #### `resource.json`
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|optional|
@@ -321,6 +335,7 @@ For example, the icon `icon-cassandra-small.png` would have a retina-ready
 alternate image named `icon-cassandra-small@2x.png`.
 
 ##### CLI Resources
+
 |Packaging Version|   |
 |-----------------|---|
 |2.0|not supported|
@@ -379,21 +394,21 @@ Full Instructions:
   git clone https://github.com/<user>/universe.git /path/to/universe
   ```
 
-3. Run the verification and build script:
+2. Run the verification and build script:
 
   ```bash
   scripts/build.sh
   ```
 
-4. Verify all build steps completed successfully
-5. Submit a pull request against the `version-3.x` branch with your changes. Every pull request opened will have a set
+3. Verify all build steps completed successfully
+4. Submit a pull request against the `version-3.x` branch with your changes. Every pull request opened will have a set
    of automated verifications run against it. These automated verification are reported against the pull request using
    the GitHub status API. All verifications must pass in order for a pull request to be eligible for merge.
 
-6. Respond to manual review feedback provided by the DC/OS Community.
+5. Respond to manual review feedback provided by the DC/OS Community.
   * Each Pull Request to Universe will also be manually reviewed by a member of the DC/OS Community. To ensure your
     package is able to be made available to users as quickly as possible be sure to respond to the feedback provided.
-7. Add a getting started example of how to install and use the DC/OS package. To add the example, fork the [`examples`](https://github.com/dcos/examples) repo and send in a pull request. Re-use the format from the existing examples there.
+6. Add a getting started example of how to install and use the DC/OS package. To add the example, fork the [`examples`](https://github.com/dcos/examples) repo and send in a pull request. Re-use the format from the existing examples there.
 
 
 ## Repository Consumption
@@ -481,3 +496,4 @@ Currently Universe Server provides support for the following versions of DC/OS
 | 1.8                   | Full Support  |
 | 1.9                   | Full Support  |
 | 1.10                  | Full Support  |
+| 1.11                  | Full Support  |

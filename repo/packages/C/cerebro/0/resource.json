@@ -1,0 +1,18 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "cerebro-tar-gz": "https://github.com/lmenezes/cerebro/releases/download/v0.6.7/cerebro-0.6.7.tgz",
+      "bootstrap-sh": "https://raw.githubusercontent.com/deric/dcos-cerebro/31d2e024a3a766be451235fe2cad7c816f18f518/bootstrap.sh"
+    }
+  },
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/deric/dcos-cerebro/master/icons/cerebro-small.png",
+    "icon-medium": "https://raw.githubusercontent.com/deric/dcos-cerebro/master/icons/cerebro-medium.png",
+    "icon-large": "https://raw.githubusercontent.com/deric/dcos-cerebro/master/icons/cerebro-large.png",
+    "screenshots": [
+      "https://raw.githubusercontent.com/deric/dcos-cerebro/master/screenshots/overview.png",
+      "https://raw.githubusercontent.com/deric/dcos-cerebro/master/screenshots/nodes.png"
+    ]
+  }
+}

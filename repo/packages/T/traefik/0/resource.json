@@ -1,0 +1,13 @@
+{
+  "assets": {
+    "uris": {
+      "traefik-bin": "https://github.com/containous/traefik/releases/download/v1.4.4/traefik_linux-amd64",
+      "bootstrap-sh": "https://raw.githubusercontent.com/deric/dcos-traefik/master/bootstrap.sh"
+    }
+  },
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/deric/dcos-traefik/master/icons/traefik-small.png",
+    "icon-medium": "https://raw.githubusercontent.com/deric/dcos-traefik/master/icons/traefik-medium.png",
+    "icon-large": "https://raw.githubusercontent.com/deric/dcos-traefik/master/icons/traefik-large.png"
+  }
+}

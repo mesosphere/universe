@@ -1,0 +1,77 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "container": {
+    "portMappings": [
+        {
+            "containerPort": 8888,
+            "hostPort": 0,
+            "labels": {
+                "VIP_0": "/{{service.name}}:{{networking.port_api}}"
+        },
+        "protocol": "tcp",
+        {{#networking.external_access.enable}}
+            "servicePort": {{networking.external_access.external_access_port}},
+        {{/networking.external_access.enable}}
+        "name": "influxdb-api"
+        }
+    ],
+    "type": "MESOS",
+    {{#storage.persistence.enable}}
+    "volumes": [
+        {
+            "persistent": {
+                "type": "root",
+                "size": {{storage.host_volume_size}},
+                "constraints": []
+            },
+                "mode": "RW",
+                "containerPath": "persistent_data"
+            },
+            {
+                "containerPath": "/home/beakerx/persistent_data",
+                "hostPath": "persistent_data",
+                "mode": "RW"
+        }
+    ],
+    {{/storage.persistence.enable}}
+    "docker": {
+      "image": "{{resource.assets.container.docker.beakerx-docker}}",
+      "forcePullImage": false
+    }
+  },
+  "networks": [
+    {
+    "mode": "container/bridge"
+    }
+  ],
+  "healthChecks": [
+    {
+        "gracePeriodSeconds": 300,
+        "ignoreHttp1xx": false,
+        "intervalSeconds": 60,
+        "maxConsecutiveFailures": 3,
+        "portIndex": 0,
+        "timeoutSeconds": 20,
+        "delaySeconds": 15,
+        "protocol": "HTTP",
+        "path": "/"
+    }
+  ],
+  "labels": {
+    "DCOS_PACKAGE_VERSION": "0.8.1",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    {{#networking.external_access.enable}}
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "{{networking.external_access.external_public_agent_ip}}",
+    {{/networking.external_access.enable}}
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}

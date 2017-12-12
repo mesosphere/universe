@@ -1,0 +1,15 @@
+{
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/hangum/TadpoleForDBTools/master/com.hangum.tadpole.chromeapp/chrome_app/icon_16.png",
+    "icon-medium": "https://raw.githubusercontent.com/hangum/TadpoleForDBTools/master/com.hangum.tadpole.chromeapp/chrome_app/icon_48.png",
+    "icon-large": "https://raw.githubusercontent.com/hangum/TadpoleForDBTools/master/com.hangum.tadpole.chromeapp/chrome_app/icon_128.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "tadpoledbhub": "hyunjongcho/tadpoledbhub:1.7.4r7"
+      }
+    }
+  }
+}
+

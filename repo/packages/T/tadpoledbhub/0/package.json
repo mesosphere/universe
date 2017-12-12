@@ -1,0 +1,23 @@
+{
+  "packagingVersion": "3.0",
+  "name": "tadpoledbhub",
+  "version": "0.0.1-1.7.4r7-LGPL",
+  "minDcosReleaseVersion": "1.9",
+  "scm": "https://github.com/hangum/docker-TadpoleDBHub",
+  "maintainer": "https://dcos.io/community/",
+  "website": "https://github.com/hangum/TadpoleForDBTools",
+  "framework": false,
+  "description": "Tadpole DB Hub is Unified infrastructure tool, various environment based interface for managing Altibase, Apache Hive, Amazon RDS, MySQL, Oracle, SQLite, MSSQL, PostgreSQL and MongoDB databases.\nDocumentation is available at: https://github.com/dcos/examples/.",
+  "tags": ["mysql", "postgresql", "sqlserver", "database", "admin"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Preview packages should never be used in production!",
+  "postInstallNotes": "Tadpole DB Hub has been installed.",
+  "postUninstallNotes": "Tadpole DB Hub has been uninstalled.",
+  "licenses": [
+    {
+      "name": "LGPL",
+      "url": "https://github.com/hangum/TadpoleForDBTools/#license"
+    }
+  ],
+  "selected": false
+}
+

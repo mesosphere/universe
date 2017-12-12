@@ -1,0 +1,426 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+
+  "definitions": {
+
+    "dcosReleaseVersion": {
+      "type": "string",
+      "pattern": "^(?:0|[1-9][0-9]*)(?:\\.(?:0|[1-9][0-9]*))*$",
+      "description": "A string representation of a DC/OS Release Version"
+    },
+
+    "url": {
+      "type": "string",
+      "pattern": "."
+    },
+
+    "base64String": {
+      "type": "string",
+      "pattern": "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$"
+    },
+
+    "cliInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "contentHash": {
+          "items": {
+            "$ref": "#/definitions/hash"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "kind": {
+          "enum": [
+            "executable",
+            "zip"
+          ],
+          "type": "string"
+        },
+        "url": {
+          "$ref": "#/definitions/url"
+        }
+      },
+      "required": [
+        "url",
+        "kind",
+        "contentHash"
+      ],
+      "type": "object"
+    },
+
+    "hash": {
+      "additionalProperties": false,
+      "properties": {
+        "algo": {
+          "enum": [
+            "sha256"
+          ],
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "algo",
+        "value"
+      ],
+      "type": "object"
+    },
+
+
+    "marathon": {
+      "type": "object",
+      "properties": {
+        "v2AppMustacheTemplate": {
+          "$ref": "#/definitions/base64String"
+        }
+      },
+      "required": [ "v2AppMustacheTemplate" ],
+      "additionalProperties": false
+    },
+
+    "v30resource": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "assets": {
+          "type": "object",
+          "properties": {
+            "uris": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "container": {
+              "type": "object",
+              "properties": {
+                "docker": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "cli": {
+          "additionalProperties": false,
+          "properties": {
+            "binaries": {
+              "additionalProperties": false,
+              "minProperties": 1,
+              "properties": {
+                "darwin": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "x86-64": {
+                      "$ref": "#/definitions/cliInfo"
+                    }
+                  },
+                  "required": [
+                    "x86-64"
+                  ],
+                  "type": "object"
+                },
+                "linux": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "x86-64": {
+                      "$ref": "#/definitions/cliInfo"
+                    }
+                  },
+                  "required": [
+                    "x86-64"
+                  ],
+                  "type": "object"
+                },
+                "windows": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "x86-64": {
+                      "$ref": "#/definitions/cliInfo"
+                    }
+                  },
+                  "required": [
+                    "x86-64"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "required": [
+              "binaries"
+          ],
+          "type": "object"
+        },
+        "images": {
+          "type": "object",
+          "properties": {
+            "icon-small": {
+              "type": "string",
+              "description": "PNG icon URL, preferably 48 by 48 pixels."
+            },
+            "icon-medium": {
+              "type": "string",
+              "description": "PNG icon URL, preferably 128 by 128 pixels."
+            },
+            "icon-large": {
+              "type": "string",
+              "description": "PNG icon URL, preferably 256 by 256 pixels."
+            },
+            "screenshots": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "PNG screen URL, preferably 1024 by 1024 pixels."
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+
+
+    "config": {
+      "$ref": "http://json-schema.org/draft-04/schema#"
+    },
+
+
+    "command": {
+      "additionalProperties": false,
+      "required": ["pip"],
+      "properties": {
+        "pip": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Embedded Requirements File",
+          "description": "[Deprecated v3.x] An array of strings representing of the requirements file to use for installing the subcommand for Pip. Each item is interpreted as a line in the requirements file."
+        }
+      }
+    },
+
+    "v30Metadata": {
+      "properties": {
+        "packagingVersion": {
+          "type": "string",
+          "enum": ["3.0"]
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[-a-zA-Z0-9.]+$"
+        },
+        "scm": {
+          "type": "string"
+        },
+        "maintainer": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "framework": {
+          "type": "boolean",
+          "default": false,
+          "description": "True if this package installs a new Mesos framework."
+        },
+        "preInstallNotes": {
+          "type": "string",
+          "description": "Pre installation notes that would be useful to the user of this package."
+        },
+        "postInstallNotes": {
+          "type": "string",
+          "description": "Post installation notes that would be useful to the user of this package."
+        },
+        "postUninstallNotes": {
+          "type": "string",
+          "description": "Post uninstallation notes that would be useful to the user of this package."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "licenses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the license. For example one of [Apache License Version 2.0 | MIT License | BSD License | Proprietary]"
+              },
+              "url": {
+                "$ref": "#/definitions/url",
+                "description": "The URL where the license can be accessed"
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "url"
+            ]
+          }
+        },
+        "minDcosReleaseVersion": {
+          "$ref": "#/definitions/dcosReleaseVersion",
+          "description": "The minimum DC/OS Release Version the package can run on."
+        },
+        "marathon": {
+          "$ref": "#/definitions/marathon"
+        },
+        "resource": {
+          "$ref": "#/definitions/v30resource"
+        },
+        "config": {
+          "$ref": "#/definitions/config"
+        },
+        "command": {
+          "$ref": "#/definitions/command"
+        }
+      },
+      "required": [
+        "packagingVersion",
+        "name",
+        "version",
+        "maintainer",
+        "description",
+        "tags"
+      ],
+      "additionalProperties": false
+    },
+
+    "v40Metadata": {
+      "properties": {
+        "packagingVersion": {
+          "type": "string",
+          "enum": ["4.0"]
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[-a-zA-Z0-9.]+$"
+        },
+        "scm": {
+          "type": "string"
+        },
+        "maintainer": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "framework": {
+          "type": "boolean",
+          "default": false,
+          "description": "True if this package installs a new Mesos framework."
+        },
+        "upgradesFrom": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of versions that can upgrade to this package. If the property is a list containing the string '*', any version can upgrade to this package. If the property is not set or the empty list, no version can upgrade to this package."
+        },
+        "downgradesTo": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of versions that this package can downgrade to. If the property is a list containing the string '*', this package can downgrade to any version. If the property is not set or the empty list, this package cannot downgrade."
+        },
+        "preInstallNotes": {
+          "type": "string",
+          "description": "Pre installation notes that would be useful to the user of this package."
+        },
+        "postInstallNotes": {
+          "type": "string",
+          "description": "Post installation notes that would be useful to the user of this package."
+        },
+        "postUninstallNotes": {
+          "type": "string",
+          "description": "Post uninstallation notes that would be useful to the user of this package."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "licenses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the license. For example one of [Apache License Version 2.0 | MIT License | BSD License | Proprietary]"
+              },
+              "url": {
+                "$ref": "#/definitions/url",
+                "description": "The URL where the license can be accessed"
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "url"
+            ]
+          }
+        },
+        "minDcosReleaseVersion": {
+          "$ref": "#/definitions/dcosReleaseVersion",
+          "description": "The minimum DC/OS Release Version the package can run on."
+        },
+        "marathon": {
+          "$ref": "#/definitions/marathon"
+        },
+        "resource": {
+          "$ref": "#/definitions/v30resource"
+        },
+        "config": {
+          "$ref": "#/definitions/config"
+        }
+      },
+      "required": [
+        "packagingVersion",
+        "name",
+        "version",
+        "maintainer",
+        "description",
+        "tags"
+      ],
+      "additionalProperties": false
+    }
+
+  },
+
+  "type": "object",
+  "oneOf": [
+    { "$ref": "#/definitions/v30Metadata" },
+    { "$ref": "#/definitions/v40Metadata" }
+  ]
+}

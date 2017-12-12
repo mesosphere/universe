@@ -1,0 +1,14 @@
+{
+  "images" : {
+    "icon-small" : "https://downloads.mesosphere.com/marathon/assets/icon-service-marathon-small.png",
+    "icon-medium" : "https://downloads.mesosphere.com/marathon/assets/icon-service-marathon-medium.png",
+    "icon-large" : "https://downloads.mesosphere.com/marathon/assets/icon-service-marathon-large.png"
+  },
+  "assets" : {
+    "container" : {
+      "docker" : {
+        "image" : "mesosphere/marathon:v1.5.1"
+      }
+    }
+  }
+}

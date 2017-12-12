@@ -1,0 +1,20 @@
+{
+    "packagingVersion": "4.0",
+    "name": "datastax-dse",
+    "version": "2.0.0-5.1.2",
+    "maintainer": "techpartner@datastax.com",
+    "minDcosReleaseVersion": "1.9",
+    "description": "Datastax Enterprise",
+    "selected": true,
+    "framework": true,
+    "tags": [
+        "datastax",
+        "dse",
+        "database",
+        "enterprise",
+        "nosql"
+    ],
+    "preInstallNotes": "This DC/OS Service is maintained by DataStax and available to mutual DataStax and Mesosphere customers (eval and production) and prospects (eval) .\n\nDefault configuration requires 3 agent nodes each with: 6.5 CPU | 23040 MB MEM | 32000MB Disk\n\nMore specifically, each instance type requires:\n\nDSE node: 3 instances | 2.5 CPU | 12500 MB MEM | 1 10240MB Disk\n\nOpsCenter node: 1 instance | 2 CPU | 6000 MB MEM | 1 10240 MB Disk\n\nContact Mesosphere and DataStax before deploying this service to ensure proper support channels are made available. Contact your rep at either company or techpartner@datastax.com. By using this service you agree to the license terms here: https://gist.github.com/012345/d1df9d43a0dfaa49e628c7bfbc9ffb52\n\nVersions: DataStax Enterprise 5.1.2 (Standard and Max) & OpsCenter 6.1.2",
+    "postInstallNotes": "DC/OS Datastax Enterprise is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/dse/\n\tIssues: https://www.datastax.com/contactus",
+    "postUninstallNotes": "DC/OS Datastax Enterprise has been uninstalled."
+}

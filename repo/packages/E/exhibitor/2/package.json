@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "2.0",
+  "name": "exhibitor",
+  "version": "1.0.1",
+  "scm": "https://github.com/netflix/exhibitor",
+  "maintainer": "https://dcos.io/community",
+  "description": "ZooKeeper co-process for instance monitoring, backup/recovery, cleanup and visualization.",
+  "framework": false,
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/Netflix/exhibitor/blob/master/LICENSE.txt"
+    }
+  ],
+  "tags": ["zookeeper"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. We recommend a minimum of three nodes with 3GB of RAM available.",
+  "postInstallNotes": "Exhibitor DCOS Service has been successfully installed!",
+  "postUninstallNotes": "The Exhibitor DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at TODO to clean up any persisted state"
+}

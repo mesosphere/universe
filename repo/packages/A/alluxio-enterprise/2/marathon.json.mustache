@@ -1,0 +1,176 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 2048,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && ./alluxio-enterprise-scheduler/bin/alluxio-enterprise ./alluxio-enterprise-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http",
+    "MARATHON_SINGLE_INSTANCE_APP": "true"
+  },
+  {{#service.service-account-secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service-account-secret}}"
+    }
+  },
+  {{/service.service-account-secret}}
+  "env": {
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1509575074810",
+    "PACKAGE_BUILD_TIME_STR": "Wed Nov 01 2017 22:24:34 +0000",
+    "PACKAGE_NAME": "alluxio-enterprise",
+    "PACKAGE_VERSION": "2.0.0-1.6.0",
+
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "JAVA_URI": "{{resource.assets.uris.java-tar-gz}}",
+    "JRE_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "TASKCFG_ALL_ALLUXIO_AGENT_URL": "{{resource.assets.uris.alluxio-agent}}",
+    "TASKCFG_ALL_CUSTOM_DOWNLOAD_URL": "{{resource.assets.uris.custom-download-url}}",
+    "TASKCFG_ALL_CUSTOM_KEYTAB_URL": "",
+    "TASKCFG_ALL_CUSTOM_KRB5_URL": "",
+
+    {{#service.service-account-secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    {{/service.service-account-secret}}
+
+    "SERVICE_PRINCIPAL": "{{service.service-account}}",
+    "SERVICE_USER": "{{service.user}}",
+    "TASKCFG_ALL_ALLUXIO_DISTRIBUTION": "{{service.alluxio-distribution}}",
+    "TASKCFG_ALL_ALLUXIO_LICENSE": "{{service.license}}",
+    "TASKCFG_ALL_ALLUXIO_VERSION": "1.6.0",
+    "TASKCFG_ALL_LOG_LEVEL": "{{service.log-level}}",
+    "TASKCFG_ALL_SERVICE_NAME": "{{service.name}}",
+
+    "TASKCFG_ALL_ALLUXIO_DOMAIN_SOCKET_LOCATION": "/tmp/domain",
+    "TASKCFG_ALL_ALLUXIO_EXTRA_CLIENT_PROPERTIES": "{{advanced.extra-client-properties}}",
+    "TASKCFG_ALL_ALLUXIO_EXTRA_JAVA_OPTS": "{{advanced.extra-java-opts}}",
+    "TASKCFG_ALL_ALLUXIO_EXTRA_USER_JAVA_OPTS": "{{advanced.extra-user-java-opts}}",
+    "TASKCFG_ALL_ALLUXIO_EXTRA_MASTER_JAVA_OPTS": "{{advanced.extra-master-java-opts}}",
+    "TASKCFG_ALL_ALLUXIO_EXTRA_WORKER_JAVA_OPTS": "{{advanced.extra-worker-java-opts}}",
+    "TASKCFG_ALL_ALLUXIO_EXTRA_JOB_MASTER_JAVA_OPTS": "{{advanced.extra-job-master-java-opts}}",
+    "TASKCFG_ALL_ALLUXIO_EXTRA_JOB_WORKER_JAVA_OPTS": "{{advanced.extra-job-worker-java-opts}}",
+    "TASKCFG_ALL_ALLUXIO_EXTRA_ENV": "{{advanced.extra-env}}",
+    "TASKCFG_ALL_ALLUXIO_TMPFS_LOCATION": "/dev/shm",
+    "TASKCFG_ALL_DOWNLOAD_CUSTOM_RESOURCES": "{{advanced.custom-resources}}",
+
+    "MASTER_COUNT": "{{service.master-count}}",
+    "WORKER_COUNT": "{{service.worker-count}}",
+    "PROXY_COUNT": "1",
+
+    {{#virtual-network.enabled}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{virtual-network.name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{virtual-network.plugin-labels}}",
+    {{/virtual-network.enabled}}
+
+    "SECURITY_KEYTAB_SECRET": "{{security.keytab-secret}}",
+    "SECURITY_KRB5_SECRET": "{{security.krb5-secret}}",
+    "TASKCFG_ALL_SECURITY_AUTHENTICATION_TYPE": "{{security.authentication-type}}",
+    "TASKCFG_ALL_SECURITY_AUTHORIZATION_PERMISSION_ENABLED": "{{security.authorization-permission-enabled}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_PRIMARY": "{{security.kerberos-primary}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_INSTANCE": "{{security.kerberos-instance}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_REALM": "{{security.kerberos-realm}}",
+
+    "TASKCFG_ALL_DOCKER_PUBLISH_URL": "{{docker.publish-url}}",
+    "TASKCFG_ALL_DOCKER_ALLUXIO_CLIENT_BASE": "{{docker.alluxio-client-base}}",
+    "TASKCFG_ALL_DOCKER_SPARK_CLIENT_BASE": "{{docker.spark-client-base}}",
+    "TASKCFG_ALL_DOCKER_SPARK_DIST_HOME": "{{docker.spark-dist-home}}",
+
+    "TASKCFG_ALL_UFS_ADDRESS": "{{service.ufs-address}}",
+
+    "TASKCFG_ALL_AWS_ACCESS_KEY": "{{s3a.aws-access-key}}",
+    "TASKCFG_ALL_AWS_SECRET_KEY": "{{s3a.aws-secret-key}}",
+
+    "TASKCFG_ALL_ZK_ENABLED": "{{zookeeper.enabled}}",
+    "TASKCFG_ALL_ZK_ADDRESS": "{{zookeeper.address}}",
+
+    "HDFS_ENDPOINT": "{{hdfs.endpoint}}",
+    "TASKCFG_ALL_ROOT_HDFS_VERSION": "{{hdfs.root-version}}",
+    "TASKCFG_ALL_JOURNAL_HDFS_VERSION": "{{hdfs.journal-version}}",
+
+    "MASTER_CPUS": "{{master.cpus}}",
+    "MASTER_MEM": "{{master.mem}}",
+    "MASTER_DISK": "{{master.disk}}",
+    "MASTER_DISK_TYPE": "{{master.disk-type}}",
+    "MASTER_PLACEMENT": "{{master.placement}}",
+    "TASKCFG_ALL_MASTER_JOURNAL_FOLDER": "{{master.journal-folder}}",
+
+    "WORKER_CPUS": "{{worker.cpus}}",
+    "WORKER_MEM": "{{worker.mem}}",
+    "TASKCFG_ALL_WORKER_MEM_RAMDISK": "{{worker.mem-ramdisk}}",
+    "TASKCFG_ALL_WORKER_MEM_TIER_ENABLED": "{{worker.mem-tier-enabled}}",
+    "WORKER_DISK": "{{worker.disk}}",
+    "WORKER_DISK_TYPE": "{{worker.disk-type}}",
+    "WORKER_DISK_TIER_1_TYPE": "{{worker.disk-tier-1-type}}",
+    "TASKCFG_ALL_WORKER_DISK_TIER_1_ENABLED": "{{worker.disk-tier-1-enabled}}",
+    "TASKCFG_ALL_WORKER_DISK_TIER_1_SIZE": "{{worker.disk-tier-1-size}}",
+    "TASKCFG_ALL_WORKER_DISK_TIER_1_ALIAS": "{{worker.disk-tier-1-alias}}",
+    "WORKER_DISK_TIER_2_TYPE": "{{worker.disk-tier-2-type}}",
+    "TASKCFG_ALL_WORKER_DISK_TIER_2_ENABLED": "{{worker.disk-tier-2-enabled}}",
+    "TASKCFG_ALL_WORKER_DISK_TIER_2_SIZE": "{{worker.disk-tier-2-size}}",
+    "TASKCFG_ALL_WORKER_DISK_TIER_2_ALIAS": "{{worker.disk-tier-2-alias}}",
+    "WORKER_PLACEMENT": "{{worker.placement}}",
+
+    "JOB_MASTER_CPUS": "{{master.job-cpus}}",
+    "JOB_MASTER_MEM": "{{master.job-mem}}",
+    "JOB_MASTER_DISK": "{{master.job-disk}}",
+    "JOB_MASTER_DISK_TYPE": "{{master.job-disk-type}}",
+    "JOB_MASTER_PLACEMENT": "{{master.job-placement}}",
+    "JOB_WORKER_CPUS": "{{worker.job-cpus}}",
+    "JOB_WORKER_MEM": "{{worker.job-mem}}",
+    "JOB_WORKER_DISK": "{{worker.job-disk}}",
+    "JOB_WORKER_DISK_TYPE": "{{worker.job-disk-type}}",
+    "JOB_WORKER_PLACEMENT": "{{worker.job-placement}}",
+    "DOCKER_CPUS": "1",
+    "DOCKER_MEM": "4096",
+    "DOCKER_DISK": "4096",
+    "DOCKER_DISK_TYPE": "ROOT",
+    "DOCKER_PLACEMENT": "",
+    "PROXY_PLACEMENT": "",
+    "PROXY_CPUS": "1",
+    "PROXY_MEM": "1024",
+    "PROXY_DISK": "1024",
+    "PROXY_DISK_TYPE": "ROOT",
+
+    "TASKCFG_ALL_ALLUXIO_MASTER_PORT": "{{network.master-port}}",
+    "TASKCFG_ALL_ALLUXIO_MASTER_WEB_PORT": "{{network.master-web-port}}",
+    "TASKCFG_ALL_ALLUXIO_WORKER_PORT": "{{network.worker-port}}",
+    "TASKCFG_ALL_ALLUXIO_WORKER_DATA_PORT": "{{network.worker-data-port}}",
+    "TASKCFG_ALL_ALLUXIO_WORKER_SECURE_RPC_PORT": "{{network.worker-secure-port}}",
+    "TASKCFG_ALL_ALLUXIO_WORKER_WEB_PORT": "{{network.worker-web-port}}",
+    "TASKCFG_ALL_ALLUXIO_JOB_MASTER_RPC_PORT": "{{network.job-master-port}}",
+    "TASKCFG_ALL_ALLUXIO_JOB_MASTER_WEB_PORT": "{{network.job-master-web-port}}",
+    "TASKCFG_ALL_ALLUXIO_JOB_WORKER_RPC_PORT": "{{network.job-worker-port}}",
+    "TASKCFG_ALL_ALLUXIO_JOB_WORKER_DATA_PORT": "{{network.job-worker-data-port}}",
+    "TASKCFG_ALL_ALLUXIO_JOB_WORKER_WEB_PORT": "{{network.job-worker-web-port}}",
+    "TASKCFG_ALL_ALLUXIO_JOB_WORKER_SECURE_RPC_PORT": "{{network.job-worker-secure-port}}",
+    "TASKCFG_ALL_ALLUXIO_PROXY_WEB_PORT": "{{network.proxy-web-port}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.java-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}

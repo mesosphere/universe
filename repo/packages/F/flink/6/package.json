@@ -1,0 +1,29 @@
+{
+    "packagingVersion": "3.0",
+
+    "name": "flink",
+    "version": "1.3.1-1.2-1.2",
+    "description": "Apache Flink® is an open source platform for distributed stream and batch data processing. Further information can be found here: https://github.com/dcos/examples/tree/master/flink",
+    "framework": true,
+    "website": "http://flink.apache.org/",
+    "tags": [
+        "stream-processing",
+        "batch"
+    ],
+    "scm": "https://github.com/apache/flink",
+    "licenses": [
+        {
+            "name": "Apache License Version 2.0",
+            "url": "https://raw.githubusercontent.com/apache/flink/master/LICENSE"
+        }
+    ],
+
+    "maintainer": "dcos.io/community/",
+
+    "selected": false,
+    "minDcosReleaseVersion": "1.8",
+
+    "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Flink requires by default 2 CPUs with 2GB of RAM on private nodes.",
+    "postInstallNotes": "DC/OS Flink is being installed!\n\n\tDocumentation: https://ci.apache.org/projects/flink/flink-docs-release-1.3/",
+    "postUninstallNotes": "The Apache Flink DC/OS Service has been uninstalled and will no longer run."
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "bookkeeper": {
+      "description": "bookkeeper specific configuration properties",
+      "properties": {
+        "name": {
+          "default": "bookkeeper",
+          "description": "The name of this DC/OS service.",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares to allocate to each bookkeeper instance.",
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of bookkeeper instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "mem": {
+          "default": 1024.0,
+          "description": "Memory (MB) to allocate to each bookkeeper task.",
+          "minimum": 512.0,
+          "type": "number"
+        },
+
+        "ledgers_volume_size": {
+          "default": 20000,
+          "description": "persistent Volume size(MB) for bookkeeper ledgers data.",
+          "minimum": 10000,
+          "type": "number"
+        },
+        "index_volume_size": {
+          "default": 7000,
+          "description": "persistent Volume size(MB) for bookkeeper index data.",
+          "minimum": 2000,
+          "type": "number"
+        },
+        "journal_volume_size": {
+          "default": 4000,
+          "description": "persistent Volume size(MB) for bookkeeper journal data.",
+          "minimum": 2000,
+          "type": "number"
+        },
+
+        "BK_BOOKIE_EXTRA_OPTS": {
+          "default": "\"-Xms1g -Xmx1g -XX:MaxDirectMemorySize=1g -XX:+UseG1GC -XX:MaxGCPauseMillis=10 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+AggressiveOpts -XX:+DoEscapeAnalysis -XX:ParallelGCThreads=32 -XX:ConcGCThreads=32 -XX:G1NewSizePercent=50 -XX:+DisableExplicitGC -XX:-ResizePLAB\"",
+          "description": "env -- bookkeeper JVM runtime options",
+          "type": "string"
+        },
+        "BK_zkServers": {
+          "default": "master.mesos:2181",
+          "description": "env -- zookeeper server instance",
+          "type": "string"
+        },
+        "BK_bookiePort": {
+          "default": 3181,
+          "description": "env -- bookkeeper export service port, using PORT0 in marathon",
+          "type": "integer"
+        },
+        "BK_journalDirectory": {
+          "default": "/bookkeeper/data/journal",
+          "description": "env -- bookkeeper data journal storage directory",
+          "type": "string"
+        },
+        "BK_ledgerDirectories": {
+          "default": "/bookkeeper/data/ledgers",
+          "description": "env -- bookkeeper data ledgers storage directory",
+          "type": "string"
+        },
+        "BK_indexDirectories": {
+          "default": "/bookkeeper/data/index",
+          "description": "env -- bookkeeper data ledgers storage directory",
+          "type": "string"
+        },
+        "bookkeeper_cmd": {
+          "default": [ ],
+          "description": "command passed in as parameter for entrypoint.sh",
+          "items" : {
+            "pattern" : "^[\\s]+",
+            "type" : "string"
+          },
+          "type" : "array"
+        }
+      },
+      "required": ["cpus", "mem", "instances", "BK_BOOKIE_EXTRA_OPTS", "BK_zkServers", "BK_bookiePort", "BK_journalDirectory", "BK_ledgerDirectories",  "BK_indexDirectories" ],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

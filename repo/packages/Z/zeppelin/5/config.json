@@ -1,0 +1,42 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "service": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "default": "zeppelin"
+                },
+                "zeppelin_java_opts": {
+                    "type": "string",
+                    "description": "Sets ZEPPELIN_JAVA_OPTS.  You can use this to set arbitrary spark configuration properties (e.g. spark.mesos.uris)",
+                    "default": "-Dspark.mesos.coarse=true -Dspark.mesos.executor.home=/opt/spark/dist"
+                }
+            }
+        },
+        "spark": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "A URI serving the Spark distribution to use for the local Zeppelin Spark context.  By default, this will use the value specified in this package's resource.json"
+                },
+                "executor_docker_image": {
+                    "type": "string",
+                    "description": "The docker image to launch Spark executors with.  By default, this will use this value specified in this package's resource.json"
+                },
+                "cores_max": {
+                    "type": "string",
+                    "description": "Sets spark.cores.max",
+                    "default": ""
+                },
+                "executor_memory": {
+                    "type": "string",
+                    "description": "Sets spark.executor.memory"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+  "packagingVersion": "3.0",
+  "name": "koding",
+  "minDcosReleaseVersion":"1.10",
+  "version": "1.0.0-0.0.2",
+  "tags": ["koding", "IDE", "development"],
+  "maintainer": "support@koding.com",
+  "description": "Koding is a web based collaborative software development tool. We bring code development off of localhost and into the cloud. Installation documentation: https://github.com/dcos/examples/tree/master/koding",
+  "scm": "https://github.com/koding/koding.git",
+  "website": "http://www.koding.com",
+  "framework": false,
+  "postInstallNotes": "Happy Koding!",
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Koding is a web based collaborative software development tool. We bring code development off of localhost and into your cloud environment. This package will install a single instance of Koding into your Mesosphere DCOS environment. Please note that Koding runs best with 8GB of RAM. Marathon-lb is also required for Koding to function properly. Please install Marathon-lb with HAProxy map option turned off before installing Koding.",
+  "postUninstallNotes":"Thank you for using Koding. In order to persist data between restarts, Koding kept data locally on the node in which it was installed. If you reinstall Koding on this node, you will still see this data. To delete this data, remove the /tmp/koding directory on the node.",
+  "licenses": [
+    {
+      "name": "Apache 2.0",
+      "url": "https://github.com/koding/koding/blob/master/LICENSE"
+    }
+  ]
+}

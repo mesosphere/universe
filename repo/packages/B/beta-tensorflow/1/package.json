@@ -1,0 +1,22 @@
+{
+    "packagingVersion": "4.0",
+    "minDcosReleaseVersion": "1.9",
+    "upgradesFrom": [
+        "0.1.0-1.3.0-beta"
+    ],
+    "downgradesTo": [
+        "0.1.0-1.3.0-beta"
+    ],
+    "name": "beta-tensorflow",
+    "version": "0.1.1-1.3.0-beta",
+    "maintainer": "https://dcos.io/community/",
+    "description": "TensorFlow on DC/OS",
+    "selected": false,
+    "framework": true,
+    "tags": [
+        "tensorflow"
+    ],
+    "preInstallNotes": "This is a community package. Community packages are unverified and unreviewed content from the community.",
+    "postInstallNotes": "The DC/OS TensorFlow service is being installed!\n\n\tDocumentation: https://mesosphere.github.io/dcos-tensorflow/\n\tIssues: https://chat.dcos.io",
+    "postUninstallNotes": "The DC/OS TensorFlow service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://mesosphere.github.io/dcos-tensorflow/uninstall to remove any persistent state if required."
+}

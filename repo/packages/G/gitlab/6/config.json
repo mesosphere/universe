@@ -1,0 +1,242 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "GitLab service properties",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of this DC/OS service.",
+          "type": "string",
+          "default": "gitlab"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to GitLab.",
+          "type": "number",
+          "default": 1.0,
+          "minimum": 0.1
+        },
+        "mem": {
+          "description": "Memory to allocate to GitLab.",
+          "type": "number",
+          "default": 2048.0,
+          "minimum": 2048.0
+        },
+        "role": {
+          "default": "*",
+          "description": "Deploy GitLab only on nodes with this role.",
+          "type": "string"
+        },
+        "host-volume": {
+          "description": "The location of a volume on the host to be used for persisting GitLab configuration and data.",
+          "type": "string",
+          "default": "/srv/gitlab"
+        },
+        "host-shared-volume": {
+          "description": "The location of a volume on the host to be used for persisting shared GitLab configuration and data. This directory MUST be mounted on all DC/OS agents if deploying GitLab in highly available configuration.",
+          "type": "string",
+          "default": "/srv/gitlab-data"
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem",
+        "host-volume",
+        "host-shared-volume"
+      ]
+    },
+    "routing": {
+      "description": "GitLab routing properties for use with Marathon-lb.",
+      "type": "object",
+      "properties": {
+        "https-redirect": {
+          "description": "Whether Marathon-lb should redirect HTTP traffic to HTTPS. This requires 'virtual-host' to be set. By default, this is false.",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual-host": {
+          "description": "The virtual host address to configure for integration with Marathon-lb.",
+          "type": "string"
+        },
+        "ssh-port": {
+          "description": "The port that ssh clients will connect to against the virtual-host.",
+          "type": "integer",
+          "default": 22222,
+          "minimum": 1024
+        },
+        "registry-port": {
+          "description": "The port that docker clients will connect to against the virtual-host.",
+          "type": "integer",
+          "default": 50000,
+          "minimum": 1024
+        }
+      }
+    },
+    "email": {
+      "description": "GitLab SMTP email config.",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Whether to use external SMTP email server. By default, this is false.",
+          "type": "boolean",
+          "default": false
+        },
+        "address": {
+          "description": "Address of the SMTP server",
+          "type": "string"
+        },
+        "port": {
+          "description": "Port to access the SMTP server on",
+          "type": "integer",
+          "default": 25
+        },
+        "username": {
+          "description": "If your mail server requires authentication, set the username in this setting.",
+          "type": "string"
+        },
+        "password": {
+          "description": "If your mail server requires authentication, set the password in this setting.",
+          "type": "string"
+        },
+        "domain": {
+          "description": "SMTP HELO domain.",
+          "type": "string"
+        },
+        "authentication": {
+          "description": "If your mail server requires authentication, you need to specify the authentication type here. ('plain', 'login', 'cram_md5')",
+          "type": "string",
+          "default": "login"
+        },
+        "enable-starttls-auto": {
+          "description": "Detects if STARTTLS is enabled in your SMTP server and starts to use it. Defaults to true.",
+          "type": "boolean",
+          "default": true
+        },
+        "openssl-verify-mode": {
+          "description": "When using TLS, you can set how OpenSSL checks the certificate. ('none', 'peer', 'client_once', 'fail_if_no_peer_cert')",
+          "type": "string",
+          "default": "peer"
+        },
+        "tls": {
+          "description": "Enables the SMTP connection to use SMTP/TLS. Default to false.",
+          "type": "boolean",
+          "default": false
+        },
+        "email-from-address": {
+          "description": "From Address used in email headers",
+          "type": "string"
+        },
+        "email-reply-to-address": {
+          "description": "Reply-to-Address used in email headers",
+          "type": "string"
+        }
+      },
+      "required": [
+        "enabled"
+      ]
+    },
+    "high-availability": {
+      "description": "GitLab high availability properties. If enabled, single-node properties WILL NOT be used.",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Whether to use external Postgres and Redis servers to enable a highly available deployment of GitLab. By default, this is false.",
+          "type": "boolean",
+          "default": false
+        },
+        "postgres": {
+          "description": "Postgres connection properties",
+          "type": "object",
+          "properties": {
+            "host": {
+              "description": "Postgres host",
+              "type": "string"
+            },
+            "database": {
+              "description": "Postgres database",
+              "type": "string"
+            },
+            "user": {
+              "description": "Postgres user",
+              "type": "string"
+            },
+            "password": {
+              "description": "Postgres password",
+              "type": "string"
+            }
+          }
+        },
+        "redis": {
+          "description": "Redis connection properties",
+          "type": "object",
+          "properties": {
+            "host": {
+              "description": "Redis host",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [
+        "enabled"
+      ]
+    },
+    "single-node": {
+      "description": "Configuration related to running a single instance version of GitLab. If high availability is enabled, these settings will be ignored.",
+      "type": "object",
+      "properties": {
+        "local-volumes": {
+          "description": "Local volumes configuration (only used if external persistent volumes are disabled). Local volumes are created on the machine with the hostname specified and Marathon will attempt to re-launch the task on the same machine. Note that if the machine is lost, your data may also be lost.",
+          "type": "object",
+          "properties": {
+            "pinned-hostname": {
+                "description": "An optional DC/OS agent hostname to run this GitLab instance on (e.g. 10.0.0.1). If this is not specified then the task may relaunch on another node than the one it originally ran on.",
+                "type" : "string"
+            }
+          }
+        },
+        "external-volumes": {
+          "description": "External persistent volumes configuration. External persistent volumes are a DC/OS feature that allow your data to be migrated with your task.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Whether to use DC/OS external volumes to persist GitLab state. By default, this is false.",
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "enabled"
+          ]
+        }
+      },
+      "required": [
+        "local-volumes",
+        "external-volumes"
+      ]
+    },
+    "enterprise": {
+      "description": "Optionally check to install Enterprise Edition. (For use if you have a license file from GitLab Inc)",
+      "type": "object",
+      "properties": {
+        "enterprise-edition": {
+          "description": "Whether to deploy the EE edition of the software. Defaults to false.",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "enterprise-edition"
+      ]
+    }
+  },
+  "required": [
+    "service",
+    "routing",
+    "email",
+    "high-availability",
+    "single-node",
+    "enterprise"
+  ]
+}

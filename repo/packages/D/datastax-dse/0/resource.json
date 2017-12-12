@@ -1,0 +1,62 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "dse": "dspn/10517a0c8e9b11e79ef5600308a463aa-1:5.1.2"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.30.0/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/datastax-dse/assets/2.0.0-5.1.2/datastax-dse-scheduler.zip",
+      "datastax-scripts-zip": "https://downloads.mesosphere.com/datastax-dse/assets/2.0.0-5.1.2/datastax-scripts.zip",
+      "executor-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.30.0/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Small.jpg",
+    "icon-medium": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Medium.jpg",
+    "icon-large": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Big.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "287cd4b43b9e6e9732ad98852b66a470aadad338c3997323c2bfeb3712d6d7f9"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/datastax-dse/assets/2.0.0-5.1.2/dcos-datastax-dse-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "03cb7ece6cc29a12ddb5df576bb880fd791d2c96f1686c03361c0c346b4eefe3"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/datastax-dse/assets/2.0.0-5.1.2/dcos-datastax-dse-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "2db6007112f09376755d8997a06acd00172b012344e3b665f6adc280e67f0891"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/datastax-dse/assets/2.0.0-5.1.2/dcos-datastax-dse.exe"
+        }
+      }
+    }
+  }
+}

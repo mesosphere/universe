@@ -1,0 +1,15 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u144-linux-x64.tar.gz",
+      "scheduler-jar": "https://github.com/humio/dcos2humio/releases/download/0.5-beta-1/scheduler-0.5-beta-1.jar",
+      "executor-jar": "https://github.com/humio/dcos2humio/releases/download/0.5-beta-1/executor-0.5-beta-1.jar",
+      "filebeat-tar-gz": "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.5.2-linux-x86_64.tar.gz"
+    }
+  },
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/humio/graphics/master/48.png",
+    "icon-medium": "https://raw.githubusercontent.com/humio/graphics/master/96.png",
+    "icon-large": "https://raw.githubusercontent.com/humio/graphics/master/256_icon.png"
+  }
+}
