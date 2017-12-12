@@ -1,0 +1,168 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.smp}},
+  "mem": {{service.mem}},
+  "instances": {{service.nodes}},
+	"constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+		{{#security.client_encryption.enable}}
+		{{^security.download_my_keys.enable}}
+			{
+        "containerPath": "/etc/scylla/keys/client",
+        "hostPath": "{{security.client_encryption.path}}",
+        "mode": "RO"	
+			},	
+		{{/security.download_my_keys.enable}}
+		{{/security.client_encryption.enable}}
+
+		{{#security.node_to_node_encryption.enable}}
+		{{^security.download_my_keys.enable}}
+			{
+        "containerPath": "/etc/scylla/keys/node",
+        "hostPath": "{{security.node_to_node_encryption.path}}",
+        "mode": "RO"	
+			}
+		{{#disks.use_host_disks}}
+		{{^disks.use_dcos_local_persistence}}
+		,
+		{{/disks.use_dcos_local_persistence}}
+		{{/disks.use_host_disks}}
+		{{#disks.use_dcos_local_persistence}}
+		{{^disks.use_host_disks}}
+		,
+		{{/disks.use_host_disks}}
+		{{/disks.use_dcos_local_persistence}}
+		{{/security.download_my_keys.enable}}
+		{{/security.node_to_node_encryption.enable}}
+
+    {{#disks.use_host_disks}}
+      {
+        "containerPath": "/var/lib/scylla",
+        "hostPath": "{{disks.host_directory}}",
+        "mode": "RW"
+      }
+		{{/disks.use_host_disks}}
+
+    {{#disks.use_dcos_local_persistence}}
+      {
+        "containerPath": "scylladata",
+        "mode": "RW",
+        "persistent": {
+          "size": {{disks.local_persistent_volume_size}}
+        }
+      },
+      {
+        "containerPath": "/var/lib/scylla",
+        "hostPath": "scylladata",
+        "mode": "RW"
+      }
+   	{{/disks.use_dcos_local_persistence}}	
+   	],
+    "docker": {
+      "image": "{{resource.assets.container.docker.scyllaimage}}",
+      "forcePullImage": true,
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 10000,
+          "hostPort": 10000,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 7000,
+          "hostPort": 7000,
+          "protocol": "tcp"
+        },
+				{{#security.node_to_node_encryption.enable}}
+				{
+					"containerPort": 7001,
+					"hostPort": 7001,
+					"protocol": "tcp"
+				},
+				{{/security.node_to_node_encryption.enable}}
+        {
+          "containerPort": 9180,
+          "hostPort": 9180,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 9042,
+          "hostPort": {{network.cql_port}},
+					{{#network.external_access_port}}
+					"servicePort": {{network.external_access_port}},
+					"name": "cqlpublic",
+					{{/network.external_access_port}}
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 9160,
+          "hostPort": {{network.thrift_port}},
+          "protocol": "tcp"
+        }
+      ]
+    }
+  },
+	"requirePorts": true,
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "TCP",
+			{{^security.node_to_node_encryption.enable}}
+      "portIndex": 3,
+			{{/security.node_to_node_encryption.enable}}
+			{{#security.node_to_node_encryption.enable}}
+			"portIndex": 4,
+			{{/security.node_to_node_encryption.enable}}
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 1
+    }
+  ],
+  {{#security.download_my_keys.enable}}
+  "uris": [
+    "{{security.download_my_keys.path}}" 
+  ],
+  {{/security.download_my_keys.enable}}
+  "env": {
+    "SCYLLA_SMP": "{{service.smp}}",
+    "SCYLLA_MEM": "{{service.mem}}",
+		"SCYLLA_NODES": "{{service.nodes}}",
+    "SCYLLA_CLUSTER_NAME": "{{general.cluster_name}}",
+    "SCYLLA_OVERPROVISIONED": "{{general.overprovisioned}}",
+		"SCYLLA_DEVELOPER_MODE": "{{general.developer_mode}}",
+    "SCYLLA_EXPERIMENTAL": "{{general.experimental}}",
+    "SCYLLA_ENDPOINT_SNITCH": "{{general.endpoint_snitch}}",
+    "SCYLLA_SEEDS": "{{general.number_of_seeds}}",
+    "SCYLLA_NEW_RACK": "{{general.each_node_is_on_a_new_rack}}",
+    "SCYLLA_DATACENTER_NAME": "{{general.data_center_name}}",
+    "SCYLLA_BATCH_SIZE_WARN": "{{general.batch_size_warning_threshold_in_kb}}",
+    "SCYLLA_BATCH_SIZE_FAIL": "{{general.batch_size_fail_threshold_in_kb}}",
+    "SCYLLA_AUTHENTICATOR": "{{security.authenticator}}",
+		"SCYLLA_CQL_PORT": "{{network.cql_port}}",
+		"SCYLLA_THRIFT_PORT": "{{network.thrift_port}}",
+		"SCYLLA_CLIENT_SSL_ENABLE": "{{security.client_encryption.enable}}",
+    "SCYLLA_CLIENT_PATH": "{{security.client_encryption.path}}",
+		"SCYLLA_NODE_SSL_ENABLE": "{{security.node_to_node_encryption.enable}}",
+    "SCYLLA_NODE_LEVEL": "{{security.node_to_node_encryption.level}}",
+    "SCYLLA_NODE_PATH": "{{security.node_to_node_encryption.path}}",
+    "SCYLLA_DOWNLOAD_KEYS": "{{security.download_my_keys.enable}}",
+    "SCYLLA_DOWNLOAD_PATH": "{{security.download_my_keys.path}}"
+  },
+  "labels": {
+    {{#network.external_access_port}}
+    "HAPROXY_GROUP": "external",
+    {{/network.external_access_port}}
+    "DCOS_SCYLLA_VERSION": "{{resource.assets.container.docker.scyllaimage}}"
+  }
+}

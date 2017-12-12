@@ -1,0 +1,227 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS container service specifications",
+      "properties": {
+        "name": {
+          "description": "Name of scylla instances as seen in DC/OS.",
+          "type": "string",
+          "default": "scylla"
+        },
+        "nodes": {
+          "description": "How many nodes the cluster will have in total",
+          "type": "number",
+          "default": 3
+        },
+        "smp": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 3,
+          "minimum": 1
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance. Should be at least 1000 Mb per logical core",
+          "type": "number",
+          "default": 12000,
+          "minimum": 4000
+        }
+     	},
+    	"required": [
+				"name",
+      	"nodes",
+      	"smp",
+				"mem"
+      ]
+    },
+    "general":{
+      "type": "object",
+      "description": "Define general scylla settings",
+      "properties": {
+        "cluster_name": {
+          "description": "Name of the cluster",
+          "type": "string",
+          "default": "charybdis"
+        },
+        "overprovisioned": {
+          "description": "Choose if you want to run in an overprovisioned environment. This is recommended for all nodes that share host resources with other applications.",
+          "type": "boolean",
+          "default": true
+        },
+        "developer_mode": {
+          "description": "Enable to skip some setup options. Not for production!",
+          "type": "boolean",
+          "default": false
+        },
+        "experimental": {
+          "description": "Run with experimental settings or not (not recommended for production).",
+          "type": "boolean",
+          "default": false
+        },
+        "endpoint_snitch": {
+          "description": "Set snitch strategy between nodes. [SimpleSnitch, GossipingPropertyFileSnitch, RackInferringSnitch]",
+          "type": "string",
+          "default": "GossipingPropertyFileSnitch"
+        },
+        "number_of_seeds": {
+          "description": "Set number of seeds to use in cluster. MUST be less than total number of instances",
+          "type": "number",
+          "default": 2,
+          "minimum": 1
+        },
+        "each_node_is_on_a_new_rack": {
+          "description": "If enabled, every node will have a new rack id. If not, they will all have the same",
+          "type": "boolean",
+          "default": true
+        },
+        "data_center_name": {
+          "description": "Give a name to your data center",
+          "type": "string",
+          "default": "dc1"
+        }, 
+        "batch_size_warning_threshold_in_kb": {
+          "description": "Set warning threshold for batch sizes larger than X kb",
+          "type": "number",
+          "default": 5
+        },
+        "batch_size_fail_threshold_in_kb": {
+          "description": "Set fail threshold for batch sizes larger than X kb",
+          "type": "number",
+          "default": 50
+        },
+        "partitioner": {
+          "description": "Set the partitoner used. [Murmur3Partitioner, RandomPartitioner, ByteOrderedPartitioner]",
+          "type": "string",
+          "default": "org.apache.cassandra.dht.Murmur3Partitioner"
+        }
+      },
+			"required": [
+				"cluster_name",
+				"endpoint_snitch",
+				"number_of_seeds",
+				"data_center_name",
+				"partitioner"
+			]
+    },
+    "disks":{
+      "type": "object",
+      "description": "Configure how to store data. If neither host disks or local persistence is chosen, no data is saved outside of the container. I.e. data loss is very possible. You can only choose one of the two.",
+      "properties": {
+        "use_host_disks": {
+          "description": "Use disks on host. Should be formatted as XFS and have the same path on all nodes",
+          "type": "boolean",
+          "default": true
+        },
+        "host_directory": {
+          "description": "Path on host to use for data and commitlog. Make sure scylla has read/write to dir. [/mnt/scylla/]",
+          "type": "string",
+          "default": "/mnt/scylla"
+        },
+        "use_dcos_local_persistence": {
+          "description": "See DC/OS documentation for more information",
+          "type": "boolean",
+          "default": false
+        },
+        "local_persistent_volume_size": {
+          "description": "Size of local volume in Mb",
+          "type": "number",
+          "default": 0
+        }
+      }
+    },
+    "network":{
+      "type": "object",
+      "description": "Network settings for scylla on DC/OS",
+      "properties": {
+        "cql_port": {
+          "description": "Port to used for cql communication",
+          "type": "number",
+          "default": 9042
+        },
+        "cql_vip_port": {
+          "description": "If set, other apps can use cql with scylla on instancename.marathon.l4lb.thisdcos.directory:PORT.",
+          "type": "number",
+          "default": 9042
+        },
+        "thrift_port": {
+          "description": "Port to be used for thrift communication",
+          "type": "number",
+          "default": 9160
+        },
+        "thrift_vip_port": {
+          "description": "If set, other apps can use thrift with scylla on instancename.marathon.l4lb.thisdcos.directory:PORT.",
+          "type": "number",
+          "default": 9160
+        },
+        "external_access_port": {
+          "description": "If set, applications outside the cluster can reach scylla on host-ip:PORT. Remember to open up firewall etc. Marathon-LB needs to be installed prior to setting this port.",
+          "type": "number"
+        }
+      },
+			"required": [
+				"cql_port"
+			]
+    },
+    "security":{
+      "type": "object",
+      "description": "Set security level of cluster",
+      "properties": {
+        "authenticator": {
+          "description": "Choose whether to allow all authenticators or use user+password authenticaton. If password authentication is chosen, the default user is cassandra with password cassandra. [AllowAllAuthenticator, PasswordAuthenticator]",
+          "type": "string",
+          "default": "AllowAllAuthenticator"
+        },
+        "client_encryption":{
+          "type": "object",
+          "description": "Use client SSL encryption or not. The certificate files must be available at the hosts before deployment in a directory or through download. OBS! Key files MUST be named scylladb.crt, scylladb.key",
+          "properties": {
+            "enable": {
+              "description": "If enabled you must provide certificate and key below",
+              "type": "boolean",
+              "default": false
+            },
+            "path": {
+              "description": "Absolute path to directory on host containing files: scylladb.crt, scylladb.key",
+              "type": "string"
+            }
+          }
+        },
+        "node_to_node_encryption":{
+          "type": "object",
+          "description": "Use SSL encryption between nodes or not. The certificate files must be available at the hosts before deployment in a directory or through download. OBS! Key files MUST be named scylladb.crt, scylladb.key, ca-scylladb.pem",
+          "properties": {
+            "enable": {
+              "description": "If enabled you must provide path to cert, key and truststore files below",
+              "type": "boolean",
+              "default": false
+            },
+            "level": {
+              "description": "Choose what traffic should be encrypted. [all, dc, rack]",
+              "type": "string"
+            },
+            "path": {
+              "description": "Absolute path to directory on host containing files: scylladb.crt, scylladb.key, ca-scylladb.pem",
+              "type": "string"
+            }
+          }
+        },
+        "download_my_keys": {
+          "type": "object",
+          "description": "Specify the path to an archive that contains your keys. The keys will end up in the mesos sandbox path on host. OBS! The certificates in the archive MUST have the following name: scylladb.crt, scylladb.key, ca-scylladb.pem",
+          "properties": {
+            "enable": {
+              "description": "If enabled. Mesos will download and extract the given archive before executing docker entrypoint",
+              "type": "boolean",
+              "default": false
+            },
+            "path": {
+              "description": "The uri to the files to download",
+              "type": "string"
+            }
+          }
+        }
+      }    
+    }
+  }
+}
