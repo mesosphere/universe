@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-jenkins-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-jenkins-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-jenkins-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "jenkins-340-2891": "mesosphere/jenkins:3.4.0-2.89.1"
+      }
+    }
+  }
+}
