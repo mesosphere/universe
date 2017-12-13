@@ -1,0 +1,113 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{app-master.cpus}},
+  "mem": {{app-master.memory}},
+  "cmd": "/sbin/init.sh",
+
+  "env": {
+{{#security.ssl.enabled}}
+    "FLINK_SSL_ENABLED": "{{security.ssl.enabled}}",
+    "FLINK_SSL_KEYSTOREBASE64": "{{security.ssl.keyStoreBase64}}",
+    "FLINK_SSL_TRUSTSTOREBASE64": "{{security.ssl.trustStoreBase64}}",
+    "FLINK_SSL_KEYSTOREPASSWORD": "{{security.ssl.keyStorePassword}}",
+    "FLINK_SSL_KEYPASSWORD": "{{security.ssl.keyPassword}}",
+    "FLINK_SSL_TRUSTSTOREPASSWORD": "{{security.ssl.keyStorePassword}}",
+    "FLINK_SSL_PROTOCOL": "{{security.ssl.protocol}}",
+    "FLINK_SSL_ENABLEDALGORITHMS": "{{security.ssl.enabledAlgorithms}}",
+    "FLINK_ARTIFACT_SERVER_SSL_ENABLED": "{{security.ssl.enableArtifactServerSSL}}",
+{{/security.ssl.enabled}}
+{{#security.kerberos.krb5conf}}
+    "FLINK_SECURITY_KRB5_CONF_BASE64": "{{security.kerberos.krb5conf}}",
+{{/security.kerberos.krb5conf}}
+
+{{#security.kerberos.use-ticket-cache}}
+    "FLINK_SECURITY_USE_TICKET_CACHE": "{{security.kerberos.use-ticket-cache}}",
+{{/security.kerberos.use-ticket-cache}}
+
+{{#security.kerberos.keytab}}
+    "FLINK_SECURITY_KEYTAB_BASE64": "{{security.kerberos.keytab}}",
+{{/security.kerberos.keytab}}
+
+{{#security.kerberos.principal}}
+    "FLINK_SECURITY_PRINCIPAL": "{{security.kerberos.principal}}",
+{{/security.kerberos.principal}}
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "FLINK_TASK_SLOTS": "{{service.slots}}",
+    "FLINK_PARALLELISM_DEFAULT": "{{service.parallelism-default}}",
+    "FLINK_DISPATCHER_MESOS_ROLE": "{{service.role}}",
+    "FLINK_DISPATCHER_MESOS_HOSTATTRIBUTE": "{{service.hostattribute}}",
+    "FLINK_DISPATCHER_MESOS_PRINCIPAL": "{{service.principal}}",
+    "FLINK_DISPATCHER_MESOS_SECRET": "{{service.secret}}",
+    "FLINK_USER": "{{service.user}}",
+    "FLINK_LOG_LEVEL": "{{service.log-level}}",
+    "FLINK_EXTRA_ARGS": "{{service.extra-args}}",
+    "FLINK_APP_MASTER_CPUS": "{{app-master.cpus}}",
+    "FLINK_APP_MASTER_MEM": "{{app-master.memory}}",
+    "FLINK_APP_MASTER_HEAP": "{{app-master.heap}}",
+    "FLINK_TASK_MANAGER_COUNT": "{{task-managers.count}}",
+    "FLINK_TASK_MANAGER_CPUS": "{{task-managers.cpus}}",
+    "FLINK_TASK_MANAGER_MEM": "{{task-managers.memory}}",
+    "FLINK_TASK_MANAGER_HEAP": "{{task-managers.heap}}",
+    "FLINK_TASK_MANAGER_MEM_PREALLOCATION": "{{task-managers.memory-preallocation}}"
+  },
+
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.flink}}",
+      "network": "HOST",
+{{#service.user}}
+      "parameters": [
+        {
+          "key": "user",
+          "value": "{{service.user}}"
+        }
+      ],
+{{/service.user}}
+      "forcePullImage": true
+    }
+  },
+  "ports": [0, 0, 0, 0, 0],
+
+  "healthChecks": [
+    {
+{{#security.ssl.enabled}}
+      "protocol": "COMMAND",
+      "command": { "value": "curl -f -k https://$HOST:$PORT0/" },
+{{/security.ssl.enabled}}
+{{^security.ssl.enabled}}
+      "protocol": "HTTP",
+      "path": "/",
+      "portIndex": 0,
+{{/security.ssl.enabled}}
+      "gracePeriodSeconds": 5,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+
+  "labels": {
+{{#hdfs.config-url}}
+    "FLINK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",
+{{/hdfs.config-url}}
+{{#security.ssl.enabled}}
+    "DCOS_SERVICE_SCHEME": "https",
+{{/security.ssl.enabled}}
+{{^security.ssl.enabled}}
+    "DCOS_SERVICE_SCHEME": "http",
+{{/security.ssl.enabled}}
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  },
+{{#service.user}}
+  "user": "{{service.user}}",
+{{/service.user}}
+  "uris": [
+{{#hdfs.config-url}}
+  "{{hdfs.config-url}}/hdfs-site.xml",
+  "{{hdfs.config-url}}/core-site.xml"
+{{/hdfs.config-url}}
+  ]
+
+}
