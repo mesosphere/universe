@@ -1,0 +1,101 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service": {
+            "type": "object",
+            "description": "Service properties for Minio on DC/OS",
+            "properties": {
+                "name": {
+                    "description": "Name of this service instance",
+                    "type": "string",
+                    "default": "minio"
+                },
+                "tls": {
+                    "description": "Enable secure connections by https://docs.minio.io/docs/how-to-secure-access-to-minio-server-with-tls. Then set this field to true",
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "required": [
+                "name",
+                "tls"
+            ]
+        },
+        "resource": {
+            "type": "object",
+            "description": "Resource properties for Minio on DC/OS",
+            "properties": {
+                "cpus": {
+                    "description": "CPU shares to allocate to service instance",
+                    "type": "number",
+                    "default": 1,
+                    "minimum": 0.5
+                },
+                "mem": {
+                    "description": "Memory to allocate to service instance",
+                    "type": "number",
+                    "default": 1024,
+                    "minimum": 1024
+                }
+            },
+            "required": [
+                "cpus",
+                "mem"
+            ]
+        },
+        "storage": {
+            "type": "object",
+            "description": "Storage properties for Minio on DC/OS",
+            "properties": {
+                "volume-size": {
+                    "type": "number",
+                    "description": "Size of volume in MiB",
+                    "default": 1024
+                }
+            },
+            "required": [
+                "volume-size"
+            ]
+
+        },
+        "credentials": {
+            "type": "object",
+            "description": "Credentials to authenticate with Minio server",
+            "properties": {
+                "access-key": {
+                    "type": "string",
+                    "description": "Access Key",
+                    "default": "minio"
+                },
+                "secret-key": {
+                    "type": "string",
+                    "description": "Secret Key",
+                    "default": "minio123"
+                }
+            },
+            "required": [
+                "access-key",
+                "secret-key"
+            ]
+        },
+        "networking": {
+            "description": "Networking properties for Minio on DC/OS",
+            "type": "object",
+            "properties": {
+                "port": {
+                    "description": "Port on which Minio service is available",
+                    "type": "number",
+                    "default": 9000
+                },
+                "public-access": {
+                    "description": "Enables public access to Minio server if true",
+                    "type": "boolean",
+                    "default": true
+                }
+            },
+            "required": [
+                "port"
+            ]
+        }
+    }
+}
