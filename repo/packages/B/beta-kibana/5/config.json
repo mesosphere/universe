@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the Kibana service instance",
+          "type": "string",
+          "default": "kibana"
+        },
+        "user": {
+          "description": "The user that runs the Kibana services and owns the Mesos sandbox.",
+          "type": "string",
+          "default": "nobody"
+        }
+      },
+      "required": [
+        "name",
+        "user"
+      ]
+    },
+    "kibana": {
+      "description": "Kibana service configuration properties",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "xpack_enabled": {
+          "description": "Whether or not to enable the commercial X-Pack plugin from kibana",
+          "type": "boolean",
+          "default": false
+        },
+        "elasticsearch_url": {
+          "description": "The URL of the Elasticsearch cluster to use for all your queries.",
+          "type": "string",
+          "default": "http://coordinator.elastic.l4lb.thisdcos.directory:9200"
+        },
+        "elasticsearch_tls": {
+          "description": "Enable TLS encryption for communicating with Elastic (required when Elastic has TLS support enabled, requires the X-Pack plugin).",
+          "type": "boolean",
+          "default": false
+        },
+        "user": {
+          "description": "kibana username to use for X-Pack authentication, if enabled",
+          "type": "string",
+          "default": "kibana"
+        },
+        "password": {
+          "description": "Password to use for X-Pack authentication, if enabled. Note that you are not setting the password here. You are specifying the credentials for Kibana to use when sending requests.",
+          "type": "string",
+          "default": "changeme"
+        },
+        "cpus": {
+          "description": "Kibana CPU requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "description": "Kibana mem requirements",
+          "type": "integer",
+          "default": 2048
+        }
+      },
+      "required": [
+        "elasticsearch_url"
+      ]
+    }
+  }
+}
