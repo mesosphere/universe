@@ -10,6 +10,10 @@
           "type": "string",
           "default": "jupyterhub"
         },
+        "admin_users": {
+          "description": "List of admin users, separated by a comma.",
+          "type": "string"
+        },
         "constraints": {
           "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
           "type": "array",
@@ -85,11 +89,10 @@
         },
         "mem": {
           "description": "Memory to allocate to each notebook instance.",
-          "type": "number",
-          "default": 2048.0,
-          "minimum": 1024.0
+          "type": "string",
+          "default": "2G"
         },
-        "docker-image": {
+        "docker_image": {
           "description": "The docker image to be used for the users' notebook.",
           "type": "string",
           "default": "jupyterhub/singleuser"

@@ -4,17 +4,20 @@
   "mem": {{service.mem}},
   "instances": 1,
   "env": {
+    "JUPYTERHUB_ADMIN_USERS": "{{service.admin_users}}",
+    "NOTEBOOK_APP_PREFIX": "{{notebook.app_prefix}}",
     "NOTEBOOK_CPU_LIMIT": "{{notebook.cpus}}",
     "NOTEBOOK_MEMORY_LIMIT": "{{notebook.mem}}",
-    "NB_DOCKER_IMAGE": "{{notebook.docker-image}}"
+    "NOTEBOOK_DOCKER_IMAGE": "{{notebook.docker_image}}"
     {{#service.env_vars}}
-    ,"{{env_vars.var_name}}": "{{env_vars.value}}"
+    ,"{{var_name}}": "{{value}}"
     {{/service.env_vars}}
   },
   "container": {
       "type": "DOCKER",
       "docker": {
          "image": "{{resource.assets.container.docker.jupyterhub}}",
+         "forcePullImage": true,
          "network": "BRIDGE",
          "portMappings": [
             { "containerPort": 8000, "hostPort": 0 },
