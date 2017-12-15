@@ -1,0 +1,273 @@
+{
+  "type": "object",
+  "properties": {
+    "mesos": {
+      "description": "Mesos specific configuration properties",
+      "type": "object",
+      "properties": {
+        "master": {
+          "default": "zk://master.mesos:2181/mesos",
+          "description": "The URL of the Mesos master. The format is a comma-delimited list of hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay particular attention to the leading zk:// and trailing /mesos! If not using ZooKeeper, standard host:port patterns, like localhost:5050 or 10.0.0.5:5050,10.0.0.6:5050, are also acceptable.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "master"
+      ]
+    },
+    "chronos": {
+      "description": "Chronos Framework Configuration Properties",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+         "assets-path": {
+         "description": "Set a local file system path to load assets from, instead of loading them from the packaged jar.",
+         "type": "string"
+       },
+       "cassandra-consistency": {
+         "description": "Consistency to use for Cassandra (default = ANY)",
+         "type": "string"
+       },
+       "cassandra-contact-points": {
+         "description": "Comma separated list of contact points for Cassandra",
+         "type": "string"
+       },
+       "cassandra-keyspace": {
+         "description": "Keyspace to use for Cassandra (default = metrics)",
+         "type": "string"
+       },
+       "cassandra-port": {
+         "description": "Port for Cassandra (default = 9042)",
+         "type": "integer",
+         "default": 9042,
+         "minimum": 0
+       },
+       "cassandra-table": {
+         "description": "Table to use for Cassandra (default = chronos)",
+         "type": "string"
+       },
+       "cassandra-ttl": {
+         "description": "TTL for records written to Cassandra (default = 31536000)",
+         "type": "integer",
+         "default": 31536000,
+         "minimum": 0
+       },
+       "cluster-name": {
+         "description": "The name of the cluster where Chronos is run",
+         "type": "string"
+       },
+       "cpus": {
+         "description": "CPU shares to allocate to each Chronos instance.",
+         "type": "number",
+         "minimum": 0.0,
+         "default": 1.0
+       },
+       "instances": {
+         "description": "Number of Chronos instances to run.",
+         "type": "integer",
+         "minimum": 0,
+         "default": 1
+      },
+      "decline-offer-duration": {
+        "description": "The duration (milliseconds) for which to decline offers by default. (Default: Use Mesos default of 5 seconds).",
+         "type": "integer",
+         "minimum": 0,
+         "default": 5000
+      },
+      "disable-after-failures": {
+        "description": "Disables a job after this many failures have occurred (default = 0)",
+        "type": "integer",
+        "default": 0,
+        "minimum": 0
+      },
+      "failover-timeout": {
+        "description": "The failover timeout in seconds for Mesos (default = 604800)",
+        "type": "integer",
+        "default": 604800,
+        "minimum": 0
+      },
+      "failure-retry": {
+        "description": "Number of ms between retries (default = 60000)",
+        "type": "integer",
+        "default": 60000,
+        "minimum": 0
+      },
+      "framework-name": {
+        "description": "The framework name (default = chronos)",
+        "type": "string",
+        "default": "chronos"
+      },
+      "graphite-group-prefix": {
+        "description": "Group prefix for Graphite (default = '')",
+        "type": "string"
+      },
+      "graphite-host-port": {
+        "description": "Host and port (in the form `host:port`) for Graphite",
+        "type": "string"
+      },
+      "graphite-reporting-interval": {
+        "description": "Graphite reporting interval (seconds) (default = 60)",
+        "type": "integer",
+        "default": 60,
+        "minimum": 0
+      },
+      "hostname": {
+        "description": "The advertised hostname stored in ZooKeeper so another standby host can redirect to this elected leader (default = localhost)",
+        "type": "string",
+        "default": "$HOST"
+      },
+      "http-credentials": {
+        "description": "Credentials for accessing the http service. If empty, anyone can access the HTTP endpoint. A username:password pair is expected where the username must not contain ':'. ",
+        "type": "string"
+      },
+      "http-realm": {
+        "description": "The security realm (aka 'area') associated with the credentials (default = Mesosphere)",
+        "type": "string"
+      },
+      "id": {
+        "description": "Unique identifier for the app consisting of a series of names separated by slashes.",
+        "type": "string",
+        "default": "/chronos"
+      },
+      "leader-max-idle-time": {
+        "description": "The look-ahead time for scheduling tasks in milliseconds (default = 5000)",
+        "type": "string"
+      },
+      "mail-from": {
+        "description": "Mail from field",
+        "type": "string"
+      },
+      "mail-password": {
+        "description": "Mail password (for auth)",
+        "type": "string"
+      },
+      "mail-server": {
+        "description": "Address of the mailserver in server:port format",
+        "type": "string"
+      },
+      "mail-ssl": {
+        "description": "Mail SSL",
+        "type": "string"
+      },
+      "mail-user": {
+        "description": "Mail user (for auth)",
+        "type": "string"
+      },
+      "mem": {
+        "description": "Memory (MB) to allocate to each Chronos instance.",
+        "type": "number",
+        "minimum": 512.0,
+        "default": 1024.0
+      },
+      "mesos-checkpoint": {
+        "description": "Enable checkpointing in Mesos",
+        "type": "string"
+      },
+      "mesos-role": {
+        "description": "The Mesos role to run tasks under (default = *)",
+        "type": "string"
+      },
+      "mesos-task-cpu": {
+        "description": "Number of CPUs to request from Mesos for each task (default = 0.1)",
+        "type": "number",
+        "default": 0.1,
+        "minimum": 0.0
+      },
+      "mesos-task-disk": {
+        "description": "Amount of disk capacity to request from Mesos for each task (MB) (default = 256.0)",
+        "type": "number",
+        "default": 256.0,
+        "minimum": 0.0
+      },
+      "mesos-task-mem": {
+        "description": "Amount of memory to request from Mesos for each task (MB) (default = 128.0)",
+        "type": "number",
+        "default": 128.0,
+        "minimum": 0.0
+      },
+      "min-revive-offers-interval": {
+        "description": "Do not ask for all offers (also already seen ones) more often than this interval (ms). (default = 5000)",
+        "type": "integer",
+        "default": 5000,
+        "minimum": 0
+      },
+      "raven-dsn": {
+        "description": "Raven DSN for connecting to a raven or sentry event service",
+        "type": "string"
+      },
+      "reconciliation-interval": {
+        "description": "Reconciliation interval in seconds (default = 600)",
+        "type": "integer",
+        "default": 600,
+        "minimum": 0
+      },
+      "revive-offers-for-new-jobs": {
+        "description": "Whether to call reviveOffers for new or changed jobs. (default: do not use reviveOffers)",
+        "type": "boolean",
+        "default": false
+      },
+      "schedule-horizon": {
+        "description": "The look-ahead time for scheduling tasks in seconds (default = 60)",
+        "type": "integer",
+        "default": 60,
+        "minimum": 0
+      },
+      "slack-channel": {
+        "description": "The channel to post to in Slack",
+        "type": "string"
+      },
+      "slack-token": {
+        "description": "Token needed for posting to Slack",
+        "type": "string"
+      },
+      "slack-url": {
+        "description": "Webhook URL for posting to Slack",
+        "type": "string"
+      },
+      "task-epsilon": {
+        "description": "The default epsilon value for tasks, in seconds (default = 60)",
+        "type": "integer",
+        "default": 60,
+        "minimum": 0
+      },
+      "user": {
+        "description": "The  user to run the processes under (default = root)",
+        "type": "string"
+      },
+      "webui-url": {
+        "description": "The http(s) url of the web ui, defaulting to the advertised hostname",
+        "type": "string"
+      },
+      "zk-hosts": {
+        "description": "The list of ZooKeeper servers for storing state (default = mesos.master:2181)",
+        "type": "string",
+        "default": "master.mesos:2181"
+      },
+      "zk-path": {
+        "description": "Path in ZooKeeper for storing state (default = /state)",
+        "type": "string"
+      },
+      "zk-timeout": {
+        "description": "The timeout for ZooKeeper in milliseconds (default = 10000)",
+        "type": "integer",
+        "default": 10000,
+        "minimum": 0
+      }
+    },
+    "required": [
+      "cpus",
+      "framework-name",
+      "hostname",
+      "id",
+      "instances",
+      "mem",
+      "zk-hosts"
+    ]
+    }
+  },
+  "required": [
+    "mesos",
+    "chronos"
+  ]
+}
+
