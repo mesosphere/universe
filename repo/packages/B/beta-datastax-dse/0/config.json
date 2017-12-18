@@ -111,10 +111,7 @@
           "title": "Node placement constraint",
           "description": "Placement constraints for DSE nodes. Example: hostname:UNIQUE",
           "type": "string",
-          "default": "",
-          "media": {
-            "type": "application/x-zone-constraints+json"
-          }
+          "default": ""
         },
         "virtual_network": {
           "description": "Name of virtual network for dse node(s) to join",
