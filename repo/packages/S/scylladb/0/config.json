@@ -195,7 +195,7 @@
           "description": "Specify the path to an archive that contains your keys. The keys will end up in the mesos sandbox path on host. OBS! The certificates in the archive MUST have the following name: scylladb.crt, scylladb.key, ca-scylladb.pem",
           "properties": {
             "enable": {
-              "description": "If enabled. Mesos will download and extract the given archive before executing docker entrypoint",
+              "description": "If enabled, Mesos will download and extract the given archive before executing docker entrypoint",
               "type": "boolean",
               "default": false
             },
