@@ -67,10 +67,7 @@
           "title": "OpsCenter placement constraint",
           "description": "Placement constraints for the OpsCenter node. Example: hostname:UNIQUE",
           "type": "string",
-          "default": "",
-          "media": {
-            "type": "application/x-zone-constraints+json"
-          }
+          "default": ""
         },
         "virtual_network": {
           "description": "Name of virtual network for Opscenter pod(s)",
