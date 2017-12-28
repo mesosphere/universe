@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-marathonlb-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-marathonlb-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-marathonlb-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "marathon-lb-docker": "mesosphere/marathon-lb:v1.11.1"
+      }
+    }
+  }
+}
