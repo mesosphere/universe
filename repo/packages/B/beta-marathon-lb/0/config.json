@@ -58,6 +58,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "mount-dev-log": {
+          "default": true,
+          "description": "Mount /dev/log into the container.",
+          "type": "boolean"
+        },
         "name": {
           "default": "marathon-lb",
           "description": "Name for this LB instance",

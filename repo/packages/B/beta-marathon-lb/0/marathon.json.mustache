@@ -6,6 +6,15 @@
   "maintainer": "support@mesosphere.io",
   "container": {
     "type": "DOCKER",
+    {{#marathon-lb.mount-dev-log}}
+    "volumes": [
+      {
+        "containerPath": "/dev/log",
+        "hostPath": "/dev/log",
+        "mode": "RW"
+      }
+    ],
+    {{/marathon-lb.mount-dev-log}}
     "docker": {
       "image": "{{resource.assets.container.docker.marathon-lb-docker}}",
       "network": "HOST",
