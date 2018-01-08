@@ -1,0 +1,60 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "scheduler-zip": "https://px-dcos.s3.amazonaws.com/portworx-couchdb/assets/1.1-2.1.1-56b7afa/couchdb-scheduler.zip",
+      "executor-zip": "https://px-dcos.s3.amazonaws.com/portworx-couchdb/assets/1.1-2.1.1-56b7afa/executor.zip"
+    },
+    "container": {
+      "docker": {
+        "couchdb": "couchdb:2.1.1"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://s3-us-west-1.amazonaws.com/px-dcos/portworx-couchdb/img/couchdb-small.png",
+    "icon-medium": "https://s3-us-west-1.amazonaws.com/px-dcos/portworx-couchdb/img/couchdb-medium.png",
+    "icon-large": "https://s3-us-west-1.amazonaws.com/px-dcos/portworx-couchdb/img/couchdb-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "c7191c0f913533ff3d978d7db2e82f35bb1e52e87f7f2f48f6f4eec93cc8f2ef"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-couchdb/assets/1.1-2.1.1-56b7afa/dcos-portworx-couchdb-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "ade0c8aeabc998fcda49b73b102a3c784840669c022d3e974705ec284467b590"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-couchdb/assets/1.1-2.1.1-56b7afa/dcos-portworx-couchdb-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "43ae4087bf5735a77ff9d2e7e2af1b2a46cfc730af6382df6c24bf37963db8b7"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-couchdb/assets/1.1-2.1.1-56b7afa/dcos-portworx-couchdb.exe"
+        }
+      }
+    }
+  }
+}
