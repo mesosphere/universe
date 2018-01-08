@@ -1,0 +1,269 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS Zookeeper service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of the Zookeeper service instance",
+          "type": "string",
+          "default": "portworx-zookeeper"
+        },
+        "user": {
+          "title": "User",
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "root"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "title": "Credential secret name (optional)",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        }
+      },
+      "required": [
+        "name",
+        "user"
+      ]
+    },
+    "node": {
+      "description": "DC/OS Zookeeper node configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of Zookeeper nodes in the cluster",
+          "type": "integer",
+          "default": 3,
+          "minimum": 3
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Number of cpu shares allocated to the Zookeeper process",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "The amount of memory allocated to the Zookeeper process (in MB)",
+          "type": "integer",
+          "default": 1024
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "The amount of disk space allocated to Zookeeper (in MB)",
+          "type": "integer",
+          "default": 2048
+        },
+        "portworx_volume_name": {
+          "title": "Portworx volume name",
+          "description": "Name of the volume used with Portworx driver",
+          "type": "string",
+          "default": "ZookeeperVolume"
+        },
+        "portworx_volume_options": {
+          "title": "Portworx volume options",
+          "description": "Comma separated key=value pairs of options passed to Portworx driver",
+          "type": "string",
+          "default": ""
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "portworx_volume_name"
+      ]
+    },
+    "zookeeper": {
+      "description": "Zookeeper configuration properties",
+      "type": "object",
+      "properties": {
+        "client_port": {
+          "title": "Client port",
+          "description": "Port used by clients to connect to Zookeeper",
+          "type": "integer",
+          "default": 2182
+        },
+        "tick_time": {
+          "title": "Tick time",
+          "description": "The length of a single tick, which is the basic time unit used by ZooKeeper (in milliseconds)",
+          "type": "integer",
+          "default": 2000
+        },
+        "global_outstanding_limit": {
+          "title": "Global outstanding limit",
+          "description": "To prevent ZooKeeper from running out of memory due to queued requests, ZooKeeper will throttle clients so that there is no more than globalOutstandingLimit outstanding requests in the system",
+          "type": "integer",
+          "default": 1000
+        },
+        "pre_alloc_size": {
+          "title": "PreAlloc size",
+          "description": "To avoid seeks ZooKeeper allocates space in the transaction log file in blocks of preAllocSize kilobytes",
+          "type": "integer",
+          "default": 65536
+        },
+        "snap_count": {
+          "title": "Snap count",
+          "description": "After Snap count transactions are written to a log file a snapshot is started and a new transaction log file is started",
+          "type": "integer",
+          "default": 100000
+        },
+        "max_client_connections": {
+          "title": "Max client connections",
+          "description": "Limits the number of concurrent connections (at the socket level) that a single client, identified by IP address, may make to a single member of the ZooKeeper ensemble",
+          "type": "integer",
+          "default": 60
+        },
+        "client_port_address": {
+          "title": "Client port address",
+          "description": "The address (ipv4, ipv6 or hostname) to listen for client connections",
+          "type": "string",
+          "default": ""
+        },
+        "min_session_timeout": {
+          "title": "Min session timeout",
+          "description": "Minimum session timeout that the server will allow the client to negotiate (in milliseconds)",
+          "type": "integer",
+          "default": 4000
+        },
+        "max_session_timeout": {
+          "title": "Max session timeout",
+          "description": "Maximum session timeout that the server will allow the client to negotiate (in milliseconds)",
+          "type": "integer",
+          "default": 40000
+        },
+        "fsync_warning_threshold": {
+          "title": "Fsync warning threshold",
+          "description": "A warning message will be output to the log whenever an fsync in the Transactional Log (WAL) takes longer than this value (in milliseconds)",
+          "type": "integer",
+          "default": 1000
+        },
+        "autopurge_snap_retain_count": {
+          "title": "Snapshot retain count",
+          "description": "When enabled, ZooKeeper auto purge feature retains these many most recent snapshots and the corresponding transaction logs",
+          "type": "integer",
+          "default": 3
+        },
+        "autopurge_interval": {
+          "title": "Purge interval",
+          "description": "The time interval (in hours) for which the purge task has to be triggered. Set to a positive integer (1 and above) to enable the auto purging",
+          "type": "integer",
+          "default": 0
+        },
+        "sync_enabled": {
+          "title": "Sync enabled",
+          "description": "The observers now log transaction and write snapshot to disk by default like the participants. This reduces the recovery time of the observers on restart",
+          "type": "string",
+          "default": "true"
+        },
+        "election_algorithm": {
+          "title": "Election algorithm",
+          "description": "Election implementation to use. A value of '0' corresponds to the original UDP-based version, '1' corresponds to the non-authenticated UDP-based version of fast leader election, '2' corresponds to the authenticated UDP-based version of fast leader election, and '3' corresponds to TCP-based version of fast leader election",
+          "type": "integer",
+          "default": 3
+        },
+        "init_limit": {
+          "title": "Init time",
+          "description": "Amount of time, in ticks, to allow followers to connect and sync to a leader",
+          "type": "integer",
+          "default": 10
+        },
+        "leader_serves": {
+          "title": "Leader serves",
+          "description": "Whether a leader accepts client connections or not",
+          "type": "string",
+          "default": "yes"
+        },
+        "leader_port": {
+          "title": "Leader port",
+          "description": "Port used to connect to a leader",
+          "type": "integer",
+          "default": 2889
+        },
+        "leader_election_port": {
+          "title": "Leader election port",
+          "description": "Port used to conduct the leader election",
+          "type": "integer",
+          "default": 3889
+        },
+        "connection_timeout": {
+          "title": "Election connection timeout",
+          "description": "Sets the timeout value (in seconds) for opening connections for leader election notifications. Only applicable if you are using electionAlg 3",
+          "type": "integer",
+          "default": 5
+        },
+        "sync_limit": {
+          "title": "Sync limit",
+          "description": "Amount of time, in ticks, to allow followers to sync with ZooKeeper",
+          "type": "integer",
+          "default": 5
+        },
+        "ip_reachable_timeout": {
+          "title": "IP reachable timeout",
+          "description": "Timeout value for IP addresses reachable checking when hostname is resolved (in milliseconds)",
+          "type": "integer"
+        },
+        "tcp_keep_alive": {
+          "title": "TCP Keep alive",
+          "description": "Setting this to true sets the TCP keepAlive flag on the sockets used by quorum members to perform elections",
+          "type": "string",
+          "default": "false"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "client_port",
+        "tick_time",
+        "leader_port",
+        "leader_election_port"
+      ]
+    }
+  }
+}
