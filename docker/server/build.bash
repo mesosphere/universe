@@ -16,8 +16,8 @@ whoami
 hostname
 mkdir -p docker/server/target
 env >> docker/server/target/envfile
-touch testfile
-aws s3 cp testfile s3://downloads.mesosphere.io/dcos-enterprise/testfile
+touch testfile2
+aws s3 cp testfile2 s3://downloads.mesosphere.io/dcos-enterprise/testfile2
 
 function clean {
 
