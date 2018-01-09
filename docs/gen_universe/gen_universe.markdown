@@ -29,7 +29,7 @@ Run the following script to generate the Universe JSON files:
 scripts/gen_universe.py --repository ~/work/private-universe/packages/ --out-dir ~/work/private-universe/
 ```
 
-This will result in the following files getting created:
+This will result in the following files getting created. The files that end with `.json` are the content of Universe while files that end with `.content-type` are the content type of that Universe.
 ```bash
  tree ~/work/private-universe/
  /home/user/work/private-universe/
@@ -57,7 +57,13 @@ This will result in the following files getting created:
  └── universe.json
 ```
 
+Upload the generated files to an HTTP server. If you are using S3 you can:
+```bash
+aws s3 cp --content-type "$(cat ~/work/private-universe/repo-up-to-1.10.content-type)" ~/work/private-universe/repo-up-to-1.10.json s3://host/and/path/to/repo-up-to-1.10.json
+```
+
 After uploading those files to an HTTP server (S3 for example), configure DC/OS (Cosmos) to use that repository:
+
 ```bash
 dcos package repo add --index=0 "Private Universe" https://host/and/path/to/repo-up-to-x.json
 ```
