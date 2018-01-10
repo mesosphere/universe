@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "registry": {
+      "properties": {
+        "name": {
+          "default": "schema-registry",
+          "description": "Service name for the schema-registry instance(s)",
+          "type": "string"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run (currently limited to 1).",
+          "minimum": 1,
+          "maximum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares to allocate to each schema-registry instance.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 512,
+          "description": "Memory (MB) to allocate to each schema-registry instance.",
+          "minimum": 320,
+          "type": "number"
+        },
+        "heap": {
+          "default": 256,
+          "description": "JVM heap allocation (in MB) for connect worker task; should be no greater than ~64MB less than total memory for the instance.",
+          "minimum": 256,
+          "type": "number"
+        },
+        "role": {
+          "default": "*",
+          "description": "Deploy schema-registry only on nodes with this role.",
+          "type": "string"
+        },
+        "zookeeper-master": {
+          "default": "master.mesos:2181",
+          "description": "Zookeeper Connect string for service cluster. Format limited to single target: <zk-host>:<zkport>",
+          "type": "string"
+        },
+        "kafkastore": {
+          "default": "dcos-service-confluent-kafka",
+          "description": "Name of the Kafka service hosting the storage for this Schema Registry edition.",
+          "type": "string"
+        },
+        "access-control-allow-methods": {
+          "default": "",
+          "description": "Set value to Jetty Access-Control-Allow-Origin header for specified methods",
+          "type": "string"
+        },
+        "access-control-allow-origin": {
+          "default": "",
+          "description": "Set value for Jetty Access-Control-Allow-Origin header",
+          "type": "string"
+        }
+      },
+      "required": ["cpus", "mem", "instances", "name"],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

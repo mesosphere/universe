@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "connect": {
+      "properties": {
+        "name": {
+          "default": "replicator",
+          "description": "Service name for the Confluent Enterprise Replicator",
+          "type": "string"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 2,
+          "description": "CPU shares to allocate to each connect worker instance.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 1024,
+          "description": "Memory (MB) to allocate to each connect worker instance.",
+          "minimum": 512,
+          "type": "number"
+        },
+        "heap": {
+          "default": 768,
+          "description": "JVM heap allocation (in MB) for connect worker task; should be ~256MB less than total memory for the instance.",
+          "minimum": 256,
+          "type": "number"
+        },
+        "role": {
+          "default": "*",
+          "description": "Deploy connect worker only on nodes with this role.",
+          "type": "string"
+        },
+        "kafka-service": {
+          "default": "confluent-kafka",
+          "description": "Target Apache Kafka by Confluent service to which these tasks will connect. ",
+          "type": "string"
+        },
+        "zookeeper-connect": {
+          "default": "master.mesos:2181/dcos-service-confluent-kafka",
+          "description": "Zookeeper Connect string for service cluster. Format is comma-separated list of <zk-host>:<zkport>/<kservice>",
+          "type": "string"
+        },
+        "schema-registry-service": {
+          "default": "schema-registry",
+          "description": "Schema Registry service to be used by connect workers. The named VIP associated with this service will be used to specify the converter-schema-registry-url's",
+
+          "type": "string"
+        }
+      },
+      "required": ["cpus", "mem", "instances", "name"],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

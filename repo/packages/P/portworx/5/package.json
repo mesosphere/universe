@@ -1,0 +1,31 @@
+{
+  "description": "Portworx PX provides scheduler integrated data services for containers, such as data persistence, multi-node replication, cloud-agnostic snapshots and data encryption. Portworx itself is deployed as a container and is suitable for both cloud and on-prem deployments. Portworx enables containerized applications to be persistent, portable and protected. For DCOS examples of Portworx, please see https://docs.portworx.com/scheduler/mesosphere-dcos/install.html",
+  "framework": true,
+  "licenses": [
+    {
+      "name": "Apache 2.0 License",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "maintainer": "support@portworx.com",
+  "minDcosReleaseVersion": "1.9",
+  "name": "portworx",
+  "packagingVersion": "3.0",
+  "postInstallNotes": "To see how Portworx data services integrate with common applications and services, to view the application solutions and to view Portworx reference architectures, please visit https://docs.portworx.com",
+  "postUninstallNotes": "Service uninstalled. Note that any persisting data still exists and will need to be manually removed.",
+  "preInstallNotes": "NOTE: Portworx requires a key-value database such as etcd for configuring storage. A highly availbale clustered etcd with persistent storage is preferred. You can start a 3-node etcd cluster using this framework, but for production it is recommended to operate an etcd cluster outside of your DC/OS environment. Instructions to set up etcd can be found here: https://docs.portworx.com/maintain/etcd.html \n\nLighthouse is a management and GUI service that allows you to manage your Portworx cluster. Lighthouse is disabled by default and can be enabled from the Lighthouse tab during install. Default username/password for Lighthouse is portworx@yourcompany.com/admin \n\nCertified packages are verified by Mesosphere for interoperability with DC/OS. Community packages are unverified and unreviewed content from the community. This is a community package. Be aware that this particular community package installs and operates as a system process in such a way that the detailed status of that process is not directly visible through DC/OS. Monitoring and managing the PX application should only be performed directly through the PX management utility and not through the DC/OS dashboard. Please visit https://docs.portworx.com/scheduler/mesosphere-dcos/install.html for detailed instructions.",
+  "scm": "https://github.com/portworx/px-dev",
+  "selected": false,
+  "tags": [
+    "portworx",
+    "storage",
+    "data",
+    "cloud",
+    "volume",
+    "encryption",
+    "s3",
+    "database"
+  ],
+  "version": "1.1-1.2.11.7-7fba8ec",
+  "website": "https://www.portworx.com/"
+}
