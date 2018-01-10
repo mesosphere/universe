@@ -70,7 +70,7 @@ def main():
     # create universe-by-version files for `dcos_versions`
     dcos_versions = ["1.6.1", "1.7", "1.8", "1.9", "1.10", "1.11"]
     [render_universe_by_version(
-        args.outdir, packages, version) for version in dcos_versions]
+        args.outdir, copy.deepcopy(packages), version) for version in dcos_versions]
 
 
 def render_universe_by_version(outdir, packages, version):
