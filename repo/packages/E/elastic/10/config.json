@@ -1,0 +1,819 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the Elasticsearch service instance",
+          "type": "string",
+          "default": "elastic"
+        },
+        "service_account_secret": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "user": {
+          "description": "The user that runs the Elasticsearch services and owns the Mesos sandbox.",
+          "type": "string",
+          "default": "nobody"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        },
+        "deploy_strategy": {
+          "description": "Elasticsearch deploy strategy. [parallel, serial]",
+          "type": "string",
+          "default": "parallel",
+          "enum": [
+            "parallel",
+            "serial"
+          ]
+        },
+        "mesos_api_version": {
+          "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)",
+          "type": "string",
+          "default": "V0"
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        }
+      },
+      "required": [
+        "name",
+        "user",
+        "deploy_strategy"
+      ]
+    },
+    "elasticsearch": {
+      "description": "Elasticsearch service configuration properties",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "xpack_enabled": {
+          "description": "Whether or not to enable the commercial X-Pack plugin from Elastic",
+          "type": "boolean",
+          "default": false
+        },
+        "plugins": {
+          "description": "Comma-separated list of plugins to install",
+          "type": "string",
+          "default": ""
+        },
+        "custom_elasticsearch_yml": {
+          "description": "Custom YAML to be appended to elasticsearch.yml on each node. This field must be base64 encoded.",
+          "type": "string",
+          "default": ""
+        },
+        "health_user": {
+          "description": "Elastic username to use for X-Pack authentication, if enabled",
+          "type": "string",
+          "default": "elastic"
+        },
+        "health_user_password": {
+          "description": "Password to use with health_user for X-Pack authentication, if enabled. Note that you are not setting the password here. You are telling the framework the credentials to use when sending in health check requests.",
+          "type": "string",
+          "default": "changeme"
+        },
+        "gateway_recover_after_time": {
+          "description": "If the expected number of nodes is not achieved, the recovery process waits for the configured amount of time before trying to recover regardless. Defaults to 5m if one of the expected_nodes settings is configured.",
+          "type": "string",
+          "default": "5m"
+        },
+        "script_allowed_types": {
+          "description": "By default all script types (inline,file,stored) are allowed to be executed. This can be modified using the setting script_allowed_types. Only the types specified as part of the setting will be allowed to be executed. To specify no types are allowed, set script.allowed_types to be none. Empty string \"\" means all types (default).",
+          "type": "string",
+          "default": ""
+        },
+        "script_allowed_contexts": {
+          "description": "By default all script contexts (search,update,aggs,plugin) are allowed to be executed. This can be modified using the setting script_allowed_contexts. Only the contexts specified as part of the setting will be allowed to be executed. To specify no contexts are allowed, set script_allowed_contexts to be none. Empty string \"\" means all contexts (default).",
+          "type": "string",
+          "default": ""
+        },
+        "repositories_url_allowed_urls": {
+          "description": "URL Repository supports the following protocols: \"http\", \"https\", \"ftp\", \"file\" and \"jar\". URL repositories with http:, https:, and ftp: URLs have to be whitelisted by specifying allowed URLs in the repositories_url_allowed_urls setting. This setting supports wildcards in the place of host, path, query, and fragment.",
+          "type": "string",
+          "default": ""
+        },
+        "network_tcp_no_delay": {
+          "description": "Enable or disable the TCP no delay setting. Defaults to true.",
+          "type": "boolean",
+          "default": true
+        },
+        "network_tcp_keep_alive": {
+          "description": "Enable or disable TCP keep alive. Defaults to true.",
+          "type": "boolean",
+          "default": true
+        },
+        "network_tcp_reuse_address": {
+          "description": "Should an address be reused or not. Defaults to true.",
+          "type": "boolean",
+          "default": true
+        },
+        "network_tcp_send_buffer_size": {
+          "description": "The size of the TCP send buffer (specified with size units). By default not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "network_tcp_receive_buffer_size": {
+          "description": "The size of the TCP receive buffer (specified with size units). By default not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "transport_tcp_connect_timeout": {
+          "description": "The socket connect timeout setting (in time setting format). Defaults to 30s.",
+          "type": "string",
+          "default": "30s"
+        },
+        "transport_tcp_compress": {
+          "description": "Set to true to enable compression (LZF) between all nodes. Defaults to false.",
+          "type": "boolean",
+          "default": false
+        },
+        "transport_ping_schedule": {
+          "description": "Schedule a regular ping message to ensure that connections are kept alive. Defaults to 5s in the transport client and -1 (disabled) elsewhere.",
+          "type": "string",
+          "default": "-1"
+        },
+        "http_enabled": {
+          "description": "The http module can be completely disabled and not started by setting http.enabled to false. Default is true.",
+          "type": "boolean",
+          "default": true
+        },
+        "http_max_content_length": {
+          "description": "The max content of an HTTP request. Defaults to 100mb. If set to greater than Integer.MAX_VALUE, it will be reset to 100mb.",
+          "type": "string",
+          "default": "100mb"
+        },
+        "http_max_initial_line_length": {
+          "description": "The max length of an HTTP URL. Defaults to 4kb.",
+          "type": "string",
+          "default": "4kb"
+        },
+        "http_max_header_size": {
+          "description": "The max size of allowed headers. Defaults to 8kB.",
+          "type": "string",
+          "default": "8kB"
+        },
+        "http_compression": {
+          "description": "Support for compression when possible (with Accept-Encoding). Defaults to true.",
+          "type": "boolean",
+          "default": true
+        },
+        "http_compression_level": {
+          "description": "Defines the compression level to use for HTTP responses. Valid values are in the range of 1 (minimum compression) and 9 (maximum compression). Defaults to 3.",
+          "type": "integer",
+          "default": 3
+        },
+        "http_cors_enabled": {
+          "description": "Enable or disable cross-origin resource sharing, i.e. whether a browser on another origin can execute requests against Elasticsearch. Set to true to enable Elasticsearch to process pre-flight CORS requests.",
+          "type": "boolean",
+          "default": false
+        },
+        "http_cors_allow_origin": {
+          "description": "Which origins to allow. Defaults to no origins allowed. If you prepend and append a\u00a0/\u00a0to the value, this will be treated as a regular expression, allowing you to support HTTP and HTTPs. *\u00a0is a valid value but is considered a\u00a0security risk\u00a0as your elasticsearch instance is open to cross origin requests from\u00a0anywhere.",
+          "type": "string",
+          "default": ""
+        },
+        "http_cors_max_age": {
+          "description": "Browsers send a \"preflight\" OPTIONS-request to determine CORS settings. Defines how long the result should be cached for. Defaults to 1728000 (20 days)",
+          "type": "integer",
+          "default": 1728000
+        },
+        "http_cors_allow_credentials": {
+          "description": "Whether the Access-Control-Allow-Credentials header should be returned. Note: This header is only returned when the setting is set to true. Defaults to false.",
+          "type": "boolean",
+          "default": false
+        },
+        "http_cors_allow_headers": {
+          "description": "Which headers to allow. Defaults to\u00a0X-Requested-With, Content-Type, Content-Length.",
+          "type": "string",
+          "default": "X-Requested-With,Content-Type,Content-Length"
+        },
+        "http_cors_allow_methods": {
+          "description": "Which methods to allow. Defaults to\u00a0OPTIONS, HEAD, GET, POST, PUT, DELETE.",
+          "type": "string",
+          "default": "OPTIONS,HEAD,GET,POST,PUT,DELETE"
+        },
+        "http_detailed_errors_enabled": {
+          "description": "Enables or disables the output of detailed error messages and stack traces in response output. Note: When set to false and the error_trace request parameter is specified, an error will be returned; when error_trace is not specified, a simple message will be returned. Defaults to true.",
+          "type": "boolean",
+          "default": true
+        },
+        "http_pipelining": {
+          "description": "Enable or disable HTTP pipelining, defaults to true.",
+          "type": "boolean",
+          "default": true
+        },
+        "http_pipelining_max_events": {
+          "description": "The maximum number of events to be queued up in memory before a HTTP connection is closed, defaults to 10000.",
+          "type": "integer",
+          "default": 10000
+        },
+        "http_content_type_required": {
+          "description": "Enables or disables strict checking and usage of the Content-Type header for all requests with content, defaults to false.",
+          "type": "boolean",
+          "default": false
+        },
+        "thread_pool_search_size": {
+          "description": "For count/search/suggest operations. Thread pool type is fixed with a size of int((# of available_processors * 3) / 2) + 1. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_search_queue_size": {
+          "description": "For count/search/suggest operations. The queue_size allows to control the size of the queue of pending requests that have no threads to execute them. -1 means its unbounded. Defaults to 1000",
+          "type": "integer",
+          "default": 1000
+        },
+        "thread_pool_index_size": {
+          "description": "For index/delete operations. Thread pool type is fixed with a size of # of available processors. The size parameter controls the number of threads. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_index_queue_size": {
+          "description": "For index/delete operations. The queue_size allows to control the size of the queue of pending requests that have no threads to execute them.  -1 means its unbounded. Defaults to 200.",
+          "type": "integer",
+          "default": 200
+        },
+        "thread_pool_get_size": {
+          "description": "For get operations. Thread pool type is fixed with a size of # of available processors. The size parameter controls the number of threads. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_get_queue_size": {
+          "description": "For get operations. The queue_size allows to control the size of the queue of pending requests that have no threads to execute them.  -1 means its unbounded. Defaults to 1000.",
+          "type": "integer",
+          "default": 200
+        },
+        "thread_pool_bulk_size": {
+          "description": "For bulk operations. Thread pool type is fixed with a size of # of available processors. The size parameter controls the number of threads. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_bulk_queue_size": {
+          "description": "For bulk operations. The queue_size allows to control the size of the queue of pending requests that have no threads to execute them.  -1 means its unbounded. Defaults to 1000.",
+          "type": "integer",
+          "default": 200
+        },
+        "thread_pool_listener_size": {
+          "description": "Mainly for java client executing of action when listener threaded is set to true. Thread pool type is fixed with a size of # of available processors. The size parameter controls the number of threads. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_listener_queue_size": {
+          "description": "Mainly for java client executing of action when listener threaded is set to true. The queue_size allows to control the size of the queue of pending requests that have no threads to execute them. -1 means its unbounded. Defaults to 2. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_warmer_core": {
+          "description": "For segment warm-up operations. The scaling thread pool holds a dynamic number of threads. This number is proportional to the workload and varies between the value of the core and max parameters. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_warmer_max": {
+          "description": "For segment warm-up operations. The scaling thread pool holds a dynamic number of threads. This number is proportional to the workload and varies between the value of the core and max parameters. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_warmer_keep_alive": {
+          "description": "For segment warm-up operations. The keep_alive parameter determines how long a thread should be kept around in the thread pool without it doing any work.",
+          "type": "string",
+          "default": "5m"
+        },
+        "thread_pool_snapshot_core": {
+          "description": "For snapshot/restore operations. Thread pool type is scaling with a keep-alive of 5m and a max of min(5, (# of available processors)/2). This number is proportional to the workload and varies between the value of the core and max parameters. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_snapshot_max": {
+          "description": "For snapshot/restore operations. The scaling thread pool holds a dynamic number of threads. This number is proportional to the workload and varies between the value of the core and max parameters. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_snapshot_keep_alive": {
+          "description": "For snapshot/restore operations. The keep_alive parameter determines how long a thread should be kept around in the thread pool without it doing any work.",
+          "type": "string",
+          "default": "5m"
+        },
+        "thread_pool_refresh_core": {
+          "description": "For refresh operations. The scaling thread pool holds a dynamic number of threads. This number is proportional to the workload and varies between the value of the core and max parameters. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_refresh_max": {
+          "description": "For refresh operations. The scaling thread pool holds a dynamic number of threads. This number is proportional to the workload and varies between the value of the core and max parameters. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_refresh_keep_alive": {
+          "description": "For refresh operations. The keep_alive parameter determines how long a thread should be kept around in the thread pool without it doing any work.",
+          "type": "string",
+          "default": "5m"
+        },
+        "thread_pool_generic_core": {
+          "description": "For generic operations (e.g., background node discovery). The scaling thread pool holds a dynamic number of threads. This number is proportional to the workload and varies between the value of the core and max parameters. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_generic_max": {
+          "description": "For generic operations (e.g., background node discovery). The scaling thread pool holds a dynamic number of threads. This number is proportional to the workload and varies between the value of the core and max parameters. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "thread_pool_generic_keep_alive": {
+          "description": "For generic operations (e.g., background node discovery). The keep_alive parameter determines how long a thread should be kept around in the thread pool without it doing any work.",
+          "type": "string",
+          "default": "30s"
+        },
+        "indices_breaker_total_limit": {
+          "description": "Starting limit for overall parent breaker, defaults to 70% of JVM heap. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "indices_breaker_fielddata_limit": {
+          "description": "Limit for fielddata breaker, defaults to 60% of JVM heap. Empty means do not explicity set. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "indices_breaker_fielddata_overhead": {
+          "description": "A constant that all field data estimations are multiplied with to determine a final estimation. Defaults to 1.03. Empty means do not explicity set. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "network_breaker_inflight_requests_limit": {
+          "description": "Limit for in flight requests breaker, defaults to 100% of JVM heap. This means that it is bound by the limit configured for the parent circuit breaker. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "network_breaker_inflight_requests_overhead": {
+          "description": "A constant that all in flight requests estimations are multiplied with to determine a final estimation. Defaults to 1. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "script_max_compilations_per_minute": {
+          "description": "Limit for the number of unique dynamic scripts within a minute that are allowed to be compiled. Defaults to 15. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "indices_fielddata_cache_size": {
+          "description": "The max size of the field data cache, eg 30% of node heap space, or an absolute value, eg 12GB. Defaults to unbounded. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "indices_queries_cache_size": {
+          "description": "Controls the memory size for the filter cache , defaults to 10%. Accepts either a percentage value, like 5%, or an exact value, like 512mb. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "indices_memory_index_buffer_size": {
+          "description": "Accepts either a percentage or a byte size value. It defaults to 10%, meaning that 10% of the total heap allocated to a node will be used as the indexing buffer size shared across all shards. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "indices_memory_min_index_buffer_size": {
+          "description": "If the index_buffer_size is specified as a percentage, then this setting can be used to specify an absolute minimum. Defaults to 48mb. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "indices_memory_max_index_buffer_size": {
+          "description": "If the index_buffer_size is specified as a percentage, then this setting can be used to specify an absolute maximum. Defaults to unbounded. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "indices_recovery_max_bytes_per_sec": {
+          "description": "This can be set to manage the recovery policy. Defaults to 40mb. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "search_remote_connections_per_cluster": {
+          "description": "The number of nodes to connect to per remote cluster. The default is 3. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "search_remote_initial_connect_timeout": {
+          "description": "The time to wait for remote connections to be established when the node starts. The default is 30s. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "search_remote_node_attr": {
+          "description": "A node attribute to filter out nodes that are eligible as a gateway node in the remote cluster. For instance a node can have a node attribute node_attr_gateway: true such that only nodes with this attribute will be connected to if search_remote_node_attr is set to gateway. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "search_remote_connect": {
+          "description": "By default, any node in the cluster can act as a cross-cluster client and connect to remote clusters. The search_remote_connect setting can be set to false (defaults to true) to prevent certain nodes from connecting to remote clusters. Cross-cluster search requests must be sent to a node that is allowed to act as a cross-cluster client. Empty means do not explicity set.",
+          "type": "string",
+          "default": ""
+        },
+        "indices_query_bool_max_clause_count": {
+          "description": "Set the number of clauses used while querying Elasticsearch. Defaults to 1024. If any query expands into more than 1024 boolean clauses, you will get TooManyClauses exception. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "discovery_zen_ping_unicast_hosts.resolve_timeout": {
+          "description": "The amount of time to wait for DNS lookups on each round of pinging. Specified as time units. Defaults to 5s. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "discovery_zen_fd_ping_interval": {
+          "description": "How often a node gets pinged. Defaults to 1s. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "discovery_zen_fd_ping_timeout": {
+          "description": "How long to wait for a ping response, defaults to 30s. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "discovery_zen_fd_ping_retries": {
+          "description": "How many ping failures / timeouts cause a node to be considered failed. Defaults to 3. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "discovery_zen_no_master_block": {
+          "description": "Controls what operations should be rejected when there is no active master. There are two valid operations: all and write (defaut). Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_blocks_read_only": {
+          "description": "Make the whole cluster read only (indices do not accept write operations), metadata is not allowed to be modified (create or delete indices). Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_blocks_read_only_allow_delete": {
+          "description": "Identical to cluster_blocks_read_only but allows to delete indices to free up resources. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_indices_tombstones_size": {
+          "description": "Index tombstones prevent nodes that are not part of the cluster when a delete occurs from joining the cluster and reimporting the index as though the delete was never issued. To keep the cluster state from growing huge we only keep the last cluster.indices.tombstones.size deletes, which defaults to 500. You can increase it if you expect nodes to be absent from the cluster and miss more than 500 deletes. We think that is rare, thus the default. Tombstones don\u2019t take up much space, but we also think that a number like 50,000 is probably too big. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "index_routing_allocation_total_shards_per_node": {
+          "description": "The maximum number of shards (replicas and primaries) that will be allocated to a single node. Defaults to unbounded. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_total_shards_per_node": {
+          "description": "The maximum number of shards (replicas and primaries) that will be allocated to a single node globally. Defaults to unbounded (-1). Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_awareness_attributes": {
+          "description": "Setup shard allocation awareness by telling Elasticsearch which attributes to use. Multiple awareness attributes can be specified, in which case the combination of values from each attribute is considered to be a separate value. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_disk_threshold_enabled": {
+          "description": "Elasticsearch factors in the available disk space on a node before deciding whether to allocate new shards to that node or to actively relocate shards away from that node. Defaults to true. Set to false to disable the disk allocation decider. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_disk_watermark_low": {
+          "description": "Controls the low watermark for disk usage. It defaults to 85%, meaning ES will not allocate new shards to nodes once they have more than 85% disk used. It can also be set to an absolute byte value (like 500mb) to prevent ES from allocating shards if less than the configured amount of space is available. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_disk_watermark_high": {
+          "description": "Controls the high watermark. It defaults to 90%, meaning ES will attempt to relocate shards to another node if the node disk usage rises above 90%. It can also be set to an absolute byte value (similar to the low watermark) to relocate shards once less than the configured amount of space is available on the node. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_info_update_interval": {
+          "description": "How often Elasticsearch should check on disk usage for each node in the cluster. Defaults to 30s. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_disk_include_relocations": {
+          "description": "Defaults to true, which means that Elasticsearch will take into account shards that are currently being relocated to the target node when computing a node\u2019s disk usage. Taking relocating shards' sizes into account may, however, mean that the disk usage for a node is incorrectly estimated on the high side, since the relocation could be 90% complete and a recently retrieved disk usage would include the total size of the relocating shard as well as the space already used by the running relocation. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_enable": {
+          "description": "Enable or disable allocation for specific kinds of shards: all, primaries, new_primaries, none. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_node_concurrent_incoming_recoveries": {
+          "description": "How many concurrent incoming shard recoveries are allowed to happen on a node. Incoming recoveries are the recoveries where the target shard (most likely the replica unless a shard is relocating) is allocated on the node. Defaults to 2. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_node_concurrent_outgoing_recoveries": {
+          "description": "How many concurrent outgoing shard recoveries are allowed to happen on a node. Outgoing recoveries are the recoveries where the source shard (most likely the primary unless a shard is relocating) is allocated on the node. Defaults to 2. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_node_concurrent_recoveries": {
+          "description": "A shortcut to set both cluster.routing.allocation.node_concurrent_incoming_recoveries and cluster.routing.allocation.node_concurrent_outgoing_recoveries. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_node_initial_primaries_recoveries": {
+          "description": "While the recovery of replicas happens over the network, the recovery of an unassigned primary after node restart uses data from the local disk. These should be fast so more initial primary recoveries can happen in parallel on the same node. Defaults to 4. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_same_shard_host": {
+          "description": "Allows to perform a check to prevent allocation of multiple instances of the same shard on a single host, based on host name and host address. Defaults to false, meaning that no check is performed by default. This setting only applies if multiple nodes are started on the same machine. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_rebalance_enable": {
+          "description": "Enable or disable rebalancing for specific kinds of shards: all, primeries, replicas, none. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_allow_rebalance": {
+          "description": "Specify when shard rebalancing is allowed: always, indices_primaries_active, indices_all_active (default). Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_cluster_concurrent_rebalance": {
+          "description": "Allow to control how many concurrent shard rebalances are allowed cluster wide. Defaults to 2. Note that this setting only controls the number of concurrent shard relocations due to imbalances in the cluster. This setting does not limit shard relocations due to allocation filtering or forced awareness. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_balance_shard": {
+          "description": "Defines the weight factor for the total number of shards allocated on a node (float). Defaults to 0.45f. Raising this raises the tendency to equalize the number of shards across all nodes in the cluster. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_balance_index": {
+          "description": "Defines the weight factor for the number of shards per index allocated on a specific node (float). Defaults to 0.55f. Raising this raises the tendency to equalize the number of shards per index across all nodes in the cluster. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "cluster_routing_allocation_balance_threshold": {
+          "description": "Minimal optimization value of operations that should be performed (non negative float). Defaults to 1.0f. Raising this will cause the cluster to be less aggressive about optimizing the shard balance. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        },
+        "indices_requests_cache_size": {
+          "description": "The cache is managed at the node level, and has a default maximum size of 1% of the heap. Empty means do not explicitly set.",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "master_nodes": {
+      "description": "Configuration properties for the three (3) Elasticsearch master nodes",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "Node cpu requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "description": "Node mem requirements",
+          "type": "integer",
+          "default": 2048
+        },
+        "heap": {
+          "description": "The Elasticsearch process JVM heap configuration object",
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "integer",
+              "description": "The amount of JVM heap, in MB, allocated to the Elasticsearch node process.",
+              "default": 1024
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "size"
+          ]
+        },
+        "disk": {
+          "description": "Node disk requirements (only respected with persistent volumes)",
+          "type": "integer",
+          "default": 2000
+        },
+        "disk_type": {
+          "type": "string",
+          "description": "Disk type to be used for storing data. [ROOT, MOUNT]",
+          "default": "ROOT"
+        },
+        "transport_port": {
+          "description": "Transport port for master nodes to listen on.",
+          "type": "integer",
+          "default": 9300
+        },
+        "placement": {
+          "description": "Marathon-style placement constraints",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk",
+        "transport_port"
+      ]
+    },
+    "data_nodes": {
+      "description": "Elasticsearch data node configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "description": "Number of data nodes to run",
+          "type": "integer",
+          "default": 2,
+          "minimum": 1
+        },
+        "cpus": {
+          "description": "Node cpu requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "description": "Node mem requirements",
+          "type": "integer",
+          "default": 4096
+        },
+        "heap": {
+          "description": "The Elasticsearch process JVM heap configuration object",
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "integer",
+              "description": "The amount of JVM heap, in MB, allocated to the Elasticsearch node process.",
+              "default": 2048
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "size"
+          ]
+        },
+        "disk": {
+          "description": "Node disk requirements (only respected with persistent volumes)",
+          "type": "integer",
+          "default": 10000
+        },
+        "disk_type": {
+          "type": "string",
+          "description": "Disk type to be used for storing data. [ROOT, MOUNT]",
+          "default": "ROOT"
+        },
+        "placement": {
+          "description": "Marathon-style placement constraints",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk",
+        "count"
+      ]
+    },
+    "ingest_nodes": {
+      "description": "Elasticsearch ingest node configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "description": "Number of ingest nodes to run",
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        },
+        "cpus": {
+          "description": "Node cpu requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "description": "Node mem requirements",
+          "type": "integer",
+          "default": 2048
+        },
+        "heap": {
+          "description": "The Elasticsearch process JVM heap configuration object",
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "integer",
+              "description": "The amount of JVM heap, in MB, allocated to the Elasticsearch node process.",
+              "default": 512
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "size"
+          ]
+        },
+        "disk": {
+          "description": "Node disk requirements (only respected with persistent volumes)",
+          "type": "integer",
+          "default": 2000
+        },
+        "disk_type": {
+          "type": "string",
+          "description": "Disk type to be used for storing data. [ROOT, MOUNT]",
+          "default": "ROOT"
+        },
+        "placement": {
+          "description": "Marathon-style placement constraints",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk",
+        "count"
+      ]
+    },
+    "coordinator_nodes": {
+      "description": "Elasticsearch coordinator node configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "description": "Number of coordinator nodes to run",
+          "type": "integer",
+          "default": 1,
+          "minimum": 0
+        },
+        "cpus": {
+          "description": "Node cpu requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "description": "Node mem requirements",
+          "type": "integer",
+          "default": 2048
+        },
+        "heap": {
+          "description": "The Elasticsearch process JVM heap configuration object",
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "integer",
+              "description": "The amount of JVM heap, in MB, allocated to the Elasticsearch node process.",
+              "default": 1024
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "size"
+          ]
+        },
+        "disk": {
+          "description": "Node disk requirements (only respected with persistent volumes)",
+          "type": "integer",
+          "default": 1000
+        },
+        "disk_type": {
+          "type": "string",
+          "description": "Disk type to be used for storing data. [ROOT, MOUNT]",
+          "default": "ROOT"
+        },
+        "placement": {
+          "description": "Marathon-style placement constraints",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk",
+        "count"
+      ]
+    }
+  }
+}
