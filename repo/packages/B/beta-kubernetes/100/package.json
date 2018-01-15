@@ -2,13 +2,13 @@
     "packagingVersion": "4.0",
     "minDcosReleaseVersion": "1.10",
     "upgradesFrom": [
-        "0.3.0-1.7.10-beta"
+        "*"
     ],
     "downgradesTo": [
-        "0.3.0-1.7.10-beta"
+        "*"
     ],
     "name": "beta-kubernetes",
-    "version": "leo-0.4.0-1.9.0-beta",
+    "version": "leo-0.3.1-1.7.10-beta",
     "maintainer": "support@mesosphere.com",
     "description": "Highly Available Kubernetes",
     "selected": false,

@@ -79,10 +79,22 @@
           "default": "10.100.0.0/16"
         },
         "node_count": {
-          "title": "Private Node Count",
-          "description": "Number of desired private Kubernetes nodes.",
+          "title": "Node Count",
+          "description": "Number of desired Kubernetes nodes.",
           "type": "integer",
           "default": 3
+        },
+        "node_cpus": {
+          "title": "CPU count",
+          "description": "Kubernetes node CPU requirements.",
+          "type": "number",
+          "default": 2
+        },
+        "node_mem": {
+          "title": "Memory size (MB)",
+          "description": "Kubernetes node RAM requirements (in MB).",
+          "type": "integer",
+          "default": 2048
         },
         "node_placement": {
           "title": "Node Placement",
@@ -90,59 +102,11 @@
           "type": "string",
           "default": "hostname:UNIQUE"
         },
-        "cloud_provider": {
-          "title": "The provider for cloud services.",
-          "description": "The provider for cloud services.",
-          "type": "string",
-          "enum": [
-            "",
-            "aws"
-          ],
-          "default": ""
-        },
-        "public_node_count": {
-          "title": "Public Node Count",
-          "description": "Number of desired public Kubernetes nodes.",
+        "node_disk": {
+          "title": "Node Disk size (MB)",
+          "description": "Kubernetes node persistent disk requirements (in MB)",
           "type": "integer",
-          "default": 1
-        },
-        "reserved-resources": {
-          "type": "object",
-          "description": "Reserved resources for Kubernetes nodes",
-          "properties": {
-            "kube_cpus": {
-              "title": "Node CPU available for pods",
-              "description": "Amount of CPU resources available for pods.",
-              "type": "number",
-              "default": 2
-            },
-            "kube_mem": {
-              "title": "Node RAM memory available for pods (in MB)",
-              "description": "Amount of memory RAM resources available for pods (in MB).",
-              "type": "integer",
-              "default": 2048
-            },
-            "kube_disk": {
-              "title": "Node Disk size (MB)",
-              "description": "Amount of persistent disk available for pods (in MB)",
-              "type": "integer",
-              "default": 1024
-            },
-            "system_cpus": {
-              "title": "Kube-reserved CPU count",
-              "description": "CPU reserved for kubelet and container runtime daemons.",
-              "type": "number",
-              "default": 1,
-              "minimum": 1
-            },
-            "system_mem": {
-              "title": "Kube-reserved RAM memory (in MB)",
-              "description": "RAM memory reserved for kubelet and container runtime daemons (in MB).",
-              "type": "integer",
-              "default": 1024,
-              "minimum": 1024
-            }
-          }
+          "default": 1024
         }
       }
     },
@@ -227,7 +191,7 @@
         }
       }
     },
-    "controller_manager": {
+    "controllermanager": {
       "description": "Kubernetes Controller Manager properties",
       "type": "object",
       "properties": {
@@ -287,7 +251,7 @@
         }
       }
     },
-    "kube_proxy": {
+    "kube-proxy": {
       "description": "Kubernetes kube-proxy properties",
       "type": "object",
       "properties": {
@@ -301,7 +265,7 @@
           "title": "Memory size (MB)",
           "description": "kube-proxy instance RAM requirements (in MB).",
           "type": "integer",
-          "default": 512
+          "default": 128
         }
       }
     }
