@@ -3,13 +3,13 @@
   "instances": {{registry.instances}},
   "cpus": {{registry.cpus}},
   "mem": {{registry.mem}},
-  "maintainer": "partner-support@confluent.io", 
+  "maintainer": "partner-support@confluent.io",
   "container": {
     "type": "DOCKER",
     "docker": {
       "image": "{{resource.assets.container.docker.image}}",
       "forcePullImage": true,
-      "network": "BRIDGE",    
+      "network": "BRIDGE",
       "portMappings": [ {
           "containerPort": 8081,
           "hostPort": 0,
@@ -20,6 +20,17 @@
       } ]
     }
   },
+  {{#registry.constraints}}
+    "constraints": [
+      {{#.}}
+        [
+          "{{attribute}}"
+         ,"{{operator}}"
+         {{#value}},"{{value}}"{{/value}}
+        ]{{^last}},{{/last}}
+      {{/.}}
+    ],
+  {{/registry.constraints}}
   "portDefinitions": [ {
     "name": "{{registry.name}}",
     "port": 8081,
