@@ -1,0 +1,631 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "percona-mongo"
+        },
+        "sleep": {
+          "description": "The sleep duration in seconds before tasks exit.",
+          "type": "integer",
+          "default": 1000
+        },
+        "user": {
+          "title": "User",
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "root"
+        },
+        "principal": {
+          "title": "Custom principal (optional)",
+          "description": "The principal for the service instance, or empty to use the default.",
+          "type": "string",
+          "default": ""
+        },
+        "virtual_networks": {
+          "description": "Enable DC/OS Virtual Networking",
+          "type": "boolean",
+          "default": false
+        },
+        "secret_name": {
+          "title": "Credential secret name (optional)",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        }
+      },
+      "required": [
+        "name",
+        "sleep",
+        "user"
+      ]
+    },
+    "mongodb": {
+      "description": "MongoDB server node configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "MongoDB server node cpu requirements",
+          "type": "number",
+          "default": 1
+        },
+        "mem": {
+          "description": "MongoDB server node mem requirements",
+          "type": "integer",
+          "default": 1024
+        },
+        "disk": {
+          "description": "MongoDB server node disk requirements, in megabytes",
+          "type": "integer",
+          "default": 1000
+        },
+        "count": {
+          "description": "Number of MongoDB replica set members/nodes to run. 1, 3, 5 or 7 node count is possible",
+          "type": "integer",
+          "enum": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "default": 3
+        },
+        "replicaSetName": {
+          "title": "replication.replicaSetName",
+          "description": "Name of the MongoDB ReplicaSet",
+          "type": "string",
+          "default": "rs"
+        },
+        "port": {
+          "description": "MongoDB server listening port",
+          "type": "integer",
+          "default": 27017
+        },
+        "version": {
+          "description": "Percona MongoDB server version. See Pre-Install Notes for supported versions, use other versions at your own risk!",
+          "type": "string",
+          "default": "3.4.10"
+        },
+        "constraint": {
+          "description": "Marathon-style constraint for MongoDB server nodes (use empty string to override the default hostname UNIQUE behavior)",
+          "type": "string",
+          "default": "[['hostname', 'UNIQUE']]"
+        },
+        "backupUser": {
+          "description": "MongoDB backup user name",
+          "type": "string",
+          "default": "backup"
+        },
+        "backupPassword": {
+          "description": "MongoDB backup password",
+          "type": "string",
+          "default": "backuppassword"
+        },
+        "userAdminUser": {
+          "description": "MongoDB userAdmin user name",
+          "type": "string",
+          "default": "useradmin"
+        },
+        "userAdminPassword": {
+          "description": "MongoDB userAdmin password",
+          "type": "string",
+          "default": "useradminpassword"
+        },
+        "clusterAdminUser": {
+          "description": "MongoDB clusterAdmin user name",
+          "type": "string",
+          "default": "clusteradmin"
+        },
+        "clusterAdminPassword": {
+          "description": "MongoDB clusterAdmin password",
+          "type": "string",
+          "default": "clusteradminpassword"
+        },
+        "clusterMonitorUser": {
+          "description": "MongoDB clusterMonitor user name",
+          "type": "string",
+          "default": "clustermonitor"
+        },
+        "clusterMonitorPassword": {
+          "description": "MongoDB clusterMonitor password",
+          "type": "string",
+          "default": "clustermonitorpassword"
+        },
+        "key": {
+          "description": "The key to be used for intra-node communication, e.g. generated by 'openssl rand -base64 756'",
+          "type": "string",
+          "default": "VCeZ9zWjiNJQDZxXBZA4jfeI9YHUrWmRJDe7DKOG34b/mzER0hncruRlKLYT9HNUiU7ABxvNQ7jj1mSgmDpVt+XfKEpI3TTCJYjEAf/8G9Saeu8pdETCAd/l8xLZOAYbZd2yjhIWagiOjDz1i56GN+R51I11mSLUcGdhXVmSOCV6rrrqAtY+3+0KaWPFOnbkTHJdm3mPrts+oFT2VjGhg2yNzcfCI9FwEVPX3PWW5dbryEAHIBUapXSsMJcBFlD730DWk/MbEZSV/B/hkaFEDXgvEJszTLT6U9a2Dg4v7+eN97mK/87iKMDPIXZ5wzjbH9XNYHFVY5ensP6pmdscU9osY2MdCYhFotJHUJfGmMNbj2d1tvcc4GuFMqGcFrTyrr2E9QKm4QOtRnxLAeE2AIX0XbXxyEEbDGkKpJRLiiJRIREHh4VP6DZDzhntgcuOwWBhCLiRGDID0m1UyDe1qMXk+yy1mSRWAdfQtjXTVdS1o+AIBCxM0L0rM3rSto1PeA3CJcN1CjTfWq0t4t9mUOy4QO/juXaZCsvRDl8FKUsjnQfnocsRlWrqCGI7ONsbJdaEuiKxtu7H1WR0A+qdtBK/tZmTgbN9q0CCaP7Y1a48R5UHJAPS3HobOrqxNXEgYn+rhADUt0/ahRMuOBMTx/zm+VG8BFl8AmjOPQItvNOc9A08bKPg7lEqlzzcsTMa9QEJcW1sN9Io2F+ibKsiK9CdlPhPEUh2zMtex5e9LbT/102cmqJezq/16/xy9GYC7GwgYkrMoEbEfKdtUvVyQRijy4UE7bl9bdEgrIEY4Rs+TlR1zIRc8nl1RgL1pQp0V/gOuU/a5G5UMfIu9uZe5kgsS7T/8TQ3bzA9JpLVyCJx9rp8jvmcWO4RfOa6rKHT6pAjo1tf+VJ/mdJAwebxcpD/OPhEmfuTH5WqS3Vb/vWRbkFfC6nn+P2oB95+bF2yvA5PnkwswMTiI9Q/zSW8b4QrKyBXbd003c4FxplAGoQr2ukY"
+        },
+        "storageEngine": {
+          "title": "storage.engine",
+          "description": "Percona MongoDB storage engine (options: wiredTiger, rocksdb, mmapv1 or inMemory)",
+          "type": "string",
+          "enum": [
+            "wiredTiger",
+            "rocksdb",
+            "mmapv1",
+            "inMemory"
+          ],
+          "default": "wiredTiger"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk",
+        "count",
+        "replicaSetName",
+        "port",
+        "version",
+        "constraint",
+        "backupUser",
+        "backupPassword",
+        "userAdminUser",
+        "userAdminPassword",
+        "clusterAdminUser",
+        "clusterAdminPassword",
+        "clusterMonitorUser",
+        "clusterMonitorPassword",
+        "key",
+        "storageEngine"
+      ]
+    },
+    "mongodb-advanced": {
+      "description": "MongoDB server advanced server configuration properties. Adjust with caution!",
+      "type": "object",
+      "properties": {
+        "openFileLimit": {
+          "title": "Open Files Limit (ulimit)",
+          "description": "Maximum number of open files inside the container ('NOFILE' ulimit setting)",
+          "type": "number",
+          "default": 64000
+        },
+        "processLimit": {
+          "title": "Max Processes Limit (ulimit)",
+          "description": "Maximum number of processes running inside the container ('NPROC' ulimit setting)",
+          "type": "number",
+          "default": 64000
+        },
+        "securityRedactClientLogData": {
+          "title": "security.redactClientLogData",
+          "description": "Prevents writing of potentially sensitive data stored on the database to the diagnostic log",
+          "type": "boolean",
+          "default": false
+        },
+        "storageIndexBuildRetry": {
+          "title": "storage.indexBuildRetry",
+          "description": "Specifies whether mongod rebuilds incomplete indexes on the next start up",
+          "type": "boolean",
+          "default": true
+        },
+        "storageJournalEnabled": {
+          "title": "storage.journal.enabled",
+          "description": "Enable or disable the durability journal to ensure data files remain valid and recoverable",
+          "type": "boolean",
+          "default": true
+        },
+        "storageJournalCommitIntervalMs": {
+          "title": "storage.journal.commitIntervalMs",
+          "description": "The maximum amount of time in milliseconds that the mongod process allows between journal operations",
+          "type": "integer",
+          "default": 100
+        },
+        "storageDirectoryPerDB": {
+          "title": "storage.directoryPerDB",
+          "description": "When true, MongoDB uses a separate directory to store data for each database",
+          "type": "boolean",
+          "default": false
+        },
+        "storageSyncPeriodSecs": {
+          "title": "storage.syncPeriodSecs",
+          "description": "The amount of time that can pass before MongoDB flushes data to the data files via an fsync operation",
+          "type": "integer",
+          "default": 60
+        },
+        "storageMMAPv1PreallocDataFiles": {
+          "title": "storage.mmapv1.preallocDataFiles",
+          "description": "Enables or disables the preallocation of data files. By default, MongoDB does not preallocate data files",
+          "type": "boolean",
+          "default": true
+        },
+        "storageMMAPv1NsSize": {
+          "title": "storage.mmapv1.nsSize",
+          "description": "The default size for namespace files, which are files that end in .ns. Each collection and index counts as a namespace",
+          "type": "integer",
+          "default": 16
+        },
+        "storageMMAPv1QuotaEnforced": {
+          "title": "storage.mmapv1.quota.enforced",
+          "description": "Enable or disable the enforcement of a maximum limit for the number data files each database can have",
+          "type": "boolean",
+          "default": false
+        },
+        "storageMMAPv1QuotaMaxFilesPerDB": {
+          "title": "storage.mmapv1.quota.maxFilesPerDB",
+          "description": "The limit on the number of data files per database",
+          "type": "integer",
+          "default": 8
+        },
+        "storageMMAPv1SmallFiles": {
+          "title": "storage.mmapv1.smallFiles",
+          "description": "When true, MongoDB uses a smaller default file size",
+          "type": "boolean",
+          "default": false
+        },
+        "storageRocksDBCompression": {
+          "title": "storage.rocksdb.compression",
+          "description": "Specifies the block compression algorithm for data collection. Possible values: none, snappy, zlib, lz4, lz4hc",
+          "type": "string",
+          "enum": [
+            "snappy",
+            "none",
+            "zlib",
+            "lz4",
+            "lz4hc"
+          ],
+          "default": "snappy"
+        },
+        "storageRocksDBMaxWriteMBPerSec": {
+          "title": "storage.rocksdb.maxWriteMBPerSec",
+          "description": "Specifies the maximum speed at which RocksDB writes to storage in megabytes per second. Decrease this value to reduce read latency spikes during compactions. However, reducing it too much might slow down writes",
+          "type": "integer",
+          "default": 1024
+        },
+        "storageRocksDBCrashSafeCounters": {
+          "title": "storage.rocksdb.crashSafeCounters",
+          "description": "Specifies whether to correct counters after a crash. Enabling this can affect write performance",
+          "type": "boolean",
+          "default": false
+        },
+        "storageWiredTigerEngineConfigJournalCompressor": {
+          "title": "storage.wiredTiger.engineConfig.journalCompressor",
+          "description": "The type of compression to use to compress WiredTiger journal data. Available compressors are: none, snappy, zlib",
+          "type": "string",
+          "enum": [
+            "snappy",
+            "none",
+            "zlib"
+          ],
+          "default": "snappy"
+        },
+        "storageWiredTigerEngineConfigDirectoryForIndexes": {
+          "title": "storage.wiredTiger.engineConfig.directoryForIndexes",
+          "description": "When true, mongod stores indexes and collections in separate subdirectories under the data (i.e. storage.dbPath) directory",
+          "type": "boolean",
+          "default": false
+        },
+        "storageWiredTigerCollectionConfigBlockCompressor": {
+          "title": "storage.wiredTiger.collectionConfig.blockCompressor",
+          "description": "The default type of compression to use to compress collection data. You can override this on a per-collection basis when creating collections. Available compressors are: none, snappy, zlib",
+          "type": "string",
+          "enum": [
+            "snappy",
+            "none",
+            "zlib"
+          ],
+          "default": "snappy"
+        },
+        "storageWiredTigerIndexConfigPrefixCompression": {
+          "title": "storage.wiredTiger.indexConfig.prefixCompression",
+          "description": "Specify true to enable prefix compression for index data, or false to disable prefix compression for index data",
+          "type": "boolean",
+          "default": true
+        },
+        "setParameterFailIndexKeyTooLong": {
+          "title": "setParameter: failIndexKeyTooLong",
+          "description": "Enable failing of updates and inserts that have indexed values longer than the Index Key Length Limit",
+          "type": "boolean",
+          "default": true
+        },
+        "setParameterMaxIndexBuildMemoryUsageMB": {
+          "title": "setParameter: maxIndexBuildMemoryUsageMB",
+          "description": "Limits the amount of memory that simultaneous foreground index builds on one collection may consume for the duration of the builds",
+          "type": "integer",
+          "default": 500
+        },
+        "setParameterLogUserIds": {
+          "title": "setParameter: logUserIds",
+          "description": "Enable logging of user IDs. 1 = true, 0 = false",
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer",
+          "default": 0
+        },
+        "setParameterTTLMonitorEnabled": {
+          "title": "setParameter: ttlMonitorEnabled",
+          "description": "Enable background thread that is responsible for deleting documents from collections with TTL indexes",
+          "type": "boolean",
+          "default": true
+        },
+        "setParameterTTLMonitorSleepSecs": {
+          "title": "setParameter: ttlMonitorSleepSecs",
+          "description": "Defines the number of seconds to wait between checking TTL Indexes for old documents and removing them",
+          "type": "integer",
+          "default": 60
+        },
+        "setParameterRocksDBConcurrentReadTransactions": {
+          "title": "setParameter: rocksdbConcurrentReadTransactions",
+          "description": "Maximum number of concurrently running read transactions in the RocksDB engine",
+          "type": "integer",
+          "default": 128
+        },
+        "setParameterRocksDBConcurrentWriteTransactions": {
+          "title": "setParameter: rocksdbConcurrentWriteTransactions",
+          "description": "Maximum number of concurrently running write transactions in the RocksDB engine",
+          "type": "integer",
+          "default": 128
+        },
+        "setParameterWiredTigerConcurrentReadTransactions": {
+          "title": "setParameter: wiredTigerConcurrentReadTransactions",
+          "description": "Maximum number of concurrently running read transactions in the WiredTiger engine",
+          "type": "integer",
+          "default": 128
+        },
+        "setParameterWiredTigerConcurrentWriteTransactions": {
+          "title": "setParameter: wiredTigerConcurrentWriteTransactions",
+          "description": "Maximum number of concurrently running write transactions in the WiredTiger engine",
+          "type": "integer",
+          "default": 128
+        },
+        "netMaxIncomingConnections": {
+          "title": "net.maxIncomingConnections",
+          "description": "Specify the maximum number of incoming connections",
+          "type": "number",
+          "default": 51200
+        },
+        "operationProfilingMode": {
+          "title": "operationProfiling.mode",
+          "description": "Percona MongoDB operation profiling mode (options: slowOp, all or off)",
+          "type": "string",
+          "enum": [
+            "slowOp",
+            "off",
+            "all"
+          ],
+          "default": "slowOp"
+        },
+        "operationProfilingSlowOpThresholdMs": {
+          "title": "operationProfiling.slowOpThresholdMs",
+          "description": "Percona MongoDB operation profiling slowOp mode threshold in milliseconds",
+          "type": "integer",
+          "default": 100
+        },
+        "operationProfilingRateLimit": {
+          "title": "operationProfiling.rateLimit",
+          "description": "Percona MongoDB operation profiling rate limiting value",
+          "type": "integer",
+          "default": 1
+        },
+        "replicationSecondaryIndexPrefetch": {
+          "title": "replication.secondaryIndexPrefetch",
+          "description": "The indexes that secondary members of a replica set load into memory before applying operations from the oplog",
+          "type": "string",
+          "enum": [
+            "none",
+            "_id_only",
+            "all"
+          ],
+          "default": "all"
+        },
+        "replicationEnableMajorityReadConcern": {
+          "title": "replication.enableMajorityReadConcern",
+          "description": "Enables read concern level of 'majority'",
+          "type": "boolean",
+          "default": false
+        },
+        "systemLogVerbosity": {
+          "title": "systemLog.verbosity",
+          "description": "The default log message verbosity level for components. The verbosity level determines the amount of Informational and Debug messages MongoDB outputs. The verbosity level can range from 0 to 5",
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "default": 0
+        },
+        "systemTraceAllExceptions": {
+          "title": "systemLog.traceAllExceptions",
+          "description": "Print verbose information for debugging. Use for additional logging for support-related troubleshooting",
+          "type": "boolean",
+          "default": false
+        },
+        "systemLogTimestampFormat": {
+          "title": "systemLog.timestampFormat",
+          "description": "The time format for timestamps in log messages. Specify one of the following values: ctime, iso8601-utc, iso8601-local",
+          "type": "string",
+          "enum": [
+            "iso8601-local",
+            "ctime",
+            "iso8601-utc"
+          ],
+          "default": "iso8601-local"
+        }
+      },
+      "required": [
+        "openFileLimit",
+        "processLimit",
+        "storageIndexBuildRetry",
+        "storageJournalEnabled",
+        "storageJournalCommitIntervalMs",
+        "storageDirectoryPerDB",
+        "storageSyncPeriodSecs",
+        "storageMMAPv1PreallocDataFiles",
+        "storageMMAPv1NsSize",
+        "storageMMAPv1QuotaEnforced",
+        "storageMMAPv1QuotaMaxFilesPerDB",
+        "storageMMAPv1SmallFiles",
+        "storageRocksDBCompression",
+        "storageRocksDBMaxWriteMBPerSec",
+        "storageRocksDBCrashSafeCounters",
+        "storageWiredTigerEngineConfigJournalCompressor",
+        "storageWiredTigerEngineConfigDirectoryForIndexes",
+        "storageWiredTigerCollectionConfigBlockCompressor",
+        "storageWiredTigerIndexConfigPrefixCompression",
+        "setParameterFailIndexKeyTooLong",
+        "setParameterMaxIndexBuildMemoryUsageMB",
+        "setParameterLogUserIds",
+        "setParameterTTLMonitorEnabled",
+        "setParameterTTLMonitorSleepSecs",
+        "setParameterRocksDBConcurrentReadTransactions",
+        "setParameterRocksDBConcurrentWriteTransactions",
+        "setParameterWiredTigerConcurrentReadTransactions",
+        "setParameterWiredTigerConcurrentWriteTransactions",
+        "netMaxIncomingConnections",
+        "operationProfilingMode",
+        "operationProfilingSlowOpThresholdMs",
+        "operationProfilingRateLimit",
+        "replicationSecondaryIndexPrefetch",
+        "replicationEnableMajorityReadConcern",
+        "systemLogVerbosity",
+        "systemTraceAllExceptions",
+        "systemLogTimestampFormat"
+      ]
+    },
+    "mongodb-auditlog": {
+      "description": "Percona Server for MongoDB AuditLog configuration properties. The audit log is written to the file 'auditLog.bson' in the MongoDB data path",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "title": "Enable PSMDB Audit Log",
+          "description": "Enables the Percona Server for MongoDB audit log feature",
+          "type": "boolean",
+          "default": false
+        },
+        "filter": {
+          "title": "auditLog.filter",
+          "description": "The filter document (in json style) to be used for filtering the Percona Server for MongoDB audit log",
+          "type": "string",
+          "default": "{}"
+        },
+        "auditAuthorizationSuccess": {
+          "title": "setParameter: auditAuthorizationSuccess",
+          "description": "Enables the logging of all read and write operations",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "enabled",
+        "filter",
+        "auditAuthorizationSuccess"
+      ]
+    },
+    "init": {
+      "description": "MongoDB init node configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "MongoDB init node cpu requirements",
+          "type": "number",
+          "default": 0.2
+        },
+        "mem": {
+          "description": "MongoDB init node mem requirements",
+          "type": "integer",
+          "default": 96
+        },
+        "initiateDelay": {
+          "description": "The delay before starting the ReplicaSet initialization, must end in 's' for seconds, 'm' for minutes, etc",
+          "type": "string",
+          "default": "15s"
+        },
+        "maxConnectTries": {
+          "description": "The number of times to try to connect to a database host",
+          "type": "integer",
+          "default": 30
+        },
+        "maxInitReplsetTries": {
+          "description": "The number of times to try to initiate the replica set",
+          "type": "integer",
+          "default": 60
+        },
+        "maxAddUsersTries": {
+          "description": "The number of times to try to add database users",
+          "type": "integer",
+          "default": 60
+        },
+        "retrySleep": {
+          "description": "The duration to wait between retries",
+          "type": "string",
+          "default": "3s"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem"
+      ]
+    },
+    "watchdog": {
+      "description": "MongoDB watchdog node configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "MongoDB watchdog node cpu requirements",
+          "type": "number",
+          "default": 0.2
+        },
+        "mem": {
+          "description": "MongoDB watchdog node mem requirements",
+          "type": "integer",
+          "default": 96
+        },
+        "delayWatcherStart": {
+          "description": "Amount of time to delay starting replica set watchers, must end in 's' for seconds, 'm' for minutes, etc",
+          "type": "string",
+          "default": "20s"
+        },
+        "apiPoll": {
+          "description": "DCOS API poll frequency, must end in 's' for seconds, 'm' for minutes, etc",
+          "type": "string",
+          "default": "10s"
+        },
+        "apiTimeout": {
+          "description": "Pod API timeout than apiPoll frequency, must end in 's' for seconds, 'm' for minutes, etc",
+          "type": "string",
+          "default": "5s"
+        },
+        "replsetPoll": {
+          "description": "MongoDB replica set state poll frequency, must end in 's' for seconds, 'm' for minutes, etc",
+          "type": "string",
+          "default": "5s"
+        },
+        "replsetTimeout": {
+          "description": "MongoDB replica set timeout, should be less than replsetPoll frequency, must end in 's' for seconds, 'm' for minutes, etc",
+          "type": "string",
+          "default": "3s"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem"
+      ]
+    }
+  }
+}
