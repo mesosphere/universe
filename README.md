@@ -398,6 +398,10 @@ Full Instructions:
 
   ```bash
   scripts/build.sh
+  
+  OR
+  
+  scripts/build.sh /tmp/universe-venv (to override the python virtual env directory)
   ```
 
 3. Verify all build steps completed successfully
@@ -432,6 +436,10 @@ Docker image" status report to view the build results.
 1. Validate and build the Universe artifacts
   ```bash
   scripts/build.sh
+  
+  OR
+  
+  scripts/build.sh /tmp/universe-venv (to override the python virtual env directory)
   ```
 
 2. Build the Universe Server Docker image
