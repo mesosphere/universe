@@ -3,18 +3,32 @@ set -e
 set -u
 set -o pipefail
 
-if [[ -z "$1" ]]; then
-    echo "Usage: add-stub-universe <stub-universe-json>"
-    exit 1
-elif [[ ! -f "$1" ]]; then
-    echo "File '$1' does not exist"
+if [[ -z "$1" || -z "$2" ]]; then
+    echo "Usage: "
+    echo "  add-stub-universe -j <stub-universe-json>"
+    echo "or"
+    echo "  add-stub-universe -u <stub-universe-json>"
     exit 1
 fi
 
 mkdir -p stub-repo/packages
+mkdir -p stub-repo/tmp
 
-FILE=$1
-PACKAGES=$(jq -r '.packages[].name' $1)
+if [[ "$1" == "-u" ]]; then
+    cd stub-repo/tmp && curl -LO "$2" && cd -
+    FILE=stub-repo/tmp/$(basename $2)
+elif [[ "$1" == "-j" ]]; then
+    FILE=$2
+else
+    echo "Usage: "
+    echo "  add-stub-universe -j <stub-universe-json>"
+    echo "or"
+    echo "  add-stub-universe -u <stub-universe-json>"
+    exit 1
+fi
+
+# FILE=$1
+PACKAGES=$(jq -r '.packages[].name' $FILE)
 
 for PACKAGE in $PACKAGES; do
 echo "Building repo structure for $PACKAGE..."
