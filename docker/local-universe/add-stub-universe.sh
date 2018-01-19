@@ -17,7 +17,7 @@ FILE=$1
 PACKAGES=$(jq -r '.packages[].name' $1)
 
 for PACKAGE in $PACKAGES; do
-echo "Building repo structure for $PACKAGE"
+echo "Building repo structure for $PACKAGE..."
 LETTER=$(echo $PACKAGE | head -c 1 | tr '[:lower:]' '[:upper:]')
 mkdir -p stub-repo/packages/${LETTER}/${PACKAGE}/0
 
@@ -31,13 +31,8 @@ cat stub-repo/$PACKAGE.json | jq -r '.marathon.v2AppMustacheTemplate' | base64 -
 
 done
 
-echo "Repo structures created:"
+echo ""
+echo "Full stub-repo contents:"
 ls -alh stub-repo/packages/*/*/*
 
-echo ""
-echo "If this looks correct, add all of them to the primary package repo with:"
-echo "        cp -rpv stub-repo/packages/* ../../repo/packages"
-echo ""
-echo "You can clean up with: "
-echo "        rm -r stub-repo"
 echo ""

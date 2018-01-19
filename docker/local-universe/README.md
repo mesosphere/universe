@@ -248,3 +248,80 @@ Marathon app:
 1. Once it is merged, run the [Publish universe-static image](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_2_PublishUniverseStaticImage&branch_Oss_Universe_2=%3Cdefault%3E&tab=buildTypeStatusDiv) build, providing the new version number when prompted
 1. Submit a pull request that updates the `FROM universe-static:...` line in
 `Dockerfile.static.base` to use the new version
+
+## Adding Edge-LB (or other stub custom universe packages)
+If you've been provided stub universe json files (such as for Edge-LB), you can add them to the local universe by first downloading them, and then running the `add-stub-universe.sh` script.
+
+For example, if you have these two stub universe files:
+* stub-universe-edgelb.json
+* stub-universe-edgelb-pool.json
+
+Each run of the add-stub-universe.sh will process the json file and generate the necessary json and mustache files, and add them to `stub-repo/packages/<X>/<packagename>`
+
+```bash
+bash add-stub-universe.sh stub-universe-edgelb.json
+bash add-stub-universe.sh stub-universe-edgelb-pool.json
+```
+
+From there, they can be merged into the primary `universe/repo/packages` directory:
+
+```bash
+cp -rpv stub-repo/packages/* ../../repo/packages
+```
+
+For example:
+```bash
+# bash add-stub-universe.sh stub-universe-edgelb.json 
+Building repo structure for edgelb...
+
+Full stub-repo contents:
+total 40
+drwxr-xr-x  7 justin  staff   238B Jan 18 23:31 .
+drwxr-xr-x  3 justin  staff   102B Jan 18 23:31 ..
+-rw-r--r--  1 justin  staff   144B Jan 18 23:31 command.json
+-rw-r--r--  1 justin  staff   1.7K Jan 18 23:31 config.json
+-rw-r--r--  1 justin  staff   1.5K Jan 18 23:31 marathon.json.mustache
+-rw-r--r--  1 justin  staff   384B Jan 18 23:31 package.json
+-rw-r--r--  1 justin  staff   1.7K Jan 18 23:31 resource.json
+
+# bash add-stub-universe.sh stub-universe-edgelb-pool.json 
+Building repo structure for edgelb-pool...
+
+Full stub-repo contents:
+stub-repo/packages/E/edgelb-pool/0:
+total 48
+drwxr-xr-x  7 justin  staff   238B Jan 18 23:31 .
+drwxr-xr-x  3 justin  staff   102B Jan 18 23:31 ..
+-rw-r--r--  1 justin  staff   149B Jan 18 23:31 command.json
+-rw-r--r--  1 justin  staff   4.5K Jan 18 23:31 config.json
+-rw-r--r--  1 justin  staff   3.4K Jan 18 23:31 marathon.json.mustache
+-rw-r--r--  1 justin  staff   411B Jan 18 23:31 package.json
+-rw-r--r--  1 justin  staff   2.2K Jan 18 23:31 resource.json
+
+stub-repo/packages/E/edgelb/0:
+total 40
+drwxr-xr-x@ 7 justin  staff   238B Jan 18 23:31 .
+drwxr-xr-x@ 3 justin  staff   102B Jan 18 23:31 ..
+-rw-r--r--@ 1 justin  staff   144B Jan 18 23:31 command.json
+-rw-r--r--@ 1 justin  staff   1.7K Jan 18 23:31 config.json
+-rw-r--r--@ 1 justin  staff   1.5K Jan 18 23:31 marathon.json.mustache
+-rw-r--r--@ 1 justin  staff   384B Jan 18 23:31 package.json
+-rw-r--r--@ 1 justin  staff   1.7K Jan 18 23:31 resource.json
+
+# cp -rpv stub-repo/packages/* ../../repo/packages
+stub-repo/packages/E -> ../../repo/packages/E
+stub-repo/packages/E/edgelb -> ../../repo/packages/E/edgelb
+stub-repo/packages/E/edgelb/0 -> ../../repo/packages/E/edgelb/0
+stub-repo/packages/E/edgelb/0/command.json -> ../../repo/packages/E/edgelb/0/command.json
+stub-repo/packages/E/edgelb/0/config.json -> ../../repo/packages/E/edgelb/0/config.json
+stub-repo/packages/E/edgelb/0/marathon.json.mustache -> ../../repo/packages/E/edgelb/0/marathon.json.mustache
+stub-repo/packages/E/edgelb/0/package.json -> ../../repo/packages/E/edgelb/0/package.json
+stub-repo/packages/E/edgelb/0/resource.json -> ../../repo/packages/E/edgelb/0/resource.json
+stub-repo/packages/E/edgelb-pool -> ../../repo/packages/E/edgelb-pool
+stub-repo/packages/E/edgelb-pool/0 -> ../../repo/packages/E/edgelb-pool/0
+stub-repo/packages/E/edgelb-pool/0/command.json -> ../../repo/packages/E/edgelb-pool/0/command.json
+stub-repo/packages/E/edgelb-pool/0/config.json -> ../../repo/packages/E/edgelb-pool/0/config.json
+stub-repo/packages/E/edgelb-pool/0/marathon.json.mustache -> ../../repo/packages/E/edgelb-pool/0/marathon.json.mustache
+stub-repo/packages/E/edgelb-pool/0/package.json -> ../../repo/packages/E/edgelb-pool/0/package.json
+stub-repo/packages/E/edgelb-pool/0/resource.json -> ../../repo/packages/E/edgelb-pool/0/resource.json
+```
