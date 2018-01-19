@@ -1,10 +1,17 @@
 #!/bin/bash
+# Script takes a provided stub-universe json file and extracts it contents into a format usable by the local-universe (or other universe) build processes.
+# Author: Justin Lee (jlee@mesosphere.com)
+# Version: 0.1
+# Example usage (from the universe/docker/local-universe directory)
+#       bash add-stub-universe.sh edgelb.json
+#       bash add-stub-universe.sh edgelb-pool.json
+#       cp -rpv stub-repo/packages/* ../../repo/packages
 set -e 
 set -u
 set -o pipefail
 
 if [[ -z "$1" ]]; then
-    echo "Usage: add-stub-universe <stub-universe-json>"
+    echo "Usage: add-stub-universe.sh <stub-universe-json>"
     exit 1
 elif [[ ! -f "$1" ]]; then
     echo "File '$1' does not exist"
