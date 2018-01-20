@@ -1,13 +1,24 @@
 #!/bin/bash
+# Script takes a provided stub-universe json file and extracts it contents into a format usable by the local-universe (or other universe) build processes.
+# Author: Justin Lee (jlee@mesosphere.com)
+# Version: 0.1
+# Example usage (from the universe/docker/local-universe directory)
+#       bash add-stub-universe.sh -j custom.json
+#       bash add-stub-universe.sh -u https://hostname/custom-online.json
+#       cp -rpv stub-repo/packages/* ../../repo/packages
 set -e 
 set -u
 set -o pipefail
 
-if [[ -z "$1" || -z "$2" ]]; then
+function print_usage() {
     echo "Usage: "
     echo "  add-stub-universe -j <stub-universe-json>"
     echo "or"
-    echo "  add-stub-universe -u <stub-universe-json>"
+    echo "  add-stub-universe -u <stub-universe-json-url>"
+}
+
+if [[ -z "${1-}" || -z "${2-}" ]]; then
+    print_usage
     exit 1
 fi
 
@@ -20,10 +31,7 @@ if [[ "$1" == "-u" ]]; then
 elif [[ "$1" == "-j" ]]; then
     FILE=$2
 else
-    echo "Usage: "
-    echo "  add-stub-universe -j <stub-universe-json>"
-    echo "or"
-    echo "  add-stub-universe -u <stub-universe-json>"
+    print_usage
     exit 1
 fi
 
