@@ -290,6 +290,9 @@ drwxr-xr-x  3 justin  staff   102B Jan 18 23:31 ..
 -rw-r--r--  1 justin  staff   1.7K Jan 18 23:31 resource.json
 
 # bash add-stub-universe.sh -u https://<url-path>/online-stub-universe.json
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 13449  100 13449    0     0  22012      0 --:--:-- --:--:-- --:--:-- 22011
 Building repo structure for custom-online...
 
 Full stub-repo contents:
