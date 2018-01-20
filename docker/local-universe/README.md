@@ -249,12 +249,12 @@ Marathon app:
 1. Submit a pull request that updates the `FROM universe-static:...` line in
 `Dockerfile.static.base` to use the new version
 
-## Adding Edge-LB (or other stub custom universe packages)
+## Adding Stub Universes (Custom Universe Packages)
 If you've been provided stub universe json files (such as for Edge-LB), you can add them to the local universe with the `add-stub-universe.sh` script.
 
-You can either use a local stub-universe json file, or a URL path for one.
+You can specify a local stub universe json definition with `-j <path-to-json-file>` or a URL for stub universe json definition with `-u <url-for-json-file>`
 
-Each run of the add-stub-universe.sh will process the json file and generate the necessary json and mustache files, and add them to `stub-repo/packages/<X>/<packagename>`
+Each run of the add-stub-universe.sh will process the json file and generate the necessary json and mustache files, and add them to `stub-repo/packages/<X>/<packagename>`.  Once all of your stub universe packages have been added into `stub-repo`, you can merge them into the primary `universe/repo/packages` and specify them in any of the standard local universe scripts.
 
 For example:
 ```bash
@@ -268,7 +268,13 @@ From there, they can be merged into the primary `universe/repo/packages` directo
 cp -rpv stub-repo/packages/* ../../repo/packages
 ```
 
-For example:
+Then, you could potentially build the rest of your universe with the regular workflow:
+
+```bash
+sudo make DCOS_VERSION=<your DC/OS version> DCOS_PACKAGE_INCLUDE="<custom-package>:0.1,<other-custom-package>:0.5" local-universe
+```
+
+Here's a full example:
 ```bash
 # bash add-stub-universe.sh -j stub-universe-custom.json
 Building repo structure for custom...
@@ -284,10 +290,10 @@ drwxr-xr-x  3 justin  staff   102B Jan 18 23:31 ..
 -rw-r--r--  1 justin  staff   1.7K Jan 18 23:31 resource.json
 
 # bash add-stub-universe.sh -u https://<url-path>/online-stub-universe.json
-Building repo structure for custom-2...
+Building repo structure for custom-online...
 
 Full stub-repo contents:
-stub-repo/packages/C/custom-2/0:
+stub-repo/packages/C/custom-online/0:
 total 48
 drwxr-xr-x  7 justin  staff   238B Jan 18 23:31 .
 drwxr-xr-x  3 justin  staff   102B Jan 18 23:31 ..
@@ -316,11 +322,14 @@ stub-repo/packages/C/custom/0/config.json -> ../../repo/packages/C/custom/0/conf
 stub-repo/packages/C/custom/0/marathon.json.mustache -> ../../repo/packages/C/custom/0/marathon.json.mustache
 stub-repo/packages/C/custom/0/package.json -> ../../repo/packages/C/custom/0/package.json
 stub-repo/packages/C/custom/0/resource.json -> ../../repo/packages/C/custom/0/resource.json
-stub-repo/packages/C/custom-2 -> ../../repo/packages/C/custom-2
-stub-repo/packages/C/custom-2/0 -> ../../repo/packages/C/custom-2/0
-stub-repo/packages/C/custom-2/0/command.json -> ../../repo/packages/C/custom-2/0/command.json
-stub-repo/packages/C/custom-2/0/config.json -> ../../repo/packages/C/custom-2/0/config.json
-stub-repo/packages/C/custom-2/0/marathon.json.mustache -> ../../repo/packages/C/custom-2/0/marathon.json.mustache
-stub-repo/packages/C/custom-2/0/package.json -> ../../repo/packages/C/custom-2/0/package.json
-stub-repo/packages/C/custom-2/0/resource.json -> ../../repo/packages/C/custom-2/0/resource.json
+stub-repo/packages/C/custom-online -> ../../repo/packages/C/custom-online
+stub-repo/packages/C/custom-online/0 -> ../../repo/packages/C/custom-online/0
+stub-repo/packages/C/custom-online/0/command.json -> ../../repo/packages/C/custom-online/0/command.json
+stub-repo/packages/C/custom-online/0/config.json -> ../../repo/packages/C/custom-online/0/config.json
+stub-repo/packages/C/custom-online/0/marathon.json.mustache -> ../../repo/packages/C/custom-online/0/marathon.json.mustache
+stub-repo/packages/C/custom-online/0/package.json -> ../../repo/packages/C/custom-online/0/package.json
+stub-repo/packages/C/custom-online/0/resource.json -> ../../repo/packages/C/custom-online/0/resource.json
+
+# sudo make DCOS_VERSION=1.10.4 DCOS_PACKAGE_INCLUDE="custom:0.1,custom-online:0.5" local-universe
+... Local universe build output here ...
 ```
