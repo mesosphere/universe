@@ -12,24 +12,24 @@
       "network": "HOST",
       "parameters": [
         {
-          "key": "name",
-          "value": "instana-agent"
+          "key": "env",
+          "value": "INSTANA_AGENT_TAGS={{instana-agent.tag_list}}"
         },
         {
           "key": "env",
-          "value": "INSTANA_TAGS={{instana-agent.tag_list}}"
+          "value": "INSTANA_AGENT_ZONE={{instana-agent.agent_zone}}"
         },
         {
           "key": "env",
-          "value": "INSTANA_KEY={{instana-agent.agent_key}}"
+          "value": "INSTANA_AGENT_KEY={{instana-agent.agent_key}}"
         },
         {
           "key": "env",
-          "value": "INSTANA_HOST={{instana-agent.agent_endpoint}}"
+          "value": "INSTANA_AGENT_ENDPOINT={{instana-agent.agent_endpoint}}"
         },
         {
           "key": "env",
-          "value": "INSTANA_PORT={{instana-agent.agent_endpoint_port}}"
+          "value": "INSTANA_AGENT_ENDPOINT_PORT={{instana-agent.agent_endpoint_port}}"
         },
         { 
           "key": "pid",
