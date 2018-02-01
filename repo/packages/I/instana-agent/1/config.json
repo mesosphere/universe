@@ -44,6 +44,11 @@
           "description": "Comma separated list of host-specific tags which identify the Mesos node.",
           "type": "string"
         },
+        "agent_zone": {
+          "default": "",
+          "description": "Zone label for Mesos node.",
+          "type": "string"
+        },
         "agent_endpoint": {
           "default": "saas-us-west-2.instana.io",
           "description": "Instana-SaaS endpoint URL or on-prem backend hostname.",
