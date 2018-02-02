@@ -49,7 +49,7 @@ cat stub-repo/$PACKAGE.json | jq '.config'  > stub-repo/packages/${LETTER}/${PAC
 cat stub-repo/$PACKAGE.json | jq '.resource' > stub-repo/packages/${LETTER}/${PACKAGE}/0/resource.json
 cat stub-repo/$PACKAGE.json | jq '.command' > stub-repo/packages/${LETTER}/${PACKAGE}/0/command.json
 cat stub-repo/$PACKAGE.json | jq 'del(.command, .marathon, .resource, .config, .releaseVersion)' > stub-repo/packages/${LETTER}/${PACKAGE}/0/package.json
-cat stub-repo/$PACKAGE.json | jq -r '.marathon.v2AppMustacheTemplate' | base64 -D > stub-repo/packages/${LETTER}/${PACKAGE}/0/marathon.json.mustache
+cat stub-repo/$PACKAGE.json | jq -r '.marathon.v2AppMustacheTemplate' | base64 -d > stub-repo/packages/${LETTER}/${PACKAGE}/0/marathon.json.mustache
 
 done
 
