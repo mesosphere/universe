@@ -1,7 +1,8 @@
 #!/bin/bash
 # Script takes a provided stub-universe json file and extracts it contents into a format usable by the local-universe (or other universe) build processes.
 # Author: Justin Lee (jlee@mesosphere.com)
-# Version: 0.1
+# Udpated: Richard Shaw (rshaw@mesosphere.com) 020218
+# Version: 0.2
 # Example usage (from the universe/docker/local-universe directory)
 #       bash add-stub-universe.sh -j custom.json
 #       bash add-stub-universe.sh -u https://hostname/custom-online.json
@@ -20,6 +21,12 @@ function print_usage() {
 if [[ -z "${1-}" || -z "${2-}" ]]; then
     print_usage
     exit 1
+fi
+
+if [[ $(uname -s) == Linux ]]; then
+    BASE64="base64 -d"
+else
+    BASE64="base64 -D"
 fi
 
 mkdir -p stub-repo/packages
@@ -47,9 +54,9 @@ jq --arg PACKAGE "$PACKAGE" '.packages[] | select(.name == $PACKAGE)' $FILE > st
 
 cat stub-repo/$PACKAGE.json | jq '.config'  > stub-repo/packages/${LETTER}/${PACKAGE}/0/config.json
 cat stub-repo/$PACKAGE.json | jq '.resource' > stub-repo/packages/${LETTER}/${PACKAGE}/0/resource.json
-cat stub-repo/$PACKAGE.json | jq '.command' > stub-repo/packages/${LETTER}/${PACKAGE}/0/command.json
+[[ $(cat stub-repo/$PACKAGE.json | jq '.command') = "null"  ]] || cat stub-repo/$PACKAGE.json | jq '.command' > stub-repo/packages/${LETTER}/${PACKAGE}/0/command.json
 cat stub-repo/$PACKAGE.json | jq 'del(.command, .marathon, .resource, .config, .releaseVersion)' > stub-repo/packages/${LETTER}/${PACKAGE}/0/package.json
-cat stub-repo/$PACKAGE.json | jq -r '.marathon.v2AppMustacheTemplate' | base64 -D > stub-repo/packages/${LETTER}/${PACKAGE}/0/marathon.json.mustache
+cat stub-repo/$PACKAGE.json | jq -r '.marathon.v2AppMustacheTemplate' | ${BASE64} > stub-repo/packages/${LETTER}/${PACKAGE}/0/marathon.json.mustache
 
 done
 
