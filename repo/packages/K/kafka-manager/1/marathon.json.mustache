@@ -1,0 +1,58 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": {{service.instances}},
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.kafka-manager-docker}}",
+      "forcePullImage": true,
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 9000,
+          "hostPort": 0,
+          {{#marathon-lb.enable}}
+          "servicePort": {{marathon-lb.external_access_port}},
+          {{/marathon-lb.enable}}
+          "protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 0,
+      "path": "/api/health",
+      "portIndex": 0,
+      "protocol": "MESOS_HTTP",
+      "timeoutSeconds": 5
+    }
+  ],
+  "env": {
+    "ZK_HOSTS": "{{kafka-manager.zk}}",
+    {{^kafka-manager.zk-base-path}}
+    "BASE_ZK_PATH": "/{{service.name}}",
+    {{/kafka-manager.zk-base-path}}
+    {{#kafka-manager.zk-base-path}}
+    "BASE_ZK_PATH": "{{kafka-manager.zk-base-path}}",
+    {{/kafka-manager.zk-base-path}}
+    "KAFKA_MANAGER_ARGS": "{{kafka-manager.zk-args}}",
+    "APPLICATION_SECRET": "{{kafka-manager.application_secret}}",
+    "KAFKA_MANAGER_CONFIG": "{{kafka-manager.config}}",
+    "HTTP_CONTEXT": "/",
+    "KAFKA_MANAGER_LOGLEVEL": "{{kafka-manager.loglevel}}"
+  },
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    {{#marathon-lb.enable}}
+    "HAPROXY_GROUP": "{{marathon-lb.group}}",
+    "HAPROXY_0_VHOST": "{{marathon-lb.virtual_host}}",
+    {{/marathon-lb.enable}}
+    "DCOS_PACKAGE_VERSION": "{{package.version}}"
+  }
+}
