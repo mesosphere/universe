@@ -1,0 +1,181 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS CouchDB service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of the CouchDB service instance",
+          "type": "string",
+          "default": "portworx-couchdb"
+        },
+        "user": {
+          "title": "User",
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "root"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "title": "Credential secret name (optional)",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        }
+      },
+      "required": [
+        "name",
+        "user"
+      ]
+    },
+    "node": {
+      "description": "DC/OS CouchDB node configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of CouchDB nodes in the cluster",
+          "type": "integer",
+          "default": 3,
+          "minimum": 1
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Number of cpu shares allocated to the CouchDB process",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Amount of memory allocated to the CouchDB process (in MB)",
+          "type": "integer",
+          "default": 2048
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "Amount of disk space allocated to CouchDB (in MB)",
+          "type": "integer",
+          "default": 10240
+        },
+        "portworx_volume_name": {
+          "title": "Portworx volume name",
+          "description": "Name of the volume used with Portworx driver",
+          "type": "string",
+          "default": "CouchDBVolume"
+        },
+        "portworx_volume_options": {
+          "title": "Portworx volume options",
+          "description": "Comma separated key=value pairs of options passed to Portworx driver",
+          "type": "string",
+          "default": ""
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "portworx_volume_name"
+      ]
+    },
+    "couchdb": {
+      "description": "CouchDB configuration properties",
+      "type": "object",
+      "properties": {
+        "couchdb_image": {
+          "title": "CouchDB image name",
+          "description": "CouchDB image to use for the cluster",
+          "type": "string",
+          "default": "couchdb:2.1.1"
+        },
+        "cluster_port": {
+          "title": "Cluster port",
+          "description": "Port used by clients to talk to CouchDB",
+          "type": "integer",
+          "default": 5984
+        },
+        "node_local_port": {
+          "title": "Node local port",
+          "description": "Port used only for maintenance and administrative tasks",
+          "type": "integer",
+          "default": 5986
+        },
+        "user": {
+          "title": "Admin user",
+          "description": "Admin user to configure CouchDB",
+          "type": "string",
+          "default": "admin"
+        },
+        "password": {
+          "title": "Admin password",
+          "description": "Password of the CouchDB admin user",
+          "type": "string",
+          "default": "password"
+        },
+        "cookie": {
+          "title": "Cookie",
+          "description": "Cookie used to form the Erlang cluster",
+          "type": "string",
+          "default": "couchdbcookie"
+        },
+        "secret": {
+          "title": "Secret",
+          "description": "Secret token used for proxy and cookie authentication",
+          "type": "string",
+          "default": "couchdbsecret"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "cluster_port",
+        "node_local_port",
+        "user",
+        "password",
+        "cookie"
+      ]
+    }
+  }
+}

@@ -70,7 +70,7 @@ def main():
     # create universe-by-version files for `dcos_versions`
     dcos_versions = ["1.6.1", "1.7", "1.8", "1.9", "1.10", "1.11"]
     [render_universe_by_version(
-        args.outdir, packages, version) for version in dcos_versions]
+        args.outdir, copy.deepcopy(packages), version) for version in dcos_versions]
 
 
 def render_universe_by_version(outdir, packages, version):
@@ -698,7 +698,11 @@ def validate_repo_with_schema(repo_json_data, repo_version):
     :return: list of validation errors ( length == zero => No errors)
     """
     validator = jsonschema.Draft4Validator(_load_jsonschema(repo_version))
-    return list(validator.iter_errors(repo_json_data))
+    errors = []
+    for error in validator.iter_errors(repo_json_data):
+        for suberror in sorted(error.context, key=lambda e: e.schema_path):
+            errors.append('{}: {}'.format(list(suberror.schema_path), suberror.message))
+    return errors
 
 
 def _validate_repo(file_path, version):
@@ -722,10 +726,10 @@ def _validate_repo(file_path, version):
     errors = validate_repo_with_schema(repo, repo_version)
     if len(errors) != 0:
         sys.exit(
-            'ERROR\n\nRepo {} version {} validation error: {}'.format(
+            'ERROR\n\nRepo {} version {} validation errors: {}'.format(
                 file_path,
                 repo_version,
-                errors
+                '\n'.join(errors)
             )
         )
 
