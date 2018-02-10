@@ -43,12 +43,6 @@
         "spark": {
             "type": "object",
             "properties": {
-                "version": {
-                  "type": "string",
-                  "description": "The spark version to use",
-                  "enum": ["2.2.1-1-hadoop-2.6", "2.2.1-1-hadoop-2.7"],
-                  "default": "2.2.1-1-hadoop-2.6"
-                },
                 "cores_max": {
                     "type": "string",
                     "description": "Sets spark.cores.max",
