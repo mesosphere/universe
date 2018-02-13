@@ -2,7 +2,8 @@
   "assets": {
     "container": {
       "docker": {
-        "dd-agent": "datadog/agent-dev:master"
+        "agent5": "datadog/docker-dd-agent:12.5.5212",
+        "agent6": "datadog/agent:latest"
       }
     }
   },

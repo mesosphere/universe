@@ -3,7 +3,13 @@
     "container": {
         "type": "DOCKER",
         "docker": {
-            "image": "{{resource.assets.container.docker.dd-agent}}",
+            {{#datadog.use_agent_5}}
+            "image": "{{resource.assets.container.docker.agent5}}",
+            {{/datadog.use_agent_5}}
+            {{^datadog.use_agent_5}}
+            "image": "{{resource.assets.container.docker.agent6}}",
+            "forcePullImage": true,
+            {{/datadog.use_agent_5}}
             "parameters": [
                 {
                     "key": "env", "value": "DD_API_KEY={{datadog.api_key}}"

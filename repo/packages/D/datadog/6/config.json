@@ -1,8 +1,13 @@
 {
     "properties": {
         "datadog": {
-            "description": "Datadog specific configuration properties",
+            "description": "Datadog Agent configuration",
             "properties": {
+                "use_agent_5": {
+                    "description": "Install version 5.21 of the Agent",
+                    "type": "boolean",
+                    "default": false
+                },
                 "api_key": {
                     "description": "Your Datadog API key.",
                     "type": "string"
