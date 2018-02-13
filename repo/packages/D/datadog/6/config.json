@@ -12,17 +12,17 @@
                     "description": "Marathon Application ID",
                     "type": "string"
                 },
-                "cpus": {
-                    "default": 0.05,
-                    "description": "CPU shares to allocate to each Marathon instance.",
-                    "minimum": 0.0,
-                    "type": "number"
-                },
                 "instances": {
                     "default": 1,
                     "description": "Number of Marathon instances to run.",
                     "minimum": 1,
                     "type": "integer"
+                },
+                "cpus": {
+                    "default": 0.05,
+                    "description": "CPU shares to allocate to each Marathon instance.",
+                    "minimum": 0.0,
+                    "type": "number"
                 },
                 "mem": {
                     "default": 256.0,
@@ -30,15 +30,21 @@
                     "minimum": 256.0,
                     "type": "number"
                 },
-                "statsd_non_local": {
-                    "default": false,
-                    "description": "Allow statsD non-local traffic (Agent6)",
-                    "type": "boolean"
-                },
-                "statsd_port": {
-                    "default": 8125,
-                    "description": "statsD port",
-                    "type": "integer"
+                "dogstatsd": {
+                  "description": "Dogstatsd (custom metrics) options",
+                  "type": "object",
+                  "properties": {
+                    "non_local_traffic": {
+                        "default": false,
+                        "description": "Allow statsD non-local traffic",
+                        "type": "boolean"
+                    },
+                    "port": {
+                        "default": 8125,
+                        "description": "UDP port to listen to",
+                        "type": "integer"
+                    }
+                  }
                 }
             },
             "required": [

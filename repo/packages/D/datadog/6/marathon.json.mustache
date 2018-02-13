@@ -11,19 +11,21 @@
                 {
                     "key": "env", "value": "SD_BACKEND=docker"
                 },
-                {{#statsd_non_local}}
+                {{#datadog.dogstatsd.non_local_traffic}}
                 {
                     "key": "env", "value": "DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true"
                 },
-                {{/statsd_non_local}}
+                {{/datadog.dogstatsd.non_local_traffic}}
                 {
                     "key": "env", "value": "MESOS_SLAVE=true"
                 }
             ],
-            "network": "BRIDGE",
             "portMappings": [
-                { "hostPort": {{datadog.statsd_port}}, "containerPort": 8125, "protocol": "udp" }
-            ]
+                {{#datadog.dogstatsd.non_local_traffic}}
+                { "hostPort": {{datadog.dogstatsd.port}}, "containerPort": 8125, "protocol": "udp" }
+                {{/datadog.dogstatsd.non_local_traffic}}
+            ],
+            "network": "BRIDGE"
         },
         "volumes": [
             {
