@@ -8,37 +8,37 @@
     }
   },
   "images": {
-    "icon-small": "https://files.serv.sh/frameworks/mongodb-replicaset/images/icons/mongodb_48x48.png",
-    "icon-medium": "https://files.serv.sh/frameworks/mongodb-replicaset/images/icons/mongodb_96x96.png",
-    "icon-large": "https://files.serv.sh/frameworks/mongodb-replicaset/images/icons/mongodb_256x256.png"
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/mongodb-replicaset-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/mongodb-replicaset-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/mongodb-replicaset-icon-large.png"
   },
-  "cli":{
-    "binaries":{
-      "darwin":{
-        "x86-64":{
-          "contentHash":[
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
             {
-              "algo":"sha256",
-              "value":"c0512da733b8d206c8fdf7632ecbac370e9455eb254672669fb8f07085c9ead5"
+              "algo": "sha256",
+              "value": "c0512da733b8d206c8fdf7632ecbac370e9455eb254672669fb8f07085c9ead5"
             }
           ],
-          "kind":"executable",
-          "url":"https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/dcos-mongodb-replicaset-darwin"
+          "kind": "executable",
+          "url": "https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/dcos-mongodb-replicaset-darwin"
         }
       },
-      "linux":{
-        "x86-64":{
-          "contentHash":[
+      "linux": {
+        "x86-64": {
+          "contentHash": [
             {
-              "algo":"sha256",
-              "value":"0041d058d720d2f630e6129dc4ab11e8944eeb8e97a25173e37a4864c2350e70"
+              "algo": "sha256",
+              "value": "0041d058d720d2f630e6129dc4ab11e8944eeb8e97a25173e37a4864c2350e70"
             }
           ],
-          "kind":"executable",
-          "url":"https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/dcos-mongodb-replicaset-linux"
+          "kind": "executable",
+          "url": "https://files.serv.sh/frameworks/mongodb-replicaset/0.1.0/dcos-mongodb-replicaset-linux"
         }
       },
-      "windows":{
+      "windows": {
         "x86-64": {
           "contentHash": [
             {

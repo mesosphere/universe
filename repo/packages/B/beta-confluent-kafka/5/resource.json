@@ -13,31 +13,46 @@
     }
   },
   "images": {
-    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-small.png",
-    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-medium.png",
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/beta-confluent-kafka-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/beta-confluent-kafka-icon-medium.png",
     "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-large.png"
   },
-  "cli":{
-    "binaries":{
-      "darwin":{
-        "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"1e6d5975aec22e898997d8c63805bec7052e4d5cb78f9faa70a29599a06fcd80" } ],
-          "kind":"executable",
-          "url":"https://downloads.mesosphere.com/confluent-kafka/assets/1.2.4-3.3.0e-beta/dcos-confluent-kafka-darwin"
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "1e6d5975aec22e898997d8c63805bec7052e4d5cb78f9faa70a29599a06fcd80"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/confluent-kafka/assets/1.2.4-3.3.0e-beta/dcos-confluent-kafka-darwin"
         }
       },
-      "linux":{
-        "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"cdb3ba98c5d8e9da09e2eadad8747fb8449cfe54782ab91d2e3ec7d5bf3ba422" } ],
-          "kind":"executable",
-          "url":"https://downloads.mesosphere.com/confluent-kafka/assets/1.2.4-3.3.0e-beta/dcos-confluent-kafka-linux"
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "cdb3ba98c5d8e9da09e2eadad8747fb8449cfe54782ab91d2e3ec7d5bf3ba422"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/confluent-kafka/assets/1.2.4-3.3.0e-beta/dcos-confluent-kafka-linux"
         }
       },
-      "windows":{
-        "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"e52625fe0224b02fbee18f317975ca5d46d51ab9c85c0bcfcf461df81a66f6e4" } ],
-          "kind":"executable",
-          "url":"https://downloads.mesosphere.com/confluent-kafka/assets/1.2.4-3.3.0e-beta/dcos-confluent-kafka.exe"
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "e52625fe0224b02fbee18f317975ca5d46d51ab9c85c0bcfcf461df81a66f6e4"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/confluent-kafka/assets/1.2.4-3.3.0e-beta/dcos-confluent-kafka.exe"
         }
       }
     }

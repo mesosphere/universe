@@ -10,31 +10,46 @@
     }
   },
   "images": {
-    "icon-small": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-small.png",
-    "icon-medium": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-medium.png",
-    "icon-large": "https://downloads.mesosphere.com/hdfs/assets/icon-service-hdfs-large.png"
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/hdfs-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/hdfs-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/hdfs-icon-large.png"
   },
-  "cli":{
-    "binaries":{
-      "darwin":{
-        "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"deeaa8ca9421faa4951fea07ebc35285811afa0f7905e8f45eaaae14c26c9dc6" } ],
-          "kind":"executable",
-          "url":"https://downloads.mesosphere.com/hdfs/assets/1.2.0-2.6.0-cdh5.9.1/dcos-hdfs-darwin"
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "deeaa8ca9421faa4951fea07ebc35285811afa0f7905e8f45eaaae14c26c9dc6"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hdfs/assets/1.2.0-2.6.0-cdh5.9.1/dcos-hdfs-darwin"
         }
       },
-      "linux":{
-        "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"fe937feb04f15141ed0b58085662198321539b6b90d4d44a0b8373f5ab0f9508" } ],
-          "kind":"executable",
-          "url":"https://downloads.mesosphere.com/hdfs/assets/1.2.0-2.6.0-cdh5.9.1/dcos-hdfs-linux"
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "fe937feb04f15141ed0b58085662198321539b6b90d4d44a0b8373f5ab0f9508"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hdfs/assets/1.2.0-2.6.0-cdh5.9.1/dcos-hdfs-linux"
         }
       },
-      "windows":{
-        "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"2351db3687756ea8cd8a71eb39f502ddcd6b5e7886b65b6e674d1e5cf4ea1851" } ],
-          "kind":"executable",
-          "url":"https://downloads.mesosphere.com/hdfs/assets/1.2.0-2.6.0-cdh5.9.1/dcos-hdfs.exe"
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "2351db3687756ea8cd8a71eb39f502ddcd6b5e7886b65b6e674d1e5cf4ea1851"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hdfs/assets/1.2.0-2.6.0-cdh5.9.1/dcos-hdfs.exe"
         }
       }
     }
