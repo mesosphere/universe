@@ -17,31 +17,46 @@
     }
   },
   "images": {
-    "icon-small": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Small.jpg",
-    "icon-medium": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Medium.jpg",
-    "icon-large": "https://s3-us-west-1.amazonaws.com/dcos-dse-pkg/image/DS_Big.png"
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/beta-dse-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/beta-dse-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/beta-dse-icon-large.png"
   },
-  "cli":{
-    "binaries":{
-      "darwin":{
-        "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"5ce6c6f0c0a00c89b0c1bcdb532b591b0da7dc4b9b7e293736d3c2d497dc3072" } ],
-          "kind":"executable",
-          "url":"https://downloads.mesosphere.com/dse/assets/1.1.6-5.0.7-beta/dcos-dse-darwin"
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "5ce6c6f0c0a00c89b0c1bcdb532b591b0da7dc4b9b7e293736d3c2d497dc3072"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/dse/assets/1.1.6-5.0.7-beta/dcos-dse-darwin"
         }
       },
-      "linux":{
-        "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"09b9e795fc3f6e0d37316a1383a196af71540ae35506db74e3c0360b2a976f62" } ],
-          "kind":"executable",
-          "url":"https://downloads.mesosphere.com/dse/assets/1.1.6-5.0.7-beta/dcos-dse-linux"
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "09b9e795fc3f6e0d37316a1383a196af71540ae35506db74e3c0360b2a976f62"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/dse/assets/1.1.6-5.0.7-beta/dcos-dse-linux"
         }
       },
-      "windows":{
-        "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"f451d8af1738110f9974a6a0b2b991d6970f791aeb4f39a54869a9a9f1ed17e0" } ],
-          "kind":"executable",
-          "url":"https://downloads.mesosphere.com/dse/assets/1.1.6-5.0.7-beta/dcos-dse.exe"
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "f451d8af1738110f9974a6a0b2b991d6970f791aeb4f39a54869a9a9f1ed17e0"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/dse/assets/1.1.6-5.0.7-beta/dcos-dse.exe"
         }
       }
     }
