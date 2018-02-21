@@ -131,6 +131,11 @@
                 "docker-credentials-uri": {
                     "description": "An optional URI to be fetched and extracted that contains docker credentials (e.g. file:///etc/docker/docker.tar.gz).",
                     "type": "string"
+                },
+                "content-security-policy": {
+                    "description": "Jenkins Content Security Policy (see: https://wiki.jenkins.io/display/JENKINS/Configuring+Content+Security+Policy)",
+                    "type": "string",
+                    "default": "sandbox; default-src 'none'; img-src 'self'; style-src 'self';"
                 }
             }
         }
