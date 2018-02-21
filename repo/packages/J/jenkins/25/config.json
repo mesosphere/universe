@@ -6,7 +6,7 @@
             "type": "object",
             "properties": {
                 "name": {
-                    "description": "The name of the service to display in the DC/OS dashboard.",
+                    "description": "The name of the service to display in the DC/OS dashboard. Cannot contain any of the following: uppercases, underscores, slashes, #s",
                     "type": "string",
                     "default": "jenkins"
                 },
