@@ -1,0 +1,74 @@
+{
+    "id": "{{datadog.app_id}}",
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            {{#datadog.use_agent_5}}
+            "image": "{{resource.assets.container.docker.agent5}}",
+            {{/datadog.use_agent_5}}
+            {{^datadog.use_agent_5}}
+            "image": "{{resource.assets.container.docker.agent6}}",
+            "forcePullImage": true,
+            {{/datadog.use_agent_5}}
+            "parameters": [
+                {
+                    "key": "env", "value": "DD_API_KEY={{datadog.api_key}}"
+                },
+                {{#datadog.use_agent_5}}
+                {
+                    "key": "env", "value": "SD_BACKEND=docker"
+                },
+                {{/datadog.use_agent_5}}
+                {{#datadog.dogstatsd.non_local_traffic}}
+                {
+                    "key": "env", "value": "DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true"
+                },
+                {{/datadog.dogstatsd.non_local_traffic}}
+                {
+                    "key": "env", "value": "MESOS_SLAVE=true"
+                }
+            ],
+            "portMappings": [
+                {{#datadog.dogstatsd.non_local_traffic}}
+                { "hostPort": {{datadog.dogstatsd.port}}, "containerPort": 8125, "protocol": "udp" }
+                {{/datadog.dogstatsd.non_local_traffic}}
+            ],
+            "network": "BRIDGE"
+        },
+        "volumes": [
+            {
+                "containerPath": "/var/run/docker.sock",
+                "hostPath": "/var/run/docker.sock",
+                "mode": "RO"
+            },
+            {
+                "containerPath": "/host/proc",
+                "hostPath": "/proc",
+                "mode": "RO"
+            },
+            {
+                "containerPath": "/host/sys/fs/cgroup",
+                "hostPath": "/sys/fs/cgroup",
+                "mode": "RO"
+            }
+        ]
+    },
+    "cpus": {{datadog.cpus}},
+    "mem": {{datadog.mem}},
+    "instances": {{datadog.instances}},
+    "acceptedResourceRoles": ["slave_public", "*"],
+    "constraints": [
+        ["hostname", "UNIQUE"],
+        ["hostname", "GROUP_BY"]
+    ],
+    "healthChecks": [
+        {
+            "protocol": "COMMAND",
+            "command": { "value": "/probe.sh" },
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3
+        }
+    ]
+}
