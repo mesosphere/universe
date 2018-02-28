@@ -8,31 +8,46 @@
     }
   },
   "images": {
-    "icon-small": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-small.png?raw=true",
-    "icon-medium": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-medium.png?raw=true",
-    "icon-large": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-large.png?raw=true"
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/hello-world-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/hello-world-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/hello-world-icon-large.png"
   },
-  "cli":{
-    "binaries":{
-      "darwin":{
-        "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"d5762423d399761ec37197d4bc1dec611d7437a4741280749587bf866103d624" } ],
-          "kind":"executable",
-          "url":"https://downloads.mesosphere.com/hello-world/assets/1.0.0/dcos-hello-world-darwin"
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "d5762423d399761ec37197d4bc1dec611d7437a4741280749587bf866103d624"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hello-world/assets/1.0.0/dcos-hello-world-darwin"
         }
       },
-      "linux":{
-        "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"208cc975aed41b684c3aa92791250616f949fddbefed6f1e628259978bdea0a9" } ],
-          "kind":"executable",
-          "url":"https://downloads.mesosphere.com/hello-world/assets/1.0.0/dcos-hello-world-linux"
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "208cc975aed41b684c3aa92791250616f949fddbefed6f1e628259978bdea0a9"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hello-world/assets/1.0.0/dcos-hello-world-linux"
         }
       },
-      "windows":{
-        "x86-64":{
-          "contentHash":[ { "algo":"sha256", "value":"061664d23d64e8cb21bc80af94c4244eb088e4bfaa30125e2c15debf138b9be7" } ],
-          "kind":"executable",
-          "url":"https://downloads.mesosphere.com/hello-world/assets/1.0.0/dcos-hello-world.exe"
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "061664d23d64e8cb21bc80af94c4244eb088e4bfaa30125e2c15debf138b9be7"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hello-world/assets/1.0.0/dcos-hello-world.exe"
         }
       }
     }

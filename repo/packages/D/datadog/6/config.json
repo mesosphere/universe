@@ -1,0 +1,65 @@
+{
+    "properties": {
+        "datadog": {
+            "description": "Datadog Agent configuration",
+            "properties": {
+                "use_agent_5": {
+                    "description": "Install version 5.21 of the Agent",
+                    "type": "boolean",
+                    "default": false
+                },
+                "api_key": {
+                    "description": "Your Datadog API key.",
+                    "type": "string"
+                },
+                "app_id": {
+                    "default": "datadog-agent",
+                    "description": "Marathon Application ID",
+                    "type": "string"
+                },
+                "instances": {
+                    "default": 1,
+                    "description": "Number of Marathon instances to run.",
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "cpus": {
+                    "default": 0.05,
+                    "description": "CPU shares to allocate to each Marathon instance.",
+                    "minimum": 0.0,
+                    "type": "number"
+                },
+                "mem": {
+                    "default": 256.0,
+                    "description": "Memory (MB) to allocate to each Marathon task.",
+                    "minimum": 256.0,
+                    "type": "number"
+                },
+                "dogstatsd": {
+                  "description": "Dogstatsd (custom metrics) options",
+                  "type": "object",
+                  "properties": {
+                    "non_local_traffic": {
+                        "default": false,
+                        "description": "Allow statsD non-local traffic",
+                        "type": "boolean"
+                    },
+                    "port": {
+                        "default": 8125,
+                        "description": "UDP port to listen to",
+                        "type": "integer"
+                    }
+                  }
+                }
+            },
+            "required": [
+                "api_key"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "datadog"
+    ],
+    "type": "object"
+}

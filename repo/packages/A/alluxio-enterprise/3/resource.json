@@ -1,0 +1,59 @@
+{
+  "assets": {
+    "uris": {
+      "alluxio-agent": "https://alluxio-dcos-release.s3.amazonaws.com/agent",
+      "bootstrap-zip": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.1.0-1.7.0/bootstrap.zip",
+      "custom-download-url": "",
+      "executor-zip": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.1.0-1.7.0/executor.zip",
+      "java-tar-gz": "https://alluxio-dcos-release.s3.amazonaws.com/jdk/jdk1.8.0_144_jce_policy.tar.gz",
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u152-linux-x64-jce-unlimited.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-master-28f8827.tar.gz",
+      "scheduler-zip": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.1.0-1.7.0/alluxio-enterprise-scheduler.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/alluxio-enterprise-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/alluxio-enterprise-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/alluxio-enterprise-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "cd2ed3b5d50618f117ea61d6479c34b0d435c71c3e8ece6a4cc32ba3e8b88813"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.1.0-1.7.0/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "20f58fc033e4d04aacc5d2516b6ce2efa05b8ec73e91b19317f6c6c3e0bfd497"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.1.0-1.7.0/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "d178da0f6d009b8e3a5a140f4bc6c860aec470c372a7400f6bdf1a94e4eec733"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.1.0-1.7.0/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

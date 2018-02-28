@@ -3,7 +3,7 @@
     "uris": {
       "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u152-linux-x64-jce-unlimited.tar.gz",
       "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-master-28f8827.tar.gz",
-      "bootstrap-zip": "https://downloads.mesosphere.com/confluent-kafka/assets/2.1.1-4.0.0e-beta/bootstrap.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.31.2/bootstrap.zip",
       "kafka-tgz": "https://packages.confluent.io/archive/4.0/confluent-4.0.0-2.11.tar.gz",
       "kafka-jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u152-linux-x64-jce-unlimited.tar.gz",
       "kafka-scheduler-zip": "https://downloads.mesosphere.com/confluent-kafka/assets/2.1.1-4.0.0e-beta/confluent-kafka-scheduler.zip",
@@ -16,8 +16,8 @@
     }
   },
   "images": {
-    "icon-small": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-small.png",
-    "icon-medium": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-medium.png",
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/beta-confluent-kafka-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/beta-confluent-kafka-icon-medium.png",
     "icon-large": "https://downloads.mesosphere.com/universe/assets/icon-service-kafka-large.png"
   },
   "cli": {

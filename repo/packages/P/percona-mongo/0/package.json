@@ -1,0 +1,25 @@
+{
+    "packagingVersion": "4.0",
+    "upgradesFrom": [
+        "*"
+    ],
+    "downgradesTo": [
+        "*"
+    ],
+    "minDcosReleaseVersion": "1.10",
+    "name": "percona-mongo",
+    "version": "0.1.0-3.4.10",
+    "maintainer": "mesosphere@percona.com",
+    "description": "Percona Server for MongoDB Replica Set on Mesosphere DC/OS",
+    "selected": false,
+    "framework": true,
+    "tags": [
+        "mongo",
+        "mongodb",
+        "percona",
+        "nosql"
+    ],
+    "postInstallNotes": "DC/OS Mongo is being installed!\n\n\tDocumentation: https://www.percona.com/software/mongo-database/documentation and https://docs.mongodb.com/manual\n\tMongoDB Release Notes: https://docs.mongodb.com/manual/release-notes",
+    "postUninstallNotes": "DC/OS Mongo is being uninstalled.",
+    "preInstallNotes": "Community packages are unverified and unreviewed content for the community but we are tracking to make it a certified framework.\n\nDefault configuration requires 3 agent nodes each with: 1.0 CPU | 1024 MB MEM\n\nSupported Percona Server for MongoDB versions: 3.4.10. Use other versions at your own risk!\n\nNote: MongoDB replica sets with less than 3 nodes are unsupported and untested!\n\nFramework Documentation: https://github.com/dcos/examples/tree/master/percona-mongo"
+}
