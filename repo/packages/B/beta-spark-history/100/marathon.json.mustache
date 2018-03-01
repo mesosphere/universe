@@ -65,6 +65,17 @@
             "maxConsecutiveFailures": 3
         }
     ],
+{{#service.constraints}}
+    "constraints": [
+      {{#.}}
+        [
+          "{{attribute}}"
+         ,"{{operator}}"
+         {{#value}},"{{value}}"{{/value}}
+        ]{{^last}},{{/last}}
+      {{/.}}
+    ],
+{{/service.constraints}}
     "labels": {
         "DCOS_SERVICE_NAME": "{{service.name}}",
         "DCOS_SERVICE_PORT_INDEX": "0",

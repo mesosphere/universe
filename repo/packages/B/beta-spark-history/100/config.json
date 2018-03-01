@@ -10,6 +10,30 @@
           "description": "The app name for the Spark History Server.  The service will be available at http://<dcos_url>/service/<name>/",
           "type": "string"
         },
+        "constraints": {
+          "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "attribute": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string",
+                "enum": ["UNIQUE", "CLUSTER", "GROUP_BY", "LIKE", "UNLIKE"]
+              },
+              "value": {
+                "type": "string"
+              },
+              "last": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          },
+          "default": []
+        },
         "cpus": {
           "default": 1,
           "description": "CPU shares",
