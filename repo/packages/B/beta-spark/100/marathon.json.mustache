@@ -140,6 +140,17 @@
         "expungeAfterSeconds": 0,
         "inactiveAfterSeconds": 0
     },
+{{#service.constraints}}
+    "constraints": [
+      {{#.}}
+        [
+          "{{attribute}}"
+         ,"{{operator}}"
+         {{#value}},"{{value}}"{{/value}}
+        ]{{^last}},{{/last}}
+      {{/.}}
+    ],
+{{/service.constraints}}
     "labels": {
 {{#hdfs.config-url}}
         "SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",
