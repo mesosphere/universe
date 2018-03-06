@@ -6,7 +6,7 @@
         "kubedns_dnsmasq": "gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.8",
         "kubedns_sidecar": "gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.8",
         "metrics_server": "gcr.io/google_containers/metrics-server-amd64:v0.2.1",
-        "dashboard": "gcr.io/google_containers/kubernetes-dashboard-amd64:v1.6.3",
+        "dashboard": "gcr.io/google_containers/kubernetes-dashboard-amd64:v1.8.3",
         "pause": "gcr.io/google_containers/pause-amd64:3.0"
       }
     },
