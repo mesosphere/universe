@@ -128,6 +128,12 @@
               "minimum": 1024
             }
           }
+        },
+        "placement": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes, e.g. 'hostname:UNIQUE'.",
+          "type": "string",
+          "default": "hostname:UNIQUE"
         }
       }
     },
@@ -167,6 +173,12 @@
             "MOUNT"
           ],
           "default": "ROOT"
+        },
+        "placement": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes, e.g. 'hostname:UNIQUE'.",
+          "type": "string",
+          "default": "hostname:UNIQUE"
         }
       }
     },
@@ -185,6 +197,12 @@
           "description": "Scheduler instance RAM requirements (in MB).",
           "type": "integer",
           "default": 512
+        },
+        "placement": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes, e.g. 'hostname:UNIQUE'.",
+          "type": "string",
+          "default": "hostname:UNIQUE"
         }
       }
     },
@@ -203,6 +221,12 @@
           "description": "Controller Manager instance RAM requirements (in MB).",
           "type": "integer",
           "default": 512
+        },
+        "placement": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes, e.g. 'hostname:UNIQUE'.",
+          "type": "string",
+          "default": "hostname:UNIQUE"
         }
       }
     },
@@ -221,6 +245,12 @@
           "description": "API Server instance RAM requirements (in MB).",
           "type": "integer",
           "default": 1024
+        },
+        "placement": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes, e.g. 'hostname:UNIQUE'.",
+          "type": "string",
+          "default": "hostname:UNIQUE"
         }
       }
     },
