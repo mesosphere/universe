@@ -1,0 +1,182 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && ./bootstrap -resolve=false -template=false && ./kubernetes-scheduler/bin/kubernetes ./kubernetes-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    "PACKAGE_NAME": "kubernetes",
+    "PACKAGE_VERSION": "1.0.0-1.9.3",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1520467622989",
+    "PACKAGE_BUILD_TIME_STR": "Thu Mar 08 2018 00:07:02 +0000",
+    "MESOS_API_VERSION": "V1",
+
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+    "SERVICE_PRINCIPAL": "{{service.service_account}}",
+
+    "ETCD_URI": "{{resource.assets.uris.etcd_uri}}",
+    "ETCD_VERSION": "v3.3.1",
+    "ETCD_QUOTA_BACKEND_BYTES": "3221225472",
+    "ETCD_ELECTION_TIMEOUT": "5000",
+    "ETCD_HEARTBEAT_INTERVAL": "250",
+    {{#kubernetes.high_availability}}
+    "ETCD_COUNT": "3",
+    {{/kubernetes.high_availability}}
+    {{^kubernetes.high_availability}}
+    "ETCD_COUNT": "1",
+    {{/kubernetes.high_availability}}
+    "ETCD_PLACEMENT": "hostname:UNIQUE",
+    "ETCD_CPUS": "{{etcd.cpus}}",
+    "ETCD_MEM": "{{etcd.mem}}",
+    "ETCD_DATA_DISK": "{{etcd.data_disk}}",
+    "ETCD_WAL_DISK": "{{etcd.wal_disk}}",
+    "ETCD_DISK_TYPE": "{{etcd.disk_type}}",
+
+    "KUBERNETES_SERVICE_CIDR": "{{kubernetes.service_cidr}}",
+    "KUBERNETES_NETWORK_PROVIDER": "{{kubernetes.network_provider}}",
+    "KUBERNETES_NODE_COUNT": "{{kubernetes.node_count}}",
+    "KUBERNETES_CLOUD_PROVIDER": "{{kubernetes.cloud_provider}}",
+    "KUBERNETES_PUBLIC_NODE_COUNT": "{{kubernetes.public_node_count}}",
+    "KUBE_ALLOCATABLE_CPUS": "{{kubernetes.reserved_resources.kube_cpus}}",
+    "KUBE_ALLOCATABLE_MEM": "{{kubernetes.reserved_resources.kube_mem}}",
+    "KUBERNETES_NODE_DISK": "{{kubernetes.reserved_resources.kube_disk}}",
+    "KUBE_RESERVED_CPUS": "{{kubernetes.reserved_resources.system_cpus}}",
+    "KUBE_RESERVED_MEM": "{{kubernetes.reserved_resources.system_mem}}",
+    "KUBERNETES_NODE_PLACEMENT": "hostname:UNIQUE",
+    "KUBERNETES_CLUSTER_DNS": "198.51.100.4",
+    "KUBERNETES_CLUSTER_DOMAIN": "cluster.local",
+    "KUBELET_MAX_PODS": "100",
+    "KUBELET_PODS_PER_CORE": "10",
+
+    "APISERVER_URI": "{{resource.assets.uris.apiserver_uri}}",
+    {{#kubernetes.high_availability}}
+    "APISERVER_COUNT": "3",
+    {{/kubernetes.high_availability}}
+    {{^kubernetes.high_availability}}
+    "APISERVER_COUNT": "1",
+    {{/kubernetes.high_availability}}
+    "APISERVER_PLACEMENT": "hostname:UNIQUE",
+    "APISERVER_CPUS": "{{apiserver.cpus}}",
+    "APISERVER_MEM": "{{apiserver.mem}}",
+    "APISERVER_MAX_REQUESTS_INFLIGHT": "1200",
+    "APISERVER_MAX_MUTATING_REQUESTS_INFLIGHT": "400",
+
+    "CONTROLLER_MANAGER_URI": "{{resource.assets.uris.controller_manager_uri}}",
+    {{#kubernetes.high_availability}}
+    "CONTROLLER_MANAGER_COUNT": "3",
+    {{/kubernetes.high_availability}}
+    {{^kubernetes.high_availability}}
+    "CONTROLLER_MANAGER_COUNT": "1",
+    {{/kubernetes.high_availability}}
+    "CONTROLLER_MANAGER_PLACEMENT": "hostname:UNIQUE",
+    "CONTROLLER_MANAGER_CPUS": "{{controller_manager.cpus}}",
+    "CONTROLLER_MANAGER_MEM": "{{controller_manager.mem}}",
+
+    "SCHEDULER_URI": "{{resource.assets.uris.scheduler_uri}}",
+    {{#kubernetes.high_availability}}
+    "SCHEDULER_COUNT": "3",
+    {{/kubernetes.high_availability}}
+    {{^kubernetes.high_availability}}
+    "SCHEDULER_COUNT": "1",
+    {{/kubernetes.high_availability}}
+    "SCHEDULER_PLACEMENT": "hostname:UNIQUE",
+    "SCHEDULER_CPUS": "{{scheduler.cpus}}",
+    "SCHEDULER_MEM": "{{scheduler.mem}}",
+
+    "KUBE_PROXY_URI": "{{resource.assets.uris.kube_proxy_uri}}",
+    "KUBE_PROXY_CPUS": "{{kube_proxy.cpus}}",
+    "KUBE_PROXY_MEM": "{{kube_proxy.mem}}",
+
+    "COREDNS_URI": "{{resource.assets.uris.coredns_uri}}",
+
+    "KUBELET_URI": "{{resource.assets.uris.kubelet_uri}}",
+
+    "KUBECTL_URI": "{{resource.assets.uris.kubectl_uri}}",
+
+    "DOCKER_URI": "{{resource.assets.uris.docker_uri}}",
+    "SOCAT_URI": "{{resource.assets.uris.socat_uri}}",
+
+    "JAVA_URI": "{{resource.assets.uris.jre_tar_gz}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor_zip}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap_zip}}",
+
+    "KUBELET_RESOURCE_WATCHDOG_URI": "{{resource.assets.uris.kubelet_resource_watchdog}}",
+    "CONNTRACK_URI": "{{resource.assets.uris.conntrack}}",
+
+    "KUBEDNS_DOCKER_IMAGE": "{{resource.assets.container.docker.kubedns}}",
+    "KUBEDNS_DNSMASQ_DOCKER_IMAGE": "{{resource.assets.container.docker.kubedns_dnsmasq}}",
+    "KUBEDNS_SIDECAR_DOCKER_IMAGE": "{{resource.assets.container.docker.kubedns_sidecar}}",
+
+    "METRICS_SERVER_DOCKER_IMAGE": "{{resource.assets.container.docker.metrics_server}}",
+
+    "DASHBOARD_DOCKER_IMAGE": "{{resource.assets.container.docker.dashboard}}",
+
+    "PAUSE_DOCKER_IMAGE": "{{resource.assets.container.docker.pause}}",
+
+    "MARATHON_URL": "http://marathon.mesos:8080",
+    "STATIC_SOCAT_URI": "{{resource.assets.uris.static_socat_uri}}",
+
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.service_account_secret}}
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos_bundle_tar_gz}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre_tar_gz}}",
+    "{{resource.assets.uris.scheduler_zip}}",
+    "{{resource.assets.uris.libmesos_bundle_tar_gz}}",
+    "{{resource.assets.uris.bootstrap_zip}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/deploy",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    },
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/recovery",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}
