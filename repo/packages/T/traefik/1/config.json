@@ -1,0 +1,184 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "service": {
+      "properties": {
+        "name": {
+          "default": "traefik",
+          "description": "Name of the Traefik instance",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares to allocate to each Traefik instance.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 128.0,
+          "description": "Memory (MB) to allocate to each Traefik task.",
+          "minimum": 64.0,
+          "type": "number"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "user": {
+          "description": "The user that runs the Traefik service and owns the Mesos sandbox.",
+          "type": "string",
+          "default": "root"
+        },
+        "role": {
+          "default": "slave_public",
+          "description": "Deploy Traefik only on nodes with this role.",
+          "type": "string"
+        },
+        "minimumHealthCapacity": {
+          "default": 0.0,
+          "description": "Minimum health capacity.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "maximumOverCapacity": {
+          "default": 0.2,
+          "description": "Maximum over capacity.",
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": ["cpus", "mem", "instances", "name"],
+      "type": "object"
+    },
+    "traefik": {
+      "description": "Traefik configuration",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "http-address": {
+          "default": "",
+          "description": "Leave empty for listening on all interfaces.",
+          "type": "string"
+        },
+        "http-port": {
+          "default": 80,
+          "description": "HTTP port.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "https-enable": {
+          "default": true,
+          "description": "Enable HTTPS endpoint.",
+          "type": "boolean"
+        },
+        "https-address": {
+          "default": "",
+          "description": "Leave empty for listening on all interfaces.",
+          "type": "string"
+        },
+        "https-port": {
+          "default": 443,
+          "description": "HTTPS port.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "admin-enable": {
+          "default": true,
+          "description": "Enable admin (web UI) endpoint.",
+          "type": "boolean"
+        },
+        "admin-address": {
+          "default": "",
+          "description": "Leave empty for listening on all interfaces.",
+          "type": "string"
+        },
+        "admin-port": {
+          "default": 8080,
+          "description": "Web admin port.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "secret-name": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "config-file": {
+          "description": "Path to additional Traefik config file. Directive will be ignored if file doesn't exist upon service start.",
+          "type": "string",
+          "default": "/etc/traefik/rules.toml"
+        },
+        "watch-config-file": {
+          "description": "Watch config file for changes.",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "marathon": {
+      "description": "Marathon configuration",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enable": {
+          "default": true,
+          "description": "Use Marathon endpoint.",
+          "type": "boolean"
+        },
+        "endpoint": {
+          "default": "http://marathon.mesos:8080",
+          "description": "Marathon endpoint, multiple instances separate by comma.",
+          "type": "string"
+        },
+        "watch": {
+          "default": true,
+          "description": "Watch changes in Marathon.",
+          "type": "boolean"
+        },
+        "domain": {
+          "default": "marathon.localhost",
+          "description": "Default domain. Can be overridden by setting the 'traefik.domain' label on an application.",
+          "type": "string"
+        },
+        "marathonlb-compatibility": {
+          "default": false,
+          "description": "Enable compatibility with marathon-lb labels.",
+          "type": "boolean"
+        },
+        "expose": {
+          "default": false,
+          "description": "Expose Marathon apps by default in Traefik.",
+          "type": "boolean"
+        },
+        "respect-readiness-checks": {
+          "default": true,
+          "description": "During deployment Traefik will respect readiness checks if defined in Marathon.",
+          "type": "boolean"
+        },
+        "groups-as-subdomains": {
+          "default": false,
+          "description": "Convert Marathon groups to subdomains.",
+          "type": "boolean"
+        },
+        "dialer-timeout": {
+          "default": "60s",
+          "description": "Amount of time to allow the Marathon provider to wait to open a TCP connection to a Marathon master.",
+          "type": "string"
+        },
+        "keep-alive": {
+          "default": "10s",
+          "description": "Set the TCP Keep Alive interval for the Marathon HTTP Client.",
+          "type": "string"
+        },
+        "force-task-hostname": {
+          "default": false,
+          "description": "By default, a task's IP address (as returned by the Marathon API) is used as backend server if an IP-per-task configuration can be found; otherwise, the name of the host running the task is used. The latter behavior can be enforced by enabling this switch.",
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "type": "object"
+}
