@@ -1,0 +1,18 @@
+{
+  "description": "Apache Hadoop",
+  "framework": true,
+  "maintainer": "support@portworx.com",
+  "minDcosReleaseVersion": "1.9",
+  "name": "portworx-hadoop",
+  "packagingVersion": "4.0",
+  "postInstallNotes": "DC/OS Apache HDFS Service is being installed.\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/hadoop-hdfs.html",
+  "postUninstallNotes": "DC/OS Apache HDFS Service is being uninstalled.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required.",
+  "preInstallNotes": "Default configuration requires 5 agent nodes each with: CPU: 0.9 | Memory: 6144MB\n\nMore specifically, each instance type requires:\n\nJournal node: 3 instances | 0.3 CPU | 2048 MB MEM\n\nName node: 2 instances | 0.3 CPU | 2048 MB MEM\n\nZKFC node: 2 instances | 0.3 CPU | 2048 MB MEM\n\nData node: 3 instances | 0.3 CPU | 2048 MB MEM\n\nPortworx should be installed on the Private Agents to be able to provision volumes.\n\nCommunity packages are unverified and unreviewed content from the community.",
+  "selected": false,
+  "tags": [
+    "hdfs",
+    "hadoop",
+    "portworx"
+  ],
+  "version": "1.1-2.6.0-bf399c5"
+}

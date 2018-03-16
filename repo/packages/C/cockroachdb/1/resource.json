@@ -1,0 +1,57 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u152-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-master-28f8827.tar.gz",
+      "scheduler-zip": "https://dcos-cockroachdb.s3.amazonaws.com/dcos/release/1.1.3-1.1.3/cockroachdb-scheduler.zip",
+      "executor-zip": "https://dcos-cockroachdb.s3.amazonaws.com/dcos/release/1.1.3-1.1.3/executor.zip",
+      "bootstrap-zip": "https://dcos-cockroachdb.s3.amazonaws.com/dcos/release/1.1.3-1.1.3/bootstrap.zip",
+      "cockroach-binary": "https://binaries.cockroachdb.com"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/cockroachdb-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/cockroachdb-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/cockroachdb-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "f5745070204246de70e9b7c4f671409a6c393e0c3f0f8810145067a79cc4bf1f"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://dcos-cockroachdb.s3.amazonaws.com/dcos/release/1.1.3-1.1.3/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "fdf652995cee7aa004494f132e1458e4c939cd9d13b8a9bc4cfb153e45a10ceb"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://dcos-cockroachdb.s3.amazonaws.com/dcos/release/1.1.3-1.1.3/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "f542e37ca285825c72a3103f7b7f4e3c687124422d60656563dd7a2cb93b578e"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://dcos-cockroachdb.s3.amazonaws.com/dcos/release/1.1.3-1.1.3/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

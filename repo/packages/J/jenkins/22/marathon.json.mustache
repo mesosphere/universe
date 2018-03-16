@@ -1,0 +1,92 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  {{#security.secret-name}}
+  "secrets": {
+      "serviceCredential": {
+          "source": "{{security.secret-name}}"
+      }
+  },
+  {{/security.secret-name}}
+  "env": {
+      "JENKINS_AGENT_ROLE": "{{roles.jenkins-agent-role}}",
+      "JENKINS_AGENT_USER": "{{service.user}}",
+      "JENKINS_FRAMEWORK_NAME": "{{service.name}}",
+      {{#security.secret-name}}
+          "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+          "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+          "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+      {{/security.secret-name}}
+      "JENKINS_CONTEXT": "/service/{{service.name}}",
+      "JENKINS_MESOS_MASTER": "{{advanced.mesos-master}}",
+      {{#networking.virtual-host}}
+      "JENKINS_ROOT_URL": "{{#networking.https-redirect}}https://{{/networking.https-redirect}}{{^networking.https-redirect}}http://{{/networking.https-redirect}}{{networking.virtual-host}}/service/{{service.name}}",
+      {{/networking.virtual-host}}
+      "JVM_OPTS": "{{advanced.jvm-opts}}",
+      "JENKINS_OPTS": "{{advanced.jenkins-opts}}",
+      "SSH_KNOWN_HOSTS": "{{networking.known-hosts}}"
+  },
+  "portDefinitions": [
+      {"port": 0, "protocol": "tcp", "name": "nginx"},
+      {"port": 0, "protocol": "tcp", "name": "jenkins"}
+  ],
+  "container": {
+       "type": "DOCKER",
+       "docker": {
+       {{#advanced.docker-image}}
+           "image": "{{advanced.docker-image}}",
+       {{/advanced.docker-image}}
+       {{^advanced.docker-image}}
+           "image": "{{resource.assets.container.docker.jenkins-324-2602}}",
+       {{/advanced.docker-image}}
+           "network" : "HOST"
+       },
+       "volumes": [
+           {
+               "containerPath": "/var/jenkins_home",
+               "hostPath": "{{storage.host-volume}}/{{service.name}}",
+               "mode": "RW"
+           }
+       ]
+   },
+   {{#advanced.docker-credentials-uri}}
+   "fetch": [
+      {
+          "uri": "{{advanced.docker-credentials-uri}}",
+          "executable": false,
+          "extract": true
+      }
+   ],{{/advanced.docker-credentials-uri}}
+   "acceptedResourceRoles": [ "{{roles.jenkins-master-role}}" ],
+   "healthChecks": [
+    {
+      "path": "/service/{{service.name}}",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "labels": {
+    {{#networking.virtual-host}}
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_VHOST":"{{networking.virtual-host}}",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "{{networking.https-redirect}}",
+    {{/networking.virtual-host}}
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }{{#storage.pinned-hostname}},
+  "constraints": [["hostname", "CLUSTER", "{{storage.pinned-hostname}}"]]
+  {{/storage.pinned-hostname}}
+}

@@ -1,0 +1,211 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "user":"{{service.user}}",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" &&  ./kafka-scheduler/bin/kafka ./kafka-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+    {{#brokers.kill_grace_period}}
+    "BROKER_KILL_GRACE_PERIOD": "{{brokers.kill_grace_period}}",
+    {{/brokers.kill_grace_period}}
+    "CMD_PREFIX": "{{service.cmd_prefix}}",
+    "SECRET_NAME": "{{service.secret_name}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "KAFKA_URI": "{{resource.assets.uris.kafka-tgz}}",
+    "KAFKA_JAVA_URI": "{{resource.assets.uris.kafka-jre-tar-gz}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "MESOS_API_VERSION": "{{service.mesos_api_version}}",
+    "KAFKA_STATSD_URI": "{{resource.assets.uris.kafka-statsd-jar}}",
+    "CLIENT_STATSD_URI": "{{resource.assets.uris.statsd-client-jar}}",
+
+    "PLACEMENT_CONSTRAINTS": "{{service.placement_constraint}}",
+    "DEPLOY_STRATEGY":"{{service.deploy_strategy}}",
+    "BROKER_COUNT": "{{brokers.count}}",
+    "BROKER_CPUS": "{{brokers.cpus}}",
+    "BROKER_MEM": "{{brokers.mem}}",
+    "BROKER_DISK_SIZE": "{{brokers.disk}}",
+    "BROKER_DISK_TYPE": "{{brokers.disk_type}}",
+    "BROKER_DISK_PATH": "{{brokers.disk_path}}",
+    "BROKER_JAVA_HEAP": "{{brokers.heap.size}}",
+    "BROKER_PORT": "{{brokers.port}}",
+
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    {{/service.service_account_secret}}
+
+    {{#service.virtual_network_enabled}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+
+    {{#service.tls}}
+    "BROKER_PORT_TLS": "{{brokers.port_tls}}",
+    "TASKCFG_ALL_KAFKA_ENABLE_TLS": "{{service.tls}}",
+    {{#service.tls_allow_plaintext}}
+    "TASKCFG_ALL_KAFKA_ALLOW_PLAINTEXT": "{{service.tls_allow_plaintext}}",
+    {{/service.tls_allow_plaintext}}
+    {{/service.tls}}
+
+    "CONFIG_TEMPLATE_PATH": "kafka-scheduler",
+    "KAFKA_VERSION_PATH": "kafka_2.11-0.11.0.0",
+
+    "KAFKA_ZOOKEEPER_URI": "{{kafka.kafka_zookeeper_uri}}",
+
+    {{#kafka.kafka_advertise_host_ip}}
+    "TASKCFG_ALL_KAFKA_ADVERTISE_HOST" : "set",
+    {{/kafka.kafka_advertise_host_ip}}
+
+    "TASKCFG_ALL_KAFKA_RESERVED_BROKER_MAX_ID": "{{kafka.reserved_broker_max_id}}",
+    "TASKCFG_ALL_KAFKA_OFFSETS_TOPIC_COMPRESSION_CODEC": "{{kafka.offsets_topic_compression_codec}}",
+    "TASKCFG_ALL_KAFKA_REPLICA_FETCH_MIN_BYTES": "{{kafka.replica_fetch_min_bytes}}",
+    "TASKCFG_ALL_KAFKA_CONTROLLED_SHUTDOWN_RETRY_BACKOFF_MS": "{{kafka.controlled_shutdown_retry_backoff_ms}}",
+    "TASKCFG_ALL_KAFKA_LOG_FLUSH_OFFSET_CHECKPOINT_INTERVAL_MS": "{{kafka.log_flush_offset_checkpoint_interval_ms}}",
+    "TASKCFG_ALL_KAFKA_OFFSETS_TOPIC_NUM_PARTITIONS": "{{kafka.offsets_topic_num_partitions}}",
+    "TASKCFG_ALL_KAFKA_MAX_CONNECTIONS_PER_IP_OVERRIDES": "{{kafka.max_connections_per_ip_overrides}}",
+    "TASKCFG_ALL_KAFKA_LEADER_IMBALANCE_CHECK_INTERVAL_SECONDS": "{{kafka.leader_imbalance_check_interval_seconds}}",
+    "TASKCFG_ALL_KAFKA_INTER_BROKER_PROTOCOL_VERSION": "{{kafka.inter_broker_protocol_version}}",
+    "TASKCFG_ALL_KAFKA_LOG_MESSAGE_FORMAT_VERSION": "{{kafka.log_message_format_version}}",
+    "TASKCFG_ALL_KAFKA_REPLICA_SOCKET_TIMEOUT_MS": "{{kafka.replica_socket_timeout_ms}}",
+    "TASKCFG_ALL_KAFKA_GROUP_MAX_SESSION_TIMEOUT_MS": "{{kafka.group_max_session_timeout_ms}}",
+    "TASKCFG_ALL_KAFKA_LOG_CLEANER_DELETE_RETENTION_MS": "{{kafka.log_cleaner_delete_retention_ms}}",
+    "TASKCFG_ALL_KAFKA_LOG_PREALLOCATE": "{{kafka.log_preallocate}}",
+    "TASKCFG_ALL_KAFKA_REPLICA_SOCKET_RECEIVE_BUFFER_BYTES": "{{kafka.replica_socket_receive_buffer_bytes}}",
+    "TASKCFG_ALL_KAFKA_OFFSET_METADATA_MAX_BYTES": "{{kafka.offset_metadata_max_bytes}}",
+    "TASKCFG_ALL_KAFKA_MESSAGE_MAX_BYTES": "{{kafka.message_max_bytes}}",
+    "TASKCFG_ALL_KAFKA_LOG_ROLL_JITTER_HOURS": "{{kafka.log_roll_jitter_hours}}",
+    "TASKCFG_ALL_KAFKA_OFFSETS_RETENTION_CHECK_INTERVAL_MS": "{{kafka.offsets_retention_check_interval_ms}}",
+    "TASKCFG_ALL_KAFKA_FETCH_PURGATORY_PURGE_INTERVAL_REQUESTS": "{{kafka.fetch_purgatory_purge_interval_requests}}",
+    "TASKCFG_ALL_KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS": "{{kafka.log_retention_check_interval_ms}}",
+    "TASKCFG_ALL_KAFKA_LOG_INDEX_INTERVAL_BYTES": "{{kafka.log_index_interval_bytes}}",
+    "TASKCFG_ALL_KAFKA_NUM_NETWORK_THREADS": "{{kafka.num_network_threads}}",
+    "TASKCFG_ALL_KAFKA_OFFSETS_COMMIT_TIMEOUT_MS": "{{kafka.offsets_commit_timeout_ms}}",
+    "TASKCFG_ALL_KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR": "{{kafka.offsets_topic_replication_factor}}",
+    "TASKCFG_ALL_KAFKA_REPLICA_FETCH_MAX_BYTES": "{{kafka.replica_fetch_max_bytes}}",
+    "TASKCFG_ALL_KAFKA_CONNECTIONS_MAX_IDLE_MS": "{{kafka.connections_max_idle_ms}}",
+    "TASKCFG_ALL_KAFKA_SOCKET_REQUEST_MAX_BYTES": "{{kafka.socket_request_max_bytes}}",
+    "TASKCFG_ALL_KAFKA_METRICS_REPORTERS": "{{kafka.kafka_metrics_reporters}}",
+    "TASKCFG_ALL_METRIC_REPORTERS": "{{kafka.metric_reporters}}",
+    "TASKCFG_ALL_KAFKA_METRICS_NUM_SAMPLES": "{{kafka.metrics_num_samples}}",
+    "TASKCFG_ALL_KAFKA_METRICS_SAMPLE_WINDOW_MS": "{{kafka.metrics_sample_window_ms}}",
+    "TASKCFG_ALL_KAFKA_NUM_PARTITIONS": "{{kafka.num_partitions}}",
+    "TASKCFG_ALL_KAFKA_REPLICA_LAG_TIME_MAX_MS": "{{kafka.replica_lag_time_max_ms}}",
+    "TASKCFG_ALL_KAFKA_LOG_CLEANER_IO_BUFFER_LOAD_FACTOR": "{{kafka.log_cleaner_io_buffer_load_factor}}",
+    "TASKCFG_ALL_KAFKA_OFFSETS_COMMIT_REQUIRED_ACKS": "{{kafka.offsets_commit_required_acks}}",
+    "TASKCFG_ALL_KAFKA_AUTO_CREATE_TOPICS_ENABLE": "{{kafka.auto_create_topics_enable}}",
+    "TASKCFG_ALL_KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE": "{{kafka.unclean_leader_election_enable}}",
+    "TASKCFG_ALL_KAFKA_REPLICA_FETCH_BACKOFF_MS": "{{kafka.replica_fetch_backoff_ms}}",
+    "TASKCFG_ALL_KAFKA_LOG_ROLL_HOURS": "{{kafka.log_roll_hours}}",
+    "TASKCFG_ALL_KAFKA_ZOOKEEPER_SESSION_TIMEOUT_MS": "{{kafka.zookeeper_session_timeout_ms}}",
+    "TASKCFG_ALL_KAFKA_PRODUCER_PURGATORY_PURGE_INTERVAL_REQUESTS": "{{kafka.producer_purgatory_purge_interval_requests}}",
+    "TASKCFG_ALL_KAFKA_GROUP_MIN_SESSION_TIMEOUT_MS": "{{kafka.group_min_session_timeout_ms}}",
+    "TASKCFG_ALL_KAFKA_LOG_INDEX_SIZE_MAX_BYTES": "{{kafka.log_index_size_max_bytes}}",
+    "TASKCFG_ALL_KAFKA_NUM_REPLICA_FETCHERS": "{{kafka.num_replica_fetchers}}",
+    "TASKCFG_ALL_KAFKA_MIN_INSYNC_REPLICAS": "{{kafka.min_insync_replicas}}",
+    "TASKCFG_ALL_KAFKA_LOG_FLUSH_INTERVAL_MESSAGES": "{{kafka.log_flush_interval_messages}}",
+    "TASKCFG_ALL_KAFKA_SOCKET_SEND_BUFFER_BYTES": "{{kafka.socket_send_buffer_bytes}}",
+    "TASKCFG_ALL_KAFKA_AUTO_LEADER_REBALANCE_ENABLE": "{{kafka.auto_leader_rebalance_enable}}",
+    "TASKCFG_ALL_KAFKA_LOG_CLEANER_ENABLE": "{{kafka.log_cleaner_enable}}",
+    "TASKCFG_ALL_KAFKA_QUEUED_MAX_REQUESTS": "{{kafka.queued_max_requests}}",
+    "TASKCFG_ALL_KAFKA_CONTROLLED_SHUTDOWN_MAX_RETRIES": "{{kafka.controlled_shutdown_max_retries}}",
+    "TASKCFG_ALL_KAFKA_OFFSETS_LOAD_BUFFER_SIZE": "{{kafka.offsets_load_buffer_size}}",
+    "TASKCFG_ALL_KAFKA_LOG_RETENTION_BYTES": "{{kafka.log_retention_bytes}}",
+    "TASKCFG_ALL_KAFKA_NUM_IO_THREADS": "{{kafka.num_io_threads}}",
+    "TASKCFG_ALL_KAFKA_CONTROLLER_SOCKET_TIMEOUT_MS": "{{kafka.controller_socket_timeout_ms}}",
+    "TASKCFG_ALL_KAFKA_LOG_RETENTION_HOURS": "{{kafka.log_retention_hours}}",
+    "TASKCFG_ALL_KAFKA_LOG_FLUSH_SCHEDULER_INTERVAL_MS": "{{kafka.log_flush_scheduler_interval_ms}}",
+    "TASKCFG_ALL_KAFKA_OFFSETS_RETENTION_MINUTES": "{{kafka.offsets_retention_minutes}}",
+    "TASKCFG_ALL_KAFKA_QUOTA_WINDOW_SIZE_SECONDS": "{{kafka.quota_window_size_seconds}}",
+    "TASKCFG_ALL_KAFKA_LOG_SEGMENT_BYTES": "{{kafka.log_segment_bytes}}",
+    "TASKCFG_ALL_KAFKA_LEADER_IMBALANCE_PER_BROKER_PERCENTAGE": "{{kafka.leader_imbalance_per_broker_percentage}}",
+    "TASKCFG_ALL_KAFKA_MAX_CONNECTIONS_PER_IP": "{{kafka.max_connections_per_ip}}",
+    "TASKCFG_ALL_KAFKA_LOG_CLEANER_DEDUPE_BUFFER_SIZE": "{{kafka.log_cleaner_dedupe_buffer_size}}",
+    "TASKCFG_ALL_KAFKA_LOG_CLEANER_MIN_CLEANABLE_RATIO": "{{kafka.log_cleaner_min_cleanable_ratio}}",
+    "TASKCFG_ALL_KAFKA_ZOOKEEPER_SYNC_TIME_MS": "{{kafka.zookeeper_sync_time_ms}}",
+    "TASKCFG_ALL_KAFKA_QUOTA_CONSUMER_DEFAULT": "{{kafka.quota_consumer_default}}",
+    "TASKCFG_ALL_KAFKA_DELETE_TOPIC_ENABLE": "{{kafka.delete_topic_enable}}",
+    "TASKCFG_ALL_KAFKA_LOG_CLEANUP_POLICY": "{{kafka.log_cleanup_policy}}",
+    "TASKCFG_ALL_KAFKA_DEFAULT_REPLICATION_FACTOR": "{{kafka.default_replication_factor}}",
+    "TASKCFG_ALL_KAFKA_NUM_RECOVERY_THREADS_PER_DATA_DIR": "{{kafka.num_recovery_threads_per_data_dir}}",
+    "TASKCFG_ALL_KAFKA_LOG_CLEANER_IO_BUFFER_SIZE": "{{kafka.log_cleaner_io_buffer_size}}",
+    "TASKCFG_ALL_KAFKA_BACKGROUND_THREADS": "{{kafka.background_threads}}",
+    "TASKCFG_ALL_KAFKA_LOG_SEGMENT_DELETE_DELAY_MS": "{{kafka.log_segment_delete_delay_ms}}",
+    "TASKCFG_ALL_KAFKA_QUOTA_WINDOW_NUM": "{{kafka.quota_window_num}}",
+    "TASKCFG_ALL_KAFKA_REQUEST_TIMEOUT_MS": "{{kafka.request_timeout_ms}}",
+    "TASKCFG_ALL_KAFKA_LOG_CLEANER_THREADS": "{{kafka.log_cleaner_threads}}",
+    "TASKCFG_ALL_KAFKA_QUOTA_PRODUCER_DEFAULT": "{{kafka.quota_producer_default}}",
+    "TASKCFG_ALL_KAFKA_LOG_CLEANER_BACKOFF_MS": "{{kafka.log_cleaner_backoff_ms}}",
+    "TASKCFG_ALL_KAFKA_CONTROLLED_SHUTDOWN_ENABLE": "{{kafka.controlled_shutdown_enable}}",
+    "TASKCFG_ALL_KAFKA_SOCKET_RECEIVE_BUFFER_BYTES": "{{kafka.socket_receive_buffer_bytes}}",
+    "TASKCFG_ALL_KAFKA_REPLICA_FETCH_WAIT_MAX_MS": "{{kafka.replica_fetch_wait_max_ms}}",
+    "TASKCFG_ALL_KAFKA_REPLICA_HIGH_WATERMARK_CHECKPOINT_INTERVAL_MS": "{{kafka.replica_high_watermark_checkpoint_interval_ms}}",
+    "TASKCFG_ALL_KAFKA_OFFSETS_TOPIC_SEGMENT_BYTES": "{{kafka.offsets_topic_segment_bytes}}",
+    "TASKCFG_ALL_KAFKA_LOG_CLEANER_IO_MAX_BYTES_PER_SECOND": "{{kafka.log_cleaner_io_max_bytes_per_second}}",
+    "TASKCFG_ALL_KAFKA_COMPRESSION_TYPE": "{{kafka.compression_type}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.executor-zip}}",
+    "{{resource.assets.uris.bootstrap-zip}}",
+    "{{resource.assets.uris.kafka-scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "{{resource.assets.uris.kafka-tgz}}",
+    "{{resource.assets.uris.jre-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/deploy",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    },
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/recovery",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}

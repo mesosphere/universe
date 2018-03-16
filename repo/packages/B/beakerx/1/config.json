@@ -1,0 +1,86 @@
+{
+	"$schema": "http://json-schema.org/schema#",
+	"properties": {
+		"service": {
+			"type": "object",
+			"description": "DC/OS service configuration properties",
+			"properties": {
+				"name": {
+					"description": "Name of this service instance",
+					"type": "string",
+					"default": "beakerx"
+				},
+				"cpus": {
+					"description": "CPU shares to allocate to each service instance.",
+					"type": "number",
+					"default": 1,
+					"minimum": 1
+				},
+				"mem": {
+					"description":  "Memory to allocate to each service instance.",
+					"type": "number",
+					"default": 2048.0,
+					"minimum": 1024.0
+				}
+			},
+			"required": [
+				"cpus",
+				"mem"
+			]
+		},
+		"storage": {
+			"type": "object",
+			"description": "beakerx storage configuration properties",
+			"properties":{
+				"host_volume_size": {
+					"description": "Size of the persistent volume",
+					"type": "number",
+					"default": 4000
+				},     
+				"persistence": {
+					"type": "object",
+					"description": "Enable persistent storage.",
+					"properties": {    
+						"enable": {
+							"description": "Enable or disable persistent storage.",
+							"type": "boolean",
+							"default": false                    
+						}
+					}
+				}
+			}
+		},
+		"networking": {
+			"type": "object",
+			"description": "beakerx networking configuration properties",
+			"properties": {
+				"port_api": {
+					"description": "Port number to be used for api communication internally to the cluster.",
+					"type": "number",
+					"default": 8888
+				},
+				"external_access": {
+					"type": "object",
+					"description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+					"properties": {
+						"enable": {
+							"description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+							"type": "boolean",
+							"default": false
+						},
+						"external_public_agent_ip": {
+							"description": "For external access, dns to be used for Marathon-LB vHost: For example use your public slave elb dns.",
+							"type": "string",
+							"default": ""
+						},
+						"external_access_port": {
+							"description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+							"type": "number",
+							"default": 18888
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,66 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "env": {  
+    "INFLUXDB_RETENTION_ENABLED": "{{configuration.INFLUXDB_RETENTION_ENABLED}}",
+    "INFLUXDB_RETENTION_CHECK_INTERVAL": "{{configuration.INFLUXDB_RETENTION_CHECK_INTERVAL}}",
+    "INFLUXDB_MONITOR_STORE_DATABASE": "{{configuration.INFLUXDB_MONITOR_STORE_DATABASE}}"
+  },
+  "container": {
+    "type": "DOCKER",
+    {{#storage.persistence.enable}}
+    "volumes": [{
+      "containerPath": "/var/lib/influxdb",
+      "hostPath": "{{storage.host_volume_influxdb}}/{{service.name}}",
+      "mode": "{{storage.persistence.volume_mode_influxdb}}"
+      }
+    ],
+    {{/storage.persistence.enable}}
+    "docker": {
+      "image": "{{resource.assets.container.docker.influxdb-docker}}",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+        "containerPort": 8086,
+        "hostPort": 0,
+        {{#networking.external_access.enable}}
+        "servicePort": {{networking.external_access.external_access_port}},
+        {{/networking.external_access.enable}}
+        "protocol": "tcp",
+        "name": "influxdb-api",
+        "labels": {
+          "VIP_0": "/{{service.name}}:{{networking.port_api}}"
+          }
+        }
+      ],
+      "forcePullImage": true
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/ping",
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "labels": {
+    "DCOS_PACKAGE_VERSION": "1.4",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    {{#networking.external_access.enable}}
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "{{networking.external_access.external_public_agent_ip}}",
+    {{/networking.external_access.enable}}
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}

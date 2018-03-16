@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "Name of this service instance.",
+          "type": "string",
+          "default": "koding"
+        }
+      }
+    },
+    "koding": {
+      "type": "object",
+      "description": "Koding instance configuration properties",
+      "properties": {
+        "cpus": {
+          "description": "CPU shares to allocate to the Koding instance.",
+          "type": "number",
+          "default": 2.0,
+          "minimum": 1.0
+        },
+        "mem": {
+          "description": "Memory to allocate to the Koding instance.",
+          "type": "number",
+          "default": 8192,
+          "minimum": 1024
+        }
+      },
+      "required": [
+        "cpus",
+        "mem"
+      ]
+    },
+    "networking": {
+      "description": "Configuration options for Koding's networking",
+      "type": "object",
+      "properties": {
+        "hostname": {
+          "description": "The DNS name you intend to host your Koding instance at",
+          "type": "string"
+        }
+      },
+      "required": [
+        "hostname"
+      ]
+    }
+  }
+}

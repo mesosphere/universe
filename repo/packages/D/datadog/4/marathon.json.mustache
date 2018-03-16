@@ -1,0 +1,62 @@
+{
+    "id": "{{datadog.app_id}}",
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.a5669b334fa2}}",
+            "parameters": [
+                {
+                    "key": "name", "value": "dd-agent"
+                },
+                {
+                    "key": "env", "value": "API_KEY={{datadog.api_key}}"
+                },
+                {
+                    "key": "env", "value": "MESOS_SLAVE=true"
+                },
+                {
+                    "key": "env", "value": "SD_BACKEND=docker"
+                }
+            ],
+            "network": "BRIDGE",
+            "portMappings": [
+                { "hostPort": {{datadog.statsd_port}}, "containerPort": 8125, "protocol": "udp" }
+            ]
+        },
+        "volumes": [
+            {
+                "containerPath": "/var/run/docker.sock",
+                "hostPath": "/var/run/docker.sock",
+                "mode": "RO"
+            },
+            {
+                "containerPath": "/host/proc",
+                "hostPath": "/proc",
+                "mode": "RO"
+            },
+            {
+                "containerPath": "/host/sys/fs/cgroup",
+                "hostPath": "/sys/fs/cgroup",
+                "mode": "RO"
+            }
+        ]
+    },
+    "cpus": {{datadog.cpus}},
+    "mem": {{datadog.mem}},
+    "instances": {{datadog.instances}},
+    "acceptedResourceRoles": ["slave_public", "*"],
+    "constraints": [
+        ["hostname", "UNIQUE"],
+        ["hostname", "GROUP_BY"]
+    ],
+    "healthChecks": [
+        {
+            "protocol": "COMMAND",
+            "command": { "value": "/probe.sh" },
+            "gracePeriodSeconds": 300,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 20,
+            "maxConsecutiveFailures": 3
+        }
+    ]
+}

@@ -9,7 +9,8 @@
         "framework-name": {
           "description": "The name of the Eremetic scheduler and service instance",
           "type": "string",
-          "default": "eremetic"
+          "default": "eremetic",
+          "pattern": "^[a-zA-Z0-9-]+$"
         },
         "cpus": {
           "description": "Number of cores allocated to Eremetic instance",

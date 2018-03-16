@@ -1,0 +1,129 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 0.5,
+  "mem": 2048,
+  "instances": 1,
+  "user":"{{service.user}}",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx1024M -XX:-HeapDumpOnOutOfMemoryError\" &&  ./elastic-scheduler/bin/elastic ./elastic-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    "ELASTIC_VERSION": "5.5.1",
+    "STATSD_URI": "{{resource.assets.uris.statsd-plugin-zip}}",
+    "ELASTICSEARCH_URI" : "{{resource.assets.uris.elasticsearch-tar-gz}}",
+    "ELASTICSEARCH_JAVA_URI" : "{{resource.assets.uris.elasticsearch-jre-tar-gz}}",
+    "XPACK_URI" : "{{resource.assets.uris.xpack-zip}}",
+    "DIAGNOSTICS_URI" : "{{resource.assets.uris.diagnostics-zip}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "SCHEDULER_URI": "{{resource.assets.uris.scheduler-zip}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    {{/service.service_account_secret}}
+
+    {{#service.virtual_network_enabled}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+
+    "DEPLOY_STRATEGY": "{{service.deploy_strategy}}",
+    "TASKCFG_ALL_XPACK_ENABLED": "{{elasticsearch.xpack_enabled}}",
+    "ELASTICSEARCH_HEALTH_USER": "{{elasticsearch.health_user}}",
+    "ELASTICSEARCH_HEALTH_USER_PASSWORD": "{{elasticsearch.health_user_password}}",
+    "TASKCFG_ALL_ELASTICSEARCH_PLUGINS": "{{elasticsearch.plugins}}",
+    "MASTER_NODE_CPUS": "{{master_nodes.cpus}}",
+    "MASTER_NODE_MEM": "{{master_nodes.mem}}",
+    "MASTER_NODE_PLACEMENT": "{{master_nodes.placement}}",
+    "MASTER_NODE_HEAP_MB": "{{master_nodes.heap.size}}",
+    "MASTER_NODE_DISK": "{{master_nodes.disk}}",
+    "MASTER_NODE_DOCKER_VOLUME_NAME": "{{{master_nodes.portworx_volume_name}}}",
+    "MASTER_NODE_DOCKER_DRIVER_OPTIONS": "{{{master_nodes.portworx_volume_options}}}",
+    "MASTER_NODE_TRANSPORT_PORT": "{{master_nodes.transport_port}}",
+    "DATA_NODE_COUNT": "{{data_nodes.count}}",
+    "DATA_NODE_CPUS": "{{data_nodes.cpus}}",
+    "DATA_NODE_MEM": "{{data_nodes.mem}}",
+    "DATA_NODE_PLACEMENT": "{{data_nodes.placement}}",
+    "DATA_NODE_HEAP_MB": "{{data_nodes.heap.size}}",
+    "DATA_NODE_DISK": "{{data_nodes.disk}}",
+    "DATA_NODE_DOCKER_VOLUME_NAME": "{{{data_nodes.portworx_volume_name}}}",
+    "DATA_NODE_DOCKER_DRIVER_OPTIONS": "{{{data_nodes.portworx_volume_options}}}",
+    "INGEST_NODE_COUNT": "{{ingest_nodes.count}}",
+    "INGEST_NODE_CPUS": "{{ingest_nodes.cpus}}",
+    "INGEST_NODE_MEM": "{{ingest_nodes.mem}}",
+    "INGEST_NODE_PLACEMENT": "{{ingest_nodes.placement}}",
+    "INGEST_NODE_HEAP_MB": "{{ingest_nodes.heap.size}}",
+    "INGEST_NODE_DISK": "{{ingest_nodes.disk}}",
+    "INGEST_NODE_DOCKER_VOLUME_NAME": "{{{ingest_nodes.portworx_volume_name}}}",
+    "INGEST_NODE_DOCKER_DRIVER_OPTIONS": "{{{ingest_nodes.portworx_volume_options}}}",
+    "COORDINATOR_NODE_COUNT": "{{coordinator_nodes.count}}",
+    "COORDINATOR_NODE_CPUS": "{{coordinator_nodes.cpus}}",
+    "COORDINATOR_NODE_MEM": "{{coordinator_nodes.mem}}",
+    "COORDINATOR_NODE_PLACEMENT": "{{coordinator_nodes.placement}}",
+    "COORDINATOR_NODE_HEAP_MB": "{{coordinator_nodes.heap.size}}",
+    "COORDINATOR_NODE_DISK": "{{coordinator_nodes.disk}}",
+    "COORDINATOR_NODE_DOCKER_VOLUME_NAME": "{{{coordinator_nodes.portworx_volume_name}}}",
+    "COORDINATOR_NODE_DOCKER_DRIVER_OPTIONS": "{{{coordinator_nodes.portworx_volume_options}}}",
+    "CONFIG_TEMPLATE_PATH": "elastic-scheduler"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/deploy",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    },
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/recovery",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}

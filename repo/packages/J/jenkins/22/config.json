@@ -1,0 +1,133 @@
+{
+    "type": "object",
+    "properties": {
+        "service": {
+            "description": "Configuration properties for the Jenkins service for DC/OS.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "The name of the service to display in the DC/OS dashboard.",
+                    "type": "string",
+                    "default": "jenkins"
+                },
+                "cpus": {
+                    "description": "CPU shares to allocate to each Jenkins master.",
+                    "type": "number",
+                    "default": 1.0,
+                    "minimum": 0.1
+                },
+                "mem": {
+                    "description": "Memory (in MB) to allocate to each Jenkins master.",
+                    "type": "number",
+                    "default": 2048.0,
+                    "minimum": 2048.0
+                },
+                "user": {
+                    "description": "The user that the service will run as. In 'strict' security mode, running tasks as root is disabled by default. Ensure that this user exists on each of the agents in your DC/OS cluster.",
+                    "type": "string",
+                    "default": "root"
+                }
+            },
+            "required": [
+                "name",
+                "cpus",
+                "mem"
+            ]
+        },
+        "storage": {
+            "description": "Storage-related configuration properties for Jenkins on DC/OS.",
+            "type": "object",
+            "properties": {
+                "host-volume": {
+                    "description": "The location of a volume on the host to be used for persisting Jenkins configuration and build data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/jenkins`). Note that this path must be the same on all DC/OS agents.",
+                    "type": "string",
+                    "default": "/tmp"
+                },
+                "pinned-hostname": {
+                    "description": "An optional DC/OS agent hostname to run this Jenkins instance on (e.g. 10.0.0.1).",
+                    "type" : "string"
+                }
+            }
+        },
+        "networking": {
+            "description": "Networking-related configuration properties for Jenkins on DC/OS.",
+            "type": "object",
+            "properties": {
+                "known-hosts": {
+                    "description": "A space-separated list of hosts used to populate the SSH known hosts file on the Jenkins master.",
+                    "type": "string",
+                    "default": "github.com"
+                },
+                "virtual-host": {
+                    "description": "The virtual host address to configure for integration with Marathon-lb.",
+                    "type": "string"
+                },
+                "https-redirect": {
+                    "description": "Whether Marathon-lb should redirect HTTP traffic to HTTPS. This requires 'virtual-host' to be set. By default, this is false.",
+                    "type": "boolean",
+                    "default": false
+                }
+            }
+        },
+        "roles": {
+            "description": "Role configuration properties for Jenkins on DC/OS.",
+            "type": "object",
+            "properties": {
+                "jenkins-master-role": {
+                    "description": "The accepted resource roles that the Jenkins master itself runs as using Marathon. By default, this will deploy to any agents with the * role. For example, to deploy to a public DC/OS agent, set this to 'slave_public'.",
+                    "type": "string",
+                    "default": "*"
+                },
+                "jenkins-agent-role": {
+                    "description": "The role passed to the internal Jenkins configuration that denotes which resources to launch Jenkins agents on.",
+                    "type": "string",
+                    "default": "*"
+                  }
+              }
+          },
+        "security": {
+            "description": "Security configuration properties for Jenkins on DC/OS.",
+            "type": "object",
+            "properties": {
+                "strict-mode": {
+                    "description": "Enabled if Enterprise DC/OS is provisioned using the 'strict' security mode flag. When enabled, tasks run as the user specified below.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "secret-name": {
+                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+                    "type": "string",
+                    "default": ""
+                }
+            }
+        },
+        "advanced": {
+            "description": "Advanced configuration properties for the Jenkins service. Under normal circumstances, you shouldn't need to modify these values.",
+            "type": "object",
+            "properties": {
+                "mesos-master": {
+                    "description": "URL of this cluster's Mesos master.",
+                    "type": "string",
+                    "default": "zk://leader.mesos:2181/mesos"
+                },
+                "jvm-opts": {
+                    "description": "Optional arguments to pass to the JVM.",
+                    "type": "string",
+                    "default": "-Xms1024m -Xmx1024m"
+                },
+                "jenkins-opts": {
+                    "description": "Optional arguments to pass to Jenkins.",
+                    "type": "string"
+                },
+                "docker-image": {
+                    "description": "The Docker image to use for the Jenkins service. By default, this package will use the Jenkins image in the Mesosphere organization on Docker Hub, which you must be authenticated against. Otherwise, specify the host, image, and tag for the Jenkins image on your private Docker Registry.",
+                    "type": "string"
+                },
+                "docker-credentials-uri": {
+                    "description": "An optional URI to be fetched and extracted that contains docker credentials (e.g. file:///etc/docker/docker.tar.gz).",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

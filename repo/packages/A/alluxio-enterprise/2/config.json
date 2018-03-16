@@ -1,0 +1,510 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "Alluxio Enterprise Edition DC/OS service configuration properties.",
+      "properties": {
+        "name": {
+          "description": "Name of the service instance. If deploying multiple Alluxio clusters, each instance must have a unique service name.",
+          "type": "string",
+          "default": "alluxio-enterprise"
+        },
+        "alluxio-distribution": {
+          "description": "Pre-built distribution version: [cdh-5.8, hadoop-1.2, hadoop-2.7, hdp-2.5, mapr-5.2].",
+          "type": "string",
+          "default": "hadoop-2.7"
+        },
+        "license": {
+          "description": "Base64 encoded  Alluxio Enterprise license.",
+          "type": "string"
+        },
+        "log-level": {
+          "description": "Log level for Alluxio console logger.",
+          "type": "string",
+          "default": "INFO"
+        },
+        "master-count": {
+          "description": "The number of Alluxio masters. If you plan to have more than one master, enable zookeeper to make Alluxio work in fault tolerant mode.",
+          "type": "integer",
+          "default": 1
+        },
+        "service-account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service-account-secret": {
+          "description": "Path of the Secret Store credential to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "ufs-address": {
+          "description": "The root under storage address (format: <scheme>://<path>/<folder>).",
+          "type": "string"
+        },
+        "user": {
+          "description": "The user that runs the Alluxio servers and owns the Mesos sandbox.",
+          "type": "string",
+          "default": "root"
+        },
+        "worker-count": {
+          "description": "The number of Alluxio workers. Each worker has a co-located job worker used for asynchronous operations.",
+          "type": "integer",
+          "default": 1
+        }
+      },
+      "required": [
+        "license",
+        "ufs-address",
+        "user"
+      ]
+    },
+    "master": {
+      "description": "Alluxio master configuration properties.",
+      "type": "object",
+      "properties": {
+        "journal-folder": {
+          "description": "The path to store master journal logs. Default value is ${MESOS_SANDBOX}/alluxio-data if left empty. If fault tolerant mode is enabled, this should point to a location in a shared storage system.",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "description": "The number of CPU shares allocated to the Alluxio master container.",
+          "type": "number",
+          "default": 2
+        },
+        "mem": {
+          "description": "The amount of memory (in MB) allocated to the Alluxio master container.",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk": {
+          "description": "Alluxio master persistent disk requirements (in MB).",
+          "type": "integer",
+          "default": 2048
+        },
+        "disk-type": {
+          "description": "Disk type to be used for storing Alluxio master data: [ROOT, MOUNT].",
+          "type": "string",
+          "default": "ROOT"
+        },
+        "placement": {
+          "description": "Marathon-style placement constraint controlling node placement for Alluxio masters.",
+          "type": "string",
+          "default": "hostname:UNIQUE"
+        },
+        "job-cpus": {
+          "description": "The number of CPU shares allocated to the Alluxio job worker container.",
+          "type": "number",
+          "default": 1
+        },
+        "job-mem": {
+          "description": "The amount of memory (in MB) allocated to the Alluxio job worker container.",
+          "type": "integer",
+          "default": 1024
+        },
+        "job-disk": {
+          "description": "Alluxio job worker persistent disk requirements (in MB).",
+          "type": "integer",
+          "default": 2048
+        },
+        "job-disk-type": {
+          "description": "Disk type to be used for storing Alluxio job worker data: [ROOT, MOUNT].",
+          "type": "string",
+          "default": "ROOT"
+        },
+        "job-placement": {
+          "description": "Marathon-style placement constraint controlling node placement for Alluxio job workers.",
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk",
+        "job-cpus",
+        "job-mem",
+        "job-disk"
+      ]
+    },
+    "worker": {
+      "description": "Alluxio worker configuration properties.",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "The number of CPU shares allocated to the Alluxio worker container.",
+          "type": "number",
+          "default": 1
+        },
+        "mem": {
+          "description": "The amount of memory (in MB) allocated to the Alluxio worker container.",
+          "type": "integer",
+          "default": 4096
+        },
+        "mem-tier-enabled": {
+          "description": "Whether storage tier on memory is enabled.",
+          "type": "boolean",
+          "default": true
+        },
+        "mem-ramdisk": {
+          "description": "The amount of memory (in MB) allocated to the worker ramdisk for storing blocks.",
+          "type": "integer",
+          "default": 3072
+        },
+        "disk": {
+          "description": "Alluxio worker persistent disk requirements (in MB).",
+          "type": "integer",
+          "default": 2048
+        },
+        "disk-type": {
+          "description": "Disk type to be used for storing Alluxio worker data: [ROOT, MOUNT].",
+          "type": "string",
+          "default": "ROOT"
+        },
+        "disk-tier-1-enabled": {
+          "description": "Whether storage tier 1 is enabled.",
+          "type": "boolean",
+          "default": false
+        },
+        "disk-tier-1-size": {
+          "description": "Disk size for storage tier 1(in MB).",
+          "type": "integer",
+          "default": 2048
+        },
+        "disk-tier-1-type": {
+          "description": "Disk type for storage tier 1: [ROOT, MOUNT].",
+          "type": "string",
+          "default": "ROOT"
+        },
+        "disk-tier-1-alias": {
+          "description": "Name for storage tier 1: [SSD, HDD].",
+          "type": "string",
+          "default": "SSD"
+        },
+        "disk-tier-2-enabled": {
+          "description": "Whether storage tier 2 is enabled.",
+          "type": "boolean",
+          "default": false
+        },
+        "disk-tier-2-size": {
+          "description": "Disk size for storage tier 2(in MB). Set it to 0 if this tier is not used.",
+          "type": "integer",
+          "default": 2048
+        },
+        "disk-tier-2-type": {
+          "description": "Disk type for storage tier 2: [ROOT, MOUNT].",
+          "type": "string",
+          "default": "MOUNT"
+        },
+        "disk-tier-2-alias": {
+          "description": "Name for storage tier 2: [SSD, HDD].",
+          "type": "string",
+          "default": "HDD"
+        },
+        "placement": {
+          "description": "Marathon-style placement constraint controlling node placement for Alluxio workers.",
+          "type": "string",
+          "default": "hostname:UNIQUE"
+        },
+        "job-cpus": {
+          "description": "The number of CPU shares allocated to the Alluxio job master container.",
+          "type": "number",
+          "default": 1
+        },
+        "job-mem": {
+          "description": "The amount of memory (in MB) allocated to the Alluxio job master container.",
+          "type": "integer",
+          "default": 1024
+        },
+        "job-disk": {
+          "description": "Alluxio job master persistent disk requirements (in MB).",
+          "type": "integer",
+          "default": 2048
+        },
+        "job-disk-type": {
+          "description": "Disk type to be used for storing Alluxio job master data: [ROOT, MOUNT].",
+          "type": "string",
+          "default": "ROOT"
+        },
+        "job-placement": {
+          "description": "Marathon-style placement constraint controlling node placement for Alluxio job masters.",
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk",
+        "job-cpus",
+        "job-mem",
+        "job-disk"
+      ]
+    },
+    "security": {
+      "type": "object",
+      "description": "Alluxio security configuration properties.",
+      "properties": {
+        "authentication-type": {
+          "description": "Authentication type: [NOSASL, SIMPLE, KERBEROS].",
+          "type": "string",
+          "default": "NOSASL"
+        },
+        "authorization-permission-enabled": {
+          "description": "Whether to enable data path authorization.",
+          "type": "boolean",
+          "default": false
+        },
+        "keytab-secret": {
+          "description": "Path to base64 encoded keytab secret (format: <service.name>/__dcos_base64__<keytab>). This keytab is used by Alluxio servers.",
+          "type": "string",
+          "default": ""
+        },
+        "kerberos-primary": {
+          "description": "The Kerberos primary used by Alluxio servers. The full principal will be <security.kerberos-primary>/<security.kerberos-instance>@<security.kerberos-realm>",
+          "type": "string",
+          "default": "hdfs"
+        },
+        "kerberos-instance": {
+          "description": "The cluster-wide unified instance name shared by all Alluxio servers.",
+          "type": "string",
+          "default": "alluxio"
+        },
+        "kerberos-realm": {
+          "description": "The Kerberos realm used to render the principal of Alluxio servers.",
+          "type": "string",
+          "default": "ALLUXIO.COM"
+        },
+        "krb5-secret": {
+          "description": "Path to krb5.conf secret (format: <service-name>/<krb5-conf>). This path is used by the Alluxio servers to connect to your KDC.",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "docker": {
+      "type": "object",
+      "description": "Configuration properties for building docker images.",
+      "properties": {
+        "publish-url": {
+          "description": "Docker registry to host any built images (format: test-registry.marathon.mesos:5001)",
+          "type": "string",
+          "default": ""
+        },
+        "alluxio-client-base": {
+          "description": "Base docker image to build on",
+          "type": "string",
+          "default": "openjdk:8-jre"
+        },
+        "spark-client-base": {
+          "description": "Base docker image to build on",
+          "type": "string",
+          "default": "mesosphere/spark:1.0.6-2.0.2-hadoop-2.6"
+        },
+        "spark-dist-home": {
+          "description": "Spark distribution home in the base docker image",
+          "type": "string",
+          "default": "/opt/spark/dist"
+        }
+      }
+    },
+    "advanced": {
+      "description": "Advanced configuration properties.",
+      "type": "object",
+      "properties": {
+        "extra-java-opts": {
+          "description": "Java VM options for both Alluxio servers and shell configuration (format: '-Dalluxio.property1=common1 -Dalluxio.property2=common2'; delimiter: ' ' (space)).",
+          "type": "string",
+          "default": ""
+        },
+        "extra-client-properties": {
+          "description": "Properties added to client-side alluxio-site.properties (format: 'alluxio.user.file.writetype.default=CACHE_THROUGH alluxio.user.file.readtype.default=NO_CACHE'; delimiter: ' ' (space)).",
+          "type": "string",
+          "default": ""
+        },
+        "extra-user-java-opts": {
+          "description": "Java VM options for Alluxio shell configuration (format: '-Dalluxio.property1=shell1 -Dalluxio.property2=shell2'; delimiter: ' ' (space)).",
+          "type": "string",
+          "default": ""
+        },
+        "extra-master-java-opts": {
+          "description": "Java VM options for Alluxio master configuration (format: '-Dalluxio.property1=master1 -Dalluxio.property2=master2'; delimiter: ' ' (space)).",
+          "type": "string",
+          "default": ""
+        },
+        "extra-worker-java-opts": {
+          "description": "Java VM options for Alluxio worker configuration (format: '-Dalluxio.property1=worker1 -Dalluxio.property2=worker2'; delimiter: ' ' (space)).",
+          "type": "string",
+          "default": ""
+        },
+        "extra-job-master-java-opts": {
+          "description": "Java VM options for Alluxio job-aster configuration (format: '-Dalluxio.property1=jmaster1 -Dalluxio.property2=jmaster2'; delimiter: ' ' (space)).",
+          "type": "string",
+          "default": ""
+        },
+        "extra-job-worker-java-opts": {
+          "description": "Java VM options for Alluxio job-worker configuration (format: '-Dalluxio.property1=jworker1 -Dalluxio.property2=jworker2'; delimiter: ' ' (space)).",
+          "type": "string",
+          "default": ""
+        },
+        "extra-env": {
+          "description": "Environment properties added to client-side alluxio-env.sh (format: 'ALLUXIO_ENV_VAR1=value1 ALLUXIO_ENV_VAR2=value2'; delimiter: ' ' (space))",
+          "type": "string",
+          "default": ""
+        },
+        "custom-resources": {
+          "description": "Download custom resources into the sandbox (format: 'DST_PATH1;SOURCE_URL1 DST_PATH2;SOURCE_URL2'). The destination path is relative to the Alluxio home directory (parent of `bin` and `conf`)",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "network": {
+      "description": "Port configuration for Alluxio servers.",
+      "type": "object",
+      "properties": {
+        "master-port": {
+          "description": "The port that Alluxio master node runs on.",
+          "type": "number",
+          "default": 19998
+        },
+        "master-web-port": {
+          "description": "The port Alluxio web UI runs on.",
+          "type": "number",
+          "default": 19999
+        },
+        "worker-port": {
+          "description": "The port Alluxio's worker node runs on.",
+          "type": "number",
+          "default": 29998
+        },
+        "worker-data-port": {
+          "description": "The port Alluxio's worker's data server runs on.",
+          "type": "number",
+          "default": 29999
+        },
+        "worker-web-port": {
+          "description": "The port Alluxio worker's web UI runs on.",
+          "type": "number",
+          "default": 30000
+        },
+        "worker-secure-port": {
+          "description": "The port Alluxio worker's secure RPC runs on.",
+          "type": "number",
+          "default": 29997
+        },
+        "job-master-port": {
+          "description": "The RPC port that Alluxio job-master node runs on.",
+          "type": "number",
+          "default": 20001
+        },
+        "job-master-web-port": {
+          "description": "The port Alluxio job master web server runs on.",
+          "type": "number",
+          "default": 20002
+        },
+        "job-worker-port": {
+          "description": "The port Alluxio's job-worker node runs on.",
+          "type": "number",
+          "default": 30001
+        },
+        "job-worker-data-port": {
+          "description": "The port Alluxio job-worker's data server runs on.",
+          "type": "number",
+          "default": 30002
+        },
+        "job-worker-web-port": {
+          "description": "The port Alluxio job worker's web server runs on.",
+          "type": "number",
+          "default": 30003
+        },
+        "job-worker-secure-port": {
+          "description": "The port Alluxio job-worker's secure RPC runs on.",
+          "type": "number",
+          "default": 30004
+        },
+        "proxy-web-port": {
+          "description": "The port Alluxio proxy server runs on.",
+          "type": "number",
+          "default": 19997
+        }
+      }
+    },
+    "hdfs": {
+      "type": "object",
+      "description": "Configuration properties required to setup HDFS UFS.",
+      "properties": {
+        "endpoint": {
+          "description": "URL to download HDFS configuration (hdfs-site.xml, core-site.xml) from (including http header).",
+          "type": "string",
+          "default": ""
+        },
+        "root-version": {
+          "description": "The version of HDFS specified for the root UFS (supported: [1.0, 1.2, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, cdh5.6, cdh5.8, cdh5.11, cdh5.12, hdp2.4, hdp2.5, mapr5.2]).",
+          "type": "string",
+          "default": ""
+        },
+        "journal-version": {
+          "description": "The version of HDFS specified for the journal.",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "s3a": {
+      "type": "object",
+      "description": "Configuration properties required to mount an Amazon S3 bucket.",
+      "properties": {
+        "aws-access-key": {
+          "description": "S3 Access key",
+          "type": "string",
+          "default": ""
+        },
+        "aws-secret-key": {
+          "description": "S3 Secret key",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "virtual-network": {
+      "type": "object",
+      "description": "Configuration properties to launch in a virtual network",
+      "properties": {
+        "enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "plugin-labels": {
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "zookeeper": {
+      "type": "object",
+      "description": "Configuration properties required to setup fault tolerant Alluxio.",
+      "properties": {
+        "enabled": {
+          "description": "If true, setup master fault tolerant mode using ZooKeeper.",
+          "type": "boolean",
+          "default": false
+        },
+        "address": {
+          "description": "Address of ZooKeeper.",
+          "type": "string",
+          "default": ""
+        }
+      }
+    }
+  }
+}

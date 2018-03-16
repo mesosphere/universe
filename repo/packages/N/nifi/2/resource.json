@@ -1,0 +1,18 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/nifi-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/nifi-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/nifi-icon-large.png",
+    "screenshots": [
+      "https://raw.githubusercontent.com/us3r/apache-nifi/master/media/screenshots/screen1.png",
+      "https://raw.githubusercontent.com/us3r/apache-nifi/master/media/screenshots/screen2.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "dcos-nifi": "mderela/apache-nifi:1.3.0"
+      }
+    }
+  }
+}

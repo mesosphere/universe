@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "3.0",
+  "name": "grafana",
+  "version": "4.5.2-0.3",
+  "scm": "https://github.com/grafana/grafana",
+  "maintainer": "https://dcos.io/community",
+  "website": "https://grafana.net/",
+  "description": "Grafana is a leading open source application for visualizing large-scale measurement data. It provides a powerful and elegant way to create, share, and explore data and dashboards from your disparate metric databases, either with your team or the world. Grafana is most commonly used for Internet infrastructure and application analytics, but many use it in other domains including industrial sensors, home automation, weather, and process control. Grafana features pluggable panels and data sources allowing easy extensibility. There is currently rich support for Graphite, InfluxDB and OpenTSDB. There is also experimental support for KairosDB, and SQL is on the roadmap. Grafana has a variety of panels, including a fully featured graph panel with rich visualization options.\n\nThis package can be used alongside the DC/OS 'cadvisor' and 'influxdb' packages for a cluster-wide monitoring solution.\n\nInstallation Documentation: https://github.com/dcos/examples/tree/master/cadvisor-influxdb-grafana\n\n",
+  "tags": [
+    "grafana",
+    "monitoring",
+    "visualization"
+    ],
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\n```Advanced Installation options notes```\n\nnetworking / *external_access*: create an entry in Marathon-LB for accessing the service from outside of the cluster\n\nnetworking / *external_access_port*: port to be used in Marathon-LB for accessing the service.",
+  "postInstallNotes": "Service installed.\n\nIt is recommended to access this service through the endpoint created in Marathon-LB.\n\nDefault login: `admin`/`admin`.",
+  "licenses": [
+    {
+      "name": "Apache License",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}

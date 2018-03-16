@@ -11,10 +11,7 @@
 
     "url": {
       "type": "string",
-      "allOf": [
-        { "format": "uri" },
-        { "pattern": "^https?://" }
-      ]
+      "pattern": "."
     },
 
     "base64String": {

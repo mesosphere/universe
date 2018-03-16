@@ -1,0 +1,54 @@
+{
+  "properties": {
+    "marathon-slack": {
+      "description": "The marathon-slack for DC/OS settings",
+      "properties": {
+        "slack_webhook_url": {
+          "description": "The Slack Webhook URL to send the notifications to.",
+          "type": "string"
+        },
+        "slack_channel": {
+          "default": "#marathon",
+          "description": "Optional: The Slack channel to send the message to.",
+          "type": "string"
+        },
+        "slack_bot_name": {
+          "default": "Marathon Event Bot",
+          "description": "Optional: The name of the bot, which will appear in Slack.",
+          "type": "string"
+        },
+        "event_types": {
+          "default": "deployment_info,deployment_success,deployment_failed",
+          "description": "Optional: Comma-separated list of event types to notify upon - eg. deployment_info,deployment_success,deployment_failed. See https://github.com/tobilg/marathon-slack#event-types",
+          "type": "string"
+        },
+        "app_id_regexes": {
+          "description": "Optional: A string regular expression to filter events by their Marathon App Id. For example to send a Slack message for **only** apps with id '*-production'. If you want multiple regular expressions, you can concatenate them with a comma.",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 0.1,
+          "description": "CPU (shares) to allocate to the marathon-slack task",
+          "minimum": 0.1,
+          "maximum": 1.0,
+          "type": "number"
+        },
+        "mem": {
+          "default": 128.0,
+          "description": "Memory (MB) to allocate to the marathon-slack task",
+          "minimum": 128.0,
+          "maximum": 512.0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "slack_webhook_url"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "marathon-slack"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,658 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of this DC/OS DSE OpsCenter instance",
+          "type": "string",
+          "default": "datastax-ops"
+        },
+        "service_secret_name": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account": {
+          "description": "The principal for the service instance.",
+          "type": "string",
+          "default": "datastax-ops-service-account"
+        },
+        "user": {
+          "description": "The user that runs the Cassandra nodes and owns the Mesos sandbox.",
+          "type": "string",
+          "default": "nobody"
+        },
+        "virtual_networks": {
+          "description": "Enable DC/OS Virtual Networking",
+          "type": "boolean",
+          "default": false
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        }
+      }
+    },
+    "opscenter": {
+      "description": "OpsCenter pod configuration properties",
+      "type": "object",
+      "properties": {
+        "stomp_port": {
+          "title": "Stomp port",
+          "description": "Port used for DSE agents to reach OpsCenter. DSE default is 61620.",
+          "type": "integer",
+          "default": 31620
+        },
+        "placement_constraint": {
+          "title": "OpsCenter placement constraint",
+          "description": "Marathon-style placement constraint for the OpsCenter node. Example: hostname:UNIQUE",
+          "type": "string",
+          "default": ""
+        },
+        "virtual_network": {
+          "description": "Name of virtual network for Opscenter pod(s)",
+          "type": "string",
+          "default": "dcos"
+        },
+        "cni_plugin_labels": {
+          "description": "Labels to pass to CNI plugin. Comma-seperated key:value pairs. For example [k_0:v_0,k_1:v_1,...,k_n:v_n]",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "OpsCenter CPU count",
+          "type": "number",
+          "default": 2
+        },
+        "mem": {
+          "title": "OpsCenter memory size (MB)",
+          "type": "integer",
+          "default": 4000
+        },
+        "heap": {
+          "title": "OpsCenter heap size (MB)",
+          "type": "integer",
+          "default": 2000
+        },
+        "jvm_opts": {
+          "title": "OpsCenter custom JVM/GC options",
+          "description": "For example '-XX:+CMSSomeSetting -XX:+SettingForGC'. See OpsCenter JVM Tuning documentation.",
+          "type": "string",
+          "default": ""
+        },
+        "disk": {
+          "title": "OpsCenter persistent volume size (MB)",
+          "type": "integer",
+          "default": 10240
+        },
+        "disk_type": {
+          "description": "OpsCenter persistent disk type [ROOT, MOUNT]",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "gui_port": {
+          "title": "OpsCenter GUI port",
+          "type": "integer",
+          "default": 8888
+        },
+        "spark_master_proxy_port": {
+          "title": "OpsCenter Spark Master proxy port",
+          "type": "integer",
+          "default": 17080
+        },
+        "cassandra_username": {
+          "title": "The username used to connect to Cassandra if authentication is enabled",
+          "type": "string",
+          "default": "cassandra"
+        },
+        "cassandra_password": {
+          "title": "The password used to connect to Cassandra if authentication is enabled.",
+          "type": "string",
+          "default": "cassandra"
+        },
+        "authentication": {
+          "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-enabled",
+          "type": "object",
+          "description": "Authentication Configuration",
+          "properties": {
+            "enabled": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-enabled",
+              "type": "boolean",
+              "description": "Enable Authentication for accessing OpsCenter",
+              "default": false
+            },
+            "login_user": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-authentication_method",
+              "type": "string",
+              "description": "User name for OpsCenter's Internal or LDAP authentication",
+              "default": "admin"
+            },
+            "login_password": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-authentication_method",
+              "type": "string",
+              "description": "Password for OpsCenter's Internal or LDAP authentication",
+              "default": "admin"
+            },
+            "method": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-authentication_method",
+              "type": "string",
+              "description": "Authentication Method",
+              "default": ""
+            },
+            "timeout": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-timeout",
+              "type": "integer"
+            },
+            "password_hash_type": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-password_hash_type",
+              "type": "string"
+            },
+            "sqlite_connection_timeout": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-sqlite_connection_timeout",
+              "type": "integer"
+            },
+            "sqlite_max_active_connections": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-sqlite_max_active_connections",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "ldap": {
+          "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-server_host",
+          "type": "object",
+          "description": "LDAP Configuration",
+          "properties": {
+            "enabled": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-server_host",
+              "type": "boolean",
+              "description": "Enable LDAP",
+              "default": false
+            },
+            "server_host": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-server_host",
+              "type": "string",
+              "description": "Hostname of LDAP server",
+              "default": "localhost"
+            },
+            "server_port": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-server_port",
+              "type": "integer",
+              "description": "Port of LDAP server",
+              "default": 389
+            },
+            "search_dn": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-search_dn",
+              "type": "string"
+            },
+            "search_password": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-search_password",
+              "type": "string"
+            },
+            "user_search_base": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-user_search_base",
+              "type": "string"
+            },
+            "user_search_filter": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-user_search_filter",
+              "type": "string",
+              "default": "(uid={0})"
+            },
+            "user_memberof_attribute": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-user_memberof_attribute",
+              "type": "string"
+            },
+            "group_search_type": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-group_search_type",
+              "enum": [
+                "directory_search",
+                "memberof_search"
+              ],
+              "default": "directory_search"
+            },
+            "group_search_base": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-group_search_base",
+              "type": "string"
+            },
+            "group_search_filter_with_dn": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-group_search_filter_with_dn",
+              "type": "string",
+              "default": "(member={0})"
+            },
+            "group_name_attribute": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-group_name_attribute",
+              "type": "string"
+            },
+            "admin_group_name": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-admin_group_name",
+              "type": "string"
+            },
+            "ldap_security": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-ldap_security",
+              "type": "string",
+              "default": "None"
+            },
+            "connection_timeout": {
+              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__connection_timeout",
+              "type": "integer",
+              "default": 20
+            }
+          },
+          "additionalProperties": false
+        },
+        "webserver": {
+          "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__webserver",
+          "type": "object",
+          "properties": {
+            "staticdir": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__webserver-staticdir",
+              "type": "string"
+            },
+            "sub_process_timeout": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__webserver-sub_process_timeout",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "http_proxy_settings": {
+          "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__http_proxy_settings",
+          "type": "object",
+          "properties": {
+            "proxy_url": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__http_proxy_settings-proxy_url",
+              "type": "string"
+            },
+            "proxy_username": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__http_proxy_settings-proxy_username",
+              "type": "string"
+            },
+            "proxy_password": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__http_proxy_settings-proxy_password",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "logging": {
+          "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__logging",
+          "type": "object",
+          "properties": {
+            "resource_usage_interval": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__logging-resource_usage_interval",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "definitions": {
+          "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions",
+          "type": "object",
+          "properties": {
+            "definitions_dir": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-definitions_dir",
+              "type": "string"
+            },
+            "auto_update": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-auto_update",
+              "type": "boolean",
+              "default": true
+            },
+            "download_host": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-download_host",
+              "type": "string"
+            },
+            "download_port": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-download_port",
+              "type": "integer"
+            },
+            "download_filename": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-download_filename",
+              "type": "string"
+            },
+            "hash_filename": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-hash_filename",
+              "type": "string"
+            },
+            "sleep": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-sleep",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "agents": {
+          "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents",
+          "type": "object",
+          "properties": {
+            "config_sleep": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-config_sleep",
+              "type": "integer"
+            },
+            "agent_install_poll_period": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-agent_install_poll_period",
+              "type": "integer"
+            },
+            "agent_install_mute_period": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-agent_install_mute_period",
+              "type": "integer"
+            },
+            "agent_install_timeout_period": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-agent_install_timeout_period",
+              "type": "integer"
+            },
+            "ssh_executable": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-ssh_executable",
+              "type": "string"
+            },
+            "scp_executable": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-scp_executable",
+              "type": "string"
+            },
+            "ssh_keygen_executable": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-ssh_keygen_executable",
+              "type": "string"
+            },
+            "ssh_keyscan_executable": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-ssh_keyscan_executable",
+              "type": "string"
+            },
+            "ssh_user_known_hosts_file": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-ssh_user_known_hosts_file",
+              "type": "string"
+            },
+            "ssh_sys_known_hosts_file": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-ssh_sys_known_hosts_file",
+              "type": "string"
+            },
+            "tmp_dir": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-tmp_dir",
+              "type": "string"
+            },
+            "not_seen_threshold": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-not_seen_threshold",
+              "type": "integer"
+            },
+            "call_agent_retry": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-call_agent_retry",
+              "type": "integer"
+            },
+            "agent_aggregation_flush": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-agent_aggregation_flush",
+              "type": "integer"
+            },
+            "http_poll_period": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-http_poll_period",
+              "type": "integer"
+            },
+            "path_to_install_script": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-path_to_install_script",
+              "type": "string"
+            },
+            "path_to_sudowrap": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-path_to_sudowrap",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "stat_reporter": {
+          "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__stat_reporter",
+          "type": "object",
+          "properties": {
+            "initial_sleep": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__stat_reporter-initial_sleep",
+              "type": "integer"
+            },
+            "interval": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__stat_reporter-interval",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "repair_service": {
+          "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service",
+          "type": "object",
+          "properties": {
+            "persist_directory": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-persist_directory",
+              "type": "string"
+            },
+            "persist_period": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-persist_period",
+              "type": "integer"
+            },
+            "restart_period": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-restart_period",
+              "type": "integer"
+            },
+            "cluster_stabilization_period": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-cluster_stabilization_period",
+              "type": "integer"
+            },
+            "single_task_err_threshold": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-single_task_err_threshold",
+              "type": "integer"
+            },
+            "max_parallel_repairs": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-max_parallel_repairs",
+              "type": "integer"
+            },
+            "max_pending_repairs": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-max_pending_repairs",
+              "type": "integer"
+            },
+            "single_repair_timeout": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-single_repair_timeout",
+              "type": "integer"
+            },
+            "min_repair_time": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-min_repair_time",
+              "type": "integer"
+            },
+            "min_throughput": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-min_throughput",
+              "type": "integer"
+            },
+            "num_recent_throughputs": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-num_recent_throughputs",
+              "type": "integer"
+            },
+            "error_logging_window": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-error_logging_window",
+              "type": "integer"
+            },
+            "incremental_repair_tables": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-incremental_repair_tables",
+              "type": "string"
+            },
+            "incremental_sleep": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-incremental_sleep",
+              "type": "integer"
+            },
+            "incremental_threshold": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-incremental_threshold",
+              "type": "integer"
+            },
+            "prioritization_page_size": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-prioritization_page_size",
+              "type": "integer"
+            },
+            "offline_splits": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-offline_splits",
+              "type": "integer"
+            },
+            "ignore_keyspaces": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-ignore_keyspaces",
+              "type": "string"
+            },
+            "ignore_table": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-ignore_table",
+              "type": "string"
+            },
+            "time_to_completion_target_percentage": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-time_to_completion_target_percentage",
+              "type": "number"
+            },
+            "incremental_repair_datacenters": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-incremental_repair_datacenters",
+              "type": "string"
+            },
+            "tokenranges_http_timeout": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-tokenranges_http_timeout",
+              "type": "integer"
+            },
+            "max_down_node_retry": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-max_down_node_retry",
+              "type": "integer"
+            },
+            "incremental_err_alert_threshold": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-incremental_err_alert_threshold",
+              "type": "integer"
+            },
+            "snapshot_override": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-snapshot_override",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "ui": {
+          "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ui",
+          "type": "object",
+          "properties": {
+            "default_api_timeout": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ui-default_api_timeout",
+              "type": "integer"
+            },
+            "max_metrics_requests": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ui-max_metrics_requests",
+              "type": "integer"
+            },
+            "node_detail_refresh_delay": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ui-node_detail_refresh_delay",
+              "type": "integer"
+            },
+            "storagemap_ttl": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__ui-storagemap_ttl",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "request_tracker": {
+          "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__request_tracker",
+          "type": "object",
+          "properties": {
+            "queue_size": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__request_tracker-queue_size",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "clusters": {
+          "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__clusters",
+          "type": "object",
+          "properties": {
+            "add_cluster_timeout": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__clusters-add_cluster_timeout",
+              "type": "integer"
+            },
+            "startup_sleep": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__clusters-startup_sleep",
+              "type": "integer"
+            },
+            "max_schema_agreement_wait": {
+              "id": "http://docs.datastax.com/en/latest-opscenter/opsc/configure/opscConfigProps_r.html#opscConfigProps__clusters-max_schema_agreement_wait",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "heap",
+        "disk",
+        "disk_type",
+        "gui_port"
+      ]
+    },
+    "dse": {
+      "description": "DSE node properties",
+      "type": "object",
+      "properties": {
+        "cluster_name": {
+          "title": "DSE cluster name",
+          "type": "string",
+          "default": "cluster_datastax"
+        },
+        "seed_hostname1": {
+          "title": "First DSE seed node hostname",
+          "type": "string",
+          "default": "dse-0-node.datastax-dse.autoip.dcos.thisdcos.directory"
+        },
+        "seed_hostname2": {
+          "title": "Second DSE seed node hostname",
+          "type": "string",
+          "default": "dse-1-node.datastax-dse.autoip.dcos.thisdcos.directory"
+        },
+        "jmx_port": {
+          "title": "JMX monitoring port",
+          "type": "integer",
+          "default": 7199
+        },
+        "agent_port": {
+          "title": "Agent API port",
+          "type": "integer",
+          "default": 21621
+        },
+        "native_port": {
+          "title": "Cassandra native client port",
+          "type": "integer",
+          "default": 9042
+        },
+        "thrift_port": {
+          "title": "Cassandra thrift client port",
+          "type": "integer",
+          "default": 9160
+        },
+        "spark_master_webui_port": {
+          "title": "Spark master web UI port",
+          "type": "integer",
+          "default": 7080
+        }
+      },
+      "required": [
+        "jmx_port",
+        "agent_port",
+        "native_port",
+        "thrift_port",
+        "cluster_name",
+        "spark_master_webui_port"
+      ],
+      "extraProperties": false
+    }
+  }
+}

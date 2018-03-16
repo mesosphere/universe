@@ -1,0 +1,15 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/geoserver-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/geoserver-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/geoserver-icon-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "geoserver-sync": "appliedis/dcos-geoserver:1.2.1",
+        "geoserver-app": "appliedis/geoserver:2.11.2"
+      }
+    }
+  }
+}

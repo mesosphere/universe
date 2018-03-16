@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.9",
+  "name": "beakerx",
+  "version": "0.9.1",
+  "scm": "https://github.com/twosigma/beakerx",
+  "maintainer": "https://dcos.io/community",
+  "website": "http://beakerx.com",
+  "description": "BeakerX is a collection of kernels and extensions to the Jupyter interactive computing environment. It provides JVM support, interactive plots, tables, forms, publishing, and more. Installation Documentation: https://github.com/dcos/examples/tree/master/beakerx",
+  "tags": ["docker", "beakerx", "jupyter", "notebook"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nDefault password is set to 'dcos'\n\nAdvanced Installation options notes\n\nstorage / persistence: create local persistent volumes for internal storage files to survive across restarts or failures. \n\nstorage / host_volume_size: define the size of your persistent volume, e.g. 4GB.\n\nNOTE: If you didn't select persistence in the storage section, or provided a valid value for host_volume on installation,\nYOUR DATA WILL NOT BE SAVED IN ANY WAY.\n\nnetworking / port: This DC/OS service can be accessed from any other application through a NAMED VIP in the format service_name.marathon.l4lb.thisdcos.directory:port. Check status of the VIP in the Network tab of the DC/OS Dashboard (Enterprise DC/OS only).\n\nnetworking / external_access: create an entry in Marathon-LB for accessing the service from outside of the cluster\n\nnetworking / external_access_port: port to be used in Marathon-LB for accessing the service. \n\nnetworking / external_public_agent_ip: dns for Marathon-LB, typically set to your public agents public ip.\n\n Access your BeakerX Server.",
+ "postInstallNotes": "Service installed.",
+ "postUninstallNotes": "Service uninstalled. Note that any persisting data will be automatically removed from the agent where the service was deployed.",
+  "licenses": [
+    {
+      "name": "Apache License",
+      "url": "http://en.wikipedia.org/wiki/Apache_License"
+    }
+  ]
+}

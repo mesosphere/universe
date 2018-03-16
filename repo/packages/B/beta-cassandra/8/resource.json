@@ -1,0 +1,60 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz",
+      "cassandra-jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz",
+      "cassandra-python-tar-gz": "https://downloads.mesosphere.com/cassandra/assets/python-2.7.14.tar.gz",
+      "cassandra-openssl-tar-gz": "https://downloads.mesosphere.com/cassandra/assets/openssl-1.0.2n-libs.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-master-28f8827.tar.gz",
+      "scheduler-zip": "https://downloads.mesosphere.com/cassandra/assets/2.1.2-3.0.15-beta/cassandra-scheduler.zip",
+      "cassandra-tar-gz": "https://downloads.mesosphere.com/cassandra/assets/apache-cassandra-3.0.15-bin-dcos.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/cassandra/assets/2.1.2-3.0.15-beta/bootstrap.zip",
+      "executor-zip": "https://downloads.mesosphere.com/cassandra/assets/2.1.2-3.0.15-beta/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/beta-cassandra-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/beta-cassandra-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/beta-cassandra-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "508ffab322bc07ac5f35e4d0db0fa419bc32a84bd7db29e66954414a853b19f2"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cassandra/assets/2.1.2-3.0.15-beta/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "8627e4a94c4ed6c2d355d24d0134954bb39311e0ee510077c5d9b980fe3be439"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cassandra/assets/2.1.2-3.0.15-beta/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "f366e7930dd1a61cc86feb7c1f5bd8fdcbf05fee838ba018f1048ad80dcd0389"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/cassandra/assets/2.1.2-3.0.15-beta/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

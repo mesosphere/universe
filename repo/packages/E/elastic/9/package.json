@@ -1,0 +1,25 @@
+{
+    "packagingVersion": "4.0",
+    "upgradesFrom": [
+        "2.0.2-5.6.2"
+    ],
+    "downgradesTo": [
+        "2.0.2-5.6.2"
+    ],
+    "minDcosReleaseVersion": "1.9",
+    "name": "elastic",
+    "version": "2.1.0-5.6.2",
+    "maintainer": "support@mesosphere.io",
+    "description": "Elasticsearch 5, and optionally X-Pack",
+    "selected": true,
+    "framework": true,
+    "tags": [
+        "elastic",
+        "elasticsearch",
+        "kibana",
+        "x-pack"
+    ],
+    "preInstallNotes": "Default configuration requires 3 agent nodes each with: CPU: 4.0 | Memory: 9216MB | Disk: 13500MB\n\nMore specifically, each instance type requires:\n\nMaster node: 3 instances | 1.0 CPU | 2048 MB MEM | 1 2000 MB Disk\n\nData node: 2 instances | 1.0 CPU | 4096 MB MEM | 1 10000 MB Disk\n\nCoordinator node: 1 instance | 1.0 CPU | 2048 MB MEM | 1 1000 MB Disk\n\nIngest node: No instances by default | 0.5 CPU | 2048 MB MEM | 1 2000 MB Disk",
+    "postInstallNotes": "The DC/OS Elastic service is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/elastic/\n\tIssues: https://docs.mesosphere.com/support/",
+    "postUninstallNotes": "The DC/OS Elastic service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/elastic/uninstall to remove any persistent state if required."
+}

@@ -1,0 +1,94 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{koding.cpus}},
+  "instances": 1,
+  "mem": {{koding.mem}},
+  "disk": 20000,
+  "args": [
+    "--host", "{{networking.hostname}}",
+    "--hostname", "{{networking.hostname}}",
+    "--nginx.real_ip"
+  ],
+  "requirePorts": true,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.koding}}",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 8090,
+          "hostPort": 0,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "volumes": [
+      {
+        "containerPath": "generated-data",
+        "mode": "RW",
+        "persistent": {
+          "type": "root",
+          "size": 100
+        }
+      },
+      {
+        "containerPath": "/opt/koding/generated",
+        "hostPath": "generated-data",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "postgresql-data",
+        "mode": "RW",
+        "persistent": {
+          "type": "root",
+          "size": 2048
+        }
+      },
+      {
+        "containerPath": "/var/lib/postgresql",
+        "hostPath": "postgresql-data",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "mongo-data",
+        "mode": "RW",
+        "persistent": {
+          "type": "root",
+          "size": 4096
+        }
+      },
+      {
+        "containerPath": "/var/lib/mongodb",
+        "hostPath": "mongo-data",
+        "mode": "RW"
+      }
+    ]
+  },
+  "residency": {
+    "taskLostBehavior": "WAIT_FOREVER"
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 180,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 3,
+      "path": "/",
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "timeoutSeconds": 5
+    }
+  ],
+  "labels":{
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_VHOST":"{{networking.hostname}}",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "{{networking.https-redirect}}",
+    "HAPROXY_0_HTTP_FRONTEND_ACL": "  acl host_{cleanedUpHostname} hdr_end(host) -i {hostname}\n  use_backend {backend} if host_{cleanedUpHostname}\n",
+    "HAPROXY_0_HTTPS_FRONTEND_ACL": "  use_backend {backend} if {{ ssl_fc_sni -m end .{hostname} }}\n",
+    "MARATHON_SINGLE_INSTANCE_APP": "true"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}

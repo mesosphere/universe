@@ -1,0 +1,187 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" &&  ./mongo-scheduler/bin/mongo ./mongo-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.secret_name}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.secret_name}}"
+    }
+  },
+  {{/service.secret_name}}
+  "env": {
+    "PACKAGE_NAME": "percona-mongo",
+    "PACKAGE_VERSION": "0.1.0-3.4.10",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1516650166499",
+    "PACKAGE_BUILD_TIME_STR": "Mon Jan 22 2018 19:42:46 +0000",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "SLEEP_DURATION": "{{service.sleep}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.principal}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+
+    "CONFIG_TEMPLATE_PATH": "mongo-scheduler",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "MONGODB_TOOLS_URI": "{{resource.assets.uris.mongodb-tools-zip}}",
+
+    "MONGODB_PORT": "{{mongodb.port}}",
+    "MONGODB_COUNT": "{{mongodb.count}}",
+    "MONGODB_CPUS": "{{mongodb.cpus}}",
+    "MONGODB_MEM": "{{mongodb.mem}}",
+    "MONGODB_DISK_SIZE": "{{mongodb.disk}}",
+    "MONGODB_REPLSET": "{{mongodb.replicaSetName}}",
+    "MONGODB_USER_ADMIN_USER": "{{mongodb.userAdminUser}}",
+    "MONGODB_USER_ADMIN_PASSWORD": "{{mongodb.userAdminPassword}}",
+    "MONGODB_CLUSTER_ADMIN_USER": "{{mongodb.clusterAdminUser}}",
+    "MONGODB_CLUSTER_ADMIN_PASSWORD": "{{mongodb.clusterAdminPassword}}",
+    "MONGODB_BACKUP_USER": "{{mongodb.backupUser}}",
+    "MONGODB_BACKUP_PASSWORD": "{{mongodb.backupPassword}}",
+    "MONGODB_CLUSTER_MONITOR_USER": "{{mongodb.clusterMonitorUser}}",
+    "MONGODB_CLUSTER_MONITOR_PASSWORD": "{{mongodb.clusterMonitorPassword}}",
+    "MONGODB_KEY": "{{mongodb.key}}",
+    {{#mongodb.constraint}}
+        "MONGODB_CONSTRAINT": "{{mongodb.constraint}}",
+    {{/mongodb.constraint}}
+    "MONGODB_VERSION": "{{mongodb.version}}",
+    "MONGODB_STORAGE_ENGINE": "{{mongodb.storageEngine}}",
+
+    "MONGODB_NOFILE_LIMIT": "{{mongodb-advanced.openFileLimit}}",
+    "MONGODB_NPROC_LIMIT": "{{mongodb-advanced.processLimit}}",
+    
+    "MONGODB_SECURITY_JAVASCRIPT_ENABLED": "{{mongodb-advanced.securityJavascriptEnabled}}",
+    "MONGODB_SECURITY_REDACT_CLIENT_LOG_DATA": "{{mongodb-advanced.securityRedactClientLogData}}",
+
+    "MONGODB_STORAGE_INDEX_BUILD_RETRY": "{{mongodb-advanced.storageIndexBuildRetry}}",
+    "MONGODB_STORAGE_JOURNAL_COMMIT_INTERVAL_MS": "{{mongodb-advanced.storageJournalCommitIntervalMs}}",
+    "MONGODB_STORAGE_DIRECTORY_PER_DB": "{{mongodb-advanced.storageDirectoryPerDB}}",
+    "MONGODB_STORAGE_SYNC_PERIOD_SECS": "{{mongodb-advanced.storageSyncPeriodSecs}}",
+
+    "MONGODB_STORAGE_MMAPV1_PREALLOC_DATA_FILES": "{{mongodb-advanced.storageMMAPv1PreallocDataFiles}}",
+    "MONGODB_STORAGE_MMAPV1_NS_SIZE": "{{mongodb-advanced.storageMMAPv1NsSize}}",
+    "MONGODB_STORAGE_MMAPV1_QUOTA_ENFORCED": "{{mongodb-advanced.storageMMAPv1QuotaEnforced}}",
+    "MONGODB_STORAGE_MMAPV1_MAX_FILES_PER_DB": "{{mongodb-advanced.storageMMAPv1QuotaMaxFilesPerDB}}",
+    "MONGODB_STORAGE_MMAPV1_SMALLFILES": "{{mongodb-advanced.storageMMAPv1SmallFiles}}",
+
+    "MONGODB_STORAGE_WIREDTIGER_ENGINE_CONFIG_CACHE_SIZE_GB": "{{mongodb-advanced.storageWiredTigerEngineConfigCacheSizeGB}}",
+    "MONGODB_STORAGE_WIREDTIGER_ENGINE_CONFIG_JOURNAL_COMPRESSOR": "{{mongodb-advanced.storageWiredTigerEngineConfigJournalCompressor}}",
+    "MONGODB_STORAGE_WIREDTIGER_ENGINE_CONFIG_DIRECTORY_FOR_INDEXES": "{{mongodb-advanced.storageWiredTigerEngineConfigDirectoryForIndexes}}",
+    "MONGODB_STORAGE_WIREDTIGER_COLLECTION_CONFIG_BLOCK_COMPRESSOR": "{{mongodb-advanced.storageWiredTigerCollectionConfigBlockCompressor}}",
+    "MONGODB_STORAGE_WIREDTIGER_INDEX_CONFIG_PREFIX_COMPRESSION": "{{mongodb-advanced.storageWiredTigerIndexConfigPrefixCompression}}",
+
+    "MONGODB_STORAGE_ROCKSDB_CACHE_SIZE_GB": "{{mongodb-advanced.storageRocksDBCacheSizeGB}}",
+    "MONGODB_STORAGE_ROCKSDB_COMPRESSION": "{{mongodb-advanced.storageRocksDBCompression}}",
+    "MONGODB_STORAGE_ROCKSDB_WRITE_MB_PER_SEC": "{{mongodb-advanced.storageRocksDBMaxWriteMBPerSec}}",
+    "MONGODB_STORAGE_ROCKSDB_CRASH_SAFE_COUNTERS": "{{mongodb-advanced.storageRocksDBCrashSafeCounters}}",
+
+    "MONGODB_SET_PARAMETER_AUDIT_AUTHORIZATION_SUCCESS": "{{mongodb-auditlog.auditAuthorizationSuccess}}",
+    "MONGODB_SET_PARAMETER_FAIL_INDEX_KEY_TOO_LONG": "{{mongodb-advanced.setParameterFailIndexKeyTooLong}}",
+    "MONGODB_SET_PARAMETER_NO_TABLE_SCAN": "{{mongodb-advanced.setParameterNoTableScan}}",
+    "MONGODB_SET_PARAMETER_DISABLE_JAVASCRIPT_JIT": "{{mongodb-advanced.setParameterDisableJavaScriptJIT}}",
+    "MONGODB_SET_PARAMETER_MAX_INDEX_BUILD_MEMORY_USAGE_MB": "{{mongodb-advanced.setParameterMaxIndexBuildMemoryUsageMB}}",
+    "MONGODB_SET_PARAMETER_LOG_USER_IDS": "{{mongodb-advanced.setParameterLogUserIds}}",
+    "MONGODB_SET_PARAMETER_REPL_WRITER_THREAD_COUNT": "{{mongodb-advanced.setParameterReplWriterThreadCount}}",
+    "MONGODB_SET_PARAMETER_TTL_MONITOR_ENABLED": "{{mongodb-advanced.setParameterTTLMonitorEnabled}}",
+    "MONGODB_SET_PARAMETER_TTL_MONITOR_SLEEP_SECS": "{{mongodb-advanced.setParameterTTLMonitorSleepSecs}}",
+    "MONGODB_SET_PARAMETER_ROCKSDB_CONCURRENT_READ_TRANSACTIONS": "{{mongodb-advanced.setParameterRocksDBConcurrentReadTransactions}}",
+    "MONGODB_SET_PARAMETER_ROCKSDB_CONCURRENT_WRITE_TRANSACTIONS": "{{mongodb-advanced.setParameterRocksDBConcurrentWriteTransactions}}",
+    "MONGODB_SET_PARAMETER_WIREDTIGER_CONCURRENT_READ_TRANSACTIONS": "{{mongodb-advanced.setParameterWiredTigerConcurrentReadTransactions}}",
+    "MONGODB_SET_PARAMETER_WIREDTIGER_CONCURRENT_WRITE_TRANSACTIONS": "{{mongodb-advanced.setParameterWiredTigerConcurrentWriteTransactions}}",
+
+    "MONGODB_NET_MAX_INCOMING_CONNECTIONS": "{{mongodb-advanced.netMaxIncomingConnections}}",
+
+    "MONGODB_OPERATION_PROFILING_MODE": "{{mongodb-advanced.operationProfilingMode}}",
+    "MONGODB_OPERATION_PROFILING_SLOWOP_THRESHOLD_MS": "{{mongodb-advanced.operationProfilingSlowOpThresholdMs}}",
+    "MONGODB_OPERATION_PROFILING_RATE_LIMIT": "{{mongodb-advanced.operationProfilingRateLimit}}",
+
+    "MONGODB_REPLICATION_SECONDARY_INDEX_PREFETCH": "{{mongodb-advanced.replicationSecondaryIndexPrefetch}}",
+    "MONGODB_REPLICATION_ENABLE_MAJORITY_READ_CONCERN": "{{mongodb-advanced.replicationEnableMajorityReadConcern}}",
+
+    "MONGODB_AUDIT_LOG_ENABLED": "{{mongodb-auditlog.enabled}}",
+    "MONGODB_AUDIT_LOG_FILTER": "{{mongodb-auditlog.filter}}",
+
+    "MONGODB_SYSTEM_LOG_VERBOSITY": "{{mongodb-advanced.systemLogVerbosity}}",
+    "MONGODB_SYSTEM_LOG_TRACE_ALL_EXCEPTIONS": "{{mongodb-advanced.systemTraceAllExceptions}}",
+    "MONGODB_SYSTEM_LOG_TIMESTAMP_FORMAT": "{{mongodb-advanced.systemLogTimestampFormat}}",
+
+    {{#service.virtual_networks}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{node.virtual_network}}",
+    "CNI_PLUGIN_LABELS": "{{node.cni_plugin_labels}}",
+    {{/service.virtual_networks}}
+
+    "INIT_CPUS": "{{init.cpus}}",
+    "INIT_MEM": "{{init.mem}}",
+    "INIT_INITIATE_DELAY": "{{init.initiateDelay}}",
+    "INIT_MAX_CONNECT_TRIES": "{{init.maxConnectTries}}",
+    "INIT_MAX_INIT_REPLSET_TRIES": "{{init.maxInitReplsetTries}}",
+    "INIT_MAX_ADD_USERS_TRIES": "{{init.maxAddUsersTries}}",
+    "INIT_RETRY_SLEEP": "{{init.retrySleep}}",
+
+    "WATCHDOG_CPUS": "{{watchdog.cpus}}",
+    "WATCHDOG_MEM": "{{watchdog.mem}}",
+    "WATCHDOG_API_TIMEOUT": "{{watchdog.apiTimeout}}",
+    "WATCHDOG_API_POLL": "{{watchdog.apiPoll}}",
+    "WATCHDOG_REPLSET_TIMEOUT": "{{watchdog.replsetTimeout}}",
+    "WATCHDOG_REPLSET_POLL": "{{watchdog.replsetPoll}}",
+    "WATCHDOG_DELAY_WATCHER_START": "{{watchdog.delayWatcherStart}}",
+
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    {{#service.secret_name}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    {{/service.secret_name}}
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "{{resource.assets.uris.bootstrap-zip}}",
+    "{{resource.assets.uris.mongodb-tools-zip}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/deploy",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    },
+    {
+      "protocol": "HTTP",
+      "path": "/v1/plans/recovery",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/scale-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/scale-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/scale-icon-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "scale": "geoint/scale:5.1.1",
+        "db": "mdillon/postgis:9.5",
+        "logstash": "geoint/scale-logstash:5.1.1",
+        "rabbitmq": "rabbitmq:3.6-management"
+      }
+    }
+  }
+}

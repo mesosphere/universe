@@ -1,0 +1,61 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u152-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-master-28f8827.tar.gz",
+      "executor-zip": "https://downloads.mesosphere.com/elastic/assets/2.1.1-5.6.5-beta/executor.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.31.2/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/elastic/assets/2.1.1-5.6.5-beta/elastic-scheduler.zip",
+      "statsd-plugin-zip": "https://github.com/mesosphere/elasticsearch-statsd-plugin/releases/download/5.6.5.0/elasticsearch-statsd-5.6.5.0.zip",
+      "elasticsearch-jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u152-linux-x64.tar.gz",
+      "elasticsearch-tar-gz": "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.5.tar.gz",
+      "xpack-zip": "https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.6.5.zip",
+      "diagnostics-zip": "https://github.com/elastic/elasticsearch-support-diagnostics/releases/download/6.2/support-diagnostics-6.2-dist.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/beta-elastic-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/beta-elastic-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/beta-elastic-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "a6c1365b04da8e39a490d684dccf7b10656f3742ec6333327d83871edddc53f4"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/elastic/assets/2.1.1-5.6.5-beta/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "560d7e1daff01311669b417df800d40a694b0d51cef64a8ff6f8a5e7b5e3b2a8"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/elastic/assets/2.1.1-5.6.5-beta/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "d1a8f87ada43c97da61c39afb609a14db3658d1b489583f7c1b22e3f9c72565c"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/elastic/assets/2.1.1-5.6.5-beta/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+    "packagingVersion": "4.0",
+    "name": "datastax-ops",
+    "version": "2.0.5-6.1.2",
+    "upgradesFrom": [
+        "2.0.4-6.1.2"
+    ],
+    "downgradesTo": [
+        "2.0.4-6.1.2"
+    ],
+    "maintainer": "techpartner@datastax.com",
+    "minDcosReleaseVersion": "1.9",
+    "description": "Datastax Enterprise OpsCenter",
+    "selected": true,
+    "framework": true,
+    "tags": [
+        "datastax",
+        "dse",
+        "opscenter",
+        "management",
+        "enterprise",
+        "nosql",
+        "database"
+    ],
+    "preInstallNotes": "This DC/OS Service is maintained by DataStax and available to mutual DataStax and Mesosphere customers (eval and production) and prospects (eval) .\n\nDefault configuration requires 1 agent node with: 2.5 CPU | 4100 MB MEM | 10240 MB Disk\n\nContact Mesosphere and DataStax before deploying this service to ensure proper support channels are made available. Contact your rep at either company or techpartner@datastax.com. By using this service you agree to the license terms here: https://gist.github.com/012345/d1df9d43a0dfaa49e628c7bfbc9ffb52\n\nVersions: DataStax Enterprise 5.1.2 (Standard and Max) & OpsCenter 6.1.2",
+    "postInstallNotes": "DC/OS Datastax Enterprise OpsCenter is being installed!\n\n\tDocumentation: https://docs.datastax.com\n\tIssues: https://www.datastax.com/contactus",
+    "postUninstallNotes": "DC/OS Datastax Enterprise OpsCenter is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/dse/v2.0.0-5.1.2/uninstall/ to remove any persistent state if required."
+}

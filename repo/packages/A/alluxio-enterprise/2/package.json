@@ -1,0 +1,19 @@
+{
+    "packagingVersion": "4.0",
+    "upgradesFrom": [],
+    "downgradesTo": [],
+    "name": "alluxio-enterprise",
+    "version": "2.0.0-1.6.0",
+    "maintainer": "info@alluxio.com",
+    "description": "Alluxio, formerly Tachyon, is the world's first system that unifies disparate storage systems at memory speed. With Alluxio, enterprises can manage data efficiently, accelerate business analytics, and ease the adoption of hybrid cloud. \n\n Alluxio Enterprise Edition delivers operational benefits of a stable, high performance system with enterprise features and support for critical deployments. Please refer to https://alluxio.com/docs/enterprise/1.6/en/Alluxio-on-DCOS.html for a detailed operation guide. \n\n Release Notes: \n - Upgrade to version 1.6.0 of Alluxio \n - Secured deployment enhancements \n - Alluxio Master UI access \n - Tiered Storage Support \n - HA Support \n - REST API Support",
+    "selected": false,
+    "framework": true,
+    "tags": [
+        "enterprise",
+        "alluxio"
+    ],
+    "minDcosReleaseVersion": "1.10",
+    "preInstallNotes": "Visit https://alluxio.com/products to obtain a license for Alluxio Enterprise Edition.\n\nDefault configuration requires 2 agent nodes each with: CPU: 3 | Memory: 5GB | Disk: 4GB\n\nMore specifically, each instance type requires:\n\nMaster: 1 instance | 2 CPU | 4096 MB MEM | 1 2048 MB Disk\n\nJob master: 1 instance | 1 CPU | 1024 MB MEM | 1 2048 MB Disk\n\nWorker: 1 instance | 2 CPU | 4096 MB MEM | 1 2048 MB Disk \n\nJob worker: 1 instance | 1 CPU | 1024 MB MEM | 1 2048 MB Disk \n\nVersion 2.0.0-1.6.0 contains breaking changes from previous releases. Upgrading from previous versions is not supported.",
+    "postInstallNotes": "DC/OS Alluxio is being installed!\n\n\tDocumentation: https://alluxio.com/docs/ \n\tIssues: info@aluxio.com",
+    "postUninstallNotes": "DC/OS Alluxio has been uninstalled."
+}

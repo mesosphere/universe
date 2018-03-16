@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "4.0",
+  "name": "traefik",
+  "version": "1.0.0-1.4.4",
+  "minDcosReleaseVersion": "1.9",
+  "scm": "https://github.com/containous/traefik",
+  "description": "Traefik is a modern HTTP reverse proxy and load balancer written in go. It supports several backends (Docker, Swarm mode, Kubernetes, Marathon, Consul, Etcd, Rancher, Amazon ECS, and a lot more) to manage its configuration automatically and dynamically. \n\nSee https://docs.traefik.io for more information.",
+  "maintainer": "https://github.com/deric/dcos-traefik",
+  "tags": ["loadbalancer", "service-discovery", "reverse-proxy", "proxy", "traffic"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Preview packages should never be used in production!\n\n",
+  "postInstallNotes": "Traefik DC/OS Service has been successfully installed!\nSee https://docs.traefik.io for documentation.",
+  "postUninstallNotes": "Traefik DC/OS Service has been uninstalled and will no longer run.",
+  "licenses": [
+    {
+      "name": "MIT",
+      "url": "https://github.com/containous/traefik/blob/master/LICENSE.md"
+    }
+  ]
+}

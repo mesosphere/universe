@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "influxdb",
+  "version": "1.4",
+  "scm": "https://github.com/influxdata/influxdb",
+  "maintainer": "https://dcos.io/community",
+  "website": "https://github.com/influxdata/influxdb",
+  "description": "InfluxDB is an open-source time series database developed by InfluxData as part of their time series platform. It is written in Go and optimized for fast, high-availability storage and retrieval of time series data in fields such as operations monitoring, application metrics, Internet of Things sensor data, and real-time analytics.\n\nThis package can be used alongside the DC/OS 'cadvisor' and 'grafana' packages for a cluster-wide monitoring solution.\n\nInstallation Documentation: https://github.com/dcos/examples/tree/master/cadvisor-influxdb-grafana\n\nNote: Since InfluxDB 1.3.0 the admin-api is depcrecated and no longer used\n\nNote: You need to manually create your database, e.g. with Chronograf",
+  "tags": ["docker", "influxdb", "database", "monitoring"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nAdvanced Installation options notes\n\nstorage / persistence: create local persistent volumes for internal storage files to survive across restarts or failures. \n\nstorage / host_volume: if /tmp for example is used it will try to mount /tmp/influxdb (make sure the influxdb folder exists within your host_volum /tmp) if persistence is not selected, this package can use a local volume in the host for storage, like a local directory or an NFS mount. The parameter host_volume controls the path in the host in which these volumes will be created, which MUST be the same on all nodes of the cluster.\n\nNOTE: If you didn't select persistence in the storage section, or provided a valid value for host_volume on installation,\nYOUR DATA WILL NOT BE SAVED IN ANY WAY.\n\nnetworking / port: This DC/OS service can be accessed from any other application through a NAMED VIP in the format service_name.marathon.l4lb.thisdcos.directory:port. Check status of the VIP in the Network tab of the DC/OS Dashboard (Enterprise DC/OS only).\n\nnetworking / external_access: create an entry in Marathon-LB for accessing the service from outside of the cluster\n\nnetworking / external_access_port: port to be used in Marathon-LB for accessing the service. \n\nnetworking / external_public_agent_ip: dns for Marathon-LB, typically set to your public agents public ip.\n\n Access your InfluxDB Server e.g. from your laptop with Chronograf: docker run -p 8888:8888 chronograf --influxdb-url=http://<public_agent_ip>",
+ "postInstallNotes": "Service installed.",
+ "postUninstallNotes": "Service uninstalled. Note that any persisting data still exists and will need to be manually removed from the agent where the service was deployed.",
+  "licenses": [
+    {
+      "name": "Apache License",
+      "url": "http://en.wikipedia.org/wiki/Apache_License"
+    }
+  ]
+}

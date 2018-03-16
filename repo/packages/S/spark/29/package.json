@@ -1,9 +1,9 @@
 {
     "packagingVersion": "3.0",
-    "postInstallNotes": "DC/OS Spark is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/spark/\n\tIssues: https://docs.mesosphere.com/support/",
+    "postInstallNotes": "DC/OS Spark is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/spark/\n\tIssues: https://docs.mesosphere.com/support/\n\n\tIf you installed from the UI, enter `dcos package install spark --cli` from the DC/OS CLI to install the Spark CLI subcommands.",
     "scm": "https://github.com/apache/spark.git",
     "maintainer": "support@mesosphere.io",
-    "postUninstallNotes": "The Apache Spark DC/OS Service has been uninstalled and will no longer run.\nPlease follow the instructions at https://docs.mesosphere.com/current/usage/service-guides/spark/uninstall/ to clean up any persisted state.",
+    "postUninstallNotes": "The Apache Spark DC/OS Service is being uninstalled.\nFollow the instructions at https://docs.mesosphere.com/current/usage/service-guides/spark/uninstall/ to clean up any persisted state.",
     "name": "spark",
     "description": "Spark is a fast and general cluster computing system for Big Data.  Documentation: https://docs.mesosphere.com/service-docs/spark/",
     "licenses": [

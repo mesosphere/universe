@@ -1,0 +1,57 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u152-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-master-28f8827.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/hello-world/assets/2.1.0-0.31.2/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/hello-world/assets/2.1.0-0.31.2/hello-world-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/hello-world/assets/2.1.0-0.31.2/executor.zip",
+      "keystore-app-zip": "https://downloads.mesosphere.com/hello-world/assets/2.1.0-0.31.2/keystore-app.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/hello-world-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/hello-world-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/hello-world-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "b21b04e9e2006830266d7fd777f60d5a78c22bd27f9379140c45f516f4e58ca0"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hello-world/assets/2.1.0-0.31.2/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "48d3837179d24124fd9c0f3bcc9f2abdeaa694b57362a9eddfd4eeff861d483c"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hello-world/assets/2.1.0-0.31.2/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "6e1ce64b3f3b37826bde66e52b8b28f2525685e1d4588943cb5ab8910f7c8c02"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hello-world/assets/2.1.0-0.31.2/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

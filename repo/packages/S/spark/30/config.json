@@ -1,0 +1,135 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "DC/OS Spark configuration properties",
+      "type": "object",
+      "properties": {
+        "name": {
+          "default": "spark",
+          "description": "The Spark Dispatcher will register with Mesos with this as a framework name.  This service will be available at http://<dcos_url>/service/<name>/",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "mem": {
+          "default": 1024.0,
+          "description": "Memory (MB)",
+          "minimum": 1024.0,
+          "type": "number"
+        },
+        "role": {
+          "description": "The Spark Dispatcher will register with Mesos with this role.",
+          "type": "string",
+          "default": "*"
+        },
+        "service_account": {
+          "description": "The Spark Dispatcher will register with Mesos with this principal.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "description": "The Spark Dispatcher will register with mesos with this secret.",
+          "type": "string",
+          "default": ""
+        },
+        "user": {
+          "description": "Executors will run as this user.",
+          "type": "string",
+          "default": "nobody"
+        },
+        "docker-image": {
+          "type": "string",
+          "description": "The docker image used to run the dispatcher, drivers, and executors.  If, for example, you need a Spark built with a specific Hadoop version, set this variable to one of the images here: https://hub.docker.com/r/mesosphere/spark/tags/",
+          "default": "mesosphere/spark:2.1.0-2.2.0-1-hadoop-2.6"
+        },
+        "log-level": {
+          "type": "string",
+          "description": "log4j log level for The Spark Dispatcher.  May be set to any valid log4j log level: https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/Level.html",
+          "default": "INFO"
+        },
+        "spark-history-server-url": {
+          "type": "string",
+          "description": "URL of The Spark History Server (e.g. http://<dcos_url>/service/spark-history"
+        }
+      }
+    },
+    "security": {
+      "description": "Spark security configuration properties",
+      "type": "object",
+      "properties": {
+        "kerberos": {
+          "description": "Spark Kerberos configuration.",
+          "type": "object",
+          "properties": {
+            "krb5conf": {
+              "description": "Base64 encoded krb5.conf file.  Copied to the drivers and executors so that they may access your KDC.  Also used by the history server.",
+              "type": "string",
+              "default": ""
+            }
+          }
+        },
+        "ssl": {
+          "description": "Spark SSL certificates and private key configuration.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "Set to true to enable SSL.",
+              "type": "boolean"
+            },
+            "keyStoreBase64": {
+              "default": "",
+              "description": "Base64 encoded blob containing a Java keystore.",
+              "type": "string"
+            },
+            "trustStoreBase64": {
+              "default": "",
+              "description": "Base64 encoded blob containing a Java truststore.",
+              "type": "string"
+            },
+            "keyPassword": {
+              "default": "",
+              "description": "An optional password for the private key in the keystore.",
+              "type": "string"
+            },
+            "keyStorePassword": {
+              "default": "",
+              "description": "An optional password for the keystore (and the key if keyPassword is not given).",
+              "type": "string"
+            },
+            "trustStorePassword": {
+              "default": "",
+              "description": "An optional password for the truststore.",
+              "type": "string"
+            },
+            "protocol": {
+              "default": "TLSv1.2",
+              "description": "The TLS version to offer.",
+              "type": "string"
+            },
+            "enabledAlgorithms": {
+              "default": "SSL_DH_anon_EXPORT_WITH_DES40_CBC_SHA,SSL_DH_anon_WITH_3DES_EDE_CBC_SHA,SSL_DH_anon_WITH_DES_CBC_SHA,SSL_DHE_DSS_EXPORT_WITH_DES40_CBC_SHA,SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA,SSL_DHE_DSS_WITH_DES_CBC_SHA,SSL_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA,SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA,SSL_DHE_RSA_WITH_DES_CBC_SHA,SSL_RSA_EXPORT_WITH_DES40_CBC_SHA,SSL_RSA_WITH_3DES_EDE_CBC_SHA,SSL_RSA_WITH_DES_CBC_SHA,SSL_RSA_WITH_NULL_MD5,SSL_RSA_WITH_NULL_SHA,TLS_DH_anon_WITH_AES_128_CBC_SHA,TLS_DH_anon_WITH_AES_128_CBC_SHA256,TLS_DH_anon_WITH_AES_128_GCM_SHA256,TLS_DH_anon_WITH_AES_256_CBC_SHA,TLS_DH_anon_WITH_AES_256_CBC_SHA256,TLS_DH_anon_WITH_AES_256_GCM_SHA384,TLS_DHE_DSS_WITH_AES_128_CBC_SHA,TLS_DHE_DSS_WITH_AES_128_CBC_SHA256,TLS_DHE_DSS_WITH_AES_128_GCM_SHA256,TLS_DHE_DSS_WITH_AES_256_CBC_SHA,TLS_DHE_DSS_WITH_AES_256_CBC_SHA256,TLS_DHE_DSS_WITH_AES_256_GCM_SHA384,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_256_CBC_SHA,TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,TLS_DHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDH_anon_WITH_3DES_EDE_CBC_SHA,TLS_ECDH_anon_WITH_AES_128_CBC_SHA,TLS_ECDH_anon_WITH_AES_256_CBC_SHA,TLS_ECDH_anon_WITH_NULL_SHA,TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDH_ECDSA_WITH_NULL_SHA,TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDH_RSA_WITH_AES_128_CBC_SHA,TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDH_RSA_WITH_AES_256_CBC_SHA,TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDH_RSA_WITH_NULL_SHA,TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_NULL_SHA,TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_NULL_SHA,TLS_EMPTY_RENEGOTIATION_INFO_SCSV,TLS_KRB5_EXPORT_WITH_DES_CBC_40_MD5,TLS_KRB5_EXPORT_WITH_DES_CBC_40_SHA,TLS_KRB5_WITH_3DES_EDE_CBC_MD5,TLS_KRB5_WITH_3DES_EDE_CBC_SHA,TLS_KRB5_WITH_DES_CBC_MD5,TLS_KRB5_WITH_DES_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_NULL_SHA256",
+              "description": "A comma-separared list of allowed ciphers.",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "hdfs": {
+      "description": "Spark-HDFS configuration properties",
+      "type": "object",
+      "properties": {
+        "config-url": {
+          "type": "string",
+          "description": "Base URL that serves HDFS config files (hdfs-site.xml, core-site.xml).  If not set, DCOS Spark will use its default configuration and read from DCOS HDFS."
+        }
+      }
+    }
+  }
+}

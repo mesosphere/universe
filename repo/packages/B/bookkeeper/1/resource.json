@@ -1,0 +1,14 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "bookkeeper": "apache/bookkeeper:4.5.1"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/bookkeeper-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/bookkeeper-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/bookkeeper-icon-large.png"
+  }
+}

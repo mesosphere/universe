@@ -1,0 +1,55 @@
+{
+    "id": "/marathon-slack",
+    "cpus": {{marathon-slack.cpus}},
+    "mem": {{marathon-slack.mem}},
+    "disk": 0,
+    "instances": 1,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.marathon-slack}}",
+            "network": "HOST",
+            "forcePullImage": true
+        }
+    },
+    "env": {
+        {{#marathon-slack.slack_channel}}
+        "SLACK_CHANNEL": "{{marathon-slack.slack_channel}}",
+        {{/marathon-slack.slack_channel}}
+        {{#marathon-slack.slack_bot_name}}
+        "SLACK_BOT_NAME": "{{marathon-slack.slack_bot_name}}",
+        {{/marathon-slack.slack_bot_name}}
+        {{#marathon-slack.app_id_regexes}}
+        "APP_ID_REGEXES": "{{marathon-slack.app_id_regexes}}",
+        {{/marathon-slack.app_id_regexes}}
+        {{#marathon-slack.event_types}}
+        "EVENT_TYPES": "{{marathon-slack.event_types}}",
+        {{/marathon-slack.event_types}}
+        "SLACK_WEBHOOK_URL": "{{marathon-slack.slack_webhook_url}}"
+    },
+    "labels": {
+        "MARATHON_SINGLE_INSTANCE_APP": "true"
+    },
+    "upgradeStrategy": {
+        "minimumHealthCapacity": 0,
+        "maximumOverCapacity": 0
+    },
+    "portDefinitions": [
+        {
+            "port": 0,
+            "protocol": "tcp",
+            "name": "api"
+        }
+    ],
+    "requirePorts": false,
+    "healthChecks": [
+        {
+            "protocol": "HTTP",
+            "portIndex": 0,
+            "path": "/health",
+            "gracePeriodSeconds": 5,
+            "intervalSeconds": 20,
+            "maxConsecutiveFailures": 3
+        }
+    ]
+}

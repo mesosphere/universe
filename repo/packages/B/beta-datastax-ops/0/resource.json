@@ -1,0 +1,62 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "opscenter": "dspn/10517a0c8e9b11e79ef5600308a463ab-2:6.1.2"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u152-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "opscenter-init-zip": "https://downloads.mesosphere.com/datastax-ops/assets/2.1.0-6.1.2-beta/opscenter-init.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.31.1/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/datastax-ops/assets/2.1.0-6.1.2-beta/datastax-ops-scheduler.zip",
+      "executor-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.31.1/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/beta-datastax-ops-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/beta-datastax-ops-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/beta-datastax-ops-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "54f3f7ebb5e50b66a3670ce21b4b6efee7f69d3c2e4495117c1e103b47216390"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/datastax-ops/assets/2.1.0-6.1.2-beta/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "7fc7934726ba189794826312070b36765823fc8fc685ea288f26df821db96072"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/datastax-ops/assets/2.1.0-6.1.2-beta/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "145672a9192dd9735e50ec720086af8d7388f2ab9f5603cc2813afdbec8e94be"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/datastax-ops/assets/2.1.0-6.1.2-beta/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

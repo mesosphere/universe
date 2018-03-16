@@ -1,0 +1,32 @@
+{
+    "description": "Apache Kafka by Confluent\n\n\tDocumentation: https://www.confluent.io/whitepaper/deploying-confluent-platform-with-mesosphere",
+    "framework": true,
+    "selected": true,
+    "maintainer": "partner-support@confluent.io",
+    "minDcosReleaseVersion": "1.9",
+    "name": "confluent-kafka",
+    "packagingVersion": "4.0",
+    "preInstallNotes": "Default configuration requires 3 agent nodes each with: 1.0 CPU | 4096 MB MEM | 1 5000 MB Disk",
+    "postInstallNotes": "Apache Kafka by Confluent is being installed.\n\n\tDocumentation: https://www.confluent.io/whitepaper/deploying-confluent-platform-with-mesosphere\n\tCommunity Support: https://groups.google.com/forum/#!forum/confluent-platform",
+    "postUninstallNotes": "Apache Kafka by Confluent is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://www.confluent.io/whitepaper/deploying-confluent-platform-with-mesosphereuninstall to remove any persistent state if required.",
+    "licenses": [
+        {
+            "name": "Apache License v2",
+            "url": "https://raw.githubusercontent.com/confluentinc/kafka/trunk/LICENSE"
+        }
+    ],
+    "tags": [
+        "message",
+        "broker",
+        "pubsub",
+        "kafka",
+        "confluent"
+    ],
+    "version": "2.0.2-3.3.0e",
+    "upgradesFrom": [
+        "2.0.1.1-3.3.0e"
+    ],
+    "downgradesTo": [
+        "2.0.1.1-3.3.0e"
+    ]
+}

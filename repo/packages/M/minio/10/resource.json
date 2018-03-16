@@ -1,0 +1,22 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/minio-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/minio-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/minio-icon-large.png",
+    "screenshots": [
+      "https://minio.io/img/browser/1.png",
+      "https://minio.io/img/browser/2.png",
+      "https://minio.io/img/browser/3.png",
+      "https://minio.io/img/browser/4.png",
+      "https://minio.io/img/browser/5.png",
+      "https://minio.io/img/browser/6.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "minio-docker-RELEASE": "minio/minio:RELEASE.2017-11-22T19-55-46Z"
+      }
+    }
+  }
+}

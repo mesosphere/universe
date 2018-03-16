@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/scylladb-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/scylladb-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/scylladb-icon-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "scyllaimage": "docker.io/laketide/scylla-universe:2.0"
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+    "packagingVersion": "4.0",
+    "upgradesFrom": [
+        "2.0.2-5.6.2"
+    ],
+    "downgradesTo": [
+        "2.0.2-5.6.2"
+    ],
+    "minDcosReleaseVersion": "1.9",
+    "name": "kibana",
+    "version": "2.1.0-5.6.2",
+    "maintainer": "support@mesosphere.io",
+    "description": "Kibana 5, and optionally X-Pack",
+    "selected": true,
+    "framework": true,
+    "tags": [
+        "elastic",
+        "elasticsearch",
+        "kibana",
+        "x-pack"
+    ],
+    "preInstallNotes": "Default configuration requires 1 agent node with: 0.5 CPU | 2048 MB MEM",
+    "postInstallNotes": "The DC/OS Kibana service is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/elastic/\n\tIssues: https://docs.mesosphere.com/support/",
+    "postUninstallNotes": "The DC/OS Kibana service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/elastic/uninstall to remove any persistent state if required."
+}

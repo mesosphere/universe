@@ -1,0 +1,61 @@
+{
+  "id": "/{{service.name}}",
+  "instances": 1,
+  "cpus": 0.5,
+  "mem": 512,
+  "cmd": "SERVER_PORT=$PORT0 jre*/bin/java -Xms256m -Xmx512m -jar scheduler-*.jar",
+  "constraints": [
+    [
+      "hostname", "UNIQUE"
+    ]
+  ],
+  "networks": [
+    {
+      "mode": "host"
+    }
+  ],
+    "portDefinitions": [
+      {
+        "name": "api",
+        "protocol": "tcp",
+        "port": 0,
+        "labels": { "VIP_0": "/api.{{service.name}}:80" }
+      }
+  ],
+  "env": {
+    "SPRING_APPLICATION_NAME": "{{service.name}}",
+    "HUMIO_EXECUTOR_URL": "{{resource.assets.uris.executor-jar}}",
+    "HUMIO_HOST": "{{humio.host}}",
+    "HUMIO_DATASPACE": "{{humio.dataspace}}",
+    "HUMIO_INGESTTOKEN": "{{humio.ingestToken}}",
+    "HUMIO_EXECUTOR_DATADIR": "{{node.datadir}}",
+    "MESOS_RESOURCES_CPUS": "{{node.cpus}}",
+    "MESOS_RESOURCES_mem": "{{node.mem}}"
+  },
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-jar}}"
+  ],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/application/status",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 10,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ]
+}

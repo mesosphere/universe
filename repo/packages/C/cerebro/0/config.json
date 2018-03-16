@@ -1,0 +1,183 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "service":{
+        "type":"object",
+        "description": "DC/OS service configuration properties",
+        "properties":{
+            "name" : {
+                "description":"The name of the Cerebro service instance.",
+                "type":"string",
+                "default":"cerebro"
+            },
+            "user": {
+              "description": "The user that runs the Cerebro service and owns the Mesos sandbox.",
+              "type": "string",
+              "default": "nobody"
+            },
+             "cpus": {
+                "description": "CPU shares to allocate",
+                "type": "number",
+                "default": 0.5,
+                "minimum": 0.5
+            },
+            "mem": {
+                "description": "Memory to allocate",
+                "type": "number",
+                "default": 1180.0,
+                "minimum": 300.0
+            },
+            "instances": {
+                "description": "Number of desired instances",
+                "type": "integer",
+                "default": 1
+            },
+            "heap": {
+                "description": "Java heap size (-Xmx)",
+                "type": "number",
+                "default": 1024.0,
+                "minimum": 256.0
+            }
+        },
+        "required": [
+            "name",
+            "cpus",
+            "mem",
+            "heap",
+            "instances"
+          ]
+    },
+    "cerebro": {
+      "additionalProperties": false,
+      "description": "Cerebro configuration",
+      "type": "object",
+      "properties": {
+        "config_path": {
+            "description": "Configuration file",
+            "type": "string",
+            "default": "./application.conf"
+        },
+        "secret": {
+            "description": "Secret will be used to sign session cookies, CSRF tokens and for other encryption utilities.",
+            "type": "string"
+        },
+        "db_driver": {
+            "description": "DB driver",
+            "type": "string",
+            "default": "org.sqlite.JDBC"
+        },
+        "db_url": {
+            "description": "DB connection",
+            "type": "string",
+            "default": "jdbc:sqlite:./cerebro.db"
+        },
+        "hist_size": {
+            "description": "REST request history max size per user",
+            "type": "integer",
+            "default": 50
+        }
+      },
+      "required": [
+        "config_path"
+      ]
+    },
+    "networking":{
+        "type": "object",
+        "description": "Cerebro networking configuration properties",
+        "properties": {
+            "external_access": {
+                "type": "object",
+                "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+                "properties": {
+                    "port": {
+                        "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+                        "type": "number",
+                        "default": 13001
+                    },
+                    "virtual_host": {
+                        "description": "For external access, Virtual Hostname to be used in the external load balancer.",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "elastic":{
+        "type": "object",
+        "description": "Elasticsearch clusters",
+        "properties": {
+            "cluster_1": {
+                "description": "Elasticsearch URI",
+                "type": "string",
+                "default": "http://master.elastic.l4lb.thisdcos.directory:9200"
+            },
+            "cluster_2": {
+                "description": "Elasticsearch URI",
+                "type": "string"
+            },
+            "cluster_3": {
+                "description": "Elasticsearch URI",
+                "type": "string"
+            },
+            "cluster_4": {
+                "description": "Elasticsearch URI",
+                "type": "string"
+            },
+            "cluster_5": {
+                "description": "Elasticsearch URI",
+                "type": "string"
+            }
+        }
+    },
+    "authentication":{
+        "type": "object",
+        "description": "Web interface authentication",
+        "properties": {
+            "type": {
+              "description": "Authentication method. Either 'none', 'basic' or 'ldap'",
+              "type": "string",
+              "enum": ["none", "basic", "ldap"],
+              "default": "none"
+            },
+            "basic": {
+                "type": "object",
+                "description": "Basic authentication",
+                "properties": {
+                    "user": {
+                        "description": "Username",
+                        "type": "string",
+                        "default": "admin"
+                    },
+                    "password": {
+                        "description": "Secret password",
+                        "type": "string"
+                    }
+                }
+            },
+            "ldap": {
+                "type": "object",
+                "description": "LDAP",
+                "properties": {
+                    "url": {
+                        "description": "LDAP server ldaps://host:port",
+                        "type": "string"
+                    },
+                    "base": {
+                        "description": "Base DN, e.g.: ou=active,ou=Employee",
+                        "type": "string"
+                    },
+                    "method": {
+                        "description": "Method, e.g. simple",
+                        "type": "string"
+                    },
+                    "domain": {
+                        "description": "Domain, e.g. example.com",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+  }
+}

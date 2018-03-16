@@ -1,0 +1,87 @@
+{
+  "id": "{{service.name}}",
+  "instances": {{service.instances}},
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "user": "{{service.user}}",
+  "cmd": "bash bootstrap.sh && ./traefik_linux-amd64 -c traefik.toml",
+  "uris": [
+    "{{resource.assets.uris.traefik-bin}}",
+    "{{resource.assets.uris.bootstrap-sh}}"
+  ],
+  {{#service.role}}
+  "acceptedResourceRoles": [
+    "{{service.role}}"
+  ],
+  {{/service.role}}
+  "healthChecks": [
+    {{#traefik.admin-enable}}
+    {
+      "path": "/health",
+      "portIndex": 1,
+      "protocol": "MESOS_HTTP",
+      "gracePeriodSeconds": 20,
+      "intervalSeconds": 5,
+      "timeoutSeconds": 2,
+      "maxConsecutiveFailures": 2,
+      "ignoreHttp1xx": false
+    }
+    {{/traefik.admin-enable}}
+  ],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": {{service.minimumHealthCapacity}},
+    "maximumOverCapacity": {{service.maximumOverCapacity}}
+  },
+  "requirePorts":true,
+  "env": {
+    "TRAEFIK_HTTP_ADDRESS": "{{traefik.http-address}}",
+    "TRAEFIK_HTTP_PORT": "{{traefik.http-port}}",
+    "TRAEFIK_HTTPS_ENABLE": "{{traefik.https-enable}}",
+    "TRAEFIK_HTTPS_PORT": "{{traefik.https-port}}",
+    "TRAEFIK_HTTPS_ADDRESS": "{{traefik.https-address}}",
+    "TRAEFIK_ADMIN_ENABLE": "{{traefik.admin-enable}}",
+    "TRAEFIK_ADMIN_PORT": "{{traefik.admin-port}}",
+    "TRAEFIK_ADMIN_ADDRESS": "{{traefik.admin-address}}",
+    "TRAEFIK_FILE_NAME": "{{traefik.config-file}}",
+    "TRAEFIK_FILE_WATCH": "{{traefik.watch-config-file}}",
+    "TRAEFIK_MARATHON_ENABLE": "{{marathon.enable}}",
+    "TRAEFIK_MARATHON_ENDPOINT": "{{marathon.endpoint}}",
+    "TRAEFIK_MARATHON_WATCH": "{{marathon.watch}}",
+    "TRAEFIK_MARATHON_DOMAIN": "{{marathon.domain}}",
+    "TRAEFIK_MARATHONLB_COMPATIBILITY": "{{marathon.marathonlb-compatibility}}",
+    "TRAEFIK_MARATHON_GROUPS_AS_SUBDOMAINS": "{{marathon.groups-as-subdomains}}",
+    "TRAEFIK_MARATHON_DIALER_TIMEOUT": "{{marathon.dialer-timeout}}",
+    "TRAEFIK_MARATHON_KEEP_ALIVE": "{{marathon.keep-alive}}",
+    "TRAEFIK_MARATHON_FORCE_TASK_HOSTNAME": "{{marathon.force-task-hostname}}",
+    "TRAEFIK_MARATHON_RESPECT_READINESS_CHECKS": "{{marathon.respect-readiness-checks}}",
+    {{#traefik.secret-name}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    {{/traefik.secret-name}}
+    "TRAEFIK_MARATHON_EXPOSE": "{{marathon.expose}}"
+  },
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_PACKAGE_VERSION": "1.0.0-1.4.4",
+    {{#traefik.admin-enable}}
+    "DCOS_SERVICE_PORT_INDEX": "1",
+    {{/traefik.admin-enable}}
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  },
+  {{#traefik.secret-name}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{traefik.secret-name}}"
+    }
+  },
+  {{/traefik.secret-name}}
+  "ports": [
+    {{traefik.http-port}}
+    {{#traefik.admin-enable}}
+    ,{{traefik.admin-port}}
+    {{/traefik.admin-enable}}
+    {{#traefik.https-enable}}
+    ,{{traefik.https-port}}
+    {{/traefik.https-enable}}
+  ]
+}
