@@ -108,13 +108,8 @@
           "type" : "boolean",
           "default" : false
         },
-        "draining-seconds" : {
-          "description" : "(Default: 0 seconds) the seconds when marathon will start declining offers before a maintenance window start time. This is only evaluated if `maintenance_mode` is in the set of `enable_features`!",
-          "type" : "integer",
-          "default" : 0
-        },
         "enable-features" : {
-          "description" : "A comma-separated list of features. Available features are: secrets - Enable support for secrets in Marathon (experimental), external_volumes - Enable external volumes support in Marathon, maintenance_mode - Enable support for maintenance mode  in Marathon (experimental), vips - Enable networking VIPs UI, gpu_resources - Enable support for GPU in Marathon (experimental), task_killing - Enable the optional TASK_KILLING state, available in Mesos 0.28 and later",
+          "description" : "A comma-separated list of features. Available features are: secrets - Enable support for secrets in Marathon (experimental), external_volumes - Enable external volumes support in Marathon, vips - Enable networking VIPs UI, gpu_resources - Enable support for GPU in Marathon (experimental), task_killing - Enable the optional TASK_KILLING state, available in Mesos 0.28 and later",
           "type" : "string",
           "default" : "vips,task_killing"
         },
