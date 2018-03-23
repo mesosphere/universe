@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/kong-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/kong-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/kong-icon-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "kong-image": "kong:0.12.3"
+      }
+    }
+  }
+}
