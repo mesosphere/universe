@@ -1,7 +1,10 @@
 {
   "assets": {
     "uris": {
-      "alluxio-agent": "https://alluxio-dcos-release.s3.amazonaws.com/agent",
+      "alluxio-agent-darwin_386": "https://alluxio-dcos-release.s3.amazonaws.com/agent/v1.5.0/darwin_386/alluxio-dcos",
+      "alluxio-agent-darwin_amd64": "https://alluxio-dcos-release.s3.amazonaws.com/agent/v1.5.0/darwin_amd64/alluxio-dcos",
+      "alluxio-agent-linux_386": "https://alluxio-dcos-release.s3.amazonaws.com/agent/v1.5.0/linux_386/alluxio-dcos",
+      "alluxio-agent-linux_amd64": "https://alluxio-dcos-release.s3.amazonaws.com/agent/v1.5.0/linux_amd64/alluxio-dcos",
       "bootstrap-zip": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.1.1-1.7.1/bootstrap.zip",
       "custom-download-url": "",
       "executor-zip": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.1.1-1.7.1/executor.zip",
