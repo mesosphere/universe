@@ -21,8 +21,8 @@
   },
   {{/service.service-account-secret}}
   "env": {
-    "PACKAGE_BUILD_TIME_EPOCH_MS": "1522187692035",
-    "PACKAGE_BUILD_TIME_STR": "Tue Mar 27 2018 21:54:52 +0000",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1522216954213",
+    "PACKAGE_BUILD_TIME_STR": "Wed Mar 28 2018 06:02:34 +0000",
     "PACKAGE_NAME": "alluxio-enterprise",
     "PACKAGE_VERSION": "2.1.1-1.7.1",
 
@@ -36,7 +36,7 @@
     "TASKCFG_ALL_ALLUXIO_AGENT_DARWIN_AMD64_URL": "{{resource.assets.uris.alluxio-agent-darwin_amd64}}",
     "TASKCFG_ALL_ALLUXIO_AGENT_LINUX_386_URL": "{{resource.assets.uris.alluxio-agent-linux_386}}",
     "TASKCFG_ALL_ALLUXIO_AGENT_LINUX_AMD64_URL": "{{resource.assets.uris.alluxio-agent-linux_amd64}}",
-    "TASKCFG_ALL_CUSTOM_DOWNLOAD_URL": "{{resource.assets.uris.custom-download-url}}",
+    "TASKCFG_ALL_CUSTOM_DOWNLOAD_URL": "{{service.download-url}}",
 
     {{#service.service-account-secret}}
     "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },

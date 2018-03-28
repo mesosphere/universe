@@ -67,6 +67,11 @@
           "description": "Whether to deploy Alluxio workers. If set to 'false', Alluxio workers can be started using the plan 'deploy-workers'.",
           "type": "boolean",
           "default": true
+        },
+        "download-url": {
+          "description": "In air-gapped environments, specify the URL to download the Alluxio tarball from.",
+          "type": "string",
+          "default": ""
         }
       },
       "required": [
