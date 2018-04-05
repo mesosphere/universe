@@ -327,6 +327,13 @@ in `resource.json` and update the path definitions accordingly. Specifications a
 * `icon-large`: 256px (w) x 256px (h)
 * `screenshots[...]`: 1200px (w) x 675px (h)
 
+To make things easier, we've provided templates specifically for creating and
+exporting service icons at the sizes defined above. Download the version that
+works best for you and follow the instructions after opening the file.
+
+* Sketch Service Icon Template: [DOWNLOAD](https://cl.ly/1p1b0O1m2f0h)
+* Photoshop Service Icon Template: [DOWNLOAD](https://cl.ly/28393D2N3F1C)
+
 **NOTE:** To ensure your service icons look beautiful on retina-ready displays,
 please supply 2x versions of all icons. No changes are needed to
 `resource.json` - simply supply an additional icon file with the text `@2x` in
