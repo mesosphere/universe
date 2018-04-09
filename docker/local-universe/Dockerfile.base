@@ -1,6 +1,12 @@
 FROM registry:2.4.1
 
-RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62 \
+ENV GPG_KEY=573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+
+RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys "$GPG_KEY" \
+  || apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys "$GPG_KEY" \
+  || apt-key adv --keyserver pool.sks-keyservers.net --recv-keys "$GPG_KEY" \
+  || apt-key adv --keyserver keyserver.pgp.com --recv-keys "$GPG_KEY" \
+  || apt-key adv --keyserver pgp.mit.edu --recv-keys "$GPG_KEY" \
   && echo "deb http://nginx.org/packages/debian/ jessie nginx" >> /etc/apt/sources.list \
   && apt-get update \
   && apt-get install --no-install-recommends --no-install-suggests -y \
