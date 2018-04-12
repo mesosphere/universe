@@ -1,0 +1,25 @@
+{
+    "packagingVersion": "4.0",
+    "upgradesFrom": [
+        "*"
+    ],
+    "downgradesTo": [
+        "*"
+    ],
+    "minDcosReleaseVersion": "1.10",
+    "name": "percona-mongo",
+    "version": "0.2.0-3.4.13",
+    "maintainer": "mesosphere@percona.com",
+    "description": "Percona Server for MongoDB Replica Set on Mesosphere DC/OS",
+    "selected": false,
+    "framework": true,
+    "tags": [
+        "mongo",
+        "mongodb",
+        "percona",
+        "nosql"
+    ],
+    "postInstallNotes": "The DC/OS Mongo service is being installed. \n\n\tDocumentation: https://docs.mesosphere.com/service-docs/percona-mongo/\n\tIssues: mesosphere@percona.com",
+    "postUninstallNotes": "DC/OS Mongo is being uninstalled.",
+    "preInstallNotes": "Default configuration requires 3 agent nodes each with: 1.0 CPU | 1024 MB MEM | 1 1000 MB Disk"
+}
