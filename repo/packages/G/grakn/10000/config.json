@@ -1,0 +1,75 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "Name of this service instance.",
+          "type": "string",
+          "default": "grakn"
+        },
+        "constraints": {
+          "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "attribute": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string",
+                "enum": ["UNIQUE", "CLUSTER", "GROUP_BY", "LIKE", "UNLIKE"]
+              },
+              "value": {
+                "type": "string"
+              },
+              "last": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          },
+          "default": []
+        }
+      }
+    },
+    "grakn": {
+      "type": "object",
+      "description": "Grakn instance configuration properties",
+      "properties": {
+        "cpus": {
+          "description": "CPU shares to allocate to the Grakn instance.",
+          "type": "number",
+          "default": 1.0,
+          "minimum": 1.0
+        },
+        "mem": {
+          "description": "Memory to allocate to the Grakn instance.",
+          "type": "number",
+          "default": 1024,
+          "minimum": 1024
+        },
+        "disk": {
+          "description": "Disk (MB) to allocate to the Grakn instance.",
+          "type": "number",
+          "default": 65536,
+          "minimum": 2000
+        },
+        "hostpath": {
+          "description": "Host path to store to the Grakn data.",
+          "type": "string",
+          "default": "/mnt/azurefileshare/data/grakn"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk",
+        "hostpath"
+      ]
+    }
+  }
+}

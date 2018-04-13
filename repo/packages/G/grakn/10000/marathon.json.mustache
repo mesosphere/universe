@@ -1,0 +1,70 @@
+{
+ "id": "{{service.name}}",
+ "instances": 1,
+ {{#service.constraints}}
+ "constraints": [
+   {{#.}}
+     [
+       "{{attribute}}"
+      ,"{{operator}}"
+      {{#value}},"{{value}}"{{/value}}
+     ]{{^last}},{{/last}}
+   {{/.}}
+ ],
+ {{/service.constraints}}
+ "cpus": {{grakn.cpus}},
+ "mem": {{grakn.mem}},
+ "disk": {{grakn.disk}},
+ "container": {
+   "type": "DOCKER",
+   "volumes": [
+      {
+        "containerPath": "/grakn/db",
+        "hostPath": "{{grakn.hostpath}}",
+        "mode": "RW"
+      }
+   ],
+   "docker": {
+     "image": "{{resource.assets.container.docker.grakn}}",
+     "network": "BRIDGE",
+     "portMappings": [
+       {
+       "containerPort": 4567,
+       "protocol": "tcp",
+       "labels": {
+            "VIP_0": "/{{service.name}}:4567"
+          }
+       },
+       {
+       "containerPort": 9042,
+       "protocol": "tcp",
+       "labels": {
+            "VIP_1": "/{{service.name}}:9042"
+          }
+       },
+       {
+       "containerPort": 9160,
+       "protocol": "tcp",
+       "labels": {
+            "VIP_2": "/{{service.name}}:9160"
+          }
+       }
+     ]
+   }
+ },
+ "healthChecks": [
+   {
+   "protocol": "TCP",
+   "gracePeriodSeconds": 60,
+   "intervalSeconds": 5,
+   "portIndex": 0,
+   "timeoutSeconds": 5,
+   "maxConsecutiveFailures": 3
+   }
+ ], 
+ "labels": {
+         "DCOS_SERVICE_NAME": "{{service.name}}",
+         "DCOS_SERVICE_PORT_INDEX": "0",
+         "DCOS_SERVICE_SCHEME": "http"
+     }
+}

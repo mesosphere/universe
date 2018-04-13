@@ -12,7 +12,7 @@
         ]{{^last}},{{/last}}
       {{/.}}
     ],
-    {{/service.constraints}}      
+    {{/service.constraints}}     
 {{^security.kerberos.enabled}}
     "cmd": "SPARK_HISTORY_OPTS=\"-Dspark.history.ui.port=${PORT0} ${SPARK_HISTORY_OPTS}\" ./bin/spark-class org.apache.spark.deploy.history.HistoryServer",
 {{/security.kerberos.enabled}}
@@ -76,17 +76,6 @@
             "maxConsecutiveFailures": 3
         }
     ],
-    {{#service.constraints}}
-        "constraints": [
-          {{#.}}
-            [
-              "{{attribute}}"
-             ,"{{operator}}"
-             {{#value}},"{{value}}"{{/value}}
-            ]{{^last}},{{/last}}
-          {{/.}}
-        ],
-    {{/service.constraints}}
     "labels": {
         "DCOS_SERVICE_NAME": "{{service.name}}",
         "DCOS_SERVICE_PORT_INDEX": "0",

@@ -2,7 +2,7 @@
   "assets": {
     "container": {
       "docker": {
-        "spark_docker": "cdpqleo/spark:2.3.0-2.2.1-2-hadoop-2.6"
+        "spark_docker": "cdpqleo/spark:2.3.1-2.2.1-2-hadoop-2.6"
       }
     }
   },
@@ -22,7 +22,7 @@
             }
           ],
           "kind": "executable",
-          "url": "https://downloads.mesosphere.com/spark/assets/2.3.0-2.2.1-2/dcos-spark-darwin"
+          "url": "https://downloads.mesosphere.com/spark/assets/2.3.1-2.2.1-2/dcos-spark-darwin"
         }
       },
       "linux": {
@@ -34,7 +34,7 @@
             }
           ],
           "kind": "executable",
-          "url": "https://downloads.mesosphere.com/spark/assets/2.3.0-2.2.1-2/dcos-spark-linux"
+          "url": "https://downloads.mesosphere.com/spark/assets/2.3.1-2.2.1-2/dcos-spark-linux"
         }
       },
       "windows": {
@@ -46,7 +46,7 @@
             }
           ],
           "kind": "executable",
-          "url": "https://downloads.mesosphere.com/spark/assets/2.3.0-2.2.1-2/dcos-spark.exe"
+          "url": "https://downloads.mesosphere.com/spark/assets/2.3.1-2.2.1-2/dcos-spark.exe"
         }
       }
     }
