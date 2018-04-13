@@ -5,7 +5,7 @@
       "properties": {
         "auto-assign-service-ports": {
           "default": false,
-          "description": "Auto assign service ports for tasks which use IP-per-task. See https://github.com/mesosphere/marathon-lb#mesos-with-ip-per-task-support for details.",
+          "description": "Auto assign service ports for tasks which use IP-per-task. See https://github.com/mesosphere/marathon-lb#mesos-with-ip-per-task-support for details. ",
           "type": "boolean"
         },
         "bind-http-https": {
