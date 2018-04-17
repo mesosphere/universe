@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [],
+  "downgradesTo": [],
+  "minDcosReleaseVersion": "1.10",
+  "name": "beta-tensorflow",
+  "version": "0.2.0-1.5.0-beta",
+  "maintainer": "https://dcos.io/community/",
+  "description": "TensorFlow",
+  "selected": false,
+  "framework": true,
+  "tags": [
+    "tensorflow",
+    "machine-learning"
+  ],
+  "preInstallNotes": "This is a community package. Community packages are unverified and unreviewed content from the community.\n\nDefault configuration requires 3 agent nodes each with: CPU: 2.0 | Memory: 8192 MB | Disk: 8192 MB\n\nMore specifically, each instance type requires:\n\nParameter server: 2 instances | 1.0 CPU | 4096 MB MEM | 1 4096 MB Disk\n\nWorker: 3 instances | 1.0 CPU | 4096 MB MEM | 1 4096 MB Disk\n\nGPU worker: No instances by default | 1 GPU | 1.0 CPU | 4096 MB MEM | 1 4096 MB Disk\n\nTensorboard: No instances by default | 1.0 CPU | 4096 MB MEM",
+  "postInstallNotes": "The DC/OS TensorFlow service is being installed!\n\n\tDocumentation: https://mesosphere.github.io/dcos-tensorflow/\n\tIssues: https://chat.dcos.io",
+  "postUninstallNotes": "The DC/OS TensorFlow service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://mesosphere.github.io/dcos-tensorflow/uninstall to remove any persistent state if required."
+}
