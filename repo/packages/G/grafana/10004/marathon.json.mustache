@@ -4,8 +4,19 @@
     "mem": {{grafana.mem}},
     "instances": 1,
     "env": {
+        "GF_SERVER_DOMAIN": "{{grafana.server.domain}}",
+        "GF_SERVER_ROOT_URL": "{{grafana.server.root_url}}",
+        "GF_INSTALL_PLUGINS": "{{grafana.plugins}}",
         "GF_SECURITY_ADMIN_PASSWORD": "{{grafana.admin_password}}",
-        "GF_INSTALL_PLUGINS": "{{grafana.plugins}}"
+        "GF_USERS_AUTO_ASSIGN_ORG_ROLE": "{{grafana.auto_assign_org_role}}",
+        "GF_AUTH_BASIC_ENABLED": "{{grafana.auth_basic_enabled}}",
+        "GF_AUTH_GITHUB_ENABLED": "{{grafana.auth_github.enabled}}",
+        "GF_AUTH_GITHUB_AUTH_URL": "{{grafana.auth_github.auth_url}}",
+        "GF_AUTH_GITHUB_API_URL": "{{grafana.auth_github.api_url}}",
+        "GF_AUTH_GITHUB_TOKEN_URL": "{{grafana.auth_github.token_url}}",
+        "GF_AUTH_GITHUB_CLIENT_ID": "{{grafana.auth_github.client_id}}",
+        "GF_AUTH_GITHUB_CLIENT_SECRET": "{{grafana.auth_github.client_secret}}",
+        "GF_AUTH_GITHUB_SCOPES": "{{grafana.auth_github.scopes}}"
     },
     "container": {
         "type": "DOCKER",

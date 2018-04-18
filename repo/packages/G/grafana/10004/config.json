@@ -12,7 +12,7 @@
                 }
             }
         },
-        "grafana":{
+        "grafana": {
             "type": "object",
             "description": "grafana service configuration properties",
             "properties": {
@@ -28,17 +28,83 @@
                     "default": 512.0,
                     "minimum": 512.0
                 },
-                "admin_password": {
-                    "description": "Admin password.",
-                    "type": "string",
-                    "default": "admin"
+                "server": {
+                    "type": "object",
+                    "description": "server configuration properties",
+                    "properties": {
+                        "domain": {
+                            "description": "This setting is only used in as a part of the root_url setting.",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "root_url": {
+                            "description": "This is the full URL used to access Grafana from a web browser.",
+                            "type": "string",
+                            "default": ""
+                        }
+                    }
                 },
                 "plugins": {
                     "description": "Comma separated Grafana plugins which will be installed via `grafana-cli plugins install grafana-example-app,grafana-clock-panel`. See https://grafana.com/plugins",
                     "type": "string",
                     "default": ""
+                },
+                "admin_password": {
+                    "description": "Admin password.",
+                    "type": "string",
+                    "default": "admin"
+                },
+                "auto_assign_org_role": {
+                    "description": "The role new users will be assigned for the main organization.",
+                    "type": "string",
+                    "default": "Viewer"
+                },
+                "auth_basic_enabled": {
+                    "description": "When enabled is true the http api will accept basic authentication.",
+                    "type": "string",
+                    "default": "true"
+                },
+                "auth_github": {
+                    "type": "object",
+                    "description": "github configuration properties",
+                    "properties": {
+                        "enabled": {
+                            "description": "This setting is only used in as a part of the root_url setting.",
+                            "type": "string",
+                            "default": "false"
+                        },
+                        "auth_url": {
+                            "description": "auth_url",
+                            "type": "string",
+                            "default": "https://github.com/login/oauth/authorize"
+                        },
+                        "api_url": {
+                            "description": "api_url",
+                            "type": "string",
+                            "default": "https://api.github.com/user"
+                        },
+                        "token_url": {
+                            "description": "token_url",
+                            "type": "string",
+                            "default": "https://github.com/login/oauth/access_token"
+                        },
+                        "client_id": {
+                            "description": "client_id",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "client_secret": {
+                            "description": "client_secret",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "scopes": {
+                            "description": "scopes",
+                            "type": "string",
+                            "default": "user:email,read:org"
+                        }
+                    }
                 }
-
             },
             "required": [
                 "cpus",
