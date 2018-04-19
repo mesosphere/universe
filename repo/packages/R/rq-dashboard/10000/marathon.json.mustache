@@ -1,0 +1,50 @@
+{
+ "id": "{{service.name}}",
+ "instances": 1,
+ "labels": {
+     "DCOS_SERVICE_NAME": "{{service.name}}",
+     "DCOS_SERVICE_SCHEME": "http",
+     "DCOS_SERVICE_PORT_INDEX": "0"
+ },
+ {{#service.constraints}}
+ "constraints": [
+   {{#.}}
+     [
+       "{{attribute}}"
+      ,"{{operator}}"
+      {{#value}},"{{value}}"{{/value}}
+     ]{{^last}},{{/last}}
+   {{/.}}
+ ],
+ {{/service.constraints}}
+ "cpus": {{rq.cpus}},
+ "mem": {{rq.mem}},
+ "disk": {{rq.disk}},
+ "cmd": "rq-dashboard -H {{rq.redis_host}} -P {{rq.redis_port}} --url-prefix {{rq.url_prefix}}",
+ "container": {
+   "type": "DOCKER",
+   "docker": {
+     "image": "{{resource.assets.container.docker.rq-dashboard}}",
+     "network": "BRIDGE",
+     "portMappings": [
+       {
+       "containerPort": 9181,
+       "protocol": "tcp",
+       "labels": {
+            "VIP_0": "/{{service.name}}:9181"
+          }
+       }
+     ]
+   }
+ },
+ "healthChecks": [
+   {
+   "protocol": "TCP",
+   "gracePeriodSeconds": 60,
+   "intervalSeconds": 5,
+   "portIndex": 0,
+   "timeoutSeconds": 5,
+   "maxConsecutiveFailures": 3
+   }
+ ]
+}
