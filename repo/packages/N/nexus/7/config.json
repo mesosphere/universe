@@ -1,0 +1,99 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "Service properties for the Nexus service on DC/OS.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of this DC/OS service.",
+          "type": "string",
+          "default": "nexus"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to Nexus.",
+          "type": "number",
+          "default": 2.0,
+          "minimum": 1.0
+        },
+        "mem": {
+          "description": "Memory (in MB) to allocate to Nexus.",
+          "type": "number",
+          "default": 2048.0,
+          "minimum": 2048.0
+        },
+        "resource-role": {
+          "default": "*",
+          "description": "The accepted resource role. Change to \"slave_public\" role if it should run on an public agent.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem"
+      ]
+    },
+    "networking": {
+      "description": "Networking properties for the Nexus service on DC/OS.",
+      "type": "object",
+      "properties": {
+        "host-port": {
+          "description": "The host port to map the Nexus service. A value of 0 will randomly assign a value for host port.",
+          "type": "number",
+          "default": 0
+        },
+        "pinned-hostname": {
+          "description": "An optional DC/OS agent hostname to run this Nexus instance on (e.g. 10.0.0.1). If this is not specified then the task may relaunch on another node than the one it originally ran on.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "host-port"
+      ]
+    },
+    "storage": {
+      "description": "Storage properties for the Nexus service on DC/OS.",
+      "type": "object",
+      "properties": {
+        "persist": {
+          "description": "Whether to use DC/OS persist Nexus data. If false, all Nexus data and state is ephemeral and will not be shared between Nexus instances. By default, this is false.",
+          "type": "boolean",
+          "default": false
+        },
+        "local-volume": {
+          "description": "Local volumes configuration (only used if external persistent volumes are disabled). Please read Pre-Install Notes for setup for local volumes.",
+          "type": "object",
+          "properties": {
+            "host-volume": {
+              "description": "The location of a volume on the host to be used for persisting Nexus configuration and data.",
+              "type": "string",
+              "default": "/opt/sonatype/nexus-data"
+            }
+          }
+        },
+        "external-volume": {
+          "description": "External volumes configuration. Uses the REX-Ray volume driver.",
+          "type": "object",
+          "properties": {
+            "enable": {
+              "description": "Whether to use DC/OS external volumes to persist Nexus data. By default, this is false.",
+              "type": "boolean",
+              "default": false
+            },
+            "volume-name": {
+              "description": "The name of the volume (this will be created if it doesn't already exist).",
+              "type": "string",
+              "default": "nexus-data"
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "service",
+    "networking",
+    "storage"
+  ]
+}
