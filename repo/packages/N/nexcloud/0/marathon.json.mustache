@@ -1,8 +1,8 @@
 {
-  "id": "/nexcloud",
+  "id": "{{group.name}}",
   "apps": [
     {
-		  "id": "/nexcloud/collecter",
+		  "id": "{{collector.name}}",
 		  "backoffFactor": 1.15,
 		  "backoffSeconds": 1,
 		  "container": {
@@ -17,13 +17,13 @@
 		    "type": "DOCKER",
 		    "volumes": [],
 		    "docker": {
-		      "image": "nexclipper/minicollector",
+		      "image": "{{resource.assets.container.docker.collector}}",
 		      "forcePullImage": true,
 		      "privileged": false,
 		      "parameters": []
 		    }
 		  },
-		  "cpus": 1,
+		  "cpus": {{collector.cpus}},
 		  "disk": 0,
 		  "env": {
 		    "MYSQL_DBNAME": "defaultdb",
@@ -43,9 +43,9 @@
 		      "path": "/v1/check/"
 		    }
 		  ],
-		  "instances": 1,
+		  "instances": {{collector.instances}},
 		  "maxLaunchDelaySeconds": 3600,
-		  "mem": 2048,
+		  "mem": {{collector.mem}},
 		  "gpus": 0,
 		  "networks": [
 		    {
@@ -66,7 +66,7 @@
 		  "constraints": []
 		},
     {
-		  "id": "/nexcloud/workflow",
+		  "id": "{{workflow.name}}",
 		  "backoffFactor": 1.15,
 		  "backoffSeconds": 1,
 		  "container": {
@@ -81,13 +81,13 @@
 		    "type": "DOCKER",
 		    "volumes": [],
 		    "docker": {
-		      "image": "nexclipper/miniworkflow",
+		      "image": "{{resource.assets.container.docker.workflow}}",
 		      "forcePullImage": true,
 		      "privileged": false,
 		      "parameters": []
 		    }
 		  },
-		  "cpus": 1,
+		  "cpus": {{workflow.cpus}},
 		  "disk": 0,
 		  "env": {
 		    "REDIS_HOST": "redis.marathon.l4lb.thisdcos.directory",
@@ -109,9 +109,9 @@
 		      "path": "/v1/check/"
 		    }
 		  ],
-		  "instances": 1,
+		  "instances": {{workflow.instances}},
 		  "maxLaunchDelaySeconds": 3600,
-		  "mem": 2048,
+		  "mem": {{workflow.mem}},
 		  "gpus": 0,
 		  "networks": [
 		    {
@@ -132,7 +132,7 @@
 		  "constraints": []
 		},
     {
-		  "id": "/nexcloud/nexcloudui",
+		  "id": "{{nexcloudui.name}}",
 		  "backoffFactor": 1.15,
 		  "backoffSeconds": 1,
 		  "container": {
@@ -147,13 +147,13 @@
 		    "type": "DOCKER",
 		    "volumes": [],
 		    "docker": {
-		      "image": "nexclipper/nexclipperui",
+		      "image": "{{resource.assets.container.docker.nexcloudui}}",
 		      "forcePullImage": true,
 		      "privileged": false,
 		      "parameters": []
 		    }
 		  },
-		  "cpus": 1,
+		  "cpus": {{nexcloudui.cpus}},
 		  "disk": 0,
 		  "env": {
 		    "REDIS_HOST": "redis.marathon.l4lb.thisdcos.directory",
@@ -175,9 +175,9 @@
 		      "path": "/v1/check/"
 		    }
 		  ],
-		  "instances": 1,
+		  "instances": {{nexcloudui.instances}},
 		  "maxLaunchDelaySeconds": 3600,
-		  "mem": 2048,
+		  "mem": {{nexcloudui.mem}},
 		  "gpus": 0,
 		  "networks": [
 		    {

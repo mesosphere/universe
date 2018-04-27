@@ -6,5 +6,14 @@
     "screenshots": [
       "https://raw.githubusercontent.com/nexclouding/NexCloud/master/imgs/dashboard.PNG"
     ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "collector": "nexclipper/minicollector",
+        "workflow": "nexclipper/miniworkflow",
+        "nexcloudui": "nexclipper/nexclipperui"
+      }
+    }
   }
 }
