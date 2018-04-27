@@ -9,11 +9,11 @@
           "description": "The name of Nexcloud group",
           "type": "string",
           "default": "/nexcloud"
-        },
-        "required": [
-          "name"
-        ]
-      }
+        }
+      },
+      "required": [
+        "name"
+      ]
     },
     "collctor": {
       "type": "object",
