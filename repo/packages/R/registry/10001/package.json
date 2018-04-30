@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "3.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "registry",
+  "version": "2.5.1-0.2",
+  "scm": "https://github.com/docker/distribution",
+  "maintainer": "https://dcos.io/community/",
+  "website": "https://docs.docker.com/registry/",
+  "description": "The docker Registry is a stateless, highly scalable server side application that stores and lets you distribute Docker images. This DC/OS package provides a private registry that can be made available to any other component in the system through a virtual IP (default: registry.marathon.l4lb.thisdcos.directory:5000).\n\nNOTE: This package requires additional configuration in order to run either in secure or insecure mode. Check the package documentation at https://github.com/dcos/examples/tree/master/registry for details.",
+  "tags": ["docker", "registry"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nAdvanced Installation options notes\n\nregistry / http_tls_download_ip: For secure communication, IP address of the host to download the HTTP TLS certificate and key from. This will be used to form the URI location of a valid HTTP TLS certificate and key to be used in the authentication process between the docker registry and the agents running the docker engine.\n\nregistry / http_tls_certificate_filename: For secure communication, name of the file holding the HTTP TLS certificate to download from the host with the IP address configured in http_tls_download_ip.\n\nregistry / http_tls_key_filename: For secure communication, name of the file holding the HTTP TLS key to download from the host with the IP address configured in http_tls_download_ip.\n\nstorage / persistence: create local persistent volumes for internal storage files to survive across restarts or failures.\n\nstorage / persistence / *external*: create external persistent volumes. This allows to use an external storage system such as Amazon EBS, OpenStack Cinder, EMC Isilon, EMC ScaleIO, EMC XtremIO, EMC VMAX and Google Compute Engine persistent storage. NOTE: To use external volumes with DC/OS, you MUST enable them during CLI or Advanced installation.\n\nstorage / host_volume:  if persistence is not selected, this package can use a local volume in the host for storage, like a local directory or an NFS mount. The parameter host_volume controls the path in the host in which these volumes will be created, which MUST be the same on all nodes of the cluster.\n\nNOTE: If you didn't select persistence in the storage section, or provided a valid value for host_volume on installation,\nYOUR DATA WILL NOT BE SAVED IN ANY WAY.\n\nnetworking / port: This DC/OS service can be accessed from any other application through a NAMED VIP in the format service_name.marathon.l4lb.thisdcos.directory:port. Check status of the VIP in the Network tab of the DC/OS Dashboard (Enterprise DC/OS only).\n\nnetworking / external_access: create an entry in Marathon-LB for accessing the service from outside of the cluster\n\nnetworking / external_access_port: port to be used in Marathon-LB for accessing the service.",
+ "postInstallNotes": "Service installed.\n\nNOTE: This package REQUIRES post-install configuration in your cluster in order to work correctly. Please check the package documentation at https://github.com/dcos/examples/tree/master/registry for details.",
+ "postUninstallNotes": "Service uninstalled. Note that any persisting data still exists and will need to be manually removed for the agent where the service was deployed.",
+  "licenses": [
+    {
+      "name": "Apache License",
+      "url": "http://en.wikipedia.org/wiki/Apache_License"
+    }
+  ]
+}
