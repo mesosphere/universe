@@ -10,20 +10,20 @@
       "image": "mesosphere/universe-converter:dev"
     }
   },
-  "env" : {
-    "MAX_REPO_SIZE" : "20",
-    "LOGLEVEL" : "INFO"
+  "env": {
+    "MAX_REPO_SIZE": "20",
+    "LOGLEVEL": "INFO"
   },
-  "networks" : [
+  "networks": [
     {
       "mode": "HOST"
     }
   ],
   "portDefinitions": [
     {
-      "name" : "universeconverter",
-      "port" : 8086,
-      "protocol" : "tcp"
+      "name": "universeconverter",
+      "port": 8086,
+      "protocol": "tcp"
     }
   ],
   "labels": {

@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 
-import gen_universe
 import json
 import logging
 import os
 import re
-
 from enum import Enum
 from http import HTTPStatus
-from http.server import HTTPServer, BaseHTTPRequestHandler
-from urllib.error import URLError, HTTPError
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from socketserver import ThreadingMixIn
+from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qsl, urlparse
 from urllib.request import Request, urlopen
 
+import gen_universe
 
 # Binds to all available interfaces
 HOST_NAME = ''
@@ -33,63 +33,106 @@ default_charset = 'utf-8'
 
 json_key_packages = 'packages'
 param_url = 'url'
-url_path = '/transform'
+transform_url_path = '/transform'
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(
+    level=os.environ.get('LOGLEVEL', 'INFO'),
+    format='[%(asctime)s|%(threadName)s|%(levelname)s]: %(message)s'
+)
 
 
-def run_server(server_class=HTTPServer):
+class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+    """Handle each request in a separate thread"""
+
+
+class Handler(BaseHTTPRequestHandler):
+    def log_message(self, format, *args):
+        """Override the default behavior of writing to stderr with `logging`"""
+        logger.info("[%s] %s", self.address_string(), format % args)
+
+    def do_GET(self):
+        logger.debug('\n{}\n{}'.format(self.requestline, self.headers).rstrip())
+        url_path = urlparse(self.path).path
+        try:
+            if url_path == transform_url_path:
+                self.handle_transform()
+            else:
+                raise ValueError(ErrorResponse.INVALID_PATH.to_msg(url_path))
+        except Exception as e:
+            self.send_error(
+                HTTPStatus.BAD_REQUEST,
+                explain=e.message if hasattr(e, 'message') else str(e)
+            )
+
+    def handle_transform(self):
+        """
+        Respond to the GET request. The expected format of this request is:
+                http://<host>:<port>/transform?url=<url> with `User-Agent`
+                and `Accept` headers
+        """
+        errors = _validate_request(self)
+        if errors:
+            self.send_error(HTTPStatus.BAD_REQUEST, explain=errors)
+            return
+
+        query = dict(parse_qsl(urlparse(self.path).query))
+        if param_url not in query:
+            self.send_error(
+                HTTPStatus.BAD_REQUEST,
+                explain=ErrorResponse.PARAM_NOT_PRESENT.to_msg(param_url)
+            )
+            return
+
+        user_agent = self.headers.get(header_user_agent)
+        accept = self.headers.get(header_accept)
+        decoded_url = query.get(param_url)
+
+        try:
+            json_response = handle(decoded_url, user_agent, accept)
+        except HTTPError as e:
+            logger.info(
+                'Upstream error :\nURL: [%s]\nReason: [%s %s]\nBody:\n[%s]',
+                decoded_url,
+                e.code,
+                e.reason,
+                e.read(),
+                exc_info=True
+            )
+            self.send_error(HTTPStatus.BAD_GATEWAY, explain=str(e))
+            return
+        except URLError as e:
+            logger.info(
+                'Route error :\nURL: [%s]\nReason: [%s]',
+                decoded_url,
+                e.reason,
+                exc_info=True
+            )
+            self.send_error(HTTPStatus.BAD_GATEWAY, explain=str(e))
+            return
+
+        self.send_response(HTTPStatus.OK)
+        content_header = gen_universe.format_universe_repo_content_type(
+            _get_repo_version(accept))
+        self.send_header(header_content_type, content_header)
+        self.send_header(header_content_length, len(json_response))
+        self.end_headers()
+        self.wfile.write(json_response.encode())
+
+
+def run_server():
     """Runs a builtin python server using the given server_class.
 
-    :param server_class: server
-    :type server_class: HTTPServer
     :return: None
     """
     server_address = (HOST_NAME, PORT_NUMBER)
-    httpd = server_class(server_address, Handler)
+    httpd = ThreadedHTTPServer(server_address, Handler)
     logger.warning('Server Starts on port - %s', PORT_NUMBER)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         httpd.server_close()
         logger.warning('Server Stops on port - %s', PORT_NUMBER)
-
-
-class Handler(BaseHTTPRequestHandler):
-    def do_GET(s):
-        """
-        Respond to the GET request. The expected format of this request is:
-                http://<host>:<port>/transform?url=<url> with `User-Agent`
-                and `Accept` headers
-        """
-        errors = _validate_request(s)
-        if errors:
-            s.send_error(HTTPStatus.BAD_REQUEST, explain=errors)
-            return
-
-        query = dict(parse_qsl(urlparse(s.path).query))
-        if param_url not in query:
-            s.send_error(HTTPStatus.BAD_REQUEST,
-                         explain=ErrorResponse.PARAM_NOT_PRESENT.to_msg(param_url))
-            return
-
-        logging.debug(">>>>>>>>>")
-
-        user_agent = s.headers.get(header_user_agent)
-        accept = s.headers.get(header_accept)
-        decoded_url = query.get(param_url)
-
-        try:
-            json_response = handle(decoded_url, user_agent, accept)
-        except Exception as e:
-            s.send_error(HTTPStatus.BAD_REQUEST, explain=str(e))
-            return
-
-        s.send_response(HTTPStatus.OK)
-        content_header = gen_universe.format_universe_repo_content_type(
-            _get_repo_version(accept))
-        s.send_header(header_content_type, content_header)
-        s.send_header(header_content_length, len(json_response))
-        s.end_headers()
-        s.wfile.write(json_response.encode())
 
 
 def handle(decoded_url, user_agent, accept):
@@ -103,40 +146,51 @@ def handle(decoded_url, user_agent, accept):
     :return Requested json data
     :rtype str (a valid json object)
     """
-    logger.debug('Url : %s\n\tUser-Agent : %s\n\tAccept : %s',
-                 decoded_url, user_agent, accept)
-    repo_version = _get_repo_version(accept)
-    dcos_version = _get_dcos_version(user_agent)
-    logger.debug('Version %s\nDC/OS %s', repo_version, dcos_version)
-
     req = Request(decoded_url)
     req.add_header(header_user_agent, user_agent)
     req.add_header(header_accept, accept)
-    try:
-        with urlopen(req, timeout=MAX_TIMEOUT) as res:
-            charset = res.info().get_param(param_charset) or default_charset
+    logger.debug('\n{}\n{}\n{}'.format(
+        '<--- Upstream Request --->',
+        req.full_url,
+        _format_dict(req.headers)
+    ))
+    with urlopen(req, timeout=MAX_TIMEOUT) as res:
+        charset = res.info().get_param(param_charset) or default_charset
 
-            if header_content_length not in res.headers:
-                raise ValueError(ErrorResponse.ENDPOINT_HEADER_MISS.to_msg())
+        if header_content_length not in res.headers:
+            raise ValueError(ErrorResponse.ENDPOINT_HEADER_MISS.to_msg())
 
-            if int(res.headers.get(header_content_length)) > MAX_BYTES:
-                raise ValueError(ErrorResponse.MAX_SIZE.to_msg())
-
-            raw_data = res.read()
-        packages = json.loads(raw_data.decode(charset)).get(json_key_packages)
-    except (HTTPError, URLError) as error:
-        logger.info("Request protocol error %s", decoded_url)
-        logger.exception(error)
-        raise error
-
-    return render_json(packages, dcos_version, repo_version)
+        if int(res.headers.get(header_content_length)) > MAX_BYTES:
+            raise ValueError(ErrorResponse.MAX_SIZE.to_msg())
+        resp_content = res.read().decode(charset)
+        logger.debug('\n{}\n{} {}\n{}\n{}'.format(
+            '<--- Upstream Response --->',
+            res.getcode(),
+            res.reason,
+            _format_dict(res.headers),
+            resp_content if res.getcode() // 200 != 1 else ''
+        ))
+        repo_version = _get_repo_version(accept)
+        dcos_version = _get_dcos_version(user_agent)
+        logger.debug('Version [%s] DC/OS [%s]', repo_version, dcos_version)
+        try:
+            json_body = json.loads(resp_content)
+        except ValueError as e:
+            logger.exception(e)
+            raise ValueError(ErrorResponse.INVALID_JSON_FROM_UPSTREAM.to_msg(decoded_url))
+        assert json_key_packages in json_body, 'Expected key [{}] is not present in response'.format(json_key_packages)
+        return render_json(
+            json_body[json_key_packages],
+            dcos_version,
+            repo_version
+        )
 
 
 def render_json(packages, dcos_version, repo_version):
     """Returns the json
 
-    :param packages: package dictionary
-    :type packages: dict
+    :param packages: packages list
+    :type packages: list
     :param dcos_version: version of dcos
     :type dcos_version: str
     :param repo_version: version of universe repo
@@ -167,9 +221,6 @@ def _validate_request(s):
     :return Error message (if any)
     :rtype String or None
     """
-    if not urlparse(s.path).path == url_path:
-        return ErrorResponse.INVALID_PATH.to_msg(s.path)
-
     if header_user_agent not in s.headers:
         return ErrorResponse.HEADER_NOT_PRESENT.to_msg(header_user_agent)
 
@@ -186,7 +237,9 @@ def _get_repo_version(accept_header):
     """
     result = re.findall(r'\bversion=v\d', accept_header)
     if result is None or len(result) is 0:
-        raise ValueError(ErrorResponse.UNABLE_PARSE.to_msg(accept_header))
+        raise ValueError(ErrorResponse.UNABLE_PARSE.to_msg(
+            header_accept, accept_header
+        ))
     result.sort(reverse=True)
     return str(result[0].split('=')[1])
 
@@ -200,27 +253,34 @@ def _get_dcos_version(user_agent_header):
     """
     result = re.search(r'\bdcos/\b\d\.\d{1,2}', user_agent_header)
     if result is None:
-        raise ValueError(ErrorResponse.UNABLE_PARSE.to_msg(user_agent_header))
+        raise ValueError(ErrorResponse.UNABLE_PARSE.to_msg(
+            header_user_agent, user_agent_header
+        ))
     return str(result.group().split('/')[1])
+
+
+def _format_dict(d):
+    """Takes a dictionary and returns it in a pretty formatted string
+    :param d: dict
+    :return pretty formatted dictionary
+    :rtype str
+    """
+    return '\n'.join('{}: {}'.format(k, v) for k, v in d.items())
 
 
 class ErrorResponse(Enum):
     INVALID_PATH = 'URL Path {} is invalid. Expected path /transform'
     HEADER_NOT_PRESENT = 'Header {} is missing'
     PARAM_NOT_PRESENT = 'Request parameter {} is missing'
-    UNABLE_PARSE = 'Unable to parse header {}'
+    UNABLE_PARSE = 'Unable to parse header {}:{}'
     VALIDATION_ERROR = 'Validation errors during processing {}'
     MAX_SIZE = 'Endpoint response exceeds maximum content size'
     ENDPOINT_HEADER_MISS = 'Endpoint doesn\'t return Content-Length header'
+    INVALID_JSON_FROM_UPSTREAM = 'Upstream [{}] did not return a json body'
 
     def to_msg(self, *args):
         return self.value.format(args)
 
 
 if __name__ == '__main__':
-    logger = logging.getLogger(__name__)
-    logging.basicConfig(
-        level=os.environ.get("LOGLEVEL", "INFO"),
-        format='%(asctime)s [%(levelname)s] %(message)s'
-    )
     run_server()
