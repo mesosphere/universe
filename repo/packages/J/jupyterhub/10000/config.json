@@ -14,6 +14,10 @@
           "description": "List of admin users, separated by a comma.",
           "type": "string"
         },
+        "whitelisted_users":{
+          "description": "List of whitelisted users, seperated by a comma.",
+          "type": "string"
+        },
         "constraints": {
           "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
           "type": "array",
