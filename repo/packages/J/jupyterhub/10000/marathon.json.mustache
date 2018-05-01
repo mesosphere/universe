@@ -5,6 +5,7 @@
   "instances": 1,
   "env": {
     "JUPYTERHUB_ADMIN_USERS": "{{service.admin_users}}",
+    "JUPYTERHUB_WHITELISTED_USERS": "{{service.whitelisted_users}}"
     "JUPYTERHUB_BASE_URL": "/service/{{service.name}}",
     "NOTEBOOK_APP_PREFIX": "{{notebook.app_prefix}}",
     "NOTEBOOK_CPU_LIMIT": "{{notebook.cpus}}",
