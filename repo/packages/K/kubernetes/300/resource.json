@@ -1,0 +1,82 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "kubedns": "gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.9",
+        "kubedns_dnsmasq": "gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.9",
+        "kubedns_sidecar": "gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.9",
+        "metrics_server": "gcr.io/google_containers/metrics-server-amd64:v0.2.1",
+        "dashboard": "k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3",
+        "pause": "gcr.io/google_containers/pause-amd64:3.1"
+      }
+    },
+    "uris": {
+      "jre_tar_gz": "https://downloads.mesosphere.com/java/jre-8u152-linux-x64.tar.gz",
+      "libmesos_bundle_tar_gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-master-28f8827.tar.gz",
+      "scheduler_zip": "https://downloads.mesosphere.com/kubernetes/assets/1.0.3-1.9.7/kubernetes-scheduler.zip",
+      "executor_zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.42.0/executor.zip",
+      "bootstrap_zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.42.0/bootstrap.zip",
+      "kubelet_resource_watchdog": "https://downloads.mesosphere.com/kubernetes/assets/1.0.3-1.9.7/kubelet-resource-watchdog-v0.2.0.tar.gz",
+      "conntrack": "https://downloads.mesosphere.com/dcos-kubernetes/conntrack/conntrack-1.4.4.tar.gz",
+      "etcd_uri": "https://storage.googleapis.com/etcd/v3.3.3/etcd-v3.3.3-linux-amd64.tar.gz",
+      "apiserver_uri": "https://storage.googleapis.com/kubernetes-release/release/v1.9.7/bin/linux/amd64/kube-apiserver",
+      "controller_manager_uri": "https://storage.googleapis.com/kubernetes-release/release/v1.9.7/bin/linux/amd64/kube-controller-manager",
+      "scheduler_uri": "https://storage.googleapis.com/kubernetes-release/release/v1.9.7/bin/linux/amd64/kube-scheduler",
+      "kube_proxy_uri": "https://storage.googleapis.com/kubernetes-release/release/v1.9.7/bin/linux/amd64/kube-proxy",
+      "kubelet_uri": "https://storage.googleapis.com/kubernetes-release/release/v1.9.7/bin/linux/amd64/kubelet",
+      "docker_uri": "https://download.docker.com/linux/static/stable/x86_64/docker-18.03.0-ce.tgz",
+      "socat_uri": "https://downloads.mesosphere.com/kubernetes/socat/socat.d-1.7.3.2-2.fc26.tar.gz",
+      "kubectl_uri": "https://storage.googleapis.com/kubernetes-release/release/v1.9.7/bin/linux/amd64/kubectl",
+      "ark_uri": "https://github.com/heptio/ark/releases/download/v0.6.0/ark-v0.6.0-linux-amd64.tar.gz",
+      "static_socat_uri": "https://downloads.mesosphere.io/dcos-kubernetes/socat/socat-1.7.3.2.tar.gz",
+      "coredns_uri": "https://github.com/coredns/coredns/releases/download/v1.1.1/coredns_1.1.1_linux_amd64.tgz",
+      "nginx_uri": "https://downloads.mesosphere.io/dcos-kubernetes/kubernetes-proxy/nginx/nginx",
+      "kubernetes_proxy_nginx_conf_uri": "https://downloads.mesosphere.io/dcos-kubernetes/kubernetes-proxy/nginx/config/0/nginx.conf"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/kubernetes/assets/k8s-small-48x48.png",
+    "icon-medium": "https://downloads.mesosphere.com/kubernetes/assets/k8s-medium-96x96.png",
+    "icon-large": "https://downloads.mesosphere.com/kubernetes/assets/k8s-large-256x256.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "dabd810becdd82c35cfd855d73beaa5803b8e67dc023f964d292f9f24cb68066"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/1.0.3-1.9.7/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "de02134a9d37c29cb94eb5b4bde10b002be841201a9ebe0fcadd8bf5c9d7a6f0"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/1.0.3-1.9.7/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "c79031a5c1ceaa375f4381f5881f4c61456a629a7fee0fcf5ff4ea9803528993"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/1.0.3-1.9.7/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
