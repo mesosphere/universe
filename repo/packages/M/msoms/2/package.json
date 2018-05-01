@@ -1,0 +1,23 @@
+{
+ "packagingVersion": "3.0",
+ "name": "msoms",
+ "version": "1.0.1",
+ "scm": "git@github.com:Microsoft/OMS-docker.git",
+ "maintainer": "omscontainers@microsoft.com",
+ "description": "Microsoft Operations Management Suite(MS OMS) – Container Solution provides real-time analytics for operational data (Performance, Inventory) and monitoring for Docker Containers.",
+ "framework": false,
+ "tags": [
+   "msoms",
+   "Microsoft"
+ ],
+ "licenses": [
+   {
+     "name": "LICENSE",
+     "url": "https://github.com/Microsoft/OMS-docker/blob/master/LICENSE"
+   }
+ ],
+ "website": "https://github.com/Microsoft/OMS-docker",
+ "postInstallNotes": "OMS is successfully installed.",
+ "preInstallNotes": "This DC/OS Service is currently in preview. Pass your OMS workspace ID and Primary Key. For more information about how to capture the OMS workspace ID and Primary Key go here 'https://azure.microsoft.com/en-us/documentation/articles/log-analytics-linux-agents'",
+ "postUninstallNotes": "OMS is successfully uninstalled."
+}
