@@ -1,0 +1,139 @@
+{
+  "id": "{{control-center.name}}",
+  "cmd": "export CONTROL_CENTER_REST_LISTENERS={{control-center.listener_protocol}}://0.0.0.0:$PORT0 && /etc/confluent/docker/run",
+  "instances": {{control-center.instances}},
+  "cpus": {{control-center.cpus}},
+  "mem": {{control-center.mem}},
+  "maintainer": "partner-support@confluent.io",
+  "container": {
+    "type": "MESOS",
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}"
+    },
+    {{#control-center.virtual_network_enabled}}
+    "portMappings": [
+        {
+            "containerPort": 9021,
+            "servicePort": 9021,
+            "protocol": "tcp",
+            "labels": {
+              "VIP_0": "{{control-center.name}}:9021"
+            }
+        }
+    ],
+    {{/control-center.virtual_network_enabled}}
+    "volumes": [
+      {{#control-center.keystore_secret}}
+      {
+          "containerPath": "mykeystore.jks",
+          "secret": "mykeystore"
+      }
+      {{/control-center.keystore_secret}}
+      {{#kafka.kerberos_enabled}}
+      {{#control-center.keystore_secret}},{{/control-center.keystore_secret}}
+      {
+          "containerPath": "/tmp/kafka-client.keytab",
+          "secret": "kafka_keytab"
+      },
+      {
+          "containerPath": "/tmp/client-jaas.conf",
+          "secret": "kafka_jaas"
+      },
+      {
+          "containerPath": "/tmp/krb5.conf",
+          "secret": "kafka_krb5"
+      }
+      {{/kafka.kerberos_enabled}}
+    ]
+  },
+  {{^control-center.virtual_network_enabled}}
+  "networks": [
+    {
+      "mode": "host"
+    }
+  ],
+  "portDefinitions": [ {
+      "name": "control-center",
+      "port": 9021,
+      "protocol": "tcp",
+      "labels": {
+        "VIP_0": "{{control-center.name}}:9021"
+      }
+  } ],
+  "requirePorts": false,
+  {{/control-center.virtual_network_enabled}}
+  {{#control-center.virtual_network_enabled}}
+  "networks": [
+    {
+      "name": "{{control-center.virtual_network_name}}",
+      "mode": "container"
+    }
+  ],
+  {{/control-center.virtual_network_enabled}}
+  "secrets": {
+      {{#control-center.keystore_secret}}
+      "mykeystore": {
+          "source": "{{control-center.keystore_secret}}"
+      }
+      {{/control-center.keystore_secret}}
+      {{#kafka.kerberos_enabled}}
+      {{#control-center.keystore_secret}},{{/control-center.keystore_secret}}
+      "kafka_keytab": {
+          "source": "{{kafka.kerberos_keytab_secret}}"
+      },
+      "kafka_jaas": {
+          "source": "{{kafka.kerberos_jaas_secret}}"
+      },
+      "kafka_krb5": {
+          "source": "{{kafka.kerberos_krb5_secret}}"
+      }
+      {{/kafka.kerberos_enabled}}
+  },
+  "env": {
+    "CONTROL_CENTER_CONNECT_CLUSTER": "{{connect.connect_cluster}}",
+    "CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS": "{{control-center.confluent-controlcenter-internal-topics-partitions}}",
+    "CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS": "{{control-center.confluent-monitoring-interceptor-topic-partitions}}",
+    "CONTROL_CENTER_REPLICATION_FACTOR": "{{control-center.confluent-controlcenter-internal-topics-replication}}",
+    "CONTROL_CENTER_LICENSE": "{{control-center.confluent-license}}",
+    "CONTROL_CENTER_BOOTSTRAP_SERVERS": "{{kafka.bootstrap_servers}}",
+    "CONTROL_CENTER_ZOOKEEPER_CONNECT": "{{kafka.zookeeper_connect}}",
+    "CONTROL_CENTER_REST_SSL_TRUSTSTORE_LOCATION": "/tmp/kafka-truststore.jks",
+    "CONTROL_CENTER_REST_SSL_TRUSTSTORE_PASSWORD": "changeit",
+    {{^control-center.keystore_secret}}
+    "CONTROL_CENTER_REST_SSL_KEYSTORE_LOCATION": "/tmp/kafka-keystore.jks",
+    {{/control-center.keystore_secret}}
+    {{#control-center.keystore_secret}}
+    "CONTROL_CENTER_REST_SSL_KEYSTORE_LOCATION": "mykeystore.jks",
+    {{/control-center.keystore_secret}}
+    "CONTROL_CENTER_REST_SSL_KEYSTORE_PASSWORD": "changeit",
+    "CONTROL_CENTER_REST_SSL_KEY_PASSWORD": "changeit",
+    "CONTROL_CENTER_STREAMS_SECURITY_PROTOCOL": "{{kafka.client_security_protocol}}",
+    "CONTROL_CENTER_STREAMS_SSL_TRUSTSTORE_LOCATION": "/tmp/kafka-truststore.jks",
+    "CONTROL_CENTER_STREAMS_SSL_TRUSTSTORE_PASSWORD": "changeit",
+    "CONTROL_CENTER_STREAMS_SSL_KEYSTORE_LOCATION": "/tmp/kafka-keystore.jks",
+    "CONTROL_CENTER_STREAMS_SSL_KEYSTORE_PASSWORD": "changeit",
+    "CONTROL_CENTER_STREAMS_SSL_KEY_PASSWORD": "changeit",
+    {{#kafka.kerberos_enabled}}
+    "KAFKA_OPTS": "-Djava.security.auth.login.config=/tmp/client-jaas.conf -Djava.security.krb5.conf=/tmp/krb5.conf",
+    "CONTROL_CENTER_OPTS": "-Djava.security.auth.login.config=/tmp/client-jaas.conf -Djava.security.krb5.conf=/tmp/krb5.conf",
+    {{/kafka.kerberos_enabled}}
+    "CONTROL_CENTER_STREAMS_SASL_MECHANISM": "{{kafka.client_sasl_mechanism}}",
+    "CONTROL_CENTER_STREAMS_SASL_KERBEROS_SERVICE_NAME": "{{kafka.client_sasl_kerberos_service_name}}",
+    "CONTROL_CENTER_REST_SSL_CIPHER_SUITES": "{{control-center.ciphers}}"
+  },
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "curl -k -I {{control-center.listener_protocol}}://localhost:$PORT0 | grep \"HTTP/1.1 200 OK\"" },
+      "gracePeriodSeconds": 180,
+      "intervalSeconds": 10,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+	  }
+  ],
+  "acceptedResourceRoles": [
+    "{{control-center.role}}"
+  ],
+  "labels": {
+  }
+}
