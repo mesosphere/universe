@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "4.0",
+  "name": "confluent-connect",
+  "version": "1.1.0-4.0.0",
+  "scm": "https://github.com/confluentinc/kafka",
+  "description": "Confluent Connect worker. Includes Replicator Connector.\n\n\tDocumentation: http://docs.confluent.io/4.0.0/connect/managing.html",
+  "maintainer": "partner-support@confluent.io",
+  "tags": ["kafka", "confluent", "connect"],
+  "preInstallNotes": "Preparing to install confluent-connect",
+  "postInstallNotes": "confluent-connect has been installed.",
+  "postUninstallNotes": "confluent-connect was uninstalled successfully.",
+  "minDcosReleaseVersion" : "1.10",
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}
