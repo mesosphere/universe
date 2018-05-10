@@ -1,6 +1,17 @@
 {
   "type": "object",
   "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "Name of this service instance",
+          "type": "string",
+          "default": "neo4j/proxy"
+        }
+      }
+    },
     "neo4j-proxy": {
       "description": "Neo4j specific configuration properties",
       "type": "object",
