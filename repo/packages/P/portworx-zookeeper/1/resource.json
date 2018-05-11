@@ -1,0 +1,57 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u131-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
+      "zookeeper-tar-gz": "https://s3-us-west-1.amazonaws.com/px-dcos/zookeeper/zookeeper-3.4.11.tar.gz",
+      "bootstrap-zip": "https://px-dcos.s3.amazonaws.com/portworx-zookeeper/assets/1.1-3.4.11-eee2a45/bootstrap.zip",
+      "scheduler-zip": "https://px-dcos.s3.amazonaws.com/portworx-zookeeper/assets/1.1-3.4.11-eee2a45/zookeeper-scheduler.zip",
+      "executor-zip": "https://px-dcos.s3.amazonaws.com/portworx-zookeeper/assets/1.1-3.4.11-eee2a45/executor.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://s3-us-west-1.amazonaws.com/px-dcos/portworx-zookeeper/img/zk-small.png",
+    "icon-medium": "https://s3-us-west-1.amazonaws.com/px-dcos/portworx-zookeeper/img/zk-medium.png",
+    "icon-large": "https://s3-us-west-1.amazonaws.com/px-dcos/portworx-zookeeper/img/zk-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "1354709564d05aad0c205addc692f6ad632bf9f4caf1d9df150a46a319a1a03d"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-zookeeper/assets/1.1-3.4.11-eee2a45/dcos-portworx-zookeeper-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "a8857d8c365dae7c71774393df6510fa63c3d29791b2e4c31bd51f28d79106b5"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-zookeeper/assets/1.1-3.4.11-eee2a45/dcos-portworx-zookeeper-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "b19d530d708bdbbf09ac2bb7179fbf7c5440f0134270c60337af53cfcf0546bb"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-zookeeper/assets/1.1-3.4.11-eee2a45/dcos-portworx-zookeeper.exe"
+        }
+      }
+    }
+  }
+}
