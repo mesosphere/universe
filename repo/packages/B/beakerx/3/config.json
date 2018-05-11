@@ -3,7 +3,7 @@
   "properties": {
     "service": {
       "type": "object",
-      "description": "DC/OS Beakerx comes with a handful of pre-installed packages for data scientists. Since BeakerX 0.15.2 there is also GPU support included. Pre-Installed packages include: H5PY 2.7.1, Keras 2.1.5, Numpy 1.14.2, Pandas 0.22.0, PySpark 2.3.0, Scikit-Learn 0.19.1, Tensorflow & Tensorboard 1.7.0, XLRD 1.1.0",
+      "description": "DC/OS BeakerX comes with a handful of pre-installed packages for data scientists. Since BeakerX 0.16.1 there is also GPU support included. Pre-Installed packages include: H5PY 2.7.1, Keras 2.1.5, Numpy 1.14.2, Pandas 0.22.0, PySpark 2.3.0, Scikit-Learn 0.19.1, Tensorflow & Tensorboard 1.7.0, XLRD 1.1.0",
       "properties": {
         "name": {
           "description": "Name of this service instance",
@@ -18,7 +18,7 @@
         },
         "gpu_support": {
           "type": "object",
-          "description": "GPU support and useful packages for Data Scientists.\n\nAdditional packages installed:\nCUDA 9.0.176, CUDNN 7.1.3.16, Tensorflow-GPU 1.7.0",
+          "description": "GPU support and useful packages for Data Scientists.\n\nGPU specific packages:\nCUDA 9.0.176, CUDNN 7.1.3.16, Tensorflow-GPU 1.7.0",
           "properties": {
             "enable": {
               "description": "Enable GPU support.\nNote: This requires at least 15GB disk space available with recent NVIDIA drivers installed.",
@@ -31,7 +31,7 @@
               "default": false
             },
             "gpus": {
-              "description": "GPU shares to allocate to your Beakerx package.\nNote: GPU support has to be enabled.",
+              "description": "Number of GPUs to allocate to your DC/OS BeakerX  package.\nNote: GPU support has to be enabled.",
               "type": "number",
               "default": 0,
               "minimum": 0
@@ -39,7 +39,7 @@
           }
         },
         "mem": {
-          "description":  "Memory to allocate to each service instance.",
+          "description":  "Memory to allocate to each service instance in MB.",
           "type": "number",
           "default": 2048.0,
           "minimum": 1024.0
@@ -52,10 +52,10 @@
     },
     "storage": {
       "type": "object",
-      "description": "beakerx storage configuration properties",
+      "description": "DC/OS BeakerX  storage configuration.",
       "properties":{
         "host_volume_size": {
-          "description": "Size of the persistent volume",
+          "description": "Size of the persistent volume in MB.",
           "type": "number",
           "default": 4000
         },
@@ -74,7 +74,7 @@
     },
     "networking": {
       "type": "object",
-      "description": "beakerx networking configuration properties",
+      "description": "DC/OS BeakerX  networking configuration properties",
       "properties": {
         "port_api": {
           "description": "Port number to be used for api communication internally to the cluster.",
@@ -86,17 +86,17 @@
           "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
           "properties": {
             "enable": {
-              "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+              "description": "Enable or disable external access through a public node via Marathon-LB.",
               "type": "boolean",
               "default": false
             },
             "external_public_agent_ip": {
-              "description": "For external access, dns to be used for Marathon-LB vHost: For example use your public slave elb dns.",
+              "description": "For external access, DNS to be used for Marathon-LB vHost: For example use your public slave ELB DNS.",
               "type": "string",
               "default": ""
             },
             "external_access_port": {
-              "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+              "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer.",
               "type": "number",
               "default": 18888
             }
