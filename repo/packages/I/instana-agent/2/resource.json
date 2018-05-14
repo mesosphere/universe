@@ -1,0 +1,21 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/instana-agent-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/instana-agent-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/instana-agent-icon-large.png",
+    "screenshots": [
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Application-Map.png",
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Incidents-View.png",
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Infrastructure-Map.png",
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Metrics-Comparison.png",
+      "https://www.instana.com/wp-content/uploads/2016/11/Instana-Tracing-View.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "instana-agent": "instana/agent:1.0.5"
+      }
+    }
+  }
+}
