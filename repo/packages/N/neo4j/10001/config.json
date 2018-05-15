@@ -35,7 +35,7 @@
         "mem": {
           "description": "Memory [mb] allocated to one neo4j core instance.",
           "type": "number",
-          "default": 4000.0,
+          "default": 6000.0,
           "minimum": 1000.0
         },
         "disk": {
