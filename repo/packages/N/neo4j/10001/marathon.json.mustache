@@ -34,6 +34,17 @@
   "ipAddress":{
     "networkName":"{{neo4j-core.network-name}}"
   },
+  {{#neo4j-core.constraints}}
+  "constraints": [
+    {{#.}}
+      [
+        "{{attribute}}"
+       ,"{{operator}}"
+       {{#value}},"{{value}}"{{/value}}
+      ]{{^last}},{{/last}}
+    {{/.}}
+  ],
+  {{/neo4j-core.constraints}}
   "healthChecks":[
     {
       "protocol":"HTTP",
@@ -44,16 +55,5 @@
       "intervalSeconds":10,
       "maxConsecutiveFailures":10
     }
-  ],
-  {{#neo4j-core.constraints}}
-  "constraints": [
-    {{#.}}
-      [
-        "{{attribute}}"
-       ,"{{operator}}"
-       {{#value}},"{{value}}"{{/value}}
-      ]{{^last}},{{/last}}
-    {{/.}}
   ]
-  {{/neo4j-core.constraints}}
 }
