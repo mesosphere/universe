@@ -33,6 +33,17 @@
   "ipAddress":{
     "networkName":"{{neo4j-replica.network-name}}"
   },
+  {{#neo4j-replica.constraints}}
+  "constraints": [
+    {{#.}}
+      [
+        "{{attribute}}"
+       ,"{{operator}}"
+       {{#value}},"{{value}}"{{/value}}
+      ]{{^last}},{{/last}}
+    {{/.}}
+  ],
+  {{/neo4j-replica.constraints}}
   "healthChecks":[
     {
       "protocol":"HTTP",
