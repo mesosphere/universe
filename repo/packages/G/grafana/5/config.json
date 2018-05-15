@@ -1,0 +1,76 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "service":{
+            "type":"object",
+            "description": "DC/OS service configuration properties",
+            "properties":{
+                "name" : {
+                    "description":"Name of this service instance.",
+                    "type":"string",
+                    "default":"grafana"
+                }
+            }
+        },
+        "grafana":{
+            "type": "object",
+            "description": "grafana service configuration properties",
+            "properties": {
+                "cpus": {
+                    "description": "CPU shares to allocate to each service instance.",
+                    "type": "number",
+                    "default": 0.3,
+                    "minimum": 0.3
+                },
+                "mem": {
+                    "description":  "Memory to allocate to each service instance.",
+                    "type": "number",
+                    "default": 512.0,
+                    "minimum": 512.0
+                },
+                "admin_password": {
+                    "description": "Admin password.",
+                    "type": "string",
+                    "default": "admin"
+                },
+                "plugins": {
+                    "description": "Comma separated Grafana plugins which will be installed via `grafana-cli plugins install grafana-example-app,grafana-clock-panel`. See https://grafana.com/plugins",
+                    "type": "string",
+                    "default": ""
+                }
+
+            },
+            "required": [
+                "cpus",
+                "mem"
+            ]
+        },
+        "networking":{
+            "type": "object",
+            "description": "Grafana networking configuration properties",
+            "properties": {
+                "external_access": {
+                    "type": "object",
+                    "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+                    "properties": {
+                        "enable": {
+                            "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "external_access_port": {
+                            "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+                            "type": "number",
+                            "default": 13000
+                        },
+                        "virtual_host": {
+                            "description": "For external access, Virtual Host URL to be used in the external load balancer.",
+                            "type": "string",
+                            "default": "grafana.example.org"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
