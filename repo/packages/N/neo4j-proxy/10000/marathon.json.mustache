@@ -38,6 +38,17 @@
       "maxConsecutiveFailures":10
     }
   ],
+  {{#neo4j-proxy.constraints}}
+  "constraints": [
+    {{#.}}
+      [
+        "{{attribute}}"
+       ,"{{operator}}"
+       {{#value}},"{{value}}"{{/value}}
+      ]{{^last}},{{/last}}
+    {{/.}}
+  ],
+  {{/neo4j-proxy.constraints}}
   "acceptedResourceRoles":[
     "slave_public"
   ]

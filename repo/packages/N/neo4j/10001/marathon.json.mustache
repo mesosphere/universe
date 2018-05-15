@@ -44,5 +44,16 @@
       "intervalSeconds":10,
       "maxConsecutiveFailures":10
     }
+  ],
+  {{#neo4j-core.constraints}}
+  "constraints": [
+    {{#.}}
+      [
+        "{{attribute}}"
+       ,"{{operator}}"
+       {{#value}},"{{value}}"{{/value}}
+      ]{{^last}},{{/last}}
+    {{/.}}
   ]
+  {{/neo4j-core.constraints}}
 }

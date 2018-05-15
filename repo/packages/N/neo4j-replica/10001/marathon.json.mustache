@@ -43,5 +43,16 @@
       "intervalSeconds":10,
       "maxConsecutiveFailures":10
     }
+  ],
+  {{#neo4j-replica.constraints}}
+  "constraints": [
+    {{#.}}
+      [
+        "{{attribute}}"
+       ,"{{operator}}"
+       {{#value}},"{{value}}"{{/value}}
+      ]{{^last}},{{/last}}
+    {{/.}}
   ]
+  {{/neo4j-replica.constraints}}
 }
