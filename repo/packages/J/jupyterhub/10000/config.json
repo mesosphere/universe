@@ -16,11 +16,13 @@
         },
         "whitelisted_users":{
           "description": "List of whitelisted users, seperated by a comma.",
-          "type": "string"
+          "type": "string",
+          "default": ""
         },
         "api_tokens":{
           "description": "List of API tokens, seperated by a comma e.g. token1:user1,token2:user2",
-          "type": "string"
+          "type": "string",
+          "default": ""
         },
         "constraints": {
           "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
