@@ -12,7 +12,7 @@
 "containerPort": 8888,
 "hostPort": 0,
 "labels": {
-"VIP_0": "/{{service.name}}:{{networking.port_api}}"
+"VIP_0": "/{{service.name}}:8888"
 },
 "protocol": "tcp",
 {{#networking.external_access.enable}}
@@ -47,22 +47,6 @@
     "hostPath": "persistent_data",
     "mode": "RW"
     }
-{{#service.gpu_support.mount_agent_libraries}}
-      ,{
-        "containerPath": "/opt/mesosphere",
-        "hostPath": "/opt/mesosphere",
-        "mode": "RO"
-      }
-{{/service.gpu_support.mount_agent_libraries}}
-{{/storage.persistence.enable}}
-{{^storage.persistence.enable}}
-{{#service.gpu_support.mount_agent_libraries}}
-      {
-        "containerPath": "/opt/mesosphere",
-        "hostPath": "/opt/mesosphere",
-        "mode": "RO"
-      }
-{{/service.gpu_support.mount_agent_libraries}}
 {{/storage.persistence.enable}}
 ],
 "docker": {
@@ -93,11 +77,10 @@
 "path": "/"
 }
 ],
+  "uris": [
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
 "env": {
-{{#service.gpu_support.mount_agent_libraries}}
-"NB_USER": "root",
-"NB_UID": "0",
-{{/service.gpu_support.mount_agent_libraries}}
 "CONTEXT": "{{service.name}}"
 },
 "labels": {

@@ -3,10 +3,10 @@
   "properties": {
     "service": {
       "type": "object",
-      "description": "DC/OS BeakerX comes with a handful of pre-installed packages for data scientists. Since BeakerX 0.16.1 there is also GPU support included. Pre-Installed packages include: H5PY 2.7.1, Keras 2.1.5, Numpy 1.14.2, Pandas 0.22.0, PySpark 2.3.0, Scikit-Learn 0.19.1, Tensorflow & Tensorboard 1.7.0, XLRD 1.1.0",
+      "description": "DC/OS BeakerX comes with a handful of pre-installed packages for data scientists. Since BeakerX 0.16.1 there is also GPU support included. Pre-Installed packages include: H5PY 2.7.1, Keras 2.1.5, Numpy 1.14.2, Pandas 0.22.0, PySpark 2.3.0, Scikit-Learn 0.19.1, TensorFlow & TensorBoard 1.7.0, XLRD 1.1.0",
       "properties": {
         "name": {
-          "description": "Name of this service instance",
+          "description": "Name of this service instance.",
           "type": "string",
           "default": "beakerx"
         },
@@ -18,15 +18,10 @@
         },
         "gpu_support": {
           "type": "object",
-          "description": "GPU support and useful packages for Data Scientists.\n\nGPU specific packages:\nCUDA 9.0.176, CUDNN 7.1.3.16, Tensorflow-GPU 1.7.0",
+          "description": "GPU support and useful packages for Data Scientists.\n\nGPU specific packages:\nCUDA 9.0.176, CUDNN 7.1.3.16, TensorFlow-GPU 1.7.0",
           "properties": {
             "enable": {
               "description": "Enable GPU support.\nNote: This requires at least 15GB disk space available with recent NVIDIA drivers installed.",
-              "type": "boolean",
-              "default": false
-            },
-            "mount_agent_libraries": {
-              "description": "Enable native support of Spark 2.2.1 in your DC/OS cluster.\nNote: Jupyter will run under root and the container has access to /opt/mesosphere to utilize your agents libraries.",
               "type": "boolean",
               "default": false
             },
@@ -74,13 +69,8 @@
     },
     "networking": {
       "type": "object",
-      "description": "DC/OS BeakerX  networking configuration properties",
+      "description": "DC/OS BeakerX networking configuration properties",
       "properties": {
-        "port_api": {
-          "description": "Port number to be used for api communication internally to the cluster.",
-          "type": "number",
-          "default": 8888
-        },
         "external_access": {
           "type": "object",
           "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
