@@ -1,0 +1,98 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS BeakerX comes with a handful of pre-installed packages for data scientists. Since BeakerX 0.16.1 there is also GPU support included. Pre-Installed packages include: H5PY 2.7.1, Keras 2.1.5, Numpy 1.14.2, Pandas 0.22.0, PySpark 2.3.0, Scikit-Learn 0.19.1, TensorFlow & TensorBoard 1.7.0, XLRD 1.1.0",
+      "properties": {
+        "name": {
+          "description": "Name of this service instance.",
+          "type": "string",
+          "default": "beakerx"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to each service instance.",
+          "type": "number",
+          "default": 1,
+          "minimum": 1
+        },
+        "gpu_support": {
+          "type": "object",
+          "description": "GPU support and useful packages for Data Scientists.\n\nGPU specific packages:\nCUDA 9.0.176, CUDNN 7.1.3.16, TensorFlow-GPU 1.7.0",
+          "properties": {
+            "enable": {
+              "description": "Enable GPU support.\nNote: This requires at least 15GB disk space available with recent NVIDIA drivers installed.",
+              "type": "boolean",
+              "default": false
+            },
+            "gpus": {
+              "description": "Number of GPUs to allocate to your DC/OS BeakerX  package.\nNote: GPU support has to be enabled.",
+              "type": "number",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        },
+        "mem": {
+          "description":  "Memory to allocate to each service instance in MB.",
+          "type": "number",
+          "default": 2048.0,
+          "minimum": 1024.0
+        }
+      },
+      "required": [
+        "cpus",
+        "mem"
+      ]
+    },
+    "storage": {
+      "type": "object",
+      "description": "DC/OS BeakerX  storage configuration.",
+      "properties":{
+        "host_volume_size": {
+          "description": "Size of the persistent volume in MB.",
+          "type": "number",
+          "default": 4000
+        },
+        "persistence": {
+          "type": "object",
+          "description": "Enable persistent storage.",
+          "properties": {
+            "enable": {
+              "description": "Enable or disable persistent storage.",
+              "type": "boolean",
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    "networking": {
+      "type": "object",
+      "description": "DC/OS BeakerX networking configuration properties",
+      "properties": {
+        "external_access": {
+          "type": "object",
+          "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+          "properties": {
+            "enable": {
+              "description": "Enable or disable external access through a public node via Marathon-LB.",
+              "type": "boolean",
+              "default": false
+            },
+            "external_public_agent_ip": {
+              "description": "For external access, DNS to be used for Marathon-LB vHost: For example use your public slave ELB DNS.",
+              "type": "string",
+              "default": ""
+            },
+            "external_access_port": {
+              "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer.",
+              "type": "number",
+              "default": 18888
+            }
+          }
+        }
+      }
+    }
+  }
+}

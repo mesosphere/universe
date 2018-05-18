@@ -1,0 +1,21 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/beakerx/assets/beakerx-logo.png",
+    "icon-medium": "https://downloads.mesosphere.com/beakerx/assets/beakerx-logo.png",
+    "icon-large": "https://downloads.mesosphere.com/beakerx/assets/beakerx-logo.png",
+    "screenshots": [
+      "https://downloads.mesosphere.com/beakerx/assets/beakerx-screenshot.png"
+    ]
+  },
+  "assets": {
+    "uris": {
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz"
+    },
+    "container": {
+      "docker": {
+        "beakerx-docker": "mesosphere/dcos-beakerx:0.16.1-base",
+        "beakerx-docker-gpu": "mesosphere/dcos-beakerx:0.16.1-gpu"
+      }
+    }
+  }
+}
