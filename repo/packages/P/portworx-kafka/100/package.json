@@ -1,0 +1,26 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [
+    "1.1-0.11.0.1-bf399c5"
+  ],
+  "downgradesTo": [
+    "1.1-0.11.0.1-bf399c5"
+  ],
+  "minDcosReleaseVersion": "1.9",
+  "name": "portworx-kafka",
+  "version": "1.2-1.0.0-2b3d93b",
+  "maintainer": "support@portworx.com",
+  "description": "Apache Kafka",
+  "selected": true,
+  "framework": true,
+  "tags": [
+    "message",
+    "broker",
+    "kafka",
+    "pubsub",
+    "portworx"
+  ],
+  "preInstallNotes": "This DC/OS service is currently a beta candidate undergoing testing as part of a formal beta test program.\n\nThere may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nDefault configuration requires 3 agent nodes each with: 1.0 CPU | 2048 MB MEM | 1 5000 MB Disk\n\nPortworx should be installed on the Private Agents to be able to provision volumes.\n\nContact Mesosphere before deploying this beta candidate service. Product support is available to approved participants in the beta test program.",
+  "postInstallNotes": "The DC/OS Apache Kafka Service is being installed.\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/kafka.html",
+  "postUninstallNotes": "The DC/OS Apache Kafka Service is being uninstalled.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required."
+}
