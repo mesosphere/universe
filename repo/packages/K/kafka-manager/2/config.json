@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "service":{
+      "type":"object",
+      "description": "DC/OS service configuration properties",
+      "properties":{
+        "name" : {
+          "description":"The name of the kafka-manager service instance.",
+          "type":"string",
+          "default":"kafka-manager"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate",
+          "type": "number",
+          "default": 1.0,
+          "minimum": 0.1
+        },
+        "mem": {
+          "description": "Memory to allocate",
+          "type": "number",
+          "default": 1024.0,
+          "minimum": 1024.0
+        },
+        "instances": {
+          "description": "Number of desired instances",
+          "type": "integer",
+          "default": 1
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "instances"
+      ]
+    },
+    "kafka-manager": {
+      "description": "Kafka-manager configuration properties",
+      "type": "object",
+      "properties": {
+        "zk": {
+          "type": "string",
+          "description": "Zookeeper URL for Kafka-manager",
+          "default": "zk-1.zk:2181,zk-2.zk:2181,zk-3.zk:2181,zk-4.zk:2181,zk-5.zk:2181"
+        },
+        "application_secret": {
+          "description": "The application secret key is used to secure cryptographics functions",
+          "type": "string"
+        },
+        "zk-base-path": {
+          "description": "Base path for storing configuration in ZooKeeper",
+          "type": "string"
+        },
+        "config": {
+          "description": "Path to kafka-manager config",
+          "type": "string",
+          "default": "./conf/application.conf"
+        },
+        "zk-args": {
+          "description": "Kafka manager extra arguments",
+          "type": "string"
+        },
+        "loglevel": {
+          "description": "Java log level",
+          "type": "string",
+          "default": "INFO"
+        }
+      },
+      "required": [
+        "zk",
+        "application_secret"
+      ]
+    },
+    "marathon-lb":{
+      "type": "object",
+      "description": "Kafka-manager works best when deployed on a virtual host",
+      "properties": {
+        "enable": {
+          "description": "Enable or disable creating a VIP for external access through a public node running Marathon-LB.",
+          "type": "boolean",
+          "default": true
+        },
+        "group": {
+          "description": "HAProxy group.",
+          "type": "string",
+          "default": "external"
+        },
+        "external_access_port": {
+          "description": "For external access, port number to be used for clear communication in the external Marathon-LB load balancer",
+          "type": "number",
+          "default": 13005
+        },
+        "virtual_host": {
+          "description": "For external access, Virtual Host URL to be used in the external load balancer.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
