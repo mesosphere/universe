@@ -712,10 +712,10 @@ def validate_repo_with_schema(repo_json_data, repo_version):
 def _populate_dcos_version_json_to_folder(dcos_version, outdir):
     """Populate the repo-up-to-<dcos-version>.json file to a folder.
     The folder structure would be :
-        <dcos-version>
-            -package
-                -<name-of-package1>.json
-                -<name-of-package2>.json
+        <dcos-version>/
+            package/
+                <name-of-package1>.json
+                <name-of-package2>.json
 
     :param dcos_version: The version of DC/OS file to process.
     :type dcos_version: str
