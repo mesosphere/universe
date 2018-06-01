@@ -10,10 +10,10 @@
 "type": "DOCKER",
 "docker": {
 {{^enterprise.enabled}}
-    "image": "{{resource.assets.container.docker.artifactory-pro}}",
+    "image": "{{resource.assets.container.docker.artifactory}}",
 {{/enterprise.enabled}}
 {{#enterprise.enabled}}
-    "image": "{{resource.assets.container.docker.artifactory-enterprise}}",
+    "image": "{{resource.assets.container.docker.artifactory}}",
 {{/enterprise.enabled}}
 {{#storage.persistence.enable}}
     {{#storage.persistence.external.enable}}
