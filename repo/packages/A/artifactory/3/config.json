@@ -105,7 +105,7 @@
       "type": "object",
       "properties": {
         "type": {
-          "description": "Database type. (can be MySQL, Oracle, MS SQL Server or Postgres)",
+          "description": "Database type (can be MySQL, Oracle, MS SQL Server or Postgres).",
           "enum": [
             "mysql",
             "postgresql"
