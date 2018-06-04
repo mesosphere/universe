@@ -223,7 +223,6 @@ As the name says, this file specifies how your package can be configured. This i
 
 ```json
 {
-  "$schema": "http://json-schema.org/schema#",
   "properties": {
     "service": {
       "type": "object",
