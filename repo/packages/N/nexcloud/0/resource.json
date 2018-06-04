@@ -1,0 +1,19 @@
+{
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/nexclouding/NexCloud/master/imgs/nexcloud_log_simple_48.png",
+    "icon-medium": "https://raw.githubusercontent.com/nexclouding/NexCloud/master/imgs/nexcloud_log_simple_96.png",
+    "icon-large": "https://raw.githubusercontent.com/nexclouding/NexCloud/master/imgs/nexcloud_log_simple_256.png",
+    "screenshots": [
+      "https://raw.githubusercontent.com/nexclouding/NexCloud/master/imgs/dashboard.PNG"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "collector": "nexclipper/minicollector",
+        "workflow": "nexclipper/miniworkflow",
+        "nexcloudui": "nexclipper/nexclipperui"
+      }
+    }
+  }
+}
