@@ -1,0 +1,23 @@
+{
+    "packagingVersion": "4.0", 
+    "upgradesFrom": [
+        "{{upgrades-from}}"
+    ], 
+    "downgradesTo": [
+        "{{downgrades-to}}"
+    ], 
+    "minDcosReleaseVersion": "1.9", 
+    "name": "myservice", 
+    "version": "0.1.0-1.0.0", 
+    "maintainer": "support@YOURNAMEHERE.COM", 
+    "description": "YOURNAMEHERE on DC/OS", 
+    "selected": false, 
+    "framework": true, 
+    "tags": [
+        "0.42.1", 
+        "myservice"
+    ], 
+    "postInstallNotes": "DC/OS YOURNAMEHERE is being installed!\n\n\tDocumentation: {{documentation-path}}\n\tIssues: {{issues-path}}", 
+    "postUninstallNotes": "DC/OS YOURNAMEHERE is being uninstalled.", 
+    "releaseVersion": 0
+}
