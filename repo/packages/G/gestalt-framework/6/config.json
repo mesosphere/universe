@@ -113,6 +113,7 @@
         },
         "password": {
           "type": "string",
+          "format": "password",
           "description": "The password for the database (provisioned or pre-existing)",
           "default": "letmein"
         },
@@ -140,6 +141,7 @@
         },
         "admin-password": {
           "type": "string",
+          "format": "password",
           "description": "The password for the bootstrapped admin account (leave blank for no-login).",
           "default": "letmein"
         }
