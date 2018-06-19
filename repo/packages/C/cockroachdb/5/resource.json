@@ -1,0 +1,57 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u152-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-master-28f8827.tar.gz",
+      "scheduler-zip": "https://dcos-cockroachdb.s3.amazonaws.com/dcos/release/2.0.1-2.0.1/cockroachdb-scheduler.zip",
+      "executor-zip": "https://dcos-cockroachdb.s3.amazonaws.com/dcos/release/2.0.1-2.0.1/executor.zip",
+      "bootstrap-zip": "https://dcos-cockroachdb.s3.amazonaws.com/dcos/release/2.0.1-2.0.1/bootstrap.zip",
+      "cockroach-tgz": "https://binaries.cockroachdb.com/cockroach-v2.0.1.linux-amd64.tgz"
+    }
+  },
+  "images": {
+    "icon-small": "http://i.imgur.com/FsEREZI.png",
+    "icon-medium": "http://i.imgur.com/1DvX5di.png?1",
+    "icon-large": "http://i.imgur.com/P1mjjGK.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "c8c10cb1757e8c431c53e10896621775a81cfaa89bcc6be1da6ad927eb99fd66"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://dcos-cockroachdb.s3.amazonaws.com/dcos/release/2.0.1-2.0.1/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "91851ee4f87e4e93e402fb470909b33d9cb9160e65cabc8a86982308594f94d4"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://dcos-cockroachdb.s3.amazonaws.com/dcos/release/2.0.1-2.0.1/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "c44b6415a0d7466538daef0fd811ccb93a0e145c63800121ef01806a1f1f974a"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://dcos-cockroachdb.s3.amazonaws.com/dcos/release/2.0.1-2.0.1/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

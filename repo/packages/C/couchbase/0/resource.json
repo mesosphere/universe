@@ -1,0 +1,62 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "couchbase": "couchbase/server:enterprise-5.1.0",
+        "sync-gateway": "couchbase/sync-gateway:2.0.0-enterprise"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u152-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-master-28f8827.tar.gz",
+      "scheduler-zip": "https://mbgl-bucket.s3.amazonaws.com/couchbase/assets/0.1.0-5.1.0/couchbase-scheduler.zip",
+      "executor-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.31.2/executor.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.31.2/bootstrap.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://s3-us-west-1.amazonaws.com/mbgl-bucket/couchbase/assets/couchbase-small.png",
+    "icon-medium": "https://s3-us-west-1.amazonaws.com/mbgl-bucket/couchbase/assets/couchbase-medium.png",
+    "icon-large": "https://s3-us-west-1.amazonaws.com/mbgl-bucket/couchbase/assets/couchbase-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "b9a433907cd66500ab69b8e9132be0144d4e517d6476bc9d8df426966fecef6e"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://mbgl-bucket.s3.amazonaws.com/couchbase/assets/0.1.0-5.1.0/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "5d97cd6d827af98b8bba74100099ab7b9a13955a1c9dd2bd1d7fca5fdafcce69"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://mbgl-bucket.s3.amazonaws.com/couchbase/assets/0.1.0-5.1.0/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "3a33959c24d7c02038155cfcfaae3f8e45373021e1cafcc66d41497163121378"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://mbgl-bucket.s3.amazonaws.com/couchbase/assets/0.1.0-5.1.0/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

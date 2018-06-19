@@ -1,0 +1,126 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "user": "{{service.user}}",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && ./bootstrap -resolve=false -template=false && ./couchbase-scheduler/bin/couchbase ./couchbase-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    "PACKAGE_NAME": "couchbase",
+    "PACKAGE_VERSION": "0.1.0-5.1.0",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1528323549853",
+    "PACKAGE_BUILD_TIME_STR": "Wed Jun 06 2018 22:19:09 +0000",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+    "MESOS_API_VERSION": "{{service.mesos_api_version}}",
+
+    {{#service.virtual_network_enabled}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.service_account_secret}}
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+
+
+    "COUCHBASE_DOCKER_IMAGE": "{{resource.assets.container.docker.couchbase}}",
+
+    "COUCHBASE_ADMIN_PASSWORD": "{{couchbase.admin_password}}",
+
+    "DATA_SERVICE_COUNT": "{{data-service.count}}",
+    "DATA_SERVICE_PLACEMENT": "{{{data-service.placement_constraint}}}",
+    "DATA_SERVICE_CPUS": "{{data-service.cpus}}",
+    "DATA_SERVICE_MEM": "{{data-service.mem}}",
+    "DATA_SERVICE_MEM_USABLE": "{{data-service.mem_usable}}",
+    "DATA_SERVICE_DISK": "{{data-service.disk}}",
+    "DATA_SERVICE_DISK_TYPE": "{{data-service.disk_type}}",
+
+    "INDEX_SERVICE_COUNT": "{{index-service.count}}",
+    "INDEX_SERVICE_PLACEMENT": "{{{index-service.placement_constraint}}}",
+    "INDEX_SERVICE_CPUS": "{{index-service.cpus}}",
+    "INDEX_SERVICE_MEM": "{{index-service.mem}}",
+    "INDEX_SERVICE_MEM_USABLE": "{{index-service.mem_usable}}",
+    "INDEX_SERVICE_DISK": "{{index-service.disk}}",
+    "INDEX_SERVICE_DISK_TYPE": "{{index-service.disk_type}}",
+    "INDEX_SERVICE_INDEX_TYPE": "{{index-service.index_type}}",
+
+    "QUERY_SERVICE_COUNT": "{{query-service.count}}",
+    "QUERY_SERVICE_PLACEMENT": "{{{query-service.placement_constraint}}}",
+    "QUERY_SERVICE_CPUS": "{{query-service.cpus}}",
+    "QUERY_SERVICE_MEM": "{{query-service.mem}}",
+    "QUERY_SERVICE_DISK": "{{query-service.disk}}",
+    "QUERY_SERVICE_DISK_TYPE": "{{query-service.disk_type}}",
+
+    "FTS_SERVICE_COUNT": "{{fts-service.count}}",
+    "FTS_SERVICE_PLACEMENT": "{{{fts-service.placement_constraint}}}",
+    "FTS_SERVICE_CPUS": "{{fts-service.cpus}}",
+    "FTS_SERVICE_MEM": "{{fts-service.mem}}",
+    "FTS_SERVICE_MEM_USABLE": "{{fts-service.mem_usable}}",
+    "FTS_SERVICE_DISK": "{{fts-service.disk}}",
+    "FTS_SERVICE_DISK_TYPE": "{{fts-service.disk_type}}",
+
+
+    "SYNC_GATEWAY_DOCKER_IMAGE": "{{resource.assets.container.docker.sync-gateway}}",
+
+    "SYNC_GATEWAY_SERVICE_COUNT": "{{sync-gateway-service.count}}",
+    "SYNC_GATEWAY_SERVICE_PLACEMENT": "{{{sync-gateway-service.placement_constraint}}}",
+    "SYNC_GATEWAY_SERVICE_CPUS": "{{sync-gateway-service.cpus}}",
+    "SYNC_GATEWAY_SERVICE_MEM": "{{sync-gateway-service.mem}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.bootstrap-zip}}",
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/v1/health",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}

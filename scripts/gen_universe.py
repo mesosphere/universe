@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import os
 from distutils.version import LooseVersion
 import argparse
 import base64
@@ -67,10 +67,14 @@ def main():
     ct_empty_path = args.outdir / 'repo-empty-v3.content_type'
     create_content_type_file(ct_empty_path, "v3")
 
+    zip_file_dcos_versions = ["1.6.1", "1.7"]
+    json_file_dcos_versions = ["1.8", "1.9", "1.10", "1.11", "1.12"]
     # create universe-by-version files for `dcos_versions`
-    dcos_versions = ["1.6.1", "1.7", "1.8", "1.9", "1.10", "1.11", "1.12"]
+    dcos_versions = zip_file_dcos_versions + json_file_dcos_versions
     [render_universe_by_version(
         args.outdir, copy.deepcopy(packages), version) for version in dcos_versions]
+    for dcos_version in json_file_dcos_versions:
+        _populate_dcos_version_json_to_folder(dcos_version, args.outdir)
 
 
 def render_universe_by_version(outdir, packages, version):
@@ -207,7 +211,7 @@ def filter_and_downgrade_packages_by_version(packages, version):
         # Prior to 1.10, Cosmos had a rendering bug that required
         # stringified JSON to be doubly escaped. This was corrected
         # in 1.10, but it means that packages with stringified JSON parameters
-        # that need to bridge versions must be accomodated.
+        # that need to bridge versions must be accommodated.
         #
         # < 1.9 style escaping:
         # \\\"field\\\": \\\"value\\\"
@@ -703,6 +707,39 @@ def validate_repo_with_schema(repo_json_data, repo_version):
         for suberror in sorted(error.context, key=lambda e: e.schema_path):
             errors.append('{}: {}'.format(list(suberror.schema_path), suberror.message))
     return errors
+
+
+def _populate_dcos_version_json_to_folder(dcos_version, outdir):
+    """Populate the repo-up-to-<dcos-version>.json file to a folder.
+    The folder structure would be :
+        <dcos-version>/
+            package/
+                <name-of-package1>.json
+                <name-of-package2>.json
+
+    :param dcos_version: The version of DC/OS file to process.
+    :type dcos_version: str
+    :param outdir: Path to the directory to use to store all universe objects
+    :type outdir: str
+    :return: None
+    """
+    repo_dir = outdir / dcos_version / 'package'
+    pathlib.Path(repo_dir).mkdir(parents=True)
+    repo_file = pathlib.Path(outdir / 'repo-up-to-{}.json'.format(dcos_version))
+    with repo_file.open('r',  encoding='utf-8') as f:
+        data = json.loads(f.read())
+        packages_dict = {}
+
+        for package in data.get('packages'):
+            package_name = package.get('name')
+            package_list = packages_dict.get(package_name, [])
+            package_list.append(package)
+            packages_dict[package_name] = package_list
+
+        for package_name, package_list in packages_dict.items():
+            with pathlib.Path(repo_dir / '{}.json'.format(package_name))\
+                        .open('w', encoding='utf-8') as f:
+                json.dump({'packages': package_list}, f)
 
 
 def _validate_repo(file_path, version):
