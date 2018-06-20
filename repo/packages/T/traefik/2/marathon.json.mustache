@@ -1,0 +1,142 @@
+{
+  "id": "{{service.name}}",
+  "instances": {{service.instances}},
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "disk": {{service.disk}},
+  "user": "{{service.user}}",
+  "cmd": "mv dcos-traefik-1.1.0/* $(pwd)/ && bash bootstrap.sh && ./traefik_linux-amd64 -c traefik.toml",
+  "uris": [
+    "{{resource.assets.uris.traefik-bin}}",
+    "{{resource.assets.uris.confd-bin}}",
+    "{{resource.assets.uris.bootstrap}}"
+  ],
+  {{#service.role}}
+  "acceptedResourceRoles": [
+    "{{service.role}}"
+  ],
+  {{/service.role}}
+  "healthChecks": [
+    {
+      "path": "/ping",
+      "portIndex": 0,
+      "protocol": "MESOS_HTTP",
+      "gracePeriodSeconds": 20,
+      "intervalSeconds": 5,
+      "timeoutSeconds": 2,
+      "maxConsecutiveFailures": 2,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": {{service.minimumHealthCapacity}},
+    "maximumOverCapacity": {{service.maximumOverCapacity}}
+  },
+  "requirePorts":true,
+  "env": {
+    "TRAEFIK_LOG_LEVEL": "{{traefik.log-level}}",
+    "TRAEFIK_GRACE_TIMEOUT": "{{traefik.grace-timeout}}",
+    "TRAEFIK_HEALTHCHECK_INTERVAL": "{{traefik.healthcheck-interval}}",
+    "TRAEFIK_READ_TIMEOUT": "{{traefik.read-timeout}}",
+    "TRAEFIK_WRITE_TIMEOUT": "{{traefik.write-timeout}}",
+    "TRAEFIK_IDLE_TIMEOUT": "{{traefik.idle-timeout}}",
+    {{#traefik.retry}}
+    "TRAEFIK_RETRY": "{{traefik.retry}}",
+    {{/traefik.retry}}
+    "TRAEFIK_HTTP_ADDRESS": "{{entrypoint.http-address}}",
+    "TRAEFIK_HTTP_PORT": "{{entrypoint.http-port}}",
+    "TRAEFIK_HTTPS_ENABLE": "{{entrypoint.https-enable}}",
+    "TRAEFIK_HTTPS_PORT": "{{entrypoint.https-port}}",
+    "TRAEFIK_HTTPS_ADDRESS": "{{entrypoint.https-address}}",
+    "TRAEFIK_HTTPS_COMPRESSION": "{{entrypoint.https-compression}}",
+    "TRAEFIK_PING_ENABLE": "true",
+    "TRAEFIK_API_ENABLE": "{{entrypoint.api-enable}}",
+    "TRAEFIK_API_PORT": "{{entrypoint.api-port}}",
+    "TRAEFIK_API_ADDRESS": "{{entrypoint.api-address}}",
+    "TRAEFIK_API_DASHBOARD": "{{entrypoint.enable-dashboard}}",
+    "TRAEFIK_FILE_NAME": "{{traefik.config-file}}",
+    "TRAEFIK_FILE_WATCH": "{{traefik.watch-config-file}}",
+    "TRAEFIK_MARATHON_ENABLE": "{{marathon.enable}}",
+    "TRAEFIK_MARATHON_ENDPOINT": "{{marathon.endpoint}}",
+    "TRAEFIK_MARATHON_WATCH": "{{marathon.watch}}",
+    "TRAEFIK_MARATHON_EXPOSE": "{{marathon.expose}}",
+    "TRAEFIK_MARATHON_DOMAIN": "{{marathon.domain}}",
+    "TRAEFIK_MARATHON_LB_COMPATIBILITY": "{{marathon.marathonlb-compatibility}}",
+    "TRAEFIK_MARATHON_GROUPS_AS_SUBDOMAINS": "{{marathon.groups-as-subdomains}}",
+    "TRAEFIK_MARATHON_DIALER_TIMEOUT": "{{marathon.dialer-timeout}}",
+    "TRAEFIK_MARATHON_KEEP_ALIVE": "{{marathon.keep-alive}}",
+    "TRAEFIK_MARATHON_FORCE_TASK_HOSTNAME": "{{marathon.force-task-hostname}}",
+    "TRAEFIK_MARATHON_RESPECT_READINESS_CHECKS": "{{marathon.respect-readiness-checks}}",
+    "TRAEFIK_MESOS_ENABLE": "{{mesos.enable}}",
+    "TRAEFIK_MESOS_ENDPOINT": "{{mesos.endpoint}}",
+    "TRAEFIK_MESOS_WATCH": "{{mesos.watch}}",
+    "TRAEFIK_MESOS_EXPOSE": "{{mesos.expose}}",
+    "TRAEFIK_MESOS_DOMAIN": "{{mesos.domain}}",
+    "TRAEFIK_MESOS_GROUPS_AS_SUBDOMAINS": "{{mesos.groups-as-subdomains}}",
+    "TRAEFIK_MESOS_ZK_TIMEOUT": "{{mesos.zk-timeout}}",
+    "TRAEFIK_MESOS_TIMEOUT": "{{mesos.timeout}}",
+    "TRAEFIK_MESOS_REFRESH": "{{mesos.refresh}}",
+    "TRAEFIK_MESOS_IP_SOURCES": "{{mesos.ip-sources}}",
+    "TRAEFIK_K8S_ENABLE": "{{kubernetess.enable}}",
+    "TRAEFIK_K8S_ENDPOINT": "{{kubernetess.endpoint}}",
+    "TRAEFIK_K8S_TOKEN": "{{kubernetess.token}}",
+    "TRAEFIK_K8S_CA": "{{kubernetess.ca}}",
+    "TRAEFIK_K8S_NAMESPACES": "{{kubernetess.namespaces}}",
+    "TRAEFIK_K8S_FILENAME": "{{kubernetess.filename}}",
+    "TRAEFIK_K8S_INGRESS_CLASS": "{{kubernetess.ingress-class}}",
+    "TRAEFIK_K8S_DISABLE_PASS_HOST_HEADERS": "{{kubernetess.disable-pass-host-headers}}",
+    "TRAEFIK_K8S_ENABLE_PASS_TLS_CERT": "{{kubernetess.enable-pass-tls-cert}}",
+    "TRAEFIK_STATISTICS_RECENT_ERRORS": "{{metrics.recent-errors}}",
+    "TRAEFIK_ACCESS_LOG": "{{logging.access-logs}}",
+    "TRAEFIK_ACCESS_FORMAT": "{{logging.access-logs-format}}",
+    "TRAEFIK_ACCESS_PATH": "{{logging.access-logs-path}}",
+    {{#metrics.datadog-address}}
+    "TRAEFIK_DATADOG_ADDRESS": "{{metrics.datadog-address}}",
+    "TRAEFIK_DATADOG_PUSHINTERVAL": "{{metrics.datadog-pushinterval}}",
+    {{/metrics.datadog-address}}
+    {{#metrics.influxdb-address}}
+    "TRAEFIK_INFLUXDB_ADDRESS": "{{metrics.influxdb-address}}",
+    "TRAEFIK_INFLUXDB_PUSHINTERVAL": "{{metrics.influxdb-pushinterval}}",
+    {{/metrics.influxdb-address}}
+    {{#metrics.statsd-address}}
+    "TRAEFIK_STATSD_ADDRESS": "{{metrics.statsd-address}}",
+    "TRAEFIK_STATSD_PUSHINTERVAL": "{{metrics.statsd-pushinterval}}",
+    {{/metrics.statsd-address}}
+    {{#metrics.prometheus-entrypoint}}
+    "TRAEFIK_PROMETHEUS_ENTRYPOINT": "{{metrics.prometheus-entrypoint}}",
+    "TRAEFIK_PROMETHEUS_BUCKETS": "{{metrics.prometheus-buckets}}",
+    {{/metrics.prometheus-entrypoint}}
+    {{#traefik.secret-name}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    {{/traefik.secret-name}}
+    "TRAEFIK_MARATHON_EXPOSE": "{{marathon.expose}}"
+  },
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_PACKAGE_VERSION": "{{package.version}}",
+    {{#entrypoint.api-enable}}
+      {{#entrypoint.enable-dashboard}}
+    "DCOS_SERVICE_PORT_INDEX": "1",
+      {{/entrypoint.enable-dashboard}}
+    {{/entrypoint.api-enable}}
+    "DCOS_PACKAGE_IS_FRAMEWORK": "false"
+  },
+  {{#traefik.secret-name}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{traefik.secret-name}}"
+    }
+  },
+  {{/traefik.secret-name}}
+  "ports": [
+    0
+    {{#entrypoint.api-enable}}
+    ,{{entrypoint.api-port}}
+    {{/entrypoint.api-enable}}
+    ,{{entrypoint.http-port}}
+    {{#entrypoint.https-enable}}
+    ,{{entrypoint.https-port}}
+    {{/entrypoint.https-enable}}
+  ]
+}

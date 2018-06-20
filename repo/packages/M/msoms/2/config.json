@@ -1,0 +1,34 @@
+{
+    "properties": {
+        "msoms": {
+            "description": "OMS specific configuration properties",
+            "properties": {
+                "wsid": {
+                    "description": "Your workspace ID.",
+                    "type": "string"
+                },
+                "wskey": {
+                    "description": "Your workspace Key.",
+                    "type": "string"
+                },
+                "app_id": {
+                    "default": "msoms",
+                    "description": "OMS Application ID",
+                    "type": "string"
+                },
+                "instances": {
+                    "default": 1,
+                    "description": "Number of Marathon instances to run.",
+                    "minimum": 1,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "wsid",
+                "wskey"
+            ],
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
