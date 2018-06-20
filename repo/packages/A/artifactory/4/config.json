@@ -1,0 +1,193 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "Artifactory service properties.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The name of this DC/OS service.",
+          "type": "string",
+          "default": "artifactory"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to this instance.",
+          "type": "number",
+          "default": 2.0,
+          "minimum": 1.0
+        },
+        "mem": {
+          "description": "Memory to allocate to this instance.",
+          "type": "number",
+          "default": 2048.0,
+          "minimum": 1024.0
+        },
+        "licenses": {
+          "description": "License for Artifactory Pro or the Artifactory Enterprise primary node.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem"
+      ]
+    },
+    "pro": {
+      "description": "Configuration for Artifactory Pro. These do not apply if Artifactory Enterprise is enabled.",
+      "type": "object",
+      "properties": {
+        "pinned-hostname": {
+          "description": "A DC/OS agent hostname to run this Artifactory instance on (e.g. 10.0.0.1). This must be specified if using local volumes with Artifactory Pro. If this is not specified then the task may relaunch on another node than the one it originally ran on.",
+          "type": "string"
+        }
+      }
+    },
+    "enterprise": {
+      "description": "Configuration for Artifactory Enterprise (a highly-available deployment of Artifactory). If enabled, this will override any Artifactory Pro configuration.",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Whether to deploy Artifactory Enterprise. By default, this is false and Artifactory Enterprise is not deployed.",
+          "type": "boolean",
+          "default": false
+        },
+        "master_key": {
+          "description": "Master key for Artifactory cluster. Generate master.key using command '$openssl rand -hex 16'",
+          "type": "string"
+        },
+        "secondary": {
+          "description": "Configuration properties for the Artifactory Enterprise secondary node.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Whether this DC/OS service represents the Artifactory Enterprise secondary instance. To run Artifactory Enterprise, you must deploy one primary DC/OS service and one secondary DC/OS service. By default, this is false (i.e. a primary instance).",
+              "type": "boolean",
+              "default": false
+            },
+            "unique-nodes": {
+              "description": "Run secondary instances on unique hosts. By default, this is true.",
+              "type": "boolean",
+              "default": true
+            },
+            "nodes": {
+              "description": "Number of Artifactory Enterprise secondary instances. By default, this is 1.",
+              "type": "integer",
+              "default": 1
+            },
+            "name": {
+              "description": "The DC/OS service name of the primary Artifactory Enterprise instance to route requests to.",
+              "type": "string",
+              "default": "artifactory"
+            }
+          },
+          "required": [
+            "enabled"
+          ]
+        }
+      },
+      "required": [
+        "enabled"
+      ]
+    },
+    "database": {
+      "description": "Database properties.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "Database type (can be MySQL, Oracle, MS SQL Server or Postgres).",
+          "enum": [
+            "mysql",
+            "postgresql"
+          ],
+          "default": "postgresql"
+        },
+        "host": {
+          "description": "Database host.",
+          "type": "string",
+          "default": "postgresql.marathon.mesos"
+        },
+        "port": {
+          "description": "Database port.",
+          "type": "integer",
+          "default": 5432
+        },
+        "url": {
+          "description": "Database url.",
+          "type": "string",
+          "default": "jdbc:postgresql://postgresql.marathon.mesos:5432/artifactory"
+        },
+        "user": {
+          "description": "Database username.",
+          "type": "string",
+          "default": "jfrogdcos"
+        },
+        "password": {
+          "description": "Database password.",
+          "type": "string",
+          "default": "jfrogdcos"
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "description": "Artifactory storage configuration properties",
+      "properties": {
+        "host_volume": {
+          "description": "If using non-persistent volumes (local volumes), this sets the location of a volume on the host to be used for the service. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/service_name`). This can be a mounted NFS drive. Note that this path must be the same on all DC/OS agents. NOTE: if you don't change the default /tmp value, YOUR DATA WILL NOT BE SAVED IN ANY WAY.",
+          "type": "string",
+          "default": "/var/artifactory"
+        },
+        "persistence": {
+          "type": "object",
+          "description": "Enable persistent storage.",
+          "properties": {
+            "enable": {
+              "description": "Enable or disable persistent storage.",
+              "type": "boolean",
+              "default": false
+            },
+            "volume_size": {
+              "description": "If a new volume is to be created, this controls its size in MBs.",
+              "type": "number",
+              "default": 10240
+            },
+            "external": {
+              "type": "object",
+              "description": "External persistent storage properties",
+              "properties": {
+                "enable": {
+                  "description": "Enable or disable external persistent storage. The `persistence` option must also be selected. Please note that for these to work, your DC/OS cluster MUST have been installed with the right options in `config.yaml`. Also, please note this requires a working  configuration file for the driver (e.g. `rexray.yaml`).",
+                  "type": "boolean",
+                  "default": false
+                },
+                "volume_name": {
+                  "description": "Name that your volume driver uses to look up your external volume. When your task is staged on an agent, the volume driver queries the storage service for a volume with this name. If one does not exist, it is created implicitly. Otherwise, the existing volume is reused.",
+                  "type": "string",
+                  "default": "arthome"
+                },
+                "provider": {
+                  "description": "Provider of the external persistent volume. The default value should be correct for most use cases.",
+                  "type": "string",
+                  "default": "dvdi"
+                },
+                "driver": {
+                  "description": "Volume driver to use for storage. The default value should be correct for most use cases.",
+                  "type": "string",
+                  "default": "rexray"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "service",
+    "pro",
+    "enterprise",
+    "database",
+    "storage"
+  ]
+}
