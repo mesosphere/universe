@@ -13,22 +13,22 @@
         "cpus": {
           "description": "Number of logical cores to allocate to each service instance.",
           "type": "number",
-          "default": 0.1
+          "default": 0.5
         },
         "mem": {
           "description":  "Memory in Mb to allocate to each service instance.",
           "type": "number",
-          "default": 128
+          "default": 512
         },
         "disk": {
-          "description": "Disk (MiB)",
+          "description": "Disk (MB) to allocate to the janusgraph instance.",
           "type": "number",
           "default": 0
         },
-        "elastic_search_host": {
-          "description": "Hostname of the ES host to connect to.",
+        "cassandra_hostnames": {
+          "description": "Comma seperated values of the hostnames of the cassandra nodes to connect to.",
           "type": "string",
-          "default": "master.elastic.l4lb.thisdcos.directory"
+          "default": ""
         },
         "constraints": {
           "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
