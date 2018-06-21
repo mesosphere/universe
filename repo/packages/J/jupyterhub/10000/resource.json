@@ -2,8 +2,13 @@
   "assets": {
     "container": {
       "docker": {
-        "jupyterhub": "cdpqleo/jupyterhub"
+        "jupyterhub": "cdpqleo/jupyterhub:1.2.0-0.9.0"
       }
     }
+  },
+  "images": {
+    "icon-medium": "https://raw.githubusercontent.com/cdpq-leo/assets/master/Jupyterhub/Images/icon-service-jupyterhub-medium.png",
+    "icon-small": "https://raw.githubusercontent.com/cdpq-leo/assets/master/Jupyterhub/Images/icon-service-jupyterhub-small.png",
+    "icon-large": "https://raw.githubusercontent.com/cdpq-leo/assets/master/Jupyterhub/Images/icon-service-jupyterhub-large.png"
   }
 }

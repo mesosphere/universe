@@ -1,0 +1,45 @@
+{
+  "id": "/{{service.name}}",
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  },
+  "backoffFactor": 1.15,
+  "backoffSeconds": 1,
+  "container": {
+    "type": "DOCKER",
+    "volumes": [],
+    "docker": {
+      "image": "cdpqleo/smart-search",
+      "forcePullImage": true,
+      "privileged": false,
+      "parameters": []
+    }
+  },
+  "cpus": {{service.cpus}},
+  "disk": {{service.disk}},
+  "env": {
+    "ES_HOST": "{{service.elastic_search_host}}"
+  },
+  {{#service.constraints}}
+  "constraints": [
+    {{#.}}
+      [
+        "{{attribute}}"
+       ,"{{operator}}"
+       {{#value}},"{{value}}"{{/value}}
+      ]{{^last}},{{/last}}
+    {{/.}}
+  ],
+  {{/service.constraints}}
+  "instances": 1,
+  "maxLaunchDelaySeconds": 3600,
+  "mem": {{service.mem}},
+  "gpus": 0,
+  "networks": [
+    {
+      "mode": "container/bridge"
+    }
+  ]
+}
