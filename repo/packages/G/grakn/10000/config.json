@@ -62,6 +62,26 @@
           "description": "Host path to store to the Grakn data.",
           "type": "string",
           "default": "/mnt/azurefileshare/data/grakn"
+        },
+        "env_vars": {
+          "description": "The list of environment variables for Grakn",
+          "type": "array",
+          "additionalProperties": false,
+          "items": {
+            "type": "object",
+            "properties": {
+              "var_name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "var_name",
+              "value"
+            ]
+          }
         }
       },
       "required": [
