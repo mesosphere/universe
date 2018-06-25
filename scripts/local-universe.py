@@ -168,7 +168,7 @@ def main():
 
         if failed_images:
             print("Unable to add these Docker images to the Universe::")
-            print("Missing files: {}".format(failed_images))
+            print("Missing images: {}".format(failed_images))
 
         if failed_resources:
             print("Unable to add these files to the image:")
