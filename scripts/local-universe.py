@@ -167,7 +167,7 @@ def main():
             print("These packages are not included in the image.")
 
         if failed_images:
-            print("Unable to add these Docker images to the Universe::")
+            print("Unable to add these Docker images to the Universe:")
             print("Missing images: {}".format(failed_images))
 
         if failed_resources:
