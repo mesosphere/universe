@@ -1,0 +1,491 @@
+{
+    "type": "object", 
+    "properties": {
+        "service": {
+            "type": "object", 
+            "description": "Spinnaker service configuration properties", 
+            "properties": {
+                "name": {
+                    "title": "Service name", 
+                    "description": "The name of the service instance", 
+                    "type": "string", 
+                    "default": "spinnaker"
+                }, 
+                "user": {
+                    "title": "User", 
+                    "description": "The user that the service will run as.", 
+                    "type": "string", 
+                    "default": "root"
+                }, 
+                "proxy-hostname": {
+                    "title": "Public service proxy or LB hostname", 
+                    "description": "Public service proxy or LB hostname, usually the hostname of the public agent", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "proxy-deck-port": {
+                    "title": "Public service proxy or LB deck port number", 
+                    "description": "Public service proxy or LB deck port number", 
+                    "type": "integer", 
+                    "default": 9001
+                }, 
+                "proxy-gate-port": {
+                    "title": "Public service proxy or LB gate port number", 
+                    "description": "Public service proxy or LB gate port number", 
+                    "type": "integer", 
+                    "default": 8084
+                }, 
+                "service_account": {
+                    "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "service_account_secret": {
+                    "title": "Credential secret name (optional)", 
+                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "virtual_network_enabled": {
+                    "description": "Enable virtual networking", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "virtual_network_name": {
+                    "description": "The name of the virtual network to join", 
+                    "type": "string", 
+                    "default": "dcos"
+                }, 
+                "virtual_network_plugin_labels": {
+                    "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "mesos_api_version": {
+                    "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)", 
+                    "type": "string", 
+                    "enum": [
+                        "V0", 
+                        "V1"
+                    ], 
+                    "default": "V1"
+                }, 
+                "log_level": {
+                    "description": "The log level for the DC/OS service.", 
+                    "type": "string", 
+                    "enum": [
+                        "OFF", 
+                        "FATAL", 
+                        "ERROR", 
+                        "WARN", 
+                        "INFO", 
+                        "DEBUG", 
+                        "TRACE", 
+                        "ALL"
+                    ], 
+                    "default": "INFO"
+                }
+            }, 
+            "required": [
+                "name", 
+                "user", 
+                "proxy-hostname"
+            ]
+        }, 
+        "redis": {
+            "description": "configuration properties", 
+            "type": "object", 
+            "properties": {
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "pod CPU requirements", 
+                    "type": "number", 
+                    "default": 0.5
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 2048
+                }, 
+                "placement": {
+                    "description": "Placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }
+            }, 
+            "required": [
+                "cpus", 
+                "mem"
+            ]
+        }, 
+        "front": {
+            "description": "configuration properties", 
+            "type": "object", 
+            "properties": {
+                "config": {
+                    "title": "front50-local yml config", 
+                    "description": "front50-local.yml config base64 encoded", 
+                    "type": "string", 
+                    "media": {
+                        "binaryEncoding": "base64", 
+                        "type": "application/x-yaml"
+                    }, 
+                    "default": "Y2Fzc2FuZHJhOgogIGVuYWJsZWQ6IGZhbHNlCgpzcGlubmFrZXI6CiAgY2Fzc2FuZHJhOgogICAgZW5hYmxlZDogZmFsc2UKICAgIGVtYmVkZGVkOiB0cnVlCiAgczM6CiAgICBlbmFibGVkOiB0cnVlCiAgICBidWNrZXQ6IG15LXNwaW5uYWtlci1idWNrZXQKICAgIHJvb3RGb2xkZXI6IGZyb250NTAKICAgIGVuZHBvaW50OiBodHRwOi8vbWluaW8ubWFyYXRob24ubDRsYi50aGlzZGNvcy5kaXJlY3Rvcnk6OTAwMAogIGdjczoKICAgIGVuYWJsZWQ6IGZhbHNlCiAgICBidWNrZXQ6IG15LXNwaW5uYWtlci1idWNrZXQKICAgIGJ1Y2tldExvY2F0aW9uOiB1cwogICAgcm9vdEZvbGRlcjogZnJvbnQ1MAogICAgcHJvamVjdDogbWVzb3Njb24tZGVtbwogICAganNvblBhdGg6IC9tbnQvbWVzb3Mvc2FuZGJveC9kYXRhL2tleXMvZ2NwX2tleS5qc29uCg=="
+                }, 
+                "secrets_enabled": {
+                    "description": "enable usage of secrets for s3 or gcs", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "aws_access_key_id": {
+                    "title": "aws access key id", 
+                    "description": "aws access key id, if no secrets are used for s3", 
+                    "type": "string", 
+                    "default": "minio"
+                }, 
+                "aws_secret_access_key": {
+                    "title": "aws secret access key", 
+                    "description": "aws secret access key, if no secrets are used for s3", 
+                    "type": "string", 
+                    "default": "minio123"
+                }, 
+                "count": {
+                    "description": "Number of front services to create", 
+                    "type": "integer", 
+                    "default": 1, 
+                    "minimum": 1
+                }, 
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "pod CPU requirements", 
+                    "type": "number", 
+                    "default": 0.5
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 2048
+                }, 
+                "placement": {
+                    "description": "Placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }
+            }, 
+            "required": [
+                "config", 
+                "cpus", 
+                "mem"
+            ]
+        }, 
+        "fiat": {
+            "description": "configuration properties", 
+            "type": "object", 
+            "properties": {
+                "config": {
+                    "title": "fiat-local yml config", 
+                    "description": "fiat-local.yml config base64 encoded", 
+                    "type": "string", 
+                    "media": {
+                        "binaryEncoding": "base64", 
+                        "type": "application/x-yaml"
+                    }, 
+                    "default": ""
+                }, 
+                "count": {
+                    "description": "Number of fiat services to create", 
+                    "type": "integer", 
+                    "default": 1, 
+                    "minimum": 1
+                }, 
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "pod CPU requirements", 
+                    "type": "number", 
+                    "default": 0.5
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 2048
+                }, 
+                "placement": {
+                    "description": "Placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }
+            }, 
+            "required": [
+                "cpus", 
+                "mem"
+            ]
+        }, 
+        "clouddriver": {
+            "description": "configuration properties", 
+            "type": "object", 
+            "properties": {
+                "config": {
+                    "title": "clouddriver-local yml config", 
+                    "description": "clouddriver-local.yml config base64 encoded", 
+                    "type": "string", 
+                    "media": {
+                        "binaryEncoding": "base64", 
+                        "type": "application/x-yaml"
+                    }, 
+                    "default": "ZG9ja2VyUmVnaXN0cnk6CiAgZW5hYmxlZDogdHJ1ZQogIGFjY291bnRzOgogIC0gbmFtZTogbXktZG9ja2VyLXJlZ2lzdHJ5LWFjY291bnQKICAgIGFkZHJlc3M6IGh0dHBzOi8vaW5kZXguZG9ja2VyLmlvLwogICAgcmVwb3NpdG9yaWVzOgogICAgICAtIGxpYnJhcnkvbmdpbngKICAgICAgLSBsaWJyYXJ5L3Bvc3RncmVzCiAgICB1c2VybmFtZTogbWVzb3NwaGVyZQoKZGNvczoKICBlbmFibGVkOiB0cnVlCiAgY2x1c3RlcnM6CiAgICAtIG5hbWU6IG15LWRjb3MKICAgICAgZGNvc1VybDogaHR0cHM6Ly9sZWFkZXIubWVzb3MKICAgICAgaW5zZWN1cmVTa2lwVGxzVmVyaWZ5OiB0cnVlCiAgYWNjb3VudHM6CiAgICAtIG5hbWU6IG15LWRjb3MtYWNjb3VudAogICAgICBkb2NrZXJSZWdpc3RyaWVzOgogICAgICAgIC0gYWNjb3VudE5hbWU6IG15LWRvY2tlci1yZWdpc3RyeS1hY2NvdW50CiAgICAgIGNsdXN0ZXJzOgogICAgICAgIC0gbmFtZTogbXktZGNvcwogICAgICAgICAgdWlkOiBib290c3RyYXB1c2VyCiAgICAgICAgICBwYXNzd29yZDogZGVsZXRlbWUKCg=="
+                }, 
+                "count": {
+                    "description": "Number of clouddriver services to create", 
+                    "type": "integer", 
+                    "default": 1, 
+                    "minimum": 1
+                }, 
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "pod CPU requirements", 
+                    "type": "number", 
+                    "default": 0.5
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 2048
+                }, 
+                "placement": {
+                    "description": "Placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }
+            }, 
+            "required": [
+                "config", 
+                "cpus", 
+                "mem"
+            ]
+        }, 
+        "orca": {
+            "description": "configuration properties", 
+            "type": "object", 
+            "properties": {
+                "config": {
+                    "title": "orca-local yml config", 
+                    "description": "orca-local.yml config base64 encoded", 
+                    "type": "string", 
+                    "media": {
+                        "binaryEncoding": "base64", 
+                        "type": "application/x-yaml"
+                    }, 
+                    "default": ""
+                }, 
+                "count": {
+                    "description": "Number of orca services to create", 
+                    "type": "integer", 
+                    "default": 1, 
+                    "minimum": 1
+                }, 
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "pod CPU requirements", 
+                    "type": "number", 
+                    "default": 0.5
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 2048
+                }, 
+                "placement": {
+                    "description": "Placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }
+            }, 
+            "required": [
+                "cpus", 
+                "mem"
+            ]
+        }, 
+        "gate": {
+            "description": "configuration properties", 
+            "type": "object", 
+            "properties": {
+                "config": {
+                    "title": "gate-local yml config", 
+                    "description": "gate-local.yml config bbase64 encoded", 
+                    "type": "string", 
+                    "media": {
+                        "binaryEncoding": "base64", 
+                        "type": "application/x-yaml"
+                    }, 
+                    "default": ""
+                }, 
+                "count": {
+                    "description": "Number of gate services to create", 
+                    "type": "integer", 
+                    "default": 1, 
+                    "minimum": 1
+                }, 
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "pod CPU requirements", 
+                    "type": "number", 
+                    "default": 0.5
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 2048
+                }, 
+                "placement": {
+                    "description": "Placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }
+            }, 
+            "required": [
+                "cpus", 
+                "mem"
+            ]
+        }, 
+        "deck": {
+            "description": "configuration properties", 
+            "type": "object", 
+            "properties": {
+                "count": {
+                    "description": "Number of deck services to create", 
+                    "type": "integer", 
+                    "default": 1, 
+                    "minimum": 1
+                }, 
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "pod CPU requirements", 
+                    "type": "number", 
+                    "default": 0.1
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 512
+                }, 
+                "placement": {
+                    "description": "Placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }
+            }, 
+            "required": [
+                "cpus", 
+                "mem"
+            ]
+        }, 
+        "echo": {
+            "description": "configuration properties", 
+            "type": "object", 
+            "properties": {
+                "config": {
+                    "title": "echo-local yml config", 
+                    "description": "echo-local.yml config base64 encoded", 
+                    "type": "string", 
+                    "media": {
+                        "binaryEncoding": "base64", 
+                        "type": "application/x-yaml"
+                    }, 
+                    "default": "bWFpbDoKICBlbmFibGVkOiBmYWxzZQo="
+                }, 
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "pod CPU requirements", 
+                    "type": "number", 
+                    "default": 0.5
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 2048
+                }, 
+                "placement": {
+                    "description": "Placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }
+            }, 
+            "required": [
+                "cpus", 
+                "mem"
+            ]
+        }, 
+        "igor": {
+            "description": "configuration properties", 
+            "type": "object", 
+            "properties": {
+                "config": {
+                    "title": "igor-local yml config", 
+                    "description": "igor-local.yml config base64 encoded", 
+                    "type": "string", 
+                    "media": {
+                        "binaryEncoding": "base64", 
+                        "type": "application/x-yaml"
+                    }, 
+                    "default": "c2VydmljZXM6CiAgIGNsb3VkZHJpdmVyOgogICAgICBiYXNlVXJsOiAke1NFUlZJQ0VTX0NMT1VERFJJVkVSX0JBU0VVUkx9CiAgIGVjaG86CiAgICAgIGJhc2VVcmw6ICR7U0VSVklDRVNfRUNIT19CQVNFVVJMfQoKZG9ja2VyUmVnaXN0cnk6CiAgZW5hYmxlZDogdHJ1ZQo="
+                }, 
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "pod CPU requirements", 
+                    "type": "number", 
+                    "default": 0.5
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 2048
+                }, 
+                "placement": {
+                    "description": "Placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }
+            }, 
+            "required": [
+                "cpus", 
+                "mem"
+            ]
+        }
+    }
+}
