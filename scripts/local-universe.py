@@ -95,6 +95,8 @@ def main():
         os.makedirs(str(repo_artifacts))
 
         failed_packages = []
+        failed_resources = []
+        failed_images = []
 
         def handle_package(opts):
             package, version, path = opts
@@ -117,11 +119,20 @@ def main():
                     args.nonlocal_images,
                     args.nonlocal_cli
                 ):
-                    add_http_resource(http_artifacts, url, archive_path)
+                    # If we get a False response, add to failed_resources
+                    if not add_http_resource(http_artifacts, url, archive_path):
+                        failed_resources.append(url)
 
                 for name in enumerate_docker_images(path):
-                    download_docker_image(name)
-                    upload_docker_image(name)
+                    try:
+                        download_docker_image(name)
+                        upload_docker_image(name)
+                    except subprocess.CalledProcessError as e:
+                        # If we have an issue with a specific Docker image,
+                        # capture the image name and re-throw the exception
+                        failed_images.append(name)
+                        raise e
+
             except (subprocess.CalledProcessError, urllib.error.HTTPError):
                 print('MISSING ASSETS: {}'.format(package))
                 remove_package(package, dir_path)
@@ -154,6 +165,14 @@ def main():
         if failed_packages:
             print("Errors: {}".format(failed_packages))
             print("These packages are not included in the image.")
+
+        if failed_images:
+            print("Unable to add these Docker images to the Universe::")
+            print("Missing files: {}".format(failed_images))
+
+        if failed_resources:
+            print("Unable to add these files to the image:")
+            print("Missing files: {}".format(failed_resources))
 
 
 def enumerate_dcos_packages(
@@ -369,8 +388,12 @@ def add_http_resource(dir_path, url, base_path):
                     pathlib.Path(urllib.parse.urlparse(url).path).name)
     print('Adding {} at {}.'.format(url, archive_path))
     os.makedirs(str(archive_path.parent), exist_ok=True)
-    urllib.request.urlretrieve(url, str(archive_path))
-
+    try:
+        urllib.request.urlretrieve(url, str(archive_path))
+    except Exception as e:
+        print("Error adding {}: {}.".format(url, e))
+        return False
+    return True
 
 def prepare_repository(
     package,
