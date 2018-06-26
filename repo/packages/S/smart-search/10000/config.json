@@ -25,6 +25,11 @@
           "type": "string",
           "default": "master.elastic.l4lb.thisdcos.directory"
         },
+        "docker_image": {
+          "description": "URL for the docker image.",
+          "type": "string",
+          "default": "cdpqleo/smart-search:1.0.0"
+        },
         "constraints": {
           "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
           "type": "array",
