@@ -1,0 +1,121 @@
+{
+  "id": "/{{service.name}}",
+  "instances": 1,
+  "cpus": {{service.cores}},
+  "mem": {{service.memory}},
+  "env": {
+    {{#zeppelin.shiro_conf_secret}}
+    "ZEPPELIN_SHIRO_CONF": {
+      "secret": "shiroconf"
+    },
+    {{/zeppelin.shiro_conf_secret}}
+    {{#service.external_persistent_volume}}
+    "ZEPPELIN_DATA_VOLUME": "/zeppelin-data",
+    "ZEPPELIN_NOTEBOOK_DIR": "/zeppelin-data/notebook",
+    {{/service.external_persistent_volume}}
+    {{#service.local_persistent_volume}}
+    "ZEPPELIN_DATA_VOLUME": "/zeppelin-data",
+    "ZEPPELIN_NOTEBOOK_DIR": "/zeppelin-data/notebook",
+    {{/service.local_persistent_volume}}
+    {{#zeppelin.python_packages}}
+    "PYTHON_PACKAGES": "{{zeppelin.python_packages}}",
+    {{/zeppelin.python_packages}}
+    {{#zeppelin.r_packages}}
+    "R_PACKAGES": "{{zeppelin.r_packages}}",
+    {{/zeppelin.r_packages}}
+    {{#spark.cores_max}}
+    "SPARK_CORES_MAX": "{{spark.cores_max}}",
+    {{/spark.cores_max}}
+    {{#spark.executor_memory}}
+    "SPARK_EXECUTOR_MEMORY": "{{spark.executor_memory}}",
+    {{/spark.executor_memory}}
+    {{#spark.executor_cores}}
+    "SPARK_EXECUTOR_CORES": "{{spark.executor_cores}}",
+    {{/spark.executor_cores}}
+    "ZEPPELIN_JAVA_OPTS": "{{spark.java_opts}}",
+    "ZEPPELIN_INTP_JAVA_OPTS": "{{spark.java_opts}}"
+  },
+  "container": {
+    "docker": {
+      "image": "{{resource.assets.container.docker.zeppelin}}",
+      "forcePullImage": false
+    },
+    "volumes": [
+      {{#service.external_persistent_volume}}
+      {
+        "containerPath": "/zeppelin-data",
+        "external": {
+          "name": "{{service.external_persistent_volume}}",
+          "provider": "dvdi",
+          "options": {
+            "dvdi/driver": "rexray"
+          }
+        },
+        "mode": "RW"
+      }
+      {{/service.external_persistent_volume}}
+      {{#service.local_persistent_volume}}
+      {
+        "containerPath": "/zeppelin-data",
+        "hostPath": "zeppelindata",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "zeppelindata",
+        "mode": "RW",
+        "persistent": {
+          "type": "root",
+          "size": 10240,
+          "constraints": []
+        }
+      }
+      {{/service.local_persistent_volume}}
+    ]
+  },
+  "networks": [
+    {
+      "mode": "host"
+    }
+  ],
+  "upgradeStrategy": {
+    "maximumOverCapacity": 0,
+    "minimumHealthCapacity": 0
+  },
+  "labels": {
+    {{#service.marathon_lb}}
+    "HAPROXY_GROUP": "{{service.marathon_lb_group}}",
+    "HAPROXY_0_VHOST": "{{service.marathon_lb_vhost}}",
+    {{/service.marathon_lb}}
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  },
+  "healthChecks": [
+    {
+      "protocol": "TCP",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 30,
+      "timeoutSeconds": 15,
+      "maxConsecutiveFailures": 5
+    }
+  ],
+  "fetch": [
+    {{#spark.use_hdfs}}
+    { "uri": "{{spark.hdfs_config_url}}/hdfs-site.xml", "extract": false, "executable": false, "cache": false },
+    { "uri": "{{spark.hdfs_config_url}}/core-site.xml", "extract": false, "executable": false, "cache": false }
+    {{/spark.use_hdfs}}
+    {{#zeppelin.shiro_conf_url}}
+    {{#spark.use_hdfs}},{{/spark.use_hdfs}}
+    { "uri": "{{spark.shiro_conf_url}}", "extract": false, "executable": false, "cache": false }
+    {{/zeppelin.shiro_conf_url}}
+  ],
+
+  "secrets": {
+    {{#zeppelin.shiro_conf_secret}}
+    "shiroconf": {
+      "source": "{{spark.shiro_conf_secret}}"
+    }
+    {{/zeppelin.shiro_conf_secret}}
+  }
+}
