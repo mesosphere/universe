@@ -6,7 +6,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "{{resource.assets.container.docker.kafka-manager-docker}}",
+      "image": "{{service.docker_image}}",
       "forcePullImage": true,
       "network": "BRIDGE",
       "portMappings": [

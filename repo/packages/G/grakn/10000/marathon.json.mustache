@@ -15,6 +15,12 @@
  "cpus": {{grakn.cpus}},
  "mem": {{grakn.mem}},
  "disk": {{grakn.disk}},
+ "env": {
+   "LOCAL_STORAGE": "false"
+   {{#service.env_vars}}
+   ,"{{var_name}}": "{{value}}"
+   {{/service.env_vars}}
+ },
  "container": {
    "type": "DOCKER",
    "volumes": [
@@ -61,7 +67,7 @@
    "timeoutSeconds": 5,
    "maxConsecutiveFailures": 3
    }
- ], 
+ ],
  "labels": {
          "DCOS_SERVICE_NAME": "{{service.name}}",
          "DCOS_SERVICE_PORT_INDEX": "0",

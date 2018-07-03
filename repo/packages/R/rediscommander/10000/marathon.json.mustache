@@ -1,0 +1,68 @@
+{
+  "labels": {
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_NAME": "{{service.name}}"
+  },
+  "id": "/{{service.name}}",
+  "backoffFactor": 1.15,
+  "backoffSeconds": 1,
+  "container": {
+    "portMappings": [
+      {
+        "containerPort": 0,
+        "hostPort": 0,
+        "protocol": "tcp",
+        "servicePort": 10117
+      }
+    ],
+    "type": "DOCKER",
+    "volumes": [],
+    "docker": {
+      "image": "{{resource.assets.container.docker.rediscommanderimage}}",
+      "forcePullImage": true,
+      "privileged": false,
+      "parameters": []
+    }
+  },
+  "cpus": {{rediscommander.cpus}},
+  "disk": 0,
+  "env": {
+    "REDIS_HOSTS": "{{rediscommander.redis_host}}"
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 120,
+      "ignoreHttp1xx": false,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 3,
+      "portIndex": 0,
+      "timeoutSeconds": 5,
+      "delaySeconds": 15,
+      "protocol": "HTTP",
+      "path": "/",
+      "ipProtocol": "IPv4"
+    }
+  ],
+  "instances": 1,
+  "maxLaunchDelaySeconds": 3600,
+  "mem": {{rediscommander.mem}},
+  "gpus": 0,
+  "networks": [
+    {
+      "mode": "container/bridge"
+    }
+  ],
+  "requirePorts": false,
+  "upgradeStrategy": {
+    "maximumOverCapacity": 1,
+    "minimumHealthCapacity": 1
+  },
+  "killSelection": "YOUNGEST_FIRST",
+  "unreachableStrategy": {
+    "inactiveAfterSeconds": 0,
+    "expungeAfterSeconds": 0
+  },
+  "fetch": [],
+  "constraints": []
+}

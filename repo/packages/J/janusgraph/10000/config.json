@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS smart-search service specifications",
+      "properties": {
+        "name": {
+          "description": "Name of SmartSearch instances as seen in DC/OS.",
+          "type": "string",
+          "default": "smart-search"
+        },
+        "cpus": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance.",
+          "type": "number",
+          "default": 512
+        },
+        "disk": {
+          "description": "Disk (MB) to allocate to the janusgraph instance.",
+          "type": "number",
+          "default": 0
+        },
+        "cassandra_hostnames": {
+          "description": "Comma seperated values of the hostnames of the cassandra nodes to connect to.",
+          "type": "string",
+          "default": ""
+        },
+        "constraints": {
+          "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "attribute": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string",
+                "enum": ["UNIQUE", "CLUSTER", "GROUP_BY", "LIKE", "UNLIKE"]
+              },
+              "value": {
+                "type": "string"
+              },
+              "last": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          },
+          "default": []
+        }
+      }
+    }
+  }
+}

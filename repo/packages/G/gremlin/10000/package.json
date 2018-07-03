@@ -1,0 +1,19 @@
+{
+ "packagingVersion": "3.0",
+ "name": "gremlin",
+ "version": "leo-1.0.0-3.3.3",
+ "maintainer": "tinkerpop",
+ "description": "A single instance Gremlin server.",
+ "website": "http://tinkerpop.apache.org/",
+ "framework": false,
+ "tags": ["tinkerpop", "graph", "gremlin"],
+ "licenses": [
+   {
+     "name": "Apache License 2.0",
+     "url": "http://www.apache.org/licenses/LICENSE-2.0"
+   }
+ ],
+ "postInstallNotes": "Gremlin installed!",
+ "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.",
+ "postUninstallNotes": "Gremlin uninstalled!"
+}

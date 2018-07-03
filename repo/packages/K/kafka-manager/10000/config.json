@@ -34,6 +34,11 @@
                 }
               },
               "default": []
+            },
+            "docker_image": {
+              "description": "URL for the docker image.",
+              "type": "string",
+              "default": "cdpqleo/kafka-manager:1.3.3.17"
             }
         }
     },

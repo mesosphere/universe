@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "Name of this service instance.",
+          "type": "string",
+          "default": "rediscommander"
+        }
+      }
+    },
+    "rediscommander": {
+      "type": "object",
+      "description": "rediscommander instance configuration properties",
+      "properties": {
+        "cpus": {
+          "description": "CPU shares to allocate to the rediscommander instance.",
+          "type": "number",
+          "default": 0.1,
+          "minimum": 0.1
+        },
+        "mem": {
+          "description": "Memory to allocate to the rediscommander instance.",
+          "type": "number",
+          "default": 128,
+          "minimum": 128
+        },
+        "redis_host": {
+          "description": "Redis hostname",
+          "type": "string",
+          "default": "redis.marathon.l4lb.thisdcos.directory"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "redis_host"
+      ]
+    }
+  }
+}
