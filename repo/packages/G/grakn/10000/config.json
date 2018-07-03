@@ -10,36 +10,6 @@
           "type": "string",
           "default": "grakn"
         },
-        "constraints": {
-          "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "attribute": {
-                "type": "string"
-              },
-              "operator": {
-                "type": "string",
-                "enum": ["UNIQUE", "CLUSTER", "GROUP_BY", "LIKE", "UNLIKE"]
-              },
-              "value": {
-                "type": "string"
-              },
-              "last": {
-                "type": "boolean",
-                "default": false
-              }
-            }
-          },
-          "default": []
-        }
-      }
-    },
-    "grakn": {
-      "type": "object",
-      "description": "Grakn instance configuration properties",
-      "properties": {
         "cpus": {
           "description": "CPU shares to allocate to the Grakn instance.",
           "type": "number",
@@ -58,37 +28,89 @@
           "default": 65536,
           "minimum": 2000
         },
-        "hostpath": {
-          "description": "Host path to store to the Grakn data.",
+        "constraints": {
+          "description": "Marathon constraints (e.g., [[\"hostname\", \"MAX_PER\", \"1\"]]).",
           "type": "string",
-          "default": "/mnt/azurefileshare/data/grakn"
-        },
-        "env_vars": {
-          "description": "The list of environment variables for Grakn",
-          "type": "array",
-          "additionalProperties": false,
-          "items": {
-            "type": "object",
-            "properties": {
-              "var_name": {
-                "type": "string"
-              },
-              "value": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "var_name",
-              "value"
-            ]
+          "default": "[]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
           }
+        }
+      }
+    },
+    "grakn": {
+      "type": "object",
+      "description": "Grakn instance configuration properties",
+      "properties": {
+        "gremlin_graph": {
+          "description": "Factory class",
+          "type": "string",
+          "default": "org.apache.tinkerpop.gremlin.hadoop.structure.HadoopGraph"
+        },
+        "start_local_storage": {
+          "description": "Start local storage engine",
+          "type": "boolean",
+          "default": true
+        },
+        "storage_backend": {
+          "description": "Storage backend",
+          "type": "string",
+          "default": "grakn-production"
+        },
+        "storage_hostname": {
+          "description": "Storage hostname",
+          "type": "string",
+          "default": "grakn-production"
+        },
+        "storage_cql_keyspace": {
+          "description": "Cassandra keyspace",
+          "type": "string",
+          "default": "grakn"
+        },
+        "storage_cql_replication_factor": {
+          "description": "Cassandra replication factor",
+          "type": "number",
+          "default": 1
+        },
+        "start_local_queue": {
+          "description": "Start local queue",
+          "type": "boolean",
+          "default": true
+        },
+        "queue_host": {
+          "description": "Queue host",
+          "type": "string",
+          "default": "localhost:6379"
+        },
+        "index_search_backend": {
+          "description": "Index storage backend",
+          "type": "string",
+          "default": "elasticsearch"
+        },
+        "index_search_hostname": {
+          "description": "Index storage hostname",
+          "type": "string",
+          "default": "localhost"
+        },
+        "spark_master": {
+          "description": "Spark master",
+          "type": "string",
+          "default": "local[*]"
+        },
+        "log_level": {
+          "description": "Log level",
+          "type": "string",
+          "default": "INFO"
         }
       },
       "required": [
-        "cpus",
-        "mem",
-        "disk",
-        "hostpath"
+        "gremlin_graph",
+        "start_local_storage",
+        "storage_backend",
+        "storage_hostname",
+        "start_local_queue",
+        "queue_host",
+        "spark_master"
       ]
     }
   }
