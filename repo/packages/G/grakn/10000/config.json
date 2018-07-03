@@ -29,12 +29,28 @@
           "minimum": 2000
         },
         "constraints": {
-          "description": "Marathon constraints (e.g., [[\"hostname\", \"MAX_PER\", \"1\"]]).",
-          "type": "string",
-          "default": "[]",
-          "media": {
-            "type": "application/x-zone-constraints+json"
-          }
+          "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "attribute": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string",
+                "enum": ["UNIQUE", "CLUSTER", "GROUP_BY", "LIKE", "UNLIKE"]
+              },
+              "value": {
+                "type": "string"
+              },
+              "last": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          },
+          "default": []
         }
       }
     },

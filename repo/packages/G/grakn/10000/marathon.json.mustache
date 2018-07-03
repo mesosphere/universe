@@ -22,7 +22,17 @@
     "SPARK_MASTER": "{{grakn.spark_master}}",
     "LOG_LEVEL": "{{grakn.log_level}}"
   },
-  "constraints": {{{service.constraints}}},
+  "constraints": [
+    {{#service.constraints}}
+      {{#.}}
+        [
+          "{{attribute}}"
+         ,"{{operator}}"
+         {{#value}},"{{value}}"{{/value}}
+        ]{{^last}},{{/last}}
+      {{/.}}
+    {{/service.constraints}}
+  ],
   "container": {
     "type": "DOCKER",
     "portMappings": [
