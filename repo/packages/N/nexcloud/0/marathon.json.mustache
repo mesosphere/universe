@@ -1,0 +1,204 @@
+{
+  "id": "{{group.name}}",
+  "apps": [
+    {
+		  "id": "{{collector.name}}",
+		  "backoffFactor": 1.15,
+		  "backoffSeconds": 1,
+		  "container": {
+		    "portMappings": [
+		      {
+		        "containerPort": 9000,
+		        "hostPort": 0,
+		        "protocol": "tcp",
+		        "servicePort": 10115
+		      }
+		    ],
+		    "type": "DOCKER",
+		    "volumes": [],
+		    "docker": {
+		      "image": "{{resource.assets.container.docker.collector}}",
+		      "forcePullImage": true,
+		      "privileged": false,
+		      "parameters": []
+		    }
+		  },
+		  "cpus": {{collector.cpus}},
+		  "disk": 0,
+		  "env": {
+		    "MYSQL_DBNAME": "defaultdb",
+		    "MYSQL_URL": "mysql.marathon.l4lb.thisdcos.directory:3306",
+		    "MYSQL_PASSWORD": "password",
+		    "MYSQL_USERNAME": "admin"
+		  },
+			"args": [],
+		  "healthChecks": [
+		    {
+		      "gracePeriodSeconds": 300,
+		      "intervalSeconds": 60,
+		      "maxConsecutiveFailures": 3,
+		      "portIndex": 0,
+		      "timeoutSeconds": 20,
+		      "delaySeconds": 15,
+		      "protocol": "MESOS_HTTP",
+		      "path": "/v1/check/"
+		    }
+		  ],
+		  "instances": {{collector.instances}},
+		  "maxLaunchDelaySeconds": 3600,
+		  "mem": {{collector.mem}},
+		  "gpus": 0,
+		  "networks": [
+		    {
+		      "mode": "container/bridge"
+		    }
+		  ],
+		  "requirePorts": false,
+		  "upgradeStrategy": {
+		    "maximumOverCapacity": 1,
+		    "minimumHealthCapacity": 1
+		  },
+		  "killSelection": "YOUNGEST_FIRST",
+		  "unreachableStrategy": {
+		    "inactiveAfterSeconds": 300,
+		    "expungeAfterSeconds": 600
+		  },
+		  "fetch": [],
+		  "constraints": []
+		},
+    {
+		  "id": "{{workflow.name}}",
+		  "backoffFactor": 1.15,
+		  "backoffSeconds": 1,
+		  "container": {
+		    "portMappings": [
+		      {
+		        "containerPort": 9000,
+		        "hostPort": 0,
+		        "protocol": "tcp",
+		        "servicePort": 10115
+		      }
+		    ],
+		    "type": "DOCKER",
+		    "volumes": [],
+		    "docker": {
+		      "image": "{{resource.assets.container.docker.workflow}}",
+		      "forcePullImage": true,
+		      "privileged": false,
+		      "parameters": []
+		    }
+		  },
+		  "cpus": {{workflow.cpus}},
+		  "disk": 0,
+		  "env": {
+		    "REDIS_HOST": "redis.marathon.l4lb.thisdcos.directory",
+		    "MYSQL_DBNAME": "defaultdb",
+		    "REDIS_PORT": "6379",
+		    "MYSQL_URL": "mysql.marathon.l4lb.thisdcos.directory:3306",
+		    "MYSQL_PASSWORD": "password",
+		    "MYSQL_USERNAME": "admin"
+		  },
+			"args": [],
+		  "healthChecks": [
+		    {
+		      "gracePeriodSeconds": 300,
+		      "intervalSeconds": 60,
+		      "maxConsecutiveFailures": 3,
+		      "portIndex": 0,
+		      "timeoutSeconds": 20,
+		      "delaySeconds": 15,
+		      "protocol": "MESOS_HTTP",
+		      "path": "/v1/check/"
+		    }
+		  ],
+		  "instances": {{workflow.instances}},
+		  "maxLaunchDelaySeconds": 3600,
+		  "mem": {{workflow.mem}},
+		  "gpus": 0,
+		  "networks": [
+		    {
+		      "mode": "container/bridge"
+		    }
+		  ],
+		  "requirePorts": false,
+		  "upgradeStrategy": {
+		    "maximumOverCapacity": 1,
+		    "minimumHealthCapacity": 1
+		  },
+		  "killSelection": "YOUNGEST_FIRST",
+		  "unreachableStrategy": {
+		    "inactiveAfterSeconds": 300,
+		    "expungeAfterSeconds": 600
+		  },
+		  "fetch": [],
+		  "constraints": []
+		},
+    {
+		  "id": "{{nexcloudui.name}}",
+		  "backoffFactor": 1.15,
+		  "backoffSeconds": 1,
+		  "container": {
+		    "portMappings": [
+		      {
+		        "containerPort": 9000,
+		        "hostPort": 0,
+		        "protocol": "tcp",
+		        "servicePort": 10015
+		      }
+		    ],
+		    "type": "DOCKER",
+		    "volumes": [],
+		    "docker": {
+		      "image": "{{resource.assets.container.docker.nexcloudui}}",
+		      "forcePullImage": true,
+		      "privileged": false,
+		      "parameters": []
+		    }
+		  },
+		  "cpus": {{nexcloudui.cpus}},
+		  "disk": 0,
+		  "env": {
+		    "REDIS_HOST": "redis.marathon.l4lb.thisdcos.directory",
+		    "MYSQL_DBNAME": "defaultdb",
+		    "REDIS_PORT": "6379",
+		    "MYSQL_URL": "mysql.marathon.l4lb.thisdcos.directory:3306",
+		    "MYSQL_PASSWORD": "password",
+		    "MYSQL_USERNAME": "admin"
+		  },
+			"args": [],
+		  "healthChecks": [
+		    {
+		      "gracePeriodSeconds": 300,
+		      "intervalSeconds": 60,
+		      "maxConsecutiveFailures": 3,
+		      "portIndex": 0,
+		      "timeoutSeconds": 20,
+		      "delaySeconds": 15,
+		      "protocol": "MESOS_HTTP",
+		      "path": "/v1/check/"
+		    }
+		  ],
+		  "instances": {{nexcloudui.instances}},
+		  "maxLaunchDelaySeconds": 3600,
+		  "mem": {{nexcloudui.mem}},
+		  "gpus": 0,
+		  "networks": [
+		    {
+		      "mode": "container/bridge"
+		    }
+		  ],
+		  "requirePorts": false,
+		  "upgradeStrategy": {
+		    "maximumOverCapacity": 1,
+		    "minimumHealthCapacity": 1
+		  },
+		  "killSelection": "YOUNGEST_FIRST",
+		  "unreachableStrategy": {
+		    "inactiveAfterSeconds": 0,
+		    "expungeAfterSeconds": 0
+		  },
+		  "fetch": [],
+		  "constraints": []
+		}
+  ]
+}

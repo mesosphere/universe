@@ -1,0 +1,122 @@
+{
+  "type": "object",
+  "properties": {
+    "group": {
+      "type": "object",
+      "description": "Nexcloud group properties",
+      "properties": {
+        "name": {
+          "description": "The name of Nexcloud group",
+          "type": "string",
+          "default": "/nexcloud"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "collector": {
+      "type": "object",
+      "description": "Nexcloud-collector properties",
+      "properties": {
+        "name": {
+          "description": "The name of Nexcloud-collector",
+          "type": "string",
+          "default": "/nexcloud/collecter"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU to allocate to each instance of the collector.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 2048,
+          "description": "Memory (MB) to allocate to each instance of the collector.",
+          "minimum": 1024,
+          "type": "integer"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of collector to run.",
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem",
+        "instances"
+      ]
+    },
+    "workflow": {
+      "description": "Nexcloud-workflow properties",
+      "properties": {
+        "name": {
+          "description": "The name of Nexcloud-workflow",
+          "type": "string",
+          "default": "/nexcloud/workflow"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU to allocate to each instance of the workflow.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 2048,
+          "description": "Memory (MB) to allocate to each instance of the workflow.",
+          "minimum": 1024,
+          "type": "integer"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of workflow to run.",
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem",
+        "instances"
+      ]
+    },
+    "nexcloudui": {
+      "description": "Nexcloud-UI properties",
+      "properties": {
+        "name": {
+          "description": "The name of Nexcloud-UI",
+          "type": "string",
+          "default": "/nexcloud/nexcloudui"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU to allocate to each instance of the Nexcloud-UI.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 2048,
+          "description": "Memory (MB) to allocate to each instance of the Nexcloud-UI.",
+          "minimum": 1024,
+          "type": "integer"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of Nexcloud-UI to run.",
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem",
+        "instances"
+      ]
+    }
+  }
+}

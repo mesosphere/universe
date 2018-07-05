@@ -1,0 +1,33 @@
+{
+ "id": "{{service.name}}",
+ "instances": 1,
+ "cpus": {{redis.cpus}},
+ "mem": {{redis.mem}},
+ "disk": 2000,
+ "container": {
+   "type": "DOCKER",
+   "docker": {
+     "image": "{{resource.assets.container.docker.redis}}",
+     "network": "BRIDGE",
+     "portMappings": [
+       {
+       "containerPort": 6379,
+       "protocol": "tcp",
+       "labels": {
+            "VIP_0": "/redis:6379"
+          }
+       }
+     ]
+   }
+ },
+ "healthChecks": [
+   {
+   "protocol": "TCP",
+   "gracePeriodSeconds": 60,
+   "intervalSeconds": 5,
+   "portIndex": 0,
+   "timeoutSeconds": 5,
+   "maxConsecutiveFailures": 3
+   }
+ ]
+}

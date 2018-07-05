@@ -1,0 +1,116 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*/jre/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && ./bootstrap -resolve=false -template=false && ./zookeeper-scheduler/bin/zookeeper ./zookeeper-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    "PACKAGE_NAME": "portworx-zookeeper",
+    "PACKAGE_VERSION": "1.2-3.4.11",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1526948676496",
+    "PACKAGE_BUILD_TIME_STR": "Tue May 22 2018 00:24:36 +0000",
+    "MESOS_API_VERSION": "{{service.mesos_api_version}}",
+
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+
+    "ZOOKEEPER_VERSION": "3.4.11",
+
+    "NODE_COUNT": "{{node.count}}",
+    "NODE_PLACEMENT": "{{node.placement_constraint}}",
+
+    {{#service.virtual_network_enabled}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+
+    "ZOOKEEPER_CPUS": "{{node.cpus}}",
+    "ZOOKEEPER_MEM_MB": "{{node.mem}}",
+    "ZOOKEEPER_DISK_MB": "{{node.disk}}",
+    "ZOOKEEPER_DOCKER_VOLUME_NAME": "{{{node.portworx_volume_name}}}",
+    "ZOOKEEPER_DOCKER_VOLUME_OPTIONS": "{{{node.portworx_volume_options}}}",
+
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.service_account_secret}}
+
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "SCHEDULER_URI": "{{resource.assets.uris.scheduler-zip}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "ZOOKEEPER_URI": "{{resource.assets.uris.zookeeper-tar-gz}}",
+
+    "TASKCFG_ALL_ZOOKEEPER_CLIENT_PORT": "{{zookeeper.client_port}}",
+    "TASKCFG_ALL_TICK_TIME": "{{zookeeper.tick_time}}",
+    "TASKCFG_ALL_GLOBAL_OUTSTANDING_LIMIT": "{{zookeeper.global_outstanding_limit}}",
+    "TASKCFG_ALL_PRE_ALLOC_SIZE": "{{zookeeper.pre_alloc_size}}",
+    "TASKCFG_ALL_SNAP_COUNT": "{{zookeeper.snap_count}}",
+    "TASKCFG_ALL_MAX_CLIENT_CONNECTIONS": "{{zookeeper.max_client_connections}}",
+    "TASKCFG_ALL_MIN_SESSION_TIMEOUT": "{{zookeeper.min_session_timeout}}",
+    "TASKCFG_ALL_MAX_SESSION_TIMEOUT": "{{zookeeper.max_session_timeout}}",
+    "TASKCFG_ALL_FSYNC_WARNING_THRESHOLD": "{{zookeeper.fsync_warning_threshold}}",
+    "TASKCFG_ALL_SNAP_RETAIN_COUNT": "{{zookeeper.autopurge_snap_retain_count}}",
+    "TASKCFG_ALL_PURGE_INTERVAL": "{{zookeeper.autopurge_interval}}",
+    "TASKCFG_ALL_SYNC_ENABLED": "{{zookeeper.sync_enabled}}",
+    "TASKCFG_ALL_ELECTION_ALGORITHM": "{{zookeeper.election_algorithm}}",
+    "TASKCFG_ALL_INIT_LIMIT": "{{zookeeper.init_limit}}",
+    "TASKCFG_ALL_LEADER_SERVES": "{{zookeeper.leader_serves}}",
+    "TASKCFG_ALL_LEADER_PORT": "{{zookeeper.leader_port}}",
+    "TASKCFG_ALL_LEADER_ELECTION_PORT": "{{zookeeper.leader_election_port}}",
+    "TASKCFG_ALL_CONNECTION_TIMEOUT": "{{zookeeper.connection_timeout}}",
+    "TASKCFG_ALL_SYNC_LIMIT": "{{zookeeper.sync_limit}}",
+    "TASKCFG_ALL_TCP_KEEP_ALIVE": "{{zookeeper.tcp_keep_alive}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.bootstrap-zip}}",
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/v1/health",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}
