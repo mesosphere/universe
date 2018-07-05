@@ -10,6 +10,7 @@
   },
   "env": {
     "GREMLIN_GRAPH": "{{grakn.gremlin_graph}}",
+    "GREMLIN_GRAPH_INPUT_FORMAT": "{{grakn.gremlin_graph_input_format}}",
     "START_LOCAL_STORAGE": "{{grakn.start_local_storage}}",
     "STORAGE_BACKEND": "{{grakn.storage_backend}}",
     "STORAGE_HOSTNAME": "{{grakn.storage_hostname}}",
@@ -48,6 +49,7 @@
     "volumes": [],
     "docker": {
       "image": "{{resource.assets.container.docker.grakn}}",
+      "forcePullImage": true,
       "network": "BRIDGE",
       "privileged": false,
       "parameters": []

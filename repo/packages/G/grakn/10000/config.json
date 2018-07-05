@@ -63,6 +63,11 @@
           "type": "string",
           "default": "org.apache.tinkerpop.gremlin.hadoop.structure.HadoopGraph"
         },
+        "gremlin_graph_input_format": {
+          "description": "Graph input format",
+          "type": "string",
+          "default": "org.janusgraph.hadoop.formats.cassandra.CassandraInputFormat"
+        },
         "start_local_storage": {
           "description": "Start local storage engine",
           "type": "boolean",
@@ -76,7 +81,7 @@
         "storage_hostname": {
           "description": "Storage hostname",
           "type": "string",
-          "default": "grakn-production"
+          "default": "localhost"
         },
         "storage_cql_keyspace": {
           "description": "Cassandra keyspace",
