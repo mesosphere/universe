@@ -1,0 +1,476 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS Jupyter comes with a handful of pre-installed packages for data scientists. Since version 0.16.1 there is also GPU support included. Pre-Installed packages include: BeakerX 0.20.1, H5PY 2.7.1, Keras 2.1.5, Numpy 1.14.2, Pandas 0.22.0, PySpark 2.3.0, Scikit-Learn 0.19.1, TensorFlow & TensorBoard 1.7.0, XLRD 1.1.0",
+      "properties": {
+        "name": {
+          "description": "Name of this service instance.",
+          "type": "string",
+          "default": "/dev/jupyter/notebook"
+        },
+        "cmd": {
+          "description": "",
+          "type": "string",
+          "default": "export SPARK_CONF_SPARK_EXECUTORENV_CLASSPATH=\"spark.executorEnv.CLASSPATH=$(${HADOOP_HDFS_HOME}/bin/hadoop classpath --glob):${CLASSPATH}\" && export SPARK_CONF_SPARK_EXECUTORENV_LD_LIBRARY_PATH=\"spark.executorEnv.LD_LIBRARY_PATH=${LD_LIBRARY_PATH}\" && /usr/local/bin/start.sh ${CONDA_DIR}/bin/jupyter lab --notebook-dir=\"/mnt/mesos/sandbox\""
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to each service instance.",
+          "type": "number",
+          "default": 1,
+          "minimum": 1
+        },
+        "force_pull": {
+          "description": "Enable force pull of the image file.",
+          "type": "boolean",
+          "default": false
+        },
+        "gpu_support": {
+          "type": "object",
+          "description": "GPU support and useful packages for Data Scientists.\n\nGPU specific packages:\nCUDA 9.0.176, CUDNN 7.1.3.16, TensorFlow-GPU 1.7.0",
+          "properties": {
+            "enabled": {
+              "description": "Enable GPU support.\nNote: This requires at least 15GB disk space available with recent NVIDIA drivers installed.",
+              "type": "boolean",
+              "default": false
+            },
+            "gpus": {
+              "description": "Number of GPUs to allocate to your DC/OS Jupyter  package.\nNote: GPU support has to be enabled.",
+              "type": "number",
+              "default": 0,
+              "minimum": 0
+            }
+          }
+        },
+        "mem": {
+          "description": "Memory to allocate to each service instance in MB.",
+          "type": "number",
+          "default": 8192.0,
+          "minimum": 1024.0
+        },
+        "user": {
+          "description": "Notebook will run as this user.",
+          "type": "string",
+          "default": "nobody"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem"
+      ]
+    },
+    "oidc": {
+      "type": "object",
+      "description": "OIDC Configuration.",
+      "properties": {
+        "enable_oidc": {
+          "description": "Enable OIDC Support.",
+          "type": "boolean",
+          "default": false
+        },
+        "oidc_discover_uri": {
+          "description": "OIDC Discovery URI.",
+          "type": "string",
+          "default": "https://keycloak.example.com/auth/realms/Notebook/.well-known/openid-configuration"
+        },
+        "oidc_redirect_uri": {
+          "description": "OIDC Redirect URI.",
+          "type": "string",
+          "default": "/oidc-redirect-callback"
+        },
+        "oidc_client_id": {
+          "description": "OIDC Client ID.",
+          "type": "string",
+          "default": "Notebook"
+        },
+        "oidc_client_secret": {
+          "description": "OIDC Client Secret.",
+          "type": "string",
+          "default": "b874f6e9-8f3f-41a6-a206-53e928d24fb1"
+        },
+        "oidc_tls_verify": {
+          "description": "OIDC TLS Verify.",
+          "type": "string",
+          "default": "no"
+        },
+        "enable_windows": {
+          "description": "Enable Windows (AD FS UPN).",
+          "type": "boolean",
+          "default": false
+        },
+        "oidc_use_email": {
+          "description": "Use OIDC E-Mail (optional)",
+          "type": "boolean",
+          "default": false
+        },
+        "oidc_email": {
+          "description": "OIDC E-Mail (if OIDC Use Email is enabled).",
+          "type": "string",
+          "default": "user@example.com"
+        },
+        "oidc_upn": {
+          "description": "Enable using using Windows Integrated Authentication with AD FS 4.0 (Windows Server 2016).",
+          "type": "string",
+          "default": "user007"
+        },
+        "oidc_logout_path": {
+          "description": "OIDC Logout Path.",
+          "type": "string",
+          "default": "/logmeout"
+        },
+        "oidc_post_logout_redirect_uri": {
+          "description": "OIDC Post Logout Redirect URI.",
+          "type": "string",
+          "default": "https://<VHOST>/<optional PATH_PREFIX>/<Service Name>"
+        },
+        "oidc_use_spartan_resolver": {
+          "description": "OIDC Use Spartan Resolver.",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "spark": {
+      "type": "object",
+      "description": "Spark Configuration.",
+      "properties": {
+        "enable_spark_monitor": {
+          "description": "Enable Spark Monitor.",
+          "type": "boolean",
+          "default": true
+        },
+        "spark_master_url": {
+          "description": "Spark Master URL.",
+          "type": "string",
+          "default": "mesos://zk://zk-1.zk:2181,zk-2.zk:2181,zk-3.zk:2181,zk-4.zk:2181,zk-5.zk:2181/mesos"
+        },
+        "spark_driver_cores": {
+          "description": "Spark Driver Core Count.",
+          "type": "number",
+          "default": 2,
+          "minimum": 0
+        },
+        "spark_driver_memory": {
+          "description": "Spark Driver Memory in GB.",
+          "type": "string",
+          "default": "4g"
+        },
+        "spark_driver_java_options": {
+          "description": "Spark Driver Java Options.",
+          "type": "string",
+          "default": "\"-XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\""
+        },
+        "spark_conf_spark_scheduler": {
+          "description": "Spark Configuration Spark Scheduler Minimal Registered Resources Ratio.",
+          "type": "string",
+          "default": "spark.scheduler.minRegisteredResourcesRatio=1.0"
+        },
+        "spark_conf_cores_max": {
+          "description": "Spark Configuration Spark Cores Max Value.",
+          "type": "string",
+          "default": "spark.cores.max=5"
+        },
+        "spark_conf_executor_cores": {
+          "description": "Spark Configuration Spark Executor Cores Value.",
+          "type": "string",
+          "default": "spark.executor.cores=1"
+        },
+        "spark_conf_executor_memory": {
+          "description": "Spark Configuration Spark Executor Memory Value in GB.",
+          "type": "string",
+          "default": "spark.executor.memory=4g"
+        },
+        "spark_conf_executor_java_options": {
+          "description": "Spark Configuration Spark Executor Java Options.",
+          "type": "string",
+          "default": "spark.executor.extraJavaOptions=\"-XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\""
+        },
+        "spark_conf_eventlog_enabled": {
+          "description": "Spark Configuration Event Log.",
+          "type": "string",
+          "default": "spark.eventLog.enabled=true"
+        },
+        "spark_conf_eventlog_dir": {
+          "description": "Spark Configuration Event Log Directory.",
+          "type": "string",
+          "default": "spark.eventLog.dir=s3a://your-dcos-aws/spark/history"
+        },
+        "spark_conf_hadoop_fs_s3a_aws_credentials_provider": {
+          "description": "Spark Configuration Hadoop S3 AWS Credentials Provider.",
+          "type": "string",
+          "default": "spark.hadoop.fs.s3a.aws.credentials.provider=com.amazonaws.auth.InstanceProfileCredentialsProvider"
+        },
+        "spark_conf_mesos_executor_docker_image": {
+          "description": "Docker Image for Spark Executor.",
+          "type": "string",
+          "default": "spark.mesos.executor.docker.image=vishnumohan/spark-dcos:tfos"
+        },
+        "spark_conf_mesos_executor_home": {
+          "description": "Spark Mesos Executor Home Directory.",
+          "type": "string",
+          "default": "spark.mesos.executor.home=/opt/spark"
+        },
+        "spark_conf_mesos_containerizer": {
+          "description": "Spark Mesos Containerizer.",
+          "type": "string",
+          "default": "spark.mesos.containerizer=mesos"
+        },
+        "spark_conf_mesos_principle": {
+          "description": "Spark Mesos Principle.",
+          "type": "string",
+          "default": "spark.mesos.principal=dev_jupyter"
+        },
+        "spark_conf_mesos_role": {
+          "description": "Spark Mesos Role.",
+          "type": "string",
+          "default": "spark.mesos.role=dev-jupyter"
+        },
+        "spark_conf_mesos_driver_labels": {
+          "description": "Spark Mesos Driver Labels.",
+          "type": "string",
+          "default": "spark.mesos.driver.labels=DCOS_SPACE:/dev/jupyter"
+        },
+        "spark_conf_mesos_task_labels": {
+          "description": "Spark Mesos Task Labels.",
+          "type": "string",
+          "default": "spark.mesos.task.labels=DCOS_SPACE:/dev/jupyter"
+        },
+        "spark_conf_mesos_conf_base64": {
+          "description": "Spark Mesos Driver Environment Spark Mesos KRB5 Configuration Base64.",
+          "type": "string",
+          "default": "spark.mesos.driverEnv.SPARK_MESOS_KRB5_CONF_BASE64=W2xpYmRlZmF1bHRzXQoJZGVmYXVsdF9yZWFsbSA9IEFUSEVOQS5NSVQuRURVCgpbcmVhbG1zXQojIHVzZSAia2RjID0gLi4uIiBpZiByZWFsbSBhZG1pbnMgaGF2ZW4ndCBwdXQgU1JWIHJlY29yZHMgaW50byBETlMKCUFUSEVOQS5NSVQuRURVID0gewoJCWFkbWluX3NlcnZlciA9IGtlcmJlcm9zLm1pdC5lZHUKCX0KCUFORFJFVy5DTVUuRURVID0gewoJCWFkbWluX3NlcnZlciA9IGtkYy0wMS5hbmRyZXcuY211LmVkdQoJfQoKW2RvbWFpbl9yZWFsbV0KCW1pdC5lZHUgPSBBVEhFTkEuTUlULkVEVQoJY3NhaWwubWl0LmVkdSA9IENTQUlMLk1JVC5FRFUKCS51Y3NjLmVkdSA9IENBVFMuVUNTQy5FRFUKCltsb2dnaW5nXQojCWtkYyA9IENPTlNPTEUK"
+        },
+        "spark_conf_executor_conf_base64": {
+          "description": "Spark Executor Environment Spark Mesos KRB5 Configuration Base64.",
+          "type": "string",
+          "default": "spark.executorEnv.SPARK_MESOS_KRB5_CONF_BASE64=W2xpYmRlZmF1bHRzXQoJZGVmYXVsdF9yZWFsbSA9IEFUSEVOQS5NSVQuRURVCgpbcmVhbG1zXQojIHVzZSAia2RjID0gLi4uIiBpZiByZWFsbSBhZG1pbnMgaGF2ZW4ndCBwdXQgU1JWIHJlY29yZHMgaW50byBETlMKCUFUSEVOQS5NSVQuRURVID0gewoJCWFkbWluX3NlcnZlciA9IGtlcmJlcm9zLm1pdC5lZHUKCX0KCUFORFJFVy5DTVUuRURVID0gewoJCWFkbWluX3NlcnZlciA9IGtkYy0wMS5hbmRyZXcuY211LmVkdQoJfQoKW2RvbWFpbl9yZWFsbV0KCW1pdC5lZHUgPSBBVEhFTkEuTUlULkVEVQoJY3NhaWwubWl0LmVkdSA9IENTQUlMLk1JVC5FRFUKCS51Y3NjLmVkdSA9IENBVFMuVUNTQy5FRFUKCltsb2dnaW5nXQojCWtkYyA9IENPTlNPTEUK"
+        },
+        "spark_conf_executor_krb5_config": {
+          "description": "Spark Executor Environment KRB5 Configuration File.",
+          "type": "string",
+          "default": "spark.executorEnv.KRB5_CONFIG=/mnt/mesos/sandbox/krb5.conf"
+        },
+        "spark_conf_executor_java_home": {
+          "description": "Spark Executor Java Home Directory.",
+          "type": "string",
+          "default": "spark.executorEnv.JAVA_HOME=/opt/jdk"
+        },
+        "spark_conf_executor_hadoop_hdfs_home": {
+          "description": "Spark Executor Environment Hadoop HDFS Home Directory.",
+          "type": "string",
+          "default": "spark.executorEnv.HADOOP_HDFS_HOME=/opt/hadoop"
+        },
+        "spark_conf_executor_hadoop_opts": {
+          "description": "Spark Executor Hadoop Options.",
+          "type": "string",
+          "default": "spark.executorEnv.HADOOP_OPTS=\"-Djava.library.path=/opt/hadoop/lib/native -Djava.security.krb5.conf=/mnt/mesos/sandbox/krb5.conf\""
+        },
+        "spark_conf_mesos_executor_docker_forcepullimage": {
+          "description": "Spark Mesos Executor Docker Force Pull Image.",
+          "type": "string",
+          "default": "spark.mesos.executor.docker.forcePullImage=true"
+        },
+        "spark_conf_mesos_uri": {
+          "description": "Spark Mesos URIs.",
+          "type": "string",
+          "default": "spark.mesos.uris=http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml,http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml"
+        },
+        "spark_mesos_conf_krb5_config": {
+          "description": "Spark Mesos KRB5 Configuration.",
+          "type": "string",
+          "default": "W2xpYmRlZmF1bHRzXQoJZGVmYXVsdF9yZWFsbSA9IEFUSEVOQS5NSVQuRURVCgpbcmVhbG1zXQojIHVzZSAia2RjID0gLi4uIiBpZiByZWFsbSBhZG1pbnMgaGF2ZW4ndCBwdXQgU1JWIHJlY29yZHMgaW50byBETlMKCUFUSEVOQS5NSVQuRURVID0gewoJCWFkbWluX3NlcnZlciA9IGtlcmJlcm9zLm1pdC5lZHUKCX0KCUFORFJFVy5DTVUuRURVID0gewoJCWFkbWluX3NlcnZlciA9IGtkYy0wMS5hbmRyZXcuY211LmVkdQoJfQoKW2RvbWFpbl9yZWFsbV0KCW1pdC5lZHUgPSBBVEhFTkEuTUlULkVEVQoJY3NhaWwubWl0LmVkdSA9IENTQUlMLk1JVC5FRFUKCS51Y3NjLmVkdSA9IENBVFMuVUNTQy5FRFUKCltsb2dnaW5nXQojCWtkYyA9IENPTlNPTEUK"
+        },
+        "spark_user": {
+          "description": "Spark Mesos User.",
+          "type": "string",
+          "default": "nobody"
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "description": "DC/OS Jupyter  storage configuration.",
+      "properties": {
+        "hdfs_support": {
+          "description": "Enable or disable HDFS.",
+          "type": "boolean",
+          "default": false
+        },
+        "hdfs_core_url": {
+          "description": "URL which serves core-site.xml .",
+          "type": "string",
+          "default": "http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml"
+        },
+        "hdfs_site_url": {
+          "description": "URL which serves hdfs-site.xml .",
+          "type": "string",
+          "default": "http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml"
+        },
+        "host_volume_size": {
+          "description": "Size of the persistent volume in MB.",
+          "type": "number",
+          "default": 4000
+        },
+        "persistence": {
+          "type": "object",
+          "description": "Enable persistent storage.",
+          "properties": {
+            "enable": {
+              "description": "Enable or disable persistent storage.",
+              "type": "boolean",
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    "networking": {
+      "type": "object",
+      "description": "DC/OS Jupyter networking configuration properties",
+      "properties": {
+        "cni_support": {
+          "type": "object",
+          "description": "Enable Container Networking Interface (CNI) Support.",
+          "properties": {
+            "enabled": {
+              "description": "Enable CNI support for this Jupyter instance (advanced use-case).",
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        "external_access": {
+          "type": "object",
+          "description": "Enable access from outside the cluster through Marathon-LB.\nNOTE: this connection is unencrypted.",
+          "properties": {
+            "enabled": {
+              "description": "Enable or disable external access through a public node via Marathon-LB.",
+              "type": "boolean",
+              "default": true
+            },
+            "external_public_agent_ip": {
+              "description": "For external access, DNS to be used for Marathon-LB vHost: For example use your public slave ELB DNS.",
+              "type": "string",
+              "default": ""
+            }
+          }
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "description": "GPU support and useful packages for Data Scientists.\n\nGPU specific packages:\nCUDA 9.0.176, CUDNN 7.1.3.16, TensorFlow-GPU 1.7.0",
+      "properties": {
+        "secrets": {
+          "description": "Enable secrets for DC/OS Service Account and AWS credentials.\n\nEnterprise feature only.",
+          "type": "boolean",
+          "default": false
+        },
+        "service_credential": {
+          "description": "DC/OS Service Credential Secret Source.\n\nNote: Enterprise feature only.",
+          "type": "string",
+          "default": "dev/jupyter/serviceCredential"
+        },
+        "aws_region": {
+          "description": "Your AWS Region.",
+          "type": "string",
+          "default": "us-east-1"
+        },
+        "conda_envs_path": {
+          "description": "Your Conda Environments Path.",
+          "type": "string",
+          "default": "/mnt/mesos/sandbox/conda/envs:/opt/conda/envs"
+        },
+        "conda_pkgs_dir": {
+          "description": "Your Conda Packages Directories.",
+          "type": "string",
+          "default": "/mnt/mesos/sandbox/conda/pkgs:/opt/conda/pkgs"
+        },
+        "dcos_dir": {
+          "description": "Your DC/OS directory.",
+          "type": "string",
+          "default": "/mnt/mesos/sandbox/.dcos"
+        },
+        "hadoop_conf_dir": {
+          "description": "Your Hadoop Configuration Directory.",
+          "type": "string",
+          "default": "/mnt/mesos/sandbox"
+        },
+        "home": {
+          "description": "Your Home Directory.",
+          "type": "string",
+          "default": "/mnt/mesos/sandbox"
+        },
+        "java_opts": {
+          "description": "Your Java Options.",
+          "type": "string",
+          "default": "\"-XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\""
+        },
+        "jupyter_config_dir": {
+          "description": "Your Jupyter Configuration Directory.",
+          "type": "string",
+          "default": "/mnt/mesos/sandbox/.jupyter"
+        },
+        "jupyter_password": {
+          "description": "Your Jupyter Password.",
+          "type": "string",
+          "default": ""
+        },
+        "jupyter_runtime_dir": {
+          "description": "Your Jupyter Runtime Directory.",
+          "type": "string",
+          "default": "/mnt/mesos/sandbox/.local/share/jupyter/runtime"
+        },
+        "nginx_log_level": {
+          "description": "NGINX log level.",
+          "type": "string",
+          "default": "warn"
+        },
+        "s3_endpoint": {
+          "description": "Your S3 endpoint.",
+          "type": "string",
+          "default": "s3.us-east-1.amazonaws.com"
+        },
+        "s3_https": {
+          "description": "Enable S3 HTTPS.\n\nNote: Set 1 for true and 0 for false.",
+          "type": "number",
+          "default": 1,
+          "minimum": 0
+        },
+        "s3_ssl": {
+          "description": "Your S3 SSL Verification.\n\nNote: Set 1 for true and 0 for false.",
+          "type": "number",
+          "default": 1,
+          "minimum": 0
+        },
+        "start_dask_distributed": {
+          "description": "Start Dask distributed.",
+          "type": "boolean",
+          "default": true
+        },
+        "start_ray_head_node": {
+          "description": "Start Ray Head Node.",
+          "type": "boolean",
+          "default": true
+        },
+        "user": {
+          "description": "User under which Notebook runs.",
+          "type": "string",
+          "default": "nobody"
+        },
+        "tensorboard_logdir": {
+          "description": "Tensorboard Logdir.",
+          "type": "string",
+          "default": "/mnt/mesos/sandbox"
+        },
+        "term": {
+          "description": "Term Colors.",
+          "type": "string",
+          "default": "xterm-256color"
+        }
+      }
+    }
+
+  }
+}
