@@ -9,13 +9,10 @@
     "DCOS_SERVICE_SCHEME": "http"
   },
   "env": {
-    "GREMLIN_GRAPH": "{{grakn.gremlin_graph}}",
-    "GREMLIN_GRAPH_INPUT_FORMAT": "{{grakn.gremlin_graph_input_format}}",
+    "GREMLIN_GRAPH_READER": "{{grakn.gremlin_graph_reader}}",
     "START_LOCAL_STORAGE": "{{grakn.start_local_storage}}",
-    "STORAGE_BACKEND": "{{grakn.storage_backend}}",
     "STORAGE_HOSTNAME": "{{grakn.storage_hostname}}",
-    "STORAGE_CQL_KEYSPACE": "{{grakn.storage_cql_keyspace}}",
-    "STORAGE_CQL_REPLICATION_FACTOR": "{{grakn.storage_cql_replication_factor}}",
+    "KEYSPACE": "{{grakn.keyspace}}",
     "START_LOCAL_QUEUE": "{{grakn.start_local_queue}}",
     "QUEUE_HOST": "{{grakn.queue_host}}",
     "INDEX_SEARCH_BACKEND": "{{grakn.index_search_backend}}",
@@ -23,17 +20,6 @@
     "SPARK_MASTER": "{{grakn.spark_master}}",
     "LOG_LEVEL": "{{grakn.log_level}}"
   },
-  "constraints": [
-    {{#service.constraints}}
-      {{#.}}
-        [
-          "{{attribute}}"
-         ,"{{operator}}"
-         {{#value}},"{{value}}"{{/value}}
-        ]{{^last}},{{/last}}
-      {{/.}}
-    {{/service.constraints}}
-  ],
   "container": {
     "type": "DOCKER",
     "portMappings": [

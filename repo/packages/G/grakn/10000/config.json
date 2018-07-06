@@ -27,30 +27,6 @@
           "type": "number",
           "default": 65536,
           "minimum": 2000
-        },
-        "constraints": {
-          "description": "Marathon constraints for the framework/scheduler instance. Valid constraint operators are one of UNIQUE, CLUSTER, GROUP_BY, LIKE, UNLIKE.",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "attribute": {
-                "type": "string"
-              },
-              "operator": {
-                "type": "string",
-                "enum": ["UNIQUE", "CLUSTER", "GROUP_BY", "LIKE", "UNLIKE"]
-              },
-              "value": {
-                "type": "string"
-              },
-              "last": {
-                "type": "boolean",
-                "default": false
-              }
-            }
-          },
-          "default": []
         }
       }
     },
@@ -58,13 +34,8 @@
       "type": "object",
       "description": "Grakn instance configuration properties",
       "properties": {
-        "gremlin_graph": {
-          "description": "Factory class",
-          "type": "string",
-          "default": "org.apache.tinkerpop.gremlin.hadoop.structure.HadoopGraph"
-        },
-        "gremlin_graph_input_format": {
-          "description": "Graph input format",
+        "gremlin_graph_reader": {
+          "description": "Graph reader",
           "type": "string",
           "default": "org.janusgraph.hadoop.formats.cassandra.CassandraInputFormat"
         },
@@ -73,25 +44,15 @@
           "type": "boolean",
           "default": true
         },
-        "storage_backend": {
-          "description": "Storage backend",
-          "type": "string",
-          "default": "grakn-production"
-        },
         "storage_hostname": {
           "description": "Storage hostname",
           "type": "string",
           "default": "localhost"
         },
-        "storage_cql_keyspace": {
-          "description": "Cassandra keyspace",
+        "keyspace": {
+          "description": "Grakn keyspace",
           "type": "string",
           "default": "grakn"
-        },
-        "storage_cql_replication_factor": {
-          "description": "Cassandra replication factor",
-          "type": "number",
-          "default": 1
         },
         "start_local_queue": {
           "description": "Start local queue",
@@ -125,13 +86,14 @@
         }
       },
       "required": [
-        "gremlin_graph",
-        "start_local_storage",
-        "storage_backend",
+        "gremlin_graph_reader",
         "storage_hostname",
-        "start_local_queue",
+        "keyspace",
         "queue_host",
-        "spark_master"
+        "index_search_backend",
+        "index_search_hostname",
+        "spark_master",
+        "log_level"
       ]
     }
   }
