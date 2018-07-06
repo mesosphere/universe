@@ -8,7 +8,7 @@
         "name": {
           "description": "Name of this service instance.",
           "type": "string",
-          "default": "/dev/jupyter/notebook"
+          "default": "/jupyter-notebook"
         },
         "cmd": {
           "description": "",
@@ -354,7 +354,10 @@
               "type": "string",
               "default": ""
             }
-          }
+          },
+          "required": [
+            "external_public_agent_ip"
+          ]
         }
       }
     },
