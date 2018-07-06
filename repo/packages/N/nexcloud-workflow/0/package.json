@@ -1,0 +1,18 @@
+{
+  "packagingVersion": "4.0",
+  "name": "nexcloud-workflow",
+  "version": "0.1.1",
+  "minDcosReleaseVersion": "1.10",
+  "description": "NexCloud-workflow is buisness component for NexCloud. It retrieves metrics from Kafka collected by NexCloud-collector and calculates metrics, then insets calcuated metrics to databases(Redis, InfluxDBf, MySQL)",
+  "maintainer": "nexcloud@nexcloud.co.kr",
+  "tags": ["nexcloud", "monitoring", "dashboard", "collectors"],
+  "preInstallNotes": "It needs NexCloud-collector for collecting Mesos, Marathon metrics and databases such as Influx, MySQL, Redis, Kafka before the installation of Nexcloud-workflow.",
+  "postInstallNotes": "Nexcloud-workflow components is installed!",
+  "postUninstallNotes": "Nexcloudworkflow is uninstalled successfully.",
+  "licenses": [
+    {
+      "name": "Free License",
+      "url": "http://www.nexcloud.co.kr"
+    }
+  ]
+}

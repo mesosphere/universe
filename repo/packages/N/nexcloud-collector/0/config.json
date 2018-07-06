@@ -1,29 +1,30 @@
 {
   "type": "object",
   "properties": {
-    "nexcloudui": {
-      "description": "Nexcloud-UI properties",
+    "collector": {
+      "type": "object",
+      "description": "Nexcloud-collector properties",
       "properties": {
         "name": {
-          "description": "The name of Nexcloud-UI",
+          "description": "The name of Nexcloud-collector",
           "type": "string",
-          "default": "/nexcloud/nexcloudui"
+          "default": "/nexcloud/collecter"
         },
         "cpus": {
           "default": 1,
-          "description": "CPU to allocate to each instance of the Nexcloud-UI.",
+          "description": "CPU to allocate to each instance of the collector.",
           "minimum": 1,
           "type": "number"
         },
         "mem": {
           "default": 2048,
-          "description": "Memory (MB) to allocate to each instance of the Nexcloud-UI.",
+          "description": "Memory (MB) to allocate to each instance of the collector.",
           "minimum": 1024,
           "type": "integer"
         },
         "instances": {
           "default": 1,
-          "description": "Number of Nexcloud-UI to run.",
+          "description": "Number of collector to run.",
           "minimum": 1,
           "type": "integer"
         }

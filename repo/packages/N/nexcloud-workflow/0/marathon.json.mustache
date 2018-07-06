@@ -1,5 +1,5 @@
 {
-	"id": "{{nexcloudui.name}}",
+	"id": "{{workflow.name}}",
 	"backoffFactor": 1.15,
 	"backoffSeconds": 1,
 	"container": {
@@ -8,19 +8,19 @@
 				"containerPort": 9000,
 				"hostPort": 0,
 				"protocol": "tcp",
-				"servicePort": 10015
+				"servicePort": 10115
 			}
 		],
 		"type": "DOCKER",
 		"volumes": [],
 		"docker": {
-			"image": "{{resource.assets.container.docker.nexcloudui}}",
+			"image": "{{resource.assets.container.docker.workflow}}",
 			"forcePullImage": true,
 			"privileged": false,
 			"parameters": []
 		}
 	},
-	"cpus": {{nexcloudui.cpus}},
+	"cpus": {{workflow.cpus}},
 	"disk": 0,
 	"env": {
 		"REDIS_HOST": "redis.marathon.l4lb.thisdcos.directory",
@@ -43,9 +43,9 @@
 			"path": "/v1/check/"
 		}
 	],
-	"instances": {{nexcloudui.instances}},
+	"instances": {{workflow.instances}},
 	"maxLaunchDelaySeconds": 3600,
-	"mem": {{nexcloudui.mem}},
+	"mem": {{workflow.mem}},
 	"gpus": 0,
 	"networks": [
 		{
@@ -59,8 +59,8 @@
 	},
 	"killSelection": "YOUNGEST_FIRST",
 	"unreachableStrategy": {
-		"inactiveAfterSeconds": 0,
-		"expungeAfterSeconds": 0
+		"inactiveAfterSeconds": 300,
+		"expungeAfterSeconds": 600
 	},
 	"fetch": [],
 	"constraints": []
