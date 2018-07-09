@@ -3,7 +3,7 @@
   "properties": {
     "service": {
       "type": "object",
-      "description": "DC/OS Jupyter comes with a handful of pre-installed packages for data scientists. Since version 0.16.1 there is also GPU support included. Pre-Installed packages include: BeakerX 0.20.1, H5PY 2.7.1, Keras 2.1.5, Numpy 1.14.2, Pandas 0.22.0, PySpark 2.3.0, Scikit-Learn 0.19.1, TensorFlow & TensorBoard 1.7.0, XLRD 1.1.0",
+      "description": "The JupyterLab Notebook Service for Mesosphere DC/OS comes with a variety of pre-installed packages. Further information can be found here https://github.com/dcos/examples/blob/dcos-labs-jupyter-service/jupyter/1.11/README.md",
       "properties": {
         "name": {
           "description": "Name of this service instance.",
@@ -13,7 +13,7 @@
         "cmd": {
           "description": "",
           "type": "string",
-          "default": "export SPARK_CONF_SPARK_EXECUTORENV_CLASSPATH=\"spark.executorEnv.CLASSPATH=$(${HADOOP_HDFS_HOME}/bin/hadoop classpath --glob):${CLASSPATH}\" && export SPARK_CONF_SPARK_EXECUTORENV_LD_LIBRARY_PATH=\"spark.executorEnv.LD_LIBRARY_PATH=${LD_LIBRARY_PATH}\" && /usr/local/bin/start.sh ${CONDA_DIR}/bin/jupyter lab --notebook-dir=\"/mnt/mesos/sandbox\""
+          "default": "/usr/local/bin/start.sh ${CONDA_DIR}/bin/jupyter lab --notebook-dir=\"/mnt/mesos/sandbox\""
         },
         "cpus": {
           "description": "CPU shares to allocate to each service instance.",
