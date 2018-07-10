@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/zeppelin-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/zeppelin-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/zeppelin-icon-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "zeppelin": "mesosphere/zeppelin:1.0-0.8.0-all-2.2.1"
+      }
+    }
+  }
+}
