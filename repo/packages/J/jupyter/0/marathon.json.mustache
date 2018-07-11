@@ -147,13 +147,13 @@
   {{#storage.hdfs_support}}
   "fetch": [
     {
-      "uri": "http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml",
+      "uri": "{{storage.hdfs_core_url}}",
       "executable": false,
       "extract": false,
       "cache": false
     },
     {
-      "uri": "http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml",
+      "uri": "{{storage.hdfs_site_url}}",
       "executable": false,
       "extract": false,
       "cache": false
