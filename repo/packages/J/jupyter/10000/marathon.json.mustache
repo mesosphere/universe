@@ -11,6 +11,24 @@
   {{^networking.cni_support.enabled}}
   "container": {
     "type": "MESOS",
+    "volumes": [
+        {{#storage.persistence.enable}}
+            {
+            "persistent": {
+            "type": "root",
+            "size": {{storage.persistence.host_volume_size}},
+            "constraints": []
+            },
+            "mode": "RW",
+            "containerPath": "persistent_data"
+            },
+            {
+            "containerPath": "/mnt/mesos/sandbox/persistent_data",
+            "hostPath": "persistent_data",
+            "mode": "RW"
+            }
+        {{/storage.persistence.enable}}
+        ],
     "docker": {
      {{#service.gpu_support.enabled}}
      "image": "{{resource.assets.container.docker.jupyter-docker-gpu}}",
@@ -25,6 +43,24 @@
   {{#networking.cni_support.enabled}}
   "container": {
     "type": "MESOS",
+    "volumes": [
+    {{#storage.persistence.enable}}
+        {
+        "persistent": {
+        "type": "root",
+        "size": {{storage.host_volume_size}},
+        "constraints": []
+        },
+        "mode": "RW",
+        "containerPath": "persistent_data"
+        },
+        {
+        "containerPath": "/mnt/mesos/sandbox/persistent_data",
+        "hostPath": "persistent_data",
+        "mode": "RW"
+        }
+    {{/storage.persistence.enable}}
+    ],
     "docker": {
       {{#service.gpu_support.enabled}}
       "image": "{{resource.assets.container.docker.jupyter-docker-gpu}}",
@@ -301,12 +337,14 @@
       "maxConsecutiveFailures": 3
     }
   ],
-  "upgradeStrategy": {
-    "minimumHealthCapacity": 0,
-    "maximumOverCapacity": 0
-  },
+  {{^storage.persistence.enable}}
   "unreachableStrategy": {
     "expungeAfterSeconds": 0,
     "inactiveAfterSeconds": 0
+  },
+  {{/storage.persistence.enable}}
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
   }
 }

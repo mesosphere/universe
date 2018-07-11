@@ -4,17 +4,14 @@
     "icon-medium": "https://downloads.mesosphere.com/jupyter/assets/jupyter-logo.svg",
     "icon-large": "https://downloads.mesosphere.com/jupyter/assets/jupyter-logo.svg",
     "screenshots": [
-      "https://downloads.mesosphere.com/beakerx/assets/jupyter-screenshot.png"
+      "https://downloads.mesosphere.com/jupyter/assets/jupyter-screenshot.png"
     ]
   },
   "assets": {
-    "uris": {
-      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz"
-    },
     "container": {
       "docker": {
-        "jupyter-docker": "dcoslabs/dcos-jupyter:latest",
-        "jupyter-docker-gpu": "dcoslabs/dcos-jupyter:latest-gpu"
+        "jupyter-docker": "dcoslabs/dcos-jupyter:1.11.3-0.32.1",
+        "jupyter-docker-gpu": "dcoslabs/dcos-jupyter:1.11.3-0.32.1-gpu"
       }
     }
   }
