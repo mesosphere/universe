@@ -300,12 +300,12 @@
         "hdfs_core_url": {
           "description": "URL which serves core-site.xml .",
           "type": "string",
-          "default": "http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml"
+          "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml"
         },
         "hdfs_site_url": {
           "description": "URL which serves hdfs-site.xml .",
           "type": "string",
-          "default": "http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml"
+          "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml"
         },
 
         "persistence": {
