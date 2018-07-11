@@ -3,7 +3,7 @@
   "properties": {
     "service": {
       "type": "object",
-      "description": "DC/OS Jupyter comes with a handful of pre-installed packages for data scientists. Since version 0.16.1 there is also GPU support included. Pre-Installed packages include: BeakerX 0.20.1, H5PY 2.7.1, Keras 2.1.5, Numpy 1.14.2, Pandas 0.22.0, PySpark 2.3.0, Scikit-Learn 0.19.1, TensorFlow & TensorBoard 1.7.0, XLRD 1.1.0",
+      "description": "The JupyterLab Notebook Service for Mesosphere DC/OS comes with a variety of pre-installed packages. Further information can be found here https://github.com/dcos/examples/blob/dcos-labs-jupyter-service/jupyter/1.11/README.md",
       "properties": {
         "name": {
           "description": "Name of this service instance.",
@@ -13,7 +13,7 @@
         "cmd": {
           "description": "",
           "type": "string",
-          "default": "export SPARK_CONF_SPARK_EXECUTORENV_CLASSPATH=\"spark.executorEnv.CLASSPATH=$(${HADOOP_HDFS_HOME}/bin/hadoop classpath --glob):${CLASSPATH}\" && export SPARK_CONF_SPARK_EXECUTORENV_LD_LIBRARY_PATH=\"spark.executorEnv.LD_LIBRARY_PATH=${LD_LIBRARY_PATH}\" && /usr/local/bin/start.sh ${CONDA_DIR}/bin/jupyter lab --notebook-dir=\"/mnt/mesos/sandbox\""
+          "default": "/usr/local/bin/start.sh ${CONDA_DIR}/bin/jupyter lab --notebook-dir=\"/mnt/mesos/sandbox\""
         },
         "cpus": {
           "description": "CPU shares to allocate to each service instance.",
@@ -44,7 +44,7 @@
           }
         },
         "mem": {
-          "description": "Memory to allocate to each service instance in MB.",
+          "description": "Memory to allocate to the service instance in MB.",
           "type": "number",
           "default": 8192.0,
           "minimum": 1024.0
@@ -148,7 +148,7 @@
         "spark_driver_cores": {
           "description": "Spark Driver Core Count.",
           "type": "number",
-          "default": 2,
+          "default": 1,
           "minimum": 0
         },
         "spark_driver_memory": {
@@ -194,7 +194,7 @@
         "spark_conf_eventlog_dir": {
           "description": "Spark Configuration Event Log Directory.",
           "type": "string",
-          "default": "spark.eventLog.dir=s3a://your-dcos-aws/spark/history"
+          "default": "spark.eventLog.dir=hdfs://hdfs/app/spark/2.3.1/logs"
         },
         "spark_conf_hadoop_fs_s3a_aws_credentials_provider": {
           "description": "Spark Configuration Hadoop S3 AWS Credentials Provider.",
@@ -274,7 +274,7 @@
         "spark_conf_mesos_uri": {
           "description": "Spark Mesos URIs.",
           "type": "string",
-          "default": "spark.mesos.uris=http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml,http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml"
+          "default": "spark.mesos.uris="
         },
         "spark_mesos_conf_krb5_config": {
           "description": "Spark Mesos KRB5 Configuration.",
@@ -295,17 +295,17 @@
         "hdfs_support": {
           "description": "Enable or disable HDFS.",
           "type": "boolean",
-          "default": false
+          "default": true
         },
         "hdfs_core_url": {
           "description": "URL which serves core-site.xml .",
           "type": "string",
-          "default": "http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml"
+          "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml"
         },
         "hdfs_site_url": {
           "description": "URL which serves hdfs-site.xml .",
           "type": "string",
-          "default": "http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml"
+          "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml"
         },
 
         "persistence": {
@@ -315,12 +315,12 @@
             "host_volume_size": {
               "description": "Size of the persistent volume in MB.",
               "type": "number",
-              "default": 4000
+              "default": 8192
             },
             "enable": {
               "description": "Enable or disable persistent storage.",
               "type": "boolean",
-              "default": false
+              "default": true
             }
           }
         }
@@ -419,7 +419,7 @@
         "jupyter_password": {
           "description": "Your Jupyter Password.",
           "type": "string",
-          "default": ""
+          "default": "dcos"
         },
         "jupyter_runtime_dir": {
           "description": "Your Jupyter Runtime Directory.",

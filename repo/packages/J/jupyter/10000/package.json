@@ -2,8 +2,8 @@
   "packagingVersion": "3.0",
   "minDcosReleaseVersion": "1.11",
   "name": "jupyter",
-  "version": "1.11.3-0.32.1",
-  "scm": "https://github.com/dcos-labs/dcos-jupyter-service",
+  "version": "leo-1.11.3-0.32.1",
+  "scm": "https://github.com/dcos-labs/dcos-jupyter-service/releases/tag/v1.11.3-0.32.1",
   "maintainer": "https://dcos.io/community",
   "website": "http://jupyter.org",
   "description": "The Jupyter Notebook is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. Uses include: data cleaning and transformation, numerical simulation, statistical modeling, data visualization, machine learning, and much more. Installation Documentation: https://github.com/dcos/examples/tree/master/jupyter",
@@ -13,8 +13,8 @@
   "postUninstallNotes": "Service uninstalled. Note that any persisting data will be automatically removed from the agent where the service was deployed.",
   "licenses": [
     {
-      "name": "Apache License",
-      "url": "http://en.wikipedia.org/wiki/Apache_License"
+      "name": "GNU General Public License (GPL) version 3",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.en.html"
     }
   ]
 }

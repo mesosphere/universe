@@ -147,13 +147,13 @@
   {{#storage.hdfs_support}}
   "fetch": [
     {
-      "uri": "http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml",
+      "uri": "{{storage.hdfs_core_url}}",
       "executable": false,
       "extract": false,
       "cache": false
     },
     {
-      "uri": "http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml",
+      "uri": "{{storage.hdfs_site_url}}",
       "executable": false,
       "extract": false,
       "cache": false
@@ -232,7 +232,7 @@
     "SPARK_CONF_SPARK_EXECUTORENV_KRB5_CONFIG": "{{spark.spark_conf_executor_krb5_config}}",
     "SPARK_CONF_SPARK_EXECUTORENV_JAVA_HOME": "{{spark.spark_conf_executor_java_home}}",
     "SPARK_CONF_SPARK_EXECUTORENV_HADOOP_HDFS_HOME": "{{spark.spark_conf_executor_hadoop_hdfs_home}}",
-    "SPARK_CONF_SPARK_MESOS_URIS": "{{spark.spark_conf_mesos_uri}}",
+    "SPARK_CONF_SPARK_MESOS_URIS": "{{spark.spark_conf_mesos_uri}}{{storage.hdfs_site_url}},{{storage.hdfs_core_url}}",
     "SPARK_CONF_SPARK_EXECUTORENV_HADOOP_OPTS": "{{spark.spark_conf_executor_hadoop_opts}}",
     "SPARK_MESOS_KRB5_CONF_BASE64": "{{spark.spark_mesos_conf_krb5_config}}",
     "START_DASK_DISTRIBUTED": "{{environment.start_dask_distributed}}",
