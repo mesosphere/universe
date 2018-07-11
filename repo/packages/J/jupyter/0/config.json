@@ -44,7 +44,7 @@
           }
         },
         "mem": {
-          "description": "Memory to allocate to each service instance in MB.",
+          "description": "Memory to allocate to the service instance in MB.",
           "type": "number",
           "default": 8192.0,
           "minimum": 1024.0
@@ -274,7 +274,7 @@
         "spark_conf_mesos_uri": {
           "description": "Spark Mesos URIs.",
           "type": "string",
-          "default": "spark.mesos.uris=http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml,http://api.devhdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml"
+          "default": "spark.mesos.uris="
         },
         "spark_mesos_conf_krb5_config": {
           "description": "Spark Mesos KRB5 Configuration.",
