@@ -5,15 +5,6 @@
   "mem": {{service.mem}},
   "instances": {{service.instances}},
   "constraints": [["hostname", "UNIQUE"]],
-  "ports": [
-    {{#marathon.http-port}}{{marathon.http-port}}{{/marathon.http-port}}{{^marathon.http-port}}0{{/marathon.http-port}}
-    , 0
-    {{#marathon.ssl-keystore-path}}
-    {{#marathon.ssl-keystore-password}}
-    , {{#marathon.https-port}}{{marathon.https-port}}{{/marathon.https-port}}{{^marathon.https-port}}0{{/marathon.https-port}}
-    {{/marathon.ssl-keystore-password}}
-    {{/marathon.ssl-keystore-path}}
-  ],
   "uris": {{service.uris}},
   "healthChecks": [
     {
@@ -33,6 +24,29 @@
       "network": "HOST"
     }
   },
+  "portDefinitions": [
+    {
+      "port": {{#marathon.http-port}}{{marathon.http-port}}{{/marathon.http-port}}{{^marathon.http-port}}0{{/marathon.http-port}},
+      "protocol": "tcp",
+      "name": "{{service.name}}",
+      "labels": { "VIP_0": "/{{service.name}}:80" }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "libprocess"
+    }
+    {{#marathon.ssl-keystore-path}}
+    {{#marathon.ssl-keystore-password}}
+    ,{
+      "port": {{#marathon.https-port}}{{marathon.https-port}}{{/marathon.https-port}}{{^marathon.https-port}}0{{/marathon.https-port}},
+      "protocol": "tcp",
+      "name": "{{service.name}}-https",
+      "labels": { "VIP_1": "/{{service.name}}:443" }
+    }
+    {{/marathon.ssl-keystore-password}}
+    {{/marathon.ssl-keystore-path}}
+  ],
   "env": {
     "JVM_OPTS": "-Xms{{jvm.heap-min}}m -Xmx{{jvm.heap-max}}m {{#jvm.opts}}{{jvm.opts}}{{/jvm.opts}}"
   },
