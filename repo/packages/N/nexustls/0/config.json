@@ -1,0 +1,75 @@
+{
+    "type": "object",
+    "properties": {
+        "service": {
+            "description": "Service properties for the Nexus service on DC/OS.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "The name of this DC/OS service.",
+                    "type": "string",
+                    "default": "nexus-centos"
+                },
+                "cpus": {
+                    "description": "CPU shares to allocate to Nexus.",
+                    "type": "number",
+                    "default": 2.0,
+                    "minimum": 1.0
+                },
+                "mem": {
+                    "description": "Memory (in MB) to allocate to Nexus.",
+                    "type": "number",
+                    "default": 2048.0,
+                    "minimum": 1024.0
+                }
+            },
+            "required": [
+                "name",
+                "cpus",
+                "mem"
+            ]
+        },
+        "docker": {
+            "description": "Docker image configuration for the Nexus service",
+            "type": "object",
+            "properties": {
+                "repository": {
+                    "description": "The Docker repository URL (including port, if applicable)",
+                    "type": "string"
+                },
+                "image": {
+                    "description": "The Docker image name",
+                    "type": "string"
+                },
+                "tag": {
+                    "description": "The Docker image tag",
+                    "type": "string",
+                    "default": "latest"
+                }
+            },
+            "required": [
+                "repository",
+                "image",
+                "tag"
+            ]
+        },
+        "tlsconfig": {
+            "description": "SSL/TLS configuration for the Nexus service",
+            "type": "object",
+            "properties": {
+                "CN": {
+                    "description": "The Common Name for the TLS layer",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "CN"
+            ]
+        }
+    },
+    "required": [
+        "service",
+        "docker",
+        "tlsconfig"
+    ]
+}

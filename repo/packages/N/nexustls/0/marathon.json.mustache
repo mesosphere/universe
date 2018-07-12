@@ -1,0 +1,96 @@
+{
+    "labels": {
+        "HAPROXY_0_VHOST": "{{ tlsconfig.CN }}",
+        "HAPROXY_GROUP": "external",
+        "DCOS_SERVICE_NAME": "{{ service.name }}",
+        "DCOS_SERVICE_PORT_INDEX": "1",
+        "DCOS_SERVICE_SCHEME": "https"
+    },
+    "id": "/{{ service.name }}",
+    "acceptedResourceRoles": [
+        "*"
+    ],
+    "backoffFactor": 1.15,
+    "backoffSeconds": 1,
+    "container": {
+        "portMappings": [{
+            "containerPort": 80,
+            "hostPort": 10080,
+            "labels": {
+                "VIP_0": "/{{ service.name }}:80"
+            },
+            "protocol": "tcp",
+            "servicePort": 10000,
+            "name": "http"
+        }, {
+            "containerPort": 443,
+            "hostPort": 10443,
+            "labels": {
+                "VIP_1": "/{{ service.name }}:443"
+            },
+            "protocol": "tcp",
+            "servicePort": 10001,
+            "name": "https"
+        }, {
+            "containerPort": 9081,
+            "hostPort": 19081,
+            "labels": {
+                "VIP_2": "/{{ service.name }}:9081"
+            },
+            "protocol": "tcp",
+            "servicePort": 10002,
+            "name": "docker"
+        }],
+        "type": "DOCKER",
+        "volumes": [{
+            "persistent": {
+                "size": 10240
+            },
+            "mode": "RW",
+            "containerPath": "opt"
+        }],
+        "docker": {
+            "image": "{{ docker_repotag }}",
+            "forcePullImage": true,
+            "privileged": false,
+            "parameters": [{
+                    "key": "volume",
+                    "value": "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+                },
+                {
+                    "key": "tmpfs",
+                    "value": "/run"
+                }
+            ]
+        }
+    },
+    "cpus": "{{ service.cpus }}",
+    "disk": 0,
+    "healthChecks": [{
+        "gracePeriodSeconds": 600,
+        "intervalSeconds": 60,
+        "maxConsecutiveFailures": 3,
+        "portIndex": 0,
+        "timeoutSeconds": 20,
+        "delaySeconds": 15,
+        "protocol": "MESOS_HTTP",
+        "path": "/",
+        "ipProtocol": "IPv4"
+    }],
+    "instances": 1,
+    "maxLaunchDelaySeconds": 3600,
+    "mem": "{{ service.mem }}",
+    "gpus": 0,
+    "networks": [{
+        "mode": "container/bridge"
+    }],
+    "requirePorts": false,
+    "upgradeStrategy": {
+        "maximumOverCapacity": 0,
+        "minimumHealthCapacity": 1
+    },
+    "killSelection": "YOUNGEST_FIRST",
+    "fetch": [],
+    "constraints": [],
+    "unreachableStrategy": "disabled"
+}
