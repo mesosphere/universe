@@ -1,10 +1,10 @@
 {
-  "description": "The Gestalt Framework is a solution for building enterprise-grade cloud-native applications using containers and lambdas.",
+  "description": "The Gestalt Framework is a solution for building enterprise-grade cloud-native applications using containers and lambdas. See https://github.com/dcos/examples/tree/master/gestalt",
   "framework": false,
   "maintainer": "team@galacticfog.com",
   "minDcosReleaseVersion": "1.10",
   "name": "gestalt-framework",
-  "packagingVersion" : "3.0",
+  "packagingVersion" : "4.0",
   "preInstallNotes": "This DC/OS Service is currently in preview. Requires DC/OS 1.10.3 or later. Please see the Getting Started guide at http://docs.galacticfog.com/",
   "postInstallNotes": "The Gestalt Framework is now running on your server.",
   "postUninstallNotes": "The gestalt-framework launcher has been uninstalled.\nIf the framework services were not shutdown from the launcher, they will need to be manually removed from Marathon.",
