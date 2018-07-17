@@ -30,6 +30,13 @@
           "VIP_0": "/{{service.name}}:4567"
         },
         "protocol": "tcp"
+      }, {
+        "containerPort": 48555,
+        "hostPort": 0,
+        "labels": {
+          "VIP_1": "/{{service.name}}:48555"
+        },
+        "protocol": "tcp"
       }
     ],
     "volumes": [],
