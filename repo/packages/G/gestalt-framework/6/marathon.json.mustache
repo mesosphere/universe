@@ -1,0 +1,101 @@
+{
+  "id": "/{{service.name}}/dcos-launcher",
+  "cmd": "./bin/gestalt-dcos -Dmeta.company-name=\"{{meta.company-name}}\" {{#service.debug-logging}}-Dlogger.resource=debug-logging.xml{{/service.debug-logging}}",
+  "maintainer": "support@galacticfog.com",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "galacticfog/gestalt-dcos:{{service.framework-version}}",
+      "network": "BRIDGE",
+      "portMappings": [
+        {"containerPort": 9000, "name": "dashboard"}
+      ],
+      "forcePullImage": true
+    }
+  },
+  "env": {
+    "JVM_OPTS": "-Xmx384m",
+    "GESTALT_FRAMEWORK_VERSION": "{{service.framework-version}}",
+
+    "MARATHON_APP_GROUP": "{{service.name}}",
+    "MARATHON_URL": "{{service.marathon-url}}",
+    {{#service.tld}}    "MARATHON_TLD":    "{{service.tld}}",   {{/service.tld}} 
+    {{#service.lb-url}} "MARATHON_LB_URL": "{{service.lb-url}}", {{/service.lb-url}} 
+    {{#service.sa-secret}}
+      "DCOS_AUTH_METHOD": "acs",
+      "DCOS_ACS_SERVICE_ACCT_CREDS": {
+        "secret": "sa-secret"
+      },
+      "DCOS_PERMISSIVE_HTTPS": "true",
+    {{/service.sa-secret}}
+
+    "DATABASE_USERNAME":  "{{database.username}}",
+    "DATABASE_PASSWORD":  "{{database.password}}",
+    "DATABASE_PROVISION": "{{database.provision}}",
+    {{#database.hostname}}           "DATABASE_HOSTNAME":           "{{database.hostname}}",           {{/database.hostname}}
+    {{#database.num-secondaries}}    "DATABASE_NUM_SECONDARIES":    "{{database.num-secondaries}}",    {{/database.num-secondaries}}
+    {{#database.port}}               "DATABASE_PORT":               "{{database.port}}",               {{/database.port}}
+    {{#database.prefix}}             "DATABASE_PREFIX":             "{{database.prefix}}",             {{/database.prefix}}
+    {{#database.provisioned-cpu}}    "DATABASE_PROVISIONED_CPU":    "{{database.provisioned-cpu}}",    {{/database.provisioned-cpu}}
+    {{#database.provisioned-memory}} "DATABASE_PROVISIONED_MEMORY": "{{database.provisioned-memory}}", {{/database.provisioned-memory}}
+    {{#database.provisioned-size}}   "DATABASE_PROVISIONED_SIZE":   "{{database.provisioned-size}}",   {{/database.provisioned-size}}
+
+    "SECURITY_USERNAME": "{{security.admin-username}}",
+    "SECURITY_PASSWORD": "{{security.admin-password}}",
+
+    "LASER_ENABLE_JS_RUNTIME":     "{{laser.enable-js-runtime}}",
+    "LASER_ENABLE_NODEJS_RUNTIME": "{{laser.enable-nodejs-runtime}}",
+    "LASER_ENABLE_JVM_RUNTIME":    "{{laser.enable-jvm-runtime}}",
+    "LASER_ENABLE_DOTNET_RUNTIME": "{{laser.enable-dotnet-runtime}}",
+    "LASER_ENABLE_RUBY_RUNTIME":   "{{laser.enable-ruby-runtime}}",
+    "LASER_ENABLE_PYTHON_RUNTIME": "{{laser.enable-python-runtime}}",
+    "LASER_ENABLE_GOLANG_RUNTIME": "{{laser.enable-golang-runtime}}",
+    "LASER_ENABLE_BASH_RUNTIME":   "{{laser.enable-bash-runtime}}",
+
+    "LASER_SCALE_DOWN_TIMEOUT": "{{laser.scale-down-timeout}}",
+    "LASER_MIN_COOL_EXECUTORS": "{{laser.min-cool-executors}}",
+
+    "LOGGING_ES_CLUSTER_NAME": "{{logging.es-cluster-name}}",
+    {{#logging.es-host}}          "LOGGING_ES_HOST":           "{{logging.es-host}}",          {{/logging.es-host}}
+    {{#logging.es-port-transport}}"LOGGING_ES_PORT_TRANSPORT": "{{logging.es-port-transport}}",{{/logging.es-port-transport}}
+    {{#logging.es-port-rest}}     "LOGGING_ES_PORT_REST":      "{{logging.es-port-rest}}",     {{/logging.es-port-rest}}
+    {{#logging.es-protocol}}      "LOGGING_ES_PROTOCOL":       "{{logging.es-protocol}}",      {{/logging.es-protocol}}
+    {{#logging.dcos-port}}        "LOG_DCOS_PORT":             "{{logging.dcos-port}}",        {{/logging.dcos-port}}
+    {{#logging.dcos-protocol}}    "LOG_DCOS_PROTOCOL":         "{{logging.dcos-protocol}}",    {{/logging.dcos-protocol}}
+    "LOGGING_PROVISION_PROVIDER": "{{logging.provision-provider}}",
+    "LOGGING_CONFIGURE_LASER": "{{logging.configure-laser}}",
+    "LOGGING_PROVISION_ELASTIC": "{{logging.provision-es}}"
+  },
+  "cpus": 1.00,
+  "mem": 768,
+  "instances": 1,
+  "secrets": {
+    {{#service.sa-secret}}
+    "sa-secret": {
+      "source": "{{service.sa-secret}}"
+    }
+    {{/service.sa-secret}}
+  },
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  },
+  {{#service.role}}
+     "acceptedResourceRoles": [
+       "{{service.role}}"
+     ],
+  {{/service.role}}
+  "healthChecks": [{
+    "protocol": "HTTP",
+    "path": "/_gfhealth",
+    "portIndex": 0,
+    "gracePeriodSeconds": 60,
+    "intervalSeconds": 30,
+    "maxConsecutiveFailures": 0
+  }],
+  "upgradeStrategy": {
+    "maximumOverCapacity": 0,
+    "minimumHealthCapacity": 0
+  }
+}
