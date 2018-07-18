@@ -148,7 +148,7 @@
         "spark_driver_cores": {
           "description": "Spark Driver Core Count.",
           "type": "number",
-          "default": 1,
+          "default": 2,
           "minimum": 0
         },
         "spark_driver_memory": {
@@ -194,7 +194,7 @@
         "spark_conf_eventlog_dir": {
           "description": "Spark Configuration Event Log Directory.",
           "type": "string",
-          "default": "spark.eventLog.dir=hdfs://hdfs/app/spark/2.3.1/logs"
+          "default": "spark.eventLog.dir=s3a://your-dcos-aws/spark/history"
         },
         "spark_conf_hadoop_fs_s3a_aws_credentials_provider": {
           "description": "Spark Configuration Hadoop S3 AWS Credentials Provider.",
@@ -295,7 +295,7 @@
         "hdfs_support": {
           "description": "Enable or disable HDFS.",
           "type": "boolean",
-          "default": true
+          "default": false
         },
         "hdfs_core_url": {
           "description": "URL which serves core-site.xml .",
@@ -315,12 +315,12 @@
             "host_volume_size": {
               "description": "Size of the persistent volume in MB.",
               "type": "number",
-              "default": 8192
+              "default": 4000
             },
             "enable": {
               "description": "Enable or disable persistent storage.",
               "type": "boolean",
-              "default": true
+              "default": false
             }
           }
         }
@@ -419,7 +419,7 @@
         "jupyter_password": {
           "description": "Your Jupyter Password.",
           "type": "string",
-          "default": "dcos"
+          "default": ""
         },
         "jupyter_runtime_dir": {
           "description": "Your Jupyter Runtime Directory.",
