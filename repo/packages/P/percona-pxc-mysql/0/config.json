@@ -1,0 +1,207 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "percona-pxc-mysql",
+          "title": "Service name"
+        },
+        "cluster_name": {
+          "description": "Specifies the name of the cluster and should be identical on all nodes.",
+          "type": "string",
+          "default": "cluster1"
+        },
+        "mysql_root_password": {
+          "description": "Specifies the password for mysql cluster",
+          "type": "string",
+          "default": "root"
+        },
+        "user": {
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "root",
+          "title": "User"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": "",
+          "title": "Credential secret name (optional)"
+        },
+        "ssl_enabled": {
+          "description": "Enables SSL support for Percona XtraDB Cluster",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        },
+        "mesos_api_version": {
+          "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)",
+          "type": "string",
+          "enum": [
+            "V0",
+            "V1"
+          ],
+          "default": "V1"
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        }
+      },
+      "required": [
+        "name",
+        "user"
+      ]
+    },
+    "pxc": {
+      "description": "Template pod configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of Template pods to run",
+          "type": "integer",
+          "default": 3
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]",
+          "type": "string",
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Template pod CPU requirements",
+          "type": "number",
+          "default": 0.1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Template pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 252
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "Template pod persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 25
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "port": {
+          "description": "Port for broker to listen on",
+          "type": "integer",
+          "default": 3306
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "disk_type"
+      ]
+    },
+    "proxysql": {
+      "description": "Template pod configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Proxysql Node count",
+          "description": "Number of Template pods to run",
+          "type": "integer",
+          "default": 1
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]",
+          "type": "string",
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Template pod CPU requirements",
+          "type": "number",
+          "default": 0.1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Template pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 252
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "Template pod persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 25
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "disk_type"
+      ]
+    }
+  }
+}
