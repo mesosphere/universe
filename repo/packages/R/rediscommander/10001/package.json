@@ -1,0 +1,15 @@
+{
+  "packagingVersion": "4.0",
+  "minDcosReleaseVersion": "1.7",
+  "name": "rediscommander",
+  "version": "leo-1.0.1-0.4.5",
+  "tags": ["redis", "manager"],
+  "maintainer": "https://github.com/joeferner",
+  "description": "A node.js web application used to view, edit, and manage a Redis Database",
+  "scm": "https://github.com/joeferner/redis-commander",
+  "website": "http://joeferner.github.io/redis-commander/",
+  "framework": false,
+  "preInstallNotes": "This DC/OS Service is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Experimental packages should never be used in production!",
+  "postInstallNotes": "redis-commander service installed.",
+  "postUninstallNotes": "redis-commander service uninstalled."
+}
