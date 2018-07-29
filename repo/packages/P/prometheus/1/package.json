@@ -17,7 +17,7 @@
         "prometheus", 
         "monitoring"
     ], 
-    "preInstallNotes": "Default configuration requires 2 agent nodes each with: 2.0 CPU | 4096 MB MEM | 1 25000 MB Disk.", 
+    "preInstallNotes": "Default configuration requires 2 agent nodes each with: 2.0 CPU | 4096 MB MEM | 1 25000 MB Disk. \n\nThis is a certified framework candidate currently in beta and should not be used in any production environment. There may be bugs or incomplete documentation for this framework and any support provided will be on a reasonable effort basis.", 
     "postInstallNotes": "DC/OS Prometheus is being installed!", 
     "postUninstallNotes": "DC/OS Prometheus is being uninstalled."
 }
