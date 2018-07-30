@@ -1,0 +1,14 @@
+{
+  "assets": {
+    "uris": {
+      "traefik-bin": "https://github.com/containous/traefik/releases/download/v1.6.5/traefik_linux-amd64",
+      "confd-bin": "https://github.com/kelseyhightower/confd/releases/download/v0.16.0/confd-0.16.0-linux-amd64",
+      "bootstrap": "https://github.com/deric/dcos-traefik/archive/v1.1.1.tar.gz"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/traefik-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/traefik-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/traefik-icon-large.png"
+  }
+}
