@@ -1,0 +1,19 @@
+{
+ "packagingVersion": "3.0",
+ "name": "grakn",
+ "version": "leo-1.0.1-1.3.0",
+ "maintainer": "leo@cdpq.com",
+ "description": "This is a single grakn container, which is a knowledge graph to organise complex networks of data and make it queryable. See documentation for more details: https://github.com/graknlabs/grakn ",
+ "website": "https://grakn.ai/",
+ "framework": false,
+ "tags": ["mesosphere", "service", "storage"],
+ "licenses": [
+   {
+     "name": "BSD",
+     "url": "http://en.wikipedia.org/wiki/BSD_License"
+   }
+ ],
+ "postInstallNotes": "Grakn installed!",
+ "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.",
+ "postUninstallNotes": "Thank you for using Grakn"
+}
