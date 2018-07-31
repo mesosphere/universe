@@ -8,17 +8,17 @@
         "name": {
           "description": "Name of this service instance.",
           "type": "string",
-          "default": "/jupyter-notebook"
+          "default": "/jupyterlab-notebook"
         },
         "cmd": {
           "description": "",
           "type": "string",
-          "default": "/usr/local/bin/start.sh ${CONDA_DIR}/bin/jupyter lab --notebook-dir=\"/mnt/mesos/sandbox\""
+          "default": "/usr/local/bin/start.sh ${CONDA_DIR}/bin/jupyter lab --notebook-dir=${MESOS_SANDBOX}"
         },
         "cpus": {
           "description": "CPU shares to allocate to each service instance.",
           "type": "number",
-          "default": 1,
+          "default": 2,
           "minimum": 1
         },
         "force_pull": {
@@ -131,6 +131,34 @@
         }
       }
     },
+    "s3": {
+      "type": "object",
+      "description": "S3 Configuration.",
+      "properties": {
+        "aws_region": {
+          "description": "Your AWS Region.",
+          "type": "string",
+          "default": "us-east-1"
+        },
+        "s3_endpoint": {
+          "description": "Your S3 endpoint.",
+          "type": "string",
+          "default": "s3.us-east-1.amazonaws.com"
+        },
+        "s3_https": {
+          "description": "Enable S3 HTTPS.\n\nNote: Set 1 for true and 0 for false.",
+          "type": "number",
+          "default": 1,
+          "minimum": 0
+        },
+        "s3_ssl": {
+          "description": "Your S3 SSL Verification.\n\nNote: Set 1 for true and 0 for false.",
+          "type": "number",
+          "default": 1,
+          "minimum": 0
+        }
+      }
+    },
     "spark": {
       "type": "object",
       "description": "Spark Configuration.",
@@ -154,12 +182,12 @@
         "spark_driver_memory": {
           "description": "Spark Driver Memory in GB.",
           "type": "string",
-          "default": "4g"
+          "default": "6g"
         },
         "spark_driver_java_options": {
           "description": "Spark Driver Java Options.",
           "type": "string",
-          "default": "\"-XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\""
+          "default": "\"-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\""
         },
         "spark_conf_spark_scheduler": {
           "description": "Spark Configuration Spark Scheduler Minimal Registered Resources Ratio.",
@@ -179,7 +207,7 @@
         "spark_conf_executor_memory": {
           "description": "Spark Configuration Spark Executor Memory Value in GB.",
           "type": "string",
-          "default": "spark.executor.memory=4g"
+          "default": "spark.executor.memory=6g"
         },
         "spark_conf_executor_java_options": {
           "description": "Spark Configuration Spark Executor Java Options.",
@@ -189,12 +217,12 @@
         "spark_conf_eventlog_enabled": {
           "description": "Spark Configuration Event Log.",
           "type": "string",
-          "default": "spark.eventLog.enabled=true"
+          "default": "spark.eventLog.enabled=false"
         },
         "spark_conf_eventlog_dir": {
           "description": "Spark Configuration Event Log Directory.",
           "type": "string",
-          "default": "spark.eventLog.dir=s3a://your-dcos-aws/spark/history"
+          "default": "spark.eventLog.dir=hdfs://hdfs/history"
         },
         "spark_conf_hadoop_fs_s3a_aws_credentials_provider": {
           "description": "Spark Configuration Hadoop S3 AWS Credentials Provider.",
@@ -204,7 +232,7 @@
         "spark_conf_mesos_executor_docker_image": {
           "description": "Docker Image for Spark Executor.",
           "type": "string",
-          "default": "spark.mesos.executor.docker.image=vishnumohan/spark-dcos:tfos"
+          "default": "spark.mesos.executor.docker.image=dcoslabs/dcos-spark:latest"
         },
         "spark_conf_mesos_executor_home": {
           "description": "Spark Mesos Executor Home Directory.",
@@ -216,35 +244,15 @@
           "type": "string",
           "default": "spark.mesos.containerizer=mesos"
         },
-        "spark_conf_mesos_principle": {
-          "description": "Spark Mesos Principle.",
-          "type": "string",
-          "default": "spark.mesos.principal=dev_jupyter"
-        },
-        "spark_conf_mesos_role": {
-          "description": "Spark Mesos Role.",
-          "type": "string",
-          "default": "spark.mesos.role=dev-jupyter"
-        },
         "spark_conf_mesos_driver_labels": {
           "description": "Spark Mesos Driver Labels.",
           "type": "string",
-          "default": "spark.mesos.driver.labels=DCOS_SPACE:/dev/jupyter"
+          "default": "spark.mesos.driver.labels=DCOS_SPACE:"
         },
         "spark_conf_mesos_task_labels": {
           "description": "Spark Mesos Task Labels.",
           "type": "string",
-          "default": "spark.mesos.task.labels=DCOS_SPACE:/dev/jupyter"
-        },
-        "spark_conf_mesos_conf_base64": {
-          "description": "Spark Mesos Driver Environment Spark Mesos KRB5 Configuration Base64.",
-          "type": "string",
-          "default": "spark.mesos.driverEnv.SPARK_MESOS_KRB5_CONF_BASE64=W2xpYmRlZmF1bHRzXQoJZGVmYXVsdF9yZWFsbSA9IEFUSEVOQS5NSVQuRURVCgpbcmVhbG1zXQojIHVzZSAia2RjID0gLi4uIiBpZiByZWFsbSBhZG1pbnMgaGF2ZW4ndCBwdXQgU1JWIHJlY29yZHMgaW50byBETlMKCUFUSEVOQS5NSVQuRURVID0gewoJCWFkbWluX3NlcnZlciA9IGtlcmJlcm9zLm1pdC5lZHUKCX0KCUFORFJFVy5DTVUuRURVID0gewoJCWFkbWluX3NlcnZlciA9IGtkYy0wMS5hbmRyZXcuY211LmVkdQoJfQoKW2RvbWFpbl9yZWFsbV0KCW1pdC5lZHUgPSBBVEhFTkEuTUlULkVEVQoJY3NhaWwubWl0LmVkdSA9IENTQUlMLk1JVC5FRFUKCS51Y3NjLmVkdSA9IENBVFMuVUNTQy5FRFUKCltsb2dnaW5nXQojCWtkYyA9IENPTlNPTEUK"
-        },
-        "spark_conf_executor_conf_base64": {
-          "description": "Spark Executor Environment Spark Mesos KRB5 Configuration Base64.",
-          "type": "string",
-          "default": "spark.executorEnv.SPARK_MESOS_KRB5_CONF_BASE64=W2xpYmRlZmF1bHRzXQoJZGVmYXVsdF9yZWFsbSA9IEFUSEVOQS5NSVQuRURVCgpbcmVhbG1zXQojIHVzZSAia2RjID0gLi4uIiBpZiByZWFsbSBhZG1pbnMgaGF2ZW4ndCBwdXQgU1JWIHJlY29yZHMgaW50byBETlMKCUFUSEVOQS5NSVQuRURVID0gewoJCWFkbWluX3NlcnZlciA9IGtlcmJlcm9zLm1pdC5lZHUKCX0KCUFORFJFVy5DTVUuRURVID0gewoJCWFkbWluX3NlcnZlciA9IGtkYy0wMS5hbmRyZXcuY211LmVkdQoJfQoKW2RvbWFpbl9yZWFsbV0KCW1pdC5lZHUgPSBBVEhFTkEuTUlULkVEVQoJY3NhaWwubWl0LmVkdSA9IENTQUlMLk1JVC5FRFUKCS51Y3NjLmVkdSA9IENBVFMuVUNTQy5FRFUKCltsb2dnaW5nXQojCWtkYyA9IENPTlNPTEUK"
+          "default": "spark.mesos.task.labels=DCOS_SPACE:"
         },
         "spark_conf_executor_krb5_config": {
           "description": "Spark Executor Environment KRB5 Configuration File.",
@@ -276,11 +284,6 @@
           "type": "string",
           "default": "spark.mesos.uris="
         },
-        "spark_mesos_conf_krb5_config": {
-          "description": "Spark Mesos KRB5 Configuration.",
-          "type": "string",
-          "default": "W2xpYmRlZmF1bHRzXQoJZGVmYXVsdF9yZWFsbSA9IEFUSEVOQS5NSVQuRURVCgpbcmVhbG1zXQojIHVzZSAia2RjID0gLi4uIiBpZiByZWFsbSBhZG1pbnMgaGF2ZW4ndCBwdXQgU1JWIHJlY29yZHMgaW50byBETlMKCUFUSEVOQS5NSVQuRURVID0gewoJCWFkbWluX3NlcnZlciA9IGtlcmJlcm9zLm1pdC5lZHUKCX0KCUFORFJFVy5DTVUuRURVID0gewoJCWFkbWluX3NlcnZlciA9IGtkYy0wMS5hbmRyZXcuY211LmVkdQoJfQoKW2RvbWFpbl9yZWFsbV0KCW1pdC5lZHUgPSBBVEhFTkEuTUlULkVEVQoJY3NhaWwubWl0LmVkdSA9IENTQUlMLk1JVC5FRFUKCS51Y3NjLmVkdSA9IENBVFMuVUNTQy5FRFUKCltsb2dnaW5nXQojCWtkYyA9IENPTlNPTEUK"
-        },
         "spark_user": {
           "description": "Spark Mesos User.",
           "type": "string",
@@ -298,16 +301,15 @@
           "default": false
         },
         "hdfs_core_url": {
-          "description": "URL which serves core-site.xml .",
+          "description": "URL which serves core-site.xml.",
           "type": "string",
           "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml"
         },
         "hdfs_site_url": {
-          "description": "URL which serves hdfs-site.xml .",
+          "description": "URL which serves hdfs-site.xml.",
           "type": "string",
           "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml"
         },
-
         "persistence": {
           "type": "object",
           "description": "Enable persistent storage.",
@@ -350,14 +352,14 @@
               "type": "boolean",
               "default": true
             },
-            "external_public_agent_ip": {
+            "external_public_agent_hostname": {
               "description": "For external access, DNS to be used for Marathon-LB vHost: For example use your public slave ELB DNS.",
               "type": "string",
               "default": ""
             }
           },
           "required": [
-            "external_public_agent_ip"
+            "external_public_agent_hostname"
           ]
         }
       }
@@ -374,12 +376,7 @@
         "service_credential": {
           "description": "DC/OS Service Credential Secret Source.\n\nNote: Enterprise feature only.",
           "type": "string",
-          "default": "dev/jupyter/serviceCredential"
-        },
-        "aws_region": {
-          "description": "Your AWS Region.",
-          "type": "string",
-          "default": "us-east-1"
+          "default": "jupyterlab-notebook/serviceCredential"
         },
         "conda_envs_path": {
           "description": "Your Conda Environments Path.",
@@ -392,7 +389,7 @@
           "default": "/mnt/mesos/sandbox/conda/pkgs:/opt/conda/pkgs"
         },
         "dcos_dir": {
-          "description": "Your DC/OS directory.",
+          "description": "DC/OS CLI Config Directory.",
           "type": "string",
           "default": "/mnt/mesos/sandbox/.dcos"
         },
@@ -431,23 +428,6 @@
           "type": "string",
           "default": "warn"
         },
-        "s3_endpoint": {
-          "description": "Your S3 endpoint.",
-          "type": "string",
-          "default": "s3.us-east-1.amazonaws.com"
-        },
-        "s3_https": {
-          "description": "Enable S3 HTTPS.\n\nNote: Set 1 for true and 0 for false.",
-          "type": "number",
-          "default": 1,
-          "minimum": 0
-        },
-        "s3_ssl": {
-          "description": "Your S3 SSL Verification.\n\nNote: Set 1 for true and 0 for false.",
-          "type": "number",
-          "default": 1,
-          "minimum": 0
-        },
         "start_dask_distributed": {
           "description": "Start Dask distributed.",
           "type": "boolean",
@@ -463,18 +443,28 @@
           "type": "string",
           "default": "nobody"
         },
-        "tensorboard_logdir": {
-          "description": "Tensorboard Logdir.",
-          "type": "string",
-          "default": "/mnt/mesos/sandbox"
+        "tensorboard": {
+          "type": "object",
+          "description": "Enable TensorBoard Log Dir.",
+          "properties": {
+            "enabled": {
+              "description": "Enable or disable TensorBoard Log Dir. \n\nDefault: disabled.",
+              "type": "boolean",
+              "default": false
+            },
+            "tensorboard_logdir": {
+              "description": "Tensorboard Logdir.",
+              "type": "string",
+              "default": "/mnt/mesos/sandbox"
+            }
+          }
         },
         "term": {
-          "description": "Term Colors.",
+          "description": "Unix Terminal Type.",
           "type": "string",
           "default": "xterm-256color"
         }
       }
     }
-
   }
 }

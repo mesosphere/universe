@@ -134,6 +134,14 @@
           "labels": {
             "VIP_7": "{{service.name}}:8076"
           }
+        },
+        {
+          "containerPort": 18080,
+          "protocol": "tcp",
+          "name": "sparkhistory",
+          "labels": {
+            "VIP_8": "{{service.name}}:18080"
+          }
         }
     ]
   },
@@ -173,7 +181,7 @@
       "secret": "serviceCredential"
     },
     {{/environment.secrets}}
-    "AWS_REGION": "{{environment.aws_region}}",
+    "AWS_REGION": "{{s3.aws_region}}",
     "CONDA_ENVS_PATH": "{{environment.conda_envs_path}}",
     "CONDA_PKGS_DIRS": "{{environment.conda_pkgs_dir}}",
     "DCOS_DIR": "{{environment.dcos_dir}}",
@@ -203,9 +211,9 @@
     "OIDC_POST_LOGOUT_REDIRECT_URI": "{{oidc.oidc_post_logout_redirect_uri}}/{{service.name}}",
     "OIDC_USE_SPARTAN_RESOLVER": "{{oidc.oidc_use_spartan_resolver}}",
     {{/oidc.enable_oidc}}
-    "S3_ENDPOINT": "{{environment.s3_endpoint}}",
-    "S3_USE_HTTPS": "{{environment.s3_https}}",
-    "S3_VERIFY_SSL": "{{environment.s3_ssl}}",
+    "S3_ENDPOINT": "{{s3.s3_endpoint}}",
+    "S3_USE_HTTPS": "{{s3.s3_https}}",
+    "S3_VERIFY_SSL": "{{s3.s3_ssl}}",
     "SPARK_MASTER_URL": "{{spark.spark_master_url}}",
     "SPARK_USER": "{{spark.spark_user}}",
     "SPARK_DRIVER_CORES": "{{spark.spark_driver_cores}}",
@@ -219,25 +227,27 @@
     "SPARK_CONF_EVENTLOG_ENABLED": "{{spark.spark_conf_eventlog_enabled}}",
     "SPARK_CONF_EVENTLOG_DIR": "{{spark.spark_conf_eventlog_dir}}",
     "SPARK_CONF_HADOOP_FS_S3A_AWS_CREDENTIALS_PROVIDER": "{{spark.spark_conf_hadoop_fs_s3a_aws_credentials_provider}}",
+    {{#service.gpu_support.enabled}}
+    "SPARK_CONF_MESOS_EXECUTOR_DOCKER_IMAGE":"{{spark.spark_conf_mesos_executor_docker_image}}-gpu",
+    {{/service.gpu_support.enabled}}
+    {{^service.gpu_support.enabled}}
     "SPARK_CONF_MESOS_EXECUTOR_DOCKER_IMAGE":"{{spark.spark_conf_mesos_executor_docker_image}}",
+    {{/service.gpu_support.enabled}}
     "SPARK_CONF_SPARK_MESOS_EXECUTOR_DOCKER_FORCEPULLIMAGE": "{{spark.spark_conf_mesos_executor_docker_forcepullimage}}",
     "SPARK_CONF_MESOS_EXECUTOR_HOME": "{{spark.spark_conf_mesos_executor_home}}",
     "SPARK_CONF_MESOS_CONTAINERIZER": "{{spark.spark_conf_mesos_containerizer}}",
-    "SPARK_CONF_MESOS_PRINCIPAL": "{{spark.spark_conf_mesos_principle}}",
-    "SPARK_CONF_MESOS_ROLE": "{{spark.spark_conf_mesos_role}}",
-    "SPARK_CONF_MESOS_DRIVER_LABELS": "{{spark.spark_conf_mesos_driver_labels}}",
-    "SPARK_CONF_MESOS_TASK_LABELS": "{{spark.spark_conf_mesos_task_labels}}",
-    "SPARK_CONF_SPARK_MESOS_DRIVERENV_SPARK_MESOS_KRB5_CONF_BASE64": "{{spark.spark_conf_mesos_conf_base64}}",
-    "SPARK_CONF_SPARK_EXECUTORENV_SPARK_MESOS_KRB5_CONF_BASE64": "{{spark.spark_conf_executor_conf_base64}}",
+    "SPARK_CONF_MESOS_DRIVER_LABELS": "{{spark.spark_conf_mesos_driver_labels}}{{service.name}}",
+    "SPARK_CONF_MESOS_TASK_LABELS": "{{spark.spark_conf_mesos_task_labels}}{{service.name}}",
     "SPARK_CONF_SPARK_EXECUTORENV_KRB5_CONFIG": "{{spark.spark_conf_executor_krb5_config}}",
     "SPARK_CONF_SPARK_EXECUTORENV_JAVA_HOME": "{{spark.spark_conf_executor_java_home}}",
     "SPARK_CONF_SPARK_EXECUTORENV_HADOOP_HDFS_HOME": "{{spark.spark_conf_executor_hadoop_hdfs_home}}",
     "SPARK_CONF_SPARK_MESOS_URIS": "{{spark.spark_conf_mesos_uri}}{{storage.hdfs_site_url}},{{storage.hdfs_core_url}}",
     "SPARK_CONF_SPARK_EXECUTORENV_HADOOP_OPTS": "{{spark.spark_conf_executor_hadoop_opts}}",
-    "SPARK_MESOS_KRB5_CONF_BASE64": "{{spark.spark_mesos_conf_krb5_config}}",
     "START_DASK_DISTRIBUTED": "{{environment.start_dask_distributed}}",
     "START_RAY_HEAD_NODE": "{{environment.start_ray_head_node}}",
-    "TENSORBOARD_LOGDIR": "{{environment.tensorboard_logdir}}",
+    {{#environment.tensorboard.enabled}}
+    "TENSORBOARD_LOGDIR": "{{environment.tensorboard.tensorboard_logdir}}",
+    {{/environment.tensorboard.enabled}}
     "TERM": "{{environment.term}}",
     "USER": "{{environment.user}}"
   },
@@ -246,7 +256,7 @@
     "HAPROXY_GROUP": "external",
     "HAPROXY_0_ENABLED": "true",
     "HAPROXY_0_REDIRECT_TO_HTTPS": "true",
-    "HAPROXY_0_VHOST": "{{networking.external_access.external_public_agent_ip}}",
+    "HAPROXY_0_VHOST": "{{networking.external_access.external_public_agent_hostname}}",
     "HAPROXY_0_PATH": "{{service.name}}",
     "HAPROXY_2_ENABLED": "true",
     "HAPROXY_2_REDIRECT_TO_HTTPS": "true",
@@ -322,6 +332,14 @@
         "name": "rayobjectmanager",
         "labels": {
           "VIP_7": "{{service.name}}:8076"
+        }
+      },
+      {
+        "port": 0,
+        "protocol": "tcp",
+        "name": "sparkhistory",
+        "labels": {
+          "VIP_7": "{{service.name}}:18080"
         }
       }
     ],
