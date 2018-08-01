@@ -1,0 +1,72 @@
+{
+  "id": "{{Service.Service_Name}}",
+  "cpus": {{Service.CPU_Share}},
+  "mem": {{Service.Memory}},
+  "instances": {{Service.Instances}},
+  "env": {
+{{#Configuration.Feedmaster}}
+      "BOOTSTRAP_NAME": "feed_master"
+{{/Configuration.Feedmaster}}
+  },
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "forcePullImage": false,
+      "image": "snaplogic/snaplex:latest",
+      "parameters": [],
+      "privileged": false
+    },
+{{#Configuration.Virtual_IP}}
+  "portMappings": [
+      {
+{{#Configuration.Feedmaster}}
+        "containerPort": 8084,
+        "labels": {
+          "VIP_0": "{{Configuration.Virtual_IP}}:8084"
+        },
+{{/Configuration.Feedmaster}}
+{{^Configuration.Feedmaster}}
+        "containerPort": 8081,
+        "labels": {
+          "VIP_0": "{{Configuration.Virtual_IP}}:8081"
+        },
+{{/Configuration.Feedmaster}}
+        "protocol": "tcp",
+        "name": "test"
+      }
+    ],
+{{/Configuration.Virtual_IP}}
+    "volumes": [
+      {
+        "containerPath": "/opt/snaplogic/etc/snaplogic.slpropz",
+        "hostPath": "{{Configuration.Snaplex_Configuration}}",
+        "mode": "RW"
+      }
+    ]
+  },
+  "healthChecks": [
+    {
+      "command": {
+{{#Configuration.Feedmaster}}
+        "value": "curl -k https://127.0.0.1:8084/healthz"
+{{/Configuration.Feedmaster}}
+{{^Configuration.Feedmaster}}
+        "value": "curl -k https://127.0.0.1:8081/healthz"
+{{/Configuration.Feedmaster}}
+      },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 3,
+      "protocol": "COMMAND",
+      "ipProtocol": "IPv4",
+      "timeoutSeconds": 20,
+      "delaySeconds": 15
+    }
+  ],
+  "networks": [
+    {
+      "name": "{{Configuration.Network}}",
+      "mode": "container"
+    }
+  ]
+}

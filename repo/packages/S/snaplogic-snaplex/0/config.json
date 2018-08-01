@@ -1,0 +1,71 @@
+{
+  "description": "SnapLogic Snaplex DC/OS Service properties",
+  "properties": {
+    "Service": {
+      "properties": {
+        "Service_Name": {
+          "description": "SnapLogic Snaplex service name.",
+          "type": "string"
+        },
+        "CPU_Share": {
+          "default": 2,
+          "description": "CPU shares to allocate to each SnapLogic Snaplex instance.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "Memory": {
+          "default": 8196,
+          "description": "Memory (MB) to allocate to each SnapLogic Snaplex instance.",
+          "minimum": 4096,
+          "type": "number"
+        },
+        "Instances": {
+          "default": 1,
+          "description": "Number of SnapLogic Snaplex instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "Service_Name",
+        "CPU_Share",
+        "Memory",
+        "Instances"
+      ],
+      "type": "object"
+    },
+    "Configuration": {
+      "properties": {
+        "Snaplex_Configuration": {
+          "description": "SnapLogic Snaplex configuration file",
+          "type": "string"
+        },
+        "Feedmaster": {
+          "default": false,
+          "description": "Enable Feedmaster",
+          "type": "boolean"
+        },
+        "Network": {
+          "default": "dcos",
+          "description": "Mesosphere Cluster network name",
+          "type": "string"
+        },
+        "Virtual_IP": {
+          "description": "Virtual IP address for Snaplex",
+          "type": "string"
+        }
+      },
+      "required": [
+        "Snaplex_Configuration",
+        "Feedmaster",
+        "Network"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+      "Service",
+      "Configuration"
+  ],
+  "type": "object"
+}
