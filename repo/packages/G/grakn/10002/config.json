@@ -93,12 +93,12 @@
         "index_search_backend": {
           "description": "Index storage backend",
           "type": "string",
-          "default": "elasticsearch"
+          "default": ""
         },
         "index_search_hostname": {
           "description": "Index storage hostname",
           "type": "string",
-          "default": "localhost"
+          "default": ""
         },
         "spark_master": {
           "description": "Spark master",
@@ -116,8 +116,6 @@
         "storage_hostname",
         "keyspace",
         "queue_host",
-        "index_search_backend",
-        "index_search_hostname",
         "spark_master",
         "log_level"
       ]

@@ -42,9 +42,9 @@
     {{#service.volume.enabled}}
     "volumes": [
       {
-        "containerPath": {{service.volume.container_path}},
-        "hostPath": {{service.volume.host_path}},
-        "mode": {{service.volume.mode}}
+        "containerPath": "{{service.volume.container_path}}",
+        "hostPath": "{{service.volume.host_path}}",
+        "mode": "{{service.volume.mode}}"
       }
     ],
     {{/service.volume.enabled}}
