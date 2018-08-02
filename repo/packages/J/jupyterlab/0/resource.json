@@ -10,8 +10,8 @@
   "assets": {
     "container": {
       "docker": {
-        "jupyter-docker": "dcoslabs/dcos-jupyter:1.11.3-0.32.1",
-        "jupyter-docker-gpu": "dcoslabs/dcos-jupyter:1.11.3-0.32.1-gpu"
+        "jupyter-docker": "dcoslabs/dcos-jupyter:latest",
+        "jupyter-docker-gpu": "dcoslabs/dcos-jupyter:latest-gpu"
       }
     }
   }

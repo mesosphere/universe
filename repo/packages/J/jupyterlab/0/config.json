@@ -22,13 +22,13 @@
           "minimum": 1
         },
         "force_pull": {
-          "description": "Enable force pull of the image file.",
+          "description": "Enable force pull of the docker image file.",
           "type": "boolean",
           "default": false
         },
         "gpu_support": {
           "type": "object",
-          "description": "GPU support and useful packages for Data Scientists.\n\nGPU specific packages:\nCUDA 9.0.176, CUDNN 7.1.3.16, TensorFlow-GPU 1.7.0",
+          "description": "GPU support and useful packages for Data Scientists.\n\nGPU specific packages:\nCUDA 9.0.176-1, CUDNN 7.1.1.5-1+cuda9.0, TensorFlow-GPU 1.9.0",
           "properties": {
             "enabled": {
               "description": "Enable GPU support.\nNote: This requires at least 15GB disk space available with recent NVIDIA drivers installed.",
@@ -59,6 +59,18 @@
         "cpus",
         "mem"
       ]
+    },
+    "placement": {
+      "type": "object",
+      "description": "Placement Constraints.",
+      "properties": {
+        "placement_constraint": {
+          "title": "Placement Constraints",
+          "description": "Placement constraints for nodes. Example: [\"hostname\", \"UNIQUE\"]",
+          "type": "string",
+          "default": ""
+        }
+      }
     },
     "oidc": {
       "type": "object",
@@ -189,6 +201,11 @@
           "type": "string",
           "default": "\"-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\""
         },
+        "spark_history_fs_logdirectory": {
+          "description": "Spark History FS Log Directory.",
+          "type": "string",
+          "default": "hdfs://hdfs/history"
+        },
         "spark_conf_spark_scheduler": {
           "description": "Spark Configuration Spark Scheduler Minimal Registered Resources Ratio.",
           "type": "string",
@@ -212,7 +229,7 @@
         "spark_conf_executor_java_options": {
           "description": "Spark Configuration Spark Executor Java Options.",
           "type": "string",
-          "default": "spark.executor.extraJavaOptions=\"-XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\""
+          "default": "spark.executor.extraJavaOptions=\"-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\""
         },
         "spark_conf_eventlog_enabled": {
           "description": "Spark Configuration Event Log.",
@@ -222,12 +239,17 @@
         "spark_conf_eventlog_dir": {
           "description": "Spark Configuration Event Log Directory.",
           "type": "string",
-          "default": "spark.eventLog.dir=hdfs://hdfs/history"
+          "default": "spark.eventLog.dir=hdfs://hdfs/"
         },
         "spark_conf_hadoop_fs_s3a_aws_credentials_provider": {
           "description": "Spark Configuration Hadoop S3 AWS Credentials Provider.",
           "type": "string",
           "default": "spark.hadoop.fs.s3a.aws.credentials.provider=com.amazonaws.auth.InstanceProfileCredentialsProvider"
+        },
+        "spark_conf_jars_packages": {
+          "description": "Spark Configuration for Spark Jars Packages.",
+          "type": "string",
+          "default": "spark.jars.packages=org.apache.spark:spark-streaming-kafka-0-10_2.11:2.2.1,org.apache.kafka:kafka_2.11:0.10.2.1"
         },
         "spark_conf_mesos_executor_docker_image": {
           "description": "Docker Image for Spark Executor.",
@@ -279,11 +301,6 @@
           "type": "string",
           "default": "spark.mesos.executor.docker.forcePullImage=true"
         },
-        "spark_conf_mesos_uri": {
-          "description": "Spark Mesos URIs.",
-          "type": "string",
-          "default": "spark.mesos.uris="
-        },
         "spark_user": {
           "description": "Spark Mesos User.",
           "type": "string",
@@ -295,21 +312,6 @@
       "type": "object",
       "description": "DC/OS Jupyter  storage configuration.",
       "properties": {
-        "hdfs_support": {
-          "description": "Enable or disable HDFS.",
-          "type": "boolean",
-          "default": false
-        },
-        "hdfs_core_url": {
-          "description": "URL which serves core-site.xml.",
-          "type": "string",
-          "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml"
-        },
-        "hdfs_site_url": {
-          "description": "URL which serves hdfs-site.xml.",
-          "type": "string",
-          "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml"
-        },
         "persistence": {
           "type": "object",
           "description": "Enable persistent storage.",
@@ -366,7 +368,7 @@
     },
     "environment": {
       "type": "object",
-      "description": "GPU support and useful packages for Data Scientists.\n\nGPU specific packages:\nCUDA 9.0.176-1, CUDNN 7.1.1.5-1+cuda9.0, TensorFlow-GPU 1.8.0",
+      "description": "Additional Configuration Options.\n\nE.g. setting a JupyterLab password, overwriting the TensorBoard log directory.",
       "properties": {
         "secrets": {
           "description": "Enable secrets for DC/OS Service Account and AWS credentials.\n\nEnterprise feature only.",
@@ -406,7 +408,12 @@
         "java_opts": {
           "description": "Your Java Options.",
           "type": "string",
-          "default": "\"-XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\""
+          "default": "\"-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\""
+        },
+        "jupyter_conf_urls": {
+          "description": "Your Jupyter Configuration URL.",
+          "type": "string",
+          "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
         },
         "jupyter_config_dir": {
           "description": "Your Jupyter Configuration Directory.",
@@ -414,7 +421,7 @@
           "default": "/mnt/mesos/sandbox/.jupyter"
         },
         "jupyter_password": {
-          "description": "Your Jupyter Password.",
+          "description": "Your Jupyter Password.\n\nIf empty it defaults to password: \"jupyter\"",
           "type": "string",
           "default": ""
         },
@@ -438,6 +445,16 @@
           "type": "boolean",
           "default": true
         },
+        "start_spark_history_server": {
+          "description": "Start Spark History Server.",
+          "type": "boolean",
+          "default": true
+        },
+        "start_tensorboard": {
+          "description": "Start TensorBoard.",
+          "type": "boolean",
+          "default": true
+        },
         "user": {
           "description": "User under which Notebook runs.",
           "type": "string",
@@ -453,9 +470,9 @@
               "default": false
             },
             "tensorboard_logdir": {
-              "description": "Tensorboard Logdir.",
+              "description": "TensorBoard Log Dir.",
               "type": "string",
-              "default": "/mnt/mesos/sandbox"
+              "default": "hdfs://hdfs/"
             }
           }
         },

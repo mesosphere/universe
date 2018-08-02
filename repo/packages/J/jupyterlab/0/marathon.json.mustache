@@ -1,6 +1,7 @@
 {
   "id": "{{service.name}}",
   "instances": 1,
+  "constraints": [{{placement.placement_constraint}}],
   "cpus": {{service.cpus}},
   {{#service.gpu_support.enabled}}
   "gpus": {{service.gpu_support.gpus}},
@@ -152,22 +153,6 @@
       }
   ],
   {{/networking.cni_support.enabled}}
-  {{#storage.hdfs_support}}
-  "fetch": [
-    {
-      "uri": "{{storage.hdfs_core_url}}",
-      "executable": false,
-      "extract": false,
-      "cache": false
-    },
-    {
-      "uri": "{{storage.hdfs_site_url}}",
-      "executable": false,
-      "extract": false,
-      "cache": false
-    }
-  ],
-  {{/storage.hdfs_support}}
   {{#environment.secrets}}
   "secrets": {
     "serviceCredential": {
@@ -176,6 +161,8 @@
   },
   {{/environment.secrets}}
   "env": {
+    "DEBUG-JOERG": "{{placement.placement_constraint}}",
+    "DEBUG-JOERG2": "[{{placement.placement_constraint}}]",
     {{#environment.secrets}}
     "DCOS_SERVICE_ACCOUNT_CREDENTIAL": {
       "secret": "serviceCredential"
@@ -189,6 +176,7 @@
     "HADOOP_CONF_DIR": "{{environment.hadoop_conf_dir}}",
     "HOME": "{{environment.home}}",
     "JAVA_OPTS": "{{environment.java_opts}}",
+    "JUPYTER_CONF_URLS": "{{environment.jupyter_conf_urls}}",
     "JUPYTER_CONFIG_DIR": "{{environment.jupyter_config_dir}}",
     "JUPYTER_PASSWORD": "{{environment.jupyter_password}}",
     "JUPYTER_RUNTIME_DIR": "{{environment.jupyter_runtime_dir}}",
@@ -219,6 +207,7 @@
     "SPARK_DRIVER_CORES": "{{spark.spark_driver_cores}}",
     "SPARK_DRIVER_MEMORY": "{{spark.spark_driver_memory}}",
     "SPARK_DRIVER_JAVA_OPTIONS": "{{spark.spark_driver_java_options}}",
+    "SPARK_HISTORY_FS_LOGDIRECTORY": "{{spark.spark_history_fs_logdirectory}}",
     "SPARK_CONF_SPARK_SCHEDULER_MINREGISTEREDRESOURCESRATIO": "{{spark.spark_conf_spark_scheduler}}",
     "SPARK_CONF_CORES_MAX": "{{spark.spark_conf_cores_max}}",
     "SPARK_CONF_EXECUTOR_CORES": "{{spark.spark_conf_executor_cores}}",
@@ -241,10 +230,12 @@
     "SPARK_CONF_SPARK_EXECUTORENV_KRB5_CONFIG": "{{spark.spark_conf_executor_krb5_config}}",
     "SPARK_CONF_SPARK_EXECUTORENV_JAVA_HOME": "{{spark.spark_conf_executor_java_home}}",
     "SPARK_CONF_SPARK_EXECUTORENV_HADOOP_HDFS_HOME": "{{spark.spark_conf_executor_hadoop_hdfs_home}}",
-    "SPARK_CONF_SPARK_MESOS_URIS": "{{spark.spark_conf_mesos_uri}}{{storage.hdfs_site_url}},{{storage.hdfs_core_url}}",
     "SPARK_CONF_SPARK_EXECUTORENV_HADOOP_OPTS": "{{spark.spark_conf_executor_hadoop_opts}}",
+    "SPARK_CONF_SPARK_JARS_PACKAGES": "{{spark.spark_conf_jars_packages}}",
     "START_DASK_DISTRIBUTED": "{{environment.start_dask_distributed}}",
     "START_RAY_HEAD_NODE": "{{environment.start_ray_head_node}}",
+    "START_SPARK_HISTORY": "{{environment.start_spark_history_server}}",
+    "START_TENSORBOARD": "{{environment.start_tensorboard}}",
     {{#environment.tensorboard.enabled}}
     "TENSORBOARD_LOGDIR": "{{environment.tensorboard.tensorboard_logdir}}",
     {{/environment.tensorboard.enabled}}
