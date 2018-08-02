@@ -1,0 +1,13 @@
+{
+   "label": {
+        "enabled": true,
+        "default": "wip",
+        "default_outside_contributor": "awaiting-testing-approval",
+        "pr-creator-can-apply": ["ready-for-review", "wip", "test", "awaiting-testing-approval"]
+    },
+    "intro": {
+        "enabled": true,
+        "interactive": false,
+        "message": "Thank you for contributing to the Mesosphere Universe! CI tests can only run with a Mesosphere employee's approval, and before tests are triggered it might look like your tests have failed. Please contact a repo maintainer and ask them to trigger your tests. If you don't know who to reach out to, please ping the community team either via [email](community@dcos.io) or message @joerg.mesosphere in [DC/OS community slack](chat.dcos.io). We are actively working on improving this contribution experience, so stay tuned. Thanks again for your contribution!"
+    }
+}
