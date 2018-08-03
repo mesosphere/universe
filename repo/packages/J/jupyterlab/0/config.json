@@ -36,7 +36,7 @@
               "default": false
             },
             "gpus": {
-              "description": "Number of GPUs to allocate to your DC/OS Jupyter  package.\nNote: GPU support has to be enabled.",
+              "description": "Number of GPUs to allocate to your DC/OS JupyterLab package.\nNote: GPU support has to be enabled.",
               "type": "number",
               "default": 0,
               "minimum": 0
@@ -298,7 +298,7 @@
     },
     "storage": {
       "type": "object",
-      "description": "DC/OS Jupyter  storage configuration.",
+      "description": "DC/OS JupyterLab storage configuration.",
       "properties": {
         "persistence": {
           "type": "object",
@@ -320,14 +320,14 @@
     },
     "networking": {
       "type": "object",
-      "description": "DC/OS Jupyter networking configuration properties",
+      "description": "DC/OS JupyterLab networking configuration properties",
       "properties": {
         "cni_support": {
           "type": "object",
           "description": "Enable Container Networking Interface (CNI) Support.",
           "properties": {
             "enabled": {
-              "description": "Enable CNI support for this Jupyter instance (advanced use-case).",
+              "description": "Enable CNI support for this JupyterLab instance (advanced use-case).",
               "type": "boolean",
               "default": false
             }
@@ -399,22 +399,22 @@
           "default": "\"-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\""
         },
         "jupyter_conf_urls": {
-          "description": "Your Jupyter Configuration URL.",
+          "description": "DC/OS JupyterLab Configuration URL.",
           "type": "string",
           "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
         },
         "jupyter_config_dir": {
-          "description": "Your Jupyter Configuration Directory.",
+          "description": "DC/OS JupyterLab Configuration Directory.",
           "type": "string",
           "default": "/mnt/mesos/sandbox/.jupyter"
         },
         "jupyter_password": {
-          "description": "Your Jupyter Password.\n\nIf empty it defaults to password: \"jupyter\"",
+          "description": "DC/OS JupyterLab Password.\n\nIf empty it defaults to password: \"jupyter\"",
           "type": "string",
           "default": ""
         },
         "jupyter_runtime_dir": {
-          "description": "Your Jupyter Runtime Directory.",
+          "description": "DC/OS JupyterLab Runtime Directory.",
           "type": "string",
           "default": "/mnt/mesos/sandbox/.local/share/jupyter/runtime"
         },
@@ -444,7 +444,7 @@
           "default": true
         },
         "user": {
-          "description": "User under which Notebook runs.",
+          "description": "Spark will run as this user.",
           "type": "string",
           "default": "nobody"
         },
