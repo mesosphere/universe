@@ -327,9 +327,9 @@
           "description": "Enable Container Networking Interface (CNI) Support.",
           "properties": {
             "enabled": {
-              "description": "Enable CNI support for this Jupyter instance (advanced use-case).",
+              "description": "Enable CNI support for this Jupyter instance.",
               "type": "boolean",
-              "default": false
+              "default": true
             }
           }
         },
