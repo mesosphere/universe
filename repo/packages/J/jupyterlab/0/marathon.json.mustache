@@ -8,7 +8,6 @@
   "mem": {{service.mem}},
   "user": "{{service.user}}",
   "cmd": "{{service.cmd}}",
-  {{^networking.cni_support.enabled}}
   "container": {
     "type": "MESOS",
     "volumes": [
@@ -37,38 +36,6 @@
      "image": "{{resource.assets.container.docker.jupyter-docker}}",
      {{/service.gpu_support.enabled}}
      "forcePullImage": {{service.force_pull}}
-    }
-  },
-  {{/networking.cni_support.enabled}}
-  {{#networking.cni_support.enabled}}
-  "container": {
-    "type": "MESOS",
-    "volumes": [
-    {{#storage.persistence.enable}}
-        {
-        "persistent": {
-        "type": "root",
-        "size": {{storage.host_volume_size}},
-        "constraints": []
-        },
-        "mode": "RW",
-        "containerPath": "persistent_data"
-        },
-        {
-        "containerPath": "/mnt/mesos/sandbox/persistent_data",
-        "hostPath": "persistent_data",
-        "mode": "RW"
-        }
-    {{/storage.persistence.enable}}
-    ],
-    "docker": {
-      {{#service.gpu_support.enabled}}
-      "image": "{{resource.assets.container.docker.jupyter-docker-gpu}}",
-      {{/service.gpu_support.enabled}}
-      {{^service.gpu_support.enabled}}
-      "image": "{{resource.assets.container.docker.jupyter-docker}}",
-      {{/service.gpu_support.enabled}}
-      "forcePullImage": {{service.force_pull}}
     },
     "portMappings": [
         {
@@ -145,13 +112,19 @@
         }
     ]
   },
+  {{#networking.cni_support.enabled}}
   "networks": [
       {
         "mode": "container",
         "name": "dcos"
       }
   ],
-  {{/networking.cni_support.enabled}}
+{{/networking.cni_support.enabled}}
+{{^networking.cni_support.enabled}}
+ "networks": [
+      { "mode": "container/bridge" }
+  ],
+{{/networking.cni_support.enabled}}
   {{#environment.secrets}}
   "secrets": {
     "serviceCredential": {
@@ -251,87 +224,6 @@
     {{/networking.external_access.enabled}}
     "MARATHON_SINGLE_INSTANCE_APP": "true"
   },
-  {{^networking.cni_support.enabled}}
-   "portDefinitions": [
-      {
-        "port": 0,
-        "protocol": "tcp",
-        "name": "notebook",
-        "labels": {
-          "VIP_0": "{{service.name}}:8888"
-        }
-      },
-      {
-        "port": 0,
-        "protocol": "tcp",
-        "name": "sparkdriver",
-        "labels": {
-          "VIP_1": "{{service.name}}:7077"
-        }
-      },
-      {
-        "port": 0,
-        "protocol": "tcp",
-        "name": "sparkui",
-        "labels": {
-          "VIP_2": "{{service.name}}:4040"
-        }
-      },
-      {
-        "port": 0,
-        "protocol": "tcp",
-        "name": "sparkblockmanager"
-      },
-      {
-        "port": 0,
-        "protocol": "tcp",
-        "name": "tfdbg",
-        "labels": {
-          "VIP_3": "{{service.name}}:6046"
-        }
-      },
-      {
-        "port": 0,
-        "protocol": "tcp",
-        "name": "daskscheduler",
-        "labels": {
-          "VIP_4": "{{service.name}}:8786"
-        }
-      },
-      {
-        "port": 0,
-        "protocol": "tcp",
-        "name": "daskboard",
-        "labels": {
-          "VIP_5": "{{service.name}}:8787"
-        }
-      },
-      {
-        "port": 0,
-        "protocol": "tcp",
-        "name": "rayredis",
-        "labels": {
-          "VIP_6": "{{service.name}}:6379"
-        }
-      },
-      {
-        "port": 0,
-        "protocol": "tcp",
-        "name": "rayobjectmanager",
-        "labels": {
-          "VIP_7": "{{service.name}}:8076"
-        }
-      },
-      {
-        "port": 0,
-        "protocol": "tcp",
-        "name": "sparkhistory",
-        "labels": {
-          "VIP_7": "{{service.name}}:18080"
-        }
-      }
-    ],
-  {{/networking.cni_support.enabled}}
   "healthChecks": [
     {
       "portIndex": 0,
