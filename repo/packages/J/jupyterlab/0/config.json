@@ -401,7 +401,7 @@
         "jupyter_conf_urls": {
           "description": "Your Jupyter Configuration URL.",
           "type": "string",
-          "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
+          "default": ""
         },
         "jupyter_config_dir": {
           "description": "Your Jupyter Configuration Directory.",
