@@ -1,7 +1,6 @@
 {
   "id": "{{service.name}}",
   "instances": 1,
-  "constraints": [{{placement.placement_constraint}}],
   "cpus": {{service.cpus}},
   {{#service.gpu_support.enabled}}
   "gpus": {{service.gpu_support.gpus}},
@@ -236,9 +235,7 @@
     "START_RAY_HEAD_NODE": "{{environment.start_ray_head_node}}",
     "START_SPARK_HISTORY": "{{environment.start_spark_history_server}}",
     "START_TENSORBOARD": "{{environment.start_tensorboard}}",
-    {{#environment.tensorboard.enabled}}
     "TENSORBOARD_LOGDIR": "{{environment.tensorboard.tensorboard_logdir}}",
-    {{/environment.tensorboard.enabled}}
     "TERM": "{{environment.term}}",
     "USER": "{{environment.user}}"
   },

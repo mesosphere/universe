@@ -28,7 +28,7 @@
         },
         "gpu_support": {
           "type": "object",
-          "description": "GPU support and useful packages for Data Scientists.\n\nGPU specific packages:\nCUDA 9.0.176-1, CUDNN 7.1.1.5-1+cuda9.0, TensorFlow-GPU 1.9.0",
+          "description": "GPU support and useful packages for Data Scientists.\n\nGPU specific packages:\nCUDA 9.0.176-1, CUDNN 7.1.4.18-1+cuda9.0, NCCL 2.2.13-1+cuda9.0, TensorFlow-GPU 1.9.0",
           "properties": {
             "enabled": {
               "description": "Enable GPU support.\nNote: This requires at least 15GB disk space available with recent NVIDIA drivers installed.",
@@ -60,21 +60,9 @@
         "mem"
       ]
     },
-    "placement": {
-      "type": "object",
-      "description": "Placement Constraints.",
-      "properties": {
-        "placement_constraint": {
-          "title": "Placement Constraints",
-          "description": "Placement constraints for nodes. Example: [\"hostname\", \"UNIQUE\"]",
-          "type": "string",
-          "default": ""
-        }
-      }
-    },
     "oidc": {
       "type": "object",
-      "description": "OIDC Configuration.",
+      "description": "OpenID Connect (OIDC) Configuration.",
       "properties": {
         "enable_oidc": {
           "description": "Enable OIDC Support.",
@@ -84,7 +72,7 @@
         "oidc_discover_uri": {
           "description": "OIDC Discovery URI.",
           "type": "string",
-          "default": "https://keycloak.example.com/auth/realms/Notebook/.well-known/openid-configuration"
+          "default": "https://keycloak.example.com/auth/realms/notebook/.well-known/openid-configuration"
         },
         "oidc_redirect_uri": {
           "description": "OIDC Redirect URI.",
@@ -94,7 +82,7 @@
         "oidc_client_id": {
           "description": "OIDC Client ID.",
           "type": "string",
-          "default": "Notebook"
+          "default": "notebook"
         },
         "oidc_client_secret": {
           "description": "OIDC Client Secret.",
@@ -254,7 +242,7 @@
         "spark_conf_mesos_executor_docker_image": {
           "description": "Docker Image for Spark Executor.",
           "type": "string",
-          "default": "spark.mesos.executor.docker.image=dcoslabs/dcos-spark:latest"
+          "default": "spark.mesos.executor.docker.image=dcoslabs/dcos-spark:1.11.4-2.2.1"
         },
         "spark_conf_mesos_executor_home": {
           "description": "Spark Mesos Executor Home Directory.",
@@ -464,11 +452,6 @@
           "type": "object",
           "description": "Enable TensorBoard Log Dir.",
           "properties": {
-            "enabled": {
-              "description": "Enable or disable TensorBoard Log Dir. \n\nDefault: disabled.",
-              "type": "boolean",
-              "default": false
-            },
             "tensorboard_logdir": {
               "description": "TensorBoard Log Dir.",
               "type": "string",
