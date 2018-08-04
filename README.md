@@ -35,7 +35,7 @@ You can publish and store packages in the Universe repository. The packages can 
 
 ### Library dependencies
 * [jq](https://stedolan.github.io/jq/download/) is installed in your environment.
-* `python3` is installed in your environment.
+* `python3` is installed in your environment (minimum python3.5).
 * Docker is installed in your environment.
 
 ### Publish a Package
