@@ -26,6 +26,17 @@
           "type": "boolean",
           "default": false
         },
+        "mem": {
+          "description": "Memory to allocate to the service instance in MB.",
+          "type": "number",
+          "default": 8192.0,
+          "minimum": 1024.0
+        },
+        "user": {
+          "description": "Notebook will run as this user.",
+          "type": "string",
+          "default": "nobody"
+        },
         "gpu_support": {
           "type": "object",
           "description": "GPU support and useful packages for Data Scientists.\n\nGPU specific packages:\nCUDA 9.0.176-1, CUDNN 7.1.4.18-1+cuda9.0, NCCL 2.2.13-1+cuda9.0, TensorFlow-GPU 1.9.0",
@@ -42,17 +53,6 @@
               "minimum": 0
             }
           }
-        },
-        "mem": {
-          "description": "Memory to allocate to the service instance in MB.",
-          "type": "number",
-          "default": 8192.0,
-          "minimum": 1024.0
-        },
-        "user": {
-          "description": "Notebook will run as this user.",
-          "type": "string",
-          "default": "nobody"
         }
       },
       "required": [
