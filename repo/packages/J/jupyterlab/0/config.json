@@ -3,7 +3,7 @@
   "properties": {
     "service": {
       "type": "object",
-      "description": "The JupyterLab Notebook Service for Mesosphere DC/OS comes with a variety of pre-installed packages. Further information can be found here https://github.com/dcos/examples/blob/dcos-labs-jupyter-service/jupyter/1.11/README.md",
+      "description": "The JupyterLab Notebook Service for Mesosphere DC/OS comes with a variety of pre-installed packages. Further information can be found here: https://github.com/dcos/examples/tree/master/jupyterlab.",
       "properties": {
         "name": {
           "description": "Name of this service instance.",
@@ -16,7 +16,7 @@
           "default": "/usr/local/bin/start.sh ${CONDA_DIR}/bin/jupyter lab --notebook-dir=${MESOS_SANDBOX}"
         },
         "cpus": {
-          "description": "CPU shares to allocate to each service instance.",
+          "description": "CPU shares to allocate to the service instance.",
           "type": "number",
           "default": 2,
           "minimum": 1
@@ -36,7 +36,7 @@
               "default": false
             },
             "gpus": {
-              "description": "Number of GPUs to allocate to your DC/OS Jupyter  package.\nNote: GPU support has to be enabled.",
+              "description": "Number of GPUs to allocate to the service instance.\nNote: GPU support has to be enabled.",
               "type": "number",
               "default": 0,
               "minimum": 0
@@ -69,7 +69,7 @@
           "type": "boolean",
           "default": false
         },
-        "oidc_discover_uri": {
+        "oidc_discovery_uri": {
           "description": "OIDC Discovery URI.",
           "type": "string",
           "default": "https://keycloak.example.com/auth/realms/notebook/.well-known/openid-configuration"
@@ -95,22 +95,22 @@
           "default": "no"
         },
         "enable_windows": {
-          "description": "Enable Windows (AD FS UPN).",
+          "description": "OIDC: Authorize User Principal Name (UPN).",
           "type": "boolean",
           "default": false
         },
         "oidc_use_email": {
-          "description": "Use OIDC E-Mail (optional)",
+          "description": "OIDC: Authorize Email Address (optional).",
           "type": "boolean",
           "default": false
         },
         "oidc_email": {
-          "description": "OIDC E-Mail (if OIDC Use Email is enabled).",
+          "description": "E-Mail to be authorized (if OIDC Use Email is enabled).",
           "type": "string",
           "default": "user@example.com"
         },
         "oidc_upn": {
-          "description": "Enable using using Windows Integrated Authentication with AD FS 4.0 (Windows Server 2016).",
+          "description": "UPN for Windows Integrated Authentication with AD FS 2016.",
           "type": "string",
           "default": "user007"
         },
@@ -298,7 +298,7 @@
     },
     "storage": {
       "type": "object",
-      "description": "DC/OS Jupyter  storage configuration.",
+      "description": "DC/OS JupyterLab storage configuration.",
       "properties": {
         "persistence": {
           "type": "object",
@@ -320,14 +320,14 @@
     },
     "networking": {
       "type": "object",
-      "description": "DC/OS Jupyter networking configuration properties",
+      "description": "DC/OS JupyterLab networking configuration properties",
       "properties": {
         "cni_support": {
           "type": "object",
           "description": "Enable Container Networking Interface (CNI) Support.",
           "properties": {
             "enabled": {
-              "description": "Enable CNI support for this Jupyter instance (advanced use-case).",
+              "description": "Enable CNI support for this JupyterLab instance (advanced use-case).",
               "type": "boolean",
               "default": false
             }
@@ -369,12 +369,12 @@
           "default": "jupyterlab-notebook/serviceCredential"
         },
         "conda_envs_path": {
-          "description": "Your Conda Environments Path.",
+          "description": "Conda Environments Path.",
           "type": "string",
           "default": "/mnt/mesos/sandbox/conda/envs:/opt/conda/envs"
         },
         "conda_pkgs_dir": {
-          "description": "Your Conda Packages Directories.",
+          "description": "Conda Packages Directories.",
           "type": "string",
           "default": "/mnt/mesos/sandbox/conda/pkgs:/opt/conda/pkgs"
         },
@@ -384,7 +384,7 @@
           "default": "/mnt/mesos/sandbox/.dcos"
         },
         "hadoop_conf_dir": {
-          "description": "Your Hadoop Configuration Directory.",
+          "description": "Hadoop Configuration Directory.",
           "type": "string",
           "default": "/mnt/mesos/sandbox"
         },
@@ -394,27 +394,27 @@
           "default": "/mnt/mesos/sandbox"
         },
         "java_opts": {
-          "description": "Your Java Options.",
+          "description": "Java Options.",
           "type": "string",
           "default": "\"-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox\""
         },
         "jupyter_conf_urls": {
-          "description": "Your Jupyter Configuration URL.",
+          "description": "Jupyter Configuration URL.",
           "type": "string",
           "default": ""
         },
         "jupyter_config_dir": {
-          "description": "Your Jupyter Configuration Directory.",
+          "description": "Jupyter Configuration Directory.",
           "type": "string",
           "default": "/mnt/mesos/sandbox/.jupyter"
         },
         "jupyter_password": {
-          "description": "Your Jupyter Password.\n\nIf empty it defaults to password: \"jupyter\"",
+          "description": "Jupyter Password.\n\nIf empty it defaults to password: \"jupyter\"",
           "type": "string",
           "default": ""
         },
         "jupyter_runtime_dir": {
-          "description": "Your Jupyter Runtime Directory.",
+          "description": "Jupyter Runtime Directory.",
           "type": "string",
           "default": "/mnt/mesos/sandbox/.local/share/jupyter/runtime"
         },
@@ -426,39 +426,34 @@
         "start_dask_distributed": {
           "description": "Start Dask distributed.",
           "type": "boolean",
-          "default": true
+          "default": false
         },
         "start_ray_head_node": {
           "description": "Start Ray Head Node.",
           "type": "boolean",
-          "default": true
+          "default": false
         },
         "start_spark_history_server": {
           "description": "Start Spark History Server.",
           "type": "boolean",
-          "default": true
+          "default": false
         },
         "start_tensorboard": {
           "description": "Start TensorBoard.",
           "type": "boolean",
-          "default": true
+          "default": false
         },
         "user": {
           "description": "User under which Notebook runs.",
           "type": "string",
           "default": "nobody"
         },
-        "tensorboard": {
-          "type": "object",
-          "description": "Enable TensorBoard Log Dir.",
-          "properties": {
-            "tensorboard_logdir": {
-              "description": "TensorBoard Log Dir.",
-              "type": "string",
-              "default": "hdfs://hdfs/"
-            }
-          }
+        "tensorboard_logdir": {
+          "description": "TensorBoard Log Dir.",
+          "type": "string",
+          "default": "hdfs://hdfs/"
         },
+
         "term": {
           "description": "Unix Terminal Type.",
           "type": "string",

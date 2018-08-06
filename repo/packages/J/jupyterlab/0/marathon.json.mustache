@@ -41,7 +41,6 @@
         {
           "containerPort": 8080,
           "protocol": "tcp",
-          "name": "notebook",
           "labels": {
             "VIP_0": "{{service.name}}:8888"
           }
@@ -49,7 +48,6 @@
         {
           "containerPort": 7077,
           "protocol": "tcp",
-          "name": "sparkdriver",
           "labels": {
             "VIP_1": "{{service.name}}:7077"
           }
@@ -57,7 +55,6 @@
         {
           "containerPort": 4040,
           "protocol": "tcp",
-          "name": "sparkui",
           "labels": {
             "VIP_2": "{{service.name}}:4040"
           }
@@ -73,7 +70,6 @@
         {
           "containerPort": 8786,
           "protocol": "tcp",
-          "name": "daskscheduler",
           "labels": {
             "VIP_4": "{{service.name}}:8786"
           }
@@ -81,7 +77,6 @@
         {
           "containerPort": 8787,
           "protocol": "tcp",
-          "name": "daskboard",
           "labels": {
             "VIP_5": "{{service.name}}:8787"
           }
@@ -89,7 +84,6 @@
         {
           "containerPort": 6379,
           "protocol": "tcp",
-          "name": "rayredis",
           "labels": {
             "VIP_6": "{{service.name}}:6379"
           }
@@ -97,7 +91,6 @@
         {
           "containerPort": 8076,
           "protocol": "tcp",
-          "name": "rayobjectmanager",
           "labels": {
             "VIP_7": "{{service.name}}:8076"
           }
@@ -105,7 +98,6 @@
         {
           "containerPort": 18080,
           "protocol": "tcp",
-          "name": "sparkhistory",
           "labels": {
             "VIP_8": "{{service.name}}:18080"
           }
@@ -133,8 +125,6 @@
   },
   {{/environment.secrets}}
   "env": {
-    "DEBUG-JOERG": "{{placement.placement_constraint}}",
-    "DEBUG-JOERG2": "[{{placement.placement_constraint}}]",
     {{#environment.secrets}}
     "DCOS_SERVICE_ACCOUNT_CREDENTIAL": {
       "secret": "serviceCredential"
@@ -204,11 +194,25 @@
     "SPARK_CONF_SPARK_EXECUTORENV_HADOOP_HDFS_HOME": "{{spark.spark_conf_executor_hadoop_hdfs_home}}",
     "SPARK_CONF_SPARK_EXECUTORENV_HADOOP_OPTS": "{{spark.spark_conf_executor_hadoop_opts}}",
     "SPARK_CONF_SPARK_JARS_PACKAGES": "{{spark.spark_conf_jars_packages}}",
+
+    {{#environment.start_dask_distributed}}
     "START_DASK_DISTRIBUTED": "{{environment.start_dask_distributed}}",
+    {{/environment.start_dask_distributed}}
+
+    {{#environment.start_ray_head_node}}
     "START_RAY_HEAD_NODE": "{{environment.start_ray_head_node}}",
+    {{/environment.start_ray_head_node}}
+
+    {{#environment.start_spark_history_server}}
     "START_SPARK_HISTORY": "{{environment.start_spark_history_server}}",
+    {{/environment.start_spark_history_server}}
+
+    {{#environment.start_tensorboard}}
     "START_TENSORBOARD": "{{environment.start_tensorboard}}",
-    "TENSORBOARD_LOGDIR": "{{environment.tensorboard.tensorboard_logdir}}",
+    "TENSORBOARD_LOGDIR": "{{environment.tensorboard_logdir}}",
+    {{/environment.start_tensorboard}}
+
+
     "TERM": "{{environment.term}}",
     "USER": "{{environment.user}}"
   },
