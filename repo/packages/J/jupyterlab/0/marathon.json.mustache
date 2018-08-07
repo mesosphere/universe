@@ -8,39 +8,43 @@
   "mem": {{service.mem}},
   "user": "{{service.user}}",
   "cmd": "{{service.cmd}}",
+
   "container": {
     "type": "MESOS",
     "volumes": [
-        {{#storage.persistence.enable}}
-            {
-            "persistent": {
-            "type": "root",
-            "size": {{storage.persistence.host_volume_size}},
-            "constraints": []
-            },
-            "mode": "RW",
-            "containerPath": "persistent_data"
-            },
-            {
-            "containerPath": "/mnt/mesos/sandbox/persistent_data",
-            "hostPath": "persistent_data",
-            "mode": "RW"
-            }
-        {{/storage.persistence.enable}}
-        ],
+    {{#storage.persistence.enable}}
+        {
+        "persistent": {
+        "type": "root",
+        "size": {{storage.host_volume_size}},
+        "constraints": []
+        },
+        "mode": "RW",
+        "containerPath": "persistent_data"
+        },
+        {
+        "containerPath": "/mnt/mesos/sandbox/persistent_data",
+        "hostPath": "persistent_data",
+        "mode": "RW"
+        }
+    {{/storage.persistence.enable}}
+    ],
     "docker": {
-     {{#service.gpu_support.enabled}}
-     "image": "{{resource.assets.container.docker.jupyter-docker-gpu}}",
-     {{/service.gpu_support.enabled}}
-     {{^service.gpu_support.enabled}}
-     "image": "{{resource.assets.container.docker.jupyter-docker}}",
-     {{/service.gpu_support.enabled}}
-     "forcePullImage": {{service.force_pull}}
-    },
+      {{#service.gpu_support.enabled}}
+      "image": "{{resource.assets.container.docker.jupyter-docker-gpu}}",
+      {{/service.gpu_support.enabled}}
+      {{^service.gpu_support.enabled}}
+      "image": "{{resource.assets.container.docker.jupyter-docker}}",
+      {{/service.gpu_support.enabled}}
+      "forcePullImage": {{service.force_pull}}
+    }
+    {{#networking.cni_support.enabled}}
+    ,
     "portMappings": [
         {
           "containerPort": 8080,
           "protocol": "tcp",
+          "name": "notebook",
           "labels": {
             "VIP_0": "{{service.name}}:8888"
           }
@@ -48,6 +52,7 @@
         {
           "containerPort": 7077,
           "protocol": "tcp",
+          "name": "sparkdriver",
           "labels": {
             "VIP_1": "{{service.name}}:7077"
           }
@@ -55,6 +60,7 @@
         {
           "containerPort": 4040,
           "protocol": "tcp",
+          "name": "sparkui",
           "labels": {
             "VIP_2": "{{service.name}}:4040"
           }
@@ -70,6 +76,7 @@
         {
           "containerPort": 8786,
           "protocol": "tcp",
+          "name": "daskscheduler",
           "labels": {
             "VIP_4": "{{service.name}}:8786"
           }
@@ -77,6 +84,7 @@
         {
           "containerPort": 8787,
           "protocol": "tcp",
+          "name": "daskboard",
           "labels": {
             "VIP_5": "{{service.name}}:8787"
           }
@@ -84,6 +92,7 @@
         {
           "containerPort": 6379,
           "protocol": "tcp",
+          "name": "rayredis",
           "labels": {
             "VIP_6": "{{service.name}}:6379"
           }
@@ -91,6 +100,7 @@
         {
           "containerPort": 8076,
           "protocol": "tcp",
+          "name": "rayobjectmanager",
           "labels": {
             "VIP_7": "{{service.name}}:8076"
           }
@@ -98,11 +108,13 @@
         {
           "containerPort": 18080,
           "protocol": "tcp",
+          "name": "sparkhistory",
           "labels": {
             "VIP_8": "{{service.name}}:18080"
           }
         }
     ]
+  {{/networking.cni_support.enabled}}
   },
   {{#networking.cni_support.enabled}}
   "networks": [
@@ -111,12 +123,88 @@
         "name": "dcos"
       }
   ],
-{{/networking.cni_support.enabled}}
-{{^networking.cni_support.enabled}}
- "networks": [
-      { "mode": "container/bridge" }
-  ],
-{{/networking.cni_support.enabled}}
+  {{/networking.cni_support.enabled}}
+ {{^networking.cni_support.enabled}}
+   "portDefinitions": [
+      {
+        "port": 0,
+        "protocol": "tcp",
+        "name": "notebook",
+        "labels": {
+          "VIP_0": "{{service.name}}:8888"
+        }
+      },
+      {
+        "port": 0,
+        "protocol": "tcp",
+        "name": "sparkdriver",
+        "labels": {
+          "VIP_1": "{{service.name}}:7077"
+        }
+      },
+      {
+        "port": 0,
+        "protocol": "tcp",
+        "name": "sparkui",
+        "labels": {
+          "VIP_2": "{{service.name}}:4040"
+        }
+      },
+      {
+        "port": 0,
+        "protocol": "tcp",
+        "name": "sparkblockmanager"
+      },
+      {
+        "port": 0,
+        "protocol": "tcp",
+        "name": "tfdbg",
+        "labels": {
+          "VIP_3": "{{service.name}}:6046"
+        }
+      },
+      {
+        "port": 0,
+        "protocol": "tcp",
+        "name": "daskscheduler",
+        "labels": {
+          "VIP_4": "{{service.name}}:8786"
+        }
+      },
+      {
+        "port": 0,
+        "protocol": "tcp",
+        "name": "daskboard",
+        "labels": {
+          "VIP_5": "{{service.name}}:8787"
+        }
+      },
+      {
+        "port": 0,
+        "protocol": "tcp",
+        "name": "rayredis",
+        "labels": {
+          "VIP_6": "{{service.name}}:6379"
+        }
+      },
+      {
+        "port": 0,
+        "protocol": "tcp",
+        "name": "rayobjectmanager",
+        "labels": {
+          "VIP_7": "{{service.name}}:8076"
+        }
+      },
+      {
+        "port": 0,
+        "protocol": "tcp",
+        "name": "sparkhistory",
+        "labels": {
+          "VIP_7": "{{service.name}}:18080"
+        }
+      }
+    ],
+  {{/networking.cni_support.enabled}}
   {{#environment.secrets}}
   "secrets": {
     "serviceCredential": {
@@ -138,7 +226,11 @@
     "HADOOP_CONF_DIR": "{{environment.hadoop_conf_dir}}",
     "HOME": "{{environment.home}}",
     "JAVA_OPTS": "{{environment.java_opts}}",
+
+    {{#environment.jupyter_conf_urls}}
     "JUPYTER_CONF_URLS": "{{environment.jupyter_conf_urls}}",
+    {{/environment.jupyter_conf_urls}}
+
     "JUPYTER_CONFIG_DIR": "{{environment.jupyter_config_dir}}",
     "JUPYTER_PASSWORD": "{{environment.jupyter_password}}",
     "JUPYTER_RUNTIME_DIR": "{{environment.jupyter_runtime_dir}}",
