@@ -38,6 +38,10 @@ def main():
         print('The path in --out-dir [{}] is not a directory. Please create it'
               ' before running this script.'.format(args.outdir))
         return
+    print('Paths present in [{}]: {}'.format(
+        str(args.outdir),
+        [str(p) for p in list(args.outdir.glob('*'))])
+    )
 
     if not args.repository.is_dir():
         print('The path in --repository [{}] is not a directory.'.format(
@@ -724,7 +728,10 @@ def _populate_dcos_version_json_to_folder(dcos_version, outdir):
     :return: None
     """
     repo_dir = outdir / dcos_version / 'package'
-    pathlib.Path(repo_dir).rmdir()
+    print('Paths present in [{}]: {}'.format(
+        str(repo_dir),
+        [str(p) for p in list(repo_dir.glob('*'))])
+    )
     pathlib.Path(repo_dir).mkdir(parents=True)
     repo_file = pathlib.Path(outdir / 'repo-up-to-{}.json'.format(dcos_version))
     with repo_file.open('r',  encoding='utf-8') as f:
