@@ -1,0 +1,82 @@
+{
+    "type": "object", 
+    "properties": {
+        "service": {
+            "type": "object", 
+            "description": "DC/OS service configuration properties", 
+            "properties": {
+                "name": {
+                    "description": "The name of the service instance", 
+                    "type": "string", 
+                    "default": "grafana", 
+                    "title": "Service name"
+                }, 
+                "user": {
+                    "description": "The user that the service will run as.", 
+                    "type": "string", 
+                    "default": "root", 
+                    "title": "User"
+                }, 
+                "service_account": {
+                    "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "service_account_secret": {
+                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.", 
+                    "type": "string", 
+                    "default": "", 
+                    "title": "Credential secret name (optional)"
+                }, 
+                "mesos_api_version": {
+                    "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)", 
+                    "type": "string", 
+                    "enum": [
+                        "V0", 
+                        "V1"
+                    ], 
+                    "default": "V1"
+                }, 
+                "log_level": {
+                    "description": "The log level for the DC/OS service.", 
+                    "type": "string", 
+                    "enum": [
+                        "OFF", 
+                        "FATAL", 
+                        "ERROR", 
+                        "WARN", 
+                        "INFO", 
+                        "DEBUG", 
+                        "TRACE", 
+                        "ALL"
+                    ], 
+                    "default": "INFO"
+                }
+            }, 
+            "required": [
+                "name", 
+                "user"
+            ]
+        }, 
+        "grafana": {
+            "description": "grafana pod configuration properties", 
+            "type": "object", 
+            "properties": {
+                "cpus": {
+                    "description": "Grafana pod CPU requirements", 
+                    "type": "number", 
+                    "default": 2.0
+                }, 
+                "mem": {
+                    "description": "Grafana pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 4096
+                }
+            }, 
+            "required": [
+                "cpus", 
+                "mem"
+            ]
+        }
+    }
+}

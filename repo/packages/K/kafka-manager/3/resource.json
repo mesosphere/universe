@@ -1,0 +1,17 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/kafka-manager-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/kafka-manager-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/kafka-manager-icon-large.png",
+    "screenshots": [
+      "https://raw.githubusercontent.com/yahoo/kafka-manager/master/img/topic-list.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "kafka-manager-docker": "deric/kafka-manager:1.3.3.18"
+      }
+    }
+  }
+}
