@@ -1,0 +1,17 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/linkerd-viz-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/linkerd-viz-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/linkerd-viz-icon-large.png",
+    "screenshots": [
+      "https://linkerd.io/images/dcos/linkerd-viz-screenshot.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "linkerd-viz-docker": "buoyantio/linkerd-viz:0.2.0"
+      }
+    }
+  }
+}
