@@ -109,6 +109,11 @@
           "description": "Log level",
           "type": "string",
           "default": "INFO"
+        },
+        "background_tasks_threads":{
+          "description": "threads to dedicate to background processes",
+          "type": "string",
+          "default": "1"
         }
       },
       "required": [
