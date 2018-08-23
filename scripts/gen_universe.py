@@ -16,6 +16,11 @@ import re
 import zipfile
 
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+schema_dir = "{}/../repo/meta/schema/".format(dir_path)
+repo_definitions_json = "{}/vX-repo-definitions.json".format(schema_dir)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='This script generates all of the universe objects from '
@@ -705,7 +710,9 @@ def validate_repo_with_schema(repo_json_data, repo_version):
     :param repo_version: version of the repo (e.g.: v4)
     :return: list of validation errors ( length == zero => No errors)
     """
-    validator = jsonschema.Draft4Validator(_load_jsonschema(repo_version))
+    validator = jsonschema.Draft4Validator(
+        _load_jsonschema(repo_version),
+        resolver=jsonschema.RefResolver('file://' + repo_definitions_json, None))
     errors = []
     for error in validator.iter_errors(repo_json_data):
         for suberror in sorted(error.context, key=lambda e: e.schema_path):
@@ -789,7 +796,7 @@ def _load_jsonschema(repo_version):
     """
 
     with open(
-        'repo/meta/schema/{}-repo-schema.json'.format(repo_version),
+        '{}/{}-repo-schema.json'.format(schema_dir, repo_version),
         encoding='utf-8'
     ) as schema_file:
         return json.loads(schema_file.read())
