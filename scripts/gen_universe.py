@@ -17,7 +17,7 @@ import zipfile
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-schema_dir = "{}/../repo/meta/schema/".format(dir_path)
+schema_dir = os.environ.get("SCHEMA_DIR", "{}/../repo/meta/schema/".format(dir_path))
 repo_definitions_json = "{}/vX-repo-definitions.json".format(schema_dir)
 
 
