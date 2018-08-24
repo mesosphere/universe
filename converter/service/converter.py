@@ -37,7 +37,7 @@ transform_url_path = '/transform'
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
-    level=os.environ.get('LOGLEVEL', 'INFO'),
+    level=os.environ.get('LOGLEVEL', 'DEBUG'),
     format='[%(asctime)s|%(threadName)s|%(levelname)s]: %(message)s'
 )
 
@@ -203,6 +203,7 @@ def render_json(packages, dcos_version, repo_version):
         dcos_version
     )
     packages_dict = {json_key_packages: processed_packages}
+    logger.info('validation for {}'.format(repo_version))
     errors = gen_universe.validate_repo_with_schema(
         packages_dict,
         repo_version
