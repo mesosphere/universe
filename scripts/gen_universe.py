@@ -67,7 +67,7 @@ def main():
     with universe_path.open('w', encoding='utf-8') as universe_file:
         json.dump({'packages': packages}, universe_file)
     ct_universe_path = args.outdir / 'universe.content_type'
-    create_content_type_file(ct_universe_path, "v4")
+    create_content_type_file(ct_universe_path, "v5")
 
     # Render empty json
     empty_path = args.outdir / 'repo-empty-v3.json'
@@ -767,7 +767,9 @@ def _validate_repo(file_path, version):
     :rtype: None
     """
 
-    if LooseVersion(version) >= LooseVersion('1.10'):
+    if LooseVersion(version) >= LooseVersion('1.12'):
+        repo_version = 'v5'
+    elif LooseVersion(version) >= LooseVersion('1.10'):
         repo_version = 'v4'
     else:
         repo_version = 'v3'

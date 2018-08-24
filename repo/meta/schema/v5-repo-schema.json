@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "packages": {
+      "type": "array",
+      "description": "The list of packages in the repo",
+      "items": {
+        "oneOf": [
+          { "$ref": "vX-repo-definitions.json#/v20Package" },
+          { "$ref": "vX-repo-definitions.json#/v30Package" },
+          { "$ref": "vX-repo-definitions.json#/v40Package" },
+          { "$ref": "vX-repo-definitions.json#/v50Package" }
+        ]
+      }
+    }
+  },
+  "required": [
+    "packages"
+  ],
+  "additionalProperties": false
+}

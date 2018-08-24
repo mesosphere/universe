@@ -15,6 +15,14 @@
       }
     ]
   },
+  "packageNameDefinition": {
+    "type": "string",
+    "pattern": "^[a-z][a-z0-9-]*[a-z0-9]$"
+  },
+  "packageVersionDefinition": {
+    "type": "string",
+    "pattern": "^[-a-zA-Z0-9.]+$"
+  },
   "base64String": {
     "type": "string",
     "pattern": "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$"
@@ -370,11 +378,10 @@
         ]
       },
       "name": {
-        "type": "string"
+        "$ref": "#/packageNameDefinition"
       },
       "version": {
-        "type": "string",
-        "pattern": "^[-a-zA-Z0-9.]+$"
+        "$ref": "#/packageVersionDefinition"
       },
       "releaseVersion": {
         "type": "integer",
@@ -480,11 +487,10 @@
         ]
       },
       "name": {
-        "type": "string"
+        "$ref": "#/packageNameDefinition"
       },
       "version": {
-        "type": "string",
-        "pattern": "^[-a-zA-Z0-9.]+$"
+        "$ref": "#/packageVersionDefinition"
       },
       "releaseVersion": {
         "type": "integer",
@@ -570,6 +576,143 @@
       "minDcosReleaseVersion": {
         "$ref": "#/dcosReleaseVersion",
         "description": "The minimum DC/OS Release Version the package can run on."
+      },
+      "marathon": {
+        "$ref": "#/marathon"
+      },
+      "resource": {
+        "$ref": "#/v30resource"
+      },
+      "config": {
+        "$ref": "#/config"
+      }
+    },
+    "required": [
+      "packagingVersion",
+      "name",
+      "version",
+      "releaseVersion",
+      "maintainer",
+      "description",
+      "tags"
+    ],
+    "additionalProperties": false
+  },
+  "v50Package": {
+    "properties": {
+      "packagingVersion": {
+        "type": "string",
+        "enum": [
+          "4.0"
+        ]
+      },
+      "name": {
+        "$ref": "#/packageNameDefinition"
+      },
+      "version": {
+        "$ref": "#/packageVersionDefinition"
+      },
+      "releaseVersion": {
+        "type": "integer",
+        "description": "Corresponds to the revision index from the universe directory structure",
+        "minimum": 0
+      },
+      "scm": {
+        "type": "string"
+      },
+      "maintainer": {
+        "type": "string"
+      },
+      "website": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "framework": {
+        "type": "boolean",
+        "default": false,
+        "description": "True if this package installs a new Mesos framework."
+      },
+      "upgradesFrom": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "List of versions that can upgrade to this package. If the property is a list containing the string '*', any version can upgrade to this package. If the property is not set or the empty list, no version can upgrade to this package."
+      },
+      "downgradesTo": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "List of versions that this package can downgrade to. If the property is a list containing the string '*', this package can downgrade to any version. If the property is not set or the empty list, this package cannot downgrade."
+      },
+      "preInstallNotes": {
+        "type": "string",
+        "description": "Pre installation notes that would be useful to the user of this package."
+      },
+      "postInstallNotes": {
+        "type": "string",
+        "description": "Post installation notes that would be useful to the user of this package."
+      },
+      "postUninstallNotes": {
+        "type": "string",
+        "description": "Post uninstallation notes that would be useful to the user of this package."
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^[^\\s]+$"
+        }
+      },
+      "selected": {
+        "type": "boolean",
+        "description": "Flag indicating if the package is selected in search results",
+        "default": false
+      },
+      "licenses": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the license. For example one of [Apache License Version 2.0 | MIT License | BSD License | Proprietary]"
+            },
+            "url": {
+              "$ref": "#/url",
+              "description": "The URL where the license can be accessed"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "url"
+          ]
+        }
+      },
+      "minDcosReleaseVersion": {
+        "$ref": "#/dcosReleaseVersion",
+        "description": "The minimum DC/OS Release Version the package can run on."
+      },
+      "manager": {
+        "type": "object",
+        "description": "Custom package manager section that can be used to define a custom manager for a package",
+        "properties": {
+          "packageName": {
+            "$ref": "#/packageNameDefinition",
+            "description": "Name of the default package manager"
+          },
+          "minPackageVersion": {
+            "$ref": "#/packageVersionDefinition",
+            "description": "The minimum version of the package manager defined above"
+          }
+        },
+        "required": [
+          "packageName"
+        ]
       },
       "marathon": {
         "$ref": "#/marathon"

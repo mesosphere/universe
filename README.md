@@ -436,13 +436,13 @@ Docker image" status report to view the build results.
 
 2. Build the Universe Server Docker image
   ```bash
-  DOCKER_TAG="my-package" docker/server/build.bash
+  DOCKER_IMAGE="my-org/my-image" DOCKER_TAG="my-package" docker/server/build.bash
   ```
   This will create a Docker image `universe-server:my-package` and `docker/server/target/marathon.json` on your local machine
 
 3. If you would like to publish the built Docker image, run
   ```bash
-  DOCKER_TAG="my-package" docker/server/build.bash publish
+  DOCKER_IMAGE="my-org/my-image" DOCKER_TAG="my-package" docker/server/build.bash publish
   ```
 
 #### Run Universe Server
