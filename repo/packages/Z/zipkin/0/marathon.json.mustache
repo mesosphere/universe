@@ -1,0 +1,69 @@
+{
+  "id": "{{service.name}}",
+  "backoffFactor": 1.15,
+  "backoffSeconds": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "forcePullImage": false,
+      "image": "{{resource.assets.container.docker.zipkin}}",
+      "parameters": [],
+      "privileged": false
+    },
+    "volumes": [],
+    "portMappings": [
+      {
+        "containerPort": 9411,
+        "hostPort": 0,
+        "labels": {
+          "VIP_0": "{{service.name}}:9411"
+        },
+        "name": "default",
+        "protocol": "tcp",
+        "servicePort": 10004
+      }
+    ]
+  },
+  "cpus": {{service.cpus}},
+  "disk": 0,
+  "executor": "",
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 10,
+      "maxConsecutiveFailures": 2,
+      "path": "/health",
+      "portIndex": 0,
+      "protocol": "MESOS_HTTP",
+      "ipProtocol": "IPv4",
+      "timeoutSeconds": 5,
+      "delaySeconds": 15
+    }
+  ],
+  "instances": 1,
+  "labels": {
+    {{#networking.virtual-host}}
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "{{networking.virtual-host}}",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "{{networking.https-redirect}}"
+    {{/networking.virtual-host}}
+  },
+  "maxLaunchDelaySeconds": 3600,
+  "mem": {{service.mem}},
+  "gpus": 0,
+  "networks": [
+    {
+      "mode": "container/bridge"
+    }
+  ],
+  "requirePorts": false,
+  "upgradeStrategy": {
+    "maximumOverCapacity": 1,
+    "minimumHealthCapacity": 1
+  },
+  "killSelection": "YOUNGEST_FIRST",
+  "unreachableStrategy": {
+    "inactiveAfterSeconds": 0,
+    "expungeAfterSeconds": 0
+  }
+}

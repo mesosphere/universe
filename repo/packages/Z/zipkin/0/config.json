@@ -1,0 +1,84 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "zipkin"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to each service instance.",
+          "type": "number",
+          "default": 0.1,
+          "minimum": 0.1
+        },
+        "mem": {
+          "description": "Memory to allocate to each service instance.",
+          "type": "number",
+          "default": 256.0,
+          "minimum": 128.0
+        },
+        "java_opts": {
+          "description": "Use to set java arguments, such as heap size or trust store location",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "storage": {
+      "description": "Storage-related configuration properties for Zipkin on DC/OS.",
+      "type": "object",
+      "properties": {
+        "cassandra": {
+          "description": "Enable cassandra as a storage backend",
+          "type": "boolean",
+          "default": false
+        },
+        "cassandra_address": {
+          "description": "Address of the cassandra instance (must listen to port 9042)",
+          "type": "string",
+          "default": ""
+        },
+        "mysql": {
+          "description": "Enable mysql as a storage backend",
+          "type": "boolean",
+          "default": false
+        },
+        "mysql_address": {
+          "description": "Address of the mysql instance (must listen to port 3306)",
+          "type": "string",
+          "default": ""
+        },
+        "elasticsearch": {
+          "description": "Enable elasticsearch as a storage backend",
+          "type": "boolean",
+          "default": false
+        },
+        "elasticsearch_address": {
+          "description": "Address of the elasticsearch instance (must listen to port 9200)",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "networking": {
+      "description": "Networking-related configuration properties for Zipkin on DC/OS.",
+      "type": "object",
+      "properties": {
+        "virtual-host": {
+          "description": "The virtual host address to configure for integration with Marathon-lb.",
+          "type": "string"
+        },
+        "https-redirect": {
+          "description": "Whether Marathon-lb should redirect HTTP traffic to HTTPS. This requires 'virtual-host' to be set. By default, this is false.",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  }
+}

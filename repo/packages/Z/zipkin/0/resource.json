@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://zipkin.io/public/img/zipkin-logo-200x119.jpg",
+    "icon-medium": "https://zipkin.io/public/img/zipkin-logo-200x119.jpg",
+    "icon-large": "https://zipkin.io/public/img/zipkin-logo-200x119.jpg"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "zipkin": "openzipkin/zipkin:2.11.3"
+      }
+    }
+  }
+}

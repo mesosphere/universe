@@ -1,0 +1,16 @@
+{
+  "packagingVersion": "4.0",
+  "name": "zipkin",
+  "version": "2.11.3",
+  "minDcosReleaseVersion": "1.10",
+  "scm": "https://github.com/openzipkin/docker-zipkin",
+  "maintainer": "https://dcos.io/community/",
+  "description": "Zipkin is a distributed tracing system. It helps gather timing data needed to troubleshoot latency problems in microservice architectures. It manages both the collection and lookup of this data",
+  "framework": true,
+  "tags": [
+    "tracing",
+    "performance"
+  ],
+  "website": "https://zipkin.io/",
+  "preInstallNotes": "This DC/OS Service is currently in preview."
+}
