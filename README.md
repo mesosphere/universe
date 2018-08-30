@@ -413,7 +413,7 @@ Full Instructions:
 
 ## Repository Consumption
 
-In order for Universe to be consumed by DC/OS the build process needs to be run to create the Universe Server.
+In order for Universe to be consumed by DC/OS the build process needs to be run to create the Universe Server. The intention of this guide is for Testing/Developing a package before releasing it to public Universe. See [Local Universe](https://docs.mesosphere.com/latest/administering-clusters/deploying-a-local-dcos-universe/) for running universe server on airgapped clusters.
 
 ### Universe Server
 
