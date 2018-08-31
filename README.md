@@ -14,6 +14,7 @@ Mesosphere Universe registry of packages made available for DC/OS Clusters.
   * [Creating a Package](#creating-a-package)
     * [`package.json`](#packagejson)
       * [`.minDcosReleaseVersion`](#mindcosreleaseversion)
+      * [`.preInstallNotes`, `.postInstallNotes`, `.postUninstallNotes`](#preinstallnotes-postinstallnotes-postuninstallnotes)
     * [`config.json`](#configjson)
     * [`marathon.json.mustache`](#marathonjsonmustache)
     * [`command.json`](#commandjson)
@@ -132,6 +133,11 @@ When `.minDcosReleaseVersion` is specified the package will only be made availab
 Release Version greater than or equal to (`>=`) the value specified.
 
 For example, `"minDcosReleaseVersion" : "1.8"` will prevent the package from being installed on clusters older than DC/OS 1.8.
+
+###### `.preInstallNotes`, `.postInstallNotes`, `.postUninstallNotes`
+
+You can add additional notes for users (un)installing your package.
+Please use Markdown to format your text.
 
 ###### `.upgradesFrom`
 
