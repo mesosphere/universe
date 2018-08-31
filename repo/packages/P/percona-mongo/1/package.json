@@ -19,7 +19,7 @@
         "percona",
         "nosql"
     ],
-    "postInstallNotes": "The DC/OS Mongo service is being installed. \n\nDocumentation: https://docs.mesosphere.com/service-docs/percona-mongo/\n\tIssues: mesosphere@percona.com",
+    "postInstallNotes": "The DC/OS Mongo service is being installed. \n\nDocumentation: https://docs.mesosphere.com/service-docs/percona-mongo/\nIssues: mesosphere@percona.com",
     "postUninstallNotes": "DC/OS Mongo is being uninstalled.",
     "preInstallNotes": "Default configuration requires 3 agent nodes each with: 1.0 CPU | 1024 MB MEM | 1 1000 MB Disk"
 }

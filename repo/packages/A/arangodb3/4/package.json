@@ -12,7 +12,7 @@
     "database"
   ],
   "preInstallNotes": "The default configuration requires at least 3 nodes having 4.75 CPU, 22GB of memory and 20GB of persistent disk storage in total.",
-  "postInstallNotes": "The ArangoDB DCOS Service has been successfully installed!\n\nDocumentation: https://github.com/arangodb/arangodb3-dcos\n\tIssues: https://github.com/arangodb/arangodb3-dcos/issues",
+  "postInstallNotes": "The ArangoDB DCOS Service has been successfully installed!\n\nDocumentation: https://github.com/arangodb/arangodb3-dcos\nIssues: https://github.com/arangodb/arangodb3-dcos/issues",
   "postUninstallNotes": "The ArangoDB DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at https://github.com/arangodb/arangodb3-dcos to clean up any persisted state.",
   "licenses": [
     {

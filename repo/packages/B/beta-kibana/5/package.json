@@ -18,6 +18,6 @@
         "x-pack"
     ],
     "preInstallNotes": "This DC/OS service is currently a beta candidate undergoing testing as part of a formal beta test program. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nDefault configuration requires 1 agent node with: 0.5 CPU | 2048 MB MEM\n\nContact Mesosphere before deploying this beta candidate service. Product support is available to approved participants in the beta test program.",
-    "postInstallNotes": "The DC/OS Kibana service is being installed!\n\nDocumentation: https://docs.mesosphere.com/service-docs/beta-elastic/\n\tIssues: https://docs.mesosphere.com/support/",
+    "postInstallNotes": "The DC/OS Kibana service is being installed!\n\nDocumentation: https://docs.mesosphere.com/service-docs/beta-elastic/\nIssues: https://docs.mesosphere.com/support/",
     "postUninstallNotes": "The DC/OS Kibana service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/beta-elastic/uninstall to remove any persistent state if required."
 }
