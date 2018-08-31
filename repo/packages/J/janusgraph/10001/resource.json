@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/cdpq-leo/assets/master/Janus/Images/icon-service-janus-small.png",
+    "icon-medium": "https://raw.githubusercontent.com/cdpq-leo/assets/master/Janus/Images/icon-service-janus-medium.png",
+    "icon-large": "https://raw.githubusercontent.com/cdpq-leo/assets/master/Janus/Images/icon-service-janus-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "janusgraphimage": "cdpqleo/janusgraph:1.0.1-0.2.0"
+      }
+    }
+  }
+}
