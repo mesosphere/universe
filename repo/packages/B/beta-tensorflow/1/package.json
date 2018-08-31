@@ -17,6 +17,6 @@
         "tensorflow"
     ],
     "preInstallNotes": "This is a community package. Community packages are unverified and unreviewed content from the community.",
-    "postInstallNotes": "The DC/OS TensorFlow service is being installed!\n\n\tDocumentation: https://mesosphere.github.io/dcos-tensorflow/\n\tIssues: https://chat.dcos.io",
+    "postInstallNotes": "The DC/OS TensorFlow service is being installed!\n\nDocumentation: https://mesosphere.github.io/dcos-tensorflow/\n\tIssues: https://chat.dcos.io",
     "postUninstallNotes": "The DC/OS TensorFlow service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://mesosphere.github.io/dcos-tensorflow/uninstall to remove any persistent state if required."
 }
