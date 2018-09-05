@@ -1,0 +1,71 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "disk": {{service.disk}},
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "env": {
+    "GREMLIN_GRAPH_READER": "{{grakn.gremlin_graph_reader}}",
+    "START_LOCAL_STORAGE": "{{grakn.start_local_storage}}",
+    "STORAGE_HOSTNAME": "{{grakn.storage_hostname}}",
+    "KEYSPACE": "{{grakn.keyspace}}",
+    "START_LOCAL_QUEUE": "{{grakn.start_local_queue}}",
+    "QUEUE_HOST": "{{grakn.queue_host}}",
+    "INDEX_SEARCH_BACKEND": "{{grakn.index_search_backend}}",
+    "INDEX_SEARCH_HOSTNAME": "{{grakn.index_search_hostname}}",
+    "SPARK_MASTER": "{{grakn.spark_master}}",
+    "BACKGROUND_TASKS_THREADS" : "{{grakn.background_tasks_threads}}",
+    "LOG_LEVEL": "{{grakn.log_level}}"
+  },
+  "container": {
+    "type": "DOCKER",
+    "portMappings": [
+      {
+        "containerPort": 4567,
+        "hostPort": 0,
+        "labels": {
+          "VIP_0": "/{{service.name}}:4567"
+        },
+        "protocol": "tcp"
+      }, {
+        "containerPort": 48555,
+        "hostPort": 0,
+        "labels": {
+          "VIP_1": "/{{service.name}}:48555"
+        },
+        "protocol": "tcp"
+      }
+    ],
+    {{#service.volume.enabled}}
+    "volumes": [
+      {
+        "containerPath": "{{service.volume.container_path}}",
+        "hostPath": "{{service.volume.host_path}}",
+        "mode": "{{service.volume.mode}}"
+      }
+    ],
+    {{/service.volume.enabled}}
+    "docker": {
+      "image": "{{resource.assets.container.docker.grakn}}",
+      "forcePullImage": true,
+      "network": "BRIDGE",
+      "privileged": false,
+      "parameters": []
+    }
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "path": "/",
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 30,
+      "maxConsecutiveFailures": 3,
+      "timeoutSeconds": 5
+    }
+  ]
+}
