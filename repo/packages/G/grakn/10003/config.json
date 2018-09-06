@@ -1,0 +1,129 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "Name of this service instance.",
+          "type": "string",
+          "default": "grakn"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to the Grakn instance.",
+          "type": "number",
+          "default": 1.0,
+          "minimum": 1.0
+        },
+        "mem": {
+          "description": "Memory to allocate to the Grakn instance.",
+          "type": "number",
+          "default": 1024,
+          "minimum": 1024
+        },
+        "disk": {
+          "description": "Disk (MB) to allocate to the Grakn instance.",
+          "type": "number",
+          "default": 65536,
+          "minimum": 2000
+        },
+        "volume": {
+          "type": "object",
+          "description": "Docker volume properties",
+          "properties": {
+            "enabled": {
+              "description": "Enable volume or not",
+              "type": "boolean",
+              "default": false
+            },
+            "host_path": {
+              "description": "Host path",
+              "type": "string",
+              "default": ""
+            },
+            "container_path": {
+              "description": "Container path",
+              "type": "string",
+              "default": ""
+            },
+            "mode": {
+              "description": "Mode",
+              "type": "string",
+              "default": "RO"
+            }
+          }
+        }
+      }
+    },
+    "grakn": {
+      "type": "object",
+      "description": "Grakn instance configuration properties",
+      "properties": {
+        "gremlin_graph_reader": {
+          "description": "Graph reader",
+          "type": "string",
+          "default": "org.janusgraph.hadoop.formats.cassandra.CassandraInputFormat"
+        },
+        "start_local_storage": {
+          "description": "Start local storage engine",
+          "type": "boolean",
+          "default": true
+        },
+        "storage_hostname": {
+          "description": "Storage hostname",
+          "type": "string",
+          "default": "localhost"
+        },
+        "keyspace": {
+          "description": "Grakn keyspace",
+          "type": "string",
+          "default": "grakn"
+        },
+        "start_local_queue": {
+          "description": "Start local queue",
+          "type": "boolean",
+          "default": true
+        },
+        "queue_host": {
+          "description": "Queue host",
+          "type": "string",
+          "default": "localhost:6379"
+        },
+        "index_search_backend": {
+          "description": "Index storage backend",
+          "type": "string",
+          "default": ""
+        },
+        "index_search_hostname": {
+          "description": "Index storage hostname",
+          "type": "string",
+          "default": ""
+        },
+        "spark_master": {
+          "description": "Spark master",
+          "type": "string",
+          "default": "local[*]"
+        },
+        "log_level": {
+          "description": "Log level",
+          "type": "string",
+          "default": "INFO"
+        },
+        "background_tasks_threads":{
+          "description": "threads to dedicate to background processes",
+          "type": "string",
+          "default": "1"
+        }
+      },
+      "required": [
+        "gremlin_graph_reader",
+        "storage_hostname",
+        "keyspace",
+        "queue_host",
+        "spark_master",
+        "log_level"
+      ]
+    }
+  }
+}

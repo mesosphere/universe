@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS smart-search service specifications",
+      "properties": {
+        "name": {
+          "description": "Name of SmartSearch instances as seen in DC/OS.",
+          "type": "string",
+          "default": "smart-search"
+        },
+        "cpus": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance.",
+          "type": "number",
+          "default": 512
+        },
+        "disk": {
+          "description": "Disk (MB) to allocate to the janusgraph instance.",
+          "type": "number",
+          "default": 0
+        },
+        "cassandra_hostnames": {
+          "description": "Comma seperated values of the hostnames of the cassandra nodes to connect to.",
+          "type": "string",
+          "default": ""
+        },
+        "elastic_hostname": {
+          "description": "Elastic hostname.",
+          "type": "string",
+          "default": ""
+        },
+        "keyspace": {
+          "description": "Keyspace.",
+          "type": "string",
+          "default": "janusgraph"
+        },
+        "read_only": {
+          "description": "Read only?",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "/{{service.name}}",
+  "cpus": {{service.cpus}},
+  "disk": {{service.disk}},
+  "mem": {{service.mem}},
+  "env": {
+    "CASSANDRA_HOSTNAMES": "{{service.cassandra_hostnames}}",
+    "ELASTIC_HOSTNAME": "{{service.elastic_hostname}}",
+    "KEYSPACE": "{{service.keyspace}}",
+    "READ_ONLY": "{{service.read_only}}"
+  },
+  "container": {
+    "portMappings": [
+      {
+        "containerPort": 8182,
+        "hostPort": 0,
+        "labels": {
+          "VIP_0": "/{{service.name}}:8182"
+        },
+        "protocol": "tcp"
+      }
+    ],
+    "type": "DOCKER",
+    "volumes": [],
+    "docker": {
+      "image": "{{resource.assets.container.docker.janusgraphimage}}",
+      "forcePullImage": true
+    }
+  },
+  "networks": [
+    {
+      "mode": "container/bridge"
+    }
+  ],
+  "healthChecks": []
+}
