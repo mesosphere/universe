@@ -10,6 +10,8 @@ ADD scripts/gen_universe.py                 /converter
 ADD repo/meta/schema                        /converter/repo/meta/schema
 ADD scripts/requirements/requirements.txt   /converter/requirements.txt
 
+ENV SCHEMA_DIR=/converter/repo/meta/schema/
+
 # Install the required dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 

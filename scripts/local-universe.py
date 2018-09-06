@@ -278,8 +278,18 @@ def selected_check(package_json, packages, only_selected, is_latest):
 
 
 def load_json(json_path):
-    with json_path.open(encoding='utf-8') as json_file:
-        return json.load(json_file)
+    try:
+        with json_path.open(encoding='utf-8') as json_file:
+            return json.load(json_file)
+    except json.JSONDecodeError as err:
+        print("JSON error in file: %s" % json_path)
+        print_width = 50
+        snippet = err.doc[max(0, err.pos - print_width) : err.pos + print_width]
+        if err.pos - print_width > 0:
+            snippet = '... {}'.format(snippet)
+        if err.pos + print_width < len(err.doc):
+            snippet = '{} ...'.format(snippet)
+        print('{}\n{}'.format(err, snippet))
 
 
 def enumerate_http_resources(

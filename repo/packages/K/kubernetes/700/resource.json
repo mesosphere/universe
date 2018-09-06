@@ -1,0 +1,79 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "kubedns": "gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.9",
+        "kubedns_dnsmasq": "gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.9",
+        "kubedns_sidecar": "gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.9",
+        "metrics_server": "gcr.io/google_containers/metrics-server-amd64:v0.2.1",
+        "dashboard": "k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3",
+        "pause": "gcr.io/google_containers/pause-amd64:3.1"
+      }
+    },
+    "uris": {
+      "jre_tar_gz": "https://downloads.mesosphere.com/java/server-jre-8u172-linux-x64.tar.gz",
+      "libmesos_bundle_tar_gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz",
+      "scheduler_zip": "https://downloads.mesosphere.com/kubernetes/assets/1.2.1-1.10.6/kubernetes-scheduler.zip",
+      "bootstrap_zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.52.1/bootstrap.zip",
+      "kubelet_resource_watchdog": "https://downloads.mesosphere.com/kubernetes/assets/1.2.1-1.10.6/kubelet-resource-watchdog-v0.2.0.tar.gz",
+      "conntrack": "https://downloads.mesosphere.com/dcos-kubernetes/conntrack/conntrack-1.4.4.tar.gz",
+      "etcd_uri": "https://storage.googleapis.com/etcd/v3.3.8/etcd-v3.3.8-linux-amd64.tar.gz",
+      "apiserver_uri": "https://storage.googleapis.com/kubernetes-release/release/v1.10.6/bin/linux/amd64/kube-apiserver",
+      "controller_manager_uri": "https://storage.googleapis.com/kubernetes-release/release/v1.10.6/bin/linux/amd64/kube-controller-manager",
+      "scheduler_uri": "https://storage.googleapis.com/kubernetes-release/release/v1.10.6/bin/linux/amd64/kube-scheduler",
+      "kube_proxy_uri": "https://storage.googleapis.com/kubernetes-release/release/v1.10.6/bin/linux/amd64/kube-proxy",
+      "kubelet_uri": "https://storage.googleapis.com/kubernetes-release/release/v1.10.6/bin/linux/amd64/kubelet",
+      "docker_uri": "https://download.docker.com/linux/static/stable/x86_64/docker-18.03.1-ce.tgz",
+      "socat_uri": "https://downloads.mesosphere.com/kubernetes/socat/socat.d-1.7.3.2-2.fc26.tar.gz",
+      "kubectl_uri": "https://storage.googleapis.com/kubernetes-release/release/v1.10.6/bin/linux/amd64/kubectl",
+      "ark_uri": "https://github.com/heptio/ark/releases/download/v0.6.0/ark-v0.6.0-linux-amd64.tar.gz",
+      "static_socat_uri": "https://downloads.mesosphere.io/dcos-kubernetes/socat/socat-1.7.3.2.tar.gz",
+      "coredns_uri": "https://github.com/coredns/coredns/releases/download/v1.1.1/coredns_1.1.1_linux_amd64.tgz"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/kubernetes/assets/k8s-small-48x48.png",
+    "icon-medium": "https://downloads.mesosphere.com/kubernetes/assets/k8s-medium-96x96.png",
+    "icon-large": "https://downloads.mesosphere.com/kubernetes/assets/k8s-large-256x256.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "f215597550f1f893a8fb0a38ddc253b221f96e097233d7898ca853fbcc0586b3"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/1.2.1-1.10.6/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "80f045d2b06676463805b3e2078c61e97c632dc2d5ad99b450af62da7d23f22e"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/1.2.1-1.10.6/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "9ec7605c65e4772d4ed3ca1f862350ee2346538adb1b89aaeba121610107b6d2"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/1.2.1-1.10.6/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

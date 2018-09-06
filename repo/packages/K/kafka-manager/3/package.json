@@ -1,0 +1,20 @@
+{
+  "packagingVersion": "4.0",
+  "name": "kafka-manager",
+  "version": "1.1.0-1.3.3.18",
+  "minDcosReleaseVersion": "1.9",
+  "scm": "https://github.com/yahoo/kafka-manager",
+  "maintainer": "https://github.com/deric/kafka-manager-docker",
+  "description": "A web-based tool for managing Apache Kafka clusters. Kafka-manager supports Kafka versions up to 1.1.0. The web UI should be deployed on a virtual host, routing to different base path is currently not supported. Use e.g. Marathon-LB to access kafka-manager web interface.",
+  "framework": false,
+  "tags": ["message", "broker", "messaging", "management", "kafka", "manager"],
+  "preInstallNotes": "This DC/OS Service is currently in preview. You need a live kafka cluster (Kafka or Confluent).",
+  "postInstallNotes": "kafka-manager has been installed. Persistent data are stored in the zookeeper cluster you defined under /${service.name} znode.",
+  "postUninstallNotes": "kafka-manager has been uninstalled. Please note that persistent data are still in your zookeeper cluster, under /${service.name} znode, and will need to be manually removed.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/yahoo/kafka-manager/master/LICENCE"
+    }
+  ]
+}

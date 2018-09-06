@@ -1,0 +1,1123 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "portworx-percona-mongo"
+        },
+        "user": {
+          "title": "User",
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "root"
+        },
+        "principal": {
+          "title": "Custom principal (optional)",
+          "description": "The principal for the service instance, or empty to use the default.",
+          "type": "string",
+          "default": ""
+        },
+        "virtual_networks": {
+          "description": "Enable DC/OS Virtual Networking",
+          "type": "boolean",
+          "default": false
+        },
+        "secret_name": {
+          "title": "Credential secret name (optional)",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        },
+        "mesos_api_version": {
+          "description": "The Mesos API version to be used by the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "V0",
+            "V1"
+          ],
+          "default": "V1"
+        }
+      },
+      "required": [
+        "name",
+        "user",
+        "mesos_api_version"
+      ]
+    },
+    "mongodb": {
+      "description": "MongoDB server node configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "MongoDB server node cpu requirements. Example: 1 equals one CPU, 0.1 equals 10% of one CPU, etc",
+          "type": "number",
+          "default": 1,
+          "minimum": 0.1
+        },
+        "mem": {
+          "description": "MongoDB server node mem requirements, in megabytes",
+          "type": "integer",
+          "default": 1024,
+          "minimum": 1024
+        },
+        "disk": {
+          "description": "MongoDB server node disk requirements, in megabytes",
+          "type": "integer",
+          "default": 10240,
+          "minimum": 1
+        },
+        "portworx_volume_name": {
+          "description": "Portworx volume name",
+          "type": "string",
+          "default": "PerconaMongoDB"
+        },
+        "portworx_volume_options": {
+          "description": "Portworx volume options. Comma separated key=value pairs",
+          "type": "string",
+          "default": ""
+        },
+        "count": {
+          "description": "Number of MongoDB replica set members/nodes to run. 1, 3, 5 or 7 node count is possible",
+          "type": "integer",
+          "enum": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "default": 3
+        },
+        "init_replset": {
+          "description": "Initialize MongoDB replset. If using existing Portworx volumes from previous framework installation, you should not initialize the replset again and use the same replicaSetName",
+          "type": "boolean",
+          "default": true
+        },
+        "replicaSetName": {
+          "title": "replication.replicaSetName",
+          "description": "Name of the MongoDB ReplicaSet. If using existing Portworx volumes from previous installation, use the same replicaSetName as before",
+          "type": "string",
+          "default": "rs"
+        },
+        "port": {
+          "description": "MongoDB server listening port. Must be a number between 1024 and 65535",
+          "type": "integer",
+          "default": 27017,
+          "minimum": 1025,
+          "maximum": 65535
+        },
+        "storageEngine": {
+          "title": "storage.engine",
+          "description": "Percona MongoDB storage engine (options: wiredTiger, mmapv1 or inMemory)",
+          "type": "string",
+          "enum": [
+            "wiredTiger",
+            "mmapv1",
+            "inMemory"
+          ],
+          "default": "wiredTiger"
+        },
+        "placement": {
+          "title": "MongoDB Node Placement",
+          "description": "MongoDB Node Placement configuration properties. By default all data-bearing MongoDB tasks run on unique DC/OS agent hosts for high-availability",
+          "type": "object",
+          "properties": {
+            "constraint": {
+              "description": "Marathon-style constraint for MongoDB server nodes (use empty string to override the default hostname UNIQUE behavior)",
+              "type": "string",
+              "default": "[[\"hostname\", \"UNIQUE\"]]",
+              "media": {
+                "type": "application/x-zone-constraints+json"
+              }
+            }
+          },
+          "required": [
+            "constraint"
+          ]
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk",
+        "count",
+        "replicaSetName",
+        "port",
+        "placement",
+        "storageEngine"
+      ]
+    },
+    "mongodb-credentials": {
+      "title": "MongoDB Credentials",
+      "description": "MongoDB System Users and Key configuration properties. Note: for security, system passwords must be 10-characters or longer. The 'key' should be generated using the command 'openssl rand -base64 756'.",
+      "type": "object",
+      "properties": {
+        "backupUser": {
+          "description": "MongoDB backup user name",
+          "type": "string",
+          "default": "backup"
+        },
+        "backupPassword": {
+          "description": "MongoDB backup password, must be 10 characters or longer",
+          "type": "string",
+          "default": ""
+        },
+        "userAdminUser": {
+          "description": "MongoDB userAdmin user name",
+          "type": "string",
+          "default": "useradmin"
+        },
+        "userAdminPassword": {
+          "description": "MongoDB userAdmin password, must be 10 characters or longer",
+          "type": "string",
+          "default": ""
+        },
+        "clusterAdminUser": {
+          "description": "MongoDB clusterAdmin user name",
+          "type": "string",
+          "default": "clusteradmin"
+        },
+        "clusterAdminPassword": {
+          "description": "MongoDB clusterAdmin password, must be 10 characters or longer",
+          "type": "string",
+          "default": ""
+        },
+        "clusterMonitorUser": {
+          "description": "MongoDB clusterMonitor user name",
+          "type": "string",
+          "default": "clustermonitor"
+        },
+        "clusterMonitorPassword": {
+          "description": "MongoDB clusterMonitor password, must be 10 characters or longer",
+          "type": "string",
+          "default": ""
+        },
+        "key": {
+          "description": "The key to be used for intra-node replica set communication. The key must be 1024 characters long. We strongly recommend a new key is generated by running 'openssl rand -base64 756'",
+          "type": "string",
+          "default": ""
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "backupPassword": {
+              "minLength": 10
+            }
+          }
+        },
+        {
+          "properties": {
+            "userAdminPassword": {
+              "minLength": 10
+            }
+          }
+        },
+        {
+          "properties": {
+            "clusterAdminPassword": {
+              "minLength": 10
+            }
+          }
+        },
+        {
+          "properties": {
+            "clusterMonitorPassword": {
+              "minLength": 10
+            }
+          }
+        },
+        {
+          "properties": {
+            "key": {
+              "minLength": 1023,
+              "maxLength": 1024
+            }
+          }
+        },
+        {
+          "required": [
+            "backupUser",
+            "backupPassword",
+            "userAdminUser",
+            "userAdminPassword",
+            "clusterAdminUser",
+            "clusterAdminPassword",
+            "clusterMonitorUser",
+            "clusterMonitorPassword",
+            "key"
+          ]
+        }
+      ]
+    },
+    "mongodb-advanced": {
+      "description": "MongoDB server advanced server configuration properties. Adjust with caution!",
+      "type": "object",
+      "properties": {
+        "container": {
+          "title": "Linux Container",
+          "description": "MongoDB Linux Container configuration properties",
+          "type": "object",
+          "properties": {
+            "openFileLimit": {
+              "title": "Open Files Limit (ulimit)",
+              "description": "Maximum number of open files inside the container ('NOFILE' ulimit setting)",
+              "type": "number",
+              "default": 64000,
+              "minimum": 1024
+            },
+            "processLimit": {
+              "title": "Max Processes Limit (ulimit)",
+              "description": "Maximum number of processes running inside the container ('NPROC' ulimit setting)",
+              "type": "number",
+              "default": 64000,
+              "minimum": 1024
+            }
+          },
+          "required": [
+            "openFileLimit",
+            "processLimit"
+          ]
+        },
+        "security": {
+          "description": "MongoDB security configuration properties",
+          "type": "object",
+          "properties": {
+            "redactClientLogData": {
+              "title": "security.redactClientLogData",
+              "description": "The Percona Log Redaction feature prevents writing of potentially sensitive data stored on the database to the diagnostic log",
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "redactClientLogData"
+          ]
+        },
+        "storage": {
+          "description": "MongoDB storage-level configuration properties",
+          "type": "object",
+          "properties": {
+            "indexBuildRetry": {
+              "title": "storage.indexBuildRetry",
+              "description": "Specifies whether mongod rebuilds incomplete indexes on the next start up",
+              "type": "boolean",
+              "default": true
+            },
+            "directoryPerDB": {
+              "title": "storage.directoryPerDB",
+              "description": "When true, MongoDB uses a separate directory to store data for each database",
+              "type": "boolean",
+              "default": false
+            },
+            "syncPeriodSecs": {
+              "title": "storage.syncPeriodSecs",
+              "description": "The amount of time that can pass before MongoDB flushes data to the data files via an fsync operation",
+              "type": "integer",
+              "default": 60,
+              "minimum": 0
+            },
+            "journal": {
+              "title": "Journaling",
+              "description": "MongoDB Storage Journal configuration properties",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "title": "storage.journal.enabled",
+                  "description": "Enable or disable the durability journal to ensure data files remain valid and recoverable",
+                  "type": "boolean",
+                  "default": true
+                },
+                "commitIntervalMs": {
+                  "title": "storage.journal.commitIntervalMs",
+                  "description": "The maximum amount of time in milliseconds that the mongod process allows between journal operations",
+                  "type": "integer",
+                  "default": 100,
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "enabled",
+                "commitIntervalMs"
+              ]
+            },
+            "mmapv1": {
+              "title": "MMAPv1 Storage Engine",
+              "description": "MongoDB MMAPv1 storage-engine configuration properties",
+              "type": "object",
+              "properties": {
+                "preallocDataFiles": {
+                  "title": "storage.mmapv1.preallocDataFiles",
+                  "description": "Enables or disables the preallocation of data files. By default, MongoDB does not preallocate data files",
+                  "type": "boolean",
+                  "default": true
+                },
+                "nsSize": {
+                  "title": "storage.mmapv1.nsSize",
+                  "description": "The default size for namespace files, which are files that end in .ns. Each collection and index counts as a namespace",
+                  "type": "integer",
+                  "default": 16,
+                  "minimum": 1
+                },
+                "quotaEnforced": {
+                  "title": "storage.mmapv1.quota.enforced",
+                  "description": "Enable or disable the enforcement of a maximum limit for the number data files each database can have",
+                  "type": "boolean",
+                  "default": false
+                },
+                "quotaMaxFilesPerDB": {
+                  "title": "storage.mmapv1.quota.maxFilesPerDB",
+                  "description": "The limit on the number of data files per database",
+                  "type": "integer",
+                  "default": 8,
+                  "minimum": 1
+                },
+                "smallFiles": {
+                  "title": "storage.mmapv1.smallFiles",
+                  "description": "When true, MongoDB uses a smaller default file size",
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "required": [
+                "preallocDataFiles",
+                "nsSize",
+                "quotaEnforced",
+                "quotaMaxFilesPerDB",
+                "smallFiles"
+              ]
+            },
+            "wiredTiger": {
+              "title": "WiredTiger Storage Engine",
+              "description": "MongoDB WiredTiger storage-engine configuration properties",
+              "type": "object",
+              "properties": {
+                "engineConfigJournalCompressor": {
+                  "title": "storage.wiredTiger.engineConfig.journalCompressor",
+                  "description": "The type of compression to use to compress WiredTiger journal data. Available compressors are: none, snappy, zlib",
+                  "type": "string",
+                  "enum": [
+                    "snappy",
+                    "none",
+                    "zlib"
+                  ],
+                  "default": "snappy"
+                },
+                "engineConfigDirectoryForIndexes": {
+                  "title": "storage.wiredTiger.engineConfig.directoryForIndexes",
+                  "description": "When true, mongod stores indexes and collections in separate subdirectories under the data (i.e. storage.dbPath) directory",
+                  "type": "boolean",
+                  "default": false
+                },
+                "collectionConfigBlockCompressor": {
+                  "title": "storage.wiredTiger.collectionConfig.blockCompressor",
+                  "description": "The default type of compression to use to compress collection data. You can override this on a per-collection basis when creating collections. Available compressors are: none, snappy, zlib",
+                  "type": "string",
+                  "enum": [
+                    "snappy",
+                    "none",
+                    "zlib"
+                  ],
+                  "default": "snappy"
+                },
+                "indexConfigPrefixCompression": {
+                  "title": "storage.wiredTiger.indexConfig.prefixCompression",
+                  "description": "Specify true to enable prefix compression for index data, or false to disable prefix compression for index data",
+                  "type": "boolean",
+                  "default": true
+                }
+              },
+              "required": [
+                "engineConfigJournalCompressor",
+                "engineConfigDirectoryForIndexes",
+                "collectionConfigBlockCompressor",
+                "indexConfigPrefixCompression"
+              ]
+            }
+          },
+          "required": [
+            "indexBuildRetry",
+            "directoryPerDB",
+            "syncPeriodSecs",
+            "journal",
+            "mmapv1",
+            "wiredTiger"
+          ]
+        },
+        "setParameter": {
+          "title": "Server Parameters",
+          "description": "MongoDB Server Parameter (setParameter) configuration properties",
+          "type": "object",
+          "properties": {
+            "failIndexKeyTooLong": {
+              "title": "setParameter: failIndexKeyTooLong",
+              "description": "Enable failing of updates and inserts that have indexed values longer than the Index Key Length Limit",
+              "type": "boolean",
+              "default": true
+            },
+            "maxIndexBuildMemoryUsageMB": {
+              "title": "setParameter: maxIndexBuildMemoryUsageMB",
+              "description": "Limits the amount of memory that simultaneous foreground index builds on one collection may consume for the duration of the builds",
+              "type": "integer",
+              "default": 500
+            },
+            "logUserIds": {
+              "title": "setParameter: logUserIds",
+              "description": "Enable logging of user IDs. 1 = true, 0 = false",
+              "enum": [
+                0,
+                1
+              ],
+              "type": "integer",
+              "default": 0
+            },
+            "ttlMonitorEnabled": {
+              "title": "setParameter: ttlMonitorEnabled",
+              "description": "Enable background thread that is responsible for deleting documents from collections with TTL indexes",
+              "type": "boolean",
+              "default": true
+            },
+            "ttlMonitorSleepSecs": {
+              "title": "setParameter: ttlMonitorSleepSecs",
+              "description": "Defines the number of seconds to wait between checking TTL Indexes for old documents and removing them",
+              "type": "integer",
+              "default": 60,
+              "minimum": 1
+            },
+            "wiredTigerConcurrentReadTransactions": {
+              "title": "setParameter: wiredTigerConcurrentReadTransactions",
+              "description": "Maximum number of concurrently running read transactions in the WiredTiger engine",
+              "type": "integer",
+              "default": 128,
+              "minimum": 1
+            },
+            "wiredTigerConcurrentWriteTransactions": {
+              "title": "setParameter: wiredTigerConcurrentWriteTransactions",
+              "description": "Maximum number of concurrently running write transactions in the WiredTiger engine",
+              "type": "integer",
+              "default": 128,
+              "minimum": 1
+            }
+          },
+          "required": [
+            "failIndexKeyTooLong",
+            "maxIndexBuildMemoryUsageMB",
+            "logUserIds",
+            "ttlMonitorEnabled",
+            "ttlMonitorSleepSecs",
+            "wiredTigerConcurrentReadTransactions",
+            "wiredTigerConcurrentWriteTransactions"
+          ]
+        },
+        "net": {
+          "title": "Network",
+          "description": "MongoDB Network configuration properties",
+          "type": "object",
+          "properties": {
+            "maxIncomingConnections": {
+              "title": "net.maxIncomingConnections",
+              "description": "Specify the maximum number of incoming connections",
+              "type": "number",
+              "default": 51200,
+              "minimum": 1
+            },
+            "transportLayer": {
+              "title": "net.transportLayer",
+              "description": "The networking implementation the mongos or mongod uses. To revert to the pre-version 3.6 implementation, change this option to 'legacy'",
+              "type": "string",
+              "enum": [
+                "asio",
+                "legacy"
+              ],
+              "default": "asio"
+            },
+            "serviceExecutor": {
+              "title": "net.serviceExecutor",
+              "description": "Determines the threading and execution model mongos or mongod uses to execute client requests.",
+              "type": "string",
+              "enum": [
+                "synchronous",
+                "adaptive"
+              ],
+              "default": "synchronous"
+            }
+          },
+          "required": [
+            "maxIncomingConnections",
+            "transportLayer",
+            "serviceExecutor"
+          ]
+        },
+        "operationProfiling": {
+          "title": "Operation Profiling",
+          "description": "MongoDB Operation Profiling configuration properties",
+          "type": "object",
+          "properties": {
+            "mode": {
+              "title": "operationProfiling.mode",
+              "description": "Percona MongoDB operation profiling mode (options: slowOp, all or off)",
+              "type": "string",
+              "enum": [
+                "slowOp",
+                "off",
+                "all"
+              ],
+              "default": "slowOp"
+            },
+            "slowOpThresholdMs": {
+              "title": "operationProfiling.slowOpThresholdMs",
+              "description": "Percona MongoDB operation profiling slowOp mode threshold in milliseconds",
+              "type": "integer",
+              "default": 100,
+              "minimum": 1
+            },
+            "rateLimit": {
+              "title": "operationProfiling.rateLimit",
+              "description": "Percona MongoDB operation profiling rate limiting value",
+              "type": "integer",
+              "default": 1
+            }
+          },
+          "required": [
+            "mode",
+            "slowOpThresholdMs",
+            "rateLimit"
+          ]
+        },
+        "replication": {
+          "description": "MongoDB Replication configuration properties",
+          "type": "object",
+          "properties": {
+            "secondaryIndexPrefetch": {
+              "title": "replication.secondaryIndexPrefetch",
+              "description": "The indexes that secondary members of a replica set load into memory before applying operations from the oplog",
+              "type": "string",
+              "enum": [
+                "none",
+                "_id_only",
+                "all"
+              ],
+              "default": "all"
+            }
+          },
+          "required": [
+            "secondaryIndexPrefetch"
+          ]
+        },
+        "auditLog": {
+          "title": "Percona AuditLog",
+          "description": "Percona Server for MongoDB AuditLog configuration properties. The audit log is written to the file 'auditLog.bson' in the MongoDB data path",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "title": "Enable PSMDB Audit Log",
+              "description": "Enables the Percona Server for MongoDB audit log feature",
+              "type": "boolean",
+              "default": false
+            },
+            "filter": {
+              "title": "auditLog.filter",
+              "description": "The filter document (in json style) to be used for filtering the Percona Server for MongoDB audit log",
+              "type": "string",
+              "default": "{}"
+            },
+            "auditAuthorizationSuccess": {
+              "title": "setParameter: auditAuthorizationSuccess",
+              "description": "Enables the logging of all read and write operations",
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "enabled",
+            "filter",
+            "auditAuthorizationSuccess"
+          ]
+        },
+        "systemLog": {
+          "title": "System Log",
+          "description": "MongoDB System Log configuration properties",
+          "type": "object",
+          "properties": {
+            "verbosity": {
+              "title": "systemLog.verbosity",
+              "description": "The default log message verbosity level for components. The verbosity level determines the amount of Informational and Debug messages MongoDB outputs. The verbosity level can range from 0 to 5",
+              "type": "integer",
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "default": 0
+            },
+            "traceAllExceptions": {
+              "title": "systemLog.traceAllExceptions",
+              "description": "Print verbose information for debugging. Use for additional logging for support-related troubleshooting",
+              "type": "boolean",
+              "default": false
+            },
+            "timestampFormat": {
+              "title": "systemLog.timestampFormat",
+              "description": "The time format for timestamps in log messages. Specify one of the following values: ctime, iso8601-utc, iso8601-local",
+              "type": "string",
+              "enum": [
+                "iso8601-local",
+                "ctime",
+                "iso8601-utc"
+              ],
+              "default": "iso8601-local"
+            }
+          },
+          "required": [
+            "verbosity",
+            "traceAllExceptions",
+            "timestampFormat"
+          ]
+        }
+      },
+      "required": [
+        "container",
+        "security",
+        "net",
+        "storage",
+        "setParameter",
+        "operationProfiling",
+        "replication",
+        "auditLog",
+        "systemLog"
+      ]
+    },
+    "mongodb-ssl": {
+      "title": "MongoDB SSL",
+      "description": "MongoDB SSL configuration properties. This section requires DC/OS Enterprise Edition!",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "title": "Enable MongoDB SSL Support",
+          "description": "Enables SSL support for Percona Server for MongoDB server",
+          "type": "boolean",
+          "default": false
+        },
+        "mode": {
+          "title": "MongoDB SSL Mode",
+          "description": "MongoDB SSL mode. See documentation for net.ssl.mode for more information",
+          "type": "string",
+          "enum": [
+            "allowSSL",
+            "preferSSL",
+            "requireSSL"
+          ],
+          "default": "preferSSL"
+        },
+        "name": {
+          "title": "DC/OS SSL Name",
+          "description": "Name of the SSL certificates that are auto-generated by DC/OS. Leave empty to auto-generate as 'SERVICENAME-REPLSETNAME'",
+          "type": "string",
+          "default": ""
+        },
+        "allowConnectionsWithoutCertificates": {
+          "title": "net.ssl.allowConnectionsWithoutCertificates",
+          "description": "Allow MongoDB to accept connections when the client does not present a certificate when establishing the connection",
+          "type": "boolean",
+          "default": false
+        },
+        "allowInvalidCertificates": {
+          "title": "net.ssl.allowInvalidCertificates",
+          "description": "Disable the validation checks for TLS/SSL certificates on other servers in the cluster and allow invalid certificates",
+          "type": "boolean",
+          "default": false
+        },
+        "allowInvalidHostnames": {
+          "title": "net.ssl.allowInvalidHostnames",
+          "description": "Disable the validation of the hostnames in TLS/SSL certificates, allowing mongod to connect to MongoDB instances if the hostname their certificates do not match the specified hostname",
+          "type": "boolean",
+          "default": false
+        },
+        "disabledProtocols": {
+          "title": "net.ssl.disabledProtocols",
+          "description": "Prevents server from accepting incoming connections that use a specific protocol or protocols. net.ssl.disabledProtocols recognizes the following protocols: TLS1_0, TLS1_1, and TLS1_2. Specifying an unrecognized protocol will prevent the server from starting. To specify multiple protocols, use a comma separated list of protocols",
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "enabled",
+        "mode",
+        "allowConnectionsWithoutCertificates",
+        "allowInvalidCertificates",
+        "allowInvalidHostnames"
+      ]
+    },
+    "backup-restore": {
+      "description": "Backup and Restore configuration properties. Only mongodump-based backup and AWS S3 (for backup storage) is supported currently",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "title": "Backup/restore node cpus",
+          "description": "Node cpu requirements for backup and restore process",
+          "type": "number",
+          "default": 2.0
+        },
+        "mem": {
+          "title": "Backup/restore node mem",
+          "description": "Node mem requirements for backup and restore process, in megabytes",
+          "type": "integer",
+          "default": 1024
+        },
+        "s3": {
+          "title": "AWS S3 configuration",
+          "description": "Backup and Restore Amazon Web Services S3 configuration properties",
+          "type": "object",
+          "properties": {
+            "region": {
+              "title": "region",
+              "description": "Backup and restore s3 region for upload",
+              "type": "string",
+              "default": "us-east-1",
+              "enum": [
+                "ap-northeast-1",
+                "ap-northeast-2",
+                "ap-northeast-3",
+                "ap-south-1",
+                "ap-southeast-1",
+                "ap-southeast-2",
+                "ca-central-1",
+                "cn-north-1",
+                "cn-northwest-1",
+                "eu-central-1",
+                "eu-west-1",
+                "eu-west-2",
+                "eu-west-3",
+                "sa-east-1",
+                "us-east-1",
+                "us-east-2",
+                "us-west-1",
+                "us-west-2"
+              ]
+            },
+            "accessKey": {
+              "title": "access_key",
+              "description": "Backup and restore s3 access key",
+              "type": "string",
+              "default": ""
+            },
+            "secretKey": {
+              "title": "secret_key",
+              "description": "Backup and restore s3 secret key",
+              "type": "string",
+              "default": ""
+            }
+          },
+          "allOf": [
+            {
+              "properties": {
+                "accessKey": {
+                  "maxLength": 20
+                }
+              }
+            },
+            {
+              "properties": {
+                "secretKey": {
+                  "maxLength": 40
+                }
+              }
+            },
+            {
+              "required": [
+                "region"
+              ]
+            }
+          ]
+        },
+        "restore": {
+          "title": "Restore",
+          "description": "Restore configuration properties",
+          "type": "object",
+          "properties": {
+            "s3Url": {
+              "description": "AWS S3 URL to mongodump backup directory in 's3://<bucket-name>/<path>/' format. A URL for the backup is required for restore!",
+              "type": "string",
+              "default": ""
+            },
+            "restoreAfterInit": {
+              "description": "Restore replica set from backup after initiation",
+              "type": "boolean",
+              "default": false
+            },
+            "gzip": {
+              "description": "Enable gzip on restore. Backup data must be gzip compressed",
+              "type": "boolean",
+              "default": true
+            },
+            "dropCollections": {
+              "description": "Drop collections during restore. This is usually required to avoid duplicate key errors on restore",
+              "type": "boolean",
+              "default": true
+            },
+            "oplogReplay": {
+              "description": "Replay the backup oplog after restoring the collections, strongly recommended!",
+              "type": "boolean",
+              "default": true
+            },
+            "numParallelCollections": {
+              "description": "Number of collections to restore in parallel",
+              "type": "integer",
+              "default": 4
+            }
+          },
+          "allOf": [
+            {
+              "not": {
+                "properties": {
+                  "s3Url": {
+                    "enum": [
+                      ""
+                    ]
+                  },
+                  "restoreAfterInit": {
+                    "enum": [
+                      true
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "required": [
+                "restoreAfterInit",
+                "gzip",
+                "dropCollections",
+                "oplogReplay",
+                "numParallelCollections"
+              ]
+            }
+          ]
+        },
+        "backup": {
+          "title": "Backup",
+          "description": "Backup configuration properties",
+          "type": "object",
+          "properties": {
+            "upload": {
+              "description": "Backup upload configuration properties",
+              "type": "object",
+              "properties": {
+                "s3bucketName": {
+                  "title": "bucket_name",
+                  "description": "Backup upload s3 bucket name",
+                  "type": "string",
+                  "default": ""
+                },
+                "s3bucketPrefix": {
+                  "title": "bucket_prefix",
+                  "description": "Backup upload s3 bucket key prefix",
+                  "type": "string",
+                  "default": "/"
+                },
+                "threads": {
+                  "title": "upload.threads",
+                  "description": "Upload thread count",
+                  "type": "integer",
+                  "default": 4
+                },
+                "retries": {
+                  "title": "upload.retries",
+                  "description": "Upload chunk retry count",
+                  "type": "integer",
+                  "default": 5
+                },
+                "s3chunkSizeMb": {
+                  "title": "chunk_size_mb",
+                  "description": "Backup and restore s3 chunk size in megabytes",
+                  "type": "integer",
+                  "default": 50,
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "s3bucketPrefix",
+                "threads",
+                "retries",
+                "s3chunkSizeMb"
+              ]
+            },
+            "verbose": {
+              "description": "Enable verbose logging of backup",
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "required": [
+            "upload",
+            "verbose"
+          ]
+        },
+        "hiddenSecondary": {
+          "title": "Backup Hidden Secondary Node",
+          "description": "MongoDB Hidden-secondary backup node configuration properties. A Hidden-secondary node is recommended for low impact backups as it does not receive application traffic and cannot win a failover-election",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "title": "Add dedicated MongoDB backup node",
+              "description": "Add a hidden-secondary MongoDB node dedicated to backup operations. This node cannot become primary and is invible to MongoDB drivers. The node will inherit any config options passed to the other mongod nodes",
+              "type": "boolean",
+              "default": false
+            },
+            "cpus": {
+              "title": "Dedicated MongoDB backup node cpus",
+              "description": "MongoDB backup hidden-secondary node cpu requirements",
+              "type": "number",
+              "default": 1.0
+            },
+            "mem": {
+              "title": "Dedicated MongoDB backup node mem",
+              "description": "MongoDB backup hidden-secondary node mem requirements, in megabytes",
+              "type": "integer",
+              "default": 1024
+            }
+          },
+          "required": [
+            "enabled",
+            "cpus",
+            "mem"
+          ]
+        }
+      }
+    },
+    "dcos-metrics": {
+      "description": "DC/OS Metrics configuration properties",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "title": "Enable DC/OS Metrics",
+          "description": "Enable the sending of MongoDB metrics to DC/OS Metrics",
+          "type": "boolean",
+          "default": false
+        },
+        "intervalSecs": {
+          "title": "Metrics Collect Interval",
+          "description": "The frequency to collect MongoDB metrics, in seconds",
+          "type": "integer",
+          "default": 10,
+          "minimum": 1
+        }
+      },
+      "required": [
+        "enabled",
+        "intervalSecs"
+      ]
+    },
+    "admin": {
+      "description": "Admin task configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "Admin node cpu requirements",
+          "type": "number",
+          "default": 0.2
+        },
+        "mem": {
+          "description": "Admin node mem requirements. Must be 64 or greater",
+          "type": "integer",
+          "default": 64,
+          "minimum": 64
+        },
+        "init": {
+          "description": "Init task configuration properties. This task runs once on initiation of a new MongoDB Replica Set",
+          "type": "object",
+          "properties": {
+            "initiateDelay": {
+              "description": "The delay before starting the ReplicaSet initialization, must end in 's' for seconds, 'm' for minutes, etc",
+              "type": "string",
+              "default": "15s"
+            },
+            "maxConnectTries": {
+              "description": "The number of times to try to connect to a database host",
+              "type": "integer",
+              "default": 30,
+              "minimum": 1
+            },
+            "maxInitReplsetTries": {
+              "description": "The number of times to try to initiate the replica set",
+              "type": "integer",
+              "default": 60,
+              "minimum": 1
+            },
+            "maxAddUsersTries": {
+              "description": "The number of times to try to add database users",
+              "type": "integer",
+              "default": 60,
+              "minimum": 1
+            },
+            "retrySleep": {
+              "description": "The duration to wait between retries",
+              "type": "string",
+              "default": "3s"
+            }
+          }
+        },
+        "watchdog": {
+          "description": "Watchdog daemon configuration properties. This daemon watches the DC/OS API for changes and updates the MongoDB Replica Set",
+          "type": "object",
+          "properties": {
+            "apiPoll": {
+              "description": "DCOS API poll frequency, must end in 's' for seconds, 'm' for minutes, etc",
+              "type": "string",
+              "default": "10s"
+            },
+            "apiTimeout": {
+              "description": "Pod API timeout than apiPoll frequency, must end in 's' for seconds, 'm' for minutes, etc",
+              "type": "string",
+              "default": "5s"
+            },
+            "replsetPoll": {
+              "description": "MongoDB replica set state poll frequency, must end in 's' for seconds, 'm' for minutes, etc",
+              "type": "string",
+              "default": "5s"
+            },
+            "replsetTimeout": {
+              "description": "MongoDB replica set timeout, should be less than replsetPoll frequency, must end in 's' for seconds, 'm' for minutes, etc",
+              "type": "string",
+              "default": "3s"
+            },
+            "metricsPort": {
+              "description": "Prometheus Metrics server port, default '0' uses a random available port",
+              "type": "integer",
+              "default": 0,
+              "maximum": 65535
+            }
+          }
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "init"
+      ]
+    }
+  }
+}

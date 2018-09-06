@@ -16,6 +16,11 @@ import re
 import zipfile
 
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+schema_dir = os.environ.get("SCHEMA_DIR", "{}/../repo/meta/schema/".format(dir_path))
+repo_definitions_json = "{}/vX-repo-definitions.json".format(schema_dir)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='This script generates all of the universe objects from '
@@ -38,6 +43,10 @@ def main():
         print('The path in --out-dir [{}] is not a directory. Please create it'
               ' before running this script.'.format(args.outdir))
         return
+    print('Paths present in [{}]: {}'.format(
+        str(args.outdir),
+        [str(p) for p in list(args.outdir.glob('*'))])
+    )
 
     if not args.repository.is_dir():
         print('The path in --repository [{}] is not a directory.'.format(
@@ -58,7 +67,7 @@ def main():
     with universe_path.open('w', encoding='utf-8') as universe_file:
         json.dump({'packages': packages}, universe_file)
     ct_universe_path = args.outdir / 'universe.content_type'
-    create_content_type_file(ct_universe_path, "v4")
+    create_content_type_file(ct_universe_path, "v5")
 
     # Render empty json
     empty_path = args.outdir / 'repo-empty-v3.json'
@@ -701,7 +710,9 @@ def validate_repo_with_schema(repo_json_data, repo_version):
     :param repo_version: version of the repo (e.g.: v4)
     :return: list of validation errors ( length == zero => No errors)
     """
-    validator = jsonschema.Draft4Validator(_load_jsonschema(repo_version))
+    validator = jsonschema.Draft4Validator(
+        _load_jsonschema(repo_version),
+        resolver=jsonschema.RefResolver('file://' + repo_definitions_json, None))
     errors = []
     for error in validator.iter_errors(repo_json_data):
         for suberror in sorted(error.context, key=lambda e: e.schema_path):
@@ -724,6 +735,10 @@ def _populate_dcos_version_json_to_folder(dcos_version, outdir):
     :return: None
     """
     repo_dir = outdir / dcos_version / 'package'
+    print('Paths present in [{}]: {}'.format(
+        str(repo_dir),
+        [str(p) for p in list(repo_dir.glob('*'))])
+    )
     pathlib.Path(repo_dir).mkdir(parents=True)
     repo_file = pathlib.Path(outdir / 'repo-up-to-{}.json'.format(dcos_version))
     with repo_file.open('r',  encoding='utf-8') as f:
@@ -752,7 +767,9 @@ def _validate_repo(file_path, version):
     :rtype: None
     """
 
-    if LooseVersion(version) >= LooseVersion('1.10'):
+    if LooseVersion(version) >= LooseVersion('1.12'):
+        repo_version = 'v5'
+    elif LooseVersion(version) >= LooseVersion('1.10'):
         repo_version = 'v4'
     else:
         repo_version = 'v3'
@@ -781,7 +798,7 @@ def _load_jsonschema(repo_version):
     """
 
     with open(
-        'repo/meta/schema/{}-repo-schema.json'.format(repo_version),
+        '{}/{}-repo-schema.json'.format(schema_dir, repo_version),
         encoding='utf-8'
     ) as schema_file:
         return json.loads(schema_file.read())

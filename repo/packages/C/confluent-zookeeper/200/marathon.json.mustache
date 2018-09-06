@@ -1,0 +1,141 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*/jre/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && ./bootstrap -resolve=false -template=false && ./confluent-zookeeper-scheduler/bin/zookeeper ./confluent-zookeeper-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_COMMONS_UNINSTALL": "true"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    "PACKAGE_NAME": "confluent-zookeeper",
+    "PACKAGE_VERSION": "2.3.0-4.0.0e",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1533900593519",
+    "PACKAGE_BUILD_TIME_STR": "Fri Aug 10 2018 11:29:53 +0000",
+    "MESOS_API_VERSION": "{{service.mesos_api_version}}",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+    "ZOOKEEPER_VERSION": "4.0.0",
+
+    "ENABLE_METRICS": "{{service.enable_metrics}}",
+
+    "NODE_COUNT": "{{node.count}}",
+    "NODE_PLACEMENT": "{{{node.placement_constraint}}}",
+    {{#service.region}}
+    "SERVICE_REGION": "{{service.region}}",
+    {{/service.region}}
+    "NODE_CPUS": "{{node.cpus}}",
+    "NODE_MEM": "{{node.mem}}",
+    "NODE_HEAP": "{{node.heap}}",
+    "DATA_DISK": "{{node.data_disk}}",
+    "DATA_DISK_TYPE": "{{node.data_disk_type}}",
+    "LOG_DISK": "{{node.log_disk}}",
+    "LOG_DISK_TYPE": "{{node.log_disk_type}}",
+
+    {{#service.virtual_network_enabled}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+
+    {{! client, follower, and leader_election ports are needed by the scheduler as well as the server pod }}
+    "CLIENT_PORT": "{{zookeeper.client_port}}",
+    "FOLLOWER_PORT": "{{zookeeper.follower_port}}",
+    "LEADER_ELECTION_PORT": "{{zookeeper.leader_election_port}}",
+
+    "SERVER_TICKTIME": "{{zookeeper.tick_time}}",
+    "SERVER_INITLIMIT": "{{zookeeper.init_limit}}",
+    "SERVER_SYNCLIMIT": "{{zookeeper.sync_limit}}",
+    "SERVER_GLOBALOUTSTANDINGLIMIT": "{{zookeeper.global_outstanding_limit}}",
+    "SERVER_PREALLOCSIZE": "{{zookeeper.pre_alloc_size}}",
+    "SERVER_SNAPCOUNT": "{{zookeeper.snap_count}}",
+    "SERVER_MAXCLIENTCNXNS": "{{zookeeper.max_client_cnxns}}",
+    "SERVER_MINSESSIONTIMEOUT": "{{zookeeper.min_session_timeout}}",
+    "SERVER_MAXSESSIONTIMEOUT": "{{zookeeper.max_session_timeout}}",
+    "SERVER_FSYNC_WARNINGTHRESHOLDMS": "{{zookeeper.fsync_warning_threshold_ms}}",
+    "SERVER_AUTOPURGE_SNAPRETAINCOUNT": "{{zookeeper.autopurge_snap_retain_count}}",
+    "SERVER_AUTOPURGE_PURGEINTERVAL": "{{zookeeper.autopurge_purge_interval}}",
+    "SERVER_SYNCENABLED": "{{zookeeper.sync_enabled}}",
+    "SERVER_LEADERSERVES": "{{zookeeper.leader_serves}}",
+    "SERVER_CNXTIMEOUT": "{{zookeeper.cnx_timeout}}",
+
+    {{#service.security.kerberos.enabled}}
+    "SECURITY_KERBEROS_KEYTAB_SECRET": "{{service.security.kerberos.keytab_secret}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_ENABLED": "{{service.security.kerberos.enabled}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_ADVANCED_REQUIRED_FOR_CLIENT": "{{service.security.kerberos.advanced.required_for_client}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_ADVANCED_REQUIRED_FOR_QUORUM_LEARNER": "{{service.security.kerberos.advanced.required_for_quorum_learner}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_ADVANCED_REQUIRED_FOR_QUORUM_SERVER": "{{service.security.kerberos.advanced.required_for_quorum_server}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_PRIMARY": "{{service.security.kerberos.primary}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_REALM": "{{service.security.kerberos.realm}}",
+    {{#service.security.kerberos.debug}}
+    "TASKCFG_ALL_SECURITY_KERBEROS_DEBUG": "{{service.security.kerberos.debug}}",
+    {{/service.security.kerberos.debug}}
+    "TASKCFG_ALL_SECURITY_KERBEROS_KDC_HOSTNAME": "{{service.security.kerberos.kdc.hostname}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_KDC_PORT": "{{service.security.kerberos.kdc.port}}",
+    {{/service.security.kerberos.enabled}}
+
+    {{#service.security.custom_domain}}
+    "SERVICE_TLD": "{{service.security.custom_domain}}",
+    {{/service.security.custom_domain}}
+
+    "CONFIG_TEMPLATE_PATH": "kafka-zookeeper-scheduler",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "ZOOKEEPER_URI": "{{resource.assets.uris.zookeeper-tar-gz}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "SCHEDULER_URI": "{{resource.assets.uris.scheduler-zip}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "METRICS_URI": "{{resource.assets.uris.metrics-zip}}",
+    "SETUP_HELPER_URI": "{{resource.assets.uris.setup-helper-zip}}",
+    "NETCAT_DOCKER_IMAGE": "{{resource.assets.container.docker.netcat}}",
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.service_account_secret}}
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  },
+  "fetch": [
+    { "uri": "{{resource.assets.uris.bootstrap-zip}}", "cache": true },
+    { "uri": "{{resource.assets.uris.jre-tar-gz}}", "cache": true },
+    { "uri": "{{resource.assets.uris.scheduler-zip}}", "cache": true },
+    { "uri": "{{resource.assets.uris.libmesos-bundle-tar-gz}}", "cache": true }
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/v1/health",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}
