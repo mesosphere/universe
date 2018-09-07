@@ -1,0 +1,40 @@
+Configurer l'upstream GitHub 
+
+1.	Ouvrir un terminal à la racine du projet universe. 
+
+2.	Vérifier si upstream présent : 
+git remote –v 
+
+3.	Si upstream non présent, l'ajouter avec la commande suivante : 
+git remote add upstream https://github.com/mesosphere/universe.git 
+
+4.	L'upstream devrait maintenant être présent : 
+git remote -v 
+
+Récupérer les changements de mesosphere 
+
+1.	Récupérer la liste des branches : 
+git fetch upstream 
+
+2.	Faire un check out de la branche : 
+git checkout version-3.x 
+
+3.	Faire le merge GitHub -> Branche locale 
+git merge upstream/version-3.x 
+
+4.	Faire le push des changements sur GitHub : 
+git push 
+
+Créer une nouvelle image de l'univers 
+
+1.	Validation des packages 
+scripts/build.sh 
+
+2.	Création de l'image docker (changer docker tag)
+DOCKER_IMAGE="cdpqleo/dcos-universe-server" DOCKER_TAG="0.6.9-1.11.3" docker/server/build.bash 
+
+3.	Publication de l'image sur docker hub (changer docker tag)
+DOCKER_IMAGE="cdpqleo/dcos-universe-server" DOCKER_TAG="0.6.9-1.11.3" docker/server/build.bash publish 
+
+4.	Modifier le service universe sur DC/OS afin de specifier le nouveau tag de l’image, et redémarrer le service.
+
