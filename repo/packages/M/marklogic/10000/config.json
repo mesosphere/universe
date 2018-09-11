@@ -5,11 +5,6 @@
       "type": "object",
       "description": "DC/OS marklogic service specifications",
       "properties": {
-        "DCOS_SERVICE_PORT_INDEX": {
-          "description": "Port index.",
-          "type": "string",
-          "default": "4"
-        },
         "name": {
           "description": "Name of SmartSearchService instances as seen in DC/OS.",
           "type": "string",
@@ -44,7 +39,7 @@
         "marklogic" : {
           "type": "object",
           "description": "Marklogic config",
-          
+
           "required": [
             "username",
             "password"
