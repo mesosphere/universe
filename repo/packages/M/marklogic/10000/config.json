@@ -1,0 +1,107 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS marklogic service specifications",
+      "properties": {
+        "DCOS_SERVICE_PORT_INDEX": {
+          "description": "Port index.",
+          "type": "string",
+          "default": "4"
+        },
+        "name": {
+          "description": "Name of SmartSearchService instances as seen in DC/OS.",
+          "type": "string",
+          "default": "marklogic"
+        },
+        "cpus": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 1
+        },
+        "disk": {
+          "description": "Disk",
+          "type": "number",
+          "default": 0
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance.",
+          "type": "number",
+          "default": 4096
+        },
+        "volumes_containerPath": {
+          "description": "volumes_containerPath",
+          "type": "string",
+          "default": "/opt/backups"
+        },
+        "volumes_hostPath": {
+          "description": "volumes_hostPath",
+          "type": "string",
+          "default": "/mnt/azurefileshare/data/marklogic/backups"
+        },
+        "container_port_1": {
+          "description": "Container port",
+          "type": "number",
+          "default": 7997
+        },
+        "container_port_2": {
+          "description": "Container port",
+          "type": "number",
+          "default": 7998
+        },
+        "container_port_3": {
+          "description": "Container port",
+          "type": "number",
+          "default": 7999
+        },
+        "container_port_4": {
+          "description": "Container port",
+          "type": "number",
+          "default": 8000
+        },
+        "container_port_5": {
+          "description": "Container port",
+          "type": "number",
+          "default": 8001
+        },
+        "container_port_6": {
+          "description": "Container port",
+          "type": "number",
+          "default": 8002
+        },
+        "env" : {
+          "type": "object",
+          "description": "environment variables",
+          "properties": {
+            "MARKLOGIC_USR" : {
+              "description": "Admin username",
+              "type": "string",
+              "default": "admin"
+            },
+            "MARKLOGIC_PWD" : {
+              "description": "Admin pws",
+              "type": "string",
+              "default": "Cdpq@1234567"
+            },
+            "MARKLOGIC_AUTH_MODE" : {
+              "description": "Auth mode",
+              "type": "string",
+              "default": "basic"
+            },
+            "MARKLOGIC_SEC_REALM" : {
+              "description": "MARKLOGIC_SEC_REALM",
+              "type": "string",
+              "default": "public"
+            },
+            "HDFS_CONFIG_URL" : {
+              "description": "HDFS_CONFIG_URL",
+              "type": "string",
+              "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
+            }
+          }
+        }
+      }
+    }
+  }
+}

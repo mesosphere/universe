@@ -1,0 +1,79 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "disk": {{service.disk}},
+  "labels": {
+    "DCOS_SERVICE_PORT_INDEX": "{{service.DCOS_SERVICE_PORT_INDEX}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_NAME": "{{service.name}}"
+  },
+  "env": {
+    "MARKLOGIC_USR": "{{service.env.MARKLOGIC_USR}}",
+    "MARKLOGIC_PWD": "{{service.env.MARKLOGIC_PWD}}",
+    "MARKLOGIC_AUTH_MODE": "{{service.env.MARKLOGIC_AUTH_MODE}}",
+    "MARKLOGIC_SEC_REALM": "{{service.env.MARKLOGIC_SEC_REALM}}",
+    "HDFS_CONFIG_URL": "{{service.env.HDFS_CONFIG_URL}}"
+  },
+  "container": {
+    "portMappings": [
+      {
+        "containerPort": {{service.container_port_1}},
+        "hostPort": 0,
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": {{service.container_port_2}},
+        "hostPort": 0,
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": {{service.container_port_3}},
+        "hostPort": 0,
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": {{service.container_port_4}},
+        "hostPort": 0,
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": {{service.container_port_5}},
+        "hostPort": 0,
+        "labels": {
+          "VIP_0": "/{{service.name}}:8001"
+        },
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": {{service.container_port_6}},
+        "hostPort": 0,
+        "protocol": "tcp"
+      }
+    ],
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "{{service.volumes_containerPath}}",
+        "hostPath": "{{service.volumes_hostPath}}",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "{{resource.assets.container.docker.mlogic}}",
+      "forcePullImage": true
+    }
+  },
+  "networks": [
+    {
+      "mode": "container/bridge"
+    }
+  ],
+  "healthChecks": [
+    {
+      "portIndex": 0,
+      "protocol": "MESOS_HTTP",
+      "path": "/"
+    }
+  ]
+}
