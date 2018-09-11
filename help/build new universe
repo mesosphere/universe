@@ -31,10 +31,10 @@ Créer une nouvelle image de l'univers
 scripts/build.sh 
 
 2.	Création de l'image docker (changer docker tag)
-DOCKER_IMAGE="cdpqleo/dcos-universe-server" DOCKER_TAG="0.6.9-1.11.3" docker/server/build.bash 
+sudo DOCKER_IMAGE="cdpqleo/dcos-universe-server" DOCKER_TAG="0.6.15-1.11.4" docker/server/build.bash
 
 3.	Publication de l'image sur docker hub (changer docker tag)
-DOCKER_IMAGE="cdpqleo/dcos-universe-server" DOCKER_TAG="0.6.9-1.11.3" docker/server/build.bash publish 
+sudo DOCKER_IMAGE="cdpqleo/dcos-universe-server" DOCKER_TAG="0.6.15-1.11.4" docker/server/build.bash publish
 
 4.	Modifier le service universe sur DC/OS afin de specifier le nouveau tag de l’image, et redémarrer le service.
 

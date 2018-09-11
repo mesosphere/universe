@@ -1,5 +1,5 @@
 {
-  "id": "/{{service.name}}",
+  "id": "{{service.name}}",
   "cpus": {{service.cpus}},
   "mem": {{service.mem}},
   "labels": {
@@ -10,29 +10,21 @@
   "env": {
     "ES_HOST": "{{service.elastic_search_host}}"
   },
-  {{#service.constraints}}
-  "constraints": [
-    {{#.}}
-      [
-        "{{attribute}}"
-       ,"{{operator}}"
-       {{#value}},"{{value}}"{{/value}}
-      ]{{^last}},{{/last}}
-    {{/.}}
-  ],
-  {{/service.constraints}}
   "container": {
     "portMappings": [
       {
-        "containerPort": 8080,
+        "containerPort": {{service.container_port}},
         "hostPort": 0,
+        "labels": {
+            "VIP_0": "/{{service.name}}:8080"
+        },
         "protocol": "tcp"
       }
     ],
     "type": "DOCKER",
     "volumes": [],
     "docker": {
-      "image": "{{service.docker_image}}",
+      "image": "{{resource.assets.container.docker.sss}}",
       "forcePullImage": true,
       "privileged": false,
       "parameters": []
@@ -43,11 +35,23 @@
       "mode": "container/bridge"
     }
   ],
+  "env": {
+    "ELASTICSEARCH_HOSTNAME": "{{service.elastic_search_host}}",
+    "GRAKN_MAX_RESULTS": "{{service.env.GRAKN_MAX_RESULTS}}",
+    "GRAKN_KEYSPACE": "{{service.env.GRAKN_KEYSPACE}}",
+    "HTTP_HOSTNAME": "{{service.env.HTTP_HOSTNAME}}",
+    "ELASTICSEARCH_SCHEME": "{{service.env.ELASTICSEARCH_SCHEME}}",
+    "GRAKN_PORT": "{{service.env.GRAKN_PORT}}",
+    "GRAKN_ATTRIBUTE": "{{service.env.GRAKN_ATTRIBUTE}}",
+    "ELASTICSEARCH_PORT": "{{service.env.ELASTICSEARCH_PORT}}",
+    "GRAKN_HOSTNAME": "{{service.env.GRAKN_HOSTNAME}}",
+    "HTTP_PORT": "{{service.env.HTTP_PORT}}"
+  },
   "healthChecks": [
     {
       "protocol": "HTTP",
       "portIndex": 0,
-      "path": "/",
+      "path": "{{service.health_url}}",
       "gracePeriodSeconds": 120,
       "intervalSeconds": 30,
       "maxConsecutiveFailures": 3,

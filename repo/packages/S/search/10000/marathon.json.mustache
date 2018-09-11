@@ -10,17 +10,6 @@
   "env": {
     "ES_HOST": "{{service.elastic_search_host}}"
   },
-  {{#service.constraints}}
-  "constraints": [
-    {{#.}}
-      [
-        "{{attribute}}"
-       ,"{{operator}}"
-       {{#value}},"{{value}}"{{/value}}
-      ]{{^last}},{{/last}}
-    {{/.}}
-  ],
-  {{/service.constraints}}
   "container": {
     "portMappings": [
       {
@@ -32,8 +21,8 @@
     "type": "DOCKER",
     "volumes": [],
     "docker": {
-      "image": "{{service.docker_image}}",
-      "forcePullImage": true,
+"image": "{{resource.assets.container.docker.search}}",
+"forcePullImage": true,
       "privileged": false,
       "parameters": []
     }
