@@ -40,36 +40,7 @@
           "type": "string",
           "default": "/mnt/azurefileshare/data/marklogic/backups"
         },
-        "container_port_1": {
-          "description": "Container port",
-          "type": "number",
-          "default": 7997
-        },
-        "container_port_2": {
-          "description": "Container port",
-          "type": "number",
-          "default": 7998
-        },
-        "container_port_3": {
-          "description": "Container port",
-          "type": "number",
-          "default": 7999
-        },
-        "container_port_4": {
-          "description": "Container port",
-          "type": "number",
-          "default": 8000
-        },
-        "container_port_5": {
-          "description": "Container port",
-          "type": "number",
-          "default": 8001
-        },
-        "container_port_6": {
-          "description": "Container port",
-          "type": "number",
-          "default": 8002
-        },
+
         "env" : {
           "type": "object",
           "description": "environment variables",
@@ -77,12 +48,12 @@
             "MARKLOGIC_USR" : {
               "description": "Admin username",
               "type": "string",
-              "default": "admin"
+              "default": ""
             },
             "MARKLOGIC_PWD" : {
-              "description": "Admin pws",
+              "description": "Admin password",
               "type": "string",
-              "default": "Cdpq@1234567"
+              "default": ""
             },
             "MARKLOGIC_AUTH_MODE" : {
               "description": "Auth mode",
@@ -99,7 +70,11 @@
               "type": "string",
               "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
             }
-          }
+          },
+          "required": [
+            "MARKLOGIC_USR",
+            "MARKLOGIC_PWD"
+          ]
         }
       }
     }
