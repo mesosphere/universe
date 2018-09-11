@@ -45,27 +45,27 @@
           "type": "object",
           "description": "Marklogic config",
           "properties": {
-            "username" : {
+            "username": {
               "description": "Admin username",
               "type": "string",
               "default": ""
             },
-            "password" : {
+            "password": {
               "description": "Admin password",
               "type": "string",
               "default": ""
             },
-            "auth_mode" : {
+            "auth_mode": {
               "description": "Auth mode",
               "type": "string",
               "default": "basic"
             },
-            "realm" : {
+            "realm": {
               "description": "Realm",
               "type": "string",
               "default": "public"
             },
-            "hdfs_config_url" : {
+            "hdfs_config_url": {
               "description": "URL de configuration HDFS",
               "type": "string",
               "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
@@ -75,6 +75,7 @@
               "password"
             ]
           }
+        }
       }
     }
   }
