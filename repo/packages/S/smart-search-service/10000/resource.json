@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/cdpq-leo/assets/master/SmartSearch/Images/icon-service-cdpq-small.png",
+    "icon-medium": "https://raw.githubusercontent.com/cdpq-leo/assets/master/SmartSearch/Images/icon-service-cdpq-medium.png",
+    "icon-large": "https://raw.githubusercontent.com/cdpq-leo/assets/master/SmartSearch/Images/icon-service-cdpq-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "sss": "registry.marathon.l4lb.thisdcos.directory:5000/cdpqleo/smart-search-service:1.0.2"
+      }
+    }
+  }
+}

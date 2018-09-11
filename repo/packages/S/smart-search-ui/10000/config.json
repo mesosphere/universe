@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS smart-search-ui service specifications",
+      "properties": {
+        "name": {
+          "description": "Name of SmartSearchUI instances as seen in DC/OS.",
+          "type": "string",
+          "default": "smart-search-ui"
+        },
+        "cpus": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 0.3
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance.",
+          "type": "number",
+          "default": 2048
+        },
+        "health_url": {
+          "description": "Url for health checks",
+          "type": "string",
+          "default": "/"
+        },
+        "container_port": {
+          "description": "Container port",
+          "type": "number",
+          "default": 8080
+        },
+        "env" : {
+          "type": "object",
+          "description": "environment variables",
+          "properties": {
+            "SMART_SEARCH_URL" : {
+              "description": "Grakn max results.",
+              "type": "string",
+              "default": "http://smart-search-service.marathon.l4lb.thisdcos.directory:8080"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS search service specifications",
+      "properties": {
+        "name": {
+          "description": "Name of SmartSearch instances as seen in DC/OS.",
+          "type": "string",
+          "default": "search"
+        },
+        "cpus": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 0.1
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance.",
+          "type": "number",
+          "default": 128
+        },
+        "elastic_search_host": {
+          "description": "Hostname of the ES host to connect to.",
+          "type": "string",
+          "default": "master.elastic.l4lb.thisdcos.directory"
+        }
+      }
+    }
+  }
+}

@@ -1,12 +1,12 @@
 {
   "packagingVersion": "4.0",
-  "name": "smart-search",
-  "version": "leo-1.0.0-1.0.0",
+  "name": "smart-search-ui",
+  "version": "leo-1.0.0-1.0.2",
   "maintainer": "leo@cdpq.com",
-  "description": "smart-search user interface for ElasticSearch.",
+  "description": "smart-search-ui user interface for ElasticSearch.",
   "minDcosReleaseVersion": "1.9.0",
-  "tags": ["smart-search","ElasticSearch","Interface"],
+  "tags": ["smart-search-service","ElasticSearch","Interface"],
   "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Preview packages should never be used in production!",
-  "postInstallNotes": "smart-search installed!",
-  "postUninstallNotes": "smart-search uninstalled!"
+  "postInstallNotes": "smart-search-ui installed!",
+  "postUninstallNotes": "smart-search-ui uninstalled!"
 }

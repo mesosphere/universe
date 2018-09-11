@@ -3,5 +3,12 @@
     "icon-small": "https://raw.githubusercontent.com/cdpq-leo/assets/master/SmartSearch/Images/icon-service-cdpq-small.png",
     "icon-medium": "https://raw.githubusercontent.com/cdpq-leo/assets/master/SmartSearch/Images/icon-service-cdpq-medium.png",
     "icon-large": "https://raw.githubusercontent.com/cdpq-leo/assets/master/SmartSearch/Images/icon-service-cdpq-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "search": "registry.marathon.l4lb.thisdcos.directory:5000/cdpqleo/smart-search:1.0.0"
+      }
+    }
   }
 }

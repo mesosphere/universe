@@ -1,0 +1,92 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS smart-search-service service specifications",
+      "properties": {
+        "name": {
+          "description": "Name of SmartSearchService instances as seen in DC/OS.",
+          "type": "string",
+          "default": "smart-search-service"
+        },
+        "cpus": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 0.3
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance.",
+          "type": "number",
+          "default": 2048
+        },
+        "elastic_search_host": {
+          "description": "Hostname of the ES host to connect to.",
+          "type": "string",
+          "default": "master.elastic.l4lb.thisdcos.directory"
+        },
+        "health_url": {
+          "description": "Url for health checks",
+          "type": "string",
+          "default": "/smart-search-service/api/health/"
+        },
+        "container_port": {
+          "description": "Container port",
+          "type": "number",
+          "default": 8080
+        },
+        "env" : {
+          "type": "object",
+          "description": "environment variables",
+          "properties": {
+            "GRAKN_MAX_RESULTS" : {
+              "description": "Grakn max results.",
+              "type": "string",
+              "default": "10"
+            },
+            "GRAKN_KEYSPACE" : {
+              "description": "Grakn keyspace",
+              "type": "string",
+              "default": "calais_articles"
+            },
+            "HTTP_HOSTNAME" : {
+              "description": "Hostname",
+              "type": "string",
+              "default": "0.0.0.0"
+            },
+            "ELASTICSEARCH_SCHEME" : {
+              "description": "ELASTICSEARCH_SCHEME",
+              "type": "string",
+              "default": "http"
+            },
+            "GRAKN_PORT" : {
+              "description": "GRAKN_PORT",
+              "type": "string",
+              "default": "48555"
+            },
+            "GRAKN_ATTRIBUTE" : {
+              "description": "GRAKN_ATTRIBUTE",
+              "type": "string",
+              "default": "a_name"
+            },
+            "ELASTICSEARCH_PORT" : {
+              "description": "ELASTICSEARCH_PORT",
+              "type": "string",
+              "default": "9200"
+            },
+            "GRAKN_HOSTNAME" : {
+              "description": "GRAKN_HOSTNAME",
+              "type": "string",
+              "default": "grakn.marathon.l4lb.thisdcos.directory"
+            },
+            "HTTP_PORT" : {
+              "description": "HTTP_PORT",
+              "type": "string",
+              "default": "8080"
+            }
+          }
+        }
+      }
+    }
+  }
+}
