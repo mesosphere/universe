@@ -44,6 +44,11 @@
         "marklogic" : {
           "type": "object",
           "description": "Marklogic config",
+          
+          "required": [
+            "username",
+            "password"
+          ],
           "properties": {
             "username": {
               "description": "Admin username",
@@ -69,11 +74,7 @@
               "description": "URL de configuration HDFS",
               "type": "string",
               "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
-            },
-            "required": [
-              "username",
-              "password"
-            ]
+            }
           }
         }
       }
