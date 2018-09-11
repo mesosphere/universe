@@ -41,41 +41,40 @@
           "default": "/mnt/azurefileshare/data/marklogic/backups"
         },
 
-        "env" : {
+        "marklogic" : {
           "type": "object",
-          "description": "environment variables",
+          "description": "Marklogic config",
           "properties": {
-            "MARKLOGIC_USR" : {
+            "username" : {
               "description": "Admin username",
               "type": "string",
               "default": ""
             },
-            "MARKLOGIC_PWD" : {
+            "password" : {
               "description": "Admin password",
               "type": "string",
               "default": ""
             },
-            "MARKLOGIC_AUTH_MODE" : {
+            "auth_mode" : {
               "description": "Auth mode",
               "type": "string",
               "default": "basic"
             },
-            "MARKLOGIC_SEC_REALM" : {
-              "description": "MARKLOGIC_SEC_REALM",
+            "realm" : {
+              "description": "Realm",
               "type": "string",
               "default": "public"
             },
-            "HDFS_CONFIG_URL" : {
-              "description": "HDFS_CONFIG_URL",
+            "hdfs_config_url" : {
+              "description": "URL de configuration HDFS",
               "type": "string",
               "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
-            }
-          },
-          "required": [
-            "MARKLOGIC_USR",
-            "MARKLOGIC_PWD"
-          ]
-        }
+            },
+            "required": [
+              "username",
+              "password"
+            ]
+          }
       }
     }
   }

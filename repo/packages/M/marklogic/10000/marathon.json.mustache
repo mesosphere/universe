@@ -4,17 +4,18 @@
   "mem": {{service.mem}},
   "disk": {{service.disk}},
   "labels": {
-    "DCOS_SERVICE_PORT_INDEX": "4",
     "DCOS_SERVICE_SCHEME": "http",
     "DCOS_SERVICE_NAME": "{{service.name}}"
   },
-  "env": {
-    "MARKLOGIC_USR": "{{service.env.MARKLOGIC_USR}}",
-    "MARKLOGIC_PWD": "{{service.env.MARKLOGIC_PWD}}",
-    "MARKLOGIC_AUTH_MODE": "{{service.env.MARKLOGIC_AUTH_MODE}}",
-    "MARKLOGIC_SEC_REALM": "{{service.env.MARKLOGIC_SEC_REALM}}",
-    "HDFS_CONFIG_URL": "{{service.env.HDFS_CONFIG_URL}}"
+
+  "marklogic": {
+    "username": "{{service.marklogic.username}}",
+    "password": "{{service.marklogic.password}}",
+    "auth_mode": "{{service.marklogic.auth_mode}}",
+    "realm": "{{service.marklogic.realm}}",
+    "hdfs_config_url": "{{service.marklogic.hdfs_config_url}}"
   },
+
   "container": {
     "portMappings": [
       {
