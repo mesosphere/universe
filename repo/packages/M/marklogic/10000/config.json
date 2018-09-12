@@ -1,0 +1,106 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS marklogic service specifications",
+      "properties": {
+        "name": {
+          "description": "Name of SmartSearchService instances as seen in DC/OS.",
+          "type": "string",
+          "default": "marklogic"
+        },
+        "cpus": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 1
+        },
+        "disk": {
+          "description": "Disk",
+          "type": "number",
+          "default": 0
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance.",
+          "type": "number",
+          "default": 4096
+        },
+
+        "backup_volume": {
+          "type": "object",
+          "description": "Marklogic backup config",
+          "properties": {
+
+            "container_path": {
+              "description": "Container path",
+              "type": "string",
+              "default": "/var/opt/Backups"
+            },
+
+            "host_path": {
+              "description": "Host path",
+              "type": "string",
+              "default": "/mnt/azurefileshare/data/marklogic/backups"
+            }
+          }
+        },
+
+        "marklogic_volume": {
+          "type": "object",
+          "description": "Marklogic volume config",
+          "properties": {
+
+            "container_path": {
+              "description": "Container path",
+              "type": "string",
+              "default": "/var/opt/MarkLogic"
+            },
+
+            "host_path": {
+              "description": "Host path",
+              "type": "string",
+              "default": "/var/lib/marklogic"
+            }
+          }
+        },
+
+        "marklogic" : {
+          "type": "object",
+          "description": "Marklogic config",
+
+          "required": [
+            "username",
+            "password"
+          ],
+          "properties": {
+            "username": {
+              "description": "Admin username",
+              "type": "string",
+              "default": ""
+            },
+            "password": {
+              "description": "Admin password",
+              "type": "string",
+              "default": ""
+            },
+            "auth_mode": {
+              "description": "Auth mode",
+              "type": "string",
+              "default": "digest"
+            },
+            "realm": {
+              "description": "Realm",
+              "type": "string",
+              "default": "public"
+            },
+            "hdfs_config_url": {
+              "description": "URL de configuration HDFS",
+              "type": "string",
+              "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
+            }
+          }
+        }
+      }
+    }
+  }
+}

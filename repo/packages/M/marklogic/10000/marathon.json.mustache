@@ -1,0 +1,88 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "disk": {{service.disk}},
+  "labels": {
+    "DCOS_SERVICE_PORT_INDEX": "4",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_NAME": "{{service.name}}"
+  },
+
+  "env": {
+    "MARKLOGIC_USR": "{{service.marklogic.username}}",
+    "MARKLOGIC_PWD": "{{service.marklogic.password}}",
+    "MARKLOGIC_AUTH_MODE": "{{service.marklogic.auth_mode}}",
+    "MARKLOGIC_SEC_REALM": "{{service.marklogic.realm}}",
+    "HDFS_CONFIG_URL": "{{service.marklogic.hdfs_config_url}}"
+  },
+
+  "container": {
+    "portMappings": [
+      {
+        "containerPort": 7997,
+        "hostPort": 0,
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": 7998,
+        "hostPort": 0,
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": 7999,
+        "hostPort": 0,
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": 8000,
+        "hostPort": 0,
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": 8001,
+        "hostPort": 0,
+        "labels": {
+          "VIP_0": "/{{service.name}}:8001"
+        },
+        "protocol": "tcp"
+      },
+      {
+        "containerPort": 8002,
+        "hostPort": 0,
+        "protocol": "tcp"
+      }
+    ],
+    "type": "DOCKER",
+
+    "volumes": [
+        {
+            "containerPath": "{{service.marklogic_volume.container_path}}",
+            "hostPath": "{{service.marklogic_volume.host_path}}",
+            "mode": "RW"
+        },
+        {
+            "containerPath": "{{service.backup_volume.container_path}}",
+            "hostPath": "{{service.backup_volume.host_path}}",
+            "mode": "RW"
+        }
+    ],
+
+    "docker": {
+      "image": "{{resource.assets.container.docker.mlogic}}",
+      "forcePullImage": true
+    }
+  },
+  "networks": [
+    {
+      "mode": "container/bridge"
+    }
+  ],
+  "healthChecks": [
+    {
+      "portIndex": 0,
+      "protocol": "MESOS_HTTP",
+      "path": "/"
+    }
+  ]
+}
