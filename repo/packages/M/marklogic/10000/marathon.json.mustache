@@ -53,13 +53,20 @@
       }
     ],
     "type": "DOCKER",
+
     "volumes": [
-      {
-        "containerPath": "{{service.volumes_containerPath}}",
-        "hostPath": "{{service.volumes_hostPath}}",
-        "mode": "RW"
-      }
+        {
+            "containerPath": "{{service.marklogic_volume.container_path}}",
+            "hostPath": "{{service.marklogic_volume.host_path}}",
+            "mode": "RW"
+        },
+        {
+            "containerPath": "{{service.backup_volume.container_path}}",
+            "hostPath": "{{service.backup_volume.host_path}}",
+            "mode": "RW"
+        }
     ],
+
     "docker": {
       "image": "{{resource.assets.container.docker.mlogic}}",
       "forcePullImage": true
