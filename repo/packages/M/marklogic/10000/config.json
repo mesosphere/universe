@@ -25,16 +25,6 @@
           "type": "number",
           "default": 4096
         },
-        "volumes_containerPath": {
-          "description": "volumes_containerPath",
-          "type": "string",
-          "default": "/var/opt/backups"
-        },
-        "volumes_hostPath": {
-          "description": "volumes_hostPath",
-          "type": "string",
-          "default": "/mnt/azurefileshare/data/marklogic/backups"
-        },
 
         "backup_volume": {
           "type": "object",
@@ -96,7 +86,7 @@
             "auth_mode": {
               "description": "Auth mode",
               "type": "string",
-              "default": "basic"
+              "default": "digest"
             },
             "realm": {
               "description": "Realm",
