@@ -8,12 +8,12 @@
     "DCOS_SERVICE_NAME": "{{service.name}}"
   },
 
-  "marklogic": {
-    "username": "{{service.marklogic.username}}",
-    "password": "{{service.marklogic.password}}",
-    "auth_mode": "{{service.marklogic.auth_mode}}",
-    "realm": "{{service.marklogic.realm}}",
-    "hdfs_config_url": "{{service.marklogic.hdfs_config_url}}"
+  "env": {
+    "MARKLOGIC_USR": "{{service.marklogic.username}}",
+    "MARKLOGIC_PWD": "{{service.marklogic.password}}",
+    "MARKLOGIC_AUTH_MODE": "{{service.marklogic.auth_mode}}",
+    "MARKLOGIC_SEC_REALM": "{{service.marklogic.realm}}",
+    "HDFS_CONFIG_URL": "{{service.marklogic.hdfs_config_url}}"
   },
 
   "container": {
