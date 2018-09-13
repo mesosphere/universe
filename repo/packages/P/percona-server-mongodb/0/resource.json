@@ -1,0 +1,67 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "percona-server-mongodb": "percona/percona-server-mongodb:3.6.6",
+        "mongodb-consistent-backup": "perconalab/mongodb_consistent_backup:1.3.0-3.6",
+        "admin": "debian:jessie"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz",
+      "bootstrap-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/bootstrap.zip",
+      "scheduler-zip": "https://percona-dcos-mongo.s3.amazonaws.com/dcos-mongo/assets/0.4.0-3.6.6/mongo-scheduler.zip",
+      "executor-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/executor.zip",
+      "mongodb-tools-zip": "https://percona-dcos-mongo.s3.amazonaws.com/dcos-mongo/assets/0.4.0-3.6.6/mongodb-tools.zip",
+      "mongodb-tools-admin-zip": "https://percona-dcos-mongo.s3.amazonaws.com/dcos-mongo/assets/0.4.0-3.6.6/mongodb-tools-admin.zip",
+      "s3-cli-tar-gz": "https://percona-dcos-mongo.s3.amazonaws.com/dcos-mongo/assets/0.4.0-3.6.6/s3-cli.zip",
+      "restore-s3-sh": "https://percona-dcos-mongo.s3.amazonaws.com/dcos-mongo/assets/0.4.0-3.6.6/restore-s3.sh"
+    }
+  },
+  "images": {
+    "icon-small": "https://www.percona.com/sites/default/files/PSfMDB-48.png",
+    "icon-medium": "https://www.percona.com/sites/default/files/PSfMDB-96.png",
+    "icon-large": "https://www.percona.com/sites/default/files/PSfMDB-256.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "a28b3735eb10c5f8f1cf8572b81494f74d72e5507f45ee8914ed3b559ac91309"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://percona-dcos-mongo.s3.amazonaws.com/dcos-mongo/assets/0.4.0-3.6.6/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "bc737d25ba6776e87c800a950b8ae62dace0db68d514cfa7ba9c1bd0856cef19"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://percona-dcos-mongo.s3.amazonaws.com/dcos-mongo/assets/0.4.0-3.6.6/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "839a35f4b0e8d25f2611ac0d482ec126738ad8858eabfb7421be033d30df4faa"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://percona-dcos-mongo.s3.amazonaws.com/dcos-mongo/assets/0.4.0-3.6.6/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
