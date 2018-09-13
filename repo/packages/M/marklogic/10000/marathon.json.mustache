@@ -21,21 +21,36 @@
       {
         "containerPort": 7997,
         "hostPort": 0,
+        "labels": {
+            "VIP_1": "/{{service.name}}:7997"
+        },
         "protocol": "tcp"
       },
       {
         "containerPort": 7998,
         "hostPort": 0,
+
+        "labels": {
+            "VIP_2": "/{{service.name}}:7998"
+        },
         "protocol": "tcp"
       },
       {
         "containerPort": 7999,
         "hostPort": 0,
+
+        "labels": {
+            "VIP_3": "/{{service.name}}:7999"
+        },
         "protocol": "tcp"
       },
       {
         "containerPort": 8000,
         "hostPort": 0,
+
+        "labels": {
+          "VIP_4": "/{{service.name}}:8000"
+        },
         "protocol": "tcp"
       },
       {
@@ -49,6 +64,10 @@
       {
         "containerPort": 8002,
         "hostPort": 0,
+
+        "labels": {
+          "VIP_5": "/{{service.name}}:8002"
+        },
         "protocol": "tcp"
       }
     ],
