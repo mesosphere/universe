@@ -1,0 +1,286 @@
+{
+  "properties": {
+    "etcd": {
+      "description": "etcd properties",
+      "properties": {
+        "cpus": {
+          "default": 0.5,
+          "description": "etcd node CPU requirements.",
+          "title": "CPU count",
+          "type": "number"
+        },
+        "data_disk": {
+          "default": 3072,
+          "description": "etcd node persistent disk requirements (in MB) for the data",
+          "title": "Disk size (MB) for data",
+          "type": "integer"
+        },
+        "disk_type": {
+          "default": "ROOT",
+          "description": "Mount volumes require pre-configuration in DC/OS.",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "title": "Disk type [ROOT, MOUNT]"
+        },
+        "mem": {
+          "default": 1024,
+          "description": "etcd node RAM requirements (in MB).",
+          "title": "Memory size (MB)",
+          "type": "integer"
+        },
+        "wal_disk": {
+          "default": 512,
+          "description": "etcd node persistent disk requirements (in MB) for the logs",
+          "title": "Disk size (MB) for logs",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "kubernetes": {
+      "description": "Kubernetes general properties",
+      "properties": {
+        "authorization_mode": {
+          "default": "AlwaysAllow",
+          "description": "The authorization mode to use.",
+          "enum": [
+            "AlwaysAllow",
+            "RBAC"
+          ],
+          "type": "string"
+        },
+        "calico": {
+          "description": "Calico provides secure network connectivity for containers and virtual machine workloads.",
+          "properties": {
+            "calico_ipv4pool_cidr": {
+              "default": "192.168.0.0/16",
+              "description": "When using Calico IPAM, each workload is assigned an address from the selection of configured IP pools. You may want to modify the IP pool of a running cluster.",
+              "type": "string"
+            },
+            "cni_mtu": {
+              "default": 1400,
+              "description": "Typically the MTU for your kubernetes workload interfaces should match the network MTU. If you need IP-in-IP then the MTU size for both the workload and tunnel interfaces should be 20 bytes less than the network MTU for your network. This is due to the extra 20 byte header that the tunnel will add to each packet.",
+              "type": "integer"
+            },
+            "felix_ipinipenabled": {
+              "default": true,
+              "description": "Whether Calico should configure an IPinIP interface on the kube-node.",
+              "type": "boolean"
+            },
+            "felix_ipinipmtu": {
+              "default": 1420,
+              "description": "The MTU Calico sets on the tunnel device created in the kube-node task.",
+              "type": "integer"
+            },
+            "ipv4pool_ipip": {
+              "default": "Always",
+              "description": "Calico can be configured to use IP-in-IP encapsulation by enabling the IPIP option on the IP pool resource. When enabled, Calico will use IP-in-IP encapsulation when routing packets to workload IPs falling in the IP pool range.",
+              "enum": [
+                "Always",
+                "CrossSubnet",
+                "Off"
+              ],
+              "type": "string"
+            }
+          },
+          "title": "Kubernetes Calico configuration",
+          "type": "object"
+        },
+        "control_plane_cpus": {
+          "default": 1.5,
+          "description": "The CPU required by every instance of the control plane.",
+          "title": "CPU count",
+          "type": "number"
+        },
+        "control_plane_disk": {
+          "default": 10240,
+          "description": "Amount of persistent disk available for the control plane docker instance (in MB)",
+          "title": "Control Plane Disk size (MB)",
+          "type": "integer"
+        },
+        "control_plane_mem": {
+          "default": 4096,
+          "description": "The RAM required by every instance of the control plane.",
+          "title": "Memory size (MB)",
+          "type": "integer"
+        },
+        "control_plane_placement": {
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "description": "The placement constraints for the control plane (e.g., [[\"hostname\", \"UNIQUE\"]]).",
+          "type": "string"
+        },
+        "high_availability": {
+          "default": false,
+          "description": "Whether to deploy a highly-available control plane.",
+          "title": "High-availability",
+          "type": "boolean"
+        },
+        "network_provider": {
+          "default": "dcos",
+          "description": "Underlying DC/OS network to use for Kubernetes workloads.",
+          "title": "Network Provider",
+          "type": "string"
+        },
+        "node_count": {
+          "default": 1,
+          "description": "Number of desired private Kubernetes nodes.",
+          "minimum": 1,
+          "title": "Private Node Count",
+          "type": "integer"
+        },
+        "node_placement": {
+          "default": "",
+          "description": "Kubernetes node placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).",
+          "type": "string"
+        },
+        "public_node_count": {
+          "default": 0,
+          "description": "Number of desired public Kubernetes nodes.",
+          "title": "Public Node Count",
+          "type": "integer"
+        },
+        "public_node_placement": {
+          "default": "",
+          "description": "Public Kubernetes node placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).",
+          "type": "string"
+        },
+        "public_reserved_resources": {
+          "description": "Reserved resources for Kubernetes public nodes",
+          "properties": {
+            "kube_cpus": {
+              "description": "Amount of CPU resources available for pods.",
+              "title": "Node CPU available for pods",
+              "type": "number"
+            },
+            "kube_disk": {
+              "description": "Amount of persistent disk available for pods (in MB)",
+              "title": "Node Disk size (MB)",
+              "type": "integer"
+            },
+            "kube_mem": {
+              "description": "Amount of memory RAM resources available for pods (in MB).",
+              "title": "Node RAM memory available for pods (in MB)",
+              "type": "integer"
+            },
+            "system_cpus": {
+              "description": "CPU reserved for kubelet and container runtime daemons.",
+              "minimum": 1,
+              "title": "Kube-reserved CPU count",
+              "type": "number"
+            },
+            "system_mem": {
+              "description": "RAM memory reserved for kubelet and container runtime daemons (in MB).",
+              "minimum": 1024,
+              "title": "Kube-reserved RAM memory (in MB)",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "reserved_resources": {
+          "description": "Reserved resources for Kubernetes private nodes",
+          "properties": {
+            "kube_cpus": {
+              "default": 2,
+              "description": "Amount of CPU resources available for pods.",
+              "title": "Node CPU available for pods",
+              "type": "number"
+            },
+            "kube_disk": {
+              "default": 10240,
+              "description": "Amount of persistent disk available for pods (in MB)",
+              "title": "Node Disk size (MB)",
+              "type": "integer"
+            },
+            "kube_mem": {
+              "default": 2048,
+              "description": "Amount of memory RAM resources available for pods (in MB).",
+              "title": "Node RAM memory available for pods (in MB)",
+              "type": "integer"
+            },
+            "system_cpus": {
+              "default": 1,
+              "description": "CPU reserved for kubelet and container runtime daemons.",
+              "minimum": 1,
+              "title": "Kube-reserved CPU count",
+              "type": "number"
+            },
+            "system_mem": {
+              "default": 1024,
+              "description": "RAM memory reserved for kubelet and container runtime daemons (in MB).",
+              "minimum": 1024,
+              "title": "Kube-reserved RAM memory (in MB)",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "service_cidr": {
+          "default": "10.100.0.0/16",
+          "description": "Kubernetes Service CIDR block, e.g. '10.100.0.0/16'. It MUST NOT overlap with DC/OS VIP CIDR block.",
+          "pattern": "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){3}/([12]?[0-9]|3[0-2])$",
+          "title": "Service CIDR",
+          "type": "string"
+        },
+        "use_private_docker_registry": {
+          "default": false,
+          "description": "Whether to use agent Docker certificates to access private Docker registries.",
+          "title": "Use private Docker registry",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "service": {
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "log_level": {
+          "default": "INFO",
+          "description": "The log level for the DC/OS service.",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "type": "string"
+        },
+        "name": {
+          "default": "kubernetes",
+          "description": "The name of the service instance. The name must contain only alphanumeric characters, underscores and dashes up to a maximum of 24 characters, and must start and end with an alphanumeric character).",
+          "title": "Service name",
+          "type": "string"
+        },
+        "service_account": {
+          "default": "",
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of the Mesos framework.",
+          "type": "string"
+        },
+        "service_account_secret": {
+          "default": "",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "title": "Credential secret name (optional)",
+          "type": "string"
+        },
+        "sleep": {
+          "default": 1000,
+          "description": "The sleep duration in seconds before tasks exit.",
+          "type": "number"
+        },
+        "virtual_network_name": {
+          "default": "dcos",
+          "description": "The name of the virtual network to join.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}
