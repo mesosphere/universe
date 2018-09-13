@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS marklogic-proxy service specifications",
+      "properties": {
+        "name": {
+          "description": "Name of the proxy service instances as seen in DC/OS.",
+          "type": "string",
+          "default": "marklogic/admin-proxy"
+        },
+        "cpus": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 0.1
+        },
+        "disk": {
+          "description": "Disk",
+          "type": "number",
+          "default": 0
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance.",
+          "type": "number",
+          "default": 128
+        },
+        "containerPort": {
+          "description":  "The port inside the container.",
+          "type": "number",
+          "default": 80
+        },
+        "hostPort": {
+          "description":  "The host port.",
+          "type": "number",
+          "default": 16010
+        }
+      }
+    }
+  }
+}

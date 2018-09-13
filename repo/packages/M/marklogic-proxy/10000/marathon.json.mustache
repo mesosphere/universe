@@ -1,0 +1,58 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "disk": {{service.disk}},
+
+  "acceptedResourceRoles": [
+    "slave_public"
+  ],
+  "backoffFactor": 1.15,
+  "backoffSeconds": 1,
+  "cmd": "/start-hbase-master-proxy.sh; sleep 2000\n",
+
+  "container": {
+    "portMappings": [
+      {
+        "hostPort": {{service.hostPort}},
+        "labels": {
+          "VIP_0": "{{service.name}}:{{service.containerPort}}"
+        },
+        "protocol": "tcp",
+        "servicePort": {{service.hostPort}},
+        "name": "marklogic-ui-proxy"
+      }
+    ],
+    "type": "DOCKER",
+    "volumes": [],
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}",
+      "forcePullImage": false,
+      "privileged": false,
+      "parameters": []
+    }
+  },
+
+  "env": {
+  },
+
+  "networks": [
+    {
+      "mode": "container/bridge"
+    }
+  ],
+
+  "healthChecks": [
+    {
+        "gracePeriodSeconds": 300,
+        "intervalSeconds": 60,
+        "maxConsecutiveFailures": 3,
+        "portIndex": 0,
+        "timeoutSeconds": 20,
+        "delaySeconds": 15,
+        "protocol": "MESOS_HTTP",
+        "path": "/",
+        "ipProtocol": "IPv4"
+    }
+  ]
+}
