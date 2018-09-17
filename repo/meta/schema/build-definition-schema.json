@@ -18,9 +18,41 @@
       "pattern": "."
     },
 
+    "packageNameDefinition": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*[a-z0-9]$"
+    },
+
+    "packageVersionDefinition": {
+      "type": "string",
+      "pattern": "^[-a-zA-Z0-9.]+$"
+    },
+
     "base64String": {
       "type": "string",
       "pattern": "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$"
+    },
+
+    "licensesDefinition": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the license. For example one of [Apache License Version 2.0 | MIT License | BSD License | Proprietary]"
+          },
+          "url": {
+            "$ref": "#/definitions/url",
+            "description": "The URL where the license can be accessed"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "url"
+        ]
+      }
     },
 
     "cliInfo": {
@@ -197,6 +229,7 @@
 
 
     "config": {
+      "type": "object"
     },
 
 
@@ -223,11 +256,10 @@
           "enum": ["3.0"]
         },
         "name": {
-          "type": "string"
+          "$ref": "#/definitions/packageNameDefinition"
         },
         "version": {
-          "type": "string",
-          "pattern": "^[-a-zA-Z0-9.]+$"
+          "$ref": "#/definitions/packageVersionDefinition"
         },
         "scm": {
           "type": "string"
@@ -266,25 +298,7 @@
           }
         },
         "licenses": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "The name of the license. For example one of [Apache License Version 2.0 | MIT License | BSD License | Proprietary]"
-              },
-              "url": {
-                "$ref": "#/definitions/url",
-                "description": "The URL where the license can be accessed"
-              }
-            },
-            "additionalProperties": false,
-            "required": [
-              "name",
-              "url"
-            ]
-          }
+          "$ref": "#/definitions/licensesDefinition"
         },
         "minDcosReleaseVersion": {
           "$ref": "#/definitions/dcosReleaseVersion",
@@ -327,11 +341,10 @@
           "enum": ["4.0"]
         },
         "name": {
-          "type": "string"
+          "$ref": "#/definitions/packageNameDefinition"
         },
         "version": {
-          "type": "string",
-          "pattern": "^[-a-zA-Z0-9.]+$"
+          "$ref": "#/definitions/packageVersionDefinition"
         },
         "scm": {
           "type": "string"
@@ -433,6 +446,117 @@
         "tags"
       ],
       "additionalProperties": false
+    },
+
+    "v50BuildDef": {
+      "properties": {
+        "packagingVersion": {
+          "type": "string",
+          "enum": ["5.0"]
+        },
+        "name": {
+          "$ref": "#/definitions/packageNameDefinition"
+        },
+        "version": {
+          "$ref": "#/definitions/packageVersionDefinition"
+        },
+        "scm": {
+          "type": "string"
+        },
+        "maintainer": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "framework": {
+          "type": "boolean",
+          "default": false,
+          "description": "True if this package installs a new Mesos framework."
+        },
+        "upgradesFrom": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of versions that can upgrade to this package. If the property is a list containing the string '*', any version can upgrade to this package. If the property is not set or the empty list, no version can upgrade to this package."
+        },
+        "downgradesTo": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of versions that this package can downgrade to. If the property is a list containing the string '*', this package can downgrade to any version. If the property is not set or the empty list, this package cannot downgrade."
+        },
+        "preInstallNotes": {
+          "type": "string",
+          "description": "Pre installation notes that would be useful to the user of this package."
+        },
+        "postInstallNotes": {
+          "type": "string",
+          "description": "Post installation notes that would be useful to the user of this package."
+        },
+        "postUninstallNotes": {
+          "type": "string",
+          "description": "Post uninstallation notes that would be useful to the user of this package."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^\\s]+$"
+          }
+        },
+        "licenses": {
+          "$ref": "#/definitions/licensesDefinition"
+        },
+        "minDcosReleaseVersion": {
+          "$ref": "#/definitions/dcosReleaseVersion",
+          "description": "The minimum DC/OS Release Version the package can run on."
+        },
+        "manager": {
+          "type": "object",
+          "description": "Custom package manager section that can be used to define a custom manager for a package",
+          "properties": {
+            "packageName": {
+              "$ref": "#/definitions/packageNameDefinition"
+            },
+            "minPackageVersion": {
+              "$ref": "#/definitions/packageVersionDefinition"
+            }
+          },
+          "required": [
+            "packageName"
+          ]
+        },
+        "marathon": {
+          "$ref": "#/definitions/marathon"
+        },
+        "resource": {
+          "oneOf": [
+            {"$ref": "#/definitions/v30resource"},
+            {"$ref": "#/definitions/localReference"}
+          ]
+        },
+        "config": {
+          "oneOf": [
+            {"$ref": "#/definitions/config"},
+            {"$ref": "#/definitions/localReference"}
+          ]
+        }
+      },
+      "required": [
+        "packagingVersion",
+        "name",
+        "version",
+        "maintainer",
+        "description",
+        "tags"
+      ],
+      "additionalProperties": false
     }
 
   },
@@ -440,6 +564,7 @@
   "type": "object",
   "oneOf": [
     { "$ref": "#/definitions/v30BuildDef" },
-    { "$ref": "#/definitions/v40BuildDef" }
+    { "$ref": "#/definitions/v40BuildDef" },
+    { "$ref": "#/definitions/v50BuildDef" }
   ]
 }
