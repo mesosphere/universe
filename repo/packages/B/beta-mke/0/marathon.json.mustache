@@ -1,0 +1,66 @@
+{
+  "id": "beta-mke",
+  "cpus": {{configuration.resources.cpus}},
+  "mem": {{configuration.resources.mem}},
+  "instances": 1,
+  "user": "nobody",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*/jre/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && chmod +x ./mke-cosmos-adapter && ./mke-cosmos-adapter --dcos-url=$MKE_DCOS_URL --scheme=$MKE_SERVER_SCHEME --host=0.0.0.0 --dcos-ca-bundle={{configuration.dcos_ca_bundle}} --port=$PORT_API 2>&1",
+  "labels": {
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "beta-mke",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "env": {
+    "PACKAGE_NAME": "beta-mke",
+    "PACKAGE_VERSION": "2.0.0-1.12.0-beta",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1537221200909",
+    "FRAMEWORK_NAME": "beta-mke",
+    "FRAMEWORK_PRINCIPAL": "",
+    "FRAMEWORK_USER": "nobody",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+
+    "MKE_DCOS_URL": "{{configuration.dcos_url}}",
+    "MKE_DCOS_SKIP_TLS_VERIFY": "{{configuration.dcos_skip_tls_verify}}",
+    "MKE_SERVER_SCHEME": "{{configuration.server_scheme}}",
+    "MKE_DCOS_CA_BUNDLE": "{{configuration.dcos_ca_bundle}}",
+
+    "COSMOS_ADAPTER_URI": "{{resource.assets.uris.mke-cosmos-adapter}}",
+    "DEBUG": "1"
+  },
+  "fetch": [
+    {
+      "uri": "{{resource.assets.uris.mke-cosmos-adapter}}",
+      "cache": true
+    },
+    {
+      "uri": "{{resource.assets.uris.jre-tar-gz}}",
+      "cache": true
+    },
+    {
+      "uri": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+      "cache": true
+    }
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_TCP",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api"
+    }
+  ]
+}

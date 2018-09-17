@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "configuration": {
+      "description": "Package Manager configuration",
+      "type": "object",
+      "properties": {
+        "dcos_url": {
+          "description": "DC/OS URL.",
+          "type": "string",
+          "default": "http://leader.mesos/"
+        },
+        "dcos_skip_tls_verify": {
+          "description": "If true, DC/OS' certificate will not be checked for validity. This will make your HTTPS connections insecure.",
+          "type": "boolean",
+          "default": false
+        },
+        "dcos_ca_bundle": {
+          "description": "Path to the DC/OS CA Bundle certificate to secure your communications.",
+          "type": "string",
+          "default": ""
+        },
+        "server_scheme": {
+          "description": "Specify whether you want to expose mke server as HTTP/HTTPS",
+          "type": "string",
+          "enum": [
+            "http"
+          ],
+          "default": "http"
+        },
+        "resources": {
+          "description": "Reserved resources for mke",
+          "type": "object",
+          "properties": {
+            "cpus": {
+              "title": "CPU count",
+              "description": "mke CPU requirements.",
+              "type": "number",
+              "default": 0.5
+            },
+            "mem": {
+              "title": "Memory size (MB)",
+              "description": "mke RAM requirements (in MB).",
+              "type": "integer",
+              "default": 1024
+            }
+          }
+        }
+      }
+    }
+  }
+}
