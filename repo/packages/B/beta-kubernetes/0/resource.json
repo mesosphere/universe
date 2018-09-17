@@ -1,0 +1,74 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "kube_apiserver": "k8s.gcr.io/kube-apiserver-amd64:v1.12.0-beta.2",
+        "kube_controller_manager": "k8s.gcr.io/kube-controller-manager-amd64:v1.12.0-beta.2",
+        "kube_scheduler": "k8s.gcr.io/kube-scheduler-amd64:v1.12.0-beta.2",
+        "kube_proxy": "k8s.gcr.io/kube-proxy-amd64:v1.12.0-beta.2",
+        "metrics_server": "gcr.io/google_containers/metrics-server-amd64:v0.3.1",
+        "dashboard": "k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.0",
+        "pause": "gcr.io/google_containers/pause-amd64:3.1",
+        "calico_typha": "quay.io/calico/typha:v3.2.1",
+        "calico_node": "quay.io/calico/node:v3.2.1",
+        "calico_cni": "quay.io/calico/cni:v3.2.1",
+        "coredns": "coredns/coredns:1.2.2",
+        "addons_image": "mesosphere/dcos-kubernetes-addons:eae65e",
+        "etcd_image": "mesosphere/dcos-kubernetes-etcd:3820c3",
+        "node_image": "mesosphere/dcos-kubernetes-node:e74fb4"
+      }
+    },
+    "uris": {
+      "jre_tar_gz": "https://downloads.mesosphere.com/java/server-jre-8u172-linux-x64.tar.gz",
+      "libmesos_bundle_tar_gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz",
+      "scheduler_zip": "https://downloads.mesosphere.com/kubernetes/assets/2.0.0-1.12.0-beta/kubernetes-scheduler.zip",
+      "bootstrap_zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.53.0/bootstrap.zip",
+      "kubelet_resource_watchdog": "https://downloads.mesosphere.com/kubernetes/assets/2.0.0-1.12.0-beta/kubelet-resource-watchdog-v0.2.2.tar.gz"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/kubernetes/assets/k8s-small-48x48.png",
+    "icon-medium": "https://downloads.mesosphere.com/kubernetes/assets/k8s-medium-96x96.png",
+    "icon-large": "https://downloads.mesosphere.com/kubernetes/assets/k8s-large-256x256.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "25c2f2be085bb17ad06f7c5b3e753a491350b7745c5b03c69f4c14f7f9fa88dc"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/2.0.0-1.12.0-beta/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "69f7e6e47529a9ba03ffeaf5f90a96b1e63addfc7a18f029bd10feb55f6cd2e4"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/2.0.0-1.12.0-beta/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "5bde8756c962f0e3b463f1cf8811d94c899cdf82d22d1a62caf8ea80f57ec775"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/2.0.0-1.12.0-beta/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
