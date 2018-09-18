@@ -1,0 +1,560 @@
+{
+    "type": "object", 
+    "properties": {
+        "service": {
+            "type": "object", 
+            "description": "DC/OS service configuration properties", 
+            "properties": {
+                "name": {
+                    "description": "The name of the service instance", 
+                    "type": "string", 
+                    "default": "couchbase", 
+                    "title": "Service name"
+                }, 
+                "user": {
+                    "description": "The user that the service will run as.", 
+                    "type": "string", 
+                    "default": "root", 
+                    "title": "User"
+                }, 
+                "service_account": {
+                    "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "service_account_secret": {
+                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.", 
+                    "type": "string", 
+                    "default": "", 
+                    "title": "Credential secret name (optional)"
+                }, 
+                "virtual_network_enabled": {
+                    "description": "Enable virtual networking", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "virtual_network_name": {
+                    "description": "The name of the virtual network to join", 
+                    "type": "string", 
+                    "default": "dcos"
+                }, 
+                "virtual_network_plugin_labels": {
+                    "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "log_level": {
+                    "description": "The log level for the DC/OS service.", 
+                    "type": "string", 
+                    "enum": [
+                        "OFF", 
+                        "FATAL", 
+                        "ERROR", 
+                        "WARN", 
+                        "INFO", 
+                        "DEBUG", 
+                        "TRACE", 
+                        "ALL"
+                    ], 
+                    "default": "INFO"
+                }, 
+                "security": {
+                    "description": "Security settings", 
+                    "type": "object", 
+                    "properties": {
+                        "transport_encryption": {
+                            "type": "object", 
+                            "description": "Transport encryption settings", 
+                            "properties": {
+                                "enabled": {
+                                    "description": "Enable transport encryption (TLS)", 
+                                    "type": "boolean", 
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }, 
+            "required": [
+                "name", 
+                "user"
+            ]
+        }, 
+        "couchbase": {
+            "description": "Common Couchbase Cluster Configuration", 
+            "type": "object", 
+            "properties": {
+                "admin_credentials": {
+                    "description": "administrator crendentials", 
+                    "type": "object", 
+                    "properties": {
+                        "admin_password_secret_enabled": {
+                            "type": "boolean", 
+                            "description": "if checked, then the cluster admin password needs to be configured in a secret named <service_name>/admin_password", 
+                            "default": false
+                        }, 
+                        "admin_password": {
+                            "type": "string", 
+                            "description": "cluster administrator password, ignored when secret is enabled", 
+                            "default": "password"
+                        }
+                    }
+                }
+            }
+        }, 
+        "data-service": {
+            "description": "Couchbase Data Service Configuration", 
+            "type": "object", 
+            "properties": {
+                "count": {
+                    "description": "Number of data nodes to create", 
+                    "type": "integer", 
+                    "default": 2, 
+                    "minimum": 2
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "cpus": {
+                    "description": "Number of cores available for each Data Service container", 
+                    "type": "number", 
+                    "default": 2
+                }, 
+                "mem": {
+                    "description": "Amount of memory available for each Data Service container (in MB)", 
+                    "type": "integer", 
+                    "default": 4096
+                }, 
+                "mem_usable": {
+                    "description": "Amount of memory available for each Data Service node (in MB)", 
+                    "type": "integer", 
+                    "default": 3686, 
+                    "minimum": 256
+                }, 
+                "disk": {
+                    "description": "Size of the persistent data volume that hosts the data partition (in MB)", 
+                    "type": "integer", 
+                    "default": 15360
+                }, 
+                "disk_type": {
+                    "description": "Disk type to be used. See documentation. [ROOT, MOUNT]", 
+                    "type": "string", 
+                    "default": "ROOT"
+                }, 
+                "all_services": {
+                    "description": "enable for development clusters all couchbase server services on the data nodes", 
+                    "type": "object", 
+                    "properties": {
+                        "all_services_enabled": {
+                            "type": "boolean", 
+                            "description": "if checked the data nodes will also run the index, query, search, eventing and anlytics service", 
+                            "default": false
+                        }
+                    }
+                }
+            }, 
+            "required": [
+                "count", 
+                "cpus", 
+                "mem", 
+                "mem_usable", 
+                "disk", 
+                "disk_type"
+            ]
+        }, 
+        "index-service": {
+            "description": "Couchbase Index Service Configuration", 
+            "type": "object", 
+            "properties": {
+                "count": {
+                    "description": "Number of index nodes to create", 
+                    "type": "integer", 
+                    "default": 0, 
+                    "minimum": 0
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "cpus": {
+                    "description": "Number of cores available for each Index Service container", 
+                    "type": "number", 
+                    "default": 1
+                }, 
+                "mem": {
+                    "description": "Amount of memory available for each Index Service container (in MB)", 
+                    "type": "integer", 
+                    "default": 4096
+                }, 
+                "mem_usable": {
+                    "description": "Amount of memory available for each Index Service node (in MB)", 
+                    "type": "integer", 
+                    "default": 3686, 
+                    "minimum": 256
+                }, 
+                "disk": {
+                    "description": "Size of the persistent data volume that hosts the data partition (in MB)", 
+                    "type": "integer", 
+                    "default": 15360
+                }, 
+                "disk_type": {
+                    "description": "Disk type to be used. See documentation. [ROOT, MOUNT]", 
+                    "type": "string", 
+                    "default": "ROOT"
+                }, 
+                "index_type": {
+                    "description": "Determines whether standard or memory optimized GSIs will be used, choices: default,memopt", 
+                    "type": "string", 
+                    "default": "default"
+                }
+            }, 
+            "required": [
+                "count", 
+                "cpus", 
+                "mem", 
+                "mem_usable", 
+                "index_type", 
+                "disk", 
+                "disk_type"
+            ]
+        }, 
+        "query-service": {
+            "description": "Couchbase Query Service Configuration", 
+            "type": "object", 
+            "properties": {
+                "count": {
+                    "description": "Number of query nodes to create", 
+                    "type": "integer", 
+                    "default": 0, 
+                    "minimum": 0
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "cpus": {
+                    "description": "Number of cores available for each Query Service container", 
+                    "type": "number", 
+                    "default": 1
+                }, 
+                "mem": {
+                    "description": "Amount of memory available for each Query Service container (in MB)", 
+                    "type": "integer", 
+                    "default": 4096
+                }, 
+                "disk": {
+                    "description": "Size of the persistent data volume that hosts the data partition (in MB)", 
+                    "type": "integer", 
+                    "default": 15360
+                }, 
+                "disk_type": {
+                    "description": "Disk type to be used. See documentation. [ROOT, MOUNT]", 
+                    "type": "string", 
+                    "default": "ROOT"
+                }
+            }, 
+            "required": [
+                "count", 
+                "cpus", 
+                "mem", 
+                "disk", 
+                "disk_type"
+            ]
+        }, 
+        "fts-service": {
+            "description": "Couchbase Full Text Search Service Configuration", 
+            "type": "object", 
+            "properties": {
+                "count": {
+                    "description": "Number of FTS nodes to create", 
+                    "type": "integer", 
+                    "default": 0, 
+                    "minimum": 0
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "cpus": {
+                    "description": "Number of cores available for each FTS Service container", 
+                    "type": "number", 
+                    "default": 1
+                }, 
+                "mem": {
+                    "description": "Amount of memory available for each FTS Service container (in MB)", 
+                    "type": "integer", 
+                    "default": 4096
+                }, 
+                "mem_usable": {
+                    "description": "Amount of memory available for each FTS Service node (in MB)", 
+                    "type": "integer", 
+                    "default": 3686, 
+                    "minimum": 256
+                }, 
+                "disk": {
+                    "description": "Size of the persistent data volume that hosts the FTS data partition (in MB)", 
+                    "type": "integer", 
+                    "default": 15360
+                }, 
+                "disk_type": {
+                    "description": "Disk type to be used. See documentation. [ROOT, MOUNT]", 
+                    "type": "string", 
+                    "default": "ROOT"
+                }
+            }, 
+            "required": [
+                "count", 
+                "cpus", 
+                "mem", 
+                "mem_usable", 
+                "disk", 
+                "disk_type"
+            ]
+        }, 
+        "eventing-service": {
+            "description": "Couchbase Eventing Service Configuration", 
+            "type": "object", 
+            "properties": {
+                "count": {
+                    "description": "Number of Eventing nodes to create", 
+                    "type": "integer", 
+                    "default": 0, 
+                    "minimum": 0
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "cpus": {
+                    "description": "Number of cores available for each Eventing Service container", 
+                    "type": "number", 
+                    "default": 1
+                }, 
+                "mem": {
+                    "description": "Amount of memory available for each Eventing Service container (in MB)", 
+                    "type": "integer", 
+                    "default": 4096
+                }, 
+                "mem_usable": {
+                    "description": "Amount of memory available for each Eventing Service node (in MB)", 
+                    "type": "integer", 
+                    "default": 3686, 
+                    "minimum": 256
+                }, 
+                "disk": {
+                    "description": "Size of the persistent data volume that hosts the Eventing data partition (in MB)", 
+                    "type": "integer", 
+                    "default": 15360
+                }, 
+                "disk_type": {
+                    "description": "Disk type to be used. See documentation. [ROOT, MOUNT]", 
+                    "type": "string", 
+                    "default": "ROOT"
+                }
+            }, 
+            "required": [
+                "count", 
+                "cpus", 
+                "mem", 
+                "mem_usable", 
+                "disk", 
+                "disk_type"
+            ]
+        }, 
+        "analytics-service": {
+            "description": "Couchbase Analytics Service Configuration", 
+            "type": "object", 
+            "properties": {
+                "count": {
+                    "description": "Number of Analytics nodes to create", 
+                    "type": "integer", 
+                    "default": 0, 
+                    "minimum": 0
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "cpus": {
+                    "description": "Number of cores available for each Analytics Service container", 
+                    "type": "number", 
+                    "default": 1
+                }, 
+                "mem": {
+                    "description": "Amount of memory available for each Analytics Service container (in MB)", 
+                    "type": "integer", 
+                    "default": 4096
+                }, 
+                "mem_usable": {
+                    "description": "Amount of memory available for each Analytics Service node (in MB)", 
+                    "type": "integer", 
+                    "default": 3686, 
+                    "minimum": 1024
+                }, 
+                "disk": {
+                    "description": "Size of the persistent data volume that hosts the Analytics data partition (in MB)", 
+                    "type": "integer", 
+                    "default": 15360
+                }, 
+                "disk_type": {
+                    "description": "Disk type to be used. See documentation. [ROOT, MOUNT]", 
+                    "type": "string", 
+                    "default": "ROOT"
+                }
+            }, 
+            "required": [
+                "count", 
+                "cpus", 
+                "mem", 
+                "mem_usable", 
+                "disk", 
+                "disk_type"
+            ]
+        }, 
+        "backupmgr-service": {
+            "description": "Couchbase Backup Manager Service Configuration", 
+            "type": "object", 
+            "properties": {
+                "count": {
+                    "description": "Number of Backup Manager Nodes to create", 
+                    "type": "integer", 
+                    "default": 0, 
+                    "minimum": 0, 
+                    "maximum": 1
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "disk": {
+                    "description": "Size of the persistent data volume that hosts the FTS data partition (in MB)", 
+                    "type": "integer", 
+                    "default": 15360
+                }, 
+                "disk_type": {
+                    "description": "Disk type to be used. See documentation. [ROOT, MOUNT]", 
+                    "type": "string", 
+                    "default": "ROOT"
+                }, 
+                "aws_endpoint": {
+                    "description": "aws endpoint", 
+                    "type": "string", 
+                    "default": "http://minio.marathon.l4lb.thisdcos.directory:9000"
+                }, 
+                "aws_bucket": {
+                    "description": "aws backup bucket name", 
+                    "type": "string", 
+                    "default": "couchbase-backup"
+                }, 
+                "aws_credentials": {
+                    "description": "aws s3 crendentials", 
+                    "type": "object", 
+                    "properties": {
+                        "aws_secrets_enabled": {
+                            "type": "boolean", 
+                            "description": "if checked, then the aws credentials need to be configured in secrets named <service_name>/aws_access_key_id, and <service_name>/aws_secret_access_key", 
+                            "default": false
+                        }, 
+                        "aws_access_key_id": {
+                            "description": "aws access key id", 
+                            "type": "string", 
+                            "default": "minio"
+                        }, 
+                        "aws_secret_access_key": {
+                            "description": "aws secret_access key", 
+                            "type": "string", 
+                            "default": "minio123"
+                        }
+                    }
+                }
+            }, 
+            "required": [
+                "disk", 
+                "disk_type"
+            ]
+        }, 
+        "sync-gateway-service": {
+            "description": "Couchbase Sync Gateway Service Configuration", 
+            "type": "object", 
+            "properties": {
+                "count": {
+                    "description": "Number of Sync Gateway nodes to create", 
+                    "type": "integer", 
+                    "default": 0, 
+                    "minimum": 0
+                }, 
+                "config": {
+                    "title": "sync gateway yml configuration", 
+                    "description": "sync gateway yml configuration base64 encoded", 
+                    "type": "string", 
+                    "media": {
+                        "binaryEncoding": "base64", 
+                        "type": "application/x-yaml"
+                    }, 
+                    "default": "Q09SUzoKICAgIEhlYWRlcnM6CiAgICAtIENvbnRlbnQtVHlwZQogICAgTG9naW5PcmlnaW46CiAgICAtICcqJwogICAgTWF4QWdlOiAxNzI4MDAwCiAgICBPcmlnaW46CiAgICAtICcqJwphZG1pbkludGVyZmFjZTogMC4wLjAuMDo0OTg1CmRhdGFiYXNlczoKICAgIHRvZG86CiAgICAgICAgYnVja2V0OiB0b2RvCiAgICAgICAgcGFzc3dvcmQ6IHRvZG8xODgKICAgICAgICBzZXJ2ZXI6IGh0dHA6Ly9kYXRhLmNvdWNoYmFzZS5sNGxiLnRoaXNkY29zLmRpcmVjdG9yeTo4MDkxCiAgICAgICAgdXNlcm5hbWU6IHRvZG8KICAgICAgICB1c2VyczoKICAgICAgICAgICAgR1VFU1Q6CiAgICAgICAgICAgICAgICBhZG1pbl9jaGFubmVsczoKICAgICAgICAgICAgICAgIC0gJyonCiAgICAgICAgICAgICAgICBkaXNhYmxlZDogZmFsc2UKaW50ZXJmYWNlOiAwLjAuMC4wOjQ5ODQKbG9nOgotICcqJw=="
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "cpus": {
+                    "description": "Number of cores available for each Sync Gateway container", 
+                    "type": "number", 
+                    "default": 1
+                }, 
+                "mem": {
+                    "description": "Amount of memory available for each Sync Gateway container (in MB)", 
+                    "type": "integer", 
+                    "default": 4096
+                }
+            }, 
+            "required": [
+                "count", 
+                "cpus", 
+                "mem"
+            ]
+        }
+    }
+}
