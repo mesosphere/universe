@@ -1,0 +1,308 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of the service instance. The name must contain only alphanumeric characters, underscores and dashes up to a maximum of 24 characters, and must start and end with an alphanumeric character).",
+          "type": "string",
+          "default": "kubernetes"
+        },
+        "sleep": {
+          "description": "The sleep duration in seconds before tasks exit.",
+          "type": "number",
+          "default": 1000
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of the Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "title": "Credential secret name (optional)",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        }
+      }
+    },
+    "kubernetes": {
+      "description": "Kubernetes general properties",
+      "type": "object",
+      "properties": {
+        "authorization_mode": {
+          "description": "The authorization mode to use.",
+          "type": "string",
+          "enum": [
+            "AlwaysAllow",
+            "RBAC"
+          ],
+          "default": "AlwaysAllow"
+        },
+        "high_availability": {
+          "type": "boolean",
+          "default": false,
+          "title": "High-availability",
+          "description": "Whether to deploy a highly-available control plane."
+        },
+        "enable_insecure_port": {
+          "type": "boolean",
+          "default": true,
+          "title": "Expose the Kubernetes API on an insecure port",
+          "description": "Expose the Kubernetes API on an insecure port (WARNING: This option will be removed in a future version)."
+        },
+        "control_plane_placement": {
+          "type": "string",
+          "description": "Kubernetes control-plane placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).",
+          "default": ""
+        },
+        "service_cidr": {
+          "title": "Service CIDR",
+          "description": "Kubernetes Service CIDR block, e.g. '10.100.0.0/16'. It MUST NOT overlap with DC/OS VIP CIDR block.",
+          "type": "string",
+          "default": "10.100.0.0/16",
+          "pattern": "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){3}/([12]?[0-9]|3[0-2])$"
+        },
+        "network_provider": {
+          "title": "Network Provider",
+          "description": "Underlying DC/OS network to use for Kubernetes workloads.",
+          "type": "string",
+          "default": "dcos"
+        },
+        "cloud_provider": {
+          "title": "The provider for cloud services.",
+          "description": "The provider for cloud services.",
+          "type": "string",
+          "enum": [
+            "(none)",
+            "aws"
+          ],
+          "default": "(none)"
+        },
+        "node_count": {
+          "title": "Private Node Count",
+          "description": "Number of desired private Kubernetes nodes.",
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        },
+        "node_placement": {
+          "type": "string",
+          "description": "Kubernetes node placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).",
+          "default": ""
+        },
+        "public_node_count": {
+          "title": "Public Node Count",
+          "description": "Number of desired public Kubernetes nodes.",
+          "type": "integer",
+          "default": 0
+        },
+        "public_node_placement": {
+          "type": "string",
+          "description": "Public Kubernetes node placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).",
+          "default": ""
+        },
+        "reserved_resources": {
+          "type": "object",
+          "description": "Reserved resources for Kubernetes private nodes",
+          "properties": {
+            "kube_cpus": {
+              "title": "Node CPU available for pods",
+              "description": "Amount of CPU resources available for pods.",
+              "type": "number",
+              "default": 2
+            },
+            "kube_mem": {
+              "title": "Node RAM memory available for pods (in MB)",
+              "description": "Amount of memory RAM resources available for pods (in MB).",
+              "type": "integer",
+              "default": 2048
+            },
+            "kube_disk": {
+              "title": "Node Disk size (MB)",
+              "description": "Amount of persistent disk available for pods (in MB)",
+              "type": "integer",
+              "default": 10240
+            },
+            "system_cpus": {
+              "title": "Kube-reserved CPU count",
+              "description": "CPU reserved for kubelet and container runtime daemons.",
+              "type": "number",
+              "default": 1,
+              "minimum": 1
+            },
+            "system_mem": {
+              "title": "Kube-reserved RAM memory (in MB)",
+              "description": "RAM memory reserved for kubelet and container runtime daemons (in MB).",
+              "type": "integer",
+              "default": 1024,
+              "minimum": 1024
+            }
+          }
+        },
+        "public_reserved_resources": {
+          "type": "object",
+          "description": "Reserved resources for Kubernetes public nodes",
+          "properties": {
+            "kube_cpus": {
+              "title": "Node CPU available for pods",
+              "description": "Amount of CPU resources available for pods.",
+              "type": "number"
+            },
+            "kube_mem": {
+              "title": "Node RAM memory available for pods (in MB)",
+              "description": "Amount of memory RAM resources available for pods (in MB).",
+              "type": "integer"
+            },
+            "kube_disk": {
+              "title": "Node Disk size (MB)",
+              "description": "Amount of persistent disk available for pods (in MB)",
+              "type": "integer"
+            },
+            "system_cpus": {
+              "title": "Kube-reserved CPU count",
+              "description": "CPU reserved for kubelet and container runtime daemons.",
+              "type": "number",
+              "minimum": 1
+            },
+            "system_mem": {
+              "title": "Kube-reserved RAM memory (in MB)",
+              "description": "RAM memory reserved for kubelet and container runtime daemons (in MB).",
+              "type": "integer",
+              "minimum": 1024
+            }
+          }
+        }
+      }
+    },
+    "etcd": {
+      "description": "etcd properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "title": "CPU count",
+          "description": "etcd node CPU requirements.",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "etcd node RAM requirements (in MB).",
+          "type": "integer",
+          "default": 1024
+        },
+        "data_disk": {
+          "title": "Disk size (MB) for data",
+          "description": "etcd node persistent disk requirements (in MB) for the data",
+          "type": "integer",
+          "default": 3072
+        },
+        "wal_disk": {
+          "title": "Disk size (MB) for logs",
+          "description": "etcd node persistent disk requirements (in MB) for the logs",
+          "type": "integer",
+          "default": 512
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require pre-configuration in DC/OS.",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        }
+      }
+    },
+    "scheduler": {
+      "description": "Kubernetes Scheduler properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "title": "CPU count",
+          "description": "Scheduler instance CPU requirements.",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Scheduler instance RAM requirements (in MB).",
+          "type": "integer",
+          "default": 512
+        }
+      }
+    },
+    "controller_manager": {
+      "description": "Kubernetes Controller Manager properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "title": "CPU count",
+          "description": "Controller Manager instance CPU requirements.",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Controller Manager instance RAM requirements (in MB).",
+          "type": "integer",
+          "default": 512
+        }
+      }
+    },
+    "apiserver": {
+      "description": "Kubernetes API Server properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "title": "CPU count",
+          "description": "API Server instance CPU requirements.",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "API Server instance RAM requirements (in MB).",
+          "type": "integer",
+          "default": 1024
+        }
+      }
+    },
+    "kube_proxy": {
+      "description": "Kubernetes kube-proxy properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "title": "CPU count",
+          "description": "kube-proxy instance CPU requirements.",
+          "type": "number",
+          "default": 0.1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "kube-proxy instance RAM requirements (in MB).",
+          "type": "integer",
+          "default": 512
+        }
+      }
+    }
+  }
+}
