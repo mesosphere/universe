@@ -19,19 +19,43 @@ docker push "<your_org>/universe-converter:dev"
      "DCOS_SERVICE_SCHEME": "http",
      "DCOS_SERVICE_PORT_INDEX": "0"
 ```
-4. Once the app is healthy, we can ssh to one of the nodes and execute bunch of curl calls. Here is a sample : 
+4. Once the app is healthy, we can ssh to one of the nodes and execute bunch of curl calls. Testing from inside the cluster when we do not want to account for downstream latencies/glitches.
 
 ```bash
+#!/usr/bin/env bash
+
+function info { echo "[info] $@" ;}
+
 # Export a stub url you want to test.
-STUB_UNIVERSE_URL=<Any_stub_url>
+: ${STUB_UNIVERSE_URL?"Need to set STUB_UNIVERSE_URL"}
+: ${CONVERTER_URL?"Need to set CONVERTER_URL"}
 
 # Test all the happy paths.
 for i in v5,1.13 v5,1.12 v4,1.13 v4,1.12 v4,1.11 v4,1.10 v3,1.9; do
     IFS=',' read packaging_version dcos_version <<< "${i}"
-    echo "Testing ${packaging_version} for ${dcos_version}"
-    curl -f -X GET "http://transform.marathon.mesos:8086/transform?url=${STUB_UNIVERSE_URL}" \
-         -H "Accept: application/vnd.dcos.universe.repo+json;charset=utf-8;version=${packaging_version}" \
-         -H "User-Agent: cosmos/0.6.0 dcos/${dcos_version}" \
-         -o /dev/null
+    info "Testing ${packaging_version} for ${dcos_version}"
+    curl -s -f -X GET "${CONVERTER_URL}" \
+        -H "Accept: application/vnd.dcos.universe.repo+json;charset=utf-8;version=${packaging_version}" \
+        -H "User-Agent: cosmos/does-not-matter dcos/${dcos_version}" \
+        -H "Authorization: ${AUTHORIZATION_HEADER}" \
+        -o /dev/null
 done
+
+
+if [ -z "$RUN_LOAD_TESTS" ]; then
+    info "Skipping load tests as RUN_LOAD_TESTS is not set"
+else
+    DEFAULT_ITERATIONS=${DEFAULT_ITERATIONS:-10}
+    packaging_version="v5"
+    dcos_version="1.13"
+    info "Running load tests"
+    for i in `eval echo {0..$DEFAULT_ITERATIONS}`; do
+        info "Iteration $i"
+        curl -s -f -X GET "${CONVERTER_URL}" \
+            -H "Accept: application/vnd.dcos.universe.repo+json;charset=utf-8;version=${packaging_version}" \
+            -H "Authorization: ${AUTHORIZATION_HEADER}" \
+            -H "User-Agent: cosmos/does-not-matter dcos/${dcos_version}" \
+            -o /dev/null
+    done
+fi
 ```
