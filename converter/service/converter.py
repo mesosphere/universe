@@ -38,7 +38,7 @@ transform_url_path = '/transform'
 logger = logging.getLogger(__name__)
 logging.basicConfig(
     level=os.environ.get('LOGLEVEL', 'DEBUG'),
-    format='[%(asctime)s|%(threadName)s|%(levelname)s]: %(message)s'
+    format="[%(asctime)s|%(threadName)s-%(funcName)s(%(lineno)d)|%(levelname)s]: %(message)s",
 )
 
 
@@ -110,6 +110,16 @@ class Handler(BaseHTTPRequestHandler):
             )
             self.send_error(HTTPStatus.BAD_GATEWAY, explain=str(e))
             return
+        except Exception as e:
+            logger.exception(
+                'Unhandled exception for [{}] UA [{}] Accept [{}]'.format(
+                    query,
+                    user_agent,
+                    accept
+                ),
+                e
+            )
+            raise e
 
         self.send_response(HTTPStatus.OK)
         self.send_header(header_content_type, accept)
@@ -201,7 +211,6 @@ def render_json(packages, dcos_version, repo_version):
         dcos_version
     )
     packages_dict = {json_key_packages: processed_packages}
-    logger.info('validation for {}'.format(repo_version))
     errors = gen_universe.validate_repo_with_schema(
         packages_dict,
         repo_version

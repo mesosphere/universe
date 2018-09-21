@@ -783,9 +783,6 @@ def _load_jsonschema(repo_version):
     :return: the schema dictionary
     :rtype: dict
     """
-    print("schema_dir : {}".format(schema_dir))
-    print("repo_version : {}".format(repo_version))
-    print('{}/{}-repo-schema.json'.format(schema_dir, repo_version))
     with open(
         '{}/{}-repo-schema.json'.format(schema_dir, repo_version),
         encoding='utf-8'

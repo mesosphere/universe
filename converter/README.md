@@ -13,7 +13,12 @@ docker push "<your_org>/universe-converter:dev"
 ```
 
 2. The docker build should have generated a `target/marathon.json`
-3. Use the above marathon app defintion to launch a marathon app in any cluster.
+3. Use the above marathon app defintion to launch a marathon app in any cluster. If testing from outside the cluster, these labels need to be added :
+```
+     "DCOS_SERVICE_NAME": "transform",
+     "DCOS_SERVICE_SCHEME": "http",
+     "DCOS_SERVICE_PORT_INDEX": "0"
+```
 4. Once the app is healthy, we can ssh to one of the nodes and execute bunch of curl calls. Here is a sample : 
 
 ```bash
