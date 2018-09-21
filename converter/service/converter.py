@@ -112,9 +112,7 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         self.send_response(HTTPStatus.OK)
-        content_header = gen_universe.format_universe_repo_content_type(
-            _get_repo_version(accept))
-        self.send_header(header_content_type, content_header)
+        self.send_header(header_content_type, accept)
         self.send_header(header_content_length, len(json_response))
         self.end_headers()
         self.wfile.write(json_response.encode())
