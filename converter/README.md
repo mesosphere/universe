@@ -5,6 +5,8 @@ Wiki : https://wiki.mesosphere.com/display/OPS/Universe+Converter+Service
 
 ### Testing
 
+Converter is an internal tool used for our CI only. Currently, we do not have any automated tests but the following manual testing can be performed whenever there is an update to converter service.
+
 1. Build a docker image for the converter locally with something like : 
 
 ```bash
@@ -27,7 +29,6 @@ docker push "<your_org>/universe-converter:dev"
 function info { echo "[info] $@" ;}
 
 # Export a stub url you want to test.
-: ${STUB_UNIVERSE_URL?"Need to set STUB_UNIVERSE_URL"}
 : ${CONVERTER_URL?"Need to set CONVERTER_URL"}
 
 # Test all the happy paths.
@@ -59,3 +60,5 @@ else
     done
 fi
 ```
+
+5. Also, make sure that the converter url can be added to cosmos via `dcos package repo add <some_name> <converter_url>`.

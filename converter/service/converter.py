@@ -89,7 +89,7 @@ class Handler(BaseHTTPRequestHandler):
         decoded_url = query.get(param_url)
 
         try:
-            json_response = handle(decoded_url, user_agent, accept)
+            content_type, json_response = handle(decoded_url, user_agent, accept)
         except HTTPError as e:
             logger.info(
                 'Upstream error :\nURL: [%s]\nReason: [%s %s]\nBody:\n[%s]',
@@ -122,7 +122,7 @@ class Handler(BaseHTTPRequestHandler):
             raise e
 
         self.send_response(HTTPStatus.OK)
-        self.send_header(header_content_type, accept)
+        self.send_header(header_content_type, content_type)
         self.send_header(header_content_length, len(json_response))
         self.end_headers()
         self.wfile.write(json_response.encode())
@@ -143,7 +143,7 @@ def run_server():
         logger.warning('Server Stops on port - %s', PORT_NUMBER)
 
 
-def handle(decoded_url, user_agent, accept):
+def handle(decoded_url, user_agent, accept) -> (str, str):
     """Returns the requested json data. May raise an error instead, if it fails.
 
     :param decoded_url: The url to be fetched from
@@ -178,7 +178,7 @@ def handle(decoded_url, user_agent, accept):
             _format_dict(res.headers),
             resp_content if res.getcode() // 200 != 1 else ''
         ))
-        repo_version = _get_repo_version(accept)
+        content_type, repo_version = _get_repo_version(accept)
         dcos_version = _get_dcos_version(user_agent)
         logger.debug('Version [%s] DC/OS [%s]', repo_version, dcos_version)
         try:
@@ -187,7 +187,7 @@ def handle(decoded_url, user_agent, accept):
             logger.exception(e)
             raise ValueError(ErrorResponse.INVALID_JSON_FROM_UPSTREAM.to_msg(decoded_url))
         assert json_key_packages in json_body, 'Expected key [{}] is not present in response'.format(json_key_packages)
-        return render_json(
+        return content_type, render_json(
             json_body[json_key_packages],
             dcos_version,
             repo_version
@@ -236,20 +236,25 @@ def _validate_request(s):
         return ErrorResponse.HEADER_NOT_PRESENT.to_msg(header_accept)
 
 
-def _get_repo_version(accept_header):
+def _get_repo_version(accept_headers) -> (str, str):
     """Returns the version of the universe repo parsed.
 
-    :param accept_header: String
-    :return repo version as a string or raises Error
-    :rtype str or raises an Error
+    :param accept_headers: String
+    :return A tuple of (matched_header, repo_version) or raises Error
     """
-    result = re.findall(r'\bversion=v\d', accept_header)
-    if result is None or len(result) is 0:
+    version_regex = r'(version=)(\b\w+\b)'
+    filtered_headers = list(filter(
+        lambda x: len(re.findall(version_regex, x)) > 0,
+        accept_headers.split(",")
+    ))
+    if not filtered_headers:
         raise ValueError(ErrorResponse.UNABLE_PARSE.to_msg(
-            header_accept, accept_header
+            header_accept, accept_headers
         ))
-    result.sort(reverse=True)
-    return str(result[0].split('=')[1])
+    headers = {}
+    for h in filtered_headers:
+        headers[h] = re.findall(version_regex, h)[0][1]
+    return sorted(headers.items(), key=lambda x: x[1], reverse=True)[0]
 
 
 def _get_dcos_version(user_agent_header):
