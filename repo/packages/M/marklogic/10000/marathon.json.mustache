@@ -3,64 +3,73 @@
   "cpus": {{service.cpus}},
   "mem": {{service.mem}},
   "disk": {{service.disk}},
-
   "labels": {
-    "DCOS_SERVICE_PORT_INDEX": "1",
-    "DCOS_SERVICE_SCHEME": "http",
-    "DCOS_SERVICE_NAME": "{{service.name}}"
+    "HAPROXY_3_GROUP": "external",
+    "HAPROXY_3_VHOST": "{{marathon-lb.vhost}}",
+    "HAPROXY_3_STICKY": "true",
+    "HAPROXY_4_GROUP": "external",
+    "HAPROXY_4_VHOST": "{{marathon-lb.vhost}}",
+    "HAPROXY_4_STICKY": "true",
+    "HAPROXY_5_GROUP": "external",
+    "HAPROXY_5_VHOST": "{{marathon-lb.vhost}}",
+    "HAPROXY_5_STICKY": "true"
   },
-
   "env": {
-    "MARKLOGIC_USR": "{{service.marklogic.username}}",
-    "MARKLOGIC_PWD": "{{service.marklogic.password}}",
-    "MARKLOGIC_AUTH_MODE": "{{service.marklogic.auth_mode}}",
-    "MARKLOGIC_SEC_REALM": "{{service.marklogic.realm}}",
-    "HDFS_CONFIG_URL": "{{service.marklogic.hdfs_config_url}}"
+    "MARKLOGIC_USR": "{{marklogic.username}}",
+    "MARKLOGIC_PWD": "{{marklogic.password}}",
+    "MARKLOGIC_AUTH_MODE": "{{marklogic.auth_mode}}",
+    "MARKLOGIC_SEC_REALM": "{{marklogic.realm}}",
+    "HDFS_CONFIG_URL": "{{hdfs.config_url}}"
   },
-
   "container": {
     "portMappings": [
       {
-        "containerPort": 8001,
-        "hostPort": 0,
-        "labels": {
-            "VIP_0": "/{{service.name}}:8001"
-        },
-        "protocol": "tcp"
-      },
-      {
+        "servicePort": {{marathon-lb.port0}},
         "containerPort": 7997,
         "hostPort": 0,
         "labels": {
-            "VIP_1": "/{{service.name}}:7997"
+          "VIP_0": "/{{service.name}}:7997"
         },
         "protocol": "tcp"
       },
       {
+        "servicePort": {{marathon-lb.port1}},
         "containerPort": 7998,
         "hostPort": 0,
         "labels": {
-            "VIP_2": "/{{service.name}}:7998"
+          "VIP_1": "/{{service.name}}:7998"
         },
         "protocol": "tcp"
       },
       {
+        "servicePort": {{marathon-lb.port2}},
         "containerPort": 7999,
         "hostPort": 0,
         "labels": {
-            "VIP_3": "/{{service.name}}:7999"
+          "VIP_2": "/{{service.name}}:7999"
         },
         "protocol": "tcp"
       },
       {
+        "servicePort": {{marathon-lb.port3}},
         "containerPort": 8000,
         "hostPort": 0,
         "labels": {
-          "VIP_4": "/{{service.name}}:8000"
+          "VIP_3": "/{{service.name}}:8000"
         },
         "protocol": "tcp"
       },
       {
+        "servicePort": {{marathon-lb.port4}},
+        "containerPort": 8001,
+        "hostPort": 0,
+        "labels": {
+          "VIP_4": "/{{service.name}}:8001"
+        },
+        "protocol": "tcp"
+      },
+      {
+        "servicePort": {{marathon-lb.port5}},
         "containerPort": 8002,
         "hostPort": 0,
         "labels": {
@@ -70,11 +79,10 @@
       }
     ],
     "type": "DOCKER",
-
     "volumes": [
         {
-            "containerPath": "{{service.marklogic_volume.container_path}}",
-            "hostPath": "{{service.marklogic_volume.host_path}}",
+            "containerPath": "{{service.data_volume.container_path}}",
+            "hostPath": "{{service.data_volume.host_path}}",
             "mode": "RW"
         },
         {
@@ -83,9 +91,8 @@
             "mode": "RW"
         }
     ],
-
     "docker": {
-      "image": "{{resource.assets.container.docker.mlogic}}",
+      "image": "{{resource.assets.container.docker.marklogic}}",
       "forcePullImage": true
     }
   },
@@ -96,7 +103,7 @@
   ],
   "healthChecks": [
     {
-      "portIndex": 1,
+      "portIndex": 0,
       "protocol": "MESOS_HTTP",
       "path": "/"
     }
