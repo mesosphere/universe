@@ -1,0 +1,29 @@
+{
+  "packagingVersion": "4.0",
+  "name": "portworx-datastax-ops",
+  "version": "1.3-2.3.0-6.1.2",
+  "upgradesFrom": [
+    "*"
+  ],
+  "downgradesTo": [
+    "*"
+  ],
+  "maintainer": "support@portworx.com",
+  "minDcosReleaseVersion": "1.9",
+  "description": "Datastax Enterprise OpsCenter backed by Portworx volumes",
+  "selected": false,
+  "framework": true,
+  "tags": [
+    "datastax",
+    "dse",
+    "opscenter",
+    "management",
+    "enterprise",
+    "nosql",
+    "database",
+    "portworx"
+  ],
+  "preInstallNotes": "This DC/OS Service is maintained by Portwor.\n\nFunctionality supported in Opscenter includes Repair, Monitoring, Backup & Restore, as well as some basic admin tools including cleanup, restart, and drain. No other OpsCenter functionality is tested or supported within the DC/OS Integration.\n\nDefault configuration requires 1 agent node with: 2.5 CPU | 4100 MB MEM | 10240 MB Disk.\n\nPortworx should be installed on the Private Agents to be able to provision volumes.\n\nVersions: DataStax Enterprise 5.1.2 (Standard and Max) & OpsCenter 6.1.2",
+  "postInstallNotes": "DC/OS Datastax Enterprise is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/services/dse/2.3.0-5.1.2\n\tIssues: support@portworx.com",
+  "postUninstallNotes": "DC/OS Datastax Enterprise OpsCenter is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/dse/v2.0.0-5.1.2/uninstall/ to remove any persistent state if required."
+}
