@@ -28,7 +28,7 @@
                     "default": "root"
                 },
                 "marathon-name": {
-                    "description": "the name of the Marathon framework the Jenkins master is deployed from. Change when using a MoM.",
+                    "description": "The name of the Marathon framework the Jenkins master is deployed from. Change when using a MoM (Marathon on Marathon).",
                     "type": "string",
                     "default": "marathon"
                 }
