@@ -9,7 +9,7 @@
         "name" : {
           "description" : "The name of this Marathon autoscaler service inside DC/OS base Marathon.\nIf not specified otherwise, this name will also be used for the framework name, dcos service name, zk path and mesos role.\nTo create a nested path, please specify a group.",
           "type" : "string",
-          "default" : "marathon-autoscaler",
+          "default" : "autoscaler",
           "pattern" : "^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$"
         },
         "group" : {
@@ -132,6 +132,6 @@
       }
     }
   },
-  "required" : [ "service", "autoscaler" ],
+  "required" : [ "service", "autoscaler", "security" ],
   "type" : "object"
 }
