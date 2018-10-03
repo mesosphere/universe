@@ -39,6 +39,24 @@
       "required" : [ "cpus", "mem", "instances" ],
       "type" : "object"
     },
+    "security" : {
+      "additionalProperties" : true,
+      "description" : "Security configurations for Marathon Autoscaler",
+      "properties" : {
+        "userid": {
+          "description": "UserID used with a password or with a secret",
+          "type": "string"
+        },
+        "password": {
+          "description": "Password to use with UserID when not using a service account",
+          "type": "string"
+        },
+        "secret": {
+          "description": "secret to use for accessing the DC/OS cluster.",
+          "type": "string"
+        }
+      }
+    },
     "autoscaler" : {
       "additionalProperties" : true,
       "description" : "Environment variables passed to the Marathon Autoscaler",
@@ -50,7 +68,8 @@
         },
         "max-mem-percent": {
           "description": "The Max percent of Mem Usage averaged across all Application Instances to trigger autoscale (ie. 80)",
-          "type": "integer"
+          "type": "integer",
+          "default": 80
         },
         "max-cpu-time": {
           "description": "The max percent of CPU Usage averaged across all Application Instances to trigger autoscale (ie. 80)",
@@ -59,7 +78,8 @@
         },
         "min-mem-percent": {
           "description": "The min percent of Mem Usage averaged across all Application Instances to trigger autoscale (ie. 55)",
-          "type": "integer"
+          "type": "integer",
+          "default": 55
         },
         "min-cpu-time": {
           "description": "The min percent of CPU Usage averaged across all Application Instances to trigger autoscale (ie. 50)",
@@ -78,7 +98,8 @@
         },
         "max-instances": {
           "description": "The Max instances that should ever exist for this application (ie. 20)",
-          "type": "integer"
+          "type": "integer",
+          "default": 3
         },
         "marathon-app": {
           "description": "Marathon Application Name to Configure autoscale for from the Marathon UI",
@@ -112,24 +133,6 @@
       },
       "required" : [ "marathon-master", "trigger-mode", "marathon-app" ],
       "type" : "object"
-    },
-    "security" : {
-      "additionalProperties" : true,
-      "description" : "Security configurations for Marathon Autoscaler",
-      "properties" : {
-        "userid": {
-          "description": "UserID used with a password or with a secret",
-          "type": "string"
-        },
-        "password": {
-          "description": "Password to use with UserID when not using a service account",
-          "type": "string"
-        },
-        "secret": {
-          "description": "secret to use for accessing the DC/OS cluster.",
-          "type": "string"
-        }
-      }
     }
   },
   "required" : [ "service", "autoscaler", "security" ],
