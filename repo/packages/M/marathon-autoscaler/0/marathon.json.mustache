@@ -1,0 +1,41 @@
+
+{
+  "id": "{{#service.group}}{{service.group}}/{{/service.group}}{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": {{service.instances}},
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}",
+      "network": "HOST"
+    }
+  },
+  {{#security.secret}}
+  "secrets": {
+    "secret0": {
+      "source": "as_secret"
+    }
+  },{{/security.secret}}
+  "env": {
+    {{#security.secret}}"AS_SECRET": { "secret": "secret0" },{{/security.secret}}
+    {{#security.userid}}"AS_USERID": {{security.userid}},{{/security.userid}}
+    {{#security.password}}"AS_PASSWORD": {{security.password}},{{/security.password}}
+    "AS_TRIGGER_MODE": {{autoscaler.trigger-mode}},
+    "AS_DCOS_MASTER": {{autoscaler.marathon-master}},
+    {{#autoscaler.min-instances}}"AS_MIN_INSTANCES": {{autoscaler.min-instances}},{{/autoscaler.min-instances}}
+    {{#autoscaler.max-instances}}"AS_MAX_INSTANCES": {{autoscaler.max-instances}},{{/autoscaler.max-instances}}
+    {{#autoscaler.cool-down-factor}}"AS_COOL_DOWN_FACTOR": {{autoscaler.cool-down-factor}},{{/autoscaler.cool-down-factor}}
+    {{#autoscaler.max-mem-percent}}"AS_MAX_MEM_PERCENT": {{autoscaler.max-mem-percent}},{{/autoscaler.max-mem-percent}}
+    {{#autoscaler.min-mem-percent}}"AS_MIN_MEM_PERCENT": {{autoscaler.min-mem-percent}},{{/autoscaler.min-mem-percent}}
+    {{#autoscaler.max-cpu-time}}"AS_MAX_CPU_TIME": {{autoscaler.max-cpu-time}},{{/autoscaler.max-cpu-time}}
+    {{#autoscaler.min-cpu-time}}"AS_MIN_CPU_TIME": {{autoscaler.min-cpu-time}},{{/autoscaler.min-cpu-time}}
+    {{#autoscaler.autoscale-multiplier}}"AS_AUTOSCALE_MULTIPLIER": {{autoscaler.autoscale-multiplier}},{{/autoscaler.autoscale-multiplier}}
+    {{#autoscaler.marathon-app}}"AS_MARATHON_APP": {{autoscaler.marathon-app}},{{/autoscaler.marathon-app}}
+    {{#autoscaler.max-instances}}"AS_MAX_INSTANCES": {{autoscaler.max-instances}},{{/autoscaler.max-instances}}
+    {{#autoscaler.min-instances}}"AS_MIN_INSTANCES": {{autoscaler.min-instances}},{{/autoscaler.min-instances}}
+    {{#autoscaler.trigger-number}}"AS_TRIGGER_NUMBER": {{autoscaler.trigger-number}},{{/autoscaler.trigger-number}}
+    {{#autoscaler.verbose}}"AS_VERBOSE": {{autoscaler.verbose}},{{/autoscaler.verbose}}
+    {{#autoscaler.interval}}"AS_INTERVAL": {{autoscaler.interval}},{{/autoscaler.interval}}
+  }
+}
