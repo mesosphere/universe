@@ -1,0 +1,24 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [
+    "1.3-0.2.0-1.5.0-beta"
+  ],
+  "downgradesTo": [
+    "1.3-0.2.0-1.5.0-beta"
+  ],
+  "minDcosReleaseVersion": "1.10",
+  "name": "beta-portworx-tensorflow",
+  "version": "1.3.1-0.2.0-1.5.0-beta",
+  "maintainer": "support@portworx.com",
+  "description": "TensorFlow backed by Portworx volumes",
+  "selected": false,
+  "framework": true,
+  "tags": [
+    "tensorflow",
+    "machine-learning",
+    "portworx"
+  ],
+  "preInstallNotes": "This is a community package. Community packages are unverified and unreviewed content from the community.\n\nDefault configuration requires 3 agent nodes each with: CPU: 2.0 | Memory: 8192 MB\n\nMore specifically, each instance type requires:\n\nParameter server: 2 instances | 1.0 CPU | 4096 MB MEM\n\nWorker: 3 instances | 1.0 CPU | 4096 MB MEM\n\nGPU worker: No instances by default | 1 GPU | 1.0 CPU | 4096 MB MEM\n\nTensorboard: No instances by default | 1.0 CPU | 4096 MB MEM.\n\nPortworx should be installed on the DC/OS private agents in order to provision portworx volumes for this framework.",
+  "postInstallNotes": "The DC/OS TensorFlow service is being installed!\n\n\tIssues: support@portworx.com",
+  "postUninstallNotes": "The DC/OS TensorFlow service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required."
+}

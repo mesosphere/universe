@@ -1,0 +1,163 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "user": "{{service.user}}",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*/jre/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && ./bootstrap -resolve=false -template=false && ./portworx-tensorflow-scheduler/bin/tensorflow ./portworx-tensorflow-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    "PACKAGE_NAME": "beta-portworx-tensorflow",
+    "PACKAGE_VERSION": "1.3.1-0.2.0-1.5.0-beta",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1538689464170",
+    "PACKAGE_BUILD_TIME_STR": "Thu Oct 04 2018 21:44:24 +0000",
+
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+
+    "TF_IMAGE": "{{service.tf_image}}",
+    "GPU_TF_IMAGE": "{{service.gpu_tf_image}}",
+    {{#service.job_url}}
+    "JOB_URL": "{{service.job_url}}",
+    "JOB_PATH": "{{service.job_path}}",
+    "JOB_NAME": "{{service.job_name}}",
+    {{/service.job_url}}
+    {{^service.job_url}}
+    "JOB_URL": "{{resource.assets.uris.examples-zip}}",
+    "JOB_PATH": "tensorflow-examples",
+    {{^service.job_name}}
+    "JOB_NAME": "default",
+    {{/service.job_name}}
+    {{#service.job_name}}
+    "JOB_NAME": "{{service.job_name}}",
+    {{/service.job_name}}
+    {{/service.job_url}}
+    "JOB_CONTEXT": "{{service.job_context}}",
+    "SHARED_FILESYSTEM": "{{service.shared_filesystem}}",
+
+    {{#service.hdfs.config_uri}}
+    "HDFS_ENABLED": "true",
+    "HDFS_CORE_SITE_URI": "{{service.hdfs.config_uri}}/core-site.xml",
+    "HDFS_HDFS_SITE_URI": "{{service.hdfs.config_uri}}/hdfs-site.xml",
+    "HADOOP_URI": "{{resource.assets.uris.hadoop-tar-gz}}",
+    {{/service.hdfs.config_uri}}
+
+    "GCS_KEY": "{{service.gcs_key}}",
+    {{#service.use_gcs_key_secret}}
+    "USE_GCS_KEY": "{{service.use_gcs_key_secret}}",
+    {{/service.use_gcs_key_secret}}
+    {{#service.use_tensorboard}}
+    "USE_TENSORBOARD": "{{service.use_tensorboard}}",
+    {{/service.use_tensorboard}}
+    "WORKER_COUNT": "{{worker.count}}",
+    "WORKER_PLACEMENT": "{{{worker.placement_constraint}}}",
+
+    {{#service.region}}
+    "SERVICE_REGION": "{{service.region}}",
+    {{/service.region}}
+
+    {{#service.virtual_network_enabled}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+    "WORKER_PORT": "{{worker.port}}",
+    "WORKER_CPUS": "{{worker.cpus}}",
+    "WORKER_MEM": "{{worker.mem}}",
+    "WORKER_DISK": "{{worker.disk}}",
+    "WORKER_DOCKER_VOLUME_NAME": "{{worker.portworx_volume_name}}",
+    "WORKER_DOCKER_DRIVER_OPTIONS": "{{worker.portworx_volume_options}}",
+
+    "GPU_WORKER_COUNT": "{{gpu_worker.count}}",
+    "GPU_WORKER_GPUS": "{{gpu_worker.gpus}}",
+    "GPU_WORKER_CPUS": "{{gpu_worker.cpus}}",
+    "GPU_WORKER_MEM": "{{gpu_worker.mem}}",
+    "GPU_WORKER_DISK": "{{gpu_worker.disk}}",
+    "GPU_WORKER_DOCKER_VOLUME_NAME": "{{gpu_worker.portworx_volume_name}}",
+    "GPU_WORKER_DOCKER_DRIVER_OPTIONS": "{{gpu_worker.portworx_volume_options}}",
+
+    "TENSORBOARD_CPUS": "{{tensorboard.cpus}}",
+    "TENSORBOARD_MEM": "{{tensorboard.mem}}",
+    "TENSORBOARD_PORT": "{{tensorboard.port}}",
+
+    "PS_PORT": "{{parameter_server.port}}",
+    "PS_CPUS": "{{parameter_server.cpus}}",
+    "PS_MEM": "{{parameter_server.mem}}",
+    "PS_PLACEMENT": "{{{parameter_server.placement_constraint}}}",
+    "PS_COUNT": "{{parameter_server.count}}",
+    "PS_DISK": "{{parameter_server.disk}}",
+    "PS_DOCKER_VOLUME_NAME": "{{parameter_server.portworx_volume_name}}",
+    "PS_DOCKER_DRIVER_OPTIONS": "{{parameter_server.portworx_volume_options}}",
+
+    {{#service.security.kerberos.enabled}}
+    "SECURITY_KERBEROS_KEYTAB_SECRET": "{{service.security.kerberos.keytab_secret}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_ENABLED": "{{service.security.kerberos.enabled}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_PRIMARY": "{{service.security.kerberos.primary}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_REALM": "{{service.security.kerberos.realm}}",
+    {{#service.security.kerberos.debug}}
+    "TASKCFG_ALL_SECURITY_KERBEROS_DEBUG": "{{service.security.kerberos.debug}}",
+    {{/service.security.kerberos.debug}}
+    "TASKCFG_ALL_SECURITY_KERBEROS_KDC_HOSTNAME": "{{service.security.kerberos.kdc.hostname}}",
+    "TASKCFG_ALL_SECURITY_KERBEROS_KDC_PORT": "{{service.security.kerberos.kdc.port}}",
+    {{/service.security.kerberos.enabled}}
+
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.service_account_secret}}
+    "MESOS_API_VERSION": "{{service.mesos_api_version}}"
+  },
+  "fetch": [
+      { "uri": "{{resource.assets.uris.bootstrap-zip}}", "cache": true},
+      { "uri": "{{resource.assets.uris.jre-tar-gz}}", "cache": true},
+      { "uri": "{{resource.assets.uris.scheduler-zip}}", "cache": true},
+      { "uri": "{{resource.assets.uris.examples-zip}}", "cache": true},
+      { "uri": "{{resource.assets.uris.libmesos-bundle-tar-gz}}", "cache": true}
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/v1/health",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}
