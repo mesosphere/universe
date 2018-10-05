@@ -11,27 +11,26 @@
       "network": "HOST"
     }
   },
-  {{#security.secret}}
+  {{#autoscaler.secret}}
   "secrets": {
     "secret0": {
       "source": "as_secret"
     }
-  },{{/security.secret}}
+  },{{/autoscaler.secret}}
   "env": {
-    {{#security.secret}}"AS_SECRET": { "secret": "secret0" },{{/security.secret}}
-    {{#security.userid}}"AS_USERID": "{{security.userid}}",{{/security.userid}}
-    {{#security.password}}"AS_PASSWORD": "{{security.password}}",{{/security.password}}
+    {{#autoscaler.secret}}"AS_SECRET": { "secret": "secret0" },{{/autoscaler.secret}}
+    {{#autoscaler.userid}}"AS_USERID": "{{autoscaler.userid}}",{{/autoscaler.userid}}
+    {{#autoscaler.password}}"AS_PASSWORD": "{{autoscaler.password}}",{{/autoscaler.password}}
     {{#autoscaler.min-instances}}"AS_MIN_INSTANCES": "{{autoscaler.min-instances}}",{{/autoscaler.min-instances}}
     {{#autoscaler.max-instances}}"AS_MAX_INSTANCES": "{{autoscaler.max-instances}}",{{/autoscaler.max-instances}}
     {{#autoscaler.cool-down-factor}}"AS_COOL_DOWN_FACTOR": "{{autoscaler.cool-down-factor}}",{{/autoscaler.cool-down-factor}}
-    {{#autoscaler.max-mem-percent}}"AS_MAX_MEM_PERCENT": "{{autoscaler.max-mem-percent}}",{{/autoscaler.max-mem-percent}}
-    {{#autoscaler.min-mem-percent}}"AS_MIN_MEM_PERCENT": "{{autoscaler.min-mem-percent}}",{{/autoscaler.min-mem-percent}}
-    {{#autoscaler.max-cpu-time}}"AS_MAX_CPU_TIME": "{{autoscaler.max-cpu-time}}",{{/autoscaler.max-cpu-time}}
-    {{#autoscaler.min-cpu-time}}"AS_MIN_CPU_TIME": "{{autoscaler.min-cpu-time}}",{{/autoscaler.min-cpu-time}}
+    {{#autoscaler.scale-up-factor}}"AS_SCALE_UP_FACTOR": "{{autoscaler.scale-up-factor}}",{{/autoscaler.scale-up-factor}}
+    {{#autoscaler.max-range}}"AS_MAX_RANGE": "{{autoscaler.max-range}}",{{/autoscaler.max-range}}
+    {{#autoscaler.min-range}}"AS_MIN_RANGE": "{{autoscaler.min-range}}",{{/autoscaler.min-range}}
     {{#autoscaler.autoscale-multiplier}}"AS_AUTOSCALE_MULTIPLIER": "{{autoscaler.autoscale-multiplier}}",{{/autoscaler.autoscale-multiplier}}
-    {{#autoscaler.trigger-number}}"AS_TRIGGER_NUMBER": "{{autoscaler.trigger-number}}",{{/autoscaler.trigger-number}}
     {{#autoscaler.verbose}}"AS_VERBOSE": "{{autoscaler.verbose}}",{{/autoscaler.verbose}}
     {{#autoscaler.interval}}"AS_INTERVAL": "{{autoscaler.interval}}",{{/autoscaler.interval}}
+    {{#autoscaler.sqs-endpoint}}"AS_QUEUE_URL": "{{autoscaler.sqs-endpoint}}",{{/autoscaler.sqs-endpoint}}
     "AS_DCOS_MASTER": "{{autoscaler.marathon-master}}",
     "AS_MARATHON_APP": "{{autoscaler.marathon-app}}",
     "AS_TRIGGER_MODE": "{{autoscaler.trigger-mode}}"
