@@ -1,0 +1,413 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the TensorFlow service instance.",
+          "type": "string",
+          "default": "portworx-tensorflow"
+        },
+        "user": {
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "root"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        },
+        "mesos_api_version": {
+          "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)",
+          "type": "string",
+          "enum": [
+            "V0",
+            "V1"
+          ],
+          "default": "V1"
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        },
+        "security": {
+          "description": "TensorFlow security settings.",
+          "type": "object",
+          "properties": {
+            "kerberos": {
+              "type": "object",
+              "description": "Kerberos configuration properties.",
+              "properties": {
+                "enabled": {
+                  "description": "Enable kerberos authentication.",
+                  "type": "boolean",
+                  "default": false
+                },
+                "kdc": {
+                  "description": "KDC settings for Kerberos",
+                  "type": "object",
+                  "properties": {
+                    "hostname": {
+                      "type": "string",
+                      "description": "The name or address of a host running a KDC for the realm."
+                    },
+                    "port": {
+                      "type": "integer",
+                      "description": "The port of the host running a KDC for that realm."
+                    }
+                  }
+                },
+                "primary": {
+                  "type": "string",
+                  "description": "The Kerberos primary used by service tasks. The full principal will be <service.kerberos.primary>@<service.kerberos.realm>",
+                  "default": "tensorflow"
+                },
+                "realm": {
+                  "type": "string",
+                  "description": "The Kerberos realm used to render the principal of service tasks."
+                },
+                "keytab_secret": {
+                  "type": "string",
+                  "description": "A DC/OS Secret Store path. The contents of this secret should be a keytab containing the credentials for all service tasks."
+                },
+                "debug": {
+                  "type": "boolean",
+                  "description": "Turn debug Kerberos logging on or off to assist in diagnosing issues with Kerberos authentication.",
+                  "default": false
+                }
+              }
+            }
+          }
+        },
+        "job_url": {
+          "title": "Job URL",
+          "description": "URL for the TensorFlow job you want to run on DC/OS (ZIPs are okay).",
+          "type": "string",
+          "default": ""
+        },
+        "job_path": {
+          "title": "Job Path (Optional)",
+          "description": "Path to your TensorFlow job (assume job_url has already been downloaded/unpacked to the current directory). This path will be added to PYTHONPATH at runtime.",
+          "type": "string",
+          "default": ""
+        },
+        "job_name": {
+          "title": "Job Name",
+          "description": "Name of the module (without extension) whose main function should be executed.",
+          "type": "string",
+          "default": ""
+        },
+        "job_context": {
+          "title": "Job Context (Optional)",
+          "description": "A dictionary to pass to your job's main function (intended for run-time configuration options like batch_size, learning_rate, etc.).",
+          "type": "string",
+          "default": "{}"
+        },
+        "shared_filesystem": {
+          "title": "Shared Filesystem",
+          "description": "Distributed TensorFlow relies on a shared filesystem (GCS, HDFS, etc.) for summaries/checkpoints. Please set up one of these filesystems before using this package, and specify the location here (eg. 'gs://your/directory' or 'hdfs://default/your/directory').",
+          "type": "string",
+          "default": ""
+        },
+        "hdfs": {
+          "type": "object",
+          "description": "HDFS properties",
+          "properties": {
+            "config_uri": {
+              "title": "HDFS Configuration Directory URI",
+              "description": "URI to parent directory for HDFS configuration files 'hdfs-site.xml' and 'core-site.xml'",
+              "type": "string",
+              "default": ""
+            }
+          }
+        },
+        "gcs_key": {
+          "title": "GCS Key",
+          "description": "Stringified contents of JSON key for Google Cloud Storage service account. Only use this field if use_gcs_key_secret is set to False.",
+          "type": "string",
+          "default": ""
+        },
+        "use_gcs_key_secret": {
+          "description": "A DC/OS secret called gcs_key exists and should be consumed by this framework.",
+          "type": "boolean",
+          "default": false
+        },
+        "use_tensorboard": {
+          "description": "Should the framework also launch an instance of Tensorboard? Make sure you have a shared filesystem set up first! You can still run Tensorboard locally if this is set to false",
+          "type": "boolean",
+          "default": false
+        },
+        "tf_image": {
+          "title": "TensorFlow Docker Image",
+          "description": "Name of the TensorFlow Docker Image in which Worker/PS tasks will be run (usr/img:version).",
+          "type": "string",
+          "default": "mesosphere/dcos-tensorflow:0.0.3-1.5.0"
+        },
+        "gpu_tf_image": {
+          "title": "TensorFlow GPU Docker Image",
+          "description": "Name of the TensorFlow Docker Image in which GPU Worker tasks will be run (usr/img:version).",
+          "type": "string",
+          "default": "mesosphere/dcos-tensorflow:0.0.3-1.5.0-gpu"
+        },
+        "region": {
+          "description": "All TensorFlow tasks will run in this region.  When no region is specified the tasks are constrained to the local region.",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-region+string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "user",
+        "job_url",
+        "job_name",
+        "tf_image",
+        "gpu_tf_image"
+      ]
+    },
+    "parameter_server": {
+      "description": "TF Parameter Server configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of TF ps tasks to run",
+          "type": "integer",
+          "default": 2
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Placement constraints for parameter server nodes (e.g., [[\"hostname\", \"UNIQUE\"]]).",
+          "type": "string",
+          "default": "[]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "port": {
+          "title": "Port",
+          "description": "The port Parameter Servers will use for gRPC.",
+          "type": "integer",
+          "default": 2223
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "TensorFlow parameter server CPU requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "TensorFlow parameter server memory requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "TensorFlow parameter server persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "portworx_volume_name": {
+          "description": "Portworx volume name",
+          "type": "string",
+          "default": "tensorflow-ps"
+        },
+        "portworx_volume_options": {
+          "description": "Portworx volume options. Comma separated key=value pairs",
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "port",
+        "disk",
+        "portworx_volume_name"
+      ]
+    },
+    "worker": {
+      "description": "TensorFlow worker configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of TensorFlow workers to run",
+          "type": "integer",
+          "default": 3
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Placement constraints for worker nodes (e.g., [[\"hostname\", \"UNIQUE\"]]).",
+          "type": "string",
+          "default": "[]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "port": {
+          "title": "Port",
+          "description": "The port Workers (and GPU Workers) will use for gRPC.",
+          "type": "integer",
+          "default": 2222
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "TensorFlow worker CPU requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "TensorFlow worker memory requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "TensorFlow worker persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "portworx_volume_name": {
+          "description": "Portworx volume name",
+          "type": "string",
+          "default": "tensorflow-worker"
+        },
+        "portworx_volume_options": {
+          "description": "Portworx volume options. Comma separated key=value pairs",
+          "type": "string",
+          "default": "shared=true"
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "portworx_volume_name"
+      ]
+    },
+    "gpu_worker": {
+      "description": "TensorFlow GPU worker configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of TensorFlow GPU workers to run",
+          "type": "integer",
+          "default": 0
+        },
+        "gpus": {
+          "title": "GPU count",
+          "description": "TensorFlow GPU worker GPU requirements",
+          "type": "integer",
+          "default": 1
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "TensorFlow GPU worker CPU requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "TensorFlow GPU worker memory requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "TensorFlow GPU worker persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "portworx_volume_name": {
+          "description": "Portworx volume name",
+          "type": "string",
+          "default": "tensorflow-gpuw"
+        },
+        "portworx_volume_options": {
+          "description": "Portworx volume options. Comma separated key=value pairs",
+          "type": "string",
+          "default": "shared=true"
+        }
+      },
+      "required": [
+        "count",
+        "gpus",
+        "cpus",
+        "mem",
+        "disk",
+        "portworx_volume_name"
+      ]
+    },
+    "tensorboard": {
+      "description": "TensorBoard configuration properties",
+      "type": "object",
+      "properties": {
+        "port": {
+          "title": "Port",
+          "description": "The port on which TensorBoard will run.",
+          "type": "integer",
+          "default": 6006
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "TensorBoard CPU requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "TensorBoard memory requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        }
+      },
+      "required": [
+        "port",
+        "cpus",
+        "mem"
+      ]
+    }
+  }
+}
