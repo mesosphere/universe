@@ -1,0 +1,18 @@
+{
+  "packagingVersion": "4.0",
+  "name": "nexcloud-collector",
+  "version": "0.1.1",
+  "minDcosReleaseVersion": "1.10",
+  "description": "NexCloud-Collector collects Mesos, Marathon metrics for NexCloud.",
+  "maintainer": "nexcloud@nexcloud.co.kr",
+  "tags": ["nexcloud", "monitoring", "dashboard", "collectors"],
+  "preInstallNotes": "It needs some applications such as Influx, MySQL, Redis, Kafka before the installation of Nexcloud-Collector.",
+  "postInstallNotes": "NexCloud-Collector is installed!",
+  "postUninstallNotes": "NexCloud-Collector is uninstalled successfully.",
+  "licenses": [
+    {
+      "name": "Free License",
+      "url": "http://www.nexcloud.co.kr"
+    }
+  ]
+}

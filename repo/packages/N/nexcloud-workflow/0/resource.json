@@ -10,6 +10,8 @@
   "assets": {
     "container": {
       "docker": {
+        "collector": "nexclipper/minicollector",
+        "workflow": "nexclipper/miniworkflow",
         "nexcloudui": "nexclipper/nexclipperui"
       }
     }
