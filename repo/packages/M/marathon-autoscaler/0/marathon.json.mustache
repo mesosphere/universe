@@ -1,0 +1,38 @@
+
+{
+  "id": "{{#service.group}}{{service.group}}/{{/service.group}}{{autoscaler.marathon-app}}-{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": {{service.instances}},
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}",
+      "network": "HOST"
+    }
+  },
+  {{#autoscaler.secret}}
+  "secrets": {
+    "secret0": {
+      "source": "as_secret"
+    }
+  },{{/autoscaler.secret}}
+  "env": {
+    {{#autoscaler.secret}}"AS_SECRET": { "secret": "secret0" },{{/autoscaler.secret}}
+    {{#autoscaler.userid}}"AS_USERID": "{{autoscaler.userid}}",{{/autoscaler.userid}}
+    {{#autoscaler.password}}"AS_PASSWORD": "{{autoscaler.password}}",{{/autoscaler.password}}
+    {{#autoscaler.min-instances}}"AS_MIN_INSTANCES": "{{autoscaler.min-instances}}",{{/autoscaler.min-instances}}
+    {{#autoscaler.max-instances}}"AS_MAX_INSTANCES": "{{autoscaler.max-instances}}",{{/autoscaler.max-instances}}
+    {{#autoscaler.cool-down-factor}}"AS_COOL_DOWN_FACTOR": "{{autoscaler.cool-down-factor}}",{{/autoscaler.cool-down-factor}}
+    {{#autoscaler.scale-up-factor}}"AS_SCALE_UP_FACTOR": "{{autoscaler.scale-up-factor}}",{{/autoscaler.scale-up-factor}}
+    {{#autoscaler.max-range}}"AS_MAX_RANGE": "{{autoscaler.max-range}}",{{/autoscaler.max-range}}
+    {{#autoscaler.min-range}}"AS_MIN_RANGE": "{{autoscaler.min-range}}",{{/autoscaler.min-range}}
+    {{#autoscaler.autoscale-multiplier}}"AS_AUTOSCALE_MULTIPLIER": "{{autoscaler.autoscale-multiplier}}",{{/autoscaler.autoscale-multiplier}}
+    {{#autoscaler.verbose}}"AS_VERBOSE": "{{autoscaler.verbose}}",{{/autoscaler.verbose}}
+    {{#autoscaler.interval}}"AS_INTERVAL": "{{autoscaler.interval}}",{{/autoscaler.interval}}
+    {{#autoscaler.sqs-endpoint}}"AS_QUEUE_URL": "{{autoscaler.sqs-endpoint}}",{{/autoscaler.sqs-endpoint}}
+    "AS_DCOS_MASTER": "{{autoscaler.marathon-master}}",
+    "AS_MARATHON_APP": "{{autoscaler.marathon-app}}",
+    "AS_TRIGGER_MODE": "{{autoscaler.trigger-mode}}"
+  }
+}
