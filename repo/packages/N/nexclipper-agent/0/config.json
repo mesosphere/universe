@@ -1,0 +1,85 @@
+{
+  "type": "object",
+  "properties": {
+    "nexclipper-agent": {
+      "type": "object",
+      "description": "NexClipper-Agent properties",
+      "properties": {
+        "name": {
+          "description": "The name of NexClipper-Agent",
+          "type": "string",
+          "default": "/nexclipper-agent"
+        },
+        "cpus": {
+          "default": 0.5,
+          "description": "CPU to allocate to each instance of the collector.",
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "mem": {
+          "default": 512,
+          "description": "Memory (MB) to allocate to each instance of the collector.",
+          "minimum": 512,
+          "type": "integer"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of collector to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "agent_key": {
+          "default": "sample-key",
+          "description": "SaaS NexClipper-agent key. You can get agent key from http://server.nexclipper.com. Join us!",
+          "type": "string"
+        },
+        "agent_endpoint": {
+          "default": "agent.nexclipper.com",
+          "description": "SaaS NexClipper-agent Endpoint to collector.",
+          "type": "string"
+        },
+        "master_endpoint": {
+          "default": "leader.mesos",
+          "description": "MESOS master endpoint.",
+          "type": "string"
+        },
+        "dcos_port": {
+          "default": "61001",
+          "description": "DC/OS port to access",
+          "type": "string"
+        },
+        "mesos_master_port": {
+          "default": "5050",
+          "description": "MESOS master port to access",
+          "type": "string"
+        },
+        "mesos_agent_port": {
+          "default": "5051",
+          "description": "MESOS agent port to access",
+          "type": "string"
+        },
+        "marathon_port": {
+          "default": "8080",
+          "description": "Marathon port to access",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem",
+        "instances",
+        "agent_key",
+        "agent_endpoint",
+        "master_endpoint",
+        "mesos_master_port",
+        "mesos_agent_port",
+        "dcos_port",
+        "marathon_port"
+      ]
+    }
+  },
+  "required": [
+    "nexclipper-agent"
+  ]
+}
