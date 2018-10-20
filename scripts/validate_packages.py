@@ -13,6 +13,7 @@ PKG_DIR = os.path.join(UNIVERSE_DIR, "repo/packages")
 SCHEMA_DIR = os.path.join(UNIVERSE_DIR, "repo/meta/schema")
 LETTER_PATTERN = re.compile("^[A-Z]$")
 PACKAGE_FOLDER_PATTERN = re.compile("^[a-z][a-z0-9-]*[a-z0-9]$")
+ESCAPED_UNICODE_LITERAL = re.compile("\\\[u][a-fA-F0-9]{4}")
 
 
 def eprint(*args, **kwargs):
@@ -163,11 +164,18 @@ def _validate_package_with_directory(given_package, actual_package_name):
 
 
 def _validate_json(path, schema):
-        with open(path, encoding='utf-8') as f:
-            data = json.loads(f.read())
+    # Charset needs to be `ascii` because cosmos 0.6.2 and below uses default
+    # encoding (specified by system property `file.encoding` - ascii on coreos)
+    with open(path, encoding='ascii') as f:
+        data = json.loads(f.read())
+        # DCOS-42473 : Package should NOT contain escaped unicode literals
+        json_content = json.dumps(data)
+        result = ESCAPED_UNICODE_LITERAL.findall(json_content)
+        assert not result, "Invalid literal(s) [{}] in [{}]"\
+            .format(result, json_content)
 
-        _validate_jsonschema(data, schema)
-        return data
+    _validate_jsonschema(data, schema)
+    return data
 
 
 def _validate_jsonschema(instance, schema):
