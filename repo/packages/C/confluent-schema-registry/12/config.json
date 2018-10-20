@@ -26,7 +26,7 @@
           "default": ""
         },
         "ssl_client_auth": {
-          "description": "Used for HTTPS. Whether or not to require the HTTPS client to authenticate via the server’s trust store.",
+          "description": "Used for HTTPS. Whether or not to require the HTTPS client to authenticate via the server's trust store.",
           "type": "boolean",
           "default": false
         },
@@ -118,7 +118,7 @@
         },
         "client_sasl_kerberos_service_name": {
           "title": "Kafka client sasl kerberos service name",
-          "description": "The Kerberos principal name that Kafka runs as. This can be defined either in Kafka’s JAAS config or in Kafka’s config.",
+          "description": "The Kerberos principal name that Kafka runs as. This can be defined either in Kafka's JAAS config or in Kafka's config.",
           "type": "string",
           "default": "kafka"
         },

@@ -121,7 +121,7 @@
         },
         "client_sasl_kerberos_service_name": {
           "title": "Kafka client sasl kerberos service name",
-          "description": "The Kerberos principal name that Kafka runs as. This can be defined either in Kafka’s JAAS config or in Kafka’s config.",
+          "description": "The Kerberos principal name that Kafka runs as. This can be defined either in Kafka's JAAS config or in Kafka's config.",
           "type": "string",
           "default": "kafka"
         },
