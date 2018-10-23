@@ -953,7 +953,7 @@
         },
         "transaction_max_timeout_ms": {
           "title": "transaction.max.timeout.ms",
-          "description": "The maximum allowed timeout for transactions. If a client\u2019s requested transaction time exceed this, then the broker will return an error in InitProducerIdRequest. This prevents a client from too large of a timeout, which can stall consumers reading from topics included in the transaction.",
+          "description": "The maximum allowed timeout for transactions. If a client's requested transaction time exceed this, then the broker will return an error in InitProducerIdRequest. This prevents a client from too large of a timeout, which can stall consumers reading from topics included in the transaction.",
           "type": "integer",
           "default": 900000,
           "minimum": 1
