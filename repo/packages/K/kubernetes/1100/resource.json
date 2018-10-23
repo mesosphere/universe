@@ -1,0 +1,56 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u192-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.54.0/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/kubernetes/assets/2.0.0-1.12.1/kubernetes-scheduler.zip",
+      "mke-cosmos-adapter": "https://downloads.mesosphere.com/kubernetes/assets/2.0.0-1.12.1/mke-cosmos-adapter"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/mke/assets/service-icon--small.png",
+    "icon-medium": "https://downloads.mesosphere.com/mke/assets/service-icon--medium.png",
+    "icon-large": "https://downloads.mesosphere.com/mke/assets/service-icon--large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "0f08f18b419cf237985f1c6427df020652479f115bc9eb81c66114bd7164d95a"
+            }
+          ],
+          "kind": "zip",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/2.0.0-1.12.1/dcos-kubernetes-cli-darwin.zip"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "583fe3cd4272814a04fc7ef21049ba264afeba76b50d5b89aa764c2f5ce2dcab"
+            }
+          ],
+          "kind": "zip",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/2.0.0-1.12.1/dcos-kubernetes-cli-linux.zip"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "d5221c99c2be5129e95651d32735d536473a62d2681f0c41287221580998b2da"
+            }
+          ],
+          "kind": "zip",
+          "url": "https://downloads.mesosphere.com/kubernetes/assets/2.0.0-1.12.1/dcos-kubernetes-cli-windows.zip"
+        }
+      }
+    }
+  }
+}
