@@ -11,9 +11,10 @@
             "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/bootstrap.zip", 
             "executor-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/executor.zip", 
             "scheduler-zip": "https://ecosystem-repo.s3.amazonaws.com/sdk/artifacts/0.42.1/operator-scheduler.zip", 
-            "svc": "https://ecosystem-repo.s3.amazonaws.com/prometheus/artifacts/0.1.1-2.3.2/svc.yml", 
+            "svc": "https://gist.githubusercontent.com/joaohf/7369386d3fe80e838b07986f64aab923/raw/svc.yml",
             "prometheus-tar-gz": "https://github.com/prometheus/prometheus/releases/download/v2.3.2/prometheus-2.3.2.linux-amd64.tar.gz", 
             "alertmanager-tar-gz": "https://github.com/prometheus/alertmanager/releases/download/v0.15.1/alertmanager-0.15.1.linux-amd64.tar.gz", 
+            "pushgateway-tar-gz": "https://github.com/prometheus/pushgateway/releases/download/v0.6.0/pushgateway-0.6.0.linux-amd64.tar.gz",
             "jq": "https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64", 
             "dcos-cli": "https://downloads.dcos.io/binaries/cli/linux/x86-64/dcos-1.11/dcos"
         }
