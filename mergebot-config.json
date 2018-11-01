@@ -1,0 +1,13 @@
+{
+    "label": {
+      "enabled": true,
+      "interactive": false,
+      "default": "ready-for-review",
+      "default_outside_contributor": "awaiting-testing-approval"
+    },
+    "intro": {
+        "enabled": true,
+        "interactive": false,
+        "message": "Thank you for contributing to DC/OS!\n CI tests can only run with a Mesosphere employee's approval, and before tests are triggered it might look like your tests have failed. Please contact a repo maintainer and ask them to trigger your tests. If you don't know who to reach out to please ping the community team either via [email](community@dcos.io) or message [DC/OS community slack](chat.dcos.io). We are actively working on improving this contribution experience, so stay tuned.\nThanks again for your contribution! "
+    }
+}

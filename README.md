@@ -35,7 +35,7 @@ You can publish and store packages in the Universe repository. The packages can 
 
 ### Library dependencies
 * [jq](https://stedolan.github.io/jq/download/) is installed in your environment.
-* `python3` is installed in your environment.
+* `python3` is installed in your environment (minimum python3.5).
 * Docker is installed in your environment.
 
 ### Publish a Package
@@ -413,7 +413,7 @@ Full Instructions:
 
 ## Repository Consumption
 
-In order for Universe to be consumed by DC/OS the build process needs to be run to create the Universe Server.
+In order for Universe to be consumed by DC/OS the build process needs to be run to create the Universe Server. This section describes how to test a package before releasing it to public Universe. See [Local Universe](https://docs.mesosphere.com/latest/administering-clusters/deploying-a-local-dcos-universe/) for running universe server on air-gapped clusters.
 
 ### Universe Server
 
@@ -436,13 +436,13 @@ Docker image" status report to view the build results.
 
 2. Build the Universe Server Docker image
   ```bash
-  DOCKER_TAG="my-package" docker/server/build.bash
+  DOCKER_IMAGE="my-org/my-image" DOCKER_TAG="my-package" docker/server/build.bash
   ```
   This will create a Docker image `universe-server:my-package` and `docker/server/target/marathon.json` on your local machine
 
 3. If you would like to publish the built Docker image, run
   ```bash
-  DOCKER_TAG="my-package" docker/server/build.bash publish
+  DOCKER_IMAGE="my-org/my-image" DOCKER_TAG="my-package" docker/server/build.bash publish
   ```
 
 #### Run Universe Server
@@ -497,3 +497,4 @@ Currently Universe Server provides support for the following versions of DC/OS
 | 1.9                   | Full Support  |
 | 1.10                  | Full Support  |
 | 1.11                  | Full Support  |
+| 1.12                  | Full Support  |
