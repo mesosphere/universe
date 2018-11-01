@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import os
 from distutils.version import LooseVersion
 import argparse
 import base64
@@ -12,7 +12,13 @@ import pathlib
 import shutil
 import sys
 import tempfile
+import re
 import zipfile
+
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+schema_dir = os.environ.get("SCHEMA_DIR", "{}/../repo/meta/schema/".format(dir_path))
+repo_definitions_json = "{}/vX-repo-definitions.json".format(schema_dir)
 
 
 def main():
@@ -37,6 +43,10 @@ def main():
         print('The path in --out-dir [{}] is not a directory. Please create it'
               ' before running this script.'.format(args.outdir))
         return
+    print('Paths present in [{}]: {}'.format(
+        str(args.outdir),
+        [str(p) for p in list(args.outdir.glob('*'))])
+    )
 
     if not args.repository.is_dir():
         print('The path in --repository [{}] is not a directory.'.format(
@@ -57,7 +67,7 @@ def main():
     with universe_path.open('w', encoding='utf-8') as universe_file:
         json.dump({'packages': packages}, universe_file)
     ct_universe_path = args.outdir / 'universe.content_type'
-    create_content_type_file(ct_universe_path, "v4")
+    create_content_type_file(ct_universe_path, "v5")
 
     # Render empty json
     empty_path = args.outdir / 'repo-empty-v3.json'
@@ -66,10 +76,33 @@ def main():
     ct_empty_path = args.outdir / 'repo-empty-v3.content_type'
     create_content_type_file(ct_empty_path, "v3")
 
+    zip_file_dcos_versions = ["1.6.1", "1.7"]
+    json_file_dcos_versions = ["1.8", "1.9", "1.10", "1.11", "1.12", "1.13"]
     # create universe-by-version files for `dcos_versions`
-    dcos_versions = ["1.6.1", "1.7", "1.8", "1.9", "1.10", "1.11"]
+    dcos_versions = zip_file_dcos_versions + json_file_dcos_versions
     [render_universe_by_version(
-        args.outdir, packages, version) for version in dcos_versions]
+        args.outdir, copy.deepcopy(packages), version) for version in dcos_versions]
+    for dcos_version in json_file_dcos_versions:
+        _populate_dcos_version_json_to_folder(dcos_version, args.outdir)
+
+
+def get_universe_version_for_dcos(dcos_version):
+    """Returns the highest packaging version supported for a DC/OS Version.
+    1.9 and below  => v3
+    1.11 and below => v4
+    Latest version => v5
+
+    :param dcos_version: The version of the DC/OS
+    :type dcos_version: str
+    :return The packaging version
+    :rtype: str
+    """
+    if LooseVersion(dcos_version) <= LooseVersion("1.9"):
+        return "v3"
+    elif LooseVersion(dcos_version) <= LooseVersion("1.11"):
+        return "v4"
+    else:
+        return "v5"
 
 
 def render_universe_by_version(outdir, packages, version):
@@ -90,24 +123,37 @@ def render_universe_by_version(outdir, packages, version):
     else:
         file_path = render_json_by_version(outdir, packages, version)
         _validate_repo(file_path, version)
-        render_content_type_file_by_version(outdir, version)
+        create_content_type_file(
+            outdir / 'repo-up-to-{}.content_type'.format(version),
+            get_universe_version_for_dcos(version)
+        )
 
 
-def render_content_type_file_by_version(outdir, version):
-    """Render content type file for `version`
+def json_escape_compatibility(schema: collections.OrderedDict) -> collections.OrderedDict:
+    """ Further escape any singly escaped stringified JSON in config """
 
-    :param outdir: Path to the directory to use to store all universe objects
-    :type outdir: str
-    :param version: DC/OS version
-    :type version: str
-    :rtype: None
-    """
+    for value in schema.values():
+        if "description" in value:
+            value["description"] = escape_json_string(value["description"])
 
-    universe_version = \
-        "v3" if LooseVersion(version) < LooseVersion("1.10") else "v4"
-    ct_file_path = \
-        outdir / 'repo-up-to-{}.content_type'.format(version)
-    create_content_type_file(ct_file_path, universe_version)
+        if "type" in value:
+            if value["type"] == "string" and "default" in value:
+                value["default"] = escape_json_string(value["default"])
+            elif value["type"] == "object" and "properties" in value:
+                value["properties"] = json_escape_compatibility(value["properties"])
+
+    return schema
+
+
+def escape_json_string(string: str) -> str:
+    """ Makes any single escaped double quotes doubly escaped. """
+
+    def escape_underescaped_slash(matchobj):
+        """ Return adjacent character + extra escaped double quote. """
+        return matchobj.group(1) + "\\\""
+
+    # This regex means: match .\" except \\\" while capturing `.`
+    return re.sub('([^\\\\])\\\"', escape_underescaped_slash, string)
 
 
 def create_content_type_file(path, universe_version):
@@ -116,28 +162,15 @@ def create_content_type_file(path, universe_version):
 
     :param path: the name of the content-type file
     :type path: str
-    :param universe_version: Universe content type version: "v3" or "v4"
+    :param universe_version: Universe content type version
     :type universe_version: str
     :rtype: None
     """
     with path.open('w', encoding='utf-8') as ct_file:
-        content_type = format_universe_repo_content_type(universe_version)
-        ct_file.write(content_type)
-
-
-def format_universe_repo_content_type(universe_version):
-    """ Formats a universe repo content-type of version `universe-version`
-
-    :param universe_version: Universe content type version: "v3" or "v4"
-    :type universe_version: str
-    :return: content-type of the universe repo version `universe_version`
-    :rtype: str
-    """
-    content_type = "application/" \
-                   "vnd.dcos.universe.repo+json;" \
-                   "charset=utf-8;version=" \
-                   + universe_version
-    return content_type
+        ct_file.write(
+            "application/vnd.dcos.universe.repo+json;" \
+            "charset=utf-8;version={}".format(universe_version)
+        )
 
 
 def render_json_by_version(outdir, packages, version):
@@ -176,6 +209,27 @@ def filter_and_downgrade_packages_by_version(packages, version):
     ]
 
     if LooseVersion(version) < LooseVersion('1.10'):
+        # Prior to 1.10, Cosmos had a rendering bug that required
+        # stringified JSON to be doubly escaped. This was corrected
+        # in 1.10, but it means that packages with stringified JSON parameters
+        # that need to bridge versions must be accommodated.
+        #
+        # < 1.9 style escaping:
+        # \\\"field\\\": \\\"value\\\"
+        #
+        # >= 1.10 style escaping:
+        # \"field\": \"value\"
+        for package in packages:
+            if "config" in package and "properties" in package["config"]:
+                # The rough shape of a config file is:
+                # {
+                #   "schema": ...,
+                #   "properties": { }
+                # }
+                # Send just the top level properties in to the recursive
+                # function json_escape_compatibility.
+                package["config"]["properties"] = json_escape_compatibility(
+                    package["config"]["properties"])
         packages = [downgrade_package_to_v3(package) for package in packages]
     return packages
 
@@ -287,7 +341,7 @@ def read_marathon_template(path):
 
 
 def read_config(path):
-    """Reads the resource.json as a dict
+    """Reads the config.json as a dict
 
     :param path: path to the package
     :type path: pathlib.Path
@@ -648,8 +702,51 @@ def validate_repo_with_schema(repo_json_data, repo_version):
     :param repo_version: version of the repo (e.g.: v4)
     :return: list of validation errors ( length == zero => No errors)
     """
-    validator = jsonschema.Draft4Validator(_load_jsonschema(repo_version))
-    return list(validator.iter_errors(repo_json_data))
+    validator = jsonschema.Draft4Validator(
+        _load_jsonschema(repo_version),
+        resolver=jsonschema.RefResolver('file://' + repo_definitions_json, None))
+    errors = []
+    for error in validator.iter_errors(repo_json_data):
+        for suberror in sorted(error.context, key=lambda e: e.schema_path):
+            errors.append('{}: {}'.format(list(suberror.schema_path), suberror.message))
+    return errors
+
+
+def _populate_dcos_version_json_to_folder(dcos_version, outdir):
+    """Populate the repo-up-to-<dcos-version>.json file to a folder.
+    The folder structure would be :
+        <dcos-version>/
+            package/
+                <name-of-package1>.json
+                <name-of-package2>.json
+
+    :param dcos_version: The version of DC/OS file to process.
+    :type dcos_version: str
+    :param outdir: Path to the directory to use to store all universe objects
+    :type outdir: str
+    :return: None
+    """
+    repo_dir = outdir / dcos_version / 'package'
+    print('Paths present in [{}]: {}'.format(
+        str(repo_dir),
+        [str(p) for p in list(repo_dir.glob('*'))])
+    )
+    pathlib.Path(repo_dir).mkdir(parents=True)
+    repo_file = pathlib.Path(outdir / 'repo-up-to-{}.json'.format(dcos_version))
+    with repo_file.open('r',  encoding='utf-8') as f:
+        data = json.loads(f.read())
+        packages_dict = {}
+
+        for package in data.get('packages'):
+            package_name = package.get('name')
+            package_list = packages_dict.get(package_name, [])
+            package_list.append(package)
+            packages_dict[package_name] = package_list
+
+        for package_name, package_list in packages_dict.items():
+            with pathlib.Path(repo_dir / '{}.json'.format(package_name))\
+                        .open('w', encoding='utf-8') as f:
+                json.dump({'packages': package_list}, f)
 
 
 def _validate_repo(file_path, version):
@@ -661,22 +758,19 @@ def _validate_repo(file_path, version):
     :type version: str
     :rtype: None
     """
-
-    if LooseVersion(version) >= LooseVersion('1.10'):
-        repo_version = 'v4'
-    else:
-        repo_version = 'v3'
-
     with file_path.open(encoding='utf-8') as repo_file:
         repo = json.loads(repo_file.read())
 
-    errors = validate_repo_with_schema(repo, repo_version)
+    errors = validate_repo_with_schema(
+        repo,
+        get_universe_version_for_dcos(version)
+    )
     if len(errors) != 0:
         sys.exit(
-            'ERROR\n\nRepo {} version {} validation error: {}'.format(
+            'ERROR\n\nRepo {} version {} validation errors: {}'.format(
                 file_path,
                 repo_version,
-                errors
+                '\n'.join(errors)
             )
         )
 
@@ -684,14 +778,13 @@ def _validate_repo(file_path, version):
 def _load_jsonschema(repo_version):
     """Opens and parses the repo schema based on the version provided.
 
-    :param repo_version: repo schema version. E.g. v3 vs v4
+    :param repo_version: repo schema version
     :type repo_version: str
     :return: the schema dictionary
     :rtype: dict
     """
-
     with open(
-        'repo/meta/schema/{}-repo-schema.json'.format(repo_version),
+        '{}/{}-repo-schema.json'.format(schema_dir, repo_version),
         encoding='utf-8'
     ) as schema_file:
         return json.loads(schema_file.read())

@@ -1,5 +1,5 @@
 # Use an official Python runtime as a base image
-FROM python:3
+FROM python:3.7
 
 # Set the working directory to the /converter directory
 WORKDIR /converter
@@ -9,6 +9,8 @@ ADD converter/service/converter.py          /converter
 ADD scripts/gen_universe.py                 /converter
 ADD repo/meta/schema                        /converter/repo/meta/schema
 ADD scripts/requirements/requirements.txt   /converter/requirements.txt
+
+ENV SCHEMA_DIR=/converter/repo/meta/schema/
 
 # Install the required dependencies
 RUN pip install --no-cache-dir -r requirements.txt
