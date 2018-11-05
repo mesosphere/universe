@@ -518,7 +518,7 @@
           "default": ""
         },
         "key_cache_save_period": {
-          "id": "hhttp://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__key_cache_save_period",
+          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__key_cache_save_period",
           "type": "integer",
           "description": "The duration in seconds that keys are saved in cache. Saved caches greatly improve cold-start speeds and has relatively little effect on I/O.",
           "default": 14400
