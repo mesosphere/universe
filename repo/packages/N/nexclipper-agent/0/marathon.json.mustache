@@ -1,0 +1,83 @@
+{
+	"id": "{{nexclipper-agent.name}}",
+	"acceptedResourceRoles": [
+		"*",
+		"slave_public"
+	],
+	"constraints": [
+		[
+			"hostname",
+			"UNIQUE"
+		]
+	],
+	"instances": "{{nexclipper-agent.instances}}",
+	"container": {
+		"type": "DOCKER",
+		"volumes": [
+			{
+				"mode": "RW",
+				"containerPath": "/var/run/docker.sock",
+				"hostPath": "/var/run/docker.sock"
+			},
+			{
+				"mode": "RW",
+				"containerPath": "/var/lib/docker",
+				"hostPath": "/var/lib/docker"
+			},
+			{
+				"mode": "RW",
+				"containerPath": "/dev",
+				"hostPath": "/dev"
+			},
+			{
+				"mode": "RW",
+				"containerPath": "/sys",
+				"hostPath": "/sys"
+			},
+			{
+				"mode": "RW",
+				"containerPath": "/var/log",
+				"hostPath": "/var/log"
+			}
+		],
+		"docker": {
+			"image": "{{resource.assets.container.docker.nexclipper-agent}}",
+			"priviledged": true,
+			"forcePullImage": false,
+			"parameters": [
+				{
+					"value": "host",
+					"key": "net"
+				},
+				{
+					"value": "host",
+					"key": "pid"
+				},
+				{
+					"value": "host",
+					"key": "ipc"
+				}
+			]
+		}
+	},
+	"cpus": "{{nexclipper-agent.cpus}}",
+	"disk": 0,
+	"mem": "{{nexclipper-agent.mem}}",
+	"networks": [
+		{
+			"mode": "host"
+		}
+	],
+	"env": {
+		"agent_endpoint": "{{nexclipper-agent.agent_endpoint}}",
+		"mesos_agent_port": "{{nexclipper-agent.mesos_agent_port}}",
+		"marathon_port": "{{nexclipper-agent.marathon_port}}",
+		"agent_key": "{{nexclipper-agent.agent_key}}",
+		"mesos_master_port": "{{nexclipper-agent.mesos_mater_port}}",
+		"master_endpoint": "{{nexclipper-agent.master_endpoint}}",
+		"dcos_port": "{{nexclipper-agent.dcos_port}}"
+	},
+	"requirePorts": false,
+	"healthCheck": [],
+	"fetch": []
+}

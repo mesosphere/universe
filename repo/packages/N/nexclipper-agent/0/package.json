@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "4.0",
+  "name": "nexclipper-agent",
+  "version": "1.0.0",
+  "minDcosReleaseVersion": "1.10",
+  "description": "NexClipper-agent is the agent for NexClipper that monitors containers manages performance specialized in Apache Mesos, DC/OS and Kubernetes.",
+  "maintainer": "support@nexcloud.co.kr",
+  "tags": [
+    "NexClipper", 
+    "monitoring", 
+    "dashboard"
+  ],
+  "preInstallNotes": "This package will deploy the NexClipper agent on your Mesos nodes.",
+  "postInstallNotes": "NexClipper agent installed.",
+  "postUninstallNotes": "NexClipper agent uninstalled.",
+  "licenses": [
+    {
+      "name": "Free License",
+      "url": "http://www.nexclipper.com"
+    }
+  ]
+}
