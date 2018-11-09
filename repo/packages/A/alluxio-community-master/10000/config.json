@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "Alluxio service configuration properties.",
+      "properties": {
+        "name": {
+          "description": "Name of the service.",
+          "type": "string",
+          "default": "alluxio-master"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to the Alluxio instance.",
+          "type": "number",
+          "default": 1
+        },
+        "mem": {
+          "description": "Memory to allocate to the Alluxio instance.",
+          "type": "number",
+          "default": 4096
+        },
+        "disk": {
+          "description": "Disk (MB) to allocate to the Alluxio instance.",
+          "type": "number",
+          "default": 16384
+        },
+        "docker-image": {
+          "description": "Docker image of the alluxio master",
+          "type": "string",
+          "default": "cdpqleo/alluxio"
+        }
+      }
+    },
+    "alluxio": {
+      "type": "object",
+      "description": "Alluxio parameters",
+      "properties": {
+        "license": {
+          "description": "alluxio license base64 format",
+          "type": "string",
+          "default": "ewogICJjaGVja3N1bSI6ICI3YjFmMjlkOTVhOTExZDJkY2UxN2Q2ZmExNjM4YmFmMSIsCiAgImVtYWlsIjogImxwZXJyZWF1bHRAY2RwcS5jb20iLAogICJrZXkiOiAiQy0wZmZiOWE1OC0zMGE5MWZkMi05NDVhZDgzMS1iOTIxZmFiMCIsCiAgIm5hbWUiOiAiTG91aXMgUGVycmVhdWx0IiwKICAicmVtb3RlIjogdHJ1ZSwKICAic2VjcmV0IjogInZYOWU3MFVPZld1VGN5ZEpjaVduQ2lhZTlYSTFld3ZCQUhmbTJJcUkvM01IcDh0U09OM2txSkxFSURjPSIsCiAgInZlcnNpb24iOiAyCn0="
+        },
+        "underfs-address": {
+          "description": "address for understorage filesystem",
+          "type": "string",
+          "default": "hdfs://hdfs/"
+        },
+        "master-hostname": {
+          "description": "alluxio master hostname",
+          "type": "string",
+          "default": "alluxio-master.alluxio.marathon.mesos"
+        },
+        "underfs-hdfs-configuration": {
+          "description": "location of hdfs configuration files",
+          "type": "string",
+          "default": "/opt/alluxio/conf/core-site.xml:/opt/alluxio/conf/hdfs-site.xml"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "Alluxio service configuration properties.",
+      "properties": {
+        "name": {
+          "description": "Name of the service instance. If deploying multiple Alluxio clusters, each instance must have a unique service name.",
+          "type": "string",
+          "default": "alluxio-worker"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to the Alluxio instance.",
+          "type": "number",
+          "default": 1
+        },
+        "mem": {
+          "description": "Memory to allocate to the Alluxio instance.",
+          "type": "number",
+          "default": 4096
+        },
+        "disk": {
+          "description": "Disk (MB) to allocate to the Alluxio instance.",
+          "type": "number",
+          "default": 16384
+        },
+        "instances": {
+          "description": "Number of worker instances.",
+          "type": "number",
+          "default": 1,
+          "minimum": 1
+        },
+        "docker-image": {
+          "description": "Docker image of the alluxio worker",
+          "type": "string",
+          "default": "cdpqleo/alluxio:worker"
+        }
+      }
+    },
+    "alluxio": {
+      "type": "object",
+      "description": "Alluxio parameters",
+      "properties": {
+        "underfs-address": {
+          "description": "address for understorage filesystem",
+          "type": "string",
+          "default": "hdfs://hdfs/"
+        },
+        "master-hostname": {
+          "description": "alluxio master hostname",
+          "type": "string",
+          "default": "alluxio-master.alluxio.marathon.mesos"
+        },
+        "underfs-hdfs-configuration": {
+          "description": "location of hdfs configuration files",
+          "type": "string",
+          "default": "/opt/alluxio/conf/core-site.xml:/opt/alluxio/conf/hdfs-site.xml"
+        },
+        "tier0-quota": {
+          "description": "Quota (GB) for the tier 0 storage",
+          "type": "number",
+          "default": 7
+        },
+        "tier1-quota": {
+          "description": "Quota (GB) for the tier 1 storage",
+          "type": "number",
+          "default": 59
+        }
+      }
+    }
+  }
+}

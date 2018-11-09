@@ -1,0 +1,105 @@
+{
+  "id": "/alluxio/{{service.name}}",
+  "instances": {{service.instances}},
+  "cpus": {{service.cpus}},
+  "gpus": 0,
+  "mem": {{service.mem}},
+  "disk": {{service.disk}},
+  "backoffFactor": 1.15,
+  "backoffSeconds": 1,
+  "cmd": "/entrypoint.sh worker --no-format",
+  "container": {
+    "portMappings": [
+      {
+        "containerPort": 30000,
+        "hostPort": 30000,
+        "protocol": "tcp",
+        "servicePort": 10104
+      },
+      {
+        "containerPort": 10103,
+        "hostPort": 10103,
+        "protocol": "tcp",
+        "servicePort": 10103
+      },
+      {
+        "containerPort": 10105,
+        "hostPort": 10105,
+        "protocol": "tcp",
+        "servicePort": 10105
+      },
+      {
+        "containerPort": 39999,
+        "hostPort": 10106,
+        "protocol": "tcp",
+        "servicePort": 10106
+      }
+    ],
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/opt/drive",
+        "hostPath": "/var/lib/docker/alluxio-storage",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/opt/ramdisk",
+        "hostPath": "/mnt/ramdisk",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "{{service.docker-image}}",
+      "forcePullImage": true,
+      "privileged": false,
+      "parameters": []
+    }
+  },
+  "env": {
+    "ALLUXIO_WORKER_PORT": "10105",
+    "ALLUXIO_WORKER_DATA_PORT": "10103",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVELS": "2",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_ALIAS": "MEM",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_DIRS_PATH": "/opt/ramdisk",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_DIRS_QUOTA": "{{alluxio.tier0-quota}}GB",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_WATERMARK_HIGH_RATIO": "0.9",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_WATERMARK_LOW_RATIO": "0.7",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_ALIAS": "HDD",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_DIRS_PATH": "/opt/drive",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_DIRS_QUOTA": "{{alluxio.tier1-quota}}GB",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_WATERMARK_HIGH_RATIO": "0.9",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_WATERMARK_LOW_RATIO": "0.7",
+    "ALLUXIO_UNDERFS_ADDRESS": "{{alluxio.underfs-address}}",
+    "ALLUXIO_MASTER_HOSTNAME": "{{alluxio.master-hostname}}",
+    "ALLUXIO_UNDERFS_HDFS_CONFIGURATION": "{{alluxio.underfs-hdfs-configuration}}"
+  },
+  "labels": {
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "HAPROXY_GROUP": "internal",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 3,
+      "portIndex": 0,
+      "timeoutSeconds": 20,
+      "delaySeconds": 15,
+      "protocol": "TCP",
+      "ipProtocol": "IPv4"
+    }
+  ],
+  "maxLaunchDelaySeconds": 3600,
+  "networks": [
+    {
+      "mode": "container/bridge"
+    }
+  ],
+  "requirePorts": false,
+  "upgradeStrategy": {
+    "maximumOverCapacity": 1,
+    "minimumHealthCapacity": 1
+  }
+}
