@@ -1,0 +1,113 @@
+{
+    "type": "object",
+    "properties": {
+        "service": {
+            "description": "Configuration properties for the NIFI service for DC/OS.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "The name of the service to display in the DC/OS dashboard.",
+                    "type": "string",
+                    "default": "nifi"
+                },
+                "cpus": {
+                    "description": "CPU shares to allocate to each Nifi master.",
+                    "type": "number",
+                    "default": 1.0,
+                    "minimum": 0.1
+                },
+                "mem": {
+                    "description": "Memory (in MB) to allocate to each Nifi instance.",
+                    "type": "number",
+                    "default": 2048.0,
+                    "minimum": 1024.0
+                },
+                "disk": {
+                    "description": "Disk (MB) to allocate to the Nifi instance.",
+                    "type": "number",
+                    "default": 1000,
+                    "minimum": 1000
+                },
+                "instances": {
+                    "description": "Amount of nifi instances",
+                    "type": "number",
+                    "default": 1,
+                    "minimum": 1
+                },
+                "docker-image": {
+                    "description": "Docker image to use",
+                    "type": "string",
+                    "default": "cdpqleo/nifi"
+                },
+                "max-launch-delay-seconds": {
+                    "description": "Max launch delay seconds for the instance",
+                    "type": "number",
+                    "default": 3600
+                }
+            }
+        },
+        "nifi": {
+            "description": "NIFI settings which will be added to nifi.properties file.",
+            "type": "object",
+            "properties": {
+                "zookeeper": {
+                    "description": "The Connect String that is needed to connect to Apache ZooKeeper. This is a comma-separted list of hostname:port pairs.",
+                    "type": "string",
+                    "default": "master.mesos:2181"
+                },
+                "zookeeper-root": {
+                    "description": "The root ZNode that should be used in ZooKeeper. ZooKeeper provides a directory-like structure for storing data. Each directory in this structure is referred to as a ZNode. This denotes the root ZNode, or directory, that should be used for storing data. The default value is /nifi. This is important to set correctly, as which cluster the NiFi instance attempts to join is determined by which ZooKeeper instance it connects to and the ZooKeeper Root Node that is specified.",
+                    "type": "string",
+                    "default": "/nifi"
+                },
+                "cluster": {
+                    "description": "Set this to true if the instance is a node in a cluster. The default value is false.",
+                    "type": "boolean",
+                    "default": true
+                },
+                "cluster-node-protocol-port":{
+                    "description": "Cluster node protocol port",
+                    "type": "number",
+                    "default": 12000
+                },
+                "cluster-node-protocol-threads":{
+                    "description": "Cluster node protocol threads",
+                    "type": "number",
+                    "default": 10,
+                    "minimum": 1
+                },
+                "cluster-node-protocol-max-threads":{
+                    "description": "Cluster node protocol max threads",
+                    "type": "number",
+                    "default": 50
+                },
+                "web-http-port": {
+                    "description": "HTTP port for the nifi web interface",
+                    "type": "number",
+                    "default": 8001
+                },
+                "election-max-wait": {
+                    "description": "Maximum waiting time for election of a master node",
+                    "type": "string",
+                    "default": "1 min"
+                },
+                "election-max-candidates": {
+                    "description": "Maximum amount of candidates for the electiono of a master node",
+                    "type": "number",
+                    "default": 1
+                }
+            }
+        },
+        "hdfs": {
+            "description": "hdfs settings.",
+            "type": "object",
+            "properties": {
+                "config-url": {
+                    "description": "HDFS endpoints url",
+                    "type": "string",
+                    "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
+              }
+            }
+        }
+    }
+}

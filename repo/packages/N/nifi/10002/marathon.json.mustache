@@ -1,0 +1,99 @@
+{
+  "env": {
+    "NIFI_CLUSTER_IS_NODE": "{{nifi.cluster}}",
+    "NIFI_CLUSTER_NODE_PROTOCOL_PORT": "{{nifi.cluster-node-protocol-port}}",
+    "NIFI_ZK_ROOT_NODE": "{{nifi.zookeeper-root}}",
+    "NIFI_CLUSTER_NODE_PROTOCOL_THREADS": "{{nifi.cluster-node-protocol-threads}}",
+    "NIFI_WEB_HTTP_PORT": "{{nifi.web-http-port}}",
+    "NIFI_ELECTION_MAX_WAIT": "{{nifi.election-max-wait}}",
+    "NIFI_ZK_CONNECT_STRING": "{{nifi.zookeeper}}",
+    "NIFI_ELECTION_MAX_CANDIDATES": "{{nifi.election-max-candidates}}",
+    "NIFI_CLUSTER_NODE_PROTOCOL_MAX_THREADS": "{{nifi.cluster-node-protocol-max-threads}}",
+    "HDFS_CONFIG_URL": "{{hdfs.config-url}}"
+  },
+  "labels": {
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  },
+  "id": "/{{service.name}}",
+  "backoffFactor": 1.15,
+  "backoffSeconds": 1,
+  "constraints": [
+    [
+      "hostname",
+      "UNIQUE"
+    ]
+  ],
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/nifi",
+        "hostPath": "nifi",
+        "mode": "RW"
+      },
+      {
+        "persistent": {
+          "type": "root",
+          "size": 5000,
+          "constraints": []
+        },
+        "mode": "RW",
+        "containerPath": "nifi"
+      }
+    ],
+    "docker": {
+      "image": "{{service.docker-image}}",
+      "forcePullImage": false,
+      "privileged": false,
+      "parameters": []
+    }
+  },
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "disk": {{service.disk}},
+  "instances": {{service.instances}},
+  "maxLaunchDelaySeconds": {{service.max-launch-delay-seconds}},
+  "networks": [
+    {
+      "mode": "host"
+    }
+  ],
+  "portDefinitions":[
+    {
+      "labels": {
+        "VIP_0": "/{{service.name}}:8001"
+      },
+      "protocol": "tcp",
+      "port": 8001
+    },
+    {
+      "labels": {
+        "VIP_1": "/{{service.name}}:8002"
+      },
+      "protocol": "tcp",
+      "port": 8002
+    },
+    {
+      "labels": {
+        "VIP_2": "/{{service.name}}:12000"
+      },
+      "protocol": "tcp",
+      "port": 12000
+    }
+  ],
+  "residency": {
+    "relaunchEscalationTimeoutSeconds": 3600,
+    "taskLostBehavior": "WAIT_FOREVER"
+  },
+  "requirePorts": true,
+  "upgradeStrategy": {
+    "maximumOverCapacity": 0,
+    "minimumHealthCapacity": 0.5
+  },
+  "killSelection": "YOUNGEST_FIRST",
+  "unreachableStrategy": "disabled",
+  "healthChecks": [],
+  "fetch": []
+}
