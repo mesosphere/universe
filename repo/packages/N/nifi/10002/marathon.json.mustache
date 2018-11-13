@@ -41,7 +41,12 @@
         },
         "mode": "RW",
         "containerPath": "nifi"
-      }
+      },
+			{
+			  "containerPath": "/mnt/azurefileshare",
+				"hostPath": "/mnt/azurefileshare",
+				"mode": "RW"
+			}
     ],
     "docker": {
       "image": "{{service.docker-image}}",
