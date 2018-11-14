@@ -1,0 +1,63 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-master-28f8827.tar.gz",
+      "bootstrap-zip": "https://px-dcos.s3.amazonaws.com/portworx-confluent-kafka/assets/1.3-2.3.0-4.1.1/bootstrap.zip",
+      "kafka-tgz": "http://packages.confluent.io/archive/4.1/confluent-4.1.1-2.11.tar.gz",
+      "kafka-jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz",
+      "kafka-scheduler-zip": "https://px-dcos.s3.amazonaws.com/portworx-confluent-kafka/assets/1.3-2.3.0-4.1.1/confluent-kafka-scheduler.zip",
+      "executor-zip": "https://px-dcos.s3.amazonaws.com/portworx-confluent-kafka/assets/1.3-2.3.0-4.1.1/executor.zip",
+      "kafka-statsd-jar": "http://downloads.mesosphere.com/kafka/assets/kafka-statsd-metrics2-0.5.3.jar",
+      "statsd-client-jar": "http://downloads.mesosphere.com/kafka/assets/java-dogstatsd-client-2.3.jar",
+      "setup-helper-zip": "https://px-dcos.s3.amazonaws.com/portworx-confluent-kafka/assets/1.3-2.3.0-4.1.1/setup-helper.zip",
+      "zookeeper-client-jar": "http://downloads.mesosphere.com/kafka/assets/zookeeper-3.4.10.1.jar",
+      "custom-kafka-principal-jar": "http://downloads.mesosphere.com/kafka/assets/kafka-custom-principal-builder-1.0.0.jar"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/confluent-connect-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/confluent-connect-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/confluent-connect-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "3f5c647d8c24295ba52874e1c7035c508028c3f9832a25e2cffdc2427edfcdc8"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-confluent-kafka/assets/1.3-2.3.0-4.1.1/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "37daf0ca209e6d5f8e51ca8a19b7af0be7ef95885136423b9d052e30cde8ff78"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-confluent-kafka/assets/1.3-2.3.0-4.1.1/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "ef63db0aeaecd80903587d70b2462583f0fa52ce4b4548bd9fb2ddb7a11d9a78"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-confluent-kafka/assets/1.3-2.3.0-4.1.1/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
