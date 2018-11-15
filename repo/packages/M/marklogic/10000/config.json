@@ -25,18 +25,15 @@
           "type": "number",
           "default": 4096
         },
-
         "backup_volume": {
           "type": "object",
-          "description": "Marklogic backup config",
+          "description": "Marklogic backup volume config",
           "properties": {
-
             "container_path": {
               "description": "Container path",
               "type": "string",
               "default": "/var/opt/Backups"
             },
-
             "host_path": {
               "description": "Host path",
               "type": "string",
@@ -44,61 +41,103 @@
             }
           }
         },
-
-        "marklogic_volume": {
+        "data_volume": {
           "type": "object",
-          "description": "Marklogic volume config",
+          "description": "Marklogic data volume config",
           "properties": {
-
             "container_path": {
               "description": "Container path",
               "type": "string",
               "default": "/var/opt/MarkLogic"
             },
-
             "host_path": {
               "description": "Host path",
               "type": "string",
               "default": "/var/lib/marklogic"
             }
           }
+        }
+      }
+    },
+    "marklogic" : {
+      "type": "object",
+      "description": "Marklogic config",
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "username": {
+          "description": "Admin username",
+          "type": "string",
+          "default": ""
         },
-
-        "marklogic" : {
-          "type": "object",
-          "description": "Marklogic config",
-
-          "required": [
-            "username",
-            "password"
-          ],
-          "properties": {
-            "username": {
-              "description": "Admin username",
-              "type": "string",
-              "default": ""
-            },
-            "password": {
-              "description": "Admin password",
-              "type": "string",
-              "default": ""
-            },
-            "auth_mode": {
-              "description": "Auth mode",
-              "type": "string",
-              "default": "digest"
-            },
-            "realm": {
-              "description": "Realm",
-              "type": "string",
-              "default": "public"
-            },
-            "hdfs_config_url": {
-              "description": "URL de configuration HDFS",
-              "type": "string",
-              "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
-            }
-          }
+        "password": {
+          "description": "Admin password",
+          "type": "string",
+          "default": ""
+        },
+        "auth_mode": {
+          "description": "Auth mode",
+          "type": "string",
+          "default": "digest"
+        },
+        "realm": {
+          "description": "Realm",
+          "type": "string",
+          "default": "public"
+        }
+      }
+    },
+    "hdfs" : {
+      "type": "object",
+      "description": "HDFS config",
+      "properties": {
+        "config_url": {
+          "description": "Base URL that serves HDFS config files (core-site.xml and hdfs-site.xml)",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "marathon-lb" : {
+      "type": "object",
+      "description": "Marathon-lb ports config",
+      "properties": {
+        "vhost": {
+          "description":  "Virtual host.",
+          "type": "string",
+          "default": ""
+        },
+        "port0": {
+          "description": "Health check",
+          "type": "number",
+          "default": 10195
+        },
+        "port1": {
+          "description": "Foreign bind port",
+          "type": "number",
+          "default": 10196
+        },
+        "port2": {
+          "description": "Bind port",
+          "type": "number",
+          "default": 10197
+        },
+        "port3": {
+          "description": "App-Services",
+          "type": "number",
+          "default": 10198
+        },
+        "port4": {
+          "description": "Admin",
+          "type": "number",
+          "default": 10199
+        },
+        "port5": {
+          "description": "Manage",
+          "type": "number",
+          "default": 10200
         }
       }
     }

@@ -1,0 +1,78 @@
+{
+  "id": "/alluxio/{{service.name}}",
+  "instances": 1,
+  "cpus": {{service.cpus}},
+  "gpus": 0,
+  "mem": {{service.mem}},
+  "disk": {{service.disk}},
+  "backoffFactor": 1.15,
+  "backoffSeconds": 1,
+  "cmd": "/entrypoint.sh master",
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "forcePullImage": true,
+      "image": "{{service.docker-image}}",
+      "parameters": [],
+      "privileged": false
+    },
+    "portMappings": [
+      {
+        "containerPort": 19999,
+        "hostPort": 19999,
+        "labels": {},
+        "protocol": "tcp",
+        "servicePort": 10101
+      },
+      {
+        "containerPort": 19998,
+        "hostPort": 19998,
+        "labels": {},
+        "protocol": "tcp",
+        "servicePort": 10102
+      },
+      {
+        "containerPort": 39999,
+        "hostPort": 10103,
+        "labels": {},
+        "protocol": "tcp",
+        "servicePort": 10103
+      }
+    ]
+  },
+  "env": {
+    "ALLUXIO_UNDERFS_ADDRESS": "{{alluxio.underfs-address}}",
+    "ALLUXIO_MASTER_HOSTNAME": "{{alluxio.master-hostname}}",
+    "ALLUXIO_UNDERFS_HDFS_CONFIGURATION": "{{alluxio.underfs-hdfs-configuration}}",
+    "ALLUXIO_LICENSE_BASE64": "{{alluxio.license}}"
+  },
+  "executor": "",
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 3,
+      "portIndex": 0,
+      "protocol": "TCP",
+      "ipProtocol": "IPv4",
+      "timeoutSeconds": 20,
+      "delaySeconds": 15
+    }
+  ],
+  "labels": {
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_NAME": "{{service.name}}"
+  },
+  "maxLaunchDelaySeconds": 3600,
+  "networks": [
+    {
+      "mode": "container/bridge"
+    }
+  ],
+  "requirePorts": false,
+  "upgradeStrategy": {
+    "maximumOverCapacity": 1,
+    "minimumHealthCapacity": 1
+  }
+}
