@@ -1,0 +1,133 @@
+{
+  "additionalProperties" : false,
+  "description" : "Marathon autoscaler specific configuration properties",
+  "properties" : {
+    "service" : {
+      "additionalProperties" : false,
+      "description" : "Marathon autoscaler configuration properties.",
+      "properties" : {
+        "name" : {
+          "description" : "The name of this Marathon autoscaler service inside DC/OS base Marathon.\nIf not specified otherwise, this name will also be used for the framework name, dcos service name, zk path and mesos role.\nTo create a nested path, please specify a group.",
+          "type" : "string",
+          "default" : "autoscaler",
+          "pattern" : "^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$"
+        },
+        "group" : {
+          "description" : "The group of this Marathon service inside DC/OS base Marathon. If a group is defined, the id of this service will be group/name",
+          "type" : "string",
+          "pattern" : "^[/]?(([a-z0-9])([a-z0-9\\-]*[a-z0-9]))([/](([a-z0-9])([a-z0-9\\-]*[a-z0-9])))*$"
+        },
+        "cpus" : {
+          "default" : 0.1,
+          "description" : "CPU shares to allocate to each Marathon autoscaler instance.",
+          "minimum" : 0,
+          "type" : "number"
+        },
+        "mem" : {
+          "default" : 128,
+          "description" : "Memory (MB) to allocate to each Marathon autoscaler instance.",
+          "minimum" : 128,
+          "type" : "number"
+        },
+        "instances" : {
+          "default" : 1,
+          "description" : "Number of Marathon autoscaler instances to run.",
+          "minimum" : 0,
+          "type" : "integer"
+        }
+      },
+      "required" : [ "cpus", "mem", "instances" ],
+      "type" : "object"
+    },
+    "autoscaler" : {
+      "additionalProperties" : true,
+      "description" : "Environment variables passed to the Marathon Autoscaler",
+      "properties" : {
+        "marathon-master": {
+          "description": "The DNS hostname or IP of your Marathon",
+          "type": "string",
+          "default": "http://marathon.mesos"
+        },
+        "max-range": {
+          "description": "The maximum range of the scaling modes dimension (80 or 75, 80)",
+          "type": "string",
+          "default": "80"
+        },
+        "min-range": {
+          "description": "The min range of the scaling modes dimension (40 or 40, 55)",
+          "type": "string",
+          "default": "40"
+        },
+        "trigger-mode": {
+          "description": "Which metric(s) to trigger Autoscale (and, or, cpu, mem)",
+          "type": "string",
+          "default": "cpu"
+        },
+        "autoscale-multiplier": {
+          "description": "Autoscale multiplier for triggered autoscale (ie 2)",
+          "type": "number",
+          "default": 1.5
+        },
+        "marathon-app": {
+          "description": "Marathon Application Name to Configure autoscale for from the Marathon UI",
+          "type": "string"
+        },
+        "max-instances": {
+          "description": "The Max instances that should ever exist for this application (ie. 20)",
+          "type": "integer",
+          "default": 6
+        },
+        "min-instances": {
+          "description": "Minimum number of instances to maintain",
+          "type": "integer",
+          "default": 2
+        },
+        "cool-down-factor": {
+          "description": "Number of cycles to avoid scaling again",
+          "type": "integer",
+          "default": 4
+        },
+        "scale-up-factor": {
+          "description": "Number of cycles needed to scale up again",
+          "type": "integer",
+          "default": 55
+        },
+        "trigger-number": {
+          "description": "Number of cycles to avoid scaling again",
+          "type": "integer",
+          "default": 3
+        },
+        "interval": {
+          "description": "Time in seconds to wait between checks (ie. 20)",
+          "type": "integer",
+          "default": 15
+        },
+        "verbose": {
+          "description": "",
+          "type": "boolean",
+          "default": true
+        },
+        "sqs-endpoint": {
+          "description": "Simple Queue Service endpoint",
+          "type": "string"
+        },
+        "userid": {
+          "description": "UserID used with a password or with a secret",
+          "type": "string"
+        },
+        "password": {
+          "description": "Password to use with UserID when not using a service account",
+          "type": "string"
+        },
+        "secret": {
+          "description": "secret to use for accessing the DC/OS cluster.",
+          "type": "string"
+        }
+      },
+      "required" : [ "marathon-master", "trigger-mode", "marathon-app" ],
+      "type" : "object"
+    }
+  },
+  "required" : [ "service", "autoscaler" ],
+  "type" : "object"
+}
