@@ -34,7 +34,7 @@
         "docker-image": {
           "description": "Docker image of the alluxio worker",
           "type": "string",
-          "default": "cdpqleo/alluxio:worker"
+          "default": "cdpqleo/alluxio:worker-1.8.1"
         }
       }
     },
@@ -57,15 +57,109 @@
           "type": "string",
           "default": "/opt/alluxio/conf/core-site.xml:/opt/alluxio/conf/hdfs-site.xml"
         },
+        "worker-port": {
+          "description": "worker port",
+          "type": "number",
+          "default": 10105
+        },
+        "worker-data-port": {
+          "description": "worker data port",
+          "type": "number",
+          "default": 10103
+        },
+        "tier-levels": {
+          "description": "The number of storage tiers on the worker",
+          "type": "number",
+          "default": 2
+        },
         "tier0-quota": {
           "description": "Quota (GB) for the tier 0 storage",
           "type": "number",
           "default": 7
         },
+        "tier0-dirs-path": {
+          "description": "The path of storage directory for the top storage tier",
+          "type": "string",
+          "default": "/opt/ramdisk"
+        },
+        "tier0-watermark-high-ratio": {
+          "description": "The high watermark of the space in the top storage tier (a value between 0 and 1)",
+          "type": "number",
+          "default": 0.9,
+          "maximum": 1,
+          "minimum": 0
+        },
+        "tier0-watermark-low-ratio": {
+          "description": "The low watermark of the space in the top storage tier (a value between 0 and 1)",
+          "type": "number",
+          "default": 0.7,
+          "maximum": 1,
+          "minimum": 0
+        },
+        "tier1-alias": {
+          "description": "alias for the tier 1 storage",
+          "type": "string",
+          "default": "HDD",
+          "enum": ["HDD", "SSD"]
+        },
         "tier1-quota": {
           "description": "Quota (GB) for the tier 1 storage",
           "type": "number",
           "default": 59
+        },
+        "tier1-dirs-path": {
+          "description": "The path of storage directory for the second storage tier",
+          "type": "string",
+          "default": "/opt/drive"
+        },
+        "tier1-watermark-high-ratio": {
+          "description": "The high watermark of the space in the second storage tier (a value between 0 and 1)",
+          "type": "number",
+          "default": 0.9,
+          "maximum": 1,
+          "minimum": 0
+        },
+        "tier1-watermark-low-ratio": {
+          "description": "The low watermark of the space in the second storage tier (a value between 0 and 1)",
+          "type": "number",
+          "default": 0.7,
+          "maximum": 1,
+          "minimum": 0
+        },
+        "tier2": {
+          "description": "Indicate whether a third storage tier is used",
+          "type": "boolean",
+          "default": false
+        },
+        "tier2-alias": {
+          "description": "alias for the tier 2 storage",
+          "type": "string",
+          "default": "HDD",
+          "enum": ["HDD", "SSD"]
+        },
+        "tier2-quota": {
+          "description": "Quota (GB) for the tier 2 storage",
+          "type": "number",
+          "default": 59
+        },
+        "tier2-dirs-path": {
+          "description": "The path of storage directory for the third storage tier",
+          "type": "string",
+          "default": "/opt/ramdisk"
+        },
+        "tier2-watermark-high-ratio": {
+          "description": "The high watermark of the space in the third storage tier (a value between 0 and 1)",
+          "type": "number",
+          "default": 0.9,
+          "maximum": 1,
+          "minimum": 0
+        },
+        "tier2-watermark-low-ratio": {
+          "description": "The low watermark of the space in the third storage tier (a value between 0 and 1)",
+          "type": "number",
+          "default": 0.7,
+          "maximum": 1,
+          "minimum": 0
         }
       }
     }

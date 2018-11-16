@@ -39,6 +39,16 @@
                     "type": "string",
                     "default": "cdpqleo/nifi"
                 },
+                "azurefileshare-path": {
+                  "description": "path on host to azurefileshare, will be mapped in the container to the same path",
+                  "type": "string",
+                  "default": "/mnt/azurefileshare"
+                },
+                "persistent-volume-size": {
+                  "description": "Disk (MB) to allocate to the persistent docke volume",
+                  "type": "number",
+                  "default": 5000
+                },
                 "max-launch-delay-seconds": {
                     "description": "Max launch delay seconds for the instance",
                     "type": "number",
@@ -95,6 +105,16 @@
                     "description": "Maximum amount of candidates for the electiono of a master node",
                     "type": "number",
                     "default": 1
+                },
+                "bootstrap-jvm-max": {
+                  "description": "bootstrap JVM max (MB)",
+                  "type": "number",
+                  "default": 2048
+                },
+                "bootstrap-jvm-min": {
+                  "description": "bootstrap JVM min (MB)",
+                  "type": "number",
+                  "default": 2048
                 }
             }
         },

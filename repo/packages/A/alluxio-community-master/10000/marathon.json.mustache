@@ -1,5 +1,5 @@
 {
-  "id": "/alluxio/{{service.name}}",
+  "id": "/{{service.name}}",
   "instances": 1,
   "cpus": {{service.cpus}},
   "gpus": 0,
@@ -42,7 +42,7 @@
   },
   "env": {
     "ALLUXIO_UNDERFS_ADDRESS": "{{alluxio.underfs-address}}",
-    "ALLUXIO_MASTER_HOSTNAME": "{{alluxio.master-hostname}}",
+    "ALLUXIO_MASTER_HOSTNAME": "{{service.name}}.marathon.mesos",
     "ALLUXIO_UNDERFS_HDFS_CONFIGURATION": "{{alluxio.underfs-hdfs-configuration}}",
     "ALLUXIO_LICENSE_BASE64": "{{alluxio.license}}"
   },

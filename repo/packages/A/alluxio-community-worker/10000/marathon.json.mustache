@@ -1,5 +1,5 @@
 {
-  "id": "/alluxio/{{service.name}}",
+  "id": "/{{service.name}}",
   "instances": {{service.instances}},
   "cpus": {{service.cpus}},
   "gpus": 0,
@@ -56,19 +56,26 @@
     }
   },
   "env": {
-    "ALLUXIO_WORKER_PORT": "10105",
-    "ALLUXIO_WORKER_DATA_PORT": "10103",
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVELS": "2",
+    "ALLUXIO_WORKER_PORT": "{{alluxio.worker-port}}",
+    "ALLUXIO_WORKER_DATA_PORT": "{{alluxio.worker-data-port}}",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVELS": "{{alluxio.tier-levels}}",
     "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_ALIAS": "MEM",
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_DIRS_PATH": "/opt/ramdisk",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_DIRS_PATH": "{{alluxio.tier0-dirs-path}}",
     "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_DIRS_QUOTA": "{{alluxio.tier0-quota}}GB",
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_WATERMARK_HIGH_RATIO": "0.9",
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_WATERMARK_LOW_RATIO": "0.7",
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_ALIAS": "HDD",
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_DIRS_PATH": "/opt/drive",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_WATERMARK_HIGH_RATIO": "{{alluxio.tier0-watermark-high-ratio}}",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_WATERMARK_LOW_RATIO": "{{alluxio.tier0-watermark-low-ratio}}",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_ALIAS": "{{alluxio.tier1-alias}}",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_DIRS_PATH": "{{alluxio.tier1-dirs-path}}",
     "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_DIRS_QUOTA": "{{alluxio.tier1-quota}}GB",
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_WATERMARK_HIGH_RATIO": "0.9",
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_WATERMARK_LOW_RATIO": "0.7",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_WATERMARK_HIGH_RATIO": "{{alluxio.tier1-watermark-high-ratio}}",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_WATERMARK_LOW_RATIO": "{{alluxio.tier1-watermark-high-ratio}}",
+    {{#alluxio.tier2}}
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_ALIAS": "{{alluxio.tier2-alias}}",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_DIRS_PATH": "{{alluxio.tier2-dirs-path}}",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_DIRS_QUOTA": "{{alluxio.tier2-quota}}GB",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_WATERMARK_HIGH_RATIO": "{{alluxio.tier2-watermark-high-ratio}}",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_WATERMARK_LOW_RATIO": "{{alluxio.tier2-watermark-high-ratio}}",
+    {{/alluxio.tier2}}
     "ALLUXIO_UNDERFS_ADDRESS": "{{alluxio.underfs-address}}",
     "ALLUXIO_MASTER_HOSTNAME": "{{alluxio.master-hostname}}",
     "ALLUXIO_UNDERFS_HDFS_CONFIGURATION": "{{alluxio.underfs-hdfs-configuration}}"

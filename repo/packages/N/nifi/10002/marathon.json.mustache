@@ -9,6 +9,8 @@
     "NIFI_ZK_CONNECT_STRING": "{{nifi.zookeeper}}",
     "NIFI_ELECTION_MAX_CANDIDATES": "{{nifi.election-max-candidates}}",
     "NIFI_CLUSTER_NODE_PROTOCOL_MAX_THREADS": "{{nifi.cluster-node-protocol-max-threads}}",
+    "NIFI_BOOTSTRAP_JVM_MAX": "{{nifi.bootstrap-jvm-max}}",
+    "NIFI_BOOTSTRAP_JVM_MIN": "{{nifi.bootstrap-jvm-min}}",
     "HDFS_CONFIG_URL": "{{hdfs.config-url}}"
   },
   "labels": {
@@ -36,15 +38,15 @@
       {
         "persistent": {
           "type": "root",
-          "size": 5000,
+          "size": {{service.persistent-volume-size}},
           "constraints": []
         },
         "mode": "RW",
         "containerPath": "nifi"
       },
 			{
-			  "containerPath": "/mnt/azurefileshare",
-				"hostPath": "/mnt/azurefileshare",
+			  "containerPath": "{{service.azurefileshare-path}}",
+				"hostPath": "{{service.azurefileshare-path}}",
 				"mode": "RW"
 			}
     ],

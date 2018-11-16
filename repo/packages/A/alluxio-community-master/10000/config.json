@@ -28,7 +28,7 @@
         "docker-image": {
           "description": "Docker image of the alluxio master",
           "type": "string",
-          "default": "cdpqleo/alluxio"
+          "default": "cdpqleo/alluxio:master-1.8.1"
         }
       }
     },
@@ -45,11 +45,6 @@
           "description": "address for understorage filesystem",
           "type": "string",
           "default": "hdfs://hdfs/"
-        },
-        "master-hostname": {
-          "description": "alluxio master hostname",
-          "type": "string",
-          "default": "alluxio-master.alluxio.marathon.mesos"
         },
         "underfs-hdfs-configuration": {
           "description": "location of hdfs configuration files",
