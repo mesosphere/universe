@@ -50,7 +50,7 @@
         "master-hostname": {
           "description": "alluxio master hostname",
           "type": "string",
-          "default": "alluxio-master.alluxio.marathon.mesos"
+          "default": "alluxio-master.marathon.mesos"
         },
         "underfs-hdfs-configuration": {
           "description": "location of hdfs configuration files",
@@ -73,7 +73,7 @@
           "default": 2
         },
         "tier0-quota": {
-          "description": "Quota (GB) for the tier 0 storage",
+          "description": "Capacity (GB) for the tier 0 storage",
           "type": "number",
           "default": 7
         },
@@ -96,21 +96,31 @@
           "maximum": 1,
           "minimum": 0
         },
+        "tier1": {
+          "description": "Indicate whether a second storage tier is used",
+          "type": "boolean",
+          "default": true
+        },
         "tier1-alias": {
           "description": "alias for the tier 1 storage",
           "type": "string",
-          "default": "HDD",
+          "default": "SSD",
           "enum": ["HDD", "SSD"]
         },
         "tier1-quota": {
-          "description": "Quota (GB) for the tier 1 storage",
+          "description": "Capacity (GB) for the tier 1 storage",
           "type": "number",
           "default": 59
         },
         "tier1-dirs-path": {
           "description": "The path of storage directory for the second storage tier",
           "type": "string",
-          "default": "/opt/drive"
+          "default": "/opt/drive-ssd"
+        },
+        "tier1-host-path":{
+          "description": "The host path of the storage directory for the second storage tier",
+          "type": "string",
+          "default": "/var/lib/docker/alluxio-storage-ssd"
         },
         "tier1-watermark-high-ratio": {
           "description": "The high watermark of the space in the second storage tier (a value between 0 and 1)",
@@ -138,14 +148,19 @@
           "enum": ["HDD", "SSD"]
         },
         "tier2-quota": {
-          "description": "Quota (GB) for the tier 2 storage",
+          "description": "Capacity (GB) for the tier 2 storage",
           "type": "number",
           "default": 59
         },
         "tier2-dirs-path": {
           "description": "The path of storage directory for the third storage tier",
           "type": "string",
-          "default": "/opt/ramdisk"
+          "default": "/opt/drive-hdd"
+        },
+        "tier2-host-path":{
+          "description": "The host path of the storage directory for the third storage tier",
+          "type": "string",
+          "default": "/var/lib/docker/alluxio-storage-hdd"
         },
         "tier2-watermark-high-ratio": {
           "description": "The high watermark of the space in the third storage tier (a value between 0 and 1)",

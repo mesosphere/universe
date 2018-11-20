@@ -50,6 +50,12 @@
           "description": "location of hdfs configuration files",
           "type": "string",
           "default": "/opt/alluxio/conf/core-site.xml:/opt/alluxio/conf/hdfs-site.xml"
+        },
+        "auth-type": {
+          "description": "authentication protocol (SIMPLE, NOSASL or CUSTOM)",
+          "type": "string",
+          "default": "NOSASL",
+          "enum": ["SIMPLE", "NOSASL"]
         }
       }
     }
