@@ -17,16 +17,16 @@
         "servicePort": 10104
       },
       {
-        "containerPort": 10103,
-        "hostPort": 10103,
+        "containerPort": {{alluxio.worker-data-port}},
+        "hostPort": {{alluxio.worker-data-port}},
         "protocol": "tcp",
-        "servicePort": 10103
+        "servicePort": {{alluxio.worker-data-port}}
       },
       {
-        "containerPort": 10105,
-        "hostPort": 10105,
+        "containerPort": {{alluxio.worker-port}},
+        "hostPort": {{alluxio.worker-port}},
         "protocol": "tcp",
-        "servicePort": 10105
+        "servicePort": {{alluxio.worker-port}}
       },
       {
         "containerPort": 39999,
@@ -37,16 +37,25 @@
     ],
     "type": "DOCKER",
     "volumes": [
+      {{#alluxio.tier1}}
       {
-        "containerPath": "/opt/drive",
-        "hostPath": "/var/lib/docker/alluxio-storage",
+        "containerPath": "{{alluxio.tier1-dirs-path}}",
+        "hostPath": "{{alluxio.tier1-host-path}}",
         "mode": "RW"
       },
+      {{/alluxio.tier1}}
       {
         "containerPath": "/opt/ramdisk",
         "hostPath": "/mnt/ramdisk",
         "mode": "RW"
       }
+      {{#alluxio.tier2}},
+      {
+        "containerPath": "{{alluxio.tier2-dirs-path}}",
+        "hostPath": "{{alluxio.tier2-host-path}}",
+        "mode": "RW"
+      }
+      {{/alluxio.tier2}}
     ],
     "docker": {
       "image": "{{service.docker-image}}",
@@ -64,17 +73,19 @@
     "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_DIRS_QUOTA": "{{alluxio.tier0-quota}}GB",
     "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_WATERMARK_HIGH_RATIO": "{{alluxio.tier0-watermark-high-ratio}}",
     "ALLUXIO_WORKER_TIEREDSTORE_LEVEL0_WATERMARK_LOW_RATIO": "{{alluxio.tier0-watermark-low-ratio}}",
+    {{#alluxio.tier1}}
     "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_ALIAS": "{{alluxio.tier1-alias}}",
     "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_DIRS_PATH": "{{alluxio.tier1-dirs-path}}",
     "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_DIRS_QUOTA": "{{alluxio.tier1-quota}}GB",
     "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_WATERMARK_HIGH_RATIO": "{{alluxio.tier1-watermark-high-ratio}}",
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_WATERMARK_LOW_RATIO": "{{alluxio.tier1-watermark-high-ratio}}",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_WATERMARK_LOW_RATIO": "{{alluxio.tier1-watermark-low-ratio}}",
+    {{/alluxio.tier1}}
     {{#alluxio.tier2}}
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_ALIAS": "{{alluxio.tier2-alias}}",
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_DIRS_PATH": "{{alluxio.tier2-dirs-path}}",
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_DIRS_QUOTA": "{{alluxio.tier2-quota}}GB",
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_WATERMARK_HIGH_RATIO": "{{alluxio.tier2-watermark-high-ratio}}",
-    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL1_WATERMARK_LOW_RATIO": "{{alluxio.tier2-watermark-high-ratio}}",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL2_ALIAS": "{{alluxio.tier2-alias}}",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL2_DIRS_PATH": "{{alluxio.tier2-dirs-path}}",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL2_DIRS_QUOTA": "{{alluxio.tier2-quota}}GB",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL2_WATERMARK_HIGH_RATIO": "{{alluxio.tier2-watermark-high-ratio}}",
+    "ALLUXIO_WORKER_TIEREDSTORE_LEVEL2_WATERMARK_LOW_RATIO": "{{alluxio.tier2-watermark-low-ratio}}",
     {{/alluxio.tier2}}
     "ALLUXIO_UNDERFS_ADDRESS": "{{alluxio.underfs-address}}",
     "ALLUXIO_MASTER_HOSTNAME": "{{alluxio.master-hostname}}",

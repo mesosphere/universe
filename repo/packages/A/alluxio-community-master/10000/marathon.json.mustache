@@ -44,7 +44,10 @@
     "ALLUXIO_UNDERFS_ADDRESS": "{{alluxio.underfs-address}}",
     "ALLUXIO_MASTER_HOSTNAME": "{{service.name}}.marathon.mesos",
     "ALLUXIO_UNDERFS_HDFS_CONFIGURATION": "{{alluxio.underfs-hdfs-configuration}}",
-    "ALLUXIO_LICENSE_BASE64": "{{alluxio.license}}"
+    "ALLUXIO_LICENSE_BASE64": "{{alluxio.license}}",
+    "ALLUXIO_SECURITY_AUTHENTICATION_TYPE": "{{alluxio.auth-type}}",
+    "ALLUXIO_MASTER_SECURITY_IMPERSONATION_NOBODY_USERS": "*",
+    "ALLUXIO_MASTER_SECURITY_IMPERSONATION_NOBODY_GROUPS": "*"
   },
   "executor": "",
   "healthChecks": [
