@@ -1,0 +1,298 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "hello-world"
+        },
+        "user": {
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "nobody"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of the Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        },
+        "region": {
+          "description": "The region that the service's tasks should run in.",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-region+string"
+          }
+        },
+        "sleep": {
+          "description": "The sleep duration in seconds before tasks exit.",
+          "type": "number",
+          "default": 1000
+        },
+        "test_boolean": {
+          "description": "A boolean value for testing purposes",
+          "type": "boolean",
+          "default": true
+        },
+        "scenario": {
+          "description": "A comma-separated list of SDK customization scenarios to perform on the service(s)",
+          "type": "string",
+          "default": "YAML"
+        },
+        "yaml": {
+          "description": "A single example YAML file to deploy, or an empty string to launch an empty multi-scheduler",
+          "type": "string",
+          "enum": [
+            "canary",
+            "custom_tld",
+            "discovery",
+            "enable-disable",
+            "executor_volume",
+            "finish_state",
+            "foobar_service_name",
+            "gpu_resource",
+            "graceful-shutdown",
+            "host-volume",
+            "marathon_constraint",
+            "multistep_plan",
+            "multiport",
+            "nonessential_tasks",
+            "overlay",
+            "pause",
+            "plan",
+            "pod-mount-volume",
+            "pod-profile-mount-volume",
+            "pre-reserved",
+            "pre-reserved-sidecar",
+            "secrets",
+            "share_pid_namespace",
+            "sidecar",
+            "simple",
+            "taskcfg",
+            "svc",
+            "tls",
+            "uri",
+            "web-url",
+            "non_recoverable_state",
+            "crash-loop",
+            ""
+          ],
+          "default": "svc"
+        },
+        "yamls": {
+          "description": "A comma-separated list of example YAML files to deploy in a multi-scheduler, in addition to any listed in 'yaml'",
+          "type": "string",
+          "default": ""
+        },
+        "allow_region_awareness": {
+          "description": "Allow region awareness",
+          "type": "boolean",
+          "default": true
+        },
+        "custom_service_tld": {
+          "description": "Specifies a custom TLD to use for endpoints",
+          "type": "string",
+          "default": ""
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "description": "Placement constraint for the hello-world scheduler",
+          "default": []
+        },
+        "verbose_mesos_logging": {
+          "description": "Sets the value of GLOG_v env-var used by Mesos. Enabled by default, set to 0 to disable.",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "default": 1
+        }
+      }
+    },
+    "hello": {
+      "description": "Hello pod configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "Hello pod CPU requirements",
+          "type": "number",
+          "default": 0.1
+        },
+        "gpus": {
+          "description": "Hello pod GPU requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "description": "Hello pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 252
+        },
+        "disk": {
+          "description": "Hello pod persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 25
+        },
+        "volume_profile": {
+          "description": "Hello pod persistent volume profile requirements",
+          "type": "string",
+          "default": ""
+        },
+        "count": {
+          "description": "Number of Hello pods to run",
+          "type": "integer",
+          "default": 1
+        },
+        "placement": {
+          "description": "Placement constraints for Hello pods",
+          "type": "string",
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "secret1": {
+          "description": "secret1",
+          "type": "string",
+          "default": ""
+        },
+        "secret2": {
+          "description": "secret2",
+          "type": "string",
+          "default": ""
+        },
+        "kill_grace_period": {
+          "description": "The number of seconds of grace to await a clean shutdown following SIGTERM before sending SIGKILL, default: `0`",
+          "type": "integer",
+          "default": 0
+        },
+        "port_one": {
+          "description": "any arbitrary port can be used",
+          "type": "integer",
+          "default": 1729
+        }
+      },
+      "required": [
+        "cpus",
+        "gpus",
+        "mem",
+        "disk",
+        "count"
+      ]
+    },
+    "world": {
+      "description": "World pod configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "World pod CPU requirements",
+          "type": "number",
+          "default": 0.2
+        },
+        "mem": {
+          "description": "World pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 512
+        },
+        "disk": {
+          "description": "World pod persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 25
+        },
+        "count": {
+          "description": "Number of World pods to run",
+          "type": "integer",
+          "default": 2
+        },
+        "placement": {
+          "description": "Placement constraints for World pods",
+          "type": "string",
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "secret1": {
+          "description": "secret1",
+          "type": "string",
+          "default": ""
+        },
+        "secret2": {
+          "description": "secret2",
+          "type": "string",
+          "default": ""
+        },
+        "secret3": {
+          "description": "secret3",
+          "type": "string",
+          "default": ""
+        },
+        "kill_grace_period": {
+          "description": "The number of seconds of grace to await a clean shutdown following SIGTERM before sending SIGKILL, default: `0`",
+          "type": "integer",
+          "default": 0
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk",
+        "count"
+      ]
+    },
+    "tls": {
+      "description": "TLS pod configuration properties",
+      "type": "object",
+      "properties": {
+        "keystore_app_version": {
+          "description": "Keystore app version",
+          "type": "string",
+          "default": "0.1-SNAPSHOT"
+        },
+        "nginx_container_version": {
+          "description": "NGINX TLS container version",
+          "type": "string",
+          "default": "0.1"
+        },
+        "discovery_task_prefix": {
+          "description": "Service discovery prefix name for discovery task",
+          "type": "string",
+          "default": "discovered"
+        }
+      }
+    }
+  }
+}
