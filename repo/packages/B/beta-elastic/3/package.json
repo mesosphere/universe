@@ -13,5 +13,15 @@
     "elasticsearch",
     "x-pack"
   ],
-  "version": "1.0.12-5.4.0-beta"
+  "version": "1.0.12-5.4.0-beta",
+  "licenses": [
+    {
+        "name": "Apache License Version 2.0",
+        "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/LICENSE.txt"
+    },
+    {
+        "name": "Elastic License",
+        "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/x-pack/README.md"
+    }
+ ]
 }
