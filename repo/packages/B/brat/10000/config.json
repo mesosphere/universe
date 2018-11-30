@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "Brat service configuration properties.",
+      "properties": {
+        "name": {
+          "description": "Name of the service instance.",
+          "type": "string",
+          "default": "brat"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to the Brat instance.",
+          "type": "number",
+          "default": 1
+        },
+        "mem": {
+          "description": "Memory to allocate to the Brat instance.",
+          "type": "number",
+          "default": 2048
+        },
+        "disk": {
+          "description": "Disk (MB) to allocate to the Brat instance.",
+          "type": "number",
+          "default": 16384
+        },
+        "docker-image": {
+          "description": "Docker image for Brat",
+          "type": "string",
+          "default": "cassj/brat"
+        }
+      }
+    },
+    "brat": {
+      "type": "object",
+      "description": "brat parameters",
+      "properties": {
+        "data-path": {
+          "description": "path on the host to the brat data",
+          "type": "string",
+          "default": "/mnt/azurefileshare/hdfs/app/brat/brat-data"
+        },
+        "config-path": {
+          "description": "path on the host to the brat config",
+          "type": "string",
+          "default": "/mnt/azurefileshare/hdfs/app/brat/brat-cfg"
+        },
+        "username": {
+          "description": "brat username",
+          "type": "string",
+          "default": "brat"
+        },
+        "password": {
+          "description": "brat user password",
+          "type": "string",
+          "default": "brat"
+        },
+        "email": {
+          "description": "brat user email",
+          "type": "string",
+          "default": "brat@example.com"
+        }
+      }
+    }
+  }
+}

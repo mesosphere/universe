@@ -1,0 +1,74 @@
+{
+  "id": "/{{service.name}}",
+  "instances": 1,
+  "cpus": {{service.cpus}},
+  "gpus": 0,
+  "mem": {{service.mem}},
+  "disk": {{service.disk}},
+  "backoffFactor": 1.15,
+  "backoffSeconds": 1,
+  "cmd": "/usr/bin/supervisord",
+  "container": {
+    "portMappings": [
+      {
+        "containerPort": 80,
+        "hostPort": 0,
+        "protocol": "tcp",
+        "servicePort": 0
+      }
+    ],
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/bratdata",
+        "hostPath": "{{brat.data-path}}",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/bratcfg",
+        "hostPath": "{{brat.config-path}}",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "{{service.docker-image}}",
+      "forcePullImage": true,
+      "privileged": false,
+      "parameters": []
+    }
+  },
+  "env": {
+    "BRAT_USERNAME": "{{brat.username}}",
+    "BRAT_PASSWORD": "{{brat.password}}",
+    "BRAT_EMAIL": "{{brat.email}}"
+  },
+  "labels": {
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "HAPROXY_GROUP": "internal",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 3,
+      "portIndex": 0,
+      "timeoutSeconds": 20,
+      "delaySeconds": 15,
+      "protocol": "TCP",
+      "ipProtocol": "IPv4"
+    }
+  ],
+  "maxLaunchDelaySeconds": 3600,
+  "networks": [
+    {
+      "mode": "container/bridge"
+    }
+  ],
+  "requirePorts": false,
+  "upgradeStrategy": {
+    "maximumOverCapacity": 1,
+    "minimumHealthCapacity": 1
+  }
+}
