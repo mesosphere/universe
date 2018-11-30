@@ -1,0 +1,23 @@
+{
+    "packagingVersion": "4.0",
+    "upgradesFrom": [
+        "*"
+    ],
+    "downgradesTo": [
+        "*"
+    ],
+    "minDcosReleaseVersion": "1.10",
+    "name": "grafana",
+    "version": "5.5.0-5.3.4",
+    "maintainer": "https://dcos.io/community",
+    "description": "Grafana on DC/OS",
+    "selected": false,
+    "framework": true, 
+    "tags": [
+        "grafana",
+        "monitoring",
+        "visualization"
+    ],
+    "postInstallNotes": "DC/OS Grafana is being installed!",
+    "postUninstallNotes": "DC/OS Grafana is being uninstalled."
+}

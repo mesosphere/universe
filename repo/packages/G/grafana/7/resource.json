@@ -1,0 +1,62 @@
+{
+    "assets": {
+        "uris": {
+            "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz", 
+            "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz", 
+            "bootstrap-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/bootstrap.zip", 
+            "executor-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/executor.zip", 
+            "scheduler-zip": "https://s3-us-west-1.amazonaws.com/mbgl-bucket/sdk/0.42.1/operator-scheduler.zip", 
+            "svc": "https://s3-us-west-2.amazonaws.com/dcos-objects/grafana/svc.yml", 
+            "grafana-tar-gz": "https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.3.4.linux-amd64.tar.gz"
+        }
+    },
+    "images": {
+        "icon-small": "https://downloads.mesosphere.com/assets/universe/000/grafana-icon-small.png", 
+        "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/grafana-icon-medium.png", 
+        "icon-large": "https://downloads.mesosphere.com/assets/universe/000/grafana-icon-large.png", 
+        "screenshots": [
+            "https://prometheus.io/assets/grafana_prometheus-cbb943f0bb3.png", 
+            "https://grafana.com/blog/img/docs/v45/query_inspector.png"
+        ]
+    }, 
+    "cli": {
+        "binaries": {
+            "darwin": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256", 
+                            "value": "c459d2109b31fc0b423f8cacd49df855ef898e63609f7050957f4a0e044d5432"
+                        }
+                    ], 
+                    "kind": "executable", 
+                    "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/dcos-service-cli-darwin"
+                }
+            }, 
+            "linux": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256", 
+                            "value": "e580ee8b71c0c26b1a1a605ca09cbd3528a2c031a8de11519024ccbbce862339"
+                        }
+                    ], 
+                    "kind": "executable", 
+                    "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/dcos-service-cli-linux"
+                }
+            }, 
+            "windows": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256", 
+                            "value": "9135f9456a40cd53e27e73e44fc94c1d4cbf27d9b59f2b47d82bad3ae0f8c714"
+                        }
+                    ], 
+                    "kind": "executable", 
+                    "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/dcos-service-cli.exe"
+                }
+            }
+        }
+    }
+}
