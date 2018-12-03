@@ -12,9 +12,18 @@
   "tags": [
     "elastic",
     "elasticsearch",
-    "kibana",
     "x-pack",
     "portworx"
   ],
-  "version": "1.1-5.5.1-bf399c5"
+  "version": "1.1-5.5.1-bf399c5",
+  "licenses": [
+    {
+        "name": "Apache License Version 2.0",
+        "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/LICENSE.txt"
+    },
+    {
+        "name": "Elastic License",
+        "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/x-pack/README.md"
+    }
+  ]
 }
