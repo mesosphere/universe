@@ -7,5 +7,11 @@
   "description": "Hue Web Interface to Hadoop",
   "preInstallNotes": "This DC/OS Service is currently in preview.",
   "framework": false,
-  "tags": ["hadoop", "filesystem", "hdfs"]
+  "tags": ["hadoop", "filesystem", "hdfs"],
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/cloudera/hue/master/LICENSE.txt"
+    }
+  ]
 }
