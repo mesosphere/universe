@@ -6,5 +6,11 @@
   "minDcosReleaseVersion": "1.9",
   "description": "Enterprise DC/OS CLI",
   "tags": [ "mesosphere", "enterprise", "subcommand" ],
-  "selected": true
+  "selected": true,
+  "licenses": [
+    {
+      "name": "Proprietary",
+      "url": "https://mesosphere.com/mesosphere-enterprise-terms/"
+    }
+  ]
 }
