@@ -8,5 +8,11 @@
   "tags": ["git", "bitbucket", "bit", "bucket", "vcs", "scm"],
   "preInstallNotes": "This DC/OS Service is currently in preview. Preparing to install bitbucket.",
   "postInstallNotes": "Bitbucket Server has been installed.",
-  "postUninstallNotes": "Bitbucket Server was uninstalled successfully."
+  "postUninstallNotes": "Bitbucket Server was uninstalled successfully.",
+  "licenses": [
+    {
+      "name": "Proprietary",
+      "url": "https://www.atlassian.com/legal/software-license-agreement"
+    }
+  ]
 }
