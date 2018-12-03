@@ -81,7 +81,7 @@ def main():
     dcos_version = distutils.version.LooseVersion(args.dcos_version)
 
     with tempfile.TemporaryDirectory() as dir_path, \
-            run_docker_registry(dir_path / pathlib.Path("registry")):
+            run_docker_registry("/Users/takirala/git/output/docker" / pathlib.Path("registry")):
 
         http_artifacts = dir_path / pathlib.Path("http")
         docker_artifacts = dir_path / pathlib.Path("registry")
