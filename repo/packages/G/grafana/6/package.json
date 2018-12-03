@@ -19,5 +19,11 @@
         "visualization"
     ], 
     "postInstallNotes": "DC/OS Grafana is being installed!", 
-    "postUninstallNotes": "DC/OS Grafana is being uninstalled."
+    "postUninstallNotes": "DC/OS Grafana is being uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/grafana/grafana/master/LICENSE.md"
+    }
+  ]
 }
