@@ -1,0 +1,449 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "ethereum",
+          "title": "Service name"
+        },
+        "user": {
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "root",
+          "title": "User"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": "",
+          "title": "Credential secret name (optional)"
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        },
+        "mesos_api_version": {
+          "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)",
+          "type": "string",
+          "enum": [
+            "V0",
+            "V1"
+          ],
+          "default": "V1"
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        }
+      },
+      "required": [
+        "name",
+        "user"
+      ]
+    },
+    "geth": {
+      "description": "Common geth node configuration.",
+      "type": "object",
+      "properties": {
+        "network_id": {
+          "title": "Chain / Network ID",
+          "description": "Chain or Network ID.",
+          "type": "integer",
+          "default": 18
+        },
+        "syncmode": {
+          "title": "Sync mode",
+          "description": "Geth sync mode, one of fast, full (default), or light.",
+          "enum": [
+            "fast",
+            "full",
+            "light"
+          ],
+          "default": "full"
+        },
+        "create_genesis": {
+          "description": "Create a genesis.json and initialize each node with it.",
+          "type": "boolean",
+          "default": true
+        },
+        "consensus_engine": {
+          "title": "Consensus engine",
+          "description": "Consensus engine to use. One of: ethash (proof-of-work) or clique (default, proof-of-authority).",
+          "enum": [
+            "ethash",
+            "clique"
+          ],
+          "default": "clique"
+        },
+        "clique_period": {
+          "title": "Clique period",
+          "description": "Number of seconds blocks should take, used only with clique consensus engine.",
+          "type": "integer",
+          "default": 15
+        }
+      },
+      "required": [
+        "network_id",
+        "syncmode",
+        "create_genesis"
+      ]
+    },
+    "boot": {
+      "description": "Boot pod configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of Node pods to run",
+          "type": "integer",
+          "default": 1
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Node CPU requirements",
+          "type": "number",
+          "default": 0.1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Node mem requirements (in MB)",
+          "type": "integer",
+          "default": 256
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "Node persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 15000
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "labels": {
+          "title": "Labels",
+          "description": "Custom mesos task labels for boot nodes",
+          "type": "string",
+          "default": ""
+        },
+        "verbosity": {
+          "title": "Log Verbosity [0-9]",
+          "description": "Geth node log verbosity level",
+          "type": "integer",
+          "default": 3
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "disk_type"
+      ]
+    },
+    "ethstats": {
+      "description": "Ethstats pod configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of Node pods to run",
+          "type": "integer",
+          "default": 1
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Node CPU requirements",
+          "type": "number",
+          "default": 1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Node mem requirements (in MB)",
+          "type": "integer",
+          "default": 1024
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "labels": {
+          "title": "Labels",
+          "description": "Custom mesos task labels for ethstats nodes",
+          "type": "string",
+          "default": ""
+        },
+        "verbosity": {
+          "title": "Log Verbosity [0-3]",
+          "description": "Ethstats node log verbosity level",
+          "type": "integer",
+          "default": 3
+        },
+        "websocket_secret": {
+          "description": "Secret for connecting to ethstats via websocket.",
+          "type": "string",
+          "default": "my-ws-secret"
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "websocket_secret"
+      ]
+    },
+    "sealer": {
+      "description": "Sealer pod configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of Node pods to run",
+          "type": "integer",
+          "default": 3
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Node CPU requirements",
+          "type": "number",
+          "default": 1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Node mem requirements (in MB)",
+          "type": "integer",
+          "default": 1024
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "Node persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 15000
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "labels": {
+          "title": "Labels",
+          "description": "Custom mesos task labels for sealer nodes",
+          "type": "string",
+          "default": ""
+        },
+        "args": {
+          "title": "CLI arguments",
+          "description": "Additional sealer node CLI arguments for the geth command. See github.com/ethereum/go-ethereum/wiki/Command-Line-Options",
+          "type": "string",
+          "default": "--metrics --mine --minerthreads=1"
+        },
+        "verbosity": {
+          "title": "Log Verbosity [0-9]",
+          "description": "Geth node log verbosity level",
+          "type": "integer",
+          "default": 3
+        },
+        "rpcapi": {
+          "title": "RPC API",
+          "description": "The API functionality to expose.",
+          "type": "string",
+          "default": "debug,db,personal,eth,network,web3,net,miner"
+        },
+        "create_accounts": {
+          "description": "Create and pre-fund an account for each sealer node when true.",
+          "type": "boolean",
+          "default": true
+        },
+        "unlock_accounts": {
+          "description": "Unlock each sealer account upon starting geth.",
+          "type": "boolean",
+          "default": true
+        },
+        "account_privatekeys": {
+          "description": "Comma separated list of private keys to use for sealer accounts. Must be used when create_account is false.",
+          "type": "string",
+          "default": ""
+        },
+        "account_secret": {
+          "description": "Account secret passphrase to use for all sealer accounts.",
+          "type": "string",
+          "default": "p@ssw0rd"
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "disk_type",
+        "create_accounts",
+        "account_secret"
+      ]
+    },
+    "client": {
+      "description": "Client pod configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Client node count",
+          "description": "Number of Node pods to run",
+          "type": "integer",
+          "default": 2
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Node CPU requirements",
+          "type": "number",
+          "default": 1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Node mem requirements (in MB)",
+          "type": "integer",
+          "default": 1024
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "Node persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 15000
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "labels": {
+          "title": "Labels",
+          "description": "Custom mesos task labels for client nodes",
+          "type": "string",
+          "default": ""
+        },
+        "args": {
+          "title": "CLI arguments",
+          "description": "Additional client node CLI arguments for the geth command. See github.com/ethereum/go-ethereum/wiki/Command-Line-Options",
+          "type": "string",
+          "default": "--metrics"
+        },
+        "verbosity": {
+          "title": "Log Verbosity [0-9]",
+          "description": "Geth node log verbosity level",
+          "type": "integer",
+          "default": 3
+        },
+        "rpcapi": {
+          "title": "RPC API",
+          "description": "The API functionality to expose.",
+          "type": "string",
+          "default": "debug,db,personal,eth,network,web3,net,miner"
+        },
+        "create_accounts": {
+          "description": "Create and pre-fund an account for each client node when true.",
+          "type": "boolean",
+          "default": true
+        },
+        "unlock_accounts": {
+          "description": "Unlock each client account upon starting geth.",
+          "type": "boolean",
+          "default": true
+        },
+        "account_privatekeys": {
+          "description": "Comma separated list of private keys to use for client accounts. Must be used when create_account is false.",
+          "type": "string",
+          "default": ""
+        },
+        "account_secret": {
+          "description": "Account secret passphrase to use for all client accounts.",
+          "type": "string",
+          "default": "p@ssw0rd"
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "disk_type",
+        "create_accounts",
+        "account_secret"
+      ]
+    }
+  }
+}
