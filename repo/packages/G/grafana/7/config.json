@@ -14,7 +14,7 @@
                 "user": {
                     "description": "The user that the service will run as.", 
                     "type": "string", 
-                    "default": "nobody", 
+                    "default": "root", 
                     "title": "User"
                 }, 
                 "service_account": {
