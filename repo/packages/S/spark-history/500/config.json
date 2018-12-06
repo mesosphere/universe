@@ -1,0 +1,127 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS Apache Spark History Server configuration properties",
+      "properties": {
+        "name": {
+          "default": "spark-history",
+          "description": "The app name for the Spark History Server.  The service will be available at https://<dcos_url>/service/<name>/",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "mem": {
+          "default": 1024.0,
+          "description": "Memory (MB)",
+          "minimum": 1024.0,
+          "type": "number"
+        },
+        "log-dir": {
+          "description": "Base directory to look for spark events.  Usually a networked directory like HDFS.  Note that this directory must exist prior to installing this package.",
+          "type": "string",
+          "default": "hdfs://hdfs/history"
+        },
+        "user": {
+          "description": "OS user",
+          "type": "string",
+          "default": "nobody"
+        },
+        "docker-image": {
+          "description": "Docker image to run in.  See https://hub.docker.com/r/mesosphere/spark/tags/ for options.",
+          "type": "string",
+          "default": "mesosphere/spark:2.5.0-2.2.1-hadoop-2.7"
+        },
+        "hdfs-config-url": {
+          "type": "string",
+          "description": "URL which serves hdfs-site.xml and core-site.xml (i.e. <hdfs-config-url>/hdfs-site.xml should exist)"
+        },
+        "cleaner": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Specifies whether the Spark History Server should periodically clean up event logs from storage.",
+              "type": "boolean",
+              "default": false
+            },
+            "interval": {
+              "default": "1d",
+              "description": "Frequency the Spark History Server checks for files to delete.",
+              "type": "string"
+            },
+            "max-age": {
+              "default": "7d",
+              "description": "History files older than this will be deleted.",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [
+        "hdfs-config-url"
+      ]
+    },
+    "security": {
+      "description": "Security configuration properties",
+      "type": "object",
+      "properties": {
+        "kerberos": {
+          "description": "Kerberos configuration.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enable kerberos authentication.",
+              "type": "boolean",
+              "default": false
+            },
+            "kdc": {
+              "description": "KDC settings for Kerberos",
+              "type": "object",
+              "properties": {
+                "hostname": {
+                  "type": "string",
+                  "description": "The name or address of a host running a KDC for the realm."
+                },
+                "port": {
+                  "type": "integer",
+                  "description": "The port of the host running a KDC for that realm."
+                }
+              }
+            },
+            "realm": {
+              "type": "string",
+              "description": "The Kerberos realm used to render the principal."
+            },
+            "krb5conf": {
+              "description": "Base64 encoded krb5.conf file to access your KDC. Providing this will override above settings.",
+              "type": "string",
+              "media": {
+                "binaryEncoding": "base64",
+                "type": "application/x-yaml"
+              },
+              "default": ""
+            },
+            "principal": {
+              "description": "Kerberos principal.",
+              "default": "",
+              "type": "string"
+            },
+            "keytab": {
+              "description": "Keytab path in the secret store.",
+              "default": "",
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "service"
+  ]
+}
