@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS PypiServer service specifications",
+      "properties": {
+        "name": {
+          "description": "Name of PypiServer instances as seen in DC/OS.",
+          "type": "string",
+          "default": "pypiserver"
+        },
+        "cpus": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 1
+        },
+        "disk": {
+          "description": "Disk",
+          "type": "number",
+          "default": 0
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance.",
+          "type": "number",
+          "default": 4096
+        },
+        "data_volume": {
+          "type": "object",
+          "description": "Pypi data volume config",
+          "properties": {
+            "container_path": {
+              "description": "Container path",
+              "type": "string",
+              "default": "/data"
+            },
+            "host_path": {
+              "description": "Host path",
+              "type": "string",
+              "default": "/mnt/azurefileshare/data/pypiserver"
+            }
+          }
+        }
+      }
+    },
+    "marathon-lb" : {
+      "type": "object",
+      "description": "Marathon-lb ports config",
+      "properties": {
+        "vhost": {
+          "description":  "Virtual host.",
+          "type": "string",
+          "default": ""
+        },
+        "port0": {
+          "description": "Health check",
+          "type": "number",
+          "default": 0
+        }
+      }
+    }
+  }
+}

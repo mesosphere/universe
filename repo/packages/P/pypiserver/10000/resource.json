@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://github.com/pypiserver/pypiserver/blob/master/pypiserver_logo.png",
+    "icon-medium": "https://github.com/pypiserver/pypiserver/blob/master/pypiserver_logo.png",
+    "icon-large": "https://github.com/pypiserver/pypiserver/blob/master/pypiserver_logo.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "pypiserver": "pypiserver/pypiserver:v1.2.5"
+      }
+    }
+  }
+}
