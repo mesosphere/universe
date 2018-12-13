@@ -249,6 +249,22 @@
     }
   },
   "config": {
+    "additionalProperties": true,
+    "properties": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "service": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "pattern": "^(\/?((\.\.)|(([a-z0-9]|[a-z0-9][a-z0-9\-]*[a-z0-9])\.)*([a-z0-9]|[a-z0-9][a-z0-9\-]*[a-z0-9]))?($|\/))+$"
+            }
+          }
+        }
+      }
+    }
   },
   "command": {
     "additionalProperties": false,
