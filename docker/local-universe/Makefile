@@ -1,6 +1,9 @@
 REPO_BASE_DIR ?= $(shell pwd -P)/../..
 static_version ?= 0.2-2
 static_image ?= universe-static:$(static_version)
+HTTP_ROOT ?= http://master.mesos:8082/:$(HTTP_ROOT)
+DOCKER_ROOT ?= master.mesos:5000:$(DOCKER_ROOT)
+
 
 .PHONY: certs base clean gen-universe
 
@@ -30,14 +33,18 @@ static-base:
 ifdef DCOS_PACKAGE_INCLUDE
 gen-universe: clean
 	python3 $(REPO_BASE_DIR)/scripts/local-universe.py \
-		--repository $(REPO_BASE_DIR)/repo/packages/ \
 		--include "$(DCOS_PACKAGE_INCLUDE)" \
+		--repository $(REPO_BASE_DIR)/repo/packages/ \
+		--server_url "$(HTTP_ROOT)" \
+		--registry_url "$(DOCKER_ROOT)" \
 		--dcos_version "$(DCOS_VERSION)"
 else
 gen-universe: clean
 	python3 $(REPO_BASE_DIR)/scripts/local-universe.py \
-		--repository $(REPO_BASE_DIR)/repo/packages/ \
 		--selected \
+		--repository $(REPO_BASE_DIR)/repo/packages/ \
+		--server_url "$(HTTP_ROOT)" \
+		--registry_url "$(DOCKER_ROOT)" \
 		--dcos_version "$(DCOS_VERSION)"
 endif
 

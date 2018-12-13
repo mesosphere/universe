@@ -17,9 +17,6 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-HTTP_ROOT = "http://master.mesos:8082/"
-DOCKER_ROOT = "master.mesos:5000"
-
 
 def main():
     # Docker writes files into the tempdir as root, you need to be running
@@ -36,8 +33,12 @@ def main():
         '...')
     parser.add_argument(
         '--server_url',
-        default=HTTP_ROOT,
+        required=True,
         help="URL for http server")
+    parser.add_argument(
+        '--registry_url',
+        required=True,
+        help="URL for docker registry")
     parser.add_argument(
         '--repository',
         required=True,
@@ -108,6 +109,7 @@ def main():
                     pathlib.Path(args.repository),
                     repo_artifacts,
                     args.server_url,
+                    args.registry_url,
                     args.nonlocal_images,
                     args.nonlocal_cli
                 )
@@ -412,6 +414,7 @@ def prepare_repository(
     source_repo,
     dest_repo,
     http_root,
+    registry_root,
     skip_images,
     skip_cli
 ):
@@ -458,7 +461,7 @@ def prepare_repository(
         if 'assets' in resource:
             if 'container' in resource["assets"]:
                 resource["assets"]["container"]["docker"] = {
-                    n: format_image_name(DOCKER_ROOT, image_name)
+                    n: format_image_name(registry_root, image_name)
                     for n, image_name in resource["assets"]["container"].get(
                         "docker", {}).items()}
 
