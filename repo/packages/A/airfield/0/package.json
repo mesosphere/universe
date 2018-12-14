@@ -1,0 +1,19 @@
+{
+    "packagingVersion": "4.0", 
+    "upgradesFrom": [], 
+    "downgradesTo": [], 
+    "minDcosReleaseVersion": "1.10", 
+    "name": "airfield", 
+    "version": "0.1.0", 
+    "maintainer": "https://github.com/MaibornWolff/dcos-airfield", 
+    "description": "Airfield - easily start and manage zeppelin instances on DC/OS", 
+    "selected": false, 
+    "framework": false, 
+    "tags": [
+        "airfield", 
+        "zeppelin", 
+        "spark"
+    ], 
+    "postInstallNotes": "Airfield is being installed!\n\n\tDocumentation: https://github.com/MaibornWolff/dcos-airfield\n\tIssues: https://github.com/MaibornWolff/dcos-airfield", 
+    "postUninstallNotes": "Airfield is being uninstalled."
+}
