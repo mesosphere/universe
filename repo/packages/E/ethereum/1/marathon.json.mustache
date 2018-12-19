@@ -34,9 +34,9 @@
   },
   "env": {
     "PACKAGE_NAME": "ethereum",
-    "PACKAGE_VERSION": "0.1.0",
-    "PACKAGE_BUILD_TIME_EPOCH_MS": "1543603017878",
-    "PACKAGE_BUILD_TIME_STR": "Fri Nov 30 2018 18:36:57 +0000",
+    "PACKAGE_VERSION": "0.1.1",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1545251073504",
+    "PACKAGE_BUILD_TIME_STR": "Wed Dec 19 2018 20:24:33 +0000",
     "FRAMEWORK_NAME": "{{service.name}}",
     "FRAMEWORK_USER": "{{service.user}}",
     "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
@@ -79,6 +79,7 @@
     "SEALER_NODE_LABELS": "{{sealer.labels}}",
     "TASKCFG_SEALER_GETH_ARGS": "{{sealer.args}}",
     "TASKCFG_SEALER_GETH_VERBOSITY": "{{sealer.verbosity}}",
+    "TASKCFG_SEALER_NODE_MEM": "{{sealer.mem}}",
     {{#sealer.rpcapi}}
     "TASKCFG_SEALER_GETH_RPCAPI": "{{sealer.rpcapi}}",
     "ENABLE_SEALER_RPC": "yes",
@@ -102,6 +103,7 @@
     "CLIENT_NODE_LABELS": "{{client.labels}}",
     "TASKCFG_CLIENT_GETH_ARGS": "{{client.args}}",
     "TASKCFG_CLIENT_GETH_VERBOSITY": "{{client.verbosity}}",
+    "TASKCFG_CLIENT_NODE_MEM": "{{client.mem}}",
     {{#client.rpcapi}}
     "TASKCFG_CLIENT_GETH_RPCAPI": "{{client.rpcapi}}",
     "ENABLE_CLIENT_RPC": "yes",
@@ -153,7 +155,8 @@
     {
       "port": 0,
       "protocol": "tcp",
-      "name": "api"
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
     }
   ]
 }

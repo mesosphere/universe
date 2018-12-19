@@ -146,7 +146,7 @@
           "title": "Disk size (MB)",
           "description": "Node persistent disk requirements (in MB)",
           "type": "integer",
-          "default": 15000
+          "default": 10
         },
         "disk_type": {
           "title": "Disk type [ROOT, MOUNT]",
@@ -201,13 +201,13 @@
           "title": "CPU count",
           "description": "Node CPU requirements",
           "type": "number",
-          "default": 1
+          "default": 0.1
         },
         "mem": {
           "title": "Memory size (MB)",
           "description": "Node mem requirements (in MB)",
           "type": "integer",
-          "default": 1024
+          "default": 256
         },
         "placement_constraint": {
           "title": "Placement constraint",
@@ -257,7 +257,7 @@
           "title": "CPU count",
           "description": "Node CPU requirements",
           "type": "number",
-          "default": 1
+          "default": 1.0
         },
         "mem": {
           "title": "Memory size (MB)",
@@ -358,7 +358,7 @@
           "title": "CPU count",
           "description": "Node CPU requirements",
           "type": "number",
-          "default": 1
+          "default": 1.0
         },
         "mem": {
           "title": "Memory size (MB)",

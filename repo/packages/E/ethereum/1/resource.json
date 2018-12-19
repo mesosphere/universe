@@ -8,9 +8,9 @@
     "uris": {
       "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u192-linux-x64.tar.gz",
       "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz",
-      "bootstrap-zip": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.0/bootstrap.zip",
-      "scheduler-zip": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.0/ethereum-scheduler.zip",
-      "geth-scripts-zip": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.0/geth-scripts.zip"
+      "bootstrap-zip": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.1/bootstrap.zip",
+      "scheduler-zip": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.1/ethereum-scheduler.zip",
+      "geth-scripts-zip": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.1/geth-scripts.zip"
     }
   },
   "images": {
@@ -29,7 +29,7 @@
             }
           ],
           "kind": "executable",
-          "url": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.0/dcos-service-cli-darwin"
+          "url": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.1/dcos-service-cli-darwin"
         }
       },
       "linux": {
@@ -41,7 +41,7 @@
             }
           ],
           "kind": "executable",
-          "url": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.0/dcos-service-cli-linux"
+          "url": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.1/dcos-service-cli-linux"
         }
       },
       "windows": {
@@ -53,7 +53,7 @@
             }
           ],
           "kind": "executable",
-          "url": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.0/dcos-service-cli.exe"
+          "url": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.1/dcos-service-cli.exe"
         }
       }
     }
