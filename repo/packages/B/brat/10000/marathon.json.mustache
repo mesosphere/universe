@@ -44,7 +44,11 @@
   },
   "labels": {
     "DCOS_SERVICE_PORT_INDEX": "0",
-    "HAPROXY_GROUP": "internal",
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "true",
+    "HAPROXY_0_ENABLED": "true",
+    "HAPROXY_0_VHOST": "dcos-leo-public.eastus.cloudapp.azure.com",
+    "HAPROXY_0_PATH": "/brat",
     "DCOS_SERVICE_NAME": "{{service.name}}",
     "DCOS_SERVICE_SCHEME": "http"
   },
