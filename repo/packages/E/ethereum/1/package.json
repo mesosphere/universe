@@ -1,0 +1,28 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [
+    "0.1.0"
+  ],
+  "downgradesTo": [
+    "0.1.0"
+  ],
+  "minDcosReleaseVersion": "1.10",
+  "name": "ethereum",
+  "version": "0.1.1",
+  "maintainer": "andrew.kerrigan@issgovernance.com",
+  "description": "Ethereum on DC/OS",
+  "selected": false,
+  "framework": true,
+  "tags": [
+    "ethereum",
+    "blockchain"
+  ],
+  "licenses": [
+    {
+      "name": "MIT",
+      "url": "https://github.com/iss-lab/dcos-ethereum/blob/master/LICENSE"
+    }
+  ],
+  "postInstallNotes": "DC/OS Ethereum is being installed!\n\n\tDocumentation: https://github.com/iss-lab/dcos-ethereum\n\tIssues: https://github.com/iss-lab/dcos-ethereum/issues",
+  "postUninstallNotes": "DC/OS Ethereum is being uninstalled."
+}
