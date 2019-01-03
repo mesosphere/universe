@@ -4,6 +4,15 @@
   "mem": {{service.mem}},
   "instances": 1,
   {{#security.secret-name}}
+  "container": {
+      "type": "MESOS",
+      "volumes":[ 
+        {
+            "containerPath": "secrets/service-account.json",
+            "secret": "serviceCredential"
+        }
+      ]
+  }
   "secrets": {
       "serviceCredential": {
           "source": "{{security.secret-name}}"
@@ -17,7 +26,7 @@
       "JENKINS_FRAMEWORK_NAME": "{{service.name}}",
       "MARATHON_NAME": "{{service.marathon-name}}",
       {{#security.secret-name}}
-          "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+          "DCOS_SERVICE_ACCOUNT_CREDENTIAL": "secrets/service-account.json",
           "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
           "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
       {{/security.secret-name}}
