@@ -17,5 +17,11 @@
   ],
   "version": "1.1.27-0.11.0-beta",
   "upgradesFrom": ["1.1.26-0.10.1.0-beta"],
-  "downgradesTo": ["1.1.26-0.10.1.0-beta"]
+  "downgradesTo": ["1.1.26-0.10.1.0-beta"],
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/apache/kafka/trunk/LICENSE"
+    }
+  ]
 }

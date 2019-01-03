@@ -8,5 +8,11 @@
   "framework": true,
   "tags": ["message", "broker", "pubsub", "kafka"],
   "postInstallNotes": "Apache Kafka by Confluent is being installed.",
-  "postUninstallNotes": "Apache Kafka by Confluent has been uninstalled. Please run the framework_cleaner to remove any persistent state if required."
+  "postUninstallNotes": "Apache Kafka by Confluent has been uninstalled. Please run the framework_cleaner to remove any persistent state if required.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/apache/kafka/trunk/LICENSE"
+    }
+  ]
 }
