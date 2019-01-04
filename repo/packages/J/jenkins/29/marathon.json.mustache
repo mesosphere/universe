@@ -12,7 +12,7 @@
             "secret": "serviceCredential"
         }
       ]
-  }
+  },
   "secrets": {
       "serviceCredential": {
           "source": "{{security.secret-name}}"
@@ -50,7 +50,7 @@
            "image": "{{advanced.docker-image}}",
        {{/advanced.docker-image}}
        {{^advanced.docker-image}}
-           "image": "{{resource.assets.container.docker.jenkins-352-21072}}",
+           "image": "{{resource.assets.container.docker.jenkins-353-21501}}",
        {{/advanced.docker-image}}
            "network" : "HOST"
        },
