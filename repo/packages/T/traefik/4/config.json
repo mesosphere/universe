@@ -1,0 +1,417 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "service": {
+      "properties": {
+        "name": {
+          "default": "traefik",
+          "description": "Name of the Traefik instance",
+          "type": "string"
+        },
+        "cpus": {
+          "default": 1,
+          "description": "CPU shares to allocate to each Traefik instance.",
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "mem": {
+          "default": 128.0,
+          "description": "Memory (MB) to allocate to each Traefik task.",
+          "minimum": 64.0,
+          "type": "number"
+        },
+        "instances": {
+          "default": 2,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "user": {
+          "description": "The user that runs the Traefik service and owns the Mesos sandbox.",
+          "type": "string",
+          "default": "root"
+        },
+        "role": {
+          "default": "slave_public",
+          "description": "Deploy Traefik only on nodes with this role.",
+          "type": "string"
+        },
+        "minimumHealthCapacity": {
+          "default": 0.5,
+          "description": "Minimum health capacity.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "maximumOverCapacity": {
+          "default": 0.2,
+          "description": "Maximum over capacity.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "disk": {
+          "default": 100,
+          "description": "Disk space (in MB) to allocate for each instance.",
+          "minimum": 20,
+          "type": "integer"
+        }
+      },
+      "required": ["cpus", "mem", "instances", "name"],
+      "type": "object"
+    },
+    "entrypoint": {
+      "description": "Traefik entrypoints",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "http-address": {
+          "default": "",
+          "description": "Leave empty for listening on all interfaces.",
+          "type": "string"
+        },
+        "http-port": {
+          "default": 80,
+          "description": "HTTP port.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "http-compression": {
+          "default": true,
+          "description": "Enable compression.",
+          "type": "boolean"
+        },
+        "https-enable": {
+          "default": true,
+          "description": "Enable HTTPS entrypoint.",
+          "type": "boolean"
+        },
+        "https-address": {
+          "default": "",
+          "description": "Leave empty for listening on all interfaces.",
+          "type": "string"
+        },
+        "https-port": {
+          "default": 443,
+          "description": "HTTPS port.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "https-compression": {
+          "default": true,
+          "description": "Enable compression.",
+          "type": "boolean"
+        },
+        "api-enable": {
+          "default": true,
+          "description": "Enable API entrypoint.",
+          "type": "boolean"
+        },
+        "enable-dashboard": {
+          "default": true,
+          "description": "Enable Admin Dashboard.",
+          "type": "boolean"
+        },
+        "api-address": {
+          "description": "Leave empty for listening on all interfaces.",
+          "type": "string"
+        },
+        "api-port": {
+          "default": 8080,
+          "description": "API (admin) port, if not defined $PORT1 will be used",
+          "type": "integer"
+        }
+      }
+    },
+    "traefik": {
+      "description": "Traefik configuration",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "secret-name": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "log-level": {
+          "description": "Traefik log level.",
+          "type": "string",
+          "default": "INFO"
+        },
+        "grace-timeout": {
+          "description": "Duration to give active requests a chance to finish before Traefik stops",
+          "type": "string",
+          "default": "30s"
+        },
+        "healthcheck-interval": {
+          "description": "Default health check interval",
+          "type": "string",
+          "default": "30s"
+        },
+        "read-timeout": {
+          "description": "The maximum duration for reading the entire request, including the body",
+          "type": "string",
+          "default": "0s"
+        },
+        "write-timeout": {
+          "description": "The maximum duration before timing out writes of the response",
+          "type": "string",
+          "default": "0s"
+        },
+        "idle-timeout": {
+          "description": "The maximum duration an idle (keep-alive) connection will remain idle before closing itself.",
+          "type": "string",
+          "default": "180s"
+        },
+        "retry": {
+          "description": "Number of attempts to reach backend service",
+          "type": "string"
+        },
+        "config-file": {
+          "description": "Path to additional Traefik config file in TOML format.",
+          "type": "string"
+        },
+        "watch-config-file": {
+          "description": "Watch config file for changes.",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "marathon": {
+      "description": "Marathon configuration",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enable": {
+          "default": true,
+          "description": "Enable Marathon provider.",
+          "type": "boolean"
+        },
+        "endpoint": {
+          "default": "http://marathon.mesos:8080",
+          "description": "Marathon endpoint, multiple instances separate by comma.",
+          "type": "string"
+        },
+        "watch": {
+          "default": true,
+          "description": "Watch changes in Marathon.",
+          "type": "boolean"
+        },
+        "domain": {
+          "default": "marathon.localhost",
+          "description": "Default domain. Can be overridden by setting the 'traefik.domain' label on an application.",
+          "type": "string"
+        },
+        "marathonlb-compatibility": {
+          "default": false,
+          "description": "Enable compatibility with marathon-lb labels.",
+          "type": "boolean"
+        },
+        "expose": {
+          "default": false,
+          "description": "Expose Marathon apps by default in Traefik.",
+          "type": "boolean"
+        },
+        "respect-readiness-checks": {
+          "default": true,
+          "description": "During deployment Traefik will respect readiness checks if defined in Marathon.",
+          "type": "boolean"
+        },
+        "groups-as-subdomains": {
+          "default": false,
+          "description": "Convert Marathon groups to subdomains.",
+          "type": "boolean"
+        },
+        "dialer-timeout": {
+          "default": "60s",
+          "description": "Amount of time to allow the Marathon provider to wait to open a TCP connection to a Marathon master.",
+          "type": "string"
+        },
+        "keep-alive": {
+          "default": "10s",
+          "description": "Set the TCP Keep Alive interval for the Marathon HTTP Client.",
+          "type": "string"
+        },
+        "force-task-hostname": {
+          "default": false,
+          "description": "By default, a task's IP address (as returned by the Marathon API) is used as backend server if an IP-per-task configuration can be found; otherwise, the name of the host running the task is used. The latter behavior can be enforced by enabling this switch.",
+          "type": "boolean"
+        }
+      }
+    },
+    "mesos": {
+      "description": "Allows directly exposing Mesos applications",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enable": {
+          "default": false,
+          "description": "Enable Mesos provider.",
+          "type": "boolean"
+        },
+        "endpoint": {
+          "default": "http://leader.mesos:5050",
+          "description": "Mesos endpoint, multiple instances separate by comma.",
+          "type": "string"
+        },
+        "watch": {
+          "default": true,
+          "description": "Watch changes in Marathon.",
+          "type": "boolean"
+        },
+        "domain": {
+          "default": "mesos.localhost",
+          "description": "Default domain. Can be overridden by setting the 'traefik.domain' label on an application.",
+          "type": "string"
+        },
+        "expose": {
+          "default": false,
+          "description": "Expose Mesos apps by default in Traefik.",
+          "type": "boolean"
+        },
+        "groups-as-subdomains": {
+          "default": false,
+          "description": "Convert Marathon groups to subdomains.",
+          "type": "boolean"
+        },
+        "timeout": {
+          "default": 30,
+          "description": "Mesos HTTP API timeout",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "zk-timeout": {
+          "default": 30,
+          "description": "ZooKeeper timeout",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "refresh": {
+          "default": 30,
+          "description": "Polling interval",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "ip-sources": {
+          "default": "host",
+          "description": "IP sources (e.g. host, docker, mesos, netinfo).",
+          "type": "string"
+        }
+      }
+    },
+    "kubernetess": {
+      "description": "Allows access to Kubernetess applications",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enable": {
+          "default": false,
+          "description": "Enable Kubernetess provider.",
+          "type": "boolean"
+        },
+        "endpoint": {
+          "description": "Kubernetes server endpoint",
+          "type": "string"
+        },
+        "token": {
+          "description": "Bearer token used for the Kubernetes client configuration",
+          "type": "string"
+        },
+        "ca": {
+          "description": "Path to the certificate authority file",
+          "type": "string"
+        },
+        "namespaces": {
+          "description": "Comma-separated namespaces to watch",
+          "type": "string"
+        },
+        "filename": {
+          "description": "Override default configuration template",
+          "type": "string"
+        },
+        "ingress-class": {
+          "description": "Value of `kubernetes.io/ingress.class` annotation that identifies Ingress objects to be processed",
+          "type": "string"
+        },
+        "disable-pass-host-headers": {
+          "default": false,
+          "description": "Disable PassHost Headers",
+          "type": "boolean"
+        },
+        "enable-pass-tls-cert": {
+          "default": false,
+          "description": "Disable PassHost Headers",
+          "type": "boolean"
+        }
+      }
+    },
+    "metrics": {
+      "description": "Metrics configuration",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "recent-errors": {
+          "default": 10,
+          "description": "Number of logged recent errors",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "prometheus-entrypoint": {
+          "default": "",
+          "description": "Traefik entrypoint for Prometheus (e.g. api)",
+          "type": "string"
+        },
+        "prometheus-buckets": {
+          "default": "0.1,0.3,1.2,5.0",
+          "type": "string"
+        },
+        "datadog-address": {
+          "default": "",
+          "description": "DataDog endpoint",
+          "type": "string"
+        },
+        "datadog-pushinterval": {
+          "default": "10s",
+          "type": "string"
+        },
+        "influxdb-address": {
+          "default": "",
+          "description": "InfluxDB endpoint",
+          "type": "string"
+        },
+        "influxdb-pushinterval": {
+          "default": "10s",
+          "type": "string"
+        },
+        "statsd-address": {
+          "default": "",
+          "description": "StatsD endpoint",
+          "type": "string"
+        },
+        "statsd-pushinterval": {
+          "default": "10s",
+          "type": "string"
+        }
+      }
+    },
+    "logging": {
+      "description": "Logging configuration",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "access-logs": {
+          "default": false,
+          "description": "Enable Access Logs",
+          "type": "boolean"
+        },
+        "access-logs-format": {
+          "description": "Default is text",
+          "type": "string"
+        },
+        "access-logs-path": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "type": "object"
+}
