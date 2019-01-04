@@ -1,0 +1,46 @@
+
+{
+  "id": "{{service.name}}",
+  "instances": 1,
+  "cpus": {{argotunnel.cpus}},
+  "mem": {{argotunnel.mem}},
+  "secrets": {
+    "tunnel-secret": {
+      "source": "{{argotunnel.origincert-secret}}"
+    }
+  },
+  "container": {
+    "type": "MESOS",
+    "volumes": [
+      {
+        "containerPath": "tunnel-secret",
+        "secret": "tunnel-secret"
+      }
+    ]
+  },
+  "fetch": [
+    {"uri": "{{resource.assets.uris.cmd}}", "executable": true},
+    {"uri": "{{resource.assets.uris.cloudflared}}"}
+  ],
+  "cmd": "env | sort && ./cmd.sh",
+  "env": {
+    "PACKAGE_NAME": "{{package-name}}",
+    "PACKAGE_VERSION": "{{package-version}}",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1546627841430",
+    "PACKAGE_BUILD_TIME_STR": "2019-01-04T18:50:41.430942",
+
+    "ARGOTUNNEL_CLOUDFLARE_HOSTNAME": "{{argotunnel.cloudflare-hostname}}",
+    "ARGOTUNNEL_LOCAL_SERVICE_URL": "{{argotunnel.local-service-url}}"
+    {{#argotunnel.lb-pool}},
+    "ARGOTUNNEL_LB_POOL": " --lb-pool {{argotunnel.lb-pool}}"
+    {{/argotunnel.lb-pool}}
+  },
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}
