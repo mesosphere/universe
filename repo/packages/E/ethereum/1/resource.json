@@ -1,0 +1,61 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "ethstats_docker": "ethereumex/eth-stats-dashboard:v0.0.1"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u192-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz",
+      "bootstrap-zip": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.1/bootstrap.zip",
+      "scheduler-zip": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.1/ethereum-scheduler.zip",
+      "geth-scripts-zip": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.1/geth-scripts.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-small.png?raw=true",
+    "icon-medium": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-medium.png?raw=true",
+    "icon-large": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-large.png?raw=true"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "b0dc012b0f344225148d9221c87ec93c629aec25c9e525c4257c62c1d883f3fb"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.1/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "e07545dc370855280f0701ece6c872befcb946e351c5778e953b0fbbb7173ccb"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.1/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "33e84a1ef1edd30f01c681b210068bf60c4e9b0c7c4ca3b6ef43b170f235bd6e"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://github.com/iss-lab/dcos-ethereum/releases/download/v0.1.1/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,236 @@
+{
+    "type": "object", 
+    "properties": {
+        "service": {
+            "type": "object", 
+            "description": "DC/OS service configuration properties", 
+            "properties": {
+                "name": {
+                    "description": "The name of the service instance", 
+                    "type": "string", 
+                    "default": "consul", 
+                    "title": "Service name"
+                }, 
+                "user": {
+                    "description": "The user that the service will run as.", 
+                    "type": "string", 
+                    "default": "root", 
+                    "title": "User"
+                }, 
+                "service_account": {
+                    "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "service_account_secret": {
+                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.", 
+                    "type": "string", 
+                    "default": "", 
+                    "title": "Credential secret name (optional)"
+                }, 
+                "virtual_network_enabled": {
+                    "description": "Enable virtual networking", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "virtual_network_name": {
+                    "description": "The name of the virtual network to join", 
+                    "type": "string", 
+                    "default": "dcos"
+                }, 
+                "virtual_network_plugin_labels": {
+                    "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "log_level": {
+                    "description": "The log level for the DC/OS service.", 
+                    "type": "string", 
+                    "enum": [
+                        "OFF", 
+                        "FATAL", 
+                        "ERROR", 
+                        "WARN", 
+                        "INFO", 
+                        "DEBUG", 
+                        "TRACE", 
+                        "ALL"
+                    ], 
+                    "default": "INFO"
+                }, 
+                "deploy_strategy": {
+                    "description": "consul deploy strategy. [parallel, serial]", 
+                    "type": "string", 
+                    "enum": [
+                        "parallel", 
+                        "serial"
+                    ], 
+                    "default": "parallel"
+                }, 
+                "update_strategy": {
+                    "description": "consul update strategy. [parallel, serial]", 
+                    "type": "string", 
+                    "enum": [
+                        "parallel", 
+                        "serial"
+                    ], 
+                    "default": "serial"
+                }
+            }, 
+            "required": [
+                "name", 
+                "user"
+            ]
+        }, 
+        "node": {
+            "description": "consul pod configuration properties", 
+            "type": "object", 
+            "properties": {
+                "count": {
+                    "title": "Node count", 
+                    "description": "Number of consul pods to run. Should be uneven.", 
+                    "type": "integer", 
+                    "default": 3, 
+                    "minimum": 3
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "consul pod CPU requirements", 
+                    "type": "number", 
+                    "default": 0.5
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "consul pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 128
+                }, 
+                "disk": {
+                    "title": "Disk size (MB)", 
+                    "description": "consul pod persistent disk requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 500
+                }, 
+                "disk_type": {
+                    "title": "Disk type [ROOT, MOUNT]", 
+                    "description": "Mount volumes require preconfiguration in DC/OS", 
+                    "enum": [
+                        "ROOT", 
+                        "MOUNT"
+                    ], 
+                    "default": "ROOT"
+                }
+            }, 
+            "required": [
+                "count", 
+                "cpus", 
+                "mem", 
+                "disk", 
+                "disk_type"
+            ]
+        }, 
+        "consul": {
+            "description": "consul pod configuration properties", 
+            "type": "object", 
+            "properties": {
+                "server_port": {
+                    "description": "Server RPC port", 
+                    "type": "integer", 
+                    "default": 8300
+                }, 
+                "serf_lan_port": {
+                    "description": "The Serf LAN port", 
+                    "type": "integer", 
+                    "default": 8301
+                }, 
+                "serf_wan_port": {
+                    "description": "The Serf WAN port", 
+                    "type": "integer", 
+                    "default": 8302
+                }, 
+                "serf_wan_port_enabled": {
+                    "description": "Enable/disable the serf wan port. Note: Disabling the port will disable WAN federation which is not recommended. Various catalog and WAN related endpoints will return errors or empty results. ", 
+                    "type": "boolean", 
+                    "default": true
+                }, 
+                "http_port": {
+                    "description": "The HTTP API port", 
+                    "type": "integer", 
+                    "default": 8500
+                }, 
+                "http_port_enabled": {
+                    "description": "Enable/disable the http port. Note: Disabling the http port will disable the readiness and health checks", 
+                    "type": "boolean", 
+                    "default": true
+                }, 
+                "https_port": {
+                    "description": "The HTTPS API. Only used if transport encryption is enabled", 
+                    "type": "integer", 
+                    "default": 8501
+                }, 
+                "dns_port": {
+                    "description": "DNS port", 
+                    "type": "integer", 
+                    "default": 8600
+                }, 
+                "dns_port_enabled": {
+                    "description": "Enable/disable the dns port.", 
+                    "type": "boolean", 
+                    "default": true
+                }, 
+                "grpc_port": {
+                    "description": "The gRPC API. We recommend using 8502 for grpc by convention as some tooling will work automatically with this. Currently gRPC is only used to expose Envoy xDS API to Envoy proxies.", 
+                    "type": "integer", 
+                    "default": 8502
+                }, 
+                "grpc_port_enabled": {
+                    "description": "Enable/disable the grpc port.", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "security": {
+                    "description": "Consul security settings", 
+                    "type": "object", 
+                    "properties": {
+                        "gossip_encryption_key": {
+                            "description": "base64-encoded string to be used for gossip encryption (generate using 'consul keygen'). If not set or empty gossip encryption is disabled", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "transport_encryption_enabled": {
+                            "description": "Enable transport encryption (TLS)", 
+                            "type": "boolean", 
+                            "default": false
+                        }
+                    }, 
+                    "required": [
+                        "gossip_encryption_key", 
+                        "transport_encryption_enabled"
+                    ]
+                }
+            }, 
+            "required": [
+                "server_port", 
+                "serf_lan_port", 
+                "serf_wan_port", 
+                "serf_wan_port_enabled", 
+                "http_port", 
+                "http_port_enabled", 
+                "https_port", 
+                "dns_port", 
+                "dns_port_enabled", 
+                "grpc_port", 
+                "grpc_port_enabled"
+            ]
+        }
+    }
+}

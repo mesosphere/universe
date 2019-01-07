@@ -14,5 +14,15 @@
   ],
   "preInstallNotes": "Mesosphere Kubernetes Engine",
   "postInstallNotes": "The Mesosphere Kubernetes Engine service is being installed.",
-  "postUninstallNotes": "The Mesosphere Kubernetes Engine service is being uninstalled."
+  "postUninstallNotes": "The Mesosphere Kubernetes Engine service is being uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/master/LICENSE"
+    },
+    {
+      "name": "Proprietary",
+      "url": "https://mesosphere.com/mesosphere-enterprise-terms/"
+    }
+  ]
 }

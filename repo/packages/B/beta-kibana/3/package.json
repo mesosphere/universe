@@ -11,9 +11,18 @@
   "selected": false,
   "tags": [
     "elastic",
-    "elasticsearch",
     "kibana",
     "x-pack"
   ],
-  "version": "1.0.15-5.5.1-beta"
+  "version": "1.0.15-5.5.1-beta",
+  "licenses": [
+    {
+        "name": "Apache License Version 2.0",
+        "url": "https://raw.githubusercontent.com/elastic/kibana/master/LICENSE.txt"
+    },
+    {
+        "name": "Elastic License",
+        "url": "https://raw.githubusercontent.com/elastic/kibana/master/x-pack/README.md"
+    }
+ ]
 }

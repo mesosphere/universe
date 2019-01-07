@@ -1,0 +1,18 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/jupyter/assets/jupyter-logo.svg",
+    "icon-medium": "https://downloads.mesosphere.com/jupyter/assets/jupyter-logo.svg",
+    "icon-large": "https://downloads.mesosphere.com/jupyter/assets/jupyter-logo.svg",
+    "screenshots": [
+      "https://downloads.mesosphere.com/jupyter/assets/jupyter-screenshot.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "jupyter-docker": "dcoslabs/dcos-jupyterlab:1.2.0-0.33.7",
+        "jupyter-docker-gpu": "dcoslabs/dcos-jupyterlab:1.2.0-0.33.7-gpu"
+      }
+    }
+  }
+}

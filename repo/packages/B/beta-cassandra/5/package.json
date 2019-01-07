@@ -14,5 +14,11 @@
   ],
   "version": "1.0.32-3.0.14-beta",
   "upgradesFrom": ["1.0.31-3.0.13-beta"],
-  "downgradesTo": ["1.0.31-3.0.13-beta"]
+  "downgradesTo": ["1.0.31-3.0.13-beta"],
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/apache/cassandra/trunk/LICENSE.txt"
+    }
+  ]
 }

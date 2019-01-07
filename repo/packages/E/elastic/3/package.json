@@ -9,9 +9,28 @@
   "postUninstallNotes": "DC/OS elastic service has been uninstalled.",
   "selected": true,
   "tags": [
+    "elastic",
     "kibana",
     "elasticsearch",
     "x-pack"
   ],
-  "version": "1.0.6-5.2.2"
+  "version": "1.0.6-5.2.2",
+  "licenses": [
+    {
+        "name": "Apache License Version 2.0",
+        "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/LICENSE.txt"
+    },
+    {
+        "name": "Elastic License",
+        "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/x-pack/README.md"
+    },
+    {
+        "name": "Apache License Version 2.0",
+        "url": "https://raw.githubusercontent.com/elastic/kibana/master/LICENSE.txt"
+    },
+    {
+        "name": "Elastic License",
+        "url": "https://raw.githubusercontent.com/elastic/kibana/master/x-pack/README.md"
+    }
+ ]
 }

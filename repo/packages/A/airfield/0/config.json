@@ -1,0 +1,108 @@
+{
+    "type": "object", 
+    "properties": {
+        "service": {
+            "type": "object", 
+            "description": "DC/OS service configuration properties", 
+            "properties": {
+                "name": {
+                    "description": "The name of the service instance", 
+                    "type": "string", 
+                    "default": "airfield", 
+                    "title": "Service name"
+                }, 
+                "user": {
+                    "description": "The user that the service will run as.", 
+                    "type": "string", 
+                    "default": "root", 
+                    "title": "User"
+                }, 
+                "service_account_secret": {
+                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.", 
+                    "type": "string", 
+                    "default": "", 
+                    "title": "Credential secret name (optional)"
+                }, 
+                "virtual_network_enabled": {
+                    "description": "Enable virtual networking", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "virtual_network_name": {
+                    "description": "The name of the virtual network to join", 
+                    "type": "string", 
+                    "default": "dcos"
+                }, 
+                "marathon_lb_vhost": {
+                    "description": "The domain name to make airfield available under, must be pointing to your marathon-lb", 
+                    "type": "string"
+                }
+            }, 
+            "required": [
+                "name", 
+                "user"
+            ]
+        }, 
+        "node": {
+            "description": "airfield pod configuration properties", 
+            "type": "object", 
+            "properties": {
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "airfield pod CPU requirements", 
+                    "type": "number", 
+                    "default": 0.5
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "airfield pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 512
+                }
+            }, 
+            "required": [
+                "cpus", 
+                "mem"
+            ]
+        }, 
+        "airfield": {
+            "description": "Airfield specific configuration", 
+            "type": "object", 
+            "properties": {
+                "marathon_lb_base_host": {
+                    "title": "Base host to expose zeppelin instances under", 
+                    "description": "Hostnames will be construced as <instance-name><marathon_lb_base_host>, e.g. marathon_lb_base_host=\".zeppelin.mycorp\" results in hosts of the form someinstance.zeppelin.mycorp.", 
+                    "type": "string"
+                }, 
+                "consul_endpoint": {
+                    "title": "Endpoint for consul", 
+                    "description": "HTTP Endpoint for consul, e.g. \"http://api.consul.l4lb.thisdcos.directory:8500/v1\" if you use the consul package. Either this or etcd_endpoint must be set", 
+                    "type": "string"
+                }, 
+                "etcd_endpoint": {
+                    "title": "Endpoint for etcd", 
+                    "description": "Endpoint for etcd in the form host:port, e.g. \"etcd.marathon.l4lb.thisdcos.directory:2379\". Either this or consul_endpoint must be set", 
+                    "type": "string"
+                }, 
+                "app_group": {
+                    "title": "Marathon App group for zeppelin instances", 
+                    "description": "app group to start zeppelin instances under. If not set \"airfield-zeppelin\" is used.", 
+                    "type": "string"
+                }, 
+                "config_base_key": {
+                    "title": "Key prefix in consul/etcd", 
+                    "description": "Key prefix in consul/etcd to use for storing airfield config. If not set \"airfield\" is used.", 
+                    "type": "string"
+                }, 
+                "dcos_base_url": {
+                    "title": "Base URL of the DC/OS adminrouter", 
+                    "description": "URL of the DC/OS adminrouter. Default works under EE clusters in permissive/strict mode. Set this to \"http://leader.mesos\" if running on OpenSource DC/OS", 
+                    "type": "string"
+                }
+            }, 
+            "required": [
+                "marathon_lb_base_host"
+            ]
+        }
+    }
+}

@@ -20,5 +20,11 @@
     ],
     "preInstallNotes": "This DC/OS Service is currently in preview.",
     "postInstallNotes": "DC/OS hello-world is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/hello-world/\n\tIssues: https://docs.mesosphere.com/support/",
-    "postUninstallNotes": "DC/OS hello-world is being uninstalled."
+    "postUninstallNotes": "DC/OS hello-world is being uninstalled.",
+    "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/mesosphere/dcos-commons/master/LICENSE"
+    }
+  ]
 }
