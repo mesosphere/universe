@@ -10,7 +10,7 @@
           "description" : "The name of this Marathon service inside DC/OS base Marathon.\nIf not specified otherwise, this name will also be used for the framework name, dcos service name, zk path and mesos role.\nTo create a nested path, please specify a group.",
           "type" : "string",
           "default" : "marathon-user",
-          "pattern" : "^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$"
+          "pattern": "^(\\/?((\\.\\.)|(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]))?($|\\/))+$",
         },
         "group" : {
           "description" : "The group of this Marathon service inside DC/OS base Marathon. If a group is defined, the id of this service will be group/name",
@@ -154,7 +154,12 @@
         "gpu-scheduling-behavior" : {
           "description" : "Defines how offered GPU resources should be treated. Possible settings are `undefined`, `restricted` and `unrestricted`",
           "type" : "string",
-          "default" : "undefined"
+          "default" : "undefined",
+          "enum": [
+            "undefined",
+            "restricted",
+            "unrestricted"
+          ]
         },
         "group-versions-cache-size" : {
           "description" : "Size of the groups repository versions cache.",
@@ -347,11 +352,6 @@
           "description" : "A transmission interval in milliseconds for the DataDog reporter.",
           "type" : "integer",
           "default" : 10000
-        },
-        "metrics-histogram-reservoir-highest-trackable-value" : {
-          "description" : "The highest trackable value of histograms and timers.",
-          "type" : "integer",
-          "default" : 3600000000000
         },
         "metrics-histogram-reservoir-reset-periodically" : {
           "description" : "Enabled: Clear histograms and timers fully according to the given interval. Disabled: ",
