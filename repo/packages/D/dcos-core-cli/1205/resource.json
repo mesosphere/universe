@@ -1,0 +1,42 @@
+{
+    "cli": {
+        "binaries": {
+            "linux": {
+                "x86-64": {
+                    "kind": "zip",
+                    "url": "https://downloads.dcos.io/cli/releases/plugins/dcos-core-cli/linux/x86-64/dcos-core-cli-1.12-patch.5.zip",
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "9a9209f7295171a497372ce4df37ea69d983dbac1b9fb0c412792dabcfbd2e5b"
+                        }
+                    ]
+                }
+            },
+            "darwin": {
+                "x86-64": {
+                    "kind": "zip",
+                    "url": "https://downloads.dcos.io/cli/releases/plugins/dcos-core-cli/darwin/x86-64/dcos-core-cli-1.12-patch.5.zip",
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "543474c443f916c0c6afa03c1adfa726c9cd354bb31a9c5e5b80e064c88226a2"
+                        }
+                    ]
+                }
+            },
+            "windows": {
+                "x86-64": {
+                    "kind": "zip",
+                    "url": "https://downloads.dcos.io/cli/releases/plugins/dcos-core-cli/windows/x86-64/dcos-core-cli-1.12-patch.5.zip",
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "75d153ba993501851f86946bec2b8c01c6f09eb45f36ca6028b0ebd3be643c50"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
