@@ -11,11 +11,20 @@
     "framework": true,
     "tags": [
         "elastic",
-        "elasticsearch",
         "kibana",
         "x-pack"
     ],
     "preInstallNotes": "Default configuration requires 1 agent node with: 0.5 CPU | 2048 MB MEM",
     "postInstallNotes": "DC/OS Kibana service is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/elastic/\n\tIssues: https://docs.mesosphere.com/support/",
-    "postUninstallNotes": "DC/OS Kibana service has been uninstalled."
+    "postUninstallNotes": "DC/OS Kibana service has been uninstalled.",
+    "licenses": [
+    {
+        "name": "Apache License Version 2.0",
+        "url": "https://raw.githubusercontent.com/elastic/kibana/master/LICENSE.txt"
+    },
+    {
+        "name": "Elastic License",
+        "url": "https://raw.githubusercontent.com/elastic/kibana/master/x-pack/README.md"
+    }
+ ]
 }

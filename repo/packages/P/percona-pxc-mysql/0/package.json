@@ -19,5 +19,23 @@
   ],
   "preInstallNotes": "Default configuration requires 3 agent nodes each with: 0.1 CPU | 252 MB MEM | 1 25 MB Disk.",
   "postInstallNotes": "DC/OS Percona XtraDB CLuster is being installed!\n\n\tDocumentation: https://github.com/dcos/examples\n\tIssues: https://dcos.io/community",
-  "postUninstallNotes": "DC/OS Percona XtraDB CLuster is being uninstalled."
+  "postUninstallNotes": "DC/OS Percona XtraDB CLuster is being uninstalled.",
+  "licenses": [
+    {
+      "name": "GNU General Public License Version 2.0",
+      "url": "https://raw.githubusercontent.com/mysql/mysql-server/8.0/LICENSE"
+    },
+    {
+      "name": "Universal FOSS Exception",
+      "url": "https://raw.githubusercontent.com/mysql/mysql-server/8.0/LICENSE"
+    },
+    {
+      "name": "BSD-like License",
+      "url": "https://raw.githubusercontent.com/percona/percona-server/5.7/COPYING.show_temp_51"
+    },
+    {
+      "name": "BSD-like License",
+      "url": "https://raw.githubusercontent.com/percona/percona-server/5.7/COPYING.innodb-deadlock-count-patch"
+    }
+  ]
 }

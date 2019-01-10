@@ -1,0 +1,78 @@
+{
+    "type": "object", 
+    "properties": {
+        "service": {
+            "type": "object", 
+            "description": "DC/OS service configuration properties", 
+            "properties": {
+                "name": {
+                    "description": "The name of the service instance", 
+                    "type": "string", 
+                    "default": "argotunnel", 
+                    "title": "Service name"
+                }, 
+                "virtual_network_enabled": {
+                    "description": "Enable virtual networking", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "virtual_network_name": {
+                    "description": "The name of the virtual network to join", 
+                    "type": "string", 
+                    "default": "dcos"
+                }
+            }, 
+            "required": [
+                "name"
+            ]
+        }, 
+        "argotunnel": {
+            "description": "argotunnel pod configuration properties", 
+            "type": "object", 
+            "properties": {
+                "origincert-secret": {
+                    "title": "Origin cert secret", 
+                    "description": "The Origin cert secret", 
+                    "type": "string", 
+                    "default": "argotunnel/origincert-secret"
+                }, 
+                "cloudflare-hostname": {
+                    "title": "Cloudflare hostname", 
+                    "description": "The hostname you want associated with your server; this must be the domain or subdomain of a zone added to your Cloudflare account", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "local-service-url": {
+                    "title": "Local service url", 
+                    "description": "Local service url.", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "lb-pool": {
+                    "title": "Load balanacer pool", 
+                    "description": "Load balancer pool", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "argotunnel pod CPU requirements", 
+                    "type": "number", 
+                    "default": 0.5
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "argotunnel pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 256
+                }
+            }, 
+            "required": [
+                "cloudflare-hostname", 
+                "local-service-url", 
+                "cpus", 
+                "mem"
+            ]
+        }
+    }
+}

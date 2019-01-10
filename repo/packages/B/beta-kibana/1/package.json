@@ -10,8 +10,19 @@
   "preInstallNotes": "This DC/OS Service is currently a beta candidate undergoing testing as part of a formal beta test program. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Contact Mesosphere before deploying this beta candidate service. Product support is available to approved participants in the beta test program.",
   "selected": false,
   "tags": [
+    "elastic",
     "kibana",
     "x-pack"
   ],
-  "version": "1.0.13-5.4.1-beta"
+  "version": "1.0.13-5.4.1-beta",
+  "licenses": [
+    {
+        "name": "Apache License Version 2.0",
+        "url": "https://raw.githubusercontent.com/elastic/kibana/master/LICENSE.txt"
+    },
+    {
+        "name": "Elastic License",
+        "url": "https://raw.githubusercontent.com/elastic/kibana/master/x-pack/README.md"
+    }
+ ]
 }

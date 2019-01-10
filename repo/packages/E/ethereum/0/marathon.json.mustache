@@ -1,0 +1,159 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "user": "{{service.user}}",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*/jre/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && ./bootstrap -print-env=false -resolve=false -template=false && ./bootstrap_geth.sh && ./ethereum-scheduler/bin/ethereum ./ethereum-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "container": {
+    "type": "MESOS",
+    "volumes": [{
+      "containerPath": "ethdata",
+      "mode": "RW",
+      "persistent": {
+        "type": "ROOT",
+        "size": 128
+      }
+    }]
+  },
+  "env": {
+    "PACKAGE_NAME": "ethereum",
+    "PACKAGE_VERSION": "0.1.0",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1543603017878",
+    "PACKAGE_BUILD_TIME_STR": "Fri Nov 30 2018 18:36:57 +0000",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+    "MESOS_API_VERSION": "{{service.mesos_api_version}}",
+    {{#service.virtual_network_enabled}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+    "TASKCFG_ALL_NETWORK_ID": "{{geth.network_id}}",
+    "TASKCFG_ALL_GETH_SYNCMODE": "{{geth.syncmode}}",
+    "TASKCFG_ALL_ETHSTATS_NODE_COUNT": "{{ethstats.count}}",
+    "TASKCFG_ALL_BOOT_NODE_COUNT": "{{boot.count}}",
+    {{#geth.create_genesis}}
+    "TASKCFG_ALL_CREATE_GENESIS": "yes",
+    {{/geth.create_genesis}}
+    "GENESIS_ENGINE": "{{geth.consensus_engine}}",
+    "GENESIS_PERIOD": "{{geth.clique_period}}",
+    "BOOT_NODE_CPUS": "{{boot.cpus}}",
+    "BOOT_NODE_MEM": "{{boot.mem}}",
+    "BOOT_NODE_DISK": "{{boot.disk}}",
+    "BOOT_NODE_DISK_TYPE": "{{boot.disk_type}}",
+    "BOOT_NODE_PLACEMENT": "{{{boot.placement_constraint}}}",
+    "BOOT_NODE_LABELS": "{{boot.labels}}",
+    "TASKCFG_BOOT_GETH_VERBOSITY": "{{boot.verbosity}}",
+    "ETHSTATS_DOCKER_IMAGE": "{{resource.assets.container.docker.ethstats_docker}}",
+    "ETHSTATS_NODE_CPUS": "{{ethstats.cpus}}",
+    "ETHSTATS_NODE_MEM": "{{ethstats.mem}}",
+    "ETHSTATS_NODE_PLACEMENT": "{{{ethstats.placement_constraint}}}",
+    "ETHSTATS_NODE_LABELS": "{{ethstats.labels}}",
+    "TASKCFG_ETHSTATS_VERBOSITY": "{{ethstats.verbosity}}",
+    "TASKCFG_ALL_WS_SECRET": "{{ethstats.websocket_secret}}",
+    "SEALER_NODE_COUNT": "{{sealer.count}}",
+    "SEALER_NODE_CPUS": "{{sealer.cpus}}",
+    "SEALER_NODE_MEM": "{{sealer.mem}}",
+    "SEALER_NODE_DISK": "{{sealer.disk}}",
+    "SEALER_NODE_DISK_TYPE": "{{sealer.disk_type}}",
+    "SEALER_NODE_PLACEMENT": "{{{sealer.placement_constraint}}}",
+    "SEALER_NODE_LABELS": "{{sealer.labels}}",
+    "TASKCFG_SEALER_GETH_ARGS": "{{sealer.args}}",
+    "TASKCFG_SEALER_GETH_VERBOSITY": "{{sealer.verbosity}}",
+    {{#sealer.rpcapi}}
+    "TASKCFG_SEALER_GETH_RPCAPI": "{{sealer.rpcapi}}",
+    "ENABLE_SEALER_RPC": "yes",
+    {{/sealer.rpcapi}}
+    {{#sealer.create_accounts}}
+    "TASKCFG_SEALER_CREATE_ACCOUNTS": "yes",
+    {{/sealer.create_accounts}}
+    {{#sealer.unlock_accounts}}
+    "TASKCFG_SEALER_UNLOCK_ACCOUNTS": "yes",
+    {{/sealer.unlock_accounts}}
+    {{#sealer.account_privatekeys}}
+    "TASKCFG_SEALER_ACCOUNT_PRIVATEKEYS": "{{sealer.account_privatekeys}}",
+    {{/sealer.account_privatekeys}}
+    "TASKCFG_SEALER_ACCOUNT_SECRET": "{{sealer.account_secret}}",
+    "CLIENT_NODE_COUNT": "{{client.count}}",
+    "CLIENT_NODE_CPUS": "{{client.cpus}}",
+    "CLIENT_NODE_MEM": "{{client.mem}}",
+    "CLIENT_NODE_DISK": "{{client.disk}}",
+    "CLIENT_NODE_DISK_TYPE": "{{client.disk_type}}",
+    "CLIENT_NODE_PLACEMENT": "{{{client.placement_constraint}}}",
+    "CLIENT_NODE_LABELS": "{{client.labels}}",
+    "TASKCFG_CLIENT_GETH_ARGS": "{{client.args}}",
+    "TASKCFG_CLIENT_GETH_VERBOSITY": "{{client.verbosity}}",
+    {{#client.rpcapi}}
+    "TASKCFG_CLIENT_GETH_RPCAPI": "{{client.rpcapi}}",
+    "ENABLE_CLIENT_RPC": "yes",
+    {{/client.rpcapi}}
+    {{#client.create_accounts}}
+    "TASKCFG_CLIENT_CREATE_ACCOUNTS": "yes",
+    {{/client.create_accounts}}
+    {{#client.unlock_accounts}}
+    "TASKCFG_CLIENT_UNLOCK_ACCOUNTS": "yes",
+    {{/client.unlock_accounts}}
+    {{#client.account_privatekeys}}
+    "TASKCFG_CLIENT_ACCOUNT_PRIVATEKEYS": "{{client.account_privatekeys}}",
+    {{/client.account_privatekeys}}
+    "TASKCFG_CLIENT_ACCOUNT_SECRET": "{{client.account_secret}}",
+    "GETH_SCRIPTS_URI": "{{resource.assets.uris.geth-scripts-zip}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.service_account_secret}}
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  },
+  "fetch": [
+    { "uri": "{{resource.assets.uris.bootstrap-zip}}", "cache": true },
+    { "uri": "{{resource.assets.uris.geth-scripts-zip}}", "cache": false },
+    { "uri": "{{resource.assets.uris.jre-tar-gz}}", "cache": true },
+    { "uri": "{{resource.assets.uris.scheduler-zip}}", "cache": false },
+    { "uri": "{{resource.assets.uris.libmesos-bundle-tar-gz}}", "cache": true }
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/v1/health",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api"
+    }
+  ]
+}

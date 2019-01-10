@@ -19,5 +19,11 @@
     ], 
     "preInstallNotes": "\n\nThe DC/OS Spinnaker service currently only works with DC/OS Enterprise.\n\n", 
     "postInstallNotes": "DC/OS Spinnaker is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/services/spinnaker/0.3.0-1.9.2/\n", 
-    "postUninstallNotes": "DC/OS Spinnaker is being uninstalled."
+    "postUninstallNotes": "DC/OS Spinnaker is being uninstalled.",
+    "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/spinnaker/spinnaker/master/LICENSE.txt"
+    }
+  ]
 }

@@ -17,5 +17,15 @@
   "postUninstallNotes": "DC/OS Kubernetes is being uninstalled.",
   "manager": {
     "packageName": "kubernetes"
-  }
+  },
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/master/LICENSE"
+    },
+    {
+      "name": "Proprietary",
+      "url": "https://mesosphere.com/mesosphere-enterprise-terms/"
+    }
+  ]
 }
