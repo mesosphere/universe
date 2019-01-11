@@ -1,0 +1,79 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS Stardog service specifications",
+      "properties": {
+        "name": {
+          "default": "stardog",
+          "type": "string",
+          "description": "Name of Stardog instace as seen in DCOS."
+        },
+        "cpus": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 2
+        },
+        "disk": {
+          "description": "Disk",
+          "type": "number",
+          "default": 20000
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance.",
+          "type": "number",
+          "default": 4096
+        },
+        "backup_volume": {
+          "type": "object",
+          "description": "Stardog backup volume config",
+          "properties": {
+            "container_path": {
+              "description": "Container path",
+              "type": "string",
+              "default": "/var/opt/Backups"
+            },
+            "host_path": {
+              "description": "Host path",
+              "type": "string",
+              "default": "/mnt/azurefileshare/data/stardog/backups"
+            }
+          }
+        },
+        "data_volume": {
+          "type": "object",
+          "description": "Stardog data volume config",
+          "properties": {
+            "container_path": {
+              "description": "Container path",
+              "type": "string",
+              "default": "/var/opt/Stardog"
+            },
+            "host_path": {
+              "description": "Host path",
+              "type": "string",
+              "default": "/var/lib/mesos/Stardog"
+            }
+          }
+        }
+      }
+    },
+    "marathon-lb" : {
+      "type": "object",
+      "description": "Marathon-lb ports config",
+      "properties": {
+        "vhost": {
+          "description":  "Virtual host.",
+          "type": "string",
+          "default": ""
+        },
+        "port0": {
+          "description": "UI",
+          "type": "number",
+          "default": 10200
+        }
+      }
+    }
+  }
+}

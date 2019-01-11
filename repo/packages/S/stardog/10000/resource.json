@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://www.stardog.com/img/favicon.png",
+    "icon-medium": "https://www.stardog.com/img/favicon.png",
+    "icon-large": "https://www.stardog.com/img/favicon.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "stardog": "registry.marathon.l4lb.thisdcos.directory:5000/cdpqleo/stardog:latest"
+      }
+    }
+  }
+}
