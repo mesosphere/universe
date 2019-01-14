@@ -18,6 +18,11 @@
     "type": "DOCKER",
     "volumes": [
         {
+            "containerPath": "{{service.graph_data_volume.container_path}}",
+            "hostPath": "{{service.graph_data_volume.host_path}}",
+            "mode": "RW"
+        },
+        {
             "containerPath": "{{service.data_volume.container_path}}",
             "hostPath": "{{service.data_volume.host_path}}",
             "mode": "RW"

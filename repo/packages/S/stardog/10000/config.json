@@ -18,12 +18,28 @@
         "disk": {
           "description": "Disk",
           "type": "number",
-          "default": 20000
+          "default": 100000
         },
         "mem": {
           "description":  "Memory in Mb to allocate to each service instance.",
           "type": "number",
-          "default": 4096
+          "default": 8192
+        },
+        "graph_data_volume": {
+          "type": "object",
+          "description": "Data to add to Stardog",
+          "properties": {
+            "container_path": {
+              "description": "Container path",
+              "type": "string",
+              "default": "/mnt/graph_data"
+            },
+            "host_path": {
+              "description": "Host path",
+              "type": "string",
+              "default": "/mnt/azurefileshare/jupyter/notebooks/Andrei/rca_to_triples/output_cleaned"
+            }
+          }
         },
         "backup_volume": {
           "type": "object",
@@ -66,7 +82,7 @@
         "vhost": {
           "description":  "Virtual host.",
           "type": "string",
-          "default": ""
+          "default": "dcos-leo-public.eastus.cloudapp.azure.com"
         },
         "port0": {
           "description": "UI",
