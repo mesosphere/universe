@@ -57,6 +57,6 @@
       "DCOS_SERVICE_SCHEME": "http",
       "HAPROXY_0_GROUP": "external",
       "HAPROXY_0_VHOST": "{{marathon-lb.vhost}}",
-      "HAPROXY_0_STICKY": "true"
+      "HAPROXY_0_BACKEND_HEAD": "backend {backend}\n  balance {balance}\n  mode {mode}\n  timeout server 30m\n  timeout client 30m\n"
   }
 }
