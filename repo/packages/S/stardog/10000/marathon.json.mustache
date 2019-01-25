@@ -1,0 +1,62 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "disk": {{service.disk}},
+  "container": {
+    "portMappings": [
+      {
+        "containerPort": 5820,
+        "hostPort": 0,
+        "servicePort": {{marathon-lb.port0}},
+        "labels": {
+          "VIP_0": "/{{service.name}}:5820"
+        },
+        "protocol": "tcp"
+      }
+    ],
+    "type": "DOCKER",
+    "volumes": [
+        {
+            "containerPath": "{{service.graph_data_volume.container_path}}",
+            "hostPath": "{{service.graph_data_volume.host_path}}",
+            "mode": "RW"
+        },
+        {
+            "containerPath": "{{service.data_volume.container_path}}",
+            "hostPath": "{{service.data_volume.host_path}}",
+            "mode": "RW"
+        },
+        {
+            "containerPath": "{{service.backup_volume.container_path}}",
+            "hostPath": "{{service.backup_volume.host_path}}",
+            "mode": "RW"
+        }
+    ],
+    "docker": {
+      "image": "{{resource.assets.container.docker.stardog}}",
+      "forcePullImage": true
+    }
+  },
+  "networks": [
+    {
+      "mode": "container/bridge"
+    }
+  ],
+  "healthChecks": [
+    {
+      "portIndex": 0,
+      "protocol": "HTTP",
+      "path": "/"
+    }
+  ],
+  "labels": {
+      "DCOS_PACKAGE_VERSION": "{{package.version}}",
+      "DCOS_SERVICE_NAME": "{{service.name}}",
+      "DCOS_SERVICE_PORT_INDEX": "0",
+      "DCOS_SERVICE_SCHEME": "http",
+      "HAPROXY_0_GROUP": "external",
+      "HAPROXY_0_VHOST": "{{marathon-lb.vhost}}",
+      "HAPROXY_0_BACKEND_HEAD": "backend {backend}\n  balance {balance}\n  mode {mode}\n  timeout server 30m\n  timeout client 30m\n"
+  }
+}
