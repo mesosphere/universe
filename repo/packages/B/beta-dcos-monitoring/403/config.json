@@ -1,0 +1,392 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "dcos-monitoring"
+        },
+        "user": {
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "nobody"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of the Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        }
+      }
+    },
+    "prometheus": {
+      "description": "Prometheus configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "Prometheus pod CPU requirements",
+          "type": "number",
+          "default": 2.0
+        },
+        "mem": {
+          "description": "Prometheus pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "volume": {
+          "description": "Prometheus volume requirements",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "The type of persistent volume to use, one of ROOT or MOUNT",
+              "type": "string",
+              "default": "ROOT",
+              "enum": [
+                "ROOT",
+                "MOUNT"
+              ]
+            },
+            "size": {
+              "description": "The size of the persistent volume in MB",
+              "type": "integer",
+              "default": 25000,
+              "minimum": 2000
+            },
+            "profile": {
+              "description": "The volume profile to use for the persistent volume",
+              "type": "string",
+              "default": ""
+            }
+          }
+        },
+        "interval": {
+          "description": "Master scrape interval",
+          "type": "number",
+          "default": 30
+        },
+        "timeout": {
+          "description": "Master scrape timeout",
+          "type": "number",
+          "default": 25
+        },
+        "dcos_metrics_node_port": {
+          "description": "Port where to scrape dcos-metrics in each node",
+          "type": "number",
+          "default": 61091
+        },
+        "storage_tsdb_retention": {
+          "description": "Determine when to remove old data",
+          "type": "string",
+          "default": "15d"
+        },
+        "admin_router_proxy": {
+          "description": "Configuration for Admin Router integration",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Whether to enable Admin Router integration for Prometheus UI",
+              "type": "boolean",
+              "default": true
+            },
+            "url": {
+              "description": "The DC/OS URL (without the tailing slash)",
+              "type": "string",
+              "default": ""
+            }
+          }
+        },
+        "alert_rules_repository": {
+          "description": "Repository for alert rules",
+          "type": "object",
+          "properties": {
+            "url": {
+              "description": "The URL to the git repository",
+              "type": "string",
+              "default": ""
+            },
+            "path": {
+              "description": "Path in the repository to load rules from (e.g., /, /foo)",
+              "type": "string",
+              "default": ""
+            },
+            "reference_name": {
+              "description": "Git repository reference name (e.g., refs/heads/master)",
+              "type": "string",
+              "default": ""
+            },
+            "credentials": {
+              "description": "Credentials for accessing the repository",
+              "type": "object",
+              "properties": {
+                "username": {
+                  "title": "Secret for username",
+                  "description": "Secret name for username of the repository",
+                  "type": "string",
+                  "default": ""
+                },
+                "password": {
+                  "title": "Secret for password (or API token)",
+                  "description": "Secret name for password (or API token) of the repository",
+                  "type": "string",
+                  "default": ""
+                },
+                "deploy_key": {
+                  "description": "Secret name for the deploy key",
+                  "type": "string",
+                  "default": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "grafana": {
+      "description": "Grafana configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "Grafana pod CPU requirements",
+          "type": "number",
+          "default": 2.0
+        },
+        "mem": {
+          "description": "Grafana pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "data_volume": {
+          "description": "Grafana data volume requirements",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "The type of persistent volume to use, one of ROOT or MOUNT",
+              "type": "string",
+              "default": "ROOT",
+              "enum": [
+                "ROOT",
+                "MOUNT"
+              ]
+            },
+            "size": {
+              "description": "The size of the persistent volume in MB",
+              "type": "integer",
+              "default": 512,
+              "minimum": 50
+            },
+            "profile": {
+              "description": "The volume profile to use for the persistent volume",
+              "type": "string",
+              "default": ""
+            }
+          }
+        },
+        "ui_port": {
+          "description": "The port to connect to the Grafana UI",
+          "type": "integer",
+          "default": 3000
+        },
+        "admin_router_proxy": {
+          "description": "Whether to use Admin Router as the proxy to access Grafana UI",
+          "type": "boolean",
+          "default": true
+        },
+        "public": {
+          "description": "Whether the Grafana instance will be deployed on a public agent or not.",
+          "type": "boolean",
+          "default": false
+        },
+        "admin_credentials": {
+          "description": "Username/password for the admin user",
+          "type": "object",
+          "properties": {
+            "username": {
+              "title": "Secret for username",
+              "description": "Secret name for username of the admin user",
+              "type": "string",
+              "default": ""
+            },
+            "password": {
+              "title": "Secret for password",
+              "description": "Secret name for password of the admin user",
+              "type": "string",
+              "default": ""
+            }
+          }
+        },
+        "placement_constraints": {
+          "type": "string",
+          "description": "The Marathon-style placement constraints string controlling Grafana server placement",
+          "default": "",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "default_dashboards": {
+          "description": "Whether to load default Grafana dashboards associated with this package",
+          "type": "boolean",
+          "default": true
+        },
+        "dashboard_config_repository": {
+          "description": "Repository for Grafana dashboard configs",
+          "type": "object",
+          "properties": {
+            "url": {
+              "description": "The URL to the git repository",
+              "type": "string",
+              "default": ""
+            },
+            "path": {
+              "description": "Path in the repository to load configs from (e.g., /, /foo)",
+              "type": "string",
+              "default": ""
+            },
+            "reference_name": {
+              "description": "Git repository reference name (e.g., refs/heads/master)",
+              "type": "string",
+              "default": ""
+            },
+            "credentials": {
+              "description": "Credentials for accessing the repository",
+              "type": "object",
+              "properties": {
+                "username": {
+                  "title": "Secret for username",
+                  "description": "Secret name for username of the repository",
+                  "type": "string",
+                  "default": ""
+                },
+                "password": {
+                  "title": "Secret for password (or API token)",
+                  "description": "Secret name for password (or API token) of the repository",
+                  "type": "string",
+                  "default": ""
+                },
+                "deploy_key": {
+                  "description": "Secret name for the deploy key",
+                  "type": "string",
+                  "default": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "alertmanager": {
+      "description": "Alertmanager settings",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "Alertmanager pod CPU requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "description": "Alertmanager pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 1024
+        },
+        "data_volume": {
+          "description": "Alertmanager data volume requirements",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "The type of persistent volume to use, one of ROOT or MOUNT",
+              "type": "string",
+              "default": "ROOT",
+              "enum": [
+                "ROOT",
+                "MOUNT"
+              ]
+            },
+            "size": {
+              "description": "The size of the persistent volume in MB",
+              "type": "integer",
+              "default": 512,
+              "minimum": 50
+            },
+            "profile": {
+              "description": "The volume profile to use for the persistent volume",
+              "type": "string",
+              "default": ""
+            }
+          }
+        },
+        "secrets": {
+          "description": "Secrets that will be used by Alertmanager",
+          "type": "object",
+          "properties": {
+            "slack_api_url": {
+              "description": "Slack webhook url",
+              "type": "string",
+              "default": ""
+            }
+          }
+        },
+        "config_repository": {
+          "description": "Repository for Alertmanager configs",
+          "type": "object",
+          "properties": {
+            "url": {
+              "description": "The URL to the git repository",
+              "type": "string",
+              "default": ""
+            },
+            "path": {
+              "description": "Path in the repository to load configs from (e.g., /, /foo)",
+              "type": "string",
+              "default": ""
+            },
+            "credentials": {
+              "description": "Credentials for accessing the repository",
+              "type": "object",
+              "properties": {
+                "username": {
+                  "title": "Secret for username",
+                  "description": "Secret name for username of the repository",
+                  "type": "string",
+                  "default": ""
+                },
+                "password": {
+                  "title": "Secret for password (or API token)",
+                  "description": "Secret name for password (or API token) of the repository",
+                  "type": "string",
+                  "default": ""
+                },
+                "deploy_key": {
+                  "description": "Secret name for the deploy key",
+                  "type": "string",
+                  "default": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
