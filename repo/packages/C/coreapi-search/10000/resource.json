@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://raw.githubusercontent.com/cdpq-leo/assets/master/CoreapiSearch/Images/icon-service-cdpq-small.png",
+    "icon-medium": "https://raw.githubusercontent.com/cdpq-leo/assets/master/CoreapiSearch/Images/icon-service-cdpq-medium.png",
+    "icon-large": "https://raw.githubusercontent.com/cdpq-leo/assets/master/CoreapiSearch/Images/icon-service-cdpq-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "coreapisearch": "registry.marathon.l4lb.thisdcos.directory:5000/cdpqleo/coreapi_search:1.0.1"
+      }
+    }
+  }
+}

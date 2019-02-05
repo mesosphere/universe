@@ -1,0 +1,82 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS coreapi-search service specifications",
+      "properties": {
+        "name": {
+          "description": "Name of CoreApiSearch instances as seen in DC/OS.",
+          "type": "string",
+          "default": "coreapi-search"
+        },
+        "cpus": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 0.2
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance.",
+          "type": "number",
+          "default": 512
+        },
+        "health_url": {
+          "description": "Url for health checks",
+          "type": "string",
+          "default": "/api/health"
+        },
+        "container_port": {
+          "description": "Container port",
+          "type": "number",
+          "default": 5000
+        },
+        "env" : {
+          "type": "object",
+          "description": "environment variables",
+          "properties": {
+            "HTTP_HOSTNAME" : {
+              "description": "Hostname",
+              "type": "string",
+              "default": "0.0.0.0"
+            },
+            "HTTP_PORT" : {
+              "description": "HTTP_PORT",
+              "type": "string",
+              "default": "5000"
+            },
+            "CUSTOM_SEARCH_ID" : {
+              "description": "Google custom search id",
+              "type": "string",
+              "default": "013258818784102125841:zblxy-sqtse"
+            },
+            "API_KEY" : {
+              "description": "Google api key",
+              "type": "string",
+              "default": "AIzaSyAjeMTG5V90ZybdpJ31eIQXmACkNqTJi0I"
+            },
+            "SEARCH_LIMIT" : {
+              "description": "Google max results per query (1-10)",
+              "type": "string",
+              "default": "10"
+            },
+            "SEARCH_LANGUAGE" : {
+              "description": "Google search language",
+              "type": "string",
+              "default": "lang_en"
+            },
+            "SEARCH_QUERY_KEYWORDS" : {
+              "description": "Google search keyword to get more precise results",
+              "type": "string",
+              "default": ""
+            },
+            "USE_SEARCH_DATE_PARAM" : {
+              "description": "Google search date range",
+              "type": "string",
+              "default": "true"
+            }
+          }
+        }
+      }
+    }
+  }
+}
