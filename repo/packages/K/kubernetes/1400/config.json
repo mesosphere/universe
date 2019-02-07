@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of the Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "title": "Credential secret name (optional)",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "mesosphere_kubernetes_engine": {
+      "description": "Mesosphere Kubernetes Engine configuration",
+      "type": "object",
+      "properties": {
+        "resources": {
+          "description": "Reserved resources for Kubernetes manager",
+          "type": "object",
+          "properties": {
+            "cpus": {
+              "title": "CPU count",
+              "description": "Kubernetes manager CPU requirements.",
+              "type": "number",
+              "default": 0.5
+            },
+            "mem": {
+              "title": "Memory size (MB)",
+              "description": "Kubernetes manager RAM requirements (in MB).",
+              "type": "integer",
+              "default": 1024
+            }
+          }
+        }
+      }
+    }
+  }
+}
