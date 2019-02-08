@@ -13,17 +13,17 @@
         "cpus": {
           "description": "Number of logical cores to allocate to each service instance.",
           "type": "number",
-          "default": 2
+          "default": 7.7
         },
         "disk": {
           "description": "Disk",
           "type": "number",
-          "default": 100000
+          "default": 450000
         },
         "mem": {
           "description":  "Memory in Mb to allocate to each service instance.",
           "type": "number",
-          "default": 8192
+          "default": 54272
         },
         "graph_data_volume": {
           "type": "object",
@@ -64,7 +64,7 @@
             "container_path": {
               "description": "Container path",
               "type": "string",
-              "default": "/var/opt/Stardog"
+              "default": "/stardog"
             },
             "host_path": {
               "description": "Host path",

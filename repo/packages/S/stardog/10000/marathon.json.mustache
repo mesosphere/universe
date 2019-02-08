@@ -15,6 +15,17 @@
         "protocol": "tcp"
       }
     ],
+    "constraints": [
+      [
+        "hostname",
+        "UNIQUE"
+      ],
+      [
+        "hostname",
+        "LIKE",
+        "10.32.16.5"
+      ]
+    ],
     "type": "DOCKER",
     "volumes": [
         {
