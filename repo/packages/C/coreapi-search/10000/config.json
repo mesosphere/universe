@@ -18,12 +18,12 @@
         "mem": {
           "description":  "Memory in Mb to allocate to each service instance.",
           "type": "number",
-          "default": 512
+          "default": 256
         },
         "health_url": {
           "description": "Url for health checks",
           "type": "string",
-          "default": "/api/health"
+          "default": "/health"
         },
         "container_port": {
           "description": "Container port",
@@ -44,33 +44,38 @@
               "type": "string",
               "default": "5000"
             },
+            "SERVICE_PREFIX" : {
+              "description": "service prefix url",
+              "type": "string",
+              "default": "/service/coreapi-search"
+            },
             "CUSTOM_SEARCH_ID" : {
-              "description": "Google custom search id",
+              "description": "custom search id",
               "type": "string",
               "default": ""
             },
             "API_KEY" : {
-              "description": "Google api key",
+              "description": "search api key",
               "type": "string",
               "default": ""
             },
             "SEARCH_LIMIT" : {
-              "description": "Google max results per query (1-10)",
+              "description": "max search results per query (1-10)",
               "type": "string",
               "default": "10"
             },
             "SEARCH_LANGUAGE" : {
-              "description": "Google search language",
+              "description": "search language",
               "type": "string",
               "default": "lang_en"
             },
             "SEARCH_QUERY_KEYWORDS" : {
-              "description": "Google search keyword to get more precise results",
+              "description": "search keyword to get more precise results",
               "type": "string",
               "default": ""
             },
             "USE_SEARCH_DATE_PARAM" : {
-              "description": "Google search date range",
+              "description": "search date range",
               "type": "string",
               "default": "true"
             }
