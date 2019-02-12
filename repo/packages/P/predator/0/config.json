@@ -28,7 +28,8 @@
                 "database_type": {
                     "description":  "Type of database.",
                     "type": "string",
-                    "default": "SQLITE"
+                    "default": "SQLITE",
+                    "enum": ["CASSANDRA", "SQLITE", "POSTGRES", "MSSQL", "MYSQL"]
                 },
                 "database_address": {
                     "description":  "Database address.",
@@ -56,7 +57,15 @@
                     "type": "string",
                     "default": "zooz/predator-runner"
                 }
-            }
+            },
+            "required": [
+                "name",
+                "cpus",
+                "mem",
+                "database_type",
+                "metronome_url",
+                "my_address"
+            ]
         }
     }
 }
