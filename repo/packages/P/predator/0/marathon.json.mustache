@@ -1,0 +1,46 @@
+{
+    "id": "{{service.name}}",
+    "cpus": {{service.cpus}},
+    "mem": {{service.mem}},
+    "instances": 1,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.predator}}",
+            "network": "HOST"
+        }
+    },
+    "portDefinitions": [
+        {
+            "port": 0,
+            "protocol": "tcp"
+        }
+    ],
+    "labels": {
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "DCOS_SERVICE_PORT_INDEX": "0",
+        "DCOS_SERVICE_SCHEME": "http"
+    },
+    "env": {
+        "JOB_PLATFORM": "METRONOME",
+        "MY_ADDRESS": "{{service.my_address}}",
+        "DATABASE_TYPE": "{{service.database_type}}",
+        "DATABASE_ADDRESS": "{{service.database_address}}",
+        "DATABASE_USERNAME": "{{service.database_username}}",
+        "DATABASE_PASSWORD": "{{service.database_password}}",
+        "DATABASE_NAME": "{{service.database_name}}",
+        "METRONOME_URL": "{{service.metronome_url}}",
+        "DOCKER_NAME": "{{service.runner_docker_name}}"
+    },
+    "healthChecks": [
+        {
+            "path": "/health",
+            "portIndex": 0,
+            "protocol": "HTTP",
+            "gracePeriodSeconds": 5,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 10,
+            "maxConsecutiveFailures": 3
+        }
+    ]
+}
