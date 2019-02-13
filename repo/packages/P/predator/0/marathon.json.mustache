@@ -13,7 +13,11 @@
     "portDefinitions": [
         {
             "port": 0,
-            "protocol": "tcp"
+            "protocol": "tcp",
+            "name": "predator",
+            "labels": {
+                "VIP_0": "/predator:80"
+            }
         }
     ],
     "labels": {
@@ -23,7 +27,7 @@
     },
     "env": {
         "JOB_PLATFORM": "METRONOME",
-        "MY_ADDRESS": "{{service.my_address}}",
+        "MY_ADDRESS": "http://predator.marathon.l4lb.thisdcos.directory:80",
         "DATABASE_TYPE": "{{service.database_type}}",
         "METRONOME_URL": "{{service.metronome_url}}",
         {{#service.database_address}}
@@ -44,13 +48,14 @@
     },
     "healthChecks": [
         {
-            "path": "/health",
-            "portIndex": 0,
-            "protocol": "HTTP",
             "gracePeriodSeconds": 5,
             "intervalSeconds": 60,
             "timeoutSeconds": 10,
-            "maxConsecutiveFailures": 3
+            "maxConsecutiveFailures": 3,
+            "portIndex": 0,
+            "path": "/health",
+            "protocol": "MESOS_HTTP",
+            "delaySeconds": 15
         }
     ]
 }
