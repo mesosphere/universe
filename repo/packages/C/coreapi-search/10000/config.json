@@ -28,7 +28,7 @@
         "container_port": {
           "description": "Container port",
           "type": "number",
-          "default": 5000
+          "default": 80
         },
         "env" : {
           "type": "object",
@@ -42,7 +42,7 @@
             "HTTP_PORT" : {
               "description": "HTTP_PORT",
               "type": "string",
-              "default": "5000"
+              "default": "80"
             },
             "SERVICE_PREFIX" : {
               "description": "service prefix url",
