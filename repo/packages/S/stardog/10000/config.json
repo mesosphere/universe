@@ -23,7 +23,44 @@
         "mem": {
           "description":  "Memory in Mb to allocate to each service instance.",
           "type": "number",
-          "default": 8192
+          "default": 12288
+        },
+        "hostname": {
+          "description": "Address of the host to be deployed on",
+          "type": "string",
+          "default": "10.32.16.44"
+        }
+      }
+    },
+    "marathon-lb" : {
+      "type": "object",
+      "description": "Marathon-lb ports config",
+      "properties": {
+        "vhost": {
+          "description":  "Virtual host.",
+          "type": "string",
+          "default": "dcos-leo-public.eastus.cloudapp.azure.com"
+        },
+        "port0": {
+          "description": "UI",
+          "type": "number",
+          "default": 10200
+        }
+      }
+    },
+    "stardog": {
+      "type": "object",
+      "description": "Stardog specifications",
+      "properties": {
+        "jvm_heap_size": {
+          "type": "number",
+          "default": 4,
+          "description": "JVM memory (GB)"
+        },
+        "jvm_off_heap_size": {
+          "type": "number",
+          "default": 6,
+          "description": "JVM off-heap memory (GB)"
         },
         "graph_data_volume": {
           "type": "object",
@@ -64,7 +101,7 @@
             "container_path": {
               "description": "Container path",
               "type": "string",
-              "default": "/var/opt/Stardog"
+              "default": "/stardog"
             },
             "host_path": {
               "description": "Host path",
@@ -72,22 +109,6 @@
               "default": "/var/lib/mesos/Stardog"
             }
           }
-        }
-      }
-    },
-    "marathon-lb" : {
-      "type": "object",
-      "description": "Marathon-lb ports config",
-      "properties": {
-        "vhost": {
-          "description":  "Virtual host.",
-          "type": "string",
-          "default": "dcos-leo-public.eastus.cloudapp.azure.com"
-        },
-        "port0": {
-          "description": "UI",
-          "type": "number",
-          "default": 10200
         }
       }
     }

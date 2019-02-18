@@ -3,6 +3,13 @@
   "cpus": {{service.cpus}},
   "mem": {{service.mem}},
   "disk": {{service.disk}},
+  "constraints": [
+    [
+      "hostname",
+      "LIKE",
+      "{{service.hostname}}"
+    ]
+  ],
   "container": {
     "portMappings": [
       {
@@ -18,18 +25,18 @@
     "type": "DOCKER",
     "volumes": [
         {
-            "containerPath": "{{service.graph_data_volume.container_path}}",
-            "hostPath": "{{service.graph_data_volume.host_path}}",
+            "containerPath": "{{stardog.graph_data_volume.container_path}}",
+            "hostPath": "{{stardog.graph_data_volume.host_path}}",
             "mode": "RW"
         },
         {
-            "containerPath": "{{service.data_volume.container_path}}",
-            "hostPath": "{{service.data_volume.host_path}}",
+            "containerPath": "{{stardog.data_volume.container_path}}",
+            "hostPath": "{{stardog.data_volume.host_path}}",
             "mode": "RW"
         },
         {
-            "containerPath": "{{service.backup_volume.container_path}}",
-            "hostPath": "{{service.backup_volume.host_path}}",
+            "containerPath": "{{stardog.backup_volume.container_path}}",
+            "hostPath": "{{stardog.backup_volume.host_path}}",
             "mode": "RW"
         }
     ],
@@ -37,6 +44,9 @@
       "image": "{{resource.assets.container.docker.stardog}}",
       "forcePullImage": true
     }
+  },
+  "env":{
+    STARDOG_SERVER_JAVA_ARGS:"-Xmx{{stardog.jvm_heap_size}}g -Xms{{stardog.jvm_heap_size}}g -XX:MaxDirectMemorySize={{stardog.jvm_off_heap_size}}g"
   },
   "networks": [
     {
