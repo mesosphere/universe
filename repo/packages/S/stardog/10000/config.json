@@ -13,7 +13,7 @@
         "cpus": {
           "description": "Number of logical cores to allocate to each service instance.",
           "type": "number",
-          "default": 7.7
+          "default": 4
         },
         "disk": {
           "description": "Disk",
@@ -23,7 +23,28 @@
         "mem": {
           "description":  "Memory in Mb to allocate to each service instance.",
           "type": "number",
-          "default": 54272
+          "default": 12288
+        },
+        "hostname": {
+          "description": "Address of the host to be deployed on",
+          "type": "string",
+          "default": "10.32.16.44"
+        }
+      }
+    },
+    "stardog": {
+      "type": "object",
+      "description": "Stardog specifications",
+      "properties": {
+        "jvm_heap_size": {
+          "type": "number",
+          "default": 4,
+          "description": "JVM memory (GB)"
+        },
+        "jvm_off_heap_size": {
+          "type": "number",
+          "default": 6,
+          "description": "JVM off-heap memory (GB)"
         },
         "graph_data_volume": {
           "type": "object",
@@ -37,7 +58,7 @@
             "host_path": {
               "description": "Host path",
               "type": "string",
-              "default": "/mnt/azurefileshare/jupyter/notebooks/Andrei/rca_to_triples/output_cleaned"
+              "default": "/mnt/azurefileshare/hdfs/raw/thomsonreuters/poc-load"
             }
           }
         },
