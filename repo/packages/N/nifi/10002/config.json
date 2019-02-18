@@ -37,7 +37,7 @@
                 "docker-image": {
                     "description": "Docker image to use",
                     "type": "string",
-                    "default": "cdpqleo/nifi"
+                    "default": "cdpqleo/nifi:1.8.0_stable"
                 },
                 "azurefileshare-path": {
                   "description": "path on host to azurefileshare, will be mapped in the container to the same path",
