@@ -73,7 +73,7 @@
                 "cluster": {
                     "description": "Set this to true if the instance is a node in a cluster. The default value is false.",
                     "type": "boolean",
-                    "default": true
+                    "default": false
                 },
                 "cluster-node-protocol-port":{
                     "description": "Cluster node protocol port",
@@ -107,14 +107,14 @@
                     "default": 1
                 },
                 "bootstrap-jvm-max": {
-                  "description": "bootstrap JVM max (MB)",
+                  "description": "bootstrap JVM max (MB). 24Mb is allocated to nifi watchdog process.",
                   "type": "number",
-                  "default": 2048
+                  "default": 2024
                 },
                 "bootstrap-jvm-min": {
-                  "description": "bootstrap JVM min (MB)",
+                  "description": "bootstrap JVM min (MB). 24Mb is allocated to nifi watchdog process.",
                   "type": "number",
-                  "default": 2048
+                  "default": 2024
                 }
             }
         },
