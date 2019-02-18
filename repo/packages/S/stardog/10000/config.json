@@ -32,22 +32,6 @@
         }
       }
     },
-    "marathon-lb" : {
-      "type": "object",
-      "description": "Marathon-lb ports config",
-      "properties": {
-        "vhost": {
-          "description":  "Virtual host.",
-          "type": "string",
-          "default": "dcos-leo-public.eastus.cloudapp.azure.com"
-        },
-        "port0": {
-          "description": "UI",
-          "type": "number",
-          "default": 10200
-        }
-      }
-    },
     "stardog": {
       "type": "object",
       "description": "Stardog specifications",
@@ -109,6 +93,22 @@
               "default": "/var/lib/mesos/Stardog"
             }
           }
+        }
+      }
+    },
+    "marathon-lb" : {
+      "type": "object",
+      "description": "Marathon-lb ports config",
+      "properties": {
+        "vhost": {
+          "description":  "Virtual host.",
+          "type": "string",
+          "default": "dcos-leo-public.eastus.cloudapp.azure.com"
+        },
+        "port0": {
+          "description": "UI",
+          "type": "number",
+          "default": 10200
         }
       }
     }
