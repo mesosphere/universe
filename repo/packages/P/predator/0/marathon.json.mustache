@@ -27,21 +27,24 @@
     },
     "env": {
         "JOB_PLATFORM": "METRONOME",
-        "MY_ADDRESS": "http://predator.marathon.l4lb.thisdcos.directory:80",
-        "DATABASE_TYPE": "{{service.database_type}}",
+        "INTERNAL_ADDRESS": "{{service.internal_address}}",
+        {{#service.external_address}}
+            "EXTERNAL_ADDRESS": "{{service.external_address}}",
+        {{/service.external_address}}
         "METRONOME_URL": "{{service.metronome_url}}",
-        {{#service.database_address}}
-            "DATABASE_ADDRESS": "{{service.database_address}}",
-        {{/service.database_address}}
-        {{#service.database_username}}
-            "DATABASE_USERNAME": "{{service.database_username}}",
-        {{/service.database_username}}
-        {{#service.database_password}}
-            "DATABASE_PASSWORD": "{{service.database_password}}",
-        {{/service.database_password}}
-        {{#service.database_name}}
-            "DATABASE_NAME": "{{service.database_name}}",
-        {{/service.database_name}}
+        "DATABASE_TYPE": "{{database.database_type}}",
+        {{#database.database_address}}
+            "DATABASE_ADDRESS": "{{database.database_address}}",
+        {{/database.database_address}}
+        {{#database.database_username}}
+            "DATABASE_USERNAME": "{{database.database_username}}",
+        {{/database.database_username}}
+        {{#database.database_password}}
+            "DATABASE_PASSWORD": "{{database.database_password}}",
+        {{/database.database_password}}
+        {{#database.database_name}}
+            "DATABASE_NAME": "{{database.database_name}}",
+        {{/database.database_name}}
         {{#service.runner_docker_name}}
             "DOCKER_NAME": "{{service.runner_docker_name}}"
         {{/service.runner_docker_name}}
