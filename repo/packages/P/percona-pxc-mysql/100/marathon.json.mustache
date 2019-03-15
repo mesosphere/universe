@@ -1,0 +1,210 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+
+  {{#service.check_for_nobody_leave_unchecked_for_root}}
+  "user": "nobody",
+  {{/service.check_for_nobody_leave_unchecked_for_root}}
+  {{^service.check_for_nobody_leave_unchecked_for_root}}
+  "user": "root",
+  {{/service.check_for_nobody_leave_unchecked_for_root}}
+
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*/jre/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && ./bootstrap -resolve=false -template=false && ./percona-pxc-mysql-scheduler/bin/percona-pxc-mysql ./percona-pxc-mysql-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    "PACKAGE_NAME": "percona-pxc-mysql",
+    "PACKAGE_VERSION": "0.2.0-5.7.21",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1552562293172",
+    "PACKAGE_BUILD_TIME_STR": "Thu Mar 14 2019 11:18:13 +0000",
+    "FRAMEWORK_NAME": "{{service.name}}",
+
+    {{#service.check_for_nobody_leave_unchecked_for_root}}
+    "FRAMEWORK_USER": "nobody",
+    {{/service.check_for_nobody_leave_unchecked_for_root}}
+    {{^service.check_for_nobody_leave_unchecked_for_root}}
+    "FRAMEWORK_USER": "root",
+    {{/service.check_for_nobody_leave_unchecked_for_root}}
+
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+    "MESOS_API_VERSION": "V1",
+    
+    "TASKCFG_ALL_PXC_CLUSTER_NAME": "{{pxc.cluster_name}}",
+    "TASKCFG_ALL_PXC_APP_USER_NAME": "{{pxc.application_user_name}}",
+
+
+    "PXC_MYSQL_ROOT_PASSWORD": "{{pxc.mysql_root_password}}",
+    "PXC_XTRABKP_PASSWORD": "{{pxc.xtrabackup_password}}",
+    "PXC_APP_USER_PASSWORD": "{{pxc.application_user_password}}",
+    "PXC_MSQLD_EXPORTER_PASSWORD": "{{pxc.mysqldexporter_password}}",
+
+    "PXC_COUNT": "{{pxc.count}}",
+    "TASKCFG_ALL_PXC_PORT": "{{pxc.pxc_port}}",
+    "PXC_PLACEMENT": "{{{pxc.placement_constraint}}}",
+    {{#service.virtual_network_enabled}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+    "PXC_CPUS": "{{pxc.cpus}}",
+    "PXC_MEM": "{{pxc.mem}}",
+    "PXC_DISK": "{{pxc.disk}}",
+    "PXC_DISK_TYPE": "{{pxc.disk_type}}",
+    "KEY_DISK_TYPE": "{{pxc.key_disk_type}}",
+    "BKP_DISK_TYPE": "{{pxc.bkp_disk_type}}",
+    "PSQL_DISK_TYPE": "{{pxc.psql_disk_type}}",
+    "STHREE_COMPATIBLE_URI": "{{pxc.backup_store_endpoint}}",
+    "TASKCFG_ALL_PXC_LDAP_URI": "{{{pxc.ldap_uri}}}",
+    "TASKCFG_ALL_PXC_LDAP_BASE": "{{{pxc.ldap_base}}}",
+    "TASKCFG_ALL_PXC_LDAP_BINDDN": "{{{pxc.ldap_binddn}}}",
+    "TASKCFG_ALL_PXC_LDAP_BINDPW": "{{{pxc.ldap_bindpw}}}",
+
+    "PROXYSQL_COUNT": "{{proxysql.count}}",
+    "PROXYSQL_PLACEMENT": "{{{proxysql.placement_constraint}}}",
+    "PROXYSQL_CPUS": "{{proxysql.cpus}}",
+    "PROXYSQL_MEM": "{{proxysql.mem}}",
+    "PROXYSQL_DISK": "{{proxysql.disk}}",
+    "PROXYSQL_DISK_TYPE": "ROOT",
+    "TASKCFG_ALL_PROXYSQL_ADMIN_USER": "{{proxysql.admin_user}}",
+    "TASKCFG_ALL_PROXYSQL_REFRESH_INTERVAL": "{{proxysql.refresh_interval}}",
+    "TASKCFG_ALL_PROXYSQL_THREADS": "{{proxysql.threads}}",
+    "TASKCFG_ALL_PROXYSQL_MAX_CONNECTIONS": "{{proxysql.max_connections}}",
+    "TASKCFG_ALL_PROXYSQL_DEFAULT_QUERY_DELAY": "{{proxysql.default_query_delay}}",
+    "TASKCFG_ALL_PROXYSQL_DEFAULT_QUERY_TIMEOUT": "{{proxysql.default_query_timeout}}",
+    "TASKCFG_ALL_PROXYSQL_POLL_TIMEOUT": "{{proxysql.poll_timeout}}",
+    "TASKCFG_ALL_PROXYSQL_DEFAULT_SCHEMA": "{{proxysql.default_schema}}",
+    "TASKCFG_ALL_PROXYSQL_STACKSIZE": "{{proxysql.stacksize}}",
+    "TASKCFG_ALL_PROXYSQL_CONNECT_TIMEOUT_SERVER": "{{proxysql.connect_timeout_server}}",
+    "TASKCFG_ALL_PROXYSQL_MONITOR_HISTORY": "{{proxysql.monitor_history}}",
+    "TASKCFG_ALL_PROXYSQL_MONITOR_CONNECT_INTERVAL": "{{proxysql.monitor_connect_interval}}",
+    "TASKCFG_ALL_PROXYSQL_MONITOR_PING_INTERVAL": "{{proxysql.monitor_ping_interval}}",
+    "TASKCFG_ALL_PROXYSQL_PING_TIMEOUT_SERVER": "{{proxysql.ping_timeout_server}}",
+    "TASKCFG_ALL_PROXYSQL_COMMANDS_STATS": "{{proxysql.commands_stats}}",
+    "TASKCFG_ALL_PROXYSQL_SESSIONS_SORT": "{{proxysql.sessions_sort}}",
+
+    "TASKCFG_ALL_PROXYSQL_CLUSTER_NAME_PXC": "{{pxc.cluster_name}}",
+
+
+    {{#service.enable_secrets}}
+    "TASKCFG_ALL_PXC_ENABLE_SECRETS": "{{service.enable_secrets}}",
+    {{/service.enable_secrets}}
+
+    "PROXYSQL_ADMIN_PASSWORD": "{{proxysql.admin_password}}",
+
+    {{#service.ssl_enabled}}
+    "TASKCFG_ALL_PXC_NET_SSL_ENABLED": "{{service.ssl_enabled}}",
+    {{/service.ssl_enabled}}
+
+    {{#service.pam_enabled}}
+    "TASKCFG_ALL_PXC_PAM_ENABLED": "{{service.pam_enabled}}",
+    {{/service.pam_enabled}}
+
+
+    "TASKCFG_ALL_PXC_ENCRYPT_CLUSTER_TRAFFIC": "{{pxc-advanced.pxc_encrypt_cluster_traffic}}",
+    "TASKCFG_ALL_PXC_MAINT_MODE": "{{pxc-advanced.pxc_maint_mode}}",
+    "TASKCFG_ALL_PXC_MAINT_TRANSITION_PERIOD": "{{pxc-advanced.pxc_maint_transition_period}}",
+    "TASKCFG_ALL_PXC_STRICT_MODE": "{{pxc-advanced.pxc_strict_mode}}",
+    "TASKCFG_ALL_WSREP_AUTO_INCREMENT_CONTROL": "{{pxc-advanced.wsrep_auto_increment_control}}",
+    "TASKCFG_ALL_WSREP_CAUSAL_READS": "{{pxc-advanced.wsrep_causal_reads}}",
+    "TASKCFG_ALL_WSREP_CERTIFY_NONPK": "{{pxc-advanced.wsrep_certify_nonPK}}",
+    "TASKCFG_ALL_WSREP_CONVERT_LOCK_TO_TRX": "{{pxc-advanced.wsrep_convert_lock_to_trx}}",
+    "TASKCFG_ALL_WSREP_DEBUG": "{{pxc-advanced.wsrep_debug}}",
+    "TASKCFG_ALL_WSREP_DESYNC": "{{pxc-advanced.wsrep_desync}}",
+    "TASKCFG_ALL_WSREP_DIRTY_READS": "{{pxc-advanced.wsrep_dirty_reads}}",
+    "TASKCFG_ALL_WSREP_DRUPAL_282555_WORKAROUND": "{{pxc-advanced.wsrep_drupal_282555_workaround}}",
+    "TASKCFG_ALL_WSREP_FORCED_BINLOG_FORMAT": "{{pxc-advanced.wsrep_forced_binlog_format}}",
+    "TASKCFG_ALL_WSREP_LOAD_DATA_SPLITTING": "{{pxc-advanced.wsrep_load_data_splitting}}",
+    "TASKCFG_ALL_WSREP_LOG_CONFLICTS": "{{pxc-advanced.wsrep_log_conflicts}}",
+    "TASKCFG_ALL_WSREP_MAX_WS_ROWS": "{{pxc-advanced.wsrep_max_ws_rows}}",
+    "TASKCFG_ALL_WSREP_MAX_WS_SIZE": "{{pxc-advanced.wsrep_max_ws_size}}",
+    "TASKCFG_ALL_WSREP_ON": "{{pxc-advanced.wsrep_on}}",
+    "TASKCFG_ALL_WSREP_OSU_METHOD": "{{pxc-advanced.wsrep_OSU_method}}",
+    "TASKCFG_ALL_WSREP_RECOVER": "{{pxc-advanced.wsrep_recover}}",
+    "TASKCFG_ALL_WSREP_REJECT_QUERIES": "{{pxc-advanced.wsrep_reject_queries}}",
+    "TASKCFG_ALL_WSREP_REPLICATE_MYISAM": "{{pxc-advanced.wsrep_replicate_myisam}}",
+    "TASKCFG_ALL_WSREP_RESTART_SLAVE": "{{pxc-advanced.wsrep_restart_slave}}",
+    "TASKCFG_ALL_WSREP_RETRY_AUTOCOMMIT": "{{pxc-advanced.wsrep_retry_autocommit}}",
+    "TASKCFG_ALL_WSREP_SLAVE_FK_CHECKS": "{{pxc-advanced.wsrep_slave_FK_checks}}",
+    "TASKCFG_ALL_WSREP_SLAVE_THREADS": "{{pxc-advanced.wsrep_slave_threads}}",
+    "TASKCFG_ALL_WSREP_SLAVE_UK_CHECKS": "{{pxc-advanced.wsrep_slave_UK_checks}}",
+    "TASKCFG_ALL_WSREP_SST_RECEIVE_ADDRESS": "{{pxc-advanced.wsrep_sst_receive_address}}",
+    "TASKCFG_ALL_WSREP_SYNC_WAIT": "{{pxc-advanced.wsrep_sync_wait}}",
+
+    
+    "IMAGE_IS_NOBODY": "{{service.check_for_nobody_leave_unchecked_for_root}}",
+    "PXC_DOCKER_IMAGE_ROOT": "{{resource.assets.container.docker.percona-xtradb-cluster-root}}",
+    "PXC_DOCKER_IMAGE_NOBODY": "{{resource.assets.container.docker.percona-xtradb-cluster-nobody}}",
+    "PROXYSQL_DOCKER_IMAGE_ROOT": "{{resource.assets.container.docker.proxysql-root}}",
+    "PROXYSQL_DOCKER_IMAGE_NOBODY": "{{resource.assets.container.docker.proxysql-nobody}}",
+    "MYSQL_DOCKER_IMAGE": "{{resource.assets.container.docker.mysqlcli}}",
+    "PROM_MYSQLD_EXPORTER_DOCKER_IMAGE": "{{resource.assets.container.docker.prom-mysqld-exporter}}",
+
+    "SYNC_STATE": "Not-Synced",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "PIP_URI": "{{resource.assets.uris.pip-uri}}",
+    "ZK_URI": "{{resource.assets.uris.zk-uri}}",
+    "MYSQLD_EXPORTER_URI": "{{resource.assets.uris.mysqld-exporter-uri}}",
+    "MC_URI": "{{resource.assets.uris.mc-uri}}",
+
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.service_account_secret}}
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+ 
+  },
+  "uris": [
+    "{{resource.assets.uris.bootstrap-zip}}",
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "{{resource.assets.uris.pip-uri}}",
+    "{{resource.assets.uris.zk-uri}}",
+    "{{resource.assets.uris.mysqld-exporter-uri}}",
+    "{{resource.assets.uris.mc-uri}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/v1/health",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}
