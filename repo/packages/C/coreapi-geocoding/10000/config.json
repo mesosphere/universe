@@ -3,12 +3,12 @@
   "properties": {
     "service": {
       "type": "object",
-      "description": "DC/OS coreapi-search service specifications",
+      "description": "DC/OS coreapi-geocoding service specifications",
       "properties": {
         "name": {
-          "description": "Name of CoreApiSearch instances as seen in DC/OS.",
+          "description": "Name of CoreApiGeocoding instances as seen in DC/OS.",
           "type": "string",
-          "default": "ui-coreapi-search"
+          "default": "ui-coreapi-geocoding"
         },
         "cpus": {
           "description": "Number of logical cores to allocate to each service instance.",
@@ -23,7 +23,7 @@
         "health_url": {
           "description": "Url for health checks",
           "type": "string",
-          "default": "/service/ui-coreapi-search/api/health"
+          "default": "/service/ui-coreapi-geocoding/api/health"
         },
         "container_port": {
           "description": "Container port",
@@ -47,37 +47,12 @@
             "SERVICE_PREFIX" : {
               "description": "service prefix url",
               "type": "string",
-              "default": "/service/ui-coreapi-search"
+              "default": "/service/ui-coreapi-geocoding"
             },
-            "CUSTOM_SEARCH_ID" : {
-              "description": "custom search id",
+            "GOOGLE_API_KEY" : {
+              "description": "api key",
               "type": "string",
               "default": ""
-            },
-            "API_KEY" : {
-              "description": "search api key",
-              "type": "string",
-              "default": ""
-            },
-            "SEARCH_LIMIT" : {
-              "description": "max search results per query (1-10)",
-              "type": "string",
-              "default": "10"
-            },
-            "SEARCH_LANGUAGE" : {
-              "description": "search language",
-              "type": "string",
-              "default": "lang_en"
-            },
-            "SEARCH_QUERY_KEYWORDS" : {
-              "description": "search keyword to get more precise results",
-              "type": "string",
-              "default": ""
-            },
-            "USE_SEARCH_DATE_PARAM" : {
-              "description": "search date range",
-              "type": "string",
-              "default": "true"
             }
           }
         }

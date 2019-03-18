@@ -1,12 +1,12 @@
 {
   "packagingVersion": "4.0",
-  "name": "coreapi-search",
-  "version": "leo-1.0.0-1.0.3",
+  "name": "coreapi-translate",
+  "version": "leo-1.0.0-1.0.1",
   "maintainer": "leo@cdpq.com",
-  "description": "search service",
+  "description": "translate service",
   "minDcosReleaseVersion": "1.9.0",
-  "tags": ["coreapi", "search"],
+  "tags": ["coreapi", "translate"],
   "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Preview packages should never be used in production!",
-  "postInstallNotes": "coreapi-search installed!",
-  "postUninstallNotes": "coreapi-search uninstalled!"
+  "postInstallNotes": "coreapi-translate installed!",
+  "postUninstallNotes": "coreapi-translate uninstalled!"
 }
