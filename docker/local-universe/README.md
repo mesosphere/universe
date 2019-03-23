@@ -163,7 +163,7 @@ $ sudo make DCOS_VERSION=<your DC/OS version> old-local-universe
 ```
 
 ### Updating the certs in your local universe
-If the cert has expired in your local universe, you can update an existing universe image by usint the 'update-certs' target.
+If the cert has expired in your local universe, you can update your existing universe image by using the 'update-certs' target.
 In order for this to work, the local universe docker image you want to update must be present on the local system, and must be tagged "mesosphere/universe:latest"
 
 ```bash
