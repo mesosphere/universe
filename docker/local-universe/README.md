@@ -162,6 +162,14 @@ the `local-universe` make target describe previously.
 $ sudo make DCOS_VERSION=<your DC/OS version> old-local-universe
 ```
 
+### Updating the certs in your local universe
+If the cert has expired in your local universe, you can update an existing universe image by usint the 'update-certs' target.
+In order for this to work, the local universe docker image you want to update must be present on the local system, and must be tagged "mesosphere/universe:latest"
+
+```bash
+$ sudo make update-certs
+```
+
 ### Outside Resources
 
 As a workaround for the image and CLI resource issues in [the FAQ above](#faq), you can place those

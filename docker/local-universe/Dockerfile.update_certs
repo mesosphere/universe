@@ -1,0 +1,4 @@
+FROM mesosphere/universe:latest
+
+COPY certs /certs
+COPY certs/domain.crt /usr/share/nginx/html/certs/domain.crt

@@ -52,3 +52,8 @@ old-local-universe: clean
 		--dcos_version "$(DCOS_VERSION)"
 	docker save -o local-universe.tar mesosphere/universe:latest
 	gzip local-universe.tar
+
+update-certs: clean certs
+	docker build -t mesosphere/universe:latest -f Dockerfile.update_certs .
+	docker save -o local-universe.tar mesosphere/universe:latest
+	gzip local-universe.tar
