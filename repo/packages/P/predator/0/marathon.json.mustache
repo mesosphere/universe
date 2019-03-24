@@ -33,27 +33,27 @@
             "MINIMUM_WAIT_FOR_DELAYED_REPORT_STATUS_UPDATE_IN_MS": "{{service.minimum_wait_for_delayed_report_status_update_in_ms}}",
         {{/service.minimum_wait_for_delayed_report_status_update_in_ms}}
 
-        "DOCKER_NAME": "{{runner.runner_docker_name}}",
-        {{#runner.runner_cpu}}
-            "RUNNER_CPU": "{{runner.runner_cpu}}",
-        {{/runner.runner_cpu}}
-        {{#runner.runner_memory}}
-            "RUNNER_MEMORY": "{{runner.runner_memory}}",
-        {{/runner.runner_memory}}
+        "DOCKER_NAME": "{{runner.docker_name}}",
+        {{#runner.cpu}}
+            "RUNNER_CPU": "{{runner.cpu}}",
+        {{/runner.cpu}}
+        {{#runner.memory}}
+            "RUNNER_MEMORY": "{{runner.memory}}",
+        {{/runner.memory}}
 
-        "DATABASE_TYPE": "{{database.database_type}}",
-        {{#database.database_address}}
-            "DATABASE_ADDRESS": "{{database.database_address}}",
-        {{/database.database_address}}
-        {{#database.database_username}}
-            "DATABASE_USERNAME": "{{database.database_username}}",
-        {{/database.database_username}}
-        {{#database.database_password}}
-            "DATABASE_PASSWORD": "{{database.database_password}}",
-        {{/database.database_password}}
-        {{#database.database_name}}
-            "DATABASE_NAME": "{{database.database_name}}",
-        {{/database.database_name}}
+        {{#database.address}}
+            "DATABASE_ADDRESS": "{{database.address}}",
+        {{/database.address}}
+        {{#database.username}}
+            "DATABASE_USERNAME": "{{database.username}}",
+        {{/database.username}}
+        {{#database.password}}
+            "DATABASE_PASSWORD": "{{database.password}}",
+        {{/database.password}}
+        {{#database.name}}
+            "DATABASE_NAME": "{{database.name}}",
+        {{/database.name}}
+        "DATABASE_TYPE": "{{database.type}}"
  },
     "healthChecks": [
         {
