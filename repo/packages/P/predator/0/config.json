@@ -16,7 +16,7 @@
                     "minimum": 0.1
                 },
                 "mem": {
-                    "description":  "Memory to allocate to each service instance.",
+                    "description":  "Memory to allocate to each service instance in MB.",
                     "type": "number",
                     "default": 256.0,
                     "minimum": 128.0
@@ -26,19 +26,15 @@
                     "type": "string",
                     "default": "http://predator.marathon.l4lb.thisdcos.directory:80"
                 },
-                "external_address": {
-                    "description":  "Address of this service accessible from outside of Metronome cluster.",
-                    "type": "string"
-                },
                 "metronome_url": {
                     "description":  "Metronome URL (used for API).",
                     "type": "string",
                     "default": "http://metronome.mesos:9000"
                 },
-                "runner_docker_name": {
-                    "description":  "Docker image of runner that runs predator tests.",
-                    "type": "string",
-                    "default": "zooz/predator-runner"
+                "minimum_wait_for_delayed_report_status_update_in_ms": {
+                    "description":  "The minimum of time waiting for runner to report before the test considered as finished in milliseconds.",
+                    "type": "number",
+                    "default": 30000
                 }
             },
             "required": [
@@ -47,6 +43,30 @@
                 "mem",
                 "metronome_url",
                 "internal_address"
+            ]
+        },
+        "runner": {
+            "type": "object",
+            "description": "Predator-Runner configuration",
+            "properties": {
+                "runner_cpu": {
+                    "description":  "Number of CPU use by the each runner.",
+                    "type": "number",
+                    "default": 1
+                },
+                "runner_memory": {
+                    "description":  "Max memory to use by each runner in MB.",
+                    "type": "number",
+                    "default": 2048
+                },
+                "runner_docker_name": {
+                    "description":  "Docker image of runner that runs predator tests.",
+                    "type": "string",
+                    "default": "zooz/predator-runner"
+                }
+            },
+            "required": [
+                "runner_docker_name"
             ]
         },
         "database": {

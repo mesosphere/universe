@@ -28,10 +28,19 @@
     "env": {
         "JOB_PLATFORM": "METRONOME",
         "INTERNAL_ADDRESS": "{{service.internal_address}}",
-        {{#service.external_address}}
-            "EXTERNAL_ADDRESS": "{{service.external_address}}",
-        {{/service.external_address}}
         "METRONOME_URL": "{{service.metronome_url}}",
+        {{#service.minimum_wait_for_delayed_report_status_update_in_ms}}
+            "MINIMUM_WAIT_FOR_DELAYED_REPORT_STATUS_UPDATE_IN_MS": "{{service.minimum_wait_for_delayed_report_status_update_in_ms}}",
+        {{/service.minimum_wait_for_delayed_report_status_update_in_ms}}
+
+        "DOCKER_NAME": "{{runner.runner_docker_name}}",
+        {{#runner.runner_cpu}}
+            "RUNNER_CPU": "{{runner.runner_cpu}}",
+        {{/runner.runner_cpu}}
+        {{#runner.runner_memory}}
+            "RUNNER_MEMORY": "{{runner.runner_memory}}",
+        {{/runner.runner_memory}}
+
         "DATABASE_TYPE": "{{database.database_type}}",
         {{#database.database_address}}
             "DATABASE_ADDRESS": "{{database.database_address}}",
@@ -45,10 +54,7 @@
         {{#database.database_name}}
             "DATABASE_NAME": "{{database.database_name}}",
         {{/database.database_name}}
-        {{#service.runner_docker_name}}
-            "DOCKER_NAME": "{{service.runner_docker_name}}"
-        {{/service.runner_docker_name}}
-    },
+ },
     "healthChecks": [
         {
             "gracePeriodSeconds": 5,
