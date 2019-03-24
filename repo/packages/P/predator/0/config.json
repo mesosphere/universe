@@ -1,0 +1,104 @@
+{
+    "properties": {
+        "service": {
+            "type": "object",
+            "description": "DC/OS service configuration properties",
+            "properties": {
+                "name": {
+                    "description": "Name of this service instance",
+                    "type": "string",
+                    "default": "predator"
+                },
+                "cpus": {
+                    "description": "CPU shares to allocate to each service instance.",
+                    "type": "number",
+                    "default": 0.1,
+                    "minimum": 0.1
+                },
+                "mem": {
+                    "description":  "Memory to allocate to each service instance in MB.",
+                    "type": "number",
+                    "default": 256.0,
+                    "minimum": 128.0
+                },
+                "internal_address": {
+                    "description":  "Address of this service accessible from inside of Metronome cluster.",
+                    "type": "string",
+                    "default": "http://predator.marathon.l4lb.thisdcos.directory:80"
+                },
+                "metronome_url": {
+                    "description":  "Metronome URL (used for API).",
+                    "type": "string",
+                    "default": "http://metronome.mesos:9000"
+                },
+                "minimum_wait_for_delayed_report_status_update_in_ms": {
+                    "description":  "The minimum of time waiting for runner to report before the test considered as finished in milliseconds.",
+                    "type": "number",
+                    "default": 30000
+                }
+            },
+            "required": [
+                "name",
+                "cpus",
+                "mem",
+                "metronome_url",
+                "internal_address"
+            ]
+        },
+        "runner": {
+            "type": "object",
+            "description": "Predator-Runner configuration",
+            "properties": {
+                "cpu": {
+                    "description":  "Number of CPU use by the each runner.",
+                    "type": "number",
+                    "default": 1
+                },
+                "memory": {
+                    "description":  "Max memory to use by each runner in MB.",
+                    "type": "number",
+                    "default": 2048
+                },
+                "docker_name": {
+                    "description":  "Docker image of runner that runs predator tests.",
+                    "type": "string",
+                    "default": "zooz/predator-runner"
+                }
+            },
+            "required": [
+                "docker_name"
+            ]
+        },
+        "database": {
+            "type": "object",
+            "description": "Database configuration",
+            "properties": {
+                "type": {
+                    "description":  "Type of database [CASSANDRA/SQLITE/POSTGRES/MSSQL/MYSQL].",
+                    "type": "string",
+                    "default": "SQLITE",
+                    "enum": ["CASSANDRA", "SQLITE", "POSTGRES", "MSSQL", "MYSQL"]
+                },
+                "address": {
+                    "description":  "Database address.",
+                    "type": "string"
+                },
+                "username": {
+                    "description":  "Database username.",
+                    "type": "string"
+                },
+                "password": {
+                    "description":  "Database password.",
+                    "type": "string"
+                },
+                "name": {
+                    "description":  "Name of database/keyspace.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        }
+    }
+}
