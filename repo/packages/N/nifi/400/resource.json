@@ -1,0 +1,67 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-master-28f8827.tar.gz",
+      "bootstrap-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.40.2/bootstrap.zip",
+      "scheduler-zip": "https://nifi-bucket.s3.amazonaws.com/nifi/assets/0.4.0-1.8.0/nifi-scheduler.zip",
+      "executor-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.40.2/executor.zip",
+      "nifi-tar-gz": "https://s3-us-west-1.amazonaws.com/nifi-binary/nifi-1.8.0-bin.tar.gz",
+      "nifi-toolkit": "https://s3-ap-southeast-2.amazonaws.com/nifi-toolkit/nifi-toolkit-1.8.0-bin.tar.gz",
+      "nifi-janitor-jar": "https://nifi-bucket.s3.amazonaws.com/nifi/assets/0.4.0-1.8.0/nifi-janitor.jar",
+      "nifi-statsd-jar": "https://nifi-bucket.s3.amazonaws.com/nifi/assets/0.4.0-1.8.0/nifi-statsd.jar",
+      "nifi-api-access-jar": "https://nifi-bucket.s3.amazonaws.com/nifi/assets/0.4.0-1.8.0/nifi-api-access.jar",
+      "nifi-python-tar-gz": "https://s3-us-west-1.amazonaws.com/nifi-python/python-2.7.14.tar.gz"
+    },
+    "container": {
+      "docker": {
+        "nifi": "mesostcs/nifi-base:1.8.0"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://s3-us-west-1.amazonaws.com/nifi-icons/nifi-icon-small.png",
+    "icon-medium": "https://s3-us-west-1.amazonaws.com/nifi-icons/nifi-icon-medium.png",
+    "icon-large": "https://s3-us-west-1.amazonaws.com/nifi-icons/nifi-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "29b4a3dbfff999b55de409c4fc7e670a4989655ba9be006bece68fc5f885a80d"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://nifi-bucket.s3.amazonaws.com/nifi/assets/0.4.0-1.8.0/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "be0d05ab29380568f8248a32a89d4afcbb93d13787ffadbbde8cd6feff6d224e"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://nifi-bucket.s3.amazonaws.com/nifi/assets/0.4.0-1.8.0/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "bd7b4f07d8b4222f276f07bd1efd0f6bee665f6fc0b11e8ef26e2e44f5a60149"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://nifi-bucket.s3.amazonaws.com/nifi/assets/0.4.0-1.8.0/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
