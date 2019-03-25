@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": ["*"],
+  "downgradesTo": ["*"],
+  "minDcosReleaseVersion": "1.10",
+  "name": "mesos-maintenance-cli",
+  "version":  "0.1.1",
+  "maintainer": "minykreva@gmail.com",
+  "description": "A cli subcommand to maintenance mesos cluster of the DC/OS",
+  "selected": false,
+  "framework": false,
+  "tags": ["mesos", "maintenance", "cli", "subcommand"],
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/minyk/dcos-maintenance-cli/master/LICENSE"
+    }
+  ],
+  "preInstallNotes": "This DC/OS subcommand is currently in alpha.",
+  "postInstallNotes": "The DC/OS mesos-maintenance-cli subcommand is being installed!\n\n\tDocumentation: https://github.com/dcos/examples/blob/master/mesos-maintenance/1.10/README.md\n\tIssues: https://github.com/minyk/dcos-maintenance/issues",
+  "postUninstallNotes": "The DC/OS mesos-maintenance-cli subcommand is being uninstalled.\n\n"
+}

@@ -1,0 +1,33 @@
+{
+  "assets": {},
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/hello-world-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/hello-world-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/hello-world-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [ { "algo":"sha256", "value":"25f02a08ea5e976c38ccc971a0a61862b108291d7efd98d2b183e4d16901ca4a" } ],
+          "kind": "executable",
+          "url": "https://github.com/minyk/dcos-maintenance/releases/download/v0.1.1/dcos-maintenance-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [ { "algo":"sha256", "value":"bffb29a0c705c15163fc3cbb4739e6376a6b7279f5ab1483e48fe3d55f96928b" } ],
+          "kind": "executable",
+          "url": "https://github.com/minyk/dcos-maintenance/releases/download/v0.1.1/dcos-maintenance-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [ { "algo":"sha256", "value":"867925ff6f7920b485a1d1f1afb36aff9ddd8a0ae495b6cd4f0060a522a2a223" } ],
+          "kind": "executable",
+          "url": "https://github.com/minyk/dcos-maintenance/releases/download/v0.1.1/dcos-maintenance-windows.exe"
+        }
+      }
+    }
+  }
+}
