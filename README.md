@@ -113,7 +113,8 @@ what properties are available for each corresponding version of a package.
   "upgradesFrom": ["1.2.2"],
   "downgradesTo": ["1.2.2"],
   "minDcosReleaseVersion": "1.10",
-  "postInstallNotes": "Have fun foo-ing and baz-ing!"
+  "postInstallNotes": "Have fun foo-ing and baz-ing!",
+  "licenses": [{"name": "My license", "url": "http://example.com/license_url"}]
 }
 ```
 
@@ -401,14 +402,15 @@ Full Instructions:
   ```
 
 3. Verify all build steps completed successfully
-4. Submit a pull request against the `version-3.x` branch with your changes. Every pull request opened will have a set
+4. Ensure the license field in package.json is completed. Without a license attribution we cannot accept pull requests.
+5. Submit a pull request against the `version-3.x` branch with your changes. Every pull request opened will have a set
    of automated verifications run against it. These automated verification are reported against the pull request using
    the GitHub status API. All verifications must pass in order for a pull request to be eligible for merge.
 
-5. Respond to manual review feedback provided by the DC/OS Community.
+6. Respond to manual review feedback provided by the DC/OS Community.
   * Each Pull Request to Universe will also be manually reviewed by a member of the DC/OS Community. To ensure your
     package is able to be made available to users as quickly as possible be sure to respond to the feedback provided.
-6. Add a getting started example of how to install and use the DC/OS package. To add the example, fork the [`examples`](https://github.com/dcos/examples) repo and send in a pull request. Re-use the format from the existing examples there.
+7. Add a getting started example of how to install and use the DC/OS package. To add the example, fork the [`examples`](https://github.com/dcos/examples) repo and send in a pull request. Re-use the format from the existing examples there.
 
 
 ## Repository Consumption

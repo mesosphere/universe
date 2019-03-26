@@ -20,5 +20,11 @@
   ],
   "preInstallNotes": "This DC/OS service is currently a beta candidate undergoing testing as part of a formal beta test program.\n\nThere may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nDefault configuration requires 5 agent nodes each with: CPU: 0.6 | Memory: 4096MB | Disk: 5000MB\n\nMore specifically, each instance type requires:\n\nJournal node: 3 instances | 0.3 CPU | 2048 MB MEM | 1 5000 MB Disk\n\nName node: 2 instances | 0.3 CPU | 2048 MB MEM | 1 5000 MB Disk\n\nZKFC node: 2 instances | 0.3 CPU | 2048 MB MEM\n\nData node: 3 instances | 0.3 CPU | 2048 MB MEM | 1 5000 MB Disk\n\nPortworx should be installed on the Private Agents to be able to provision volumes.\n\nContact Mesosphere before deploying this beta candidate service. Product support is available to approved participants in the beta test program.",
   "postInstallNotes": "The DC/OS Apache HDFS Service is being installed.\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/hadoop-hdfs.html",
-  "postUninstallNotes": "The DC/OS Apache HDFS Service is being uninstalled.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required."
+  "postUninstallNotes": "The DC/OS Apache HDFS Service is being uninstalled.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/apache/hadoop/trunk/LICENSE.txt"
+    }
+  ]
 }

@@ -1,0 +1,24 @@
+{
+    "packagingVersion": "4.0", 
+    "upgradesFrom": [
+        "*"
+    ], 
+    "downgradesTo": [
+        "*"
+    ], 
+    "minDcosReleaseVersion": "1.10", 
+    "name": "portworx-prometheus", 
+    "version": "1.3-0.1.1-2.3.2", 
+    "maintainer": "support@portworx.com", 
+    "description": "Prometheus on DC/OS with Portworx as the persistent Volume provider \n\nDocumentation: https://docs.mesosphere.com/services/prometheus/0.1.1-2.3.2/", 
+    "selected": false, 
+    "framework": true, 
+    "tags": [
+        "prometheus", 
+        "monitoring", 
+        "portworx"
+    ], 
+    "preInstallNotes": "Default configuration requires 2 agent nodes each with: 2.0 CPU | 4096 MB MEM | 1 25000 MB Disk.\n\nPortworx should be installed on the DC/OS private agents in order to provision portworx volumes for this framework", 
+    "postInstallNotes": "DC/OS Prometheus is being installed!\n\n\tIssues: support@portworx.com", 
+    "postUninstallNotes": "DC/OS Prometheus is being uninstalled.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required."
+}

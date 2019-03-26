@@ -19,5 +19,11 @@
   ],
   "preInstallNotes": "Default configuration requires 3 agent nodes each with: 0.5 CPU | 2048 MB MEM\n\nPortworx should be installed on the Private Agents to be able to provision volumes.\n\nCommunity packages are unverified and unreviewed content from the community.",
   "postInstallNotes": "DC/OS portworx-couchdb is being installed!\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/frameworks.html",
-  "postUninstallNotes": "DC/OS portworx-couchdb has been uninstalled.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required."
+  "postUninstallNotes": "DC/OS portworx-couchdb has been uninstalled.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/couchbase/manifest/master/LICENSE"
+    }
+  ]
 }
