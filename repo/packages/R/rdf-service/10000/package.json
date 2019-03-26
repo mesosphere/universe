@@ -1,0 +1,12 @@
+{
+    "packagingVersion": "4.0",
+    "name": "rdf-service",
+    "maintainer": "leo@cdpq.com",
+    "version": "leo-1.0.0-1.0.3",
+    "description": "Service to query RDF database.",
+    "minDcosReleaseVersion": "1.9.0",
+    "tags": ["rdf"],
+    "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies. Preview packages should never be used in production!",
+    "postInstallNotes": "RDF service installed!",
+    "postUninstallNotes": "RDF service uninstalled!"
+}

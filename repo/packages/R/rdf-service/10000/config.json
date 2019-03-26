@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS RDF service specifications",
+      "properties": {
+        "name": {
+          "default": "ui-rdf-service",
+          "type": "string",
+          "description": "Name of rdf-service instance as seen in DCOS."
+        },
+        "cpus": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 0.2
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance.",
+          "type": "number",
+          "default": 256
+        },
+        "container_port": {
+          "description": "Container port",
+          "type": "number",
+          "default": 8080
+        },
+        "health_url": {
+          "description": "Url for health checks",
+          "type": "string",
+          "default": "/api/health"
+        },
+        "env": {
+          "type": "object",
+          "description": "environment variables",
+          "properties": {
+              "HTTP_HOSTNAME" : {
+                  "description": "Hostname",
+                  "type": "string",
+                  "default": "0.0.0.0"
+              },
+              "HTTP_PORT" : {
+                  "description": "HTTP_PORT",
+                  "type": "string",
+                  "default": "80"
+              },
+              "SERVICE_PREFIX" : {
+                  "description": "service prefix url",
+                  "type": "string",
+                  "default": "/service/ui-rdf-service"
+              },
+              "USERNAME" : {
+                  "description": "Database username",
+                  "type": "string",
+                  "default": "admin"
+              },
+              "PASSWORD" : {
+                  "description": "Database password",
+                  "type": "string",
+                  "default": "CdpqQM22"
+              },
+              "ENDPOINT" : {
+                  "description": "Database endpoint",
+                  "type": "string",
+                  "default": ""
+              }
+          }
+        }
+      }
+    }
+  }
+}
+  
