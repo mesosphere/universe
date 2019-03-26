@@ -6,9 +6,13 @@ RUN apt-key adv --keyserver hkp://zimmermann.mayfirst.org --recv-keys "$GPG_KEY"
   || apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys "$GPG_KEY" \
   || apt-key adv --keyserver pool.sks-keyservers.net --recv-keys "$GPG_KEY" \
   || apt-key adv --keyserver keyserver.pgp.com --recv-keys "$GPG_KEY" \
-  || apt-key adv --keyserver pgp.mit.edu --recv-keys "$GPG_KEY" \
-  && echo "deb http://nginx.org/packages/debian/ jessie nginx" >> /etc/apt/sources.list \
-  && apt-get update \
+  || apt-key adv --keyserver pgp.mit.edu --recv-keys "$GPG_KEY"
+
+RUN echo "deb http://nginx.org/packages/debian/ jessie nginx" >> /etc/apt/sources.list
+# Explicitly remove `jessie-updates`
+RUN sed -i '/jessie-updates/d' /etc/apt/sources.list
+
+RUN apt-get update \
   && apt-get install --no-install-recommends --no-install-suggests -y \
             ca-certificates \
             nginx \
