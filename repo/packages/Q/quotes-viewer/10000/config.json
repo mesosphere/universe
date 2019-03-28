@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS quotes viewer service specifications",
+      "properties": {
+        "name": {
+          "default": "ui-quotes-viewer",
+          "type": "string",
+          "description": "Name of quotes-viewer instance as seen in DCOS."
+        },
+        "cpus": {
+          "description": "Number of logical cores to allocate to each service instance.",
+          "type": "number",
+          "default": 0.2
+        },
+        "mem": {
+          "description":  "Memory in Mb to allocate to each service instance.",
+          "type": "number",
+          "default": 256
+        },
+        "container_port": {
+          "description": "Container port",
+          "type": "number",
+          "default": 8080
+        },
+        "health_url": {
+          "description": "Url for health checks",
+          "type": "string",
+          "default": "/en"
+        },
+        "env": {
+          "type": "object",
+          "description": "environment variables",
+          "properties": {
+              "HTTP_HOSTNAME" : {
+                  "description": "Hostname",
+                  "type": "string",
+                  "default": "0.0.0.0"
+              },
+              "HTTP_PORT" : {
+                  "description": "HTTP_PORT",
+                  "type": "string",
+                  "default": "80"
+              },
+              "ENDPOINT" : {
+                  "description": "API endpoint",
+                  "type": "string",
+                  "default": "http://ui-rdf-service.marathon.l4lb.thisdcos.directory:5000/service/ui-rdf-service"
+              }
+          }
+        }
+      }
+    }
+  }
+}
+  
