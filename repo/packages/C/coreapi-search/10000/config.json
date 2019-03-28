@@ -30,6 +30,22 @@
           "type": "number",
           "default": 8080
         },
+        "data_volume": {
+          "type": "object",
+          "description": "coreapi-search data volume config",
+          "properties": {
+            "container_path": {
+              "description": "Container path",
+              "type": "string",
+              "default": "/var/opt/data/google"
+            },
+            "host_path": {
+              "description": "Host path",
+              "type": "string",
+              "default": "/mnt/azurefileshare/data/google"
+            }
+          }
+        },
         "env" : {
           "type": "object",
           "description": "environment variables",

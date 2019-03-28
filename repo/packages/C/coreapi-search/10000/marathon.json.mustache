@@ -19,7 +19,13 @@
       }
     ],
     "type": "DOCKER",
-    "volumes": [],
+    "volumes": [
+        {
+            "containerPath": "{{service.data_volume.container_path}}",
+            "hostPath": "{{service.data_volume.host_path}}",
+            "mode": "RW"
+        }
+    ],
     "docker": {
       "image": "{{resource.assets.container.docker.coreapisearch}}",
       "forcePullImage": true,
