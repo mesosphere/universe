@@ -3,12 +3,12 @@
   "properties": {
     "service": {
       "type": "object",
-      "description": "DC/OS RDF service specifications",
+      "description": "DC/OS quotes viewer service specifications",
       "properties": {
         "name": {
-          "default": "ui-rdf-service",
+          "default": "ui-quotes-viewer",
           "type": "string",
-          "description": "Name of rdf-service instance as seen in DCOS."
+          "description": "Name of quotes-viewer instance as seen in DCOS."
         },
         "cpus": {
           "description": "Number of logical cores to allocate to each service instance.",
@@ -28,7 +28,7 @@
         "health_url": {
           "description": "Url for health checks",
           "type": "string",
-          "default": "/service/ui-rdf-service/api/health"
+          "default": "/en"
         },
         "env": {
           "type": "object",
@@ -44,25 +44,10 @@
                   "type": "string",
                   "default": "80"
               },
-              "SERVICE_PREFIX" : {
-                  "description": "service prefix url",
-                  "type": "string",
-                  "default": "/service/ui-rdf-service"
-              },
-              "USERNAME" : {
-                  "description": "Database username",
-                  "type": "string",
-                  "default": "admin"
-              },
-              "PASSWORD" : {
-                  "description": "Database password",
-                  "type": "string",
-                  "default": "CdpqQM22"
-              },
               "ENDPOINT" : {
-                  "description": "Database endpoint",
+                  "description": "API endpoint",
                   "type": "string",
-                  "default": ""
+                  "default": "http://ui-rdf-service.marathon.l4lb.thisdcos.directory:5000/service/ui-rdf-service"
               }
           }
         }
