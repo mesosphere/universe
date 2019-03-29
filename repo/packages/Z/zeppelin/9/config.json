@@ -1,0 +1,126 @@
+{
+    "type": "object",
+    "properties": {
+        "service": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "default": "zeppelin"
+                },
+                "cores": {
+                    "type": "integer",
+                    "description": "Nuber of cores to allocate for the zeppelin instance",
+                    "default": 2
+                },
+                "memory": {
+                    "type": "integer",
+                    "description": "Memory to allocate for the zeppelin instance, in MB",
+                    "default": 4096
+                },
+                "external_persistent_volume": {
+                  "type": "string",
+                  "description": "Name of an external persistent volume to store notebook data on (rexray needs to be configured). Mutually exclusive with local_persistent_volume"
+                },
+                "local_persistent_volume": {
+                  "type": "boolean",
+                  "description": "Whether to use a local persistent volume to store notebook data. Mutually exclusive to external_persistent_volume",
+                  "default": false
+                },
+                "marathon_lb": {
+                  "type": "boolean",
+                  "description": "Whether to enable marathon-lb config for the service, if set requires marathon_lb_vhost",
+                  "default": false
+                },
+                "marathon_lb_group": {
+                  "type": "string",
+                  "description": "The group name for marathon-lb, used for HAPROXY_GROUP",
+                  "default": "external"
+                },
+                "marathon_lb_vhost": {
+                  "type": "string",
+                  "description": "The domain name to use for marathon-lb, used for HAPROXY_0_VHOST",
+                  "default": ""
+                },
+                "virtual_network_enabled": {
+                  "description": "Enable virtual networking. Otherwise host networking will be used. With virtual network enabled you need marathon-lb to access your instance as the dcos-adminrouter does not work with cni.",
+                  "type": "boolean",
+                  "default": false
+                },
+                "virtual_network_name": {
+                  "description": "The name of the virtual network to join",
+                  "type": "string",
+                  "default": "dcos"
+                }
+            }
+        },
+        "spark": {
+            "type": "object",
+            "properties": {
+                "cores_max": {
+                    "type": "string",
+                    "description": "Sets spark.cores.max",
+                    "default": "4"
+                },
+                "executor_cores": {
+                    "type": "string",
+                    "description": "Sets spark.executor.cores",
+                    "default": "1"
+                },
+                "executor_memory": {
+                    "type": "string",
+                    "description": "Sets spark.executor.memory",
+                    "default": "1g"
+                },
+                "use_hdfs": {
+                  "type": "boolean",
+                  "description": "Whether to configure hdfs access for spark",
+                  "default": false
+                },
+                "hdfs_config_url": {
+                  "type": "string",
+                  "description": "URL for hdfs config endpoint (hdfs-site.xml and core-site.xml), only used if use_hdfs is set",
+                  "default": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints"
+                },
+                "java_opts": {
+                    "type": "string",
+                    "description": "Sets ZEPPELIN_JAVA_OPTS and ZEPPELIN_INTP_JAVA_OPTS.  You can use this to set arbitrary spark configuration properties (e.g. spark.mesos.uris)",
+                    "default": ""
+                }
+            }
+        },
+        "zeppelin": {
+          "type": "object",
+          "properties": {
+            "shiro_conf_secret": {
+              "type": "string",
+              "description": "Path to a secret to use as content for shiro.ini (to configure users and permissions), mutually exclusive with shiro_conf_url"
+            },
+            "shiro_conf_url": {
+              "type": "string",
+              "description": "URL to a file to use as shiro.ini (to configure users and permissions), mutually exclusive with shiro_conf_secret"
+            },
+            "python_packages": {
+                "type": "string",
+                "description": "Space-separated list of python packages to install on startup, will be passed to pip. Needs internet connection. Example: \"tensorflow requests\"",
+                "default": ""
+            },
+            "r_packages": {
+                "type": "string",
+                "description": "List of r packages to install on startup, will be passed to the R command install.packages(). Needs internet connection. Example: \"c('glmnet', 'caret')\"",
+                "default": ""
+            },
+            "timezone": {
+              "type": "string",
+              "description": "Timezone to set in the container. Needed if you want to run the cron scheduler for notebooks. Example: \"Europe/Berlin\"",
+              "default": ""
+            },
+            "cacerts_url": {
+              "type": "string",
+              "description": "URL for a custom cacerts file that should be used for the zeppelin jvm. Must be fetchable by the mesos agents.",
+              "default": ""
+            }
+          }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "packagingVersion": "4.0",
+    "name": "zeppelin",
+    "version": "1.1-0.8.1-2.4.0",
+    "minDcosReleaseVersion": "1.10",
+    "scm": "https://github.com/MaibornWolff/dcos-zeppelin",
+    "maintainer": "https://dcos.io/community/",
+    "description": "Zeppelin is a web-based notebook that enables interactive data analytics using spark",
+    "framework": true,
+    "tags": [
+        "framework",
+        "bigdata",
+        "spark",
+        "notebook",
+        "interactive",
+        "python"
+    ],
+    "website": "https://zeppelin.apache.org/",
+    "preInstallNotes": "This DC/OS Service is currently in preview.",
+    "postInstallNotes": "DC/OS Zeppelin is being installed!\n\n\tDocumentation: https://github.com/dcos/examples/tree/master/zeppelin/1.11\n\tIssues: https://dcos.io/community or\n\t\t https://github.com/MaibornWolff/dcos-zeppelin",
+    "postUninstallNotes": "If you installed Zeppelin with an external persistent volume make sure to delete the volume manually."
+}
