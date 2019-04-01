@@ -1,0 +1,70 @@
+{
+    "id": "{{service.name}}",
+    "cpus": {{service.cpus}},
+    "mem": {{service.mem}},
+    "instances": 1,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "{{resource.assets.container.docker.predator}}",
+            "network": "HOST"
+        }
+    },
+    "portDefinitions": [
+        {
+            "port": 0,
+            "protocol": "tcp",
+            "name": "predator",
+            "labels": {
+                "VIP_0": "/predator:80"
+            }
+        }
+    ],
+    "labels": {
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "DCOS_SERVICE_PORT_INDEX": "0",
+        "DCOS_SERVICE_SCHEME": "http"
+    },
+    "env": {
+        "JOB_PLATFORM": "METRONOME",
+        "INTERNAL_ADDRESS": "{{service.internal_address}}",
+        "METRONOME_URL": "{{service.metronome_url}}",
+        {{#service.minimum_wait_for_delayed_report_status_update_in_ms}}
+            "MINIMUM_WAIT_FOR_DELAYED_REPORT_STATUS_UPDATE_IN_MS": "{{service.minimum_wait_for_delayed_report_status_update_in_ms}}",
+        {{/service.minimum_wait_for_delayed_report_status_update_in_ms}}
+
+        "DOCKER_NAME": "{{runner.docker_name}}",
+        {{#runner.cpu}}
+            "RUNNER_CPU": "{{runner.cpu}}",
+        {{/runner.cpu}}
+        {{#runner.memory}}
+            "RUNNER_MEMORY": "{{runner.memory}}",
+        {{/runner.memory}}
+
+        {{#database.address}}
+            "DATABASE_ADDRESS": "{{database.address}}",
+        {{/database.address}}
+        {{#database.username}}
+            "DATABASE_USERNAME": "{{database.username}}",
+        {{/database.username}}
+        {{#database.password}}
+            "DATABASE_PASSWORD": "{{database.password}}",
+        {{/database.password}}
+        {{#database.name}}
+            "DATABASE_NAME": "{{database.name}}",
+        {{/database.name}}
+        "DATABASE_TYPE": "{{database.type}}"
+ },
+    "healthChecks": [
+        {
+            "gracePeriodSeconds": 5,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 10,
+            "maxConsecutiveFailures": 3,
+            "portIndex": 0,
+            "path": "/health",
+            "protocol": "MESOS_HTTP",
+            "delaySeconds": 15
+        }
+    ]
+}

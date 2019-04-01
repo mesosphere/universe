@@ -1,0 +1,17 @@
+{
+  "images": {
+    "icon-small": "https://zooz.github.io/predator/logo.png",
+    "icon-medium": "https://zooz.github.io/predator/logo.png",
+    "icon-large": "https://zooz.github.io/predator/logo.png",
+    "screenshots": [
+      "https://zooz.github.io/predator/logo.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "predator": "zooz/predator:latest"
+      }
+    }
+  }
+}
