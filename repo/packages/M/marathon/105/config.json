@@ -420,6 +420,11 @@
           "description" : "The timeout for ZooKeeper operations in milliseconds.",
           "type" : "integer",
           "default" : 10000
+        },
+        "max-concurrent-marathon-health-checks" : {
+          "description" : "Defines maximum number of concurrent *Marathon* health checks (HTTP/S and TCP). Note that setting a big value here will overload Marathon leading to internal timeouts and unstable behavior.",
+          "type" : "integer",
+          "default" : 256
         }
       },
       "required" : [ "master" ],
