@@ -90,6 +90,9 @@ class Handler(BaseHTTPRequestHandler):
 
         try:
             content_type, json_response = handle(decoded_url, user_agent, accept)
+        except ValueError as e:
+            self.send_error(HTTPStatus.BAD_REQUEST, explain=str(e))
+            return
         except HTTPError as e:
             logger.info(
                 'Upstream error :\nURL: [%s]\nReason: [%s %s]\nBody:\n[%s]',
@@ -292,7 +295,7 @@ class ErrorResponse(Enum):
     INVALID_JSON_FROM_UPSTREAM = 'Upstream [{}] did not return a json body'
 
     def to_msg(self, *args):
-        return self.value.format(args)
+        return self.value.format(*args)
 
 
 if __name__ == '__main__':
