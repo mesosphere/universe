@@ -1,0 +1,42 @@
+{
+    "cli": {
+        "binaries": {
+            "linux": {
+                "x86-64": {
+                    "kind": "zip",
+                    "url": "https://downloads.mesosphere.io/cli/releases/plugins/dcos-enterprise-cli/linux/x86-64/dcos-enterprise-cli-1.13-patch.0.zip",
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "8b84e99385192b87b7df06f655c2afbff98eb45fba10bc70f35313f31f466ff3"
+                        }
+                    ]
+                }
+            },
+            "darwin": {
+                "x86-64": {
+                    "kind": "zip",
+                    "url": "https://downloads.mesosphere.io/cli/releases/plugins/dcos-enterprise-cli/darwin/x86-64/dcos-enterprise-cli-1.13-patch.0.zip",
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "0ebdadc3a06ca908acf71233e7daaeb2e614f63aca8d9f1e6e24a7340ab83f61"
+                        }
+                    ]
+                }
+            },
+            "windows": {
+                "x86-64": {
+                    "kind": "zip",
+                    "url": "https://downloads.mesosphere.io/cli/releases/plugins/dcos-enterprise-cli/windows/x86-64/dcos-enterprise-cli-1.13-patch.0.zip",
+                    "contentHash": [
+                        {
+                            "algo": "sha256",
+                            "value": "b6be38085dce979bcffaf64b4fb5760a8a5778adf9d4274ed7776d50108ff7bf"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
