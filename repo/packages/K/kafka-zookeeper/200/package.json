@@ -15,7 +15,7 @@
     "zookeeper",
     "kafka"
   ],
-  "preInstallNotes": "Default configuration requires 3 agent nodes each with: 1.0 CPU | 4000 MB MEM | 5000 MB Disk\n\n\tBy using this service you agree to the license terms here: https://github.com/mesosphere/dcos-zookeeper/blob/master/LICENSE\n\nVersions: Apache ZooKeeper 3.4.12",
+  "preInstallNotes": "Default configuration requires 3 agent nodes each with: 1.0 CPU | 4000 MB MEM | 5000 MB Disk\n\nVersions: Apache ZooKeeper 3.4.12",
   "postInstallNotes": "The DC/OS Apache ZooKeeper service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/kafka-zookeeper/\n\tIssues: https://docs.mesosphere.com/support/",
   "postUninstallNotes": "The DC/OS Apache ZooKeeper service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/kafka-zookeeper/uninstall to remove any persistent state if required.",
   "licenses": [
