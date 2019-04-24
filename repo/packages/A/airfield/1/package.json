@@ -18,6 +18,12 @@
         "zeppelin", 
         "spark"
     ], 
+    "licenses": [
+        {
+          "name": "Apache License Version 2.0",
+          "url": "https://github.com/MaibornWolff/dcos-airfield/blob/master/LICENSE"
+        }
+    ],
     "postInstallNotes": "Airfield is being installed!\n\n\tDocumentation: https://github.com/MaibornWolff/dcos-airfield\n\tIssues: https://github.com/MaibornWolff/dcos-airfield", 
     "postUninstallNotes": "Airfield is being uninstalled."
 }
