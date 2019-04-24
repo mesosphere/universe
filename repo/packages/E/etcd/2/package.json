@@ -1,5 +1,5 @@
 {
-    "packagingVersion": "4.0", 
+    "packagingVersion": "4.0",
     "upgradesFrom": [
         "0.1.0-3.3.12"
     ], 
@@ -17,7 +17,13 @@
         "etcd", 
         "keyvalue", 
         "ha"
-    ], 
+    ],
+    "licenses": [
+        {
+            "name": "Apache License Version 2.0",
+            "url": "https://github.com/etcd-io/etcd/blob/master/LICENSE"
+        }
+    ],
     "postInstallNotes": "DC/OS etcd is being installed!\n\n\tDocumentation: https://github.com/maibornwolff/dcos-etcd\n\tIssues: https://github.com/maibornwolff/dcos-etcd", 
     "postUninstallNotes": "DC/OS etcd is being uninstalled."
 }
