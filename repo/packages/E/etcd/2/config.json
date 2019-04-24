@@ -1,0 +1,192 @@
+{
+    "type": "object", 
+    "properties": {
+        "service": {
+            "type": "object", 
+            "description": "DC/OS service configuration properties", 
+            "properties": {
+                "name": {
+                    "description": "The name of the service instance", 
+                    "type": "string", 
+                    "default": "etcd", 
+                    "title": "Service name"
+                }, 
+                "user": {
+                    "description": "The user that the service will run as.", 
+                    "type": "string", 
+                    "default": "root", 
+                    "title": "User"
+                }, 
+                "service_account": {
+                    "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "service_account_secret": {
+                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.", 
+                    "type": "string", 
+                    "default": "", 
+                    "title": "Credential secret name (optional)"
+                }, 
+                "virtual_network_enabled": {
+                    "description": "Enable virtual networking", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "virtual_network_name": {
+                    "description": "The name of the virtual network to join", 
+                    "type": "string", 
+                    "default": "dcos"
+                }, 
+                "virtual_network_plugin_labels": {
+                    "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "log_level": {
+                    "description": "The log level for the DC/OS service.", 
+                    "type": "string", 
+                    "enum": [
+                        "OFF", 
+                        "FATAL", 
+                        "ERROR", 
+                        "WARN", 
+                        "INFO", 
+                        "DEBUG", 
+                        "TRACE", 
+                        "ALL"
+                    ], 
+                    "default": "INFO"
+                }, 
+                "deploy_strategy": {
+                    "description": "etcd deploy strategy. [parallel, serial]", 
+                    "type": "string", 
+                    "enum": [
+                        "parallel", 
+                        "serial"
+                    ], 
+                    "default": "parallel"
+                }, 
+                "update_strategy": {
+                    "description": "etcd update strategy. [parallel, serial]", 
+                    "type": "string", 
+                    "enum": [
+                        "parallel", 
+                        "serial"
+                    ], 
+                    "default": "serial"
+                }
+            }, 
+            "required": [
+                "name", 
+                "user"
+            ]
+        }, 
+        "node": {
+            "description": "etcd pod configuration properties", 
+            "type": "object", 
+            "properties": {
+                "count": {
+                    "title": "Node count", 
+                    "description": "Number of etcd pods to run", 
+                    "type": "integer", 
+                    "default": 3, 
+                    "minimum": 3
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "etcd pod CPU requirements", 
+                    "type": "number", 
+                    "default": 1.0
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "etcd pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 256
+                }, 
+                "disk": {
+                    "title": "Disk size (MB)", 
+                    "description": "etcd pod persistent disk requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 100
+                }, 
+                "disk_type": {
+                    "title": "Disk type [ROOT, MOUNT]", 
+                    "description": "Mount volumes require preconfiguration in DC/OS", 
+                    "enum": [
+                        "ROOT", 
+                        "MOUNT"
+                    ], 
+                    "default": "ROOT"
+                }
+            }, 
+            "required": [
+                "count", 
+                "cpus", 
+                "mem", 
+                "disk", 
+                "disk_type"
+            ]
+        }, 
+        "etcd": {
+            "description": "consul pod configuration properties", 
+            "type": "object", 
+            "properties": {
+                "client_port": {
+                    "description": "Port for client communication", 
+                    "type": "integer", 
+                    "default": 2379
+                }, 
+                "peer_port": {
+                    "description": "Port for communication between etcd peers", 
+                    "type": "integer", 
+                    "default": 2380
+                }, 
+                "tls_enabled": {
+                    "description": "Enable TLS for client and peer connections. Requires DC/OS EE and configured serviceaccount unless use_auto_tls is set to true.", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "use_auto_tls": {
+                    "description": "Let etcd generate its own self-signed certificates instead of using ones provided by DC/OS. Only takes effect when tls_enabled is set to true.", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "initial_cluster_token": {
+                    "description": "Initial cluster token for the etcd cluster during bootstrap. Default is \"dcos\". Make this unique if you have multiple etcd clusters.", 
+                    "type": "string", 
+                    "default": "dcos"
+                }, 
+                "heartbeat_interval": {
+                    "description": "Time (in milliseconds) of a heartbeat interval", 
+                    "type": "integer", 
+                    "default": 100
+                }, 
+                "election_timeout": {
+                    "description": "Time (in milliseconds) for an election to timeout", 
+                    "type": "integer", 
+                    "default": 1000
+                }, 
+                "snapshot_count": {
+                    "description": "Number of committed transactions to trigger a snapshot to disk.", 
+                    "type": "integer", 
+                    "default": 100000
+                }
+            }, 
+            "required": [
+                "client_port", 
+                "peer_port"
+            ]
+        }
+    }
+}
