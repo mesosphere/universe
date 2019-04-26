@@ -1,0 +1,57 @@
+{
+    "assets": {
+        "uris": {
+            "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz", 
+            "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz", 
+            "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.55.2/bootstrap.zip", 
+            "scheduler-zip": "https://ecosystem-repo.s3.amazonaws.com/sdk/artifacts/0.55.2/operator-scheduler.zip", 
+            "etcd-tar-gz": "https://github.com/etcd-io/etcd/releases/download/v3.3.12/etcd-v3.3.12-linux-amd64.tar.gz", 
+            "svc": "https://github.com/MaibornWolff/dcos-etcd/releases/download/v0.1.0-3.3.12/svc.yml"
+        }
+    }, 
+    "images": {
+        "icon-small": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-small.png?raw=true", 
+        "icon-medium": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-medium.png?raw=true", 
+        "icon-large": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-large.png?raw=true"
+    }, 
+    "cli": {
+        "binaries": {
+            "darwin": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256", 
+                            "value": "c329d60aa5fea372115c371814a141f6615819db51935bd09a8265c8978115ac"
+                        }
+                    ], 
+                    "kind": "executable", 
+                    "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.55.2/dcos-service-cli-darwin"
+                }
+            }, 
+            "linux": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256", 
+                            "value": "9690330cd5d7017ab7d747e31b28d30f817cf35cb8db700a5ceebaf628d0d299"
+                        }
+                    ], 
+                    "kind": "executable", 
+                    "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.55.2/dcos-service-cli-linux"
+                }
+            }, 
+            "windows": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256", 
+                            "value": "75a6d593848f18b6fc5050f7dde18fb91c659b5b62825ba0eca0e8a5286d46bf"
+                        }
+                    ], 
+                    "kind": "executable", 
+                    "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.55.2/dcos-service-cli.exe"
+                }
+            }
+        }
+    }
+}

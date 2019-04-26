@@ -1,0 +1,29 @@
+{
+    "packagingVersion": "4.0",
+    "upgradesFrom": [
+        "0.1.0-3.3.12"
+    ], 
+    "downgradesTo": [
+        "0.1.0-3.3.12"
+    ], 
+    "minDcosReleaseVersion": "1.11", 
+    "name": "etcd", 
+    "version": "0.1.0-3.3.12", 
+    "maintainer": "https://github.com/maibornwolff/dcos-etcd", 
+    "description": "etcd cluster in HA mode on DC/OS", 
+    "selected": false, 
+    "framework": true, 
+    "tags": [
+        "etcd", 
+        "keyvalue", 
+        "ha"
+    ],
+    "licenses": [
+        {
+            "name": "Apache License Version 2.0",
+            "url": "https://raw.githubusercontent.com/etcd-io/etcd/master/LICENSE"
+        }
+    ],
+    "postInstallNotes": "DC/OS etcd is being installed!\n\n\tDocumentation: https://github.com/maibornwolff/dcos-etcd\n\tIssues: https://github.com/maibornwolff/dcos-etcd", 
+    "postUninstallNotes": "DC/OS etcd is being uninstalled."
+}
