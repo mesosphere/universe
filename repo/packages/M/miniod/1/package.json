@@ -1,14 +1,10 @@
 {
     "packagingVersion": "4.0", 
-    "upgradesFrom": [
-        "{{upgrades-from}}"
-    ], 
-    "downgradesTo": [
-        "{{downgrades-to}}"
-    ], 
+    "upgradesFrom": [], 
+    "downgradesTo": [], 
     "minDcosReleaseVersion": "1.10", 
     "name": "miniod", 
-    "version": "0.1.1", 
+    "version": "0.1.1-RELEASE.2019-04-26T02-11-47Z", 
     "maintainer": "support@mesosphere.io", 
     "description": "Minio on DC/OS \n\nDocumentation: https://docs.mesosphere.com/services/minio", 
     "selected": false, 
