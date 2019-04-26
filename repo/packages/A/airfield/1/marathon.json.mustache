@@ -1,0 +1,93 @@
+
+{
+  "id": "{{service.name}}",
+  "user": "{{service.user}}",
+  "instances": 1,
+  "cpus": {{node.cpus}},
+  "mem": {{node.mem}},
+  "container": {
+    "type": "MESOS",
+    "portMappings": [
+      {
+        "containerPort": 5000
+      }
+    ],
+    "docker": {
+      "image": "{{resource.assets.container.docker.airfield}}",
+      "forcePullImage": false
+    }
+  },
+  "networks": [
+    {{#service.virtual_network_enabled}}
+    {
+      "name": "{{service.virtual_network_name}}",
+      "mode": "container"
+    }
+    {{/service.virtual_network_enabled}}
+    {{^service.virtual_network_enabled}}
+    {
+      "mode": "container/bridge"
+    }
+    {{/service.virtual_network_enabled}}
+  ],
+  "labels": {
+    {{#service.marathon_lb_vhost}}
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "{{service.marathon_lb_vhost}}",
+    {{/service.marathon_lb_vhost}}
+    "DCOS_SERVICE_NAME": "{{service.name}}"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": {
+      "secret": "serviceCredential"
+    },
+    {{/service.service_account_secret}}
+    "PACKAGE_NAME": "airfield",
+    "PACKAGE_VERSION": "0.2.0",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1556101126847",
+    "PACKAGE_BUILD_TIME_STR": "2019-04-24T10:18:46.847522",
+    {{#airfield.dcos_base_url}}
+    "DCOS_BASE_URL": "{{airfield.dcos_base_url}}",
+    {{/airfield.dcos_base_url}}
+    {{#airfield.consul_endpoint}}
+    "AIRFIELD_CONSUL_ENDPOINT": "{{airfield.consul_endpoint}}",
+    {{/airfield.consul_endpoint}}
+    {{#airfield.etcd_endpoint}}
+    "AIRFIELD_ETCD_ENDPOINT": "{{airfield.etcd_endpoint}}",
+    {{/airfield.etcd_endpoint}}
+    {{#airfield.app_group}}
+    "AIRFIELD_MARATHON_APP_GROUP": "{{airfield.app_group}}",
+    {{/airfield.app_group}}
+    {{#airfield.config_base_key}}
+    "AIRFIELD_CONFIG_BASE_KEY": "{{airfield.config_base_key}}",
+    {{/airfield.config_base_key}}
+    {{#airfield.oidc_config}}
+    "AIRFIELD_OIDC_ACTIVATED": "1",
+    "AIRFIELD_OIDC_SECRET_FILE": "{{airfield.oidc_config}}",
+    {{/airfield.oidc_config}}
+    "AIRFIELD_BASE_HOST" : "{{airfield.marathon_lb_base_host}}"
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/",
+      "portIndex": 0,
+      "timeoutSeconds": 10,
+      "gracePeriodSeconds": 20,
+      "intervalSeconds": 20,
+      "maxConsecutiveFailures": 6
+    }
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}
