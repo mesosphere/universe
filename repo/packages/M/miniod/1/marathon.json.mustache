@@ -1,0 +1,194 @@
+
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "user": "{{service.user}}",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*/jre/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && ./bootstrap -resolve=false -template=false && ./operator-scheduler/bin/operator svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    "PACKAGE_NAME": "{{package-name}}",
+    "PACKAGE_VERSION": "{{package-version}}",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1556089555765",
+    "PACKAGE_BUILD_TIME_STR": "2019-04-24T07:05:55.765029",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+    "MESOS_API_VERSION": "V1",
+
+    "MINIO_ACCESS_KEY": "{{minio.minio_access_key}}",
+    "MINIO_SECRET_KEY": "{{minio.minio_secret_key}}",
+    "MINIO_BROWSER": "{{minio.minio_browser}}",
+    "MINIO_STORAGE_CLASS_STANDARD": "{{minio.minio_storage_class_standard}}",
+    "MINIO_STORAGE_CLASS_RRS": "{{minio.minio_storage_class_rrs}}",
+    {{#minio.minio_cache_enable}}
+    "ENABLE_MINIO_CACHE": "true",
+    "MINIO_CACHE_EXPIRY": "{{minio.minio_cache_expiry}}",
+    "MINIO_CACHE_EXCLUDE": "{{minio.minio_cache_exclude}}",
+    "MINIO_CACHE_MAXUSE": "{{minio.minio_cache_maxuse}}",
+    {{/minio.minio_cache_enable}}
+
+    "MINIO_SSL_ENABLED": "{{service.ssl_enabled}}",
+    "MINIO_SECRETS_ENABLED": "{{minio.enable_secrets}}",
+
+    "TASKCFG_ALL_NOTIFY_AMQP_ENABLE": "{{notify.amqp.enable}}",
+    "TASKCFG_ALL_NOTIFY_AMQP_URL": "{{notify.amqp.url}}",
+    "TASKCFG_ALL_NOTIFY_AMQP_EXCHANGE": "{{notify.amqp.exchange}}",
+    "TASKCFG_ALL_NOTIFY_AMQP_ROUTINGKEY": "{{notify.amqp.routingKey}}",
+    "TASKCFG_ALL_NOTIFY_AMQP_EXCHANGETYPE": "{{notify.amqp.exchangeType}}",
+    "TASKCFG_ALL_NOTIFY_AMQP_DELIVERYMODE": "{{notify.amqp.deliveryMode}}",
+    "TASKCFG_ALL_NOTIFY_AMQP_MANDATORY": "{{notify.amqp.mandatory}}",
+    "TASKCFG_ALL_NOTIFY_AMQP_IMMEDIATE": "{{notify.amqp.immediate}}",
+    "TASKCFG_ALL_NOTIFY_AMQP_DURABLE": "{{notify.amqp.durable}}",
+    "TASKCFG_ALL_NOTIFY_AMQP_INTERNAL": "{{notify.amqp.internal}}",
+    "TASKCFG_ALL_NOTIFY_AMQP_NOWAIT": "{{notify.amqp.noWait}}",
+    "TASKCFG_ALL_NOTIFY_AMQP_AUTODELETE": "{{notify.amqp.autoDeleted}}",
+
+    "TASKCFG_ALL_NOTIFY_NATS_ENABLE": "{{notify.nats.enable}}",
+    "TASKCFG_ALL_NOTIFY_NATS_ADDRESS": "{{notify.nats.address}}",
+    "TASKCFG_ALL_NOTIFY_NATS_SUBJECT": "{{notify.nats.subject}}",
+    "TASKCFG_ALL_NOTIFY_NATS_USERNAME": "{{notify.nats.username}}",
+    "TASKCFG_ALL_NOTIFY_NATS_PASSWORD": "{{notify.nats.password}}",
+    "TASKCFG_ALL_NOTIFY_NATS_TOKEN": "{{notify.nats.token}}",
+    "TASKCFG_ALL_NOTIFY_NATS_SECURE": "{{notify.nats.secure}}",
+    "TASKCFG_ALL_NOTIFY_NATS_PINGINTERVAL": "{{notify.nats.pingInterval}}",
+    "TASKCFG_ALL_NOTIFY_NATS_STREAMING_ENABLE": "{{notify.nats.streaming.enable}}",
+    "TASKCFG_ALL_NOTIFY_NATS_STREAMING_CLUSTERID": "{{notify.nats.streaming.clusterId}}",
+    "TASKCFG_ALL_NOTIFY_NATS_STREAMING_CLIENTID": "{{notify.nats.streaming.cleintId}}",
+    "TASKCFG_ALL_NOTIFY_NATS_STREAMING_ASYNC": "{{notify.nats.streaming.async}}",
+    "TASKCFG_ALL_NOTIFY_NATS_STREAMING_MAXPUBACKSINFLIGHT": "{{notify.nats.streaming.maxPubAcksInflight}}",
+
+    "TASKCFG_ALL_NOTIFY_ELASTICSEARCH_ENABLE": "{{notify.elasticsearch.enable}}",
+    "TASKCFG_ALL_NOTIFY_ELASTICSEARCH_FORMAT": "{{notify.elasticsearch.format}}",
+    "TASKCFG_ALL_NOTIFY_ELASTICSEARCH_URL": "{{notify.elasticsearch.url}}",
+    "TASKCFG_ALL_NOTIFY_ELASTICSEARCH_INDEX": "{{notify.elasticsearch.index}}",
+
+    "TASKCFG_ALL_NOTIFY_REDIS_ENABLE": "{{notify.redis.enable}}",
+    "TASKCFG_ALL_NOTIFY_REDIS_FORMAT": "{{notify.redis.format}}",
+    "TASKCFG_ALL_NOTIFY_REDIS_ADDRESS": "{{notify.redis.address}}",
+    "TASKCFG_ALL_NOTIFY_REDIS_PASSWORD": "{{notify.redis.password}}",
+    "TASKCFG_ALL_NOTIFY_REDIS_KEY": "{{notify.redis.key}}",
+
+    "TASKCFG_ALL_NOTIFY_POSTGRESQL_ENABLE": "{{notify.postgresql.enable}}",
+    "TASKCFG_ALL_NOTIFY_POSTGRESQL_FORMAT": "{{notify.postgresql.format}}",
+    "TASKCFG_ALL_NOTIFY_POSTGRESQL_CONNECTIONSTRING": "{{notify.postgresql.connectionString}}",
+    "TASKCFG_ALL_NOTIFY_POSTGRESQL_TABLE": "{{notify.postgresql.table}}",
+    "TASKCFG_ALL_NOTIFY_POSTGRESQL_HOST": "{{notify.postgresql.host}}",
+    "TASKCFG_ALL_NOTIFY_POSTGRESQL_PORT": "{{notify.postgresql.port}}",
+    "TASKCFG_ALL_NOTIFY_POSTGRESQL_USER": "{{notify.postgresql.user}}",
+    "TASKCFG_ALL_NOTIFY_POSTGRESQL_PASSWORD": "{{notify.postgresql.password}}",
+    "TASKCFG_ALL_NOTIFY_POSTGRESQL_DATABASE": "{{notify.postgresql.database}}",
+
+    "TASKCFG_ALL_NOTIFY_KAFKA_ENABLE": "{{notify.kafka.enable}}",
+    "TASKCFG_ALL_NOTIFY_KAFKA_BROKERS": "{{notify.kafka.brokers}}",
+    "TASKCFG_ALL_NOTIFY_KAFKA_TOPIC": "{{notify.kafka.topic}}",
+
+    "TASKCFG_ALL_NOTIFY_WEBHOOK_ENABLE": "{{notify.webhook.enable}}",
+    "TASKCFG_ALL_NOTIFY_WEBHOOK_ENDPOINT": "{{notify.webhook.endpoint}}",
+
+    "TASKCFG_ALL_NOTIFY_MYSQL_ENABLE": "{{notify.mysql.enable}}",
+    "TASKCFG_ALL_NOTIFY_MYSQL_FORMAT": "{{notify.mysql.format}}",
+    "TASKCFG_ALL_NOTIFY_MYSQL_DSNSTRING": "{{notify.mysql.dsnString}}",
+    "TASKCFG_ALL_NOTIFY_MYSQL_TABLE": "{{notify.mysql.table}}",
+    "TASKCFG_ALL_NOTIFY_MYSQL_HOST": "{{notify.mysql.host}}",
+    "TASKCFG_ALL_NOTIFY_MYSQL_PORT": "{{notify.mysql.port}}",
+    "TASKCFG_ALL_NOTIFY_MYSQL_USER": "{{notify.mysql.user}}",
+    "TASKCFG_ALL_NOTIFY_MYSQL_PASSWORD": "{{notify.mysql.password}}",
+    "TASKCFG_ALL_NOTIFY_MYSQL_DATABASE": "{{notify.mysql.database}}",
+
+    "TASKCFG_ALL_NOTIFY_MQTT_ENABLE": "{{notify.mqtt.enable}}",
+    "TASKCFG_ALL_NOTIFY_MQTT_BROKER": "{{notify.mqtt.broker}}",
+    "TASKCFG_ALL_NOTIFY_MQTT_TOPIC": "{{notify.mqtt.topic}}",
+    "TASKCFG_ALL_NOTIFY_MQTT_QOS": "{{notify.mqtt.qos}}",
+    "TASKCFG_ALL_NOTIFY_MQTT_CLIENTID": "{{notify.mqtt.clientId}}",
+    "TASKCFG_ALL_NOTIFY_MQTT_USERNAME": "{{notify.mqtt.username}}",
+    "TASKCFG_ALL_NOTIFY_MQTT_PASSWORD": "{{notify.mqtt.password}}",
+    "TASKCFG_ALL_NOTIFY_MQTT_RECONNECTINTERVAL": "{{notify.mqtt.reconnectInterval}}",
+    "TASKCFG_ALL_NOTIFY_MQTT_KEEPALIVEINTERVAL": "{{notify.mqtt.keepAliveInterval}}",
+
+    "MINIO_NODE_COUNT": "{{minio.count}}",
+    "MINIO_NODE_PLACEMENT": "{{{minio.placement_constraint}}}",
+    {{#service.virtual_network_enabled}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+    "MINIO_NODE_CPUS": "{{minio.cpus}}",
+    "MINIO_NODE_MEM": "{{minio.mem}}",
+    "MINIO_NODE_DISK": "{{minio.disk}}",
+    "MINIO_NODE_DISK_TYPE": "{{minio.disk_type}}",
+
+    "STHREE_COMPATIBLE_URI": "{{minio.backup_store_endpoint}}",
+    "CACHE_DISK": "{{minio.cache_disk}}",
+    "CACHE_DISK_TYPE": "{{minio.cache_disk_type}}",
+    "MINIO_NODE_PORT": "{{minio.minio_port}}",
+
+    "MINIO_DOCKER_IMAGE": "{{resource.assets.container.docker.minio-cluster}}",
+    "MC_DOCKER_IMAGE": "{{resource.assets.container.docker.mc-cluster}}",
+
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "MINIO_STATSD_JAR_URI": "{{resource.assets.uris.minio-statsd-jar}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "MINIO_INIT_SH": "{{resource.assets.uris.minio-init-sh}}",
+    "MINIO_SYNCHRONIZE_SH": "{{resource.assets.uris.minio-synchronize-sh}}",
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.service_account_secret}}
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+
+  },
+  "uris": [
+    "{{resource.assets.uris.bootstrap-zip}}",
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "{{resource.assets.uris.svc}}",
+    "{{resource.assets.uris.minio-init-sh}}",
+    "{{resource.assets.uris.minio-synchronize-sh}}",
+    "{{resource.assets.uris.minio-config}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/v1/health",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}
