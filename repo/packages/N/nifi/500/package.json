@@ -1,0 +1,24 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [],
+  "downgradesTo": [],
+  "minDcosReleaseVersion": "1.9",
+  "name": "nifi",
+  "version": "0.4.1-1.8.0",
+  "maintainer": "support@mesosphere.io",
+  "description": "Apache NiFi",
+  "selected": false,
+  "framework": true,
+  "tags": [
+    "nifi"
+  ],
+  "preInstallNotes": "Default configuration requires 2 agent nodes each with: 1.1 CPU | 2048 MB MEM | 6 1000 MB Disk.",
+  "postInstallNotes": "DC/OS Apache NiFi is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/services/nifi\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS Apache NiFi is being uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/apache/nifi/blob/master/LICENSE"
+    }
+  ]
+}
