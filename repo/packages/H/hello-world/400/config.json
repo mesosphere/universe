@@ -145,6 +145,27 @@
             1
           ],
           "default": 1
+        },
+        "check" : {
+          "description": "Checks are a way to understand the health of a service. These HTTP checks are intended to be consumed by services external to Mesos/Marathon which will take appropriate action on them.",
+          "type": "object",
+          "properties" : {
+            "intervalSeconds": {
+              "description": "Number of seconds to wait between checks",
+              "type": "integer",
+              "default": 60
+            },
+            "timeoutSeconds": {
+              "description": "Number of seconds after which a check times out, regardless of the response. This value must be smaller than intervalSeconds",
+              "type": "integer",
+              "default": 20
+            },
+            "delaySeconds": {
+              "description": "Amount of time to wait until starting the checks",
+              "type": "integer",
+              "default": 15
+            }
+          }  
         }
       }
     },
