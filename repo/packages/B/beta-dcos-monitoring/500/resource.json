@@ -36,11 +36,11 @@
           "contentHash": [
             {
               "algo": "sha256",
-              "value": "c329d60aa5fea372115c371814a141f6615819db51935bd09a8265c8978115ac"
+              "value": "53fd8ef691284c6c54982c36380c282fbd24448dc913ebc0718fcba9aa09795b"
             }
           ],
-          "kind": "executable",
-          "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.55.2/dcos-service-cli-darwin"
+          "kind": "zip",
+          "url": "https://downloads.dcos.io/cli/releases/plugins/dcos-monitoring-cli/darwin/x86-64/dcos-monitoring-cli-0.5.0-2019-05-08.zip"
         }
       },
       "linux": {
@@ -48,11 +48,11 @@
           "contentHash": [
             {
               "algo": "sha256",
-              "value": "9690330cd5d7017ab7d747e31b28d30f817cf35cb8db700a5ceebaf628d0d299"
+              "value": "283df94cbd1ca63b50f899bbf10d7a2ef6f81b08a5f6bcfc198f6015422282ba"
             }
           ],
-          "kind": "executable",
-          "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.55.2/dcos-service-cli-linux"
+          "kind": "zip",
+          "url": "https://downloads.dcos.io/cli/releases/plugins/dcos-monitoring-cli/linux/x86-64/dcos-monitoring-cli-0.5.0-2019-05-08.zip"
         }
       },
       "windows": {
@@ -60,11 +60,11 @@
           "contentHash": [
             {
               "algo": "sha256",
-              "value": "75a6d593848f18b6fc5050f7dde18fb91c659b5b62825ba0eca0e8a5286d46bf"
+              "value": "c24ecd80b79e3da9d98ed9c12851a80942d1151d770238b7b7f15b469d4dee08"
             }
           ],
-          "kind": "executable",
-          "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.55.2/dcos-service-cli.exe"
+          "kind": "zip",
+          "url": "https://downloads.dcos.io/cli/releases/plugins/dcos-monitoring-cli/windows/x86-64/dcos-monitoring-cli-0.5.0-2019-05-08.zip"
         }
       }
     }
