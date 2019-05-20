@@ -77,7 +77,7 @@ def main():
     create_content_type_file(ct_empty_path, "v3")
 
     zip_file_dcos_versions = ["1.6.1", "1.7"]
-    json_file_dcos_versions = ["1.8", "1.9", "1.10", "1.11", "1.12", "1.13"]
+    json_file_dcos_versions = ["1.8", "1.9", "1.10", "1.11", "1.12", "1.13", "1.14"]
     # create universe-by-version files for `dcos_versions`
     dcos_versions = zip_file_dcos_versions + json_file_dcos_versions
     [render_universe_by_version(
