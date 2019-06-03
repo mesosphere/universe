@@ -1,0 +1,427 @@
+{
+  "id": "{{service.name}}",
+  "instances": 1,
+  "cpus": {{service.cpus}},
+
+  {{#service.gpu.enabled}}
+  "gpus": {{service.gpu.gpus}},
+  {{/service.gpu.enabled}}
+
+  "mem": {{service.mem}},
+  "user": "{{service.user}}",
+  "cmd": "{{service.cmd}}",
+  "constraints": {{service.placement_constraints}},
+  "container": {
+    "type": "MESOS",
+    "volumes": [
+      {{#service.service_account_secret}}
+      {
+        "containerPath": "secrets/service-account.json",
+        "secret": "serviceCredential",
+      }
+      {{/service.service_account_secret}}
+      {
+        "external": {
+          "provider": "dvdi",
+          "name": "{{storage.persistence.portworx_volume_name}}",
+          "size": {{storage.persistence.portworx_volume_size}},
+          "options": {
+            "dvdi/driver": "pxd",
+            "dvdi/repl": "{{storage.persistence.portworx_volume_replication_factor}}"
+          }
+        },
+        "mode": "RW",
+        "containerPath": "data"
+      }
+    ],
+    "docker": {
+
+      {{#service.gpu.enabled}}
+      "image": "{{resource.assets.container.docker.jupyter-docker-gpu}}",
+      {{/service.gpu.enabled}}
+      {{^service.gpu.enabled}}
+      "image": "{{resource.assets.container.docker.jupyter-docker}}",
+      {{/service.gpu.enabled}}
+
+      "forcePullImage": {{advanced.force_pull_jupyter_image}}
+    }
+
+    {{#networking.cni_network_enabled}},
+    "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp",
+          "name": "notebook",
+          "labels": {
+            "VIP_0": "{{service.name}}:8888"
+          }
+        },
+        {
+          "containerPort": 7077,
+          "protocol": "tcp",
+          "name": "sparkdriver",
+          "labels": {
+            "VIP_1": "{{service.name}}:7077"
+          }
+        },
+        {
+          "containerPort": 4040,
+          "protocol": "tcp",
+          "name": "sparkui",
+          "labels": {
+            "VIP_2": "{{service.name}}:4040"
+          }
+        },
+        {
+          "containerPort": 6046,
+          "protocol": "tcp",
+          "name": "tfdbg",
+          "labels": {
+            "VIP_3": "{{service.name}}:6046"
+          }
+        },
+        {
+          "containerPort": 8786,
+          "protocol": "tcp",
+          "name": "daskscheduler",
+          "labels": {
+            "VIP_4": "{{service.name}}:8786"
+          }
+        },
+        {
+          "containerPort": 8787,
+          "protocol": "tcp",
+          "name": "daskboard",
+          "labels": {
+            "VIP_5": "{{service.name}}:8787"
+          }
+        },
+        {
+          "containerPort": 6379,
+          "protocol": "tcp",
+          "name": "rayredis",
+          "labels": {
+            "VIP_6": "{{service.name}}:6379"
+          }
+        },
+        {
+          "containerPort": 8076,
+          "protocol": "tcp",
+          "name": "rayobjectmanager",
+          "labels": {
+            "VIP_7": "{{service.name}}:8076"
+          }
+        },
+        {
+          "containerPort": 18080,
+          "protocol": "tcp",
+          "name": "sparkhistory",
+          "labels": {
+            "VIP_8": "{{service.name}}:18080"
+          }
+        }
+    ]
+  {{/networking.cni_network_enabled}}
+
+  },
+
+  {{#networking.cni_network_enabled}}
+  "networks": [
+      {
+        "mode": "container",
+        "name": "dcos"
+
+        {{#networking.cni_network_plugin_labels}}
+        ,
+        "labels": "{{networking.cni_network_plugin_labels}}"
+        {{/networking.cni_network_plugin_labels}}
+
+      }
+  ],
+  {{/networking.cni_network_enabled}}
+  {{^networking.cni_network_enabled}}
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "notebook",
+      "labels": {
+        "VIP_0": "{{service.name}}:8888"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "sparkdriver",
+      "labels": {
+        "VIP_1": "{{service.name}}:7077"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "sparkui",
+      "labels": {
+        "VIP_2": "{{service.name}}:4040"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "sparkblockmanager"
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "tfdbg",
+      "labels": {
+        "VIP_3": "{{service.name}}:6046"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "daskscheduler",
+      "labels": {
+        "VIP_4": "{{service.name}}:8786"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "daskboard",
+      "labels": {
+        "VIP_5": "{{service.name}}:8787"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "rayredis",
+      "labels": {
+        "VIP_6": "{{service.name}}:6379"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "rayobjectmanager",
+      "labels": {
+        "VIP_7": "{{service.name}}:8076"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "sparkhistory",
+      "labels": {
+        "VIP_7": "{{service.name}}:18080"
+      }
+    }
+  ],
+  {{/networking.cni_network_enabled}}
+
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+
+  "env": {
+
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": "file://secrets/service-account.json",
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"\/opt\/mesosphere\/libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\",\"parameters\":[{\"key\":\"service_account_credential\",\"value\":\"file://secrets/service-account.json\"}]},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"service_account_credential\",\"value\":\"file://secrets/service-account.json\"},{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    {{/service.service_account_secret}}
+
+    "CONDA_ENVS_PATH": "{{advanced.conda_envs_path}}",
+    "CONDA_PKGS_DIRS": "{{advanced.conda_pkgs_dir}}",
+    "DCOS_DIR": "{{advanced.dcos_dir}}",
+    "JUPYTER_CONFIG_DIR": "{{advanced.jupyter_config_dir}}",
+    "JUPYTER_RUNTIME_DIR": "{{advanced.jupyter_runtime_dir}}",
+    "JUPYTER_PATH": "{{advanced.jupyter_path}}",
+    "HADOOP_CONF_DIR": "{{advanced.hadoop_conf_dir}}",
+    "HOME": "{{advanced.home}}",
+    "ENABLE_SPARK_MONITOR": "{{advanced.spark_monitor_enabled}}",
+    "JAVA_OPTS": "'{{advanced.java_opts}}'",
+    
+    {{#service.jupyter_conf_urls}}
+    "JUPYTER_CONF_URLS": "{{service.jupyter_conf_urls}}",
+    {{/service.jupyter_conf_urls}}
+
+    "JUPYTER_PASSWORD": "{{service.jupyter_password}}",
+    
+    "NGINX_LOG_LEVEL": "{{advanced.nginx_log_level}}",
+
+    {{#oidc.enabled}}
+    {{#oidc.authorization_params}}
+    "OIDC_AUTHORIZATION_PARAMS": "{{oidc.authorization_params}}",
+    {{/oidc.authorization_params}}
+    
+    "OIDC_CLIENT_ID": "{{oidc.client_id}}",
+    
+    {{#oidc.client_secret}}
+    "OIDC_CLIENT_SECRET": "{{oidc.client_secret}}",
+    {{/oidc.client_secret}}
+    
+    "OIDC_DISCOVERY_URI": "{{oidc.discovery_uri}}",
+    
+    {{#oidc.email}}
+    "OIDC_EMAIL": "{{oidc.email}}",
+    {{/oidc.email}}
+    
+    "OIDC_LOGOUT_PATH": "https://{{networking.ingress.hostname}}{{service.name}}{{oidc.logout_path}}",
+    
+    {{#oidc.post_logout_redirect_uri}}
+    "OIDC_POST_LOGOUT_REDIRECT_URI": "{{oidc.post_logout_redirect_uri}}",
+    {{/oidc.post_logout_redirect_uri}}
+    {{^oidc.post_logout_redirect_uri}}
+    "OIDC_POST_LOGOUT_REDIRECT_URI": "https://{{networking.ingress.hostname}}{{service.name}}",
+    {{/oidc.post_logout_redirect_uri}}
+    
+    "OIDC_REDIRECT_URI": "https://{{networking.ingress.hostname}}{{service.name}}{{oidc.redirect_uri}}",
+    
+    {{#oidc.redirect_after_logout_uri}}
+    "OIDC_REDIRECT_AFTER_LOGOUT_URI": "{{oidc.redirect_after_logout_uri}}",
+    {{/oidc.redirect_after_logout_uri}}
+    {{^oidc.redirect_after_logout_uri}}
+    "OIDC_REDIRECT_AFTER_LOGOUT_URI": "https://{{networking.ingress.hostname}}{{service.name}}",
+    {{/oidc.redirect_after_logout_uri}}
+   
+    "OIDC_SCOPE": "{{oidc.scope}}",
+    
+    {{#oidc.tls_verify}}
+    "OIDC_TLS_VERIFY": "yes",
+    {{/oidc.tls_verify}}
+    {{^oidc.tls_verify}}
+    "OIDC_TLS_VERIFY": "no",
+    {{/oidc.tls_verify}}
+    
+    "OIDC_TOKEN_ENDPOINT_AUTH_METHOD": "{{oidc.token_endpoint_auth_method}}",
+    
+    {{#oidc.upn}}
+    "OIDC_UPN": "{{oidc.upn}}",
+    {{/oidc.upn}}
+    
+    "OIDC_USE_SPARTAN_RESOLVER": "{{oidc.use_spartan_resolver}}",
+    {{/oidc.enabled}}
+
+    "AWS_REGION": "{{storage.s3.aws_region}}",
+    "S3_ENDPOINT": "{{storage.s3.endpoint}}",
+    "S3_USE_HTTPS": "{{storage.s3.use_https}}",
+    "S3_VERIFY_SSL": "{{storage.s3.verify_ssl}}",
+
+    "SPARK_MASTER_URL": "{{spark.spark_master_url}}",
+    "SPARK_USER": "{{spark.spark_user}}",
+    "SPARK_DRIVER_CORES": "{{spark.spark_driver_cores}}",
+    "SPARK_DRIVER_MEMORY": "{{spark.spark_driver_memory}}",
+    "SPARK_DRIVER_JAVA_OPTIONS": "'{{spark.spark_driver_java_options}}'",
+
+    "SPARK_HISTORY_FS_LOGDIRECTORY": "{{spark.spark_history_fs_logdirectory}}",
+
+    "SPARK_CONF_SPARK_SCHEDULER_MINREGISTEREDRESOURCESRATIO": "spark.scheduler.minRegisteredResourcesRatio={{spark.spark_conf_spark_scheduler_min_registered_resources_ratio}}",
+    "SPARK_CONF_CORES_MAX": "spark.cores.max={{spark.spark_conf_cores_max}}",
+    "SPARK_CONF_EXECUTOR_CORES": "spark.executor.cores={{spark.spark_conf_executor_cores}}",
+    "SPARK_CONF_EXECUTOR_MEMORY": "spark.executor.memory={{spark.spark_conf_executor_memory}}",
+    "SPARK_CONF_EXECUTOR_JAVA_OPTIONS": "spark.executor.extraJavaOptions='{{spark.spark_conf_executor_java_options}}'",
+
+    "SPARK_CONF_EVENTLOG_ENABLED": "spark.eventLog.enabled={{spark.spark_conf_eventlog_enabled}}",
+    "SPARK_CONF_EVENTLOG_DIR": "spark.eventLog.dir={{spark.spark_conf_eventlog_dir}}",
+
+    "SPARK_CONF_HADOOP_FS_S3A_AWS_CREDENTIALS_PROVIDER": "spark.hadoop.fs.s3a.aws.credentials.provider={{spark.spark_conf_hadoop_fs_s3a_aws_credentials_provider}}",
+
+    {{#service.gpu.enabled}}
+    "SPARK_CONF_MESOS_EXECUTOR_DOCKER_IMAGE":"spark.mesos.executor.docker.image={{resource.assets.container.docker.worker-docker-gpu}}",
+    {{/service.gpu.enabled}}
+    {{^service.gpu.enabled}}
+    "SPARK_CONF_MESOS_EXECUTOR_DOCKER_IMAGE":"spark.mesos.executor.docker.image={{resource.assets.container.docker.worker-docker}}",
+    {{/service.gpu.enabled}}
+
+    "SPARK_CONF_SPARK_MESOS_EXECUTOR_DOCKER_FORCEPULLIMAGE": "spark.mesos.executor.docker.forcePullImage={{spark.spark_conf_mesos_executor_docker_forcepullimage}}",
+    "SPARK_CONF_MESOS_EXECUTOR_HOME": "spark.mesos.executor.home={{spark.spark_conf_mesos_executor_home}}",
+    "SPARK_CONF_MESOS_CONTAINERIZER": "spark.mesos.containerizer={{spark.spark_conf_mesos_containerizer}}",
+
+    {{#spark.spark_conf_mesos_principal}}
+    "SPARK_CONF_MESOS_PRINCIPAL": "spark.mesos.principal={{spark.spark_conf_mesos_principal}}",
+    {{/spark.spark_conf_mesos_principal}}
+
+    {{#spark.spark_conf_mesos_role}}
+    "SPARK_CONF_MESOS_ROLE": "spark.mesos.role={{spark.spark_conf_mesos_role}}",
+    {{/spark.spark_conf_mesos_role}}
+
+    {{#spark.spark_conf_mesos_driver_labels}}
+    "SPARK_CONF_MESOS_DRIVER_LABELS": "spark.mesos.driver.labels={{spark.spark_conf_mesos_driver_labels}}",
+    {{/spark.spark_conf_mesos_driver_labels}}
+
+    {{#spark.spark_conf_mesos_task_labels}}
+    "SPARK_CONF_MESOS_TASK_LABELS": "spark.mesos.task.labels={{spark.spark_conf_mesos_task_labels}}",
+    {{/spark.spark_conf_mesos_task_labels}}
+
+    "SPARK_CONF_SPARK_EXECUTORENV_KRB5_CONFIG": "spark.executorEnv.KRB5_CONFIG={{spark.spark_conf_executor_krb5_config}}",
+    "SPARK_CONF_SPARK_EXECUTORENV_JAVA_HOME": "spark.executorEnv.JAVA_HOME={{spark.spark_conf_executor_java_home}}",
+    "SPARK_CONF_SPARK_EXECUTORENV_HADOOP_HDFS_HOME": "spark.executorEnv.HADOOP_HDFS_HOME={{spark.spark_conf_executor_hadoop_hdfs_home}}",
+    "SPARK_CONF_SPARK_EXECUTORENV_HADOOP_OPTS": "spark.executorEnv.HADOOP_OPTS='{{spark.spark_conf_executor_hadoop_opts}}'",
+
+    {{#spark.spark_conf_jars_packages}}
+    "SPARK_CONF_SPARK_JARS_PACKAGES": "spark.jars.packages={{spark.spark_conf_jars_packages}}",
+    {{/spark.spark_conf_jars_packages}}
+
+    {{#advanced.start_dask_distributed}}
+    "START_DASK_DISTRIBUTED": "{{advanced.start_dask_distributed}}",
+    {{/advanced.start_dask_distributed}}
+
+    {{#advanced.start_ray_head_node}}
+    "START_RAY_HEAD_NODE": "{{advanced.start_ray_head_node}}",
+    {{/advanced.start_ray_head_node}}
+
+    {{#advanced.start_spark_history_server}}
+    "START_SPARK_HISTORY": "{{advanced.start_spark_history_server}}",
+    {{/advanced.start_spark_history_server}}
+
+    {{#advanced.start_tensorboard}}
+    "START_TENSORBOARD": "{{advanced.start_tensorboard}}",
+    "TENSORBOARD_LOGDIR": "{{advanced.tensorboard_logdir}}",
+    {{/advanced.start_tensorboard}}
+
+    "TERM": "{{advanced.term}}",
+    "USER": "{{service.user}}"
+  },
+  "labels": {
+    "DCOS_PACKAGE_IS_FRAMEWORK": "true",
+
+    {{#networking.ingress.enabled}}
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_ENABLED": "true",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "true",
+    "HAPROXY_0_VHOST": "{{networking.ingress.hostname}}",
+    "HAPROXY_0_PATH": "{{service.name}}",
+    "HAPROXY_2_ENABLED": "true",
+    "HAPROXY_2_REDIRECT_TO_HTTPS": "true",
+    {{/networking.ingress.enabled}}
+
+    "MARATHON_SINGLE_INSTANCE_APP": "true"
+  },
+  "healthChecks": [
+    {
+      "portIndex": 0,
+      "protocol": "MESOS_HTTP",
+      "path": "/healthz",
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 20,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+
+  "unreachableStrategy": {
+    "expungeAfterSeconds": 0,
+    "inactiveAfterSeconds": 0
+  },
+
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}
