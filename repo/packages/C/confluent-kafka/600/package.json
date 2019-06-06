@@ -10,7 +10,7 @@
   "name": "confluent-kafka",
   "version": "2.6.0-5.1.2",
   "maintainer": "partner-support@confluent.io",
-  "description": "Apache Kafka by Confluent\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/confluent-kafka/v2.6.0-5.1.2/",
+  "description": "Apache Kafka by Confluent\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/confluent-kafka/2.6.0-5.1.2/",
   "selected": true,
   "framework": true,
   "tags": [
@@ -21,8 +21,8 @@
     "kafka"
   ],
   "preInstallNotes": "Default configuration requires 3 agent nodes each with: 1.0 CPU | 4096 MB MEM | 1 5000 MB Disk",
-  "postInstallNotes": "Apache Kafka by Confluent is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/confluent-kafka/v2.6.0-5.1.2/\n\tCommunity Support: https://docs.mesosphere.com/support/",
-  "postUninstallNotes": "Apache Kafka by Confluent is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/confluent-kafka/v2.6.0-5.1.2/uninstall to remove any persistent state if required.",
+  "postInstallNotes": "Apache Kafka by Confluent is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/confluent-kafka/2.6.0-5.1.2/\n\tCommunity Support: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "Apache Kafka by Confluent is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/confluent-kafka/2.6.0-5.1.2/uninstall to remove any persistent state if required.",
   "licenses": [
     {
       "name": "Apache License v2",
