@@ -1,0 +1,36 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "kube_apiserver": "k8s.gcr.io/kube-apiserver-amd64:v1.14.3",
+        "kube_controller_manager": "k8s.gcr.io/kube-controller-manager-amd64:v1.14.3",
+        "kube_scheduler": "k8s.gcr.io/kube-scheduler-amd64:v1.14.3",
+        "kube_proxy": "k8s.gcr.io/kube-proxy-amd64:v1.14.3",
+        "metrics_server": "gcr.io/google_containers/metrics-server-amd64:v0.3.3",
+        "dashboard": "k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1",
+        "pause": "gcr.io/google_containers/pause-amd64:3.1",
+        "calico_typha": "quay.io/calico/typha:v3.7.2",
+        "calico_node": "quay.io/calico/node:v3.7.2",
+        "calico_cni": "quay.io/calico/cni:v3.7.2",
+        "coredns": "coredns/coredns:1.4.0",
+        "addons_image": "mesosphere/dcos-kubernetes-addons:5e3696",
+        "etcd_image": "mesosphere/dcos-kubernetes-etcd:e3c2db",
+        "node_image": "mesosphere/dcos-kubernetes-node:00e101",
+        "dcos_auth_webhook_image": "mesosphere/kubernetes-dcos-auth-webhook:5b0e46",
+        "dcos_kubernetes_cluster_metrics_exporter": "mesosphere/dcos-kubernetes-cluster-metrics-exporter:494d8b"
+      }
+    },
+    "uris": {
+      "jre_tar_gz": "https://downloads.mesosphere.com/java/server-jre-8u192-linux-x64.tar.gz",
+      "libmesos_bundle_tar_gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.12.0.tar.gz",
+      "scheduler_zip": "https://downloads.mesosphere.com/kubernetes-cluster/assets/2.3.3-1.14.3/kubernetes-cluster-scheduler.zip",
+      "bootstrap_zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.56.0/bootstrap.zip",
+      "kubelet_resource_watchdog": "https://downloads.mesosphere.com/kubernetes-cluster/assets/2.3.3-1.14.3/kubelet-resource-watchdog-v0.2.5.tar.gz"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/kubernetes/assets/k8s-small-48x48.png",
+    "icon-medium": "https://downloads.mesosphere.com/kubernetes/assets/k8s-medium-96x96.png",
+    "icon-large": "https://downloads.mesosphere.com/kubernetes/assets/k8s-large-256x256.png"
+  }
+}
