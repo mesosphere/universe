@@ -1,0 +1,62 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-8u212b03-hotspot-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.12.0.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.56.1/bootstrap.zip",
+      "kafka-tgz": "https://downloads.mesosphere.com/kafka/assets/kafka_2.12-2.2.1.tgz",
+      "kafka-jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-8u212b03-hotspot-linux-x64.tar.gz",
+      "kafka-scheduler-zip": "https://downloads.mesosphere.com/kafka/assets/2.6.0-2.2.1/kafka-scheduler.zip",
+      "kafka-statsd-jar": "https://downloads.mesosphere.com/kafka/assets/kafka-statsd-metrics2-0.5.3.jar",
+      "statsd-client-jar": "https://downloads.mesosphere.com/kafka/assets/java-dogstatsd-client-2.3.jar",
+      "setup-helper-zip": "https://downloads.mesosphere.com/kafka/assets/2.6.0-2.2.1/setup-helper.zip",
+      "zookeeper-client-jar": "https://downloads.mesosphere.com/kafka/assets/zookeeper-3.4.13.jar",
+      "custom-kafka-principal-jar": "https://downloads.mesosphere.com/kafka/assets/kafka-custom-principal-builder-1.0.0.jar"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/kafka-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/kafka-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/kafka-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "335bdac465a7b0a6c270f4265a537a7114876409946d5b6e83accd8ab18e7144"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kafka/assets/2.6.0-2.2.1/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "255c7ab8a4dcfac01d207a339e8a0060144f36b42e682d33abc61e6cbc93ee1d"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kafka/assets/2.6.0-2.2.1/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "f0f654680584c0c90caa86675674ced0bad6f3ad456f7427ad67eb9693aa1892"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/kafka/assets/2.6.0-2.2.1/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
