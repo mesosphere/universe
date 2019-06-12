@@ -1,0 +1,29 @@
+{
+  "packagingVersion": "4.0",
+  "name": "confluent-connect",
+  "version": "2.6.0-5.1.2",
+  "upgradesFrom": [
+    "1.1.1-4.1.1"
+  ],
+  "downgradesTo": [
+    "1.1.1-4.1.1"
+  ],
+  "scm": "https://github.com/confluentinc/cp-docker-images",
+  "description": "Confluent Connect worker. Includes Replicator Connector.\n\n\tDocumentation: https://docs.confluent.io/5.1.2/connect/managing.html",
+  "maintainer": "partner-support@confluent.io",
+  "tags": [
+    "kafka",
+    "confluent",
+    "connect"
+  ],
+  "preInstallNotes": "Preparing to install confluent-connect",
+  "postInstallNotes": "confluent-connect has been installed.",
+  "postUninstallNotes": "confluent-connect was uninstalled successfully.",
+  "minDcosReleaseVersion": "1.11",
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}
