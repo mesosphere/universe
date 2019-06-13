@@ -1878,7 +1878,7 @@
             },
             "use_tls": {
               "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__use_tls",
-              "type": "booslean",
+              "type": "boolean",
               "default": false
             },
             "truststore_type": {
