@@ -390,7 +390,7 @@
       "type": "object",
       "properties": {
         "num_tokens": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__num_tokens",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__num_tokens",
           "description": "The number of tokens randomly assigned to node(s) in a cluster that use vnodes",
           "type": "integer",
           "default": 256
@@ -419,7 +419,7 @@
           "default": 1024
         },
         "max_hints_delivery_threads": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__max_hints_delivery_threads",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__max_hints_delivery_threads",
           "type": "integer",
           "description": "The maximum number of delivery threads for hinted handoff.",
           "default": 2
@@ -442,19 +442,19 @@
           "default": ""
         },
         "batchlog_replay_throttle_in_kb": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__batchlog_replay",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__batchlog_replay",
           "type": "integer",
           "description": "The total throttle for log replay in Kpbs.",
           "default": 1024
         },
         "authenticator": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__authenticator",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__authenticator",
           "type": "string",
           "description": "The authentication backend. It implements IAuthenticator, which is used to identify users.",
           "default": "AllowAllAuthenticator"
         },
         "authorizer": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__authorizer",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__authorizer",
           "type": "string",
           "description": "The authorization backend. It implements IAuthenticator, which limits access and provides permissions.",
           "default": "AllowAllAuthorizer"
@@ -488,7 +488,7 @@
           "default": 2000
         },
         "partitioner": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__partitioner",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__partitioner",
           "type": "string",
           "description": "The partitioner used to distribute rows across the cluster. Murmur3Partitioner is the recommended setting. RandomPartitioner and ByteOrderedPartitioner are supported for legacy applications.",
           "default": "org.apache.cassandra.dht.Murmur3Partitioner"
@@ -518,7 +518,7 @@
           "default": ""
         },
         "key_cache_save_period": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__key_cache_save_period",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__key_cache_save_period",
           "type": "integer",
           "description": "The duration in seconds that keys are saved in cache. Saved caches greatly improve cold-start speeds and has relatively little effect on I/O.",
           "default": 14400
@@ -532,13 +532,13 @@
           "default": "org.apache.cassandra.cache.OHCProvider"
         },
         "row_cache_size_in_mb": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__row_cache_size_in_mb",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__row_cache_size_in_mb",
           "type": "integer",
           "description": "Maximum size of the row cache in memory. Row cache can save more time than key_cache_size_in_mb, but is space-intensive because it contains the entire row. Use the row cache only for hot rows or static rows. 0 disables the row cache.",
           "default": 0
         },
         "row_cache_save_period": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__row_cache_save_period",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__row_cache_save_period",
           "type": "integer",
           "description": "Duration in seconds that rows are saved in cache. 0 disables caching.",
           "default": 0
@@ -564,7 +564,7 @@
           "default": "periodic"
         },
         "commitlog_sync_period_in_ms": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__commitlog_sync",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__commitlog_sync",
           "type": "integer",
           "description": "The number of milliseconds between disk fsync calls.",
           "default": 10000
@@ -574,7 +574,7 @@
           "default": ""
         },
         "commitlog_segment_size_in_mb": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__commitlog_segment_size_in_mb",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__commitlog_segment_size_in_mb",
           "type": "integer",
           "description": "The size of each commit log segment in Mb.",
           "default": 32
@@ -588,19 +588,19 @@
           "default": ""
         },
         "concurrent_reads": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__concurrent_reads",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__concurrent_reads",
           "type": "integer",
           "description": "For workloads with more data than can fit in memory, the bottleneck is reads fetching data from disk. Setting to (16 times the number of drives) allows operations to queue low enough in the stack so that the OS and drives can reorder them.",
           "default": 16
         },
         "concurrent_writes": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__concurrent_writes",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__concurrent_writes",
           "type": "integer",
           "description": "Writes in Cassandra are rarely I/O bound, so the ideal number of concurrent writes depends on the number of CPU cores in your system. The recommended value is 8 times the number of cpu cores.",
           "default": 32
         },
         "concurrent_counter_writes": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__concurrent_counter_writes",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__concurrent_counter_writes",
           "type": "integer",
           "description": "Counter writes read the current values before incrementing and writing them back. The recommended value is (16 times the number of drives) .",
           "default": 16
@@ -634,7 +634,7 @@
           "default": 0.11
         },
         "memtable_allocation_type": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__memtable_allocation_type",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__memtable_allocation_type",
           "type": "string",
           "description": "The type of allocations for the Cassandra memtable. heap_buffers keep all data on the JVM heap. offheap_buffers may reduce heap utilization for large string or binary values. offheap_objects may improve heap size for small integers or UUIDs as well. Both off heap options will increase read latency.",
           "default": "heap_buffers"
@@ -660,7 +660,7 @@
           "default": ""
         },
         "index_summary_resize_interval_in_minutes": {
-          "id": "http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__index_summary_resize_interval_in_minutes",
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__index_summary_resize_interval_in_minutes",
           "type": "integer",
           "description": "How frequently index summaries should be re-sampled in minutes. This is done periodically to redistribute memory from the fixed-size pool to SSTables proportional their recent read rates.",
           "default": 60
@@ -1066,18 +1066,18 @@
       "type": "object",
       "properties": {
         "global_performance_service": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__global-perf-options",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__global-perf-options",
           "type": "object",
           "description": "Global Performance Service options",
           "properties": {
             "performance_max_threads": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__performance_max_threads",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__performance_max_threads",
               "type": "integer",
               "description": "Maximum number of background threads used by the performance service",
               "default": 32
             },
             "performance_core_threads": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__performance_core_threads",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__performance_core_threads",
               "type": "integer",
               "description": "Number of background threads used by the performance service",
               "default": 4
@@ -1090,7 +1090,7 @@
           ]
         },
         "max_memory_to_lock_fraction": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__max_memory_to_lock_mb",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__max_memory_to_lock_mb",
           "description": "Specify a fraction of the system memory for DSE In-Memory",
           "type": "number",
           "default": 0.2
@@ -1757,12 +1757,12 @@
           "default": 1.05
         },
         "authentication_options_enabled": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_enabled",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_enabled",
           "type": "boolean",
           "default": false
         },
         "authentication_options_default_scheme": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_default_scheme",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_default_scheme",
           "type": "string",
           "enum": [
             "internal",
@@ -1771,7 +1771,7 @@
           "default": "internal"
         },
         "authentication_options_other_schemes": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_other_schemes",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_other_schemes",
           "type": "string",
           "enum": [
             "internal",
@@ -1781,17 +1781,17 @@
           "default": ""
         },
         "authentication_options_scheme_permissions": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_scheme_permissions",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_scheme_permissions",
           "type": "boolean",
           "default": true
         },
         "authentication_options_allow_digest_with_kerberos": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_allow_digest_with_kerberos",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_allow_digest_with_kerberos",
           "type": "boolean",
           "default": true
         },
         "authentication_options_plain_text_without_ssl": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_plain_text_without_ssl",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_plain_text_without_ssl",
           "type": "string",
           "enum": [
             "block",
@@ -1801,7 +1801,7 @@
           "default": "warn"
         },
         "authentication_options_transitional_mode": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_transitional_mode",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authentication_options_transitional_mode",
           "type": "string",
           "enum": [
             "disabled",
@@ -1812,7 +1812,7 @@
           "default": "disabled"
         },
         "role_management_options_mode": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__role_management_options_mode",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__role_management_options_mode",
           "type": "string",
           "enum": [
             "internal",
@@ -1821,12 +1821,12 @@
           "default": "internal"
         },
         "authorization_options_enabled": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authorization_options_enabled",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authorization_options_enabled",
           "type": "boolean",
           "default": false
         },
         "authorization_options_transitional_mode": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authorization_options_transitional_mode",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authorization_options_transitional_mode",
           "type": "string",
           "enum": [
             "disabled",
@@ -1836,71 +1836,71 @@
           "default": "disabled"
         },
         "authorization_options_allow_row_level_security": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authorization_options_allow_row_level_security",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__authorization_options_allow_row_level_security",
           "type": "boolean",
           "default": false
         },
         "ldap": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__ldap-options",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__ldap-options",
           "type": "object",
           "description": "LDAP Configuration",
           "properties": {
             "enabled": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__ldap-options",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__ldap-options",
               "type": "boolean",
               "description": "Enable LDAP",
               "default": false
             },
             "server_host": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__server_host",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__server_host",
               "type": "string",
               "description": "Hostname of LDAP server",
               "default": "localhost"
             },
             "server_port": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__server_port",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__server_port",
               "type": "integer",
               "description": "Port of LDAP server",
               "default": 389
             },
             "search_dn": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__search_dn",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__search_dn",
               "type": "string"
             },
             "search_password": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__search_password",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__search_password",
               "type": "string"
             },
             "use_ssl": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__use_ssl",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__use_ssl",
               "type": "boolean",
               "default": false
             },
             "use_tls": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__use_tls",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__use_tls",
               "type": "boolean",
               "default": false
             },
             "truststore_type": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__truststore_type",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__truststore_type",
               "type": "string",
               "default": "jks"
             },
             "user_search_base": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__user_search_base",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__user_search_base",
               "type": "string"
             },
             "user_search_filter": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__usersearch-filter",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__usersearch-filter",
               "type": "string",
               "default": "(uid={0})"
             },
             "user_memberof_attribute": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__user_memberof_attributePL",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__user_memberof_attributePL",
               "type": "string"
             },
             "group_search_type": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_search_typePL",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_search_typePL",
               "type": "string",
               "enum": [
                 "directory_search",
@@ -1909,36 +1909,36 @@
               "default": "directory_search"
             },
             "group_search_base": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_search_basePL",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_search_basePL",
               "type": "string"
             },
             "group_search_filter": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_search_filterPL",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_search_filterPL",
               "type": "string",
               "default": "(uniquemember={0})"
             },
             "group_name_attribute": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_name_attributePL",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_name_attributePL",
               "type": "string"
             },
             "credentials_validity_in_ms": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__credentials_validity_in_ms",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__credentials_validity_in_ms",
               "type": "integer",
               "default": 0
             },
             "search_validity_in_seconds": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__search_validity_in_seconds",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__search_validity_in_seconds",
               "type": "integer",
               "default": 0
             },
             "connection_pool_max_active": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__connection_pool",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__connection_pool",
               "type": "integer",
               "description": "The maximum number of active connections to the LDAP server.",
               "default": 8
             },
             "connection_pool_max_idle": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__connection_pool",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__connection_pool",
               "type": "integer",
               "description": "The maximum number of idle connections in the pool awaiting requests.",
               "default": 8
@@ -1947,24 +1947,24 @@
           "additionalProperties": false
         },
         "advanced_replication": {
-          "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__advanced_replication_options",
+          "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__advanced_replication_options",
           "type": "object",
           "description": "Advanced Replication Configuration",
           "properties": {
             "enabled": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__advanced_replication_options",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__advanced_replication_options",
               "type": "boolean",
               "description": "Enable Advanced Replication",
               "default": false
             },
             "conf_driver_pwd_encryption_enabled": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__conf_driver_password_encryption_enabled",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__conf_driver_password_encryption_enabled",
               "type": "boolean",
               "description": "Set enabled:true on an edge node to collect data in the replication log. Default: false.",
               "default": false
             },
             "security_base_path": {
-              "id": "http://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__security_base_path",
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__security_base_path",
               "type": "string",
               "description": "The base path to prepend to paths in the Advanced Replication configuration locations, including locations to SSL keystore, SSL truststore, and so on.",
               "default": ""
