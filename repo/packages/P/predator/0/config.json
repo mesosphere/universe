@@ -24,7 +24,7 @@
                 "internal_address": {
                     "description":  "Address of this service accessible from inside of Metronome cluster.",
                     "type": "string",
-                    "default": "http://predator.marathon.l4lb.thisdcos.directory:80"
+                    "default": "http://predator.marathon.l4lb.thisdcos.directory:80/v1"
                 },
                 "metronome_url": {
                     "description":  "Metronome URL (used for API).",
@@ -49,16 +49,6 @@
             "type": "object",
             "description": "Predator-Runner configuration",
             "properties": {
-                "cpu": {
-                    "description":  "Number of CPU use by the each runner.",
-                    "type": "number",
-                    "default": 1
-                },
-                "memory": {
-                    "description":  "Max memory to use by each runner in MB.",
-                    "type": "number",
-                    "default": 2048
-                },
                 "docker_name": {
                     "description":  "Docker image of runner that runs predator tests.",
                     "type": "string",
