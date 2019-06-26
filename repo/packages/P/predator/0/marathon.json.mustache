@@ -34,12 +34,6 @@
         {{/service.minimum_wait_for_delayed_report_status_update_in_ms}}
 
         "DOCKER_NAME": "{{runner.docker_name}}",
-        {{#runner.cpu}}
-            "RUNNER_CPU": "{{runner.cpu}}",
-        {{/runner.cpu}}
-        {{#runner.memory}}
-            "RUNNER_MEMORY": "{{runner.memory}}",
-        {{/runner.memory}}
 
         {{#database.address}}
             "DATABASE_ADDRESS": "{{database.address}}",
