@@ -145,7 +145,7 @@
                   "default": "PasswordAuthenticator"
                 },
                 "role_manager": {
-                  "description": "\ufeffPart of the Authentication & Authorization backend that implements IRoleManager to maintain grants and memberships between roles, By default, the value set is Apache Cassandra's out of the box Role Manager: CassandraRoleManager",
+                  "description": "Part of the Authentication & Authorization backend that implements IRoleManager to maintain grants and memberships between roles, By default, the value set is Apache Cassandra's out of the box Role Manager: CassandraRoleManager",
                   "type": "string",
                   "default": "CassandraRoleManager"
                 },
