@@ -1,0 +1,20 @@
+{
+    "packagingVersion": "4.0", 
+    "upgradesFrom": [], 
+    "downgradesTo": [], 
+    "minDcosReleaseVersion": "1.9", 
+    "name": "hivemq", 
+    "version": "1.0.0-4.1.1", 
+    "maintainer": "support@hivemq.com", 
+    "description": "HiveMQ on DC/OS", 
+    "selected": false, 
+    "framework": true, 
+    "tags": [
+        "0.55.4", 
+        "hivemq", 
+        "mqtt", 
+        "iot"
+    ], 
+    "postInstallNotes": "HiveMQ is being installed!\nNote that this service runs in evaluation mode by default.\nDefault configuration: 3 cluster nodes | 4 CPU cores | 4GB RAM\n\n\tDocumentation: {{documentation-path}}\n\tIssues: {{issues-path}}", 
+    "postUninstallNotes": "HiveMQ is being uninstalled."
+}
