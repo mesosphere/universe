@@ -1,0 +1,172 @@
+{
+  "id": "{{rest-proxy.name}}",
+  "cmd": "export KAFKA_REST_LISTENERS={{rest-proxy.listener_protocol}}://0.0.0.0:$PORT0 && /etc/confluent/docker/run",
+  "instances": {{rest-proxy.instances}},
+  "cpus": {{rest-proxy.cpus}},
+  "mem": {{rest-proxy.mem}},
+  "user": "{{rest-proxy.user}}",
+  "maintainer": "partner-support@confluent.io",
+  "container": {
+    "type": "MESOS",
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}"
+    },
+    {{#rest-proxy.virtual_network_enabled}}
+    "portMappings": [
+        {
+            "containerPort": 8082,
+            "servicePort": 8082,
+            "protocol": "tcp",
+            "labels": {
+              "VIP_0": "{{rest-proxy.name}}:8082"
+            }
+        }
+    ],
+    {{/rest-proxy.virtual_network_enabled}}
+    "volumes": [
+      {{#rest-proxy.keystore_secret}}
+      {
+          "containerPath": "mykeystore.jks",
+          "secret": "mykeystore"
+      }
+      {{/rest-proxy.keystore_secret}}
+      {{#kafka.kerberos_enabled}}
+      {{#rest-proxy.keystore_secret}},{{/rest-proxy.keystore_secret}}
+      {
+          "containerPath": "/tmp/kafka-client.keytab",
+          "secret": "kafka_keytab"
+      },
+      {
+          "containerPath": "/tmp/client-jaas.conf",
+          "secret": "kafka_jaas"
+      },
+      {
+          "containerPath": "/tmp/krb5.conf",
+          "secret": "kafka_krb5"
+      }
+      {{/kafka.kerberos_enabled}}
+    ]
+  },
+  {{^rest-proxy.virtual_network_enabled}}
+  "networks": [
+    {
+      "mode": "host"
+    }
+  ],
+  "portDefinitions": [ {
+      "name": "rest-proxy",
+      "port": 8082,
+      "protocol": "tcp",
+      "labels": {
+        "VIP_0": "{{rest-proxy.name}}:8082"
+      }
+  } ],
+  {{/rest-proxy.virtual_network_enabled}}
+  {{#rest-proxy.virtual_network_enabled}}
+  "networks": [
+    {
+      "name": "{{rest-proxy.virtual_network_name}}",
+      {{^rest-proxy.virtual_network_plugin_labels.isEmpty}}
+      "labels": {
+      {{#rest-proxy.virtual_network_plugin_labels}}
+           "{{key}}": "{{value}}",
+      {{/rest-proxy.virtual_network_plugin_labels}}
+       "network_name": "{{rest-proxy.virtual_network_name}}"
+      },
+      {{/rest-proxy.virtual_network_plugin_labels.isEmpty}}
+      "mode": "container"
+    }
+  ],
+  {{/rest-proxy.virtual_network_enabled}}
+  "secrets": {
+      {{#rest-proxy.keystore_secret}}
+      "mykeystore": {
+          "source": "{{rest-proxy.keystore_secret}}"
+      }
+      {{/rest-proxy.keystore_secret}}
+      {{#kafka.kerberos_enabled}}
+      {{#rest-proxy.keystore_secret}},{{/rest-proxy.keystore_secret}}
+      "kafka_keytab": {
+          "source": "{{kafka.kerberos_keytab_secret}}"
+      },
+      "kafka_jaas": {
+          "source": "{{kafka.kerberos_jaas_secret}}"
+      },
+      "kafka_krb5": {
+          "source": "{{kafka.kerberos_krb5_secret}}"
+      }
+      {{/kafka.kerberos_enabled}}
+  },
+  "env": {
+    "KAFKAREST_HEAP_OPTS": "-Xmx{{rest-proxy.heap}}M",
+    "KAFKA_REST_BOOTSTRAP_SERVERS": "{{kafka.bootstrap_servers}}",
+    "KAFKA_REST_ZOOKEEPER_CONNECT": "{{kafka.zookeeper_connect}}",
+    "KAFKA_REST_SCHEMA_REGISTRY_URL": "{{schema-registry.url}}",
+    "KAFKA_REST_ACCESS_CONTROL_ALLOW_METHODS": "{{rest-proxy.access-control-allow-methods}}",
+    "KAFKA_REST_ACCESS_CONTROL_ALLOW_ORIGIN": "{{rest-proxy.access-control-allow-origin}}",
+    "KAFKA_REST_SSL_TRUSTSTORE_LOCATION": "/tmp/kafka-truststore.jks",
+    "KAFKA_REST_SSL_TRUSTSTORE_PASSWORD": "changeit",
+    {{^rest-proxy.keystore_secret}}
+    "KAFKA_REST_SSL_KEYSTORE_LOCATION": "/tmp/kafka-keystore.jks",
+    {{/rest-proxy.keystore_secret}}
+    {{#rest-proxy.keystore_secret}}
+    "KAFKA_REST_SSL_KEYSTORE_LOCATION": "mykeystore.jks",
+    {{/rest-proxy.keystore_secret}}
+    "KAFKA_REST_SSL_KEYSTORE_PASSWORD": "changeit",
+    "KAFKA_REST_SSL_KEY_PASSWORD": "changeit",
+    "KAFKA_REST_SSL_CLIENT_AUTH": "{{rest-proxy.ssl_client_auth}}",
+    "KAFKA_REST_CLIENT_SECURITY_PROTOCOL": "{{kafka.client_security_protocol}}",
+    "KAFKA_REST_CLIENT_SSL_TRUSTSTORE_LOCATION": "/tmp/kafka-truststore.jks",
+    "KAFKA_REST_CLIENT_SSL_TRUSTSTORE_PASSWORD": "changeit",
+    "KAFKA_REST_CLIENT_SSL_KEYSTORE_LOCATION": "/tmp/kafka-keystore.jks",
+    "KAFKA_REST_CLIENT_SSL_KEYSTORE_PASSWORD": "changeit",
+    "KAFKA_REST_CLIENT_SSL_KEY_PASSWORD": "changeit",
+    "FRAMEWORK_USER": "{{rest-proxy.user}}",
+    {{#kafka.kerberos_enabled}}
+    "KAFKA_OPTS": "-Djava.security.auth.login.config=/tmp/client-jaas.conf -Djava.security.krb5.conf=/tmp/krb5.conf",
+    "KAFKAREST_OPTS": "-Djava.security.auth.login.config=/tmp/client-jaas.conf -Djava.security.krb5.conf=/tmp/krb5.conf -Djavax.net.ssl.trustStore=/tmp/kafka-truststore.jks -Djavax.net.ssl.trustStorePassword=changeit",
+    {{/kafka.kerberos_enabled}}
+    {{^kafka.kerberos_enabled}}
+    "KAFKAREST_OPTS": "-Djavax.net.ssl.trustStore=/tmp/kafka-truststore.jks -Djavax.net.ssl.trustStorePassword=changeit",
+    {{/kafka.kerberos_enabled}}
+    {{#rest-proxy.virtual_network_enabled}}
+    "VIRTUAL_NETWORK_ENABLED": "true",
+    "VIRTUAL_NETWORK_NAME": "{{rest-proxy.virtual_network_name}}",
+    {{^rest-proxy.virtual_network_plugin_labels.isEmpty}}
+       "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{#rest-proxy.virtual_network_plugin_labels}}{{key}}:{{value}},{{/rest-proxy.virtual_network_plugin_labels}}",
+    {{/rest-proxy.virtual_network_plugin_labels.isEmpty}}
+    "VIRTUAL_NETWORK_LABELS": "{{rest-proxy.virtual_network_name}}",
+    {{/rest-proxy.virtual_network_enabled}}
+    "KAFKA_REST_CLIENT_SASL_MECHANISM": "{{kafka.client_sasl_mechanism}}",
+    "KAFKA_REST_CLIENT_SASL_KERBEROS_SERVICE_NAME": "{{kafka.client_sasl_kerberos_service_name}}",
+    "KAFKA_REST_SSL_CIPHER_SUITES": "{{rest-proxy.ciphers}}",
+    "KAFKA_REST_CLIENT_SSL_CIPHER_SUITES": "{{rest-proxy.ciphers}}"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "curl --cert $MESOS_SANDBOX/.ssl/scheduler.crt --key $MESOS_SANDBOX/.ssl/scheduler.key -k -I {{rest-proxy.listener_protocol}}://localhost:$PORT0 | grep \"HTTP/1.1 200 OK\"" },
+      "gracePeriodSeconds": 180,
+      "intervalSeconds": 10,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+	}
+  ],
+  "acceptedResourceRoles": [
+    "{{rest-proxy.role}}"
+  ],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{rest-proxy.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{rest-proxy.name}}" 
+  }
+}
+
