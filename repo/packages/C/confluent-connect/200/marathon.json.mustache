@@ -1,0 +1,184 @@
+{
+  "id": "{{connect.name}}",
+  "cmd": "export CONNECT_REST_HOST_NAME=0.0.0.0 && export CONNECT_REST_PORT=$PORT0 && /etc/confluent/docker/run",
+  "instances": {{connect.instances}},
+  "cpus": {{connect.cpus}},
+  "mem": {{connect.mem}},
+  "user": "{{connect.user}}",
+  "maintainer": "partner-support@confluent.io",
+  "container": {
+    "type": "MESOS",
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}"
+    },
+    {{#connect.virtual_network_enabled}}
+    "portMappings": [
+        {
+            "containerPort": 8083,
+            "servicePort": 8083,
+            "protocol": "tcp",
+            "labels": {
+              "VIP_0": "{{connect.name}}:8083"
+            }
+        }
+    ],
+    {{/connect.virtual_network_enabled}}
+    "volumes": [
+      {{#kafka.kerberos_enabled}}
+      {
+          "containerPath": "/tmp/kafka-client.keytab",
+          "secret": "kafka_keytab"
+      },
+      {
+          "containerPath": "/tmp/client-jaas.conf",
+          "secret": "kafka_jaas"
+      },
+      {
+          "containerPath": "/tmp/krb5.conf",
+          "secret": "kafka_krb5"
+      }
+      {{/kafka.kerberos_enabled}}
+    ]
+  },
+  {{^connect.virtual_network_enabled}}
+  "networks": [
+    {
+      "mode": "host"
+    }
+  ],
+  "portDefinitions": [ {
+      "name": "connect",
+      "port": 8083,
+      "protocol": "tcp",
+      "labels": {
+        "VIP_0": "{{connect.name}}:8083"
+      }
+  } ],
+  {{/connect.virtual_network_enabled}}
+  {{#connect.virtual_network_enabled}}
+  "networks": [
+    {
+      "name": "{{connect.virtual_network_name}}",
+      {{^connect.virtual_network_plugin_labels.isEmpty}}
+      "labels": {
+      {{#connect.virtual_network_plugin_labels}}
+          "{{key}}": "{{value}}",
+      {{/connect.virtual_network_plugin_labels}}
+      "network_name": "{{connect.virtual_network_name}}"
+      },
+      {{/connect.virtual_network_plugin_labels.isEmpty}}
+      "mode": "container"
+    }
+  ],
+  {{/connect.virtual_network_enabled}}
+  "secrets": {
+      {{#kafka.kerberos_enabled}}
+      "kafka_keytab": {
+          "source": "{{kafka.kerberos_keytab_secret}}"
+      },
+      "kafka_jaas": {
+          "source": "{{kafka.kerberos_jaas_secret}}"
+      },
+      "kafka_krb5": {
+          "source": "{{kafka.kerberos_krb5_secret}}"
+      }
+      {{/kafka.kerberos_enabled}}
+  },
+  "env": {
+    "CONNECT_PLUGIN_PATH": "/usr/share/java",
+    "FRAMEWORK_USER": "{{connect.user}}",
+    "CONNECT_BOOTSTRAP_SERVERS": "{{kafka.bootstrap_servers}}",
+    "CONNECT_ZOOKEEPER_CONNECT": "{{kafka.zookeeper_connect}}",
+    "CONNECT_GROUP_ID": "{{connect.group_id}}",
+    "CONNECT_CONFIG_STORAGE_TOPIC": "{{connect.group_id}}-config",
+    "CONNECT_OFFSET_STORAGE_TOPIC": "{{connect.group_id}}-offset",
+    "CONNECT_STATUS_STORAGE_TOPIC": "{{connect.group_id}}-status",
+    "CONNECT_ACCESS_CONTROL_ALLOW_METHODS":"{{connect.access-control-allow-methods}}",
+    "CONNECT_ACCESS_CONTROL_ALLOW_ORIGIN":"{{connect.access-control-allow-origin}}",
+    "CONNECT_KEY_CONVERTER" : "{{connect.key_converter}}",
+    "CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL": "{{schema-registry.url}}",
+    "CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE": "{{connect.key_converter_schema_enable}}",
+    "CONNECT_VALUE_CONVERTER" : "{{connect.value_converter}}",
+    "CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL": "{{schema-registry.url}}",
+    "CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE": "{{connect.value_converter_schema_enable}}",
+    "CONNECT_INTERNAL_KEY_CONVERTER" : "org.apache.kafka.connect.json.JsonConverter",
+    "CONNECT_INTERNAL_VALUE_CONVERTER" : "org.apache.kafka.connect.json.JsonConverter",
+    "KAFKA_HEAP_OPTS": "-Xmx{{connect.heap}}M",
+    "CONNECT_SECURITY_PROTOCOL": "{{kafka.client_security_protocol}}",
+    "CONNECT_SSL_TRUSTSTORE_LOCATION": "/tmp/kafka-truststore.jks",
+    "CONNECT_SSL_TRUSTSTORE_PASSWORD": "changeit",
+    "CONNECT_SSL_KEYSTORE_LOCATION": "/tmp/kafka-keystore.jks",
+    "CONNECT_SSL_KEYSTORE_PASSWORD": "changeit",
+    "CONNECT_SSL_KEY_PASSWORD": "changeit",
+    "CONNECT_CONSUMER_SECURITY_PROTOCOL": "{{kafka.client_security_protocol}}",
+    "CONNECT_CONSUMER_SSL_TRUSTSTORE_LOCATION": "/tmp/kafka-truststore.jks",
+    "CONNECT_CONSUMER_SSL_TRUSTSTORE_PASSWORD": "changeit",
+    "CONNECT_CONSUMER_SSL_KEYSTORE_LOCATION": "/tmp/kafka-keystore.jks",
+    "CONNECT_CONSUMER_SSL_KEYSTORE_PASSWORD": "changeit",
+    "CONNECT_CONSUMER_SSL_KEY_PASSWORD": "changeit",
+    "CONNECT_PRODUCER_SECURITY_PROTOCOL": "{{kafka.client_security_protocol}}",
+    "CONNECT_PRODUCER_SSL_TRUSTSTORE_LOCATION": "/tmp/kafka-truststore.jks",
+    "CONNECT_PRODUCER_SSL_TRUSTSTORE_PASSWORD": "changeit",
+    "CONNECT_PRODUCER_SSL_KEYSTORE_LOCATION": "/tmp/kafka-keystore.jks",
+    "CONNECT_PRODUCER_SSL_KEYSTORE_PASSWORD": "changeit",
+    "CONNECT_PRODUCER_SSL_KEY_PASSWORD": "changeit",
+    {{#kafka.kerberos_enabled}}
+    "KAFKA_OPTS": "-Djava.security.auth.login.config=/tmp/client-jaas.conf -Djava.security.krb5.conf=/tmp/krb5.conf -Djavax.net.ssl.trustStore=/tmp/kafka-truststore.jks -Djavax.net.ssl.trustStorePassword=changeit",
+    "CONNECT_OPTS": "-Djava.security.auth.login.config=/tmp/client-jaas.conf -Djava.security.krb5.conf=/tmp/krb5.conf -Djavax.net.ssl.trustStore=/tmp/kafka-truststore.jks -Djavax.net.ssl.trustStorePassword=changeit",
+    {{/kafka.kerberos_enabled}}
+    {{^kafka.kerberos_enabled}}
+    "KAFKA_OPTS": "-Djavax.net.ssl.trustStore=/tmp/kafka-truststore.jks -Djavax.net.ssl.trustStorePassword=changeit",
+    "CONNECT_OPTS": "-Djavax.net.ssl.trustStore=/tmp/kafka-truststore.jks -Djavax.net.ssl.trustStorePassword=changeit",
+    {{/kafka.kerberos_enabled}}
+    "CONNECT_SASL_MECHANISM": "{{kafka.client_sasl_mechanism}}",
+    "CONNECT_SASL_KERBEROS_SERVICE_NAME": "{{kafka.client_sasl_kerberos_service_name}}",
+    "CONNECT_PRODUCER_INTERCEPTOR_CLASSES": "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor",
+    "CONNECT_PRODUCER_CONFLUENT_MONITORING_INTERCEPTOR_SECURITY_PROTOCOL": "{{kafka.client_security_protocol}}",
+    "CONNECT_PRODUCER_CONFLUENT_MONITORING_INTERCEPTOR_SSL_TRUSTSTORE_LOCATION": "/tmp/kafka-truststore.jks",
+    "CONNECT_PRODUCER_CONFLUENT_MONITORING_INTERCEPTOR_SSL_TRUSTSTORE_PASSWORD": "changeit",
+    "CONNECT_PRODUCER_CONFLUENT_MONITORING_INTERCEPTOR_SSL_KEYSTORE_LOCATION": "/tmp/kafka-keystore.jks",
+    "CONNECT_PRODUCER_CONFLUENT_MONITORING_INTERCEPTOR_SSL_KEYSTORE_PASSWORD": "changeit",
+    "CONNECT_PRODUCER_CONFLUENT_MONITORING_INTERCEPTOR_SSL_KEY_PASSWORD": "changeit",
+    "CONNECT_PRODUCER_CONFLUENT_MONITORING_INTERCEPTOR_SASL_MECHANISM": "{{kafka.client_sasl_mechanism}}",
+    {{#connect.virtual_network_enabled}}
+    "VIRTUAL_NETWORK_ENABLED": "true",
+    "VIRTUAL_NETWORK_NAME": "{{connect.virtual_network_name}}",
+    {{^connect.virtual_network_plugin_labels.isEmpty}}
+        "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{#connect.virtual_network_plugin_labels}}{{key}}:{{value}},{{/connect.virtual_network_plugin_labels}}",
+    {{/connect.virtual_network_plugin_labels.isEmpty}}
+    "VIRTUAL_NETWORK_LABELS": "{{connect.virtual_network_name}}",
+    {{/connect.virtual_network_enabled}} 
+    "CONNECT_CONSUMER_INTERCEPTOR_CLASSES": "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor",
+    "CONNECT_CONSUMER_CONFLUENT_MONITORING_INTERCEPTOR_SECURITY_PROTOCOL": "{{kafka.client_security_protocol}}",
+    "CONNECT_CONSUMER_CONFLUENT_MONITORING_INTERCEPTOR_SSL_TRUSTSTORE_LOCATION": "/tmp/kafka-truststore.jks",
+    "CONNECT_CONSUMER_CONFLUENT_MONITORING_INTERCEPTOR_SSL_TRUSTSTORE_PASSWORD": "changeit",
+    "CONNECT_CONSUMER_CONFLUENT_MONITORING_INTERCEPTOR_SSL_KEYSTORE_LOCATION": "/tmp/kafka-keystore.jks",
+    "CONNECT_CONSUMER_CONFLUENT_MONITORING_INTERCEPTOR_SSL_KEYSTORE_PASSWORD": "changeit",
+    "CONNECT_CONSUMER_CONFLUENT_MONITORING_INTERCEPTOR_SSL_KEY_PASSWORD": "changeit",
+    "CONNECT_CONSUMER_CONFLUENT_MONITORING_INTERCEPTOR_SASL_MECHANISM": "{{kafka.client_sasl_mechanism}}"
+  },
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "curl -k -I http://localhost:$PORT0 | grep \"HTTP/1.1 200 OK\"" },
+      "gracePeriodSeconds": 180,
+      "intervalSeconds": 10,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+  }
+  ],
+  "acceptedResourceRoles": [
+    "{{connect.role}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{connect.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{connect.name}}"
+  }
+}
