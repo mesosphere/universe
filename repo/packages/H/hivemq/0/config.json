@@ -1,0 +1,634 @@
+{
+    "type": "object", 
+    "properties": {
+        "service": {
+            "type": "object", 
+            "description": "DC/OS service configuration properties", 
+            "properties": {
+                "name": {
+                    "description": "Unique name for the HiveMQ service instance consisting of a series of words separated by slashes. Each word must be at least 1 alphanumeric character and may only contain digits (`0-9`), dashes (`-`), dots (`.`), and lowercase letters (`a-z`). The word may not begin or end with a dash", 
+                    "type": "string", 
+                    "default": "hivemq", 
+                    "title": "Service name", 
+                    "pattern": "^(\\/?((\\.\\.)|(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]))?($|\\/))+$"
+                }, 
+                "user": {
+                    "description": "The user that the service will run as.", 
+                    "type": "string", 
+                    "default": "root", 
+                    "title": "User"
+                }, 
+                "service_account": {
+                    "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "service_account_secret": {
+                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.", 
+                    "type": "string", 
+                    "default": "", 
+                    "title": "Credential secret name (optional)"
+                }, 
+                "virtual_network_enabled": {
+                    "description": "Enable virtual networking", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "virtual_network_name": {
+                    "description": "The name of the virtual network to join", 
+                    "type": "string", 
+                    "default": "dcos"
+                }, 
+                "virtual_network_plugin_labels": {
+                    "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "log_level": {
+                    "description": "The log level for the DC/OS service.", 
+                    "type": "string", 
+                    "enum": [
+                        "OFF", 
+                        "FATAL", 
+                        "ERROR", 
+                        "WARN", 
+                        "INFO", 
+                        "DEBUG", 
+                        "TRACE", 
+                        "ALL"
+                    ], 
+                    "default": "INFO"
+                }, 
+                "sleep": {
+                    "description": "The sleep duration in seconds before tasks exit.", 
+                    "type": "number", 
+                    "default": 1000
+                }
+            }, 
+            "required": [
+                "name", 
+                "sleep", 
+                "user"
+            ]
+        }, 
+        "node": {
+            "description": "HiveMQ pod configuration properties", 
+            "type": "object", 
+            "properties": {
+                "count": {
+                    "title": "Node count", 
+                    "description": "Number of hivemq pods to run", 
+                    "type": "integer", 
+                    "default": 3
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "hivemq pod CPU requirements", 
+                    "type": "number", 
+                    "default": 4, 
+                    "minimum": 0.8
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "hivemq pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 4096, 
+                    "minimum": 1024
+                }, 
+                "disk": {
+                    "title": "Disk size (MB)", 
+                    "description": "hivemq pod persistent disk requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 10000
+                }, 
+                "disk_type": {
+                    "title": "Disk type [ROOT, MOUNT]", 
+                    "description": "Mount volumes require preconfiguration in DC/OS", 
+                    "enum": [
+                        "ROOT", 
+                        "MOUNT"
+                    ], 
+                    "default": "ROOT"
+                }, 
+                "rlimits": {
+                    "description": "POSIX resource limits applied to the pod. Excercise caution when modifying these default values as it can lead to spurious task failures.", 
+                    "type": "object", 
+                    "properties": {
+                        "rlimit_nofile": {
+                            "description": "Specifies RLIMIT_NOFILE, a value one greater than the maximum file descriptor number that can be opened by this process.", 
+                            "type": "object", 
+                            "properties": {
+                                "soft": {
+                                    "type": "integer", 
+                                    "description": "The  soft  limit  is  the  value that the kernel enforces for the corresponding resource.", 
+                                    "default": 128000, 
+                                    "minimum": 128000
+                                }, 
+                                "hard": {
+                                    "type": "integer", 
+                                    "description": "The  hard  limit  acts as a ceiling for the soft limit.", 
+                                    "default": 128000, 
+                                    "minimum": 128000
+                                }
+                            }
+                        }
+                    }
+                }, 
+                "custom_domain": {
+                    "type": "string", 
+                    "description": "A custom domain to be used in place of autoip.dcos.thisdcos.directory. This can be used to expose the service securely outside of the cluster, but requires setting up external DNS. See the service documentation for details."
+                }
+            }, 
+            "required": [
+                "count", 
+                "cpus", 
+                "mem", 
+                "disk", 
+                "disk_type", 
+                "rlimits"
+            ]
+        }, 
+        "hivemq": {
+            "description": "HiveMQ specific configuration properties", 
+            "type": "object", 
+            "properties": {
+                "hivemq_log_level": {
+                    "description": "The log level for HiveMQ.", 
+                    "type": "string", 
+                    "enum": [
+                        "OFF", 
+                        "ERROR", 
+                        "WARN", 
+                        "INFO", 
+                        "DEBUG", 
+                        "TRACE", 
+                        "ALL"
+                    ], 
+                    "default": "INFO"
+                }, 
+                "java_options": {
+                    "description": "JAVA_OPTS to pass to the java process", 
+                    "type": "string", 
+                    "default": "-XX:+UnlockExperimentalVMOptions -XX:+UseContainerSupport -XX:InitialRAMPercentage=60 -XX:MaxRAMPercentage=70 -XX:MinRAMPercentage=40 -XX:+UseNUMA"
+                }, 
+                "license": {
+                    "type": "string", 
+                    "description": "Add a (base64 encoded) license at startup, leave empty to start in evaluation mode", 
+                    "default": ""
+                }, 
+                "cluster_tls_enabled": {
+                    "description": "Enable TLS for HiveMQ cluster transports. Make sure that your TLS settings are correct (Service Account and secret). Changing this option at runtime is not supported", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "native_tls_enabled": {
+                    "description": "When TLS is enabled: specify whether to use native TLS", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "listener_configuration": {
+                    "description": "Configure HiveMQ listeners", 
+                    "type": "object", 
+                    "properties": {
+                        "mqtt_port": {
+                            "description": "MQTT port to use on the individual cluster nodes. A random port is chosen by default.", 
+                            "type": "integer", 
+                            "default": 0
+                        }, 
+                        "websocket_enabled": {
+                            "title": "Enable WebSocket listener", 
+                            "description": "Enable WebSocket listener", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "websocket_path": {
+                            "title": "WebSocket path", 
+                            "description": "WebSocket path", 
+                            "type": "string", 
+                            "default": "/mqtt"
+                        }, 
+                        "websocket_port": {
+                            "description": "When WebSocket is enabled: Port to use for the WebSocket listener", 
+                            "type": "integer", 
+                            "default": 0
+                        }, 
+                        "websocket_port_vip_enabled": {
+                            "description": "Whether to enable the VIP for the MQTT TLS port", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "websocket_port_vip": {
+                            "description": "When WebSocket is enabled: Port to use for the VIP for the WebSocket port", 
+                            "type": "integer", 
+                            "default": 8083
+                        }, 
+                        "mqtt_tls_enabled": {
+                            "description": "Enable TLS listeners for MQTT clients (default and WebSocket if enabled)", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "mqtt_tls_port": {
+                            "description": "When TLS is enabled: Port to use for the MQTT TLS port", 
+                            "type": "integer", 
+                            "default": 0
+                        }, 
+                        "mqtt_tls_port_vip_enabled": {
+                            "description": "Whether to enable the VIP for the MQTT TLS port", 
+                            "type": "boolean", 
+                            "default": true
+                        }, 
+                        "mqtt_tls_port_vip": {
+                            "description": "When TLS and the VIP are enabled: Port to use for the VIP for the MQTT TLS port", 
+                            "type": "integer", 
+                            "default": 8883
+                        }, 
+                        "websocket_tls_port": {
+                            "description": "When WebSocket and TLS is enabled: Port to use for the VIP for the WebSocket TLS port", 
+                            "type": "integer", 
+                            "default": 0
+                        }, 
+                        "websocket_tls_port_vip_enabled": {
+                            "description": "Whether to enable the VIP for the WebSocket TLS port", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "websocket_tls_port_vip": {
+                            "description": "When TLS, the VIP and WebSocket are enabled: Port to use for the VIP for the WebSocket TLS port", 
+                            "type": "integer", 
+                            "default": 8443
+                        }, 
+                        "control_center_tls_enabled": {
+                            "description": "Whether to enable the VIP for the WebSocket TLS port", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "control_center_tls_port": {
+                            "description": "When TLS is enabled: Port for the Control Center TLS listener", 
+                            "type": "integer", 
+                            "default": 0
+                        }
+                    }, 
+                    "additionalProperties": false, 
+                    "required": [
+                        "mqtt_port", 
+                        "websocket_enabled", 
+                        "websocket_path", 
+                        "websocket_port", 
+                        "websocket_port_vip_enabled", 
+                        "websocket_port_vip", 
+                        "mqtt_tls_enabled", 
+                        "mqtt_tls_port", 
+                        "mqtt_tls_port_vip_enabled", 
+                        "mqtt_tls_port_vip", 
+                        "websocket_tls_port", 
+                        "websocket_tls_port_vip_enabled", 
+                        "websocket_tls_port_vip", 
+                        "control_center_tls_enabled", 
+                        "control_center_tls_port"
+                    ]
+                }, 
+                "cluster_replica_count": {
+                    "title": "Cluster replica count", 
+                    "description": "Number of cluster replica", 
+                    "type": "integer", 
+                    "default": 2, 
+                    "minimum": 1
+                }, 
+                "cluster_overload_protection": {
+                    "title": "Cluster overload protection", 
+                    "description": "Enable cluster overload protection", 
+                    "type": "boolean", 
+                    "default": true
+                }, 
+                "control_center_enabled": {
+                    "title": "Control Center enabled", 
+                    "description": "Enable control center", 
+                    "type": "boolean", 
+                    "default": true
+                }, 
+                "control_center_user": {
+                    "title": "Control Center user", 
+                    "description": "User for the control center login", 
+                    "type": "string", 
+                    "default": "admin"
+                }, 
+                "control_center_password": {
+                    "title": "Control Center password", 
+                    "description": "Password for the control center login", 
+                    "type": "string", 
+                    "default": "hivemq"
+                }, 
+                "metrics_enabled": {
+                    "title": "Push metrics", 
+                    "description": "Push HiveMQ metrics to the DCOS StatsD agent, for use with e.g. Prometheus on DCOS", 
+                    "type": "boolean", 
+                    "default": true
+                }, 
+                "metrics_interval": {
+                    "title": "Metrics push interval", 
+                    "description": "Metrics push interval (resolution) in seconds for HiveMQ metrics. Note that if you are using Prometheus, you may need to adjust the Prometheus scrape configuration as well in order to get higher resolution", 
+                    "type": "integer", 
+                    "default": 5, 
+                    "minimum": 1
+                }, 
+                "discovery_interval": {
+                    "title": "Discovery interval", 
+                    "description": "Interval within which running nodes will attempt to discover new nodes. This should be fairly low as to allow nodes to quickly discover each other and merge during a rolling update", 
+                    "type": "integer", 
+                    "default": 5
+                }, 
+                "restrictions": {
+                    "description": "Restrictions to limit the load on a broker", 
+                    "type": "object", 
+                    "properties": {
+                        "max_client_id_length": {
+                            "title": "Max client id length", 
+                            "description": "Maximum client id length in bytes", 
+                            "type": "integer", 
+                            "default": 65535
+                        }, 
+                        "max_topic_length": {
+                            "title": "Max topic length", 
+                            "description": "Maximum topic length in bytes", 
+                            "type": "integer", 
+                            "default": 65535
+                        }, 
+                        "max_connections": {
+                            "title": "Max connections", 
+                            "description": "Maximum total MQTT connections for a single broker", 
+                            "type": "integer", 
+                            "default": -1, 
+                            "minimum": -1
+                        }, 
+                        "incoming_bandwidth_throttling": {
+                            "title": "Incoming bandwidth throttling", 
+                            "description": "Incoming bandwidth maximum bytes per second", 
+                            "type": "integer", 
+                            "default": 0, 
+                            "minimum": 0
+                        }, 
+                        "no_connect_idle_timeout": {
+                            "title": "CONNECT idle timeout", 
+                            "description": "Timeout in milliseconds before disconnecting a client which doesn't send a CONNECT packet", 
+                            "type": "integer", 
+                            "default": 10000
+                        }
+                    }, 
+                    "additionalProperties": false, 
+                    "required": [
+                        "no_connect_idle_timeout", 
+                        "max_topic_length", 
+                        "max_client_id_length", 
+                        "max_connections", 
+                        "incoming_bandwidth_throttling"
+                    ]
+                }
+            }, 
+            "additionalProperties": false, 
+            "required": [
+                "cluster_replica_count", 
+                "cluster_overload_protection", 
+                "control_center_enabled", 
+                "control_center_user", 
+                "control_center_password", 
+                "restrictions", 
+                "java_options", 
+                "cluster_tls_enabled", 
+                "native_tls_enabled", 
+                "metrics_enabled", 
+                "metrics_interval", 
+                "discovery_interval"
+            ]
+        }, 
+        "mqtt": {
+            "description": "MQTT specific configuration properties", 
+            "type": "object", 
+            "properties": {
+                "limits": {
+                    "description": "Limits and toggles for specific protocol features", 
+                    "type": "object", 
+                    "properties": {
+                        "session_expiry_interval": {
+                            "title": "Session expiry interval", 
+                            "description": "Duration (in seconds) that has to pass after the client disconnected, before its session expires", 
+                            "type": "integer", 
+                            "default": 4294967296, 
+                            "minimum": 0
+                        }, 
+                        "max_packet_size": {
+                            "title": "Max packet size", 
+                            "description": "The maximum size of any MQTT packet in bytes that will be accepted by the broker", 
+                            "type": "integer", 
+                            "default": 268435460
+                        }, 
+                        "server_receive_maximum": {
+                            "title": "Server receive maximum", 
+                            "description": "The maximum amount of PUBLISH messages, which have not yet been acknowledged by the broker, each client is allowed to send", 
+                            "type": "integer", 
+                            "default": 10
+                        }, 
+                        "keepalive_max": {
+                            "title": "Keep alive maximum", 
+                            "description": "The maximum value of the keepAlive field in the CONNECT packet of the client that will be accepted by the broker", 
+                            "type": "integer", 
+                            "default": 65535
+                        }, 
+                        "keepalive_allow_unlimited": {
+                            "title": "Keep alive allow unlimited", 
+                            "description": "Whether or not the broker will accept connections by clients that sent a CONNECT packet with a keepAlive=0 setting", 
+                            "type": "boolean", 
+                            "default": true
+                        }, 
+                        "topic_alias_enabled": {
+                            "title": "Topic alias enabled", 
+                            "description": "Whether or not the broker will allow MQTT 5 clients to use topic-alias", 
+                            "type": "boolean", 
+                            "default": true
+                        }, 
+                        "topic_alias_max_per_client": {
+                            "title": "Topic alias max per client", 
+                            "description": "Maximum topic aliases a single client can use", 
+                            "type": "integer", 
+                            "default": 5
+                        }, 
+                        "subscription_identifier_enabled": {
+                            "title": "Subscription identifier", 
+                            "description": "Whether or not the broker will allow MQTT 5 clients to use subscription identifiers", 
+                            "type": "boolean", 
+                            "default": true
+                        }, 
+                        "wildcard_subscription_enabled": {
+                            "title": "Wildcard subscriptions", 
+                            "description": "Whether or not the wildcard subscription feature is enabled on the broker", 
+                            "type": "boolean", 
+                            "default": true
+                        }, 
+                        "shared_subscription_enabled": {
+                            "title": "Shared subscriptions", 
+                            "description": "Whether or not the shared subscription feature is enabled on the broker", 
+                            "type": "boolean", 
+                            "default": true
+                        }, 
+                        "retained_messages_enabled": {
+                            "title": "Retained messages", 
+                            "description": "Whether or not the retained message feature is enabled on the broker", 
+                            "type": "boolean", 
+                            "default": true
+                        }, 
+                        "max_qos": {
+                            "title": "Max QoS", 
+                            "description": "Defines the maximum Quality of Service (QoS) level, which may be used in MQTT PUBLISH messages", 
+                            "type": "integer", 
+                            "default": 2, 
+                            "minimum": 0, 
+                            "maximum": 2
+                        }, 
+                        "queued_message_max_queue_size": {
+                            "title": "Queued messages max queue size", 
+                            "description": "Maximum amount of messages per client that will be stored on the broker", 
+                            "type": "integer", 
+                            "default": 1000, 
+                            "minimum": 0
+                        }, 
+                        "queued_message_strategy": {
+                            "title": "Queued messages strategy", 
+                            "description": "Discard strategy when message arrives at the broker and the corresponding clients message queue is full.\ndiscard for discarding newly arriving messages. discard-oldest to discard the oldest message in the queue when a new message arrives", 
+                            "type": "string", 
+                            "default": "discard", 
+                            "enum": [
+                                "discard",
+                                "discard_oldest"
+                            ]
+                        }
+                    }, 
+                    "additionalProperties": false, 
+                    "required": [
+                        "queued_message_strategy", 
+                        "queued_message_max_queue_size", 
+                        "max_qos", 
+                        "retained_messages_enabled", 
+                        "shared_subscription_enabled", 
+                        "wildcard_subscription_enabled", 
+                        "subscription_identifier_enabled", 
+                        "topic_alias_max_per_client", 
+                        "topic_alias_enabled", 
+                        "keepalive_allow_unlimited", 
+                        "keepalive_max", 
+                        "server_receive_maximum", 
+                        "max_packet_size", 
+                        "session_expiry_interval"
+                    ]
+                }, 
+                "security": {
+                    "type": "object", 
+                    "description": "Security configuration", 
+                    "properties": {
+                        "allow_empty_client_id": {
+                            "title": "Allow empty client id", 
+                            "description": "Allows the use of empty client ids. If this is set to true, HiveMQ automatically generates random client ids, when clientId in the CONNECT packet is empty", 
+                            "type": "boolean", 
+                            "default": true
+                        }, 
+                        "payload_format_validation": {
+                            "title": "Payload UTF-8 validation", 
+                            "description": "Enables the UTF-8 validation of UTF-8 PUBLISH payloads", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "topic_format_validation": {
+                            "title": "Topic UTF-8 validation", 
+                            "description": "Enables the UTF-8 validation of topic names and client ids", 
+                            "type": "boolean", 
+                            "default": true
+                        }, 
+                        "allow_request_problem_information": {
+                            "title": "Request problem information", 
+                            "description": "Allows the client to request the problem information. If this is set to false, no reason string and user property values will be sent to clients", 
+                            "type": "boolean", 
+                            "default": true
+                        }
+                    }, 
+                    "additionalProperties": false, 
+                    "required": [
+                        "allow_empty_client_id", 
+                        "payload_format_validation", 
+                        "topic_format_validation", 
+                        "allow_request_problem_information"
+                    ]
+                }, 
+                "auth": {
+                    "description": "HiveMQ specific configuration properties", 
+                    "type": "object", 
+                    "properties": {
+                        "enable_rbac": {
+                            "title": "Enable RBAC extension", 
+                            "description": "Download and install the file RBAC extension on all nodes", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "rbac_config": {
+                            "title": "Configure RBAC file", 
+                            "description": "credentials.xml configuration for users and roles", 
+                            "type": "string", 
+                            "media": {
+                                "binaryEncoding": "base64", 
+                                "type": "application/x-yaml"
+                            }, 
+                            "default": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pgo8ZmlsZS1yYmFjPgogICAgPHVzZXJzPgogICAgICAgIDx1c2VyPgogICAgICAgICAgICA8bmFtZT51c2VyMTwvbmFtZT4KICAgICAgICAgICAgPCEtLS0gcGFzc3dvcmQgaGFzaCBmb3IgInBhc3MxIiAtLT4KICAgICAgICAgICAgPHBhc3N3b3JkPldGTlFVVkIwVWt4ak0wNHhhMGhTUjFCUU5HaHVPVEpLVnpkbGJYQTRiams9OjEwMDpGWTEybndwVUViQks5RUtRL0F3L3JRS1NvQTdqWHNDMEhLRUx3VTJtTENWVTM5YkpWSzB6ZjROZW11RmVET0hQTzRCVzFuT2p4aTZOcG9ya0M2clVvZz09PC9wYXNzd29yZD4KICAgICAgICAgICAgPHJvbGVzPgogICAgICAgICAgICAgICAgPGlkPnJvbGUxPC9pZD4KICAgICAgICAgICAgPC9yb2xlcz4KICAgICAgICA8L3VzZXI+CiAgICAgICAgPHVzZXI+CiAgICAgICAgICAgIDxuYW1lPmFkbWluLXVzZXI8L25hbWU+CiAgICAgICAgICAgIDwhLS0gcGFzc3dvcmQgaGFzaCBmb3IgImFkbWluLXBhc3N3b3JkIiAtLT4KICAgICAgICAgICAgPHBhc3N3b3JkPlZqYzFhMGx4UTNOdmIwbGpORlZITkU5V1JuTTNSRzFJWm1kTlVGY3dWR1k9OjEwMDpQTDJGTHFmcGRoT05HN3FYakFNbWRWbjR3bE1pWG55cGRYaUZXMDl6cW9yRmhLZ29paXhGUXcyRVZKSmZFOVpuNzlxNDVWN1hwYzZKZUtMcDBudG1ZQT09PC9wYXNzd29yZD4KICAgICAgICAgICAgPHJvbGVzPgogICAgICAgICAgICAgICAgPGlkPnN1cGVydXNlcjwvaWQ+CiAgICAgICAgICAgIDwvcm9sZXM+CiAgICAgICAgPC91c2VyPgogICAgPC91c2Vycz4KICAgIDxyb2xlcz4KICAgICAgICA8cm9sZT4KICAgICAgICAgICAgPGlkPnJvbGUxPC9pZD4KICAgICAgICAgICAgPHBlcm1pc3Npb25zPgogICAgICAgICAgICAgICAgPHBlcm1pc3Npb24+CiAgICAgICAgICAgICAgICAgICAgPCEtLSBQVUJMSVNIIGFuZCBTVUJTQ1JJQkUgdG8gYWxsIHRvcGljcyBiZWxvdyAiZGF0YS88Y2xpZW50aWQ+LyIgLS0+CiAgICAgICAgICAgICAgICAgICAgPHRvcGljPmRhdGEvJHt7Y2xpZW50aWR9fS8jPC90b3BpYz4KICAgICAgICAgICAgICAgIDwvcGVybWlzc2lvbj4KICAgICAgICAgICAgICAgIDxwZXJtaXNzaW9uPgogICAgICAgICAgICAgICAgICAgIDwhLS0gUFVCTElTSCB0byB0b3BpYyAib3V0Z29pbmcvPGNsaWVudGlkPiIsIHJldGFpbmVkIG9ubHktLT4KICAgICAgICAgICAgICAgICAgICA8dG9waWM+b3V0Z29pbmcvJHt7Y2xpZW50aWR9fTwvdG9waWM+CiAgICAgICAgICAgICAgICAgICAgPGFjdGl2aXR5PlBVQkxJU0g8L2FjdGl2aXR5PgogICAgICAgICAgICAgICAgICAgIDxyZXRhaW4+UkVUQUlORUQ8L3JldGFpbj4KICAgICAgICAgICAgICAgIDwvcGVybWlzc2lvbj4KICAgICAgICAgICAgICAgIDxwZXJtaXNzaW9uPgogICAgICAgICAgICAgICAgICAgIDwhLS0gU1VCU0NSSUJFIHRvIHRvcGljICJpbmNvbWluZy88Y2xpZW50aWQ+Ii0tPgogICAgICAgICAgICAgICAgICAgIDx0b3BpYz5pbmNvbWluZy8ke3t1c2VybmFtZX19L2FjdGlvbnM8L3RvcGljPgogICAgICAgICAgICAgICAgICAgIDxhY3Rpdml0eT5TVUJTQ1JJQkU8L2FjdGl2aXR5PgogICAgICAgICAgICAgICAgPC9wZXJtaXNzaW9uPgogICAgICAgICAgICA8L3Blcm1pc3Npb25zPgogICAgICAgIDwvcm9sZT4KICAgICAgICA8cm9sZT4KICAgICAgICAgICAgPGlkPnN1cGVydXNlcjwvaWQ+CiAgICAgICAgICAgIDxwZXJtaXNzaW9ucz4KICAgICAgICAgICAgICAgIDxwZXJtaXNzaW9uPgogICAgICAgICAgICAgICAgICAgIDwhLS0gQWxsb3cgZXZlcnl0aGluZyAtLT4KICAgICAgICAgICAgICAgICAgICA8dG9waWM+IzwvdG9waWM+CiAgICAgICAgICAgICAgICA8L3Blcm1pc3Npb24+CiAgICAgICAgICAgIDwvcGVybWlzc2lvbnM+CiAgICAgICAgPC9yb2xlPgogICAgPC9yb2xlcz4KPC9maWxlLXJiYWM+Cg=="
+                        }, 
+                        "rbac_extension_config": {
+                            "title": "Configure RBAC extension configuration", 
+                            "description": "extension-config.xml configuration for users and roles", 
+                            "type": "string", 
+                            "media": {
+                                "binaryEncoding": "base64", 
+                                "type": "application/x-yaml"
+                            }, 
+                            "default": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/Pgo8ZXh0ZW5zaW9uLWNvbmZpZ3VyYXRpb24+CgogICAgPCEtLSBSZWxvYWQgaW50ZXJ2YWwgZm9yIGNyZWRlbnRpYWxzIGluIHNlY29uZHMgLS0+CiAgICA8Y3JlZGVudGlhbHMtcmVsb2FkLWludGVydmFsPjYwPC9jcmVkZW50aWFscy1yZWxvYWQtaW50ZXJ2YWw+CgogICAgPCEtLSBJZiB0aGUgY3JlZGVudGlhbHMgZmlsZSBpcyB1c2luZyBIQVNIRUQgb3IgUExBSU4gcGFzc3dvcmRzIC0tPgogICAgPHBhc3N3b3JkLXR5cGU+SEFTSEVEPC9wYXNzd29yZC10eXBlPgoKPC9leHRlbnNpb24tY29uZmlndXJhdGlvbj4="
+                        }
+                    }, 
+                    "additionalProperties": false, 
+                    "required": [
+                        "enable_rbac", 
+                        "rbac_config", 
+                        "rbac_extension_config"
+                    ]
+                }
+            }, 
+            "additionalProperties": false, 
+            "required": [
+                "limits", 
+                "security", 
+                "auth"
+            ]
+        }, 
+        "advanced": {
+            "description": "Advanced features, handle with care", 
+            "type": "object", 
+            "properties": {
+                "configuration_override": {
+                    "description": "Modify the configuration template used for the HiveMQ configuration. Handle with care, this can break active deployments", 
+                    "type": "string", 
+                    "media": {
+                        "binaryEncoding": "base64", 
+                        "type": "application/x-yaml"
+                    }, 
+                    "default": "PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxoaXZlbXEgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIKICAgICAgICB4c2k6bm9OYW1lc3BhY2VTY2hlbWFMb2NhdGlvbj0iaGl2ZW1xLWNvbmZpZy54c2QiPgoKICAgIDxsaXN0ZW5lcnM+CiAgICAgICAgPCEtLSBEZWZhdWx0IGxpc3RlbmVyLCBhbHdheXMgZW5hYmxlZCAtLT4KICAgICAgICA8dGNwLWxpc3RlbmVyPgogICAgICAgICAgICA8cG9ydD4ke0hJVkVNUV9NUVRUX1BPUlR9PC9wb3J0PgogICAgICAgICAgICA8YmluZC1hZGRyZXNzPjAuMC4wLjA8L2JpbmQtYWRkcmVzcz4KICAgICAgICA8L3RjcC1saXN0ZW5lcj4KICAgICAgICA8IS0tIFRPRE8gdGVtcGxhdGluZyBUTFMgL1dTIC8gV1NTIGxpc3RlbmVyLCBvdmVybG9hZCBwcm90ZWN0aW9uLi4uLS0+CiAgICAgICAgPCEtLSBUTFMgVENQIC0tPgogICAgICAgIHt7I0hJVkVNUV9UTFNfTElTVEVORVJfRU5BQkxFRH19CiAgICAgICAgICAgIDx0bHMtdGNwLWxpc3RlbmVyPgogICAgICAgICAgICAgICAgPHBvcnQ+JHtISVZFTVFfVExTX01RVFRfUE9SVH08L3BvcnQ+CiAgICAgICAgICAgICAgICA8YmluZC1hZGRyZXNzPjAuMC4wLjA8L2JpbmQtYWRkcmVzcz4KICAgICAgICAgICAgICAgIDx0bHM+CiAgICAgICAgICAgICAgICAgICAgPGtleXN0b3JlPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aD57e01FU09TX1NBTkRCT1h9fS9ub2RlLmtleXN0b3JlPC9wYXRoPgogICAgICAgICAgICAgICAgICAgICAgICA8cGFzc3dvcmQ+bm90c2VjdXJlPC9wYXNzd29yZD4KICAgICAgICAgICAgICAgICAgICAgICAgPHByaXZhdGUta2V5LXBhc3N3b3JkPm5vdHNlY3VyZTwvcHJpdmF0ZS1rZXktcGFzc3dvcmQ+CiAgICAgICAgICAgICAgICAgICAgPC9rZXlzdG9yZT4KICAgICAgICAgICAgICAgICAgICA8dHJ1c3RzdG9yZT4KICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGg+e3tNRVNPU19TQU5EQk9YfX0vbm9kZS50cnVzdHN0b3JlPC9wYXRoPgogICAgICAgICAgICAgICAgICAgICAgICA8cGFzc3dvcmQ+bm90c2VjdXJlPC9wYXNzd29yZD4KICAgICAgICAgICAgICAgICAgICA8L3RydXN0c3RvcmU+CiAgICAgICAgICAgICAgICAgICAgPGNsaWVudC1hdXRoZW50aWNhdGlvbi1tb2RlPk5PTkU8L2NsaWVudC1hdXRoZW50aWNhdGlvbi1tb2RlPgogICAgICAgICAgICAgICAgPC90bHM+CiAgICAgICAgICAgIDwvdGxzLXRjcC1saXN0ZW5lcj4KICAgICAgICB7ey9ISVZFTVFfVExTX0xJU1RFTkVSX0VOQUJMRUR9fQogICAgICAgIDwhLS0gbmF0aXZlIFdTIC0tPgogICAgICAgIHt7I0hJVkVNUV9XRUJTT0NLRVRfRU5BQkxFRH19CiAgICAgICAgICAgIDx3ZWJzb2NrZXQtbGlzdGVuZXI+CiAgICAgICAgICAgICAgICA8cG9ydD4ke0hJVkVNUV9XRUJTT0NLRVRfUE9SVH08L3BvcnQ+CiAgICAgICAgICAgICAgICA8YmluZC1hZGRyZXNzPjAuMC4wLjA8L2JpbmQtYWRkcmVzcz4KICAgICAgICAgICAgICAgIDxwYXRoPiR7SElWRU1RX1dFQlNPQ0tFVF9QQVRIfTwvcGF0aD4KICAgICAgICAgICAgICAgIDxzdWJwcm90b2NvbHM+CiAgICAgICAgICAgICAgICAgICAgPHN1YnByb3RvY29sPm1xdHR2My4xPC9zdWJwcm90b2NvbD4KICAgICAgICAgICAgICAgICAgICA8c3VicHJvdG9jb2w+bXF0dDwvc3VicHJvdG9jb2w+CiAgICAgICAgICAgICAgICA8L3N1YnByb3RvY29scz4KICAgICAgICAgICAgICAgIDxhbGxvdy1leHRlbnNpb25zPnRydWU8L2FsbG93LWV4dGVuc2lvbnM+CiAgICAgICAgICAgIDwvd2Vic29ja2V0LWxpc3RlbmVyPgogICAgICAgIHt7L0hJVkVNUV9XRUJTT0NLRVRfRU5BQkxFRH19CiAgICAgICAgPCEtLSBUTFMtV1MgLS0+CiAgICAgICAge3sjSElWRU1RX1RMU19MSVNURU5FUl9FTkFCTEVEfX0KICAgICAgICAgICAge3sjSElWRU1RX1dFQlNPQ0tFVF9FTkFCTEVEfX0KICAgICAgICAgICAgICAgIDx0bHMtd2Vic29ja2V0LWxpc3RlbmVyPgogICAgICAgICAgICAgICAgICAgIDxwb3J0PiR7SElWRU1RX1RMU19XU19QT1JUfTwvcG9ydD4KICAgICAgICAgICAgICAgICAgICA8YmluZC1hZGRyZXNzPjAuMC4wLjA8L2JpbmQtYWRkcmVzcz4KICAgICAgICAgICAgICAgICAgICA8cGF0aD4ke0hJVkVNUV9XU19QQVRIfTwvcGF0aD4KICAgICAgICAgICAgICAgICAgICA8c3VicHJvdG9jb2xzPgogICAgICAgICAgICAgICAgICAgICAgICA8c3VicHJvdG9jb2w+bXF0dHYzLjE8L3N1YnByb3RvY29sPgogICAgICAgICAgICAgICAgICAgICAgICA8c3VicHJvdG9jb2w+bXF0dDwvc3VicHJvdG9jb2w+CiAgICAgICAgICAgICAgICAgICAgPC9zdWJwcm90b2NvbHM+CiAgICAgICAgICAgICAgICAgICAgPGFsbG93LWV4dGVuc2lvbnM+dHJ1ZTwvYWxsb3ctZXh0ZW5zaW9ucz4KICAgICAgICAgICAgICAgICAgICA8dGxzPgogICAgICAgICAgICAgICAgICAgICAgICA8a2V5c3RvcmU+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aD57e01FU09TX1NBTkRCT1h9fS9ub2RlLmtleXN0b3JlPC9wYXRoPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhc3N3b3JkPm5vdHNlY3VyZTwvcGFzc3dvcmQ+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cHJpdmF0ZS1rZXktcGFzc3dvcmQ+bm90c2VjdXJlPC9wcml2YXRlLWtleS1wYXNzd29yZD4KICAgICAgICAgICAgICAgICAgICAgICAgPC9rZXlzdG9yZT4KICAgICAgICAgICAgICAgICAgICAgICAgPHRydXN0c3RvcmU+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aD57e01FU09TX1NBTkRCT1h9fS9ub2RlLnRydXN0c3RvcmU8L3BhdGg+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGFzc3dvcmQ+bm90c2VjdXJlPC9wYXNzd29yZD4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwcml2YXRlLWtleS1wYXNzd29yZD5ub3RzZWN1cmU8L3ByaXZhdGUta2V5LXBhc3N3b3JkPgogICAgICAgICAgICAgICAgICAgICAgICA8L3RydXN0c3RvcmU+CiAgICAgICAgICAgICAgICAgICAgICAgIDxjbGllbnQtYXV0aGVudGljYXRpb24tbW9kZT5OT05FPC9jbGllbnQtYXV0aGVudGljYXRpb24tbW9kZT4KICAgICAgICAgICAgICAgICAgICA8L3Rscz4KICAgICAgICAgICAgICAgIDwvdGxzLXdlYnNvY2tldC1saXN0ZW5lcj4KICAgICAgICAgICAge3svSElWRU1RX1dFQlNPQ0tFVF9FTkFCTEVEfX0KICAgICAgICB7ey9ISVZFTVFfVExTX0xJU1RFTkVSX0VOQUJMRUR9fQogICAgPC9saXN0ZW5lcnM+CgogICAgPHRscz4KICAgICAgICA8bmF0aXZlLXNzbD4ke0hJVkVNUV9OQVRJVkVfVExTX0VOQUJMRUR9PC9uYXRpdmUtc3NsPgogICAgPC90bHM+CgogICAgPGNvbnRyb2wtY2VudGVyPgogICAgICAgIDxlbmFibGVkPiR7SElWRU1RX0NPTlRST0xfQ0VOVEVSX0VOQUJMRUR9PC9lbmFibGVkPgogICAgICAgIDxsaXN0ZW5lcnM+CiAgICAgICAgICAgIDxodHRwPgogICAgICAgICAgICAgICAgPHBvcnQ+JHtISVZFTVFfQ09OVFJPTF9DRU5URVJfUE9SVH08L3BvcnQ+CiAgICAgICAgICAgICAgICA8YmluZC1hZGRyZXNzPjAuMC4wLjA8L2JpbmQtYWRkcmVzcz4KICAgICAgICAgICAgPC9odHRwPgogICAgICAgIDwvbGlzdGVuZXJzPgogICAgICAgIDx1c2Vycz4KICAgICAgICAgICAgPHVzZXI+CiAgICAgICAgICAgICAgICA8bmFtZT4ke0hJVkVNUV9DT05UUk9MX0NFTlRFUl9VU0VSfTwvbmFtZT4KICAgICAgICAgICAgICAgIDxwYXNzd29yZD4ke0hJVkVNUV9DT05UUk9MX0NFTlRFUl9QQVNTV09SRH08L3Bhc3N3b3JkPgogICAgICAgICAgICA8L3VzZXI+CiAgICAgICAgPC91c2Vycz4KICAgICAgICA8IS0tIFRPRE8gVExTIC0tPgogICAgPC9jb250cm9sLWNlbnRlcj4KCiAgICA8Y2x1c3Rlcj4KICAgICAgICA8dHJhbnNwb3J0PgogICAgICAgICAgICA8dGNwPgogICAgICAgICAgICAgICAgPGJpbmQtYWRkcmVzcz4ke01FU09TX0NPTlRBSU5FUl9JUH08L2JpbmQtYWRkcmVzcz4KICAgICAgICAgICAgICAgIDxiaW5kLXBvcnQ+JHtISVZFTVFfQ0xVU1RFUl9QT1JUfTwvYmluZC1wb3J0PgogICAgICAgICAgICAgICAgPHRscz4KICAgICAgICAgICAgICAgICAgICA8ZW5hYmxlZD4ke0hJVkVNUV9DTFVTVEVSX1RMU19FTkFCTEVEfTwvZW5hYmxlZD4KICAgICAgICAgICAgICAgICAgICA8c2VydmVyLWtleXN0b3JlPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aD57e01FU09TX1NBTkRCT1h9fS9ub2RlLmtleXN0b3JlPC9wYXRoPgogICAgICAgICAgICAgICAgICAgICAgICA8cGFzc3dvcmQ+bm90c2VjdXJlPC9wYXNzd29yZD4KICAgICAgICAgICAgICAgICAgICAgICAgPHByaXZhdGUta2V5LXBhc3N3b3JkPm5vdHNlY3VyZTwvcHJpdmF0ZS1rZXktcGFzc3dvcmQ+CiAgICAgICAgICAgICAgICAgICAgPC9zZXJ2ZXIta2V5c3RvcmU+CiAgICAgICAgICAgICAgICAgICAgPHNlcnZlci1jZXJ0aWZpY2F0ZS10cnVzdHN0b3JlPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aD57e01FU09TX1NBTkRCT1h9fS9ub2RlLnRydXN0c3RvcmU8L3BhdGg+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXNzd29yZD5ub3RzZWN1cmU8L3Bhc3N3b3JkPgogICAgICAgICAgICAgICAgICAgIDwvc2VydmVyLWNlcnRpZmljYXRlLXRydXN0c3RvcmU+CiAgICAgICAgICAgICAgICA8L3Rscz4KICAgICAgICAgICAgPC90Y3A+CiAgICAgICAgPC90cmFuc3BvcnQ+CiAgICAgICAgPGVuYWJsZWQ+dHJ1ZTwvZW5hYmxlZD4KICAgICAgICA8ZGlzY292ZXJ5PgogICAgICAgICAgICA8ZXh0ZW5zaW9uPgogICAgICAgICAgICAgICAgPHJlbG9hZC1pbnRlcnZhbD4ke0hJVkVNUV9ESVNDT1ZFUllfSU5URVJWQUx9PC9yZWxvYWQtaW50ZXJ2YWw+CiAgICAgICAgICAgIDwvZXh0ZW5zaW9uPgogICAgICAgIDwvZGlzY292ZXJ5PgoKICAgICAgICA8cmVwbGljYXRpb24+CiAgICAgICAgICAgIDxyZXBsaWNhLWNvdW50PiR7SElWRU1RX0NMVVNURVJfUkVQTElDQV9DT1VOVH08L3JlcGxpY2EtY291bnQ+CiAgICAgICAgPC9yZXBsaWNhdGlvbj4KICAgIDwvY2x1c3Rlcj4KCgogICAgPG92ZXJsb2FkLXByb3RlY3Rpb24+CiAgICAgICAgPGVuYWJsZWQ+JHtISVZFTVFfQ0xVU1RFUl9PVkVSTE9BRF9QUk9URUNUSU9OfTwvZW5hYmxlZD4KICAgIDwvb3ZlcmxvYWQtcHJvdGVjdGlvbj4KCiAgICA8cmVzdHJpY3Rpb25zPgogICAgICAgIDxtYXgtY2xpZW50LWlkLWxlbmd0aD4ke0hJVkVNUV9NQVhfQ0xJRU5UX0lEX0xFTkdUSH08L21heC1jbGllbnQtaWQtbGVuZ3RoPgogICAgICAgIDxtYXgtdG9waWMtbGVuZ3RoPiR7SElWRU1RX01BWF9UT1BJQ19MRU5HVEh9PC9tYXgtdG9waWMtbGVuZ3RoPgogICAgICAgIDxtYXgtY29ubmVjdGlvbnM+LSR7SElWRU1RX01BWF9DT05ORUNUSU9OU308L21heC1jb25uZWN0aW9ucz4KICAgICAgICA8aW5jb21pbmctYmFuZHdpZHRoLXRocm90dGxpbmc+JHtISVZFTVFfSU5DT01JTkdfQkFORFdJRFRIX1RIUk9UVExJTkd9PC9pbmNvbWluZy1iYW5kd2lkdGgtdGhyb3R0bGluZz4KICAgICAgICA8bm8tY29ubmVjdC1pZGxlLXRpbWVvdXQ+JHtISVZFTVFfTk9fQ09OTkVDVF9JRExFX1RJTUVPVVR9PC9uby1jb25uZWN0LWlkbGUtdGltZW91dD4KICAgIDwvcmVzdHJpY3Rpb25zPgoKICAgIDxtcXR0PgogICAgICAgIDxzZXNzaW9uLWV4cGlyeT4KICAgICAgICAgICAgPG1heC1pbnRlcnZhbD4ke0hJVkVNUV9TRVNTSU9OX0VYUElSWV9JTlRFUlZBTH08L21heC1pbnRlcnZhbD4KICAgICAgICA8L3Nlc3Npb24tZXhwaXJ5PgoKICAgICAgICA8cGFja2V0cz4KICAgICAgICAgICAgPG1heC1wYWNrZXQtc2l6ZT4ke0hJVkVNUV9NQVhfUEFDS0VUX1NJWkV9PC9tYXgtcGFja2V0LXNpemU+CiAgICAgICAgPC9wYWNrZXRzPgoKICAgICAgICA8cmVjZWl2ZS1tYXhpbXVtPgogICAgICAgICAgICA8c2VydmVyLXJlY2VpdmUtbWF4aW11bT4ke0hJVkVNUV9TRVJWRVJfUkVDRUlWRV9NQVhJTVVNfTwvc2VydmVyLXJlY2VpdmUtbWF4aW11bT4KICAgICAgICA8L3JlY2VpdmUtbWF4aW11bT4KCiAgICAgICAgPGtlZXAtYWxpdmU+CiAgICAgICAgICAgIDxtYXgta2VlcC1hbGl2ZT4ke0hJVkVNUV9LRUVQQUxJVkVfTUFYfTwvbWF4LWtlZXAtYWxpdmU+CiAgICAgICAgICAgIDxhbGxvdy11bmxpbWl0ZWQ+JHtISVZFTVFfS0VFUEFMSVZFX0FMTE9XX1VOTElNSVRFRH08L2FsbG93LXVubGltaXRlZD4KICAgICAgICA8L2tlZXAtYWxpdmU+CgogICAgICAgIDx0b3BpYy1hbGlhcz4KICAgICAgICAgICAgPGVuYWJsZWQ+JHtISVZFTVFfVE9QSUNfQUxJQVNfRU5BQkxFRH08L2VuYWJsZWQ+CiAgICAgICAgICAgIDxtYXgtcGVyLWNsaWVudD4ke0hJVkVNUV9UT1BJQ19BTElBU19NQVhfUEVSX0NMSUVOVH08L21heC1wZXItY2xpZW50PgogICAgICAgIDwvdG9waWMtYWxpYXM+CgogICAgICAgIDxzdWJzY3JpcHRpb24taWRlbnRpZmllcj4KICAgICAgICAgICAgPGVuYWJsZWQ+JHtISVZFTVFfU1VCU0NSSVBUSU9OX0lERU5USUZJRVJfRU5BQkxFRH08L2VuYWJsZWQ+CiAgICAgICAgPC9zdWJzY3JpcHRpb24taWRlbnRpZmllcj4KCiAgICAgICAgPHdpbGRjYXJkLXN1YnNjcmlwdGlvbnM+CiAgICAgICAgICAgIDxlbmFibGVkPiR7SElWRU1RX1dJTERDQVJEX1NVQlNDUklQVElPTl9FTkFCTEVEfTwvZW5hYmxlZD4KICAgICAgICA8L3dpbGRjYXJkLXN1YnNjcmlwdGlvbnM+CgogICAgICAgIDxzaGFyZWQtc3Vic2NyaXB0aW9ucz4KICAgICAgICAgICAgPGVuYWJsZWQ+JHtISVZFTVFfU0hBUkVEX1NVQlNDUklQVElPTl9FTkFCTEVEfTwvZW5hYmxlZD4KICAgICAgICA8L3NoYXJlZC1zdWJzY3JpcHRpb25zPgoKICAgICAgICA8cXVhbGl0eS1vZi1zZXJ2aWNlPgogICAgICAgICAgICA8bWF4LXFvcz4ke0hJVkVNUV9NQVhfUU9TfTwvbWF4LXFvcz4KICAgICAgICA8L3F1YWxpdHktb2Ytc2VydmljZT4KCiAgICAgICAgPHJldGFpbmVkLW1lc3NhZ2VzPgogICAgICAgICAgICA8ZW5hYmxlZD4ke0hJVkVNUV9SRVRBSU5FRF9NRVNTQUdFU19FTkFCTEVEfTwvZW5hYmxlZD4KICAgICAgICA8L3JldGFpbmVkLW1lc3NhZ2VzPgoKICAgICAgICA8cXVldWVkLW1lc3NhZ2VzPgogICAgICAgICAgICA8bWF4LXF1ZXVlLXNpemU+JHtISVZFTVFfUVVFVUVEX01FU1NBR0VfTUFYX1FVRVVFX1NJWkV9PC9tYXgtcXVldWUtc2l6ZT4KICAgICAgICAgICAgPHN0cmF0ZWd5PiR7SElWRU1RX1FVRVVFRF9NRVNTQUdFX1NUUkFURUdZfTwvc3RyYXRlZ3k+CiAgICAgICAgPC9xdWV1ZWQtbWVzc2FnZXM+CiAgICA8L21xdHQ+CgogICAgPHNlY3VyaXR5PgogICAgICAgIDwhLS0gQWxsb3dzIHRoZSB1c2Ugb2YgZW1wdHkgY2xpZW50IGlkcyAtLT4KICAgICAgICA8YWxsb3ctZW1wdHktY2xpZW50LWlkPgogICAgICAgICAgICA8ZW5hYmxlZD4ke0hJVkVNUV9BTExPV19FTVBUWV9DTElFTlRfSUR9PC9lbmFibGVkPgogICAgICAgIDwvYWxsb3ctZW1wdHktY2xpZW50LWlkPgoKICAgICAgICA8IS0tIENvbmZpZ3VyZXMgdmFsaWRhdGlvbiBmb3IgVVRGLTggUFVCTElTSCBwYXlsb2FkcyAtLT4KICAgICAgICA8cGF5bG9hZC1mb3JtYXQtdmFsaWRhdGlvbj4KICAgICAgICAgICAgPGVuYWJsZWQ+JHtISVZFTVFfUEFZTE9BRF9GT1JNQVRfVkFMSURBVElPTn08L2VuYWJsZWQ+CiAgICAgICAgPC9wYXlsb2FkLWZvcm1hdC12YWxpZGF0aW9uPgoKICAgICAgICA8dXRmOC12YWxpZGF0aW9uPgogICAgICAgICAgICA8ZW5hYmxlZD4ke0hJVkVNUV9UT1BJQ19GT1JNQVRfVkFMSURBVElPTn08L2VuYWJsZWQ+CiAgICAgICAgPC91dGY4LXZhbGlkYXRpb24+CgogICAgICAgIDwhLS0gQWxsb3dzIGNsaWVudHMgdG8gcmVxdWVzdCBwcm9ibGVtIGluZm9ybWF0aW9uIC0tPgogICAgICAgIDxhbGxvdy1yZXF1ZXN0LXByb2JsZW0taW5mb3JtYXRpb24+CiAgICAgICAgICAgIDxlbmFibGVkPiR7SElWRU1RX0FMTE9XX1JFUVVFU1RfUFJPQkxFTV9JTkZPUk1BVElPTn08L2VuYWJsZWQ+CiAgICAgICAgPC9hbGxvdy1yZXF1ZXN0LXByb2JsZW0taW5mb3JtYXRpb24+CiAgICA8L3NlY3VyaXR5Pgo8L2hpdmVtcT4K"
+                }
+            }, 
+            "additionalProperties": false, 
+            "required": [
+                "configuration_override"
+            ]
+        }
+    }
+}
