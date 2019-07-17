@@ -4,7 +4,7 @@
   "mem": {{service.mem}},
   "user": "{{service.user}}",
   "instances": {{service.instances}},
-  "cmd": "export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jre*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx${CEREBRO_HEAP}M -XX:-HeapDumpOnOutOfMemoryError -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap\" && bash bootstrap.sh && ./cerebro-${CEREBRO_VERSION}/bin/cerebro -Dhttp.port=$PORT0 -Dconfig.file=$CEREBRO_CONFIG -Dorg.sqlite.tmpdir=/tmp -Dapplication.home=$MESOS_SANDBOX",
+  "cmd": "export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH &&  export JAVA_OPTS=\"-Xms256M -Xmx${CEREBRO_HEAP}M -XX:-HeapDumpOnOutOfMemoryError -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap\" && bash bootstrap.sh && ./cerebro-${CEREBRO_VERSION}/bin/cerebro -Dhttp.port=$PORT0 -Dconfig.file=$CEREBRO_CONFIG -Dorg.sqlite.tmpdir=/tmp -Dapplication.home=$MESOS_SANDBOX",
   "uris": [
     "{{resource.assets.uris.jre-tar-gz}}",
     "{{resource.assets.uris.cerebro-tar-gz}}",
@@ -24,7 +24,7 @@
     "CEREBRO_LDAP_BASE": "{{authentication.ldap.base}}",
     "CEREBRO_LDAP_METHOD": "{{authentication.ldap.method}}",
     "CEREBRO_LDAP_DOMAIN": "{{authentication.ldap.domain}}",
-    "CEREBRO_VERSION": "0.7.2",
+    "CEREBRO_VERSION": "0.8.1",
     "ES_1": "{{elastic.cluster_1}}",
     "ES_2": "{{elastic.cluster_2}}",
     "ES_3": "{{elastic.cluster_3}}",
