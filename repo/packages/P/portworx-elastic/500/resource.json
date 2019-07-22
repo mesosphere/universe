@@ -1,0 +1,60 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-master-28f8827.tar.gz",
+      "bootstrap-zip": "https://px-dcos.s3.amazonaws.com/portworx-elastic/assets/1.3.3-2.5.0-6.3.2/bootstrap.zip",
+      "executor-zip": "https://px-dcos.s3.amazonaws.com/portworx-elastic/assets/1.3.3-2.5.0-6.3.2/executor.zip",
+      "scheduler-zip": "https://px-dcos.s3.amazonaws.com/portworx-elastic/assets/1.3.3-2.5.0-6.3.2/elastic-scheduler.zip",
+      "statsd-plugin-zip": "https://downloads.mesosphere.com/elastic/assets/elasticsearch-statsd-6.3.2.0.zip",
+      "elasticsearch-jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz",
+      "elasticsearch-tar-gz": "https://downloads.mesosphere.com/elastic/assets/elasticsearch-6.3.2.tar.gz",
+      "diagnostics-zip": "https://downloads.mesosphere.com/elastic/assets/support-diagnostics-6.4.4-dist.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/elastic-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/elastic-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/elastic-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "86dbc805bbcc861a67a32b4e61a1c7278c96da862dd30874675120826e0692f9"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-elastic/assets/1.3.3-2.5.0-6.3.2/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "90a1fae8248bc8a161c9e9e1c1eec147237781d6d72ac5cbc954a5cc98c4cc35"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-elastic/assets/1.3.3-2.5.0-6.3.2/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "8fcc26ab186e8561daf0b25751a4a172ad50c897ecf6f269a1c1089db1c5857e"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://px-dcos.s3.amazonaws.com/portworx-elastic/assets/1.3.3-2.5.0-6.3.2/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
