@@ -1,0 +1,170 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "user": "{{service.user}}",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*/jre/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && echo \"${HIVEMQ_CONFIG_TEMPLATE}\" | base64 -d > ./operator-scheduler/config.xml.mustache && ./bootstrap -resolve=false -template=false && ./operator-scheduler/bin/operator ./operator-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+{{#service.service_account_secret}}
+    "secrets": {
+      "serviceCredential": {
+        "source": "{{service.service_account_secret}}"
+      }
+    },
+{{/service.service_account_secret}}
+  "env": {
+    "PACKAGE_NAME": "{{package-name}}",
+    "PACKAGE_VERSION": "{{package-version}}",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1564403561890",
+    "PACKAGE_BUILD_TIME_STR": "2019-07-29T12:32:41.890735",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "SLEEP_DURATION": "{{service.sleep}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+    "MESOS_API_VERSION": "V1",
+    "NODE_COUNT": "{{node.count}}",
+    "NODE_PLACEMENT": "{{{node.placement_constraint}}}",
+    {{#service.virtual_network_enabled}}
+      "ENABLE_VIRTUAL_NETWORK": "yes",
+      "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+      "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+    "NODE_CPUS": "{{node.cpus}}",
+    "NODE_MEM": "{{node.mem}}",
+    "NODE_DISK": "{{node.disk}}",
+    "NODE_DISK_TYPE": "{{node.disk_type}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "HIVEMQ_URI": "{{resource.assets.uris.hivemq}}",
+    "HIVEMQ_JRE_URI": "{{resource.assets.uris.hivemq-jre}}",
+    "HIVEMQ_DCOS_URI": "{{resource.assets.uris.hivemq-dcos}}",
+    "HIVEMQ_RBAC_URI": "{{resource.assets.uris.hivemq-rbac}}",
+    {{#service.service_account_secret}}
+      "DCOS_SERVICE_ACCOUNT_CREDENTIAL": {
+        "secret": "serviceCredential"
+      },
+      "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+      "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+      "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.service_account_secret}}
+
+    {{#node.custom_domain}}
+      "SERVICE_TLD": "{{node.custom_domain}}",
+    {{/node.custom_domain}}
+
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "RLIMIT_NOFILE_SOFT": "{{node.rlimits.rlimit_nofile.soft}}",
+    "RLIMIT_NOFILE_HARD": "{{node.rlimits.rlimit_nofile.hard}}",
+    "HIVEMQ_CONFIG_TEMPLATE": "{{advanced.configuration_override}}",
+    "TASKCFG_ALL_HIVEMQ_LOG_LEVEL": "{{hivemq.hivemq_log_level}}",
+    "TASKCFG_ALL_HIVEMQ_JAVA_OPTS": "{{hivemq.java_options}}",
+    "TASKCFG_ALL_HIVEMQ_LICENSE": "{{hivemq.license}}",
+    "TASKCFG_ALL_HIVEMQ_VERSION": "4.2.0",
+    {{! The service TLD also concerns the pod instances, as this will affect service discovery when using DNS.}}
+    "TASKCFG_ALL_SERVICE_TLD": "{{node.custom_domain}}",
+    {{! HiveMQ configuration injection }}
+    "TASKCFG_ALL_HIVEMQ_CONTROL_CENTER_ENABLED": "{{hivemq.control_center_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_CC_USER": "{{hivemq.control_center_user}}",
+    "TASKCFG_ALL_HIVEMQ_CC_PASSWORD": "{{hivemq.control_center_password}}",
+    "TASKCFG_ALL_HIVEMQ_METRICS_ENABLED": "{{hivemq.metrics_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_METRICS_INTERVAL": "{{hivemq.metrics_interval}}",
+    "TASKCFG_ALL_HIVEMQ_CLUSTER_REPLICA_COUNT": "{{hivemq.cluster_replica_count}}",
+    "TASKCFG_ALL_HIVEMQ_CLUSTER_OVERLOAD_PROTECTION": "{{hivemq.cluster_overload_protection}}",
+    "TASKCFG_ALL_HIVEMQ_DISCOVERY_INTERVAL": "{{hivemq.discovery_interval}}",
+    "TASKCFG_ALL_HIVEMQ_CLUSTER_TLS_ENABLED": "{{hivemq.cluster_tls_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_NATIVE_TLS_ENABLED": "{{hivemq.native_tls_enabled}}",
+
+    {{! listener configuration }}
+    "TASKCFG_ALL_HIVEMQ_MQTT_PORT_CONF": "{{hivemq.listener_configuration.mqtt_port}}",
+    "TASKCFG_ALL_HIVEMQ_WEBSOCKET_ENABLED": "{{hivemq.listener_configuration.websocket_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_WEBSOCKET_PATH": "{{hivemq.listener_configuration.websocket_path}}",
+    "TASKCFG_ALL_HIVEMQ_WEBSOCKET_PORT_CONF": "{{hivemq.listener_configuration.websocket_port}}",
+    "TASKCFG_ALL_HIVEMQ_WEBSOCKET_PORT_VIP_ENABLED": "{{hivemq.listener_configuration.websocket_port_vip_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_WEBSOCKET_PORT_VIP": "{{hivemq.listener_configuration.websocket_port_vip}}",
+    "TASKCFG_ALL_HIVEMQ_TLS_LISTENER_ENABLED": "{{hivemq.listener_configuration.mqtt_tls_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_TLS_MQTT_PORT_CONF": "{{hivemq.listener_configuration.mqtt_tls_port}}",
+    "TASKCFG_ALL_HIVEMQ_TLS_MQTT_PORT_VIP_ENABLED": "{{hivemq.listener_configuration.mqtt_tls_port_vip_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_TLS_MQTT_PORT_VIP": "{{hivemq.listener_configuration.mqtt_tls_port_vip}}",
+    "TASKCFG_ALL_HIVEMQ_WEBSOCKET_TLS_PORT_CONF": "{{hivemq.listener_configuration.websocket_tls_port}}",
+    "TASKCFG_ALL_HIVEMQ_WEBSOCKET_TLS_PORT_VIP_ENABLED": "{{hivemq.listener_configuration.websocket_tls_port_vip_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_WEBSOCKET_TLS_PORT_VIP": "{{hivemq.listener_configuration.websocket_tls_port_vip}}",
+    "TASKCFG_ALL_HIVEMQ_CC_LISTENER_ENABLED": "{{hivemq.listener_configuration.control_center_tls_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_CC_PORT_CONF": "{{hivemq.listener_configuration.control_center_tls_port}}",
+
+
+    {{! restrictions }}
+    "TASKCFG_ALL_HIVEMQ_INCOMING_BANDWIDTH_THROTTLING": "{{hivemq.incoming_bandwidth_throttling}}",
+    "TASKCFG_ALL_HIVEMQ_MAX_CONNECTIONS": "{{hivemq.max_connections}}",
+    "TASKCFG_ALL_HIVEMQ_MAX_CLIENT_ID_LENGTH": "{{hivemq.max_client_id_length}}",
+    "TASKCFG_ALL_HIVEMQ_MAX_TOPIC_LENGTH": "{{hivemq.max_topic_length}}",
+    "TASKCFG_ALL_HIVEMQ_NO_CONNECT_IDLE_TIMEOUT": "{{hivemq.no_connect_idle_timeout}}",
+
+    {{! mqtt options }}
+    "TASKCFG_ALL_HIVEMQ_MAX_PACKET_SIZE": "{{mqtt.max_packet_size}}",
+    "TASKCFG_ALL_HIVEMQ_SESSION_EXPIRY_INTERVAL": "{{mqtt.session_expiry_interval}}",
+    "TASKCFG_ALL_HIVEMQ_SERVER_RECEIVE_MAXIMUM": "{{mqtt.server_receive_maximum}}",
+    "TASKCFG_ALL_HIVEMQ_KEEPALIVE_MAX": "{{mqtt.keepalive_max}}",
+    "TASKCFG_ALL_HIVEMQ_KEEPALIVE_ALLOW_UNLIMITED": "{{mqtt.keepalive_allow_unlimited}}",
+    "TASKCFG_ALL_HIVEMQ_TOPIC_ALIAS_ENABLED": "{{mqtt.topic_alias_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_TOPIC_ALIAS_MAX_PER_CLIENT": "{{mqtt.topic_alias_max_per_client}}",
+    "TASKCFG_ALL_HIVEMQ_SUBSCRIPTION_IDENTIFIER_ENABLED": "{{mqtt.subscription_identifier_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_WILDCARD_SUBSCRIPTION_ENABLED": "{{mqtt.wildcard_subscription_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_SHARED_SUBSCRIPTION_ENABLED": "{{mqtt.shared_subscription_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_RETAINED_MESSAGES_ENABLED": "{{mqtt.retained_messages_enabled}}",
+    "TASKCFG_ALL_HIVEMQ_MAX_QOS": "{{mqtt.max_qos}}",
+    "TASKCFG_ALL_HIVEMQ_QUEUED_MESSAGE_MAX_QUEUE_SIZE": "{{mqtt.queued_message_max_queue_size}}",
+    "TASKCFG_ALL_HIVEMQ_QUEUED_MESSAGE_STRATEGY": "{{mqtt.queued_message_strategy}}",
+
+    {{! security options }}
+    "TASKCFG_ALL_HIVEMQ_ALLOW_EMPTY_CLIENT_ID": "{{mqtt.security.allow_empty_client_id}}",
+    "TASKCFG_ALL_HIVEMQ_PAYLOAD_FORMAT_VALIDATION": "{{mqtt.security.payload_format_validation}}",
+    "TASKCFG_ALL_HIVEMQ_TOPIC_FORMAT_VALIDATION": "{{mqtt.security.topic_format_validation}}",
+    "TASKCFG_ALL_HIVEMQ_ALLOW_REQUEST_PROBLEM_INFORMATION": "{{mqtt.security.allow_request_problem_information}}",
+
+    {{! rbac options }}
+    "TASKCFG_ALL_HIVEMQ_RBAC_CONFIG": "{{mqtt.auth.rbac_config}}",
+    "TASKCFG_ALL_HIVEMQ_RBAC_EXTENSION_CONFIG": "{{mqtt.auth.rbac_extension_config}}",
+    "TASKCFG_ALL_ENABLE_RBAC": "{{mqtt.auth.enable_rbac}}"
+  },
+  "fetch": [
+    { "uri": "{{resource.assets.uris.bootstrap-zip}}", "cache": true },
+    { "uri": "{{resource.assets.uris.jre-tar-gz}}", "cache": true },
+    { "uri": "{{resource.assets.uris.scheduler-zip}}", "cache": true },
+    { "uri": "{{resource.assets.uris.libmesos-bundle-tar-gz}}", "cache": true }
+  ],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/v1/health",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": {
+        "VIP_0": "/api.{{service.name}}:80"
+      }
+    }
+  ]
+}

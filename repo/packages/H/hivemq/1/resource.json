@@ -1,0 +1,59 @@
+{
+    "assets": {
+        "uris": {
+            "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz", 
+            "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz", 
+            "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.55.4/bootstrap.zip", 
+            "scheduler-zip": "https://hivemq-dcos.s3.amazonaws.com/hivemq/artifacts/1.0.0-4.2.0/operator-scheduler.zip", 
+            "hivemq-jre": "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk11u-2019-02-03-10-04/OpenJDK11U-jre_x64_linux_hotspot_2019-02-03-10-04.tar.gz", 
+            "hivemq-dcos": "https://hivemq-dcos.s3.amazonaws.com/hivemq/artifacts/1.0.0-4.2.0/dcos_files.zip", 
+            "hivemq-rbac": "https://www.hivemq.com/releases/extensions/hivemq-file-rbac-extension-4.0.0.zip", 
+            "hivemq": "http://hivemq.com/releases/hivemq-4.2.0.zip"
+        }
+    }, 
+    "images": {
+        "icon-small": "https://hivemq-dcos.s3.amazonaws.com/hivemq/artifacts/1.0.0-4.2.0/icon-hivemq-small.png", 
+        "icon-medium": "https://hivemq-dcos.s3.amazonaws.com/hivemq/artifacts/1.0.0-4.2.0/icon-hivemq-medium.png", 
+        "icon-large": "https://hivemq-dcos.s3.amazonaws.com/hivemq/artifacts/1.0.0-4.2.0/icon-hivemq-large.png"
+    }, 
+    "cli": {
+        "binaries": {
+            "darwin": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256", 
+                            "value": "c329d60aa5fea372115c371814a141f6615819db51935bd09a8265c8978115ac"
+                        }
+                    ], 
+                    "kind": "executable", 
+                    "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.55.4/dcos-service-cli-darwin"
+                }
+            }, 
+            "linux": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256", 
+                            "value": "9690330cd5d7017ab7d747e31b28d30f817cf35cb8db700a5ceebaf628d0d299"
+                        }
+                    ], 
+                    "kind": "executable", 
+                    "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.55.4/dcos-service-cli-linux"
+                }
+            }, 
+            "windows": {
+                "x86-64": {
+                    "contentHash": [
+                        {
+                            "algo": "sha256", 
+                            "value": "75a6d593848f18b6fc5050f7dde18fb91c659b5b62825ba0eca0e8a5286d46bf"
+                        }
+                    ], 
+                    "kind": "executable", 
+                    "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.55.4/dcos-service-cli.exe"
+                }
+            }
+        }
+    }
+}
