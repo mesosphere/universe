@@ -134,6 +134,12 @@
           "type": "string",
           "default": "PLAINTEXT"
         },
+        "kafkastore-bootstrap-servers": {
+          "title": "Kafka bootstrap servers",
+          "default": "",
+          "description": "A list of Kafka brokers to connect to. For example, PLAINTEXT://kafka-0-broker.confluent-kafka.autoip.dcos.thisdcos.directory:9092,SSL://kafka-0-broker.confluent-kafka.autoip.dcos.thisdcos.directory:9092",
+          "type": "string"
+        },
         "kerberos_enabled": {
           "description": "Enable kerberos",
           "type": "boolean",
