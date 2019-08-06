@@ -1,0 +1,822 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "id": "https://github.com/mesosphere/mesosphere-jupyter-service",
+      "title": "Data Science Engine Configuration",
+      "description": "Data Science Engine Configuration Properties",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^(\\/?((\\.\\.)|(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]))?($|\\/))+$",
+          "title": "Service Name",
+          "description": "Unique name for this Data Science Engine instance consisting of a series of words separated by slashes. Each word must be at least 1 alphanumeric character and may only contain digits (`0-9`), dashes (`-`), dots (`.`), and lowercase letters (`a-z`). The word may not begin or end with a dash",
+          "default": "data-science-engine"
+        },
+        "cpus": {
+          "type": "number",
+          "title": "CPU Allocation",
+          "description": "CPU shares to allocate to this service instance (e.g., 2.0)",
+          "minimum": 1.0,
+          "default": 2.0
+        },
+        "mem": {
+          "type": "integer",
+          "title": "Memory Allocation",
+          "description": "Memory to allocate to the service instance in MiB (e.g., 8192)",
+          "minimum": 4096,
+          "default": 8192
+        },
+        "gpu": {
+          "type": "object",
+          "title": "Nvidia GPU Configuration",
+          "description": "Nvidia GPU Allocation Configuration",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enable Nvidia GPU Support?",
+              "id": "https://www.nvidia.com/object/unix.html",
+              "description": "Enable Nvidia GPU Support? Note: This requires that CUDA 9.2-compatible Nvidia GPU Drivers (ideally the \"Latest Long Lived Branch Version\" - ref https://www.nvidia.com/object/unix.html) be installed on the DC/OS agents that have GPUs",
+              "default": false
+            },
+            "gpus": {
+              "type": "integer",
+              "title": "Nvidia GPU Allocation",
+              "description": "Number of Nvidia GPUs to allocate (e.g., 2) to this service (Data Science Engine) instance. Note: Nvidia GPU Support must be enabled for this to take effect.",
+              "minimum": 0,
+              "default": 0
+            }
+          }
+        },
+        "jupyter_password": {
+          "type": "string",
+          "title": "Data Science Engine Notebook Password",
+          "description": "Data Science Engine Notebook Password (JUPYTER_PASSWORD). Defaults to 'jupyter' unless OpenID Connect has been configured.",
+          "default": "jupyter"
+        },
+        "jupyter_conf_urls": {
+          "type": "string",
+          "title": "Data Science Engine Configuration URLs",
+          "description": "Data Science Engine Configuration URLs as comma seperated list of URLs (JUPYTER_CONF_URLS) to download additional configuration artifacts (e.g., http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints,http://artifacts.contoso.com/jaas.conf)",
+          "default": ""
+        },
+        "service_account": {
+          "type": "string",
+          "title": "DC/OS Service Account",
+          "description": "The DC/OS Service Account to use for Mesosphere Data Science Engine Service for Mesos Framework (e.g., Apache Spark) Authentication or leave empty to use the default. Note: For Mesosphere DC/OS Enterprise clusters in strict mode, this must be explicitly set",
+          "default": ""
+        },
+        "service_account_secret": {
+          "type": "string",
+          "title": "DC/OS Service Account Credential Secret Name",
+          "description": "Path to the Secret to access the Service Account Credentials to use for DC/OS Service Authentication or leave empty to use the default. Note: For Mesosphere DC/OS Enterprise clusters in strict mode, this must be explicitly set",
+          "default": ""
+        },
+        "placement_constraints": {
+          "type": "string",
+          "title": "Data Science Engine Placement Constraints",
+          "description": "Placement constraints for the Data Science Engine. Note: It's best to deploy Data Science Engine in the Local Region - i.e., where the DC/OS Master Nodes reside",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          },
+          "default": "[]"
+        },
+        "user": {
+          "type": "string",
+          "title": "Linux User (Data Science Engine Process Execution Context)",
+          "description": "The Linux user account name under whom the Data Science Engine will run and own the Mesos Sandbox. Note: It is not recommended to set the Data Science Engine to run as root",
+          "default": "nobody"
+        },
+        "cmd": {
+          "type": "string",
+          "title": "Entrypoint",
+          "description": "The shell command to use to launch the Data Science Engine",
+          "default": "/usr/local/bin/start.sh ${CONDA_DIR}/bin/jupyter lab --notebook-dir=\"${MESOS_SANDBOX}\""
+        },
+        "log_level": {
+          "type": "string",
+          "title": "Log Level",
+          "description": "The default log level for the Data Science Engine",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem"
+      ]
+    },
+    "networking": {
+      "type": "object",
+      "title": "Data Science Engine Networking Configuration",
+      "description": "Data Science Engine Networking Configuration",
+      "properties": {
+        "virtual_network_enabled": {
+          "type": "boolean",
+          "title": "Enable Virtual Networking (CNI)?",
+          "description": "Enable Virtual Networking (CNI)?",
+          "default": true
+        },
+        "virtual_network_name": {
+          "type": "string",
+          "title": "(CNI) Virtual Network Name",
+          "description": "The name of the (CNI) Virtual Network to join",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "default": ""
+              },
+              "value": {
+                "type": "string",
+                "default": ""
+              }
+            }
+          },
+          "description": "Labels to pass to the virtual network plugin (e.g., [{\"key\": \"key_1\", \"value\": \"value_1\"}, {\"key\": \"key_2\", \"value\": \"value_2\"}])",
+          "default": []
+        },
+        "ingress": {
+          "type": "object",
+          "title": "Ingress Loadbalancer Configuration",
+          "description": "Configure Data Science Engine to be advertized by Marathon-LB",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enable Ingress via Loadbalancer (Marathon-LB)?",
+              "description": "Enable external access through a public agent running Marathon-LB? Note: If enabled, you must set a hostname below for the service to be reachable",
+              "default": true
+            },
+            "hostname": {
+              "type": "string",
+              "title": "VHOST FQDN",
+              "description": "This is typically the (Elastic) Loadbalancer's Fully Qualified Domain Name (FQDN) that fronts the Public Agent(s) or a Virtual Hostname (VHOST) FQDN whose DNS record was specifically created for this Data Science Engine instance",
+              "default": ""
+            }
+          }
+        }
+      }
+    },
+    "security": {
+      "description": "Security configuration properties",
+      "type": "object",
+      "properties": {
+        "tls": {
+          "description": "Data Science Engine TLS/SSL configuration.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enable TLS/SSL configuration.",
+              "type": "boolean",
+              "enum": [
+                true,
+                false
+              ],
+              "default": false
+            },
+            "protocol": {
+              "description": "Protocol to use for TLS/SSL. e.g. TLSv1.0, TLSv1.1, TLSv1.2",
+              "type": "string",
+              "default": "TLSv1.2"
+            },
+            "truststore_secret": {
+              "description": "DC/OS secret path that contains the Truststore secret",
+              "type": "string",
+              "default": "",
+              "media": {
+                "type": "application/x-secret+string"
+              }
+            },
+            "truststore_password": {
+              "description": "DC/OS secret path that contains the Truststore password",
+              "type": "string",
+              "default": "",
+              "media": {
+                "type": "application/x-secret+string"
+              }
+            },
+            "keystore_secret": {
+              "description": "DC/OS secret path that contains the Keystore secret",
+              "type": "string",
+              "default": "",
+              "media": {
+                "type": "application/x-secret+string"
+              }
+            },
+            "keystore_password": {
+              "description": "DC/OS secret path that contains the Keystore password",
+              "type": "string",
+              "default": "",
+              "media": {
+                "type": "application/x-secret+string"
+              }
+            },
+            "key_password": {
+              "description": "DC/OS secret path that contains the Key password",
+              "type": "string",
+              "default": "",
+              "media": {
+                "type": "application/x-secret+string"
+              }
+            },
+            "ca_bundle_secret": {
+              "description": "DC/OS secret path that contains the CA Bundle Truststore secret",
+              "type": "string",
+              "default": "",
+              "media": {
+                "type": "application/x-secret+string"
+              }
+            },
+            "jaas_secret": {
+              "description": "DC/OS secret path that contains the JAAS configuration secret",
+              "type": "string",
+              "default": "",
+              "media": {
+                "type": "application/x-secret+string"
+              }
+            }
+          }
+        },
+        "extra_spark_secrets": {
+          "description": "Extra DC/OS secret paths for Spark",
+	  "type": "object",
+	  "properties": {
+            "secret_names": {
+              "description": "Comma separated DC/OS secret paths e.g. path/secret1,path/secret2",
+	      "type": "string",
+	      "default": "",
+	      "media": {
+                "type": "application/x-secret+string"
+              }
+            },
+	    "secret_filenames": {
+              "description": "Comma separated filenames to be downloaded from given DC/OS secret paths e.g. secret1.key,secret2.key",
+              "type": "string",
+              "default": ""
+            },
+	    "secret_envkeys": {
+              "description": "Comma separated environment keys corresponding to each secret e.g. SECRET1,SECRET2",
+              "type": "string",
+              "default": ""
+            }
+          }
+        },
+        "kerberos": {
+          "description": "Data Science Engine Kerberos configuration.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enable kerberos authentication.",
+              "type": "boolean",
+              "default": false
+            },
+            "kdc": {
+              "description": "KDC settings for Kerberos",
+              "type": "object",
+              "properties": {
+                "hostname": {
+                  "type": "string",
+                  "description": "The name or address of a host running a KDC for the realm."
+                },
+                "port": {
+                  "type": "integer",
+                  "description": "The port of the host running a KDC for that realm."
+                }
+              }
+            },
+            "primary": {
+              "type": "string",
+              "description": "The Kerberos primary used by Data Science Engine/Spark tasks. The full principal will be <service.kerberos.primary>/<mesos_dns_address>@<service.kerberos.realm>",
+              "default": "jupyter"
+            },
+            "realm": {
+              "type": "string",
+              "description": "The Kerberos realm used to render the principal of Data Science Engine tasks."
+            },
+            "keytab_secret": {
+              "type": "string",
+              "description": "A DC/OS Secret Store path.  The contents of this secret should be a keytab containing the credentials for all Data Science Engine users."
+            }
+          }
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "title": "Data Science Engine Storage Configuration",
+      "description": "Data Science Engine Storage Configuration",
+      "properties": {
+        "local_persistence": {
+          "type": "object",
+          "title": "Local Persistent Storage Configuration",
+          "description": "Local Persistent Storage Configuration",
+          "properties": {
+            "enabled": {
+              "title": "Enable Local Persistent Storage?",
+              "description": "Enable Local Persistent Storage?",
+              "type": "boolean",
+              "default": false
+            },
+            "volume_size": {
+              "title": "Local Persistent Volume Size",
+              "description": "Size of the local persistent volume in MiB",
+              "type": "integer",
+              "default": 4000
+            },
+            "volume_path": {
+              "title": "Local Persistent Volume Path",
+              "description": "Path at which to produce the volume (relative to the Mesos Sandbox) within the container",
+              "type": "string",
+              "default": "jupyter_data"
+            }
+          }
+        },
+        "s3": {
+          "type": "object",
+          "title": "S3 Object Store Configuration",
+          "description": "S3 Object Store Configuration",
+          "properties": {
+            "aws_region": {
+              "type": "string",
+              "title": "S3: Region",
+              "description": "S3 Region",
+              "default": "us-east-1"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "S3: Endpoint",
+              "description": "S3 Endpoint",
+              "default": "s3.us-east-1.amazonaws.com"
+            },
+            "use_https": {
+              "type": "boolean",
+              "title": "S3: Enable HTTPS?",
+              "description": "Enable connections to S3 over HTTPS?",
+              "default": true
+            },
+            "verify_ssl": {
+              "type": "boolean",
+              "title": "S3: Verify TLS?",
+              "description": "Verify TLS Certificate(s) for the S3 endpoint?",
+              "default": true
+            },
+            "aws_access_key_id": {
+              "type": "string",
+              "title": "S3: AWS Access Key ID",
+              "description": "A DC/OS Secret Store path. The contents of this secret should be s valid AWS Access Key ID to be used by Data Science Engine and Spark. EnvironmentVariableCredentialsProvider should be selected for Spark to respect this setting",
+              "default": ""
+            },
+            "aws_secret_access_key": {
+              "type": "string",
+              "title": "S3: AWS Secret Access Key",
+              "description": "A DC/OS Secret Store path. The contents of this secret should be s valid AWS Secret Access Key to be used by Data Science Engine and Spark. EnvironmentVariableCredentialsProvider should be selected for Spark to respect this setting",
+              "default": ""
+            }
+          }
+        }
+      }
+    },
+    "oidc": {
+      "type": "object",
+      "title": "OpenID Connect (OIDC) Configuration",
+      "description": "OpenID Connect Configuration",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enable OpenID Connect Authentication?",
+          "description": "Enable OpenID Connect Authentication (and optional Authorization)?",
+          "default": false
+        },
+        "discovery_uri": {
+          "type": "string",
+          "title": "OIDC Discovery URI",
+          "description": "OpenID Connect Discovery URI (e.g., https://keycloak.contoso.com/auth/realms/notebook/.well-known/openid-configuration)",
+          "default": "https://keycloak.contoso.com/auth/realms/notebook/.well-known/openid-configuration"
+        },
+        "client_id": {
+          "type": "string",
+          "title": "OIDC Client ID",
+          "description": "OpenID Connect Client ID (e.g., notebook)",
+          "default": "notebook"
+        },
+        "client_secret": {
+          "type": "string",
+          "title": "OIDC Client Secret",
+          "description": "OpenID Connect Client Secret (e.g., b874f6e9-8f3f-41a6-a206-53e928d24fb1). Note: This must not be set if using Windows Integrated Authentication (WIA) with Active Directory Federation Services (ADFS) on Windows Server 2016 or newer",
+          "default": ""
+        },
+        "scope": {
+          "type": "string",
+          "title": "OIDC Scope",
+          "description": "OpenID Scope (e.g., openid profile email). Note: This typically does not need to be modified",
+          "default": "openid profile email"
+        },
+        "authorization_params": {
+          "type": "string",
+          "title": "OIDC Authorization Parameters",
+          "description": "(Optional) Authorization Parameters (e.g., hd=\\\"zmartzone.eu\\\", resource=\\\"ABC:DEF:GH-12345-6789-foo-bar\\\"). Note: Windows Integrated Authentication requires that the resource parameter be set",
+          "default": ""
+        },
+        "authorized_email": {
+          "type": "string",
+          "title": "Email Address to Authorize",
+          "description": "(Optional) E-Mail Address to be authorized (e.g., user@contoso.com), once authenticated",
+          "default": ""
+        },
+        "authorized_upn": {
+          "type": "string",
+          "title": "User Principal Name (UPN) to Authorize",
+          "description": "(Optional) Windows Active Directory Federation Services (AD FS) UPN to be authorized (e.g., user007), once authenticated",
+          "default": ""
+        },
+        "redirect_after_logout_uri": {
+          "type": "string",
+          "title": "OIDC Redirect After Logout URI",
+          "description": "OpenID Connect Redirect After Redirect URI (e.g., https://notebooks.contoso.com/jupyter). Note: This typically does not need to be set",
+          "default": ""
+        },
+        "post_logout_redirect_uri": {
+          "type": "string",
+          "title": "OIDC Post Logout Redirect URI",
+          "description": "OpenID Post Logout Redirect URI (e.g., https://notebooks.contoso.com/jupyter). Note: This typically does not need to be set",
+          "default": ""
+        },
+        "tls_verify": {
+          "type": "boolean",
+          "title": "OIDC TLS Verify?",
+          "description": "Verify TLS Certificates presented by the OpenID Connect endpoint?",
+          "default": false
+        },
+        "redirect_uri": {
+          "type": "string",
+          "title": "OIDC Redirect URI",
+          "description": "OpenID Connect Redirect URI (e.g., /oidc-redirect-callback). Note: This typically does not need to be modified",
+          "default": "/oidc-redirect-callback"
+        },
+        "logout_path": {
+          "type": "string",
+          "title": "OIDC Logout Path",
+          "description": "OpenID Connect Logout Path (e.g., /logmeout). Note: This typically does not need to be modified",
+          "default": "/logmeout"
+        },
+        "token_endpoint_auth_method": {
+          "type": "string",
+          "title": "OIDC Token Endpoint Authentication Method",
+          "description": "OpenID Token Endpoint Authentication Method (e.g., client_secret_basic). Note: This typically does not need to be modified",
+          "default": "client_secret_basic"
+        },
+        "use_spartan_resolver": {
+          "type": "boolean",
+          "title": "Use DC/OS Highly Available DNS Dispatcher (Spartan)?",
+          "description": "Use the DC/OS DNS Dispatcher (Spartan) to resolve OpenID Connect endpoints. Note: This typically does not need to be modified",
+          "default": true
+        }
+      }
+    },
+    "spark": {
+      "type": "object",
+      "id": "https://spark.apache.org/docs/latest/configuration.html",
+      "title": "Apache Spark Configuration",
+      "description": "Apache Spark Configuration",
+      "properties": {
+        "spark_master_url": {
+          "type": "string",
+          "title": "spark.master",
+          "description": "The cluster manager (--master) to connect to",
+          "default": "mesos://zk://zk-1.zk:2181,zk-2.zk:2181,zk-3.zk:2181,zk-4.zk:2181,zk-5.zk:2181/mesos"
+        },
+        "spark_cores_max": {
+          "title": "spark.cores.max",
+          "description": "The maximum amount of CPU cores to request for the application from across the cluster",
+          "type": "integer",
+          "minimum": 1,
+          "default": 4
+        },
+        "spark_driver_cores": {
+          "type": "integer",
+          "title": "spark.driver.cores",
+          "description": "Number of cores (--driver-cores) to use for the driver process",
+          "minimum": 1,
+          "default": 2
+        },
+        "spark_executor_cores": {
+          "title": "spark.executor.cores",
+          "description": "The number of cores to use on each executor. Note: This MUST be set to 1 if using TensorFlowOnSpark",
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
+        "spark_mesos_gpus_max": {
+          "type": "integer",
+          "id": "https://spark.apache.org/docs/latest/running-on-mesos.html",
+          "title": "spark.mesos.gpus.max",
+          "description": "Set the maximum number GPU resources to acquire for this job. Warning: Executors will still launch when no GPU resources are found since this configuration is just a upper limit and not a guaranteed amount. Note: GPU Support must be enabled for this to take effect",
+          "minimum": 0,
+          "default": 0
+        },
+        "spark_mesos_executor_gpus": {
+          "type": "integer",
+          "id": "https://spark.apache.org/docs/latest/running-on-mesos.html",
+          "title": "spark.mesos.executor.gpus",
+          "description": "Set the hard limit on the (integer) number of gpus to request for each executor. Note: GPU Support must be enabled for this to take effect",
+          "minimum": 0,
+          "default": 0
+        },
+        "spark_driver_memory": {
+          "type": "string",
+          "title": "spark.driver.memory",
+          "description": "Amount of memory (--driver-memory) to use for the driver process, i.e. where SparkContext is initialized, in MiB unless otherwise specified (e.g. 1g, 2g). Note: This must be less than 75% of the memory allocation for the Notebook",
+          "default": "6g"
+        },
+        "spark_executor_memory": {
+          "type": "string",
+          "title": "spark.executor.memory",
+          "description": "spark.executor.memory: Amount of memory to use per executor process, in MiB unless otherwise specified. (e.g. 2g, 8g)",
+          "default": "6g"
+        },
+        "spark_eventlog_enabled": {
+          "type": "boolean",
+          "title": "spark.eventLog.enabled",
+          "description": "Whether to log Spark events, useful for reconstructing the Web UI after the application has finished",
+          "default": true
+        },
+        "spark_eventlog_dir": {
+          "type": "string",
+          "title": "spark.eventLog.dir",
+          "description": "Base directory to which Spark events are logged, if spark.eventLog.enabled is true (e.g., hdfs://hdfs/ or s3a://path/to/bucket). Note: You'd typically want to set this to point to distributed/HA storage",
+          "default": "/mnt/mesos/sandbox/"
+        },
+        "start_spark_history_server": {
+          "type": "boolean",
+          "title": "Start Spark History Server?",
+          "description": "Start Spark History Server",
+          "default": true
+        },
+        "spark_history_fs_logdirectory": {
+          "type": "string",
+          "title": "Spark EventLog Directory",
+          "description": "Spark EvenLog Directory from which to load events for prior Spark job runs (e.g., hdfs://hdfs/ or s3a://path/to/bucket). Note: You'd typically want to set this to point to distributed/HA storage",
+          "default": "file:/mnt/mesos/sandbox/"
+        },
+        "spark_jars_packages": {
+          "type": "string",
+          "title": "spark.jars.packages",
+          "description": "Comma-separated list of Maven coordinates of jars to include on the driver and executor classpaths (e.g., org.apache.spark:spark-streaming-kafka-0-10_2.11:2.2.1,org.apache.kafka:kafka_2.11:0.10.2.1)",
+          "default": ""
+        },
+        "spark_mesos_principal": {
+          "type": "string",
+          "title": "",
+          "description": "Spark Mesos Principal. Typically set to the Service Account Name provisioned for the Data Science Engine (e.g., dev_jupyter)",
+          "default": ""
+        },
+        "spark_mesos_secret": {
+          "type": "string",
+          "title": "",
+          "description": "Spark Mesos Secret. Typically set to the Service Account Secret provisioned for the Data Science Engine (e.g., dev_jupyter-secret)",
+          "default": ""
+        },
+        "spark_mesos_role": {
+          "type": "string",
+          "title": "",
+          "description": "Spark Mesos Role. Typically set to the Mesos Role to which the Service Account for the Data Science Engine has been provisioned (e.g., dev_jupyter-role)",
+          "default": ""
+        },
+        "spark_mesos_driver_labels": {
+          "type": "string",
+          "title": "spark.mesos.driver.labels",
+          "description": "Mesos labels to add to the driver. Labels are free-form key-value pairs. Key-value pairs should be separated by a colon, and commas used to list more than one. If your label includes a colon or comma, you can escape it with a backslash (e.g., DCOS_SPACE:/jupyter,key:value,key2:a\\:b)",
+          "default": ""
+        },
+        "spark_mesos_task_labels": {
+          "type": "string",
+          "title": "spark.mesos.task.labels",
+          "description": "Set the Mesos labels to add to each task. Labels are free-form key-value pairs. Key-value pairs should be separated by a colon, and commas used to list more than one. If your label includes a colon or comma, you can escape it with a backslash (e.g., DCOS_SPACE:/jupyter,key:value,key2:a\\:b)",
+          "default": ""
+        },
+        "spark_executor_krb5_config": {
+          "type": "string",
+          "title": "spark.executorEnv.KRB5_CONFIG",
+          "description": "Location of the krb5.conf file passed via the KRB5_CONFIG environment variable to the Spark Executors",
+          "default": "/mnt/mesos/sandbox/krb5.conf"
+        },
+        "spark_scheduler_min_registered_resources_ratio": {
+          "title": "spark.scheduler.minRegisteredResourcesRatio",
+          "description": "The minimum ratio (range: 0.0 - 1.0) of registered resources before the Spark Driver will allocate work to the Spark Executors",
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "default": 1.0
+        },
+        "spark_mesos_containerizer": {
+          "description": "Spark Mesos Containerizer.",
+          "type": "string",
+          "enum": [
+            "mesos",
+            "docker"
+          ],
+          "default": "mesos"
+        },
+        "spark_hadoop_fs_s3a_aws_credentials_provider": {
+          "type": "string",
+          "title": "spark.hadoop.fs.s3a.aws.credentials.provider",
+          "description": "Hadoop FS S3A Client Credentials Provider",
+          "enum": [
+            "com.amazonaws.auth.InstanceProfileCredentialsProvider",
+            "com.amazonaws.auth.EnvironmentVariableCredentialsProvider"
+          ],
+          "default": "com.amazonaws.auth.InstanceProfileCredentialsProvider"
+        },
+        "spark_driver_java_options": {
+          "type": "string",
+          "title": "spark.driver.extraJavaOptions",
+          "description": "A string of extra JVM options (--driver-java-options) to pass to the driver",
+          "default": "-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox"
+        },
+        "spark_executor_java_options": {
+          "type": "string",
+          "title": "spark.executor.extraJavaOptions",
+          "description": "A string of extra JVM options to pass to executors",
+          "default": "-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox"
+        },
+        "spark_mesos_executor_home": {
+          "type": "string",
+          "title": "spark.mesos.executor.home",
+          "description": "Set the directory into which Spark is installed for the Executors when running on Apache Mesos",
+          "default": "/opt/spark"
+        },
+        "spark_executor_java_home": {
+          "type": "string",
+          "title": "spark.executorEnv.JAVA_HOME",
+          "description": "Location of the Java runtime passed via the JAVA_HOME environment variable to the Spark Executors",
+          "default": "/opt/jdk"
+        },
+        "spark_executor_hadoop_hdfs_home": {
+          "type": "string",
+          "title": "spark.executorEnv.HADOOP_HDFS_HOME",
+          "description": "Location of the Hadoop distribution passed via the HADOOP_HDFS_HOME environment variable to the Spark Executors",
+          "default": "/opt/hadoop"
+        },
+        "spark_executor_hadoop_opts": {
+          "type": "string",
+          "title": "spark.executorEnv.HADOOP_OPTS",
+          "description": "JVM Options to pass to the Hadoop runtime via the HADOOP_OPTS environment variable to the Spark Executors",
+          "default": "-Djava.library.path=/opt/hadoop/lib/native -Djava.security.krb5.conf=/mnt/mesos/sandbox/krb5.conf"
+        },
+        "spark_mesos_executor_docker_forcepullimage": {
+          "type": "boolean",
+          "title": "spark.mesos.executor.docker.forcePullImage",
+          "description": "Force Mesos agents to pull the image specified in spark.mesos.executor.docker.image",
+          "default": false
+        },
+        "spark_user": {
+          "type": "string",
+          "title": "Spark User (Process Execution Context)",
+          "description": "The Linux user under which the Spark Executors will run",
+          "default": "nobody"
+        }
+      }
+    },
+    "advanced": {
+      "type": "object",
+      "title": "Advanced",
+      "description": "Advanced Configuration Options",
+      "properties": {
+        "jupyter_notebook_image": {
+          "type": "string",
+          "title": "Data Science Engine Notebook Docker Image",
+          "description": "Docker image used to run Data Science Engine Notebook. If, for example, you need an image with GPU support, set this variable to one of the images here: https://hub.docker.com/r/mesosphere/jupyter-service/tags",
+          "default": ""
+        },
+        "jupyter_worker_image": {
+          "type": "string",
+          "title": "Spark Executor Docker Image",
+          "description": "Docker image used to run Spark Executors launched by Data Science Engine. If, for example, you need an image with GPU support, set this variable to one of the images here: https://hub.docker.com/r/mesosphere/jupyter-service/tags",
+          "default": ""
+        },
+        "force_pull_jupyter_image": {
+          "type": "boolean",
+          "title": "Force-Pull Data Science Engine Docker Image?",
+          "description": "Always force a pull of the Data Science Engine Docker Image?",
+          "default": false
+        },
+        "force_pull_worker_image": {
+          "type": "boolean",
+          "title": "Force-Pull Mesosphere Data Toolkit (Worker) Docker Image?",
+          "description": "Always force a pull of the Mesosphere Data Toolkit (Worker) Docker Image?",
+          "default": false
+        },
+        "home": {
+          "type": "string",
+          "title": "Home Directory",
+          "description": "Your Home Directory (HOME)",
+          "default": "/mnt/mesos/sandbox"
+        },
+        "sandbox": {
+          "type": "string",
+          "title": "Sandbox Directory",
+          "description": "Your Sandbox Directory (MESOS_SANDBOX)",
+          "default": "/mnt/mesos/sandbox"
+        },
+        "hadoop_conf_dir": {
+          "type": "string",
+          "title": "Haddop Configuration Directory",
+          "description": "Hadoop Configuration Directory (HADOOP_CONF_DIR)",
+          "default": "/mnt/mesos/sandbox"
+        },
+        "jupyter_config_dir": {
+          "type": "string",
+          "title": "Data Science Engine Notebook Configuration Directory",
+          "description": "Data Science Engine Notebook Configuration Directory (JUPYTER_CONFIG_DIR)",
+          "default": "/mnt/mesos/sandbox/.jupyter"
+        },
+        "jupyter_runtime_dir": {
+          "type": "string",
+          "title": "Data Science Engine Notebook Runtime Directory",
+          "description": "Data Science Engine Notebook Runtime Directory (JUPYTER_RUNTIME_DIR)",
+          "default": "/mnt/mesos/sandbox/.local/share/jupyter/runtime"
+        },
+        "conda_envs_path": {
+          "type": "string",
+          "title": "Conda Environment Paths",
+          "description": "Conda Environment Paths (CONDA_ENVS_PATH)",
+          "default": "/mnt/mesos/sandbox/conda/envs:/opt/conda/envs"
+        },
+        "conda_pkgs_dir": {
+          "type": "string",
+          "title": "Conda Package Directory Paths",
+          "description": "Conda Package Directory Paths (CONDA_PKGS_DIRS)",
+          "default": "/mnt/mesos/sandbox/conda/pkgs:/opt/conda/pkgs"
+        },
+        "dcos_dir": {
+          "type": "string",
+          "title": "DC/OS CLI Configuration Directory",
+          "description": "DC/OS CLI Config Directory (DCOS_DIR)",
+          "default": "/mnt/mesos/sandbox/.dcos"
+        },
+        "java_opts": {
+          "type": "string",
+          "title": "JVM Options",
+          "description": "JVM Options (JAVA_OPTS)",
+          "default": "-server -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/mesos/sandbox"
+        },
+        "nginx_log_level": {
+          "type": "string",
+          "title": "NGINX Log Level",
+          "description": "NGINX Log Level (NGINX_LOG_LEVEL)",
+          "enum": [
+            "debug",
+            "warn",
+            "info"
+          ],
+          "default": "warn"
+        },
+        "start_dask_distributed": {
+          "type": "boolean",
+          "title": "Start Dask Distributed?",
+          "description": "Start Dask's Distributed Scheduler?",
+          "default": false
+        },
+        "start_ray_head_node": {
+          "type": "boolean",
+          "title": "Start Ray Head Node?",
+          "description": "Start Ray Head Node?",
+          "default": false
+        },
+        "start_tensorboard": {
+          "type": "boolean",
+          "title": "Start TensorBoard?",
+          "description": "Start TensorBoard?",
+          "default": true
+        },
+        "tensorboard_logdir": {
+          "type": "string",
+          "title": "TensorBoard Log Directory",
+          "description": "TensorBoard Log Directory - e.g., hdfs://hdfs/ or s3://path/to/bucket",
+          "default": "/mnt/mesos/sandbox"
+        },
+        "term": {
+          "type": "string",
+          "title": "Terminal (TTY) Type",
+          "description": "Unix Terminal Type",
+          "default": "xterm-256color"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,637 @@
+{
+  "id": "{{service.name}}",
+  "instances": 1,
+  "cpus": {{service.cpus}},
+
+  {{#service.gpu.enabled}}
+  "gpus": {{service.gpu.gpus}},
+  {{/service.gpu.enabled}}
+
+  "mem": {{service.mem}},
+  "user": "{{service.user}}",
+  "cmd": "{{service.cmd}}",
+  "constraints": {{service.placement_constraints}},
+  "container": {
+    "type": "MESOS",
+    "volumes": [
+      {{#service.service_account_secret}}
+      {
+        "containerPath": "secrets/service-account.json",
+        "secret": "serviceCredential"
+
+      {{#storage.local_persistence.enabled}}
+      },
+      {{/storage.local_persistence.enabled}}
+      {{^storage.local_persistence.enabled}}
+      }
+      {{/storage.local_persistence.enabled}}
+
+      {{/service.service_account_secret}}
+
+      {{#storage.local_persistence.enabled}}
+      {
+        "containerPath": "{{storage.local_persistence.volume_path}}",
+        "mode": "RW",
+        "persistent": {
+          "type": "root",
+          "size": {{storage.local_persistence.volume_size}},
+          "constraints": []
+        }
+      },
+      {
+        "containerPath": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}",
+        "hostPath": "{{storage.local_persistence.volume_path}}",
+        "mode": "RW"
+      }
+      {{/storage.local_persistence.enabled}}
+      {{#security.kerberos.enabled}}
+          {{#security.kerberos.keytab_secret}}
+          ,{
+            "containerPath": "secrets/kerberos.keytab",
+            "secret": "kerberos_keytab"
+          }
+        {{/security.kerberos.keytab_secret}}
+      {{/security.kerberos.enabled}}
+      {{#security.tls.enabled}}
+        {{#security.tls.truststore_secret}}
+          ,{
+            "containerPath": "secrets/trust.jks",
+            "secret": "tls_truststore"
+          }
+        {{/security.tls.truststore_secret}}
+        {{#security.tls.keystore_secret}}
+          ,{
+            "containerPath": "secrets/server.jks",
+            "secret": "tls_keystore"
+          }
+        {{/security.tls.keystore_secret}}
+        {{#security.tls.ca_bundle_secret}}
+          ,{
+            "containerPath": "secrets/trust-ca.jks",
+            "secret": "tls_ca_bundle"
+          }
+        {{/security.tls.ca_bundle_secret}}
+        {{#security.tls.jaas_secret}}
+          ,{
+            "containerPath": "secrets/jaas.conf",
+            "secret": "tls_jaas"
+          }
+        {{/security.tls.jaas_secret}}
+      {{/security.tls.enabled}}
+    ],
+    "docker": {
+      {{#service.gpu.enabled}}
+        {{#advanced.jupyter_notebook_image}}
+            "image": "{{advanced.jupyter_notebook_image}}",
+        {{/advanced.jupyter_notebook_image}}
+        {{^advanced.jupyter_notebook_image}}
+            "image": "{{resource.assets.container.docker.jupyter-service-notebook-image-gpu-cuda100}}",
+        {{/advanced.jupyter_notebook_image}}
+      {{/service.gpu.enabled}}
+      {{^service.gpu.enabled}}
+        "image": "{{resource.assets.container.docker.jupyter-service-notebook-image-cpu}}",
+      {{/service.gpu.enabled}}
+      "forcePullImage": {{advanced.force_pull_jupyter_image}}
+    }
+    {{#networking.virtual_network_enabled}}
+    ,
+    "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp",
+          "name": "notebook",
+          "labels": {
+            "VIP_0": "{{service.name}}:8888"
+          }
+        },
+        {
+          "containerPort": 7077,
+          "protocol": "tcp",
+          "name": "sparkdriver",
+          "labels": {
+            "VIP_1": "{{service.name}}:7077"
+          }
+        },
+        {
+          "containerPort": 4040,
+          "protocol": "tcp",
+          "name": "sparkui",
+          "labels": {
+            "VIP_2": "{{service.name}}:4040"
+          }
+        },
+        {
+          "containerPort": 6046,
+          "protocol": "tcp",
+          "name": "tfdbg",
+          "labels": {
+            "VIP_3": "{{service.name}}:6046"
+          }
+        },
+        {
+          "containerPort": 8786,
+          "protocol": "tcp",
+          "name": "daskscheduler",
+          "labels": {
+            "VIP_4": "{{service.name}}:8786"
+          }
+        },
+        {
+          "containerPort": 8787,
+          "protocol": "tcp",
+          "name": "daskboard",
+          "labels": {
+            "VIP_5": "{{service.name}}:8787"
+          }
+        },
+        {
+          "containerPort": 6379,
+          "protocol": "tcp",
+          "name": "rayredis",
+          "labels": {
+            "VIP_6": "{{service.name}}:6379"
+          }
+        },
+        {
+          "containerPort": 8076,
+          "protocol": "tcp",
+          "name": "rayobjectmanager",
+          "labels": {
+            "VIP_7": "{{service.name}}:8076"
+          }
+        },
+        {
+          "containerPort": 18080,
+          "protocol": "tcp",
+          "name": "sparkhistory",
+          "labels": {
+            "VIP_8": "{{service.name}}:18080"
+          }
+        }
+    ]
+  {{/networking.virtual_network_enabled}}
+  },
+  {{#networking.virtual_network_enabled}}
+  "networks": [
+      {
+      "name": "{{networking.virtual_network_name}}",
+      {{^networking.virtual_network_plugin_labels.isEmpty}}
+      "labels": {
+      {{#networking.virtual_network_plugin_labels}}
+          "{{key}}": "{{value}}",
+      {{/networking.virtual_network_plugin_labels}}
+      "network_name": "{{networking.virtual_network_name}}"
+      },
+      {{/networking.virtual_network_plugin_labels.isEmpty}}
+      "mode": "container"
+      }
+  ],
+  {{/networking.virtual_network_enabled}}
+  {{^networking.virtual_network_enabled}}
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "notebook",
+      "labels": {
+        "VIP_0": "{{service.name}}:8888"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "sparkdriver",
+      "labels": {
+        "VIP_1": "{{service.name}}:7077"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "sparkui",
+      "labels": {
+        "VIP_2": "{{service.name}}:4040"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "sparkblockmanager"
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "tfdbg",
+      "labels": {
+        "VIP_3": "{{service.name}}:6046"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "daskscheduler",
+      "labels": {
+        "VIP_4": "{{service.name}}:8786"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "daskboard",
+      "labels": {
+        "VIP_5": "{{service.name}}:8787"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "rayredis",
+      "labels": {
+        "VIP_6": "{{service.name}}:6379"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "rayobjectmanager",
+      "labels": {
+        "VIP_7": "{{service.name}}:8076"
+      }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "sparkhistory",
+      "labels": {
+        "VIP_7": "{{service.name}}:18080"
+      }
+    }
+  ],
+  {{/networking.virtual_network_enabled}}
+  "secrets": {
+    {{#service.service_account_secret}}
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+    {{/service.service_account_secret}}
+    {{#security.kerberos.keytab_secret}}
+    ,"kerberos_keytab": {
+       "source": "{{security.kerberos.keytab_secret}}"
+     }
+    {{/security.kerberos.keytab_secret}}
+    {{#security.tls.enabled}}
+      {{#security.tls.truststore_secret}}
+      , "tls_truststore": {
+        "source": "{{security.tls.truststore_secret}}"
+      },
+      "tls_truststore_password": {
+        "source": "{{security.tls.truststore_password}}"
+      }
+      {{/security.tls.truststore_secret}}
+      {{#security.tls.keystore_secret}}
+      , "tls_keystore": {
+        "source": "{{security.tls.keystore_secret}}"
+      },
+      "tls_keystore_password": {
+        "source": "{{security.tls.keystore_password}}"
+      },
+      "tls_key_password": {
+        "source": "{{security.tls.key_password}}"
+      }
+      {{/security.tls.keystore_secret}}
+      {{#security.tls.ca_bundle_secret}}
+      , "tls_ca_bundle": {
+        "source": "{{security.tls.ca_bundle_secret}}"
+      }
+      {{/security.tls.ca_bundle_secret}}
+      {{#security.tls.jaas_secret}}
+      , "tls_jaas": {
+        "source": "{{security.tls.jaas_secret}}"
+      }
+      {{/security.tls.jaas_secret}}
+    {{/security.tls.enabled}}
+    {{#storage.s3.aws_access_key_id}}
+    ,"aws_access_key_id": {
+        "source": "{{storage.s3.aws_access_key_id}}"
+     }
+    {{/storage.s3.aws_access_key_id}}
+    {{#storage.s3.aws_secret_access_key}}
+    ,"aws_secret_access_key": {
+        "source": "{{storage.s3.aws_secret_access_key}}"
+     }
+    {{/storage.s3.aws_secret_access_key}}
+  },
+  "env": {
+    {{#security.kerberos.enabled}}
+    "KERBEROS_ENABLED": "true",
+        {{#security.kerberos.kdc.hostname}}
+        "KERBEROS_KDC_HOSTNAME": "{{security.kerberos.kdc.hostname}}",
+        {{/security.kerberos.kdc.hostname}}
+        {{#security.kerberos.kdc.port}}
+        "KERBEROS_KDC_PORT": "{{security.kerberos.kdc.port}}",
+        {{/security.kerberos.kdc.port}}
+        {{#security.kerberos.primary}}
+        "KERBEROS_PRIMARY": "{{security.kerberos.primary}}",
+        {{/security.kerberos.primary}}
+        {{#security.kerberos.realm}}
+        "KERBEROS_REALM": "{{security.kerberos.realm}}",
+        {{/security.kerberos.realm}}
+        {{#security.kerberos.keytab_secret}}
+        "KERBEROS_KEYTAB": "secrets/kerberos.keytab",
+        {{/security.kerberos.keytab_secret}}
+    {{/security.kerberos.enabled}}
+    {{#security.tls.enabled}}
+    "SPARK_SSL_ENABLED": "true",
+    "SPARK_SSL_PROTOCOL": "{{security.tls.protocol}}",
+      {{#security.tls.truststore_secret}}
+      "SPARK_SSL_TRUSTSTORE": "secrets/trust.jks",
+      "SPARK_SSL_TRUSTSTOREPASSWORD": {
+        "secret": "tls_truststore_password"
+      },
+      {{/security.tls.truststore_secret}}
+      {{#security.tls.keystore_secret}}
+      "SPARK_SSL_KEYSTORE": "secrets/server.jks",
+      "SPARK_SSL_KEYSTOREPASSWORD": {
+        "secret": "tls_keystore_password"
+      },
+      "SPARK_SSL_KEYPASSWORD": {
+        "secret": "tls_key_password"
+      },
+      {{/security.tls.keystore_secret}}
+      {{#security.tls.jaas_secret}}
+      "TLS_SECRET_NAMES": "{{security.tls.truststore_secret}},{{security.tls.keystore_secret}},{{security.tls.ca_bundle_secret}},{{security.tls.jaas_secret}}",
+      "TLS_SECRET_ENVKEYS": "TRUSTSTORE,KEYSTORE,TRUSTSTORE_CA,JAAS_CONF",
+      "TLS_SECRET_FILENAMES": "secrets/trust.jks,secrets/server.jks,secrets/trust-ca.jks,secrets/jaas.conf",
+      {{/security.tls.jaas_secret}}
+      {{^security.tls.jaas_secret}}
+      "TLS_SECRET_NAMES": "{{security.tls.truststore_secret}},{{security.tls.keystore_secret}},{{security.tls.ca_bundle_secret}}",
+      "TLS_SECRET_ENVKEYS": "TRUSTSTORE,KEYSTORE,TRUSTSTORE_CA",
+      "TLS_SECRET_FILENAMES": "secrets/trust.jks,secrets/server.jks,secrets/trust-ca.jks",
+      {{/security.tls.jaas_secret}}
+    {{/security.tls.enabled}}
+    {{#security.extra_spark_secrets.secret_names}}
+    "EXTRA_SECRET_NAMES": "{{security.extra_spark_secrets.secret_names}}",
+    {{/security.extra_spark_secrets.secret_names}}
+    {{#security.extra_spark_secrets.secret_filenames}}
+    "EXTRA_SECRET_FILENAMES": "{{security.extra_spark_secrets.secret_filenames}}",
+    {{/security.extra_spark_secrets.secret_filenames}}
+    {{#security.extra_spark_secrets.secret_envkeys}}
+    "EXTRA_SECRET_ENVKEYS": "{{security.extra_spark_secrets.secret_envkeys}}",
+    {{/security.extra_spark_secrets.secret_envkeys}}
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": "file://secrets/service-account.json",
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"\/opt\/mesosphere\/libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\",\"parameters\":[{\"key\":\"service_account_credential\",\"value\":\"file://secrets/service-account.json\"}]},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"service_account_credential\",\"value\":\"file://secrets/service-account.json\"},{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    {{/service.service_account_secret}}
+    {{#networking.virtual_network_enabled}}
+    "VIRTUAL_NETWORK_ENABLED": "true",
+    "VIRTUAL_NETWORK_NAME": "{{networking.virtual_network_name}}",
+    {{^networking.virtual_network_plugin_labels.isEmpty}}
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{#networking.virtual_network_plugin_labels}}{{key}}:{{value}},{{/networking.virtual_network_plugin_labels}}",
+    {{/networking.virtual_network_plugin_labels.isEmpty}}
+    {{/networking.virtual_network_enabled}}
+    {{#storage.local_persistence.enabled}}
+    "CONDA_ENVS_PATH": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}/conda/envs:/opt/conda/envs",
+    "CONDA_PKGS_DIRS": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}/conda/pkgs:/opt/conda/pkgs",
+    "DCOS_DIR": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}/.dcos",
+    "HADOOP_CONF_DIR": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}",
+    "HOME": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}",
+    "JUPYTER_CONFIG_DIR": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}/.jupyter",
+    "JUPYTER_RUNTIME_DIR": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}/.local/share/jupyter/runtime",
+    {{/storage.local_persistence.enabled}}
+    {{^storage.local_persistence.enabled}}
+    "CONDA_ENVS_PATH": "{{advanced.conda_envs_path}}",
+    "CONDA_PKGS_DIRS": "{{advanced.conda_pkgs_dir}}",
+    "DCOS_DIR": "{{advanced.dcos_dir}}",
+    "HADOOP_CONF_DIR": "{{advanced.hadoop_conf_dir}}",
+    "HOME": "{{advanced.home}}",
+    "JUPYTER_CONFIG_DIR": "{{advanced.jupyter_config_dir}}",
+    "JUPYTER_RUNTIME_DIR": "{{advanced.jupyter_runtime_dir}}",
+    {{/storage.local_persistence.enabled}}
+
+    "JAVA_OPTS": "'{{advanced.java_opts}}'",
+
+    {{#service.jupyter_conf_urls}}
+    "JUPYTER_CONF_URLS": "{{service.jupyter_conf_urls}}",
+    {{/service.jupyter_conf_urls}}
+
+    "JUPYTER_PASSWORD": "{{service.jupyter_password}}",
+
+    "NGINX_LOG_LEVEL": "{{advanced.nginx_log_level}}",
+
+    {{#oidc.enabled}}
+    {{#oidc.authorization_params}}
+    "OIDC_AUTHORIZATION_PARAMS": "{{oidc.authorization_params}}",
+    {{/oidc.authorization_params}}
+
+    "OIDC_CLIENT_ID": "{{oidc.client_id}}",
+
+    {{#oidc.client_secret}}
+    "OIDC_CLIENT_SECRET": "{{oidc.client_secret}}",
+    {{/oidc.client_secret}}
+
+    "OIDC_DISCOVERY_URI": "{{oidc.discovery_uri}}",
+
+    {{#oidc.email}}
+    "OIDC_EMAIL": "{{oidc.email}}",
+    {{/oidc.email}}
+
+    "OIDC_LOGOUT_PATH": "https://{{networking.ingress.hostname}}{{service.name}}{{oidc.logout_path}}",
+
+    {{#oidc.post_logout_redirect_uri}}
+    "OIDC_POST_LOGOUT_REDIRECT_URI": "{{oidc.post_logout_redirect_uri}}",
+    {{/oidc.post_logout_redirect_uri}}
+    {{^oidc.post_logout_redirect_uri}}
+    "OIDC_POST_LOGOUT_REDIRECT_URI": "https://{{networking.ingress.hostname}}{{service.name}}",
+    {{/oidc.post_logout_redirect_uri}}
+
+    "OIDC_REDIRECT_URI": "https://{{networking.ingress.hostname}}/service/{{service.name}}{{oidc.redirect_uri}}",
+
+    {{#oidc.redirect_after_logout_uri}}
+    "OIDC_REDIRECT_AFTER_LOGOUT_URI": "{{oidc.redirect_after_logout_uri}}",
+    {{/oidc.redirect_after_logout_uri}}
+    {{^oidc.redirect_after_logout_uri}}
+    "OIDC_REDIRECT_AFTER_LOGOUT_URI": "https://{{networking.ingress.hostname}}{{service.name}}",
+    {{/oidc.redirect_after_logout_uri}}
+
+    "OIDC_SCOPE": "{{oidc.scope}}",
+
+    {{#oidc.tls_verify}}
+    "OIDC_TLS_VERIFY": "yes",
+    {{/oidc.tls_verify}}
+    {{^oidc.tls_verify}}
+    "OIDC_TLS_VERIFY": "no",
+    {{/oidc.tls_verify}}
+
+    "OIDC_TOKEN_ENDPOINT_AUTH_METHOD": "{{oidc.token_endpoint_auth_method}}",
+
+    {{#oidc.upn}}
+    "OIDC_UPN": "{{oidc.upn}}",
+    {{/oidc.upn}}
+
+    "OIDC_USE_SPARTAN_RESOLVER": "{{oidc.use_spartan_resolver}}",
+    {{/oidc.enabled}}
+
+    "AWS_REGION": "{{storage.s3.aws_region}}",
+    "S3_ENDPOINT": "{{storage.s3.endpoint}}",
+    "S3_USE_HTTPS": "{{storage.s3.use_https}}",
+    "S3_VERIFY_SSL": "{{storage.s3.verify_ssl}}",
+
+    {{#storage.s3.aws_access_key_id}}
+        "AWS_ACCESS_KEY_ID": {
+            "secret": "aws_access_key_id"
+        },
+
+        {{#storage.s3.aws_secret_access_key}}
+        "AWS_SECRET_NAMES": "{{storage.s3.aws_access_key_id}},{{storage.s3.aws_secret_access_key}}",
+        "AWS_SECRET_ENVKEYS": "AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY",
+        "AWS_SECRET_FILENAMES": "secrets/aws_access_key_id,secrets/aws_secret_access_key",
+        {{/storage.s3.aws_secret_access_key}}
+        {{^storage.s3.aws_secret_access_key}}
+            "AWS_SECRET_NAMES": "{{storage.s3.aws_access_key_id}}",
+            "AWS_SECRET_ENVKEYS": "AWS_ACCESS_KEY_ID",
+            "AWS_SECRET_FILENAMES": "secrets/aws_access_key_id",
+        {{/storage.s3.aws_secret_access_key}}
+    {{/storage.s3.aws_access_key_id}}
+    {{#storage.s3.aws_secret_access_key}}
+        "AWS_SECRET_ACCESS_KEY": {
+            "secret": "aws_secret_access_key"
+        },
+
+        {{#storage.s3.aws_access_key_id}}
+            "AWS_SECRET_NAMES": "{{storage.s3.aws_access_key_id}},{{storage.s3.aws_secret_access_key}}",
+            "AWS_SECRET_ENVKEYS": "AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY",
+            "AWS_SECRET_FILENAMES": "secrets/aws_access_key_id,secrets/aws_secret_access_key",
+        {{/storage.s3.aws_access_key_id}}
+        {{^storage.s3.aws_access_key_id}}
+            "AWS_SECRET_NAMES": "{{storage.s3.aws_secret_access_key}}",
+            "AWS_SECRET_ENVKEYS": "AWS_SECRET_ACCESS_KEY",
+            "AWS_SECRET_FILENAMES": "secrets/aws_secret_access_key",
+        {{/storage.s3.aws_access_key_id}}
+    {{/storage.s3.aws_secret_access_key}}
+
+    "SPARK_MASTER_URL": "{{spark.spark_master_url}}",
+    "SPARK_USER": "{{spark.spark_user}}",
+    "SPARK_DRIVER_CORES": "{{spark.spark_driver_cores}}",
+    "SPARK_DRIVER_MEMORY": "{{spark.spark_driver_memory}}",
+    "SPARK_DRIVER_JAVA_OPTIONS": "\"{{spark.spark_driver_java_options}}\"",
+
+    "SPARK_HISTORY_FS_LOGDIRECTORY": "{{spark.spark_history_fs_logdirectory}}",
+
+    "SPARK_SCHEDULER_MINREGISTEREDRESOURCESRATIO": "{{spark.spark_scheduler_min_registered_resources_ratio}}",
+    "SPARK_CORES_MAX": "{{spark.spark_cores_max}}",
+    "SPARK_EXECUTOR_CORES": "{{spark.spark_executor_cores}}",
+    "SPARK_EXECUTOR_MEMORY": "{{spark.spark_executor_memory}}",
+    "SPARK_EXECUTOR_JAVA_OPTIONS": "\"{{spark.spark_executor_java_options}}\"",
+
+    "SPARK_EVENTLOG_ENABLED": "{{spark.spark_eventlog_enabled}}",
+    "SPARK_EVENTLOG_DIR": "{{spark.spark_eventlog_dir}}",
+
+    "SPARK_HADOOP_FS_S3A_AWS_CREDENTIALS_PROVIDER": "{{spark.spark_hadoop_fs_s3a_aws_credentials_provider}}",
+
+    {{#service.gpu.enabled}}
+        {{#advanced.jupyter_worker_image}}
+            "SPARK_MESOS_EXECUTOR_DOCKER_IMAGE":"{{advanced.jupyter_worker_image}}",
+        {{/advanced.jupyter_worker_image}}
+        {{^advanced.jupyter_worker_image}}
+            "SPARK_MESOS_EXECUTOR_DOCKER_IMAGE":"{{resource.assets.container.docker.jupyter-service-worker-image-gpu-cuda100}}",
+        {{/advanced.jupyter_worker_image}}
+    {{/service.gpu.enabled}}
+    {{^service.gpu.enabled}}
+        "SPARK_MESOS_EXECUTOR_DOCKER_IMAGE":"{{resource.assets.container.docker.jupyter-service-worker-image-cpu}}",
+    {{/service.gpu.enabled}}
+
+    "SPARK_MESOS_EXECUTOR_DOCKER_FORCEPULLIMAGE": "{{spark.spark_mesos_executor_docker_forcepullimage}}",
+    "SPARK_MESOS_EXECUTOR_HOME": "{{spark.spark_mesos_executor_home}}",
+    "SPARK_MESOS_CONTAINERIZER": "{{spark.spark_mesos_containerizer}}",
+
+    "SPARK_DCOS_SPACE": "{{service.name}}",
+    {{#spark.spark_mesos_principal}}
+    "SPARK_MESOS_PRINCIPAL": "{{spark.spark_mesos_principal}}",
+    {{/spark.spark_mesos_principal}}
+
+    {{#spark.spark_mesos_secret}}
+    "SPARK_MESOS_SECRET": "{{spark.spark_mesos_secret}}",
+    {{/spark.spark_mesos_secret}}
+
+    {{#spark.spark_mesos_role}}
+    "SPARK_MESOS_ROLE": "{{spark.spark_mesos_role}}",
+    {{/spark.spark_mesos_role}}
+
+    {{#spark.spark_mesos_driver_labels}}
+    "SPARK_MESOS_DRIVER_LABELS": "{{spark.spark_mesos_driver_labels}}",
+    {{/spark.spark_mesos_driver_labels}}
+
+    {{#spark.spark_mesos_task_labels}}
+    "SPARK_MESOS_TASK_LABELS": "{{spark.spark_mesos_task_labels}}",
+    {{/spark.spark_mesos_task_labels}}
+
+    "SPARK_EXECUTORENV_JAVA_HOME": "{{spark.spark_executor_java_home}}",
+    "SPARK_EXECUTORENV_HADOOP_HDFS_HOME": "{{spark.spark_executor_hadoop_hdfs_home}}",
+    "SPARK_EXECUTORENV_HADOOP_OPTS": "'{{spark.spark_executor_hadoop_opts}}'",
+
+    {{#spark.spark_jars_packages}}
+    "SPARK_JARS_PACKAGES": "{{spark.spark_jars_packages}}",
+    {{/spark.spark_jars_packages}}
+
+    {{#advanced.start_dask_distributed}}
+    "START_DASK_DISTRIBUTED": "{{advanced.start_dask_distributed}}",
+    {{/advanced.start_dask_distributed}}
+
+    {{#advanced.start_ray_head_node}}
+    "START_RAY_HEAD_NODE": "{{advanced.start_ray_head_node}}",
+    {{/advanced.start_ray_head_node}}
+
+    {{#spark.start_spark_history_server}}
+    "START_SPARK_HISTORY": "{{spark.start_spark_history_server}}",
+    {{/spark.start_spark_history_server}}
+
+    {{#advanced.start_tensorboard}}
+    "START_TENSORBOARD": "{{advanced.start_tensorboard}}",
+    "TENSORBOARD_LOGDIR": "{{advanced.tensorboard_logdir}}",
+    {{/advanced.start_tensorboard}}
+
+    "TERM": "{{advanced.term}}",
+    "USER": "{{service.user}}"
+  },
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_REWRITE_REQUEST_URLS": "false",
+    "DCOS_PACKAGE_IS_FRAMEWORK": "true",
+    {{#networking.ingress.enabled}}
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_ENABLED": "true",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "true",
+    "HAPROXY_0_VHOST": "{{networking.ingress.hostname}}",
+    "HAPROXY_0_PATH": "/service/{{service.name}}",
+    "HAPROXY_2_ENABLED": "true",
+    "HAPROXY_2_REDIRECT_TO_HTTPS": "true",
+    {{/networking.ingress.enabled}}
+
+    "MARATHON_SINGLE_INSTANCE_APP": "true"
+  },
+  "healthChecks": [
+    {
+      "portIndex": 0,
+      "protocol": "MESOS_HTTP",
+      "path": "/healthz",
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 20,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+
+  {{^storage.local_persistence.enabled}}
+  "unreachableStrategy": {
+    "expungeAfterSeconds": 0,
+    "inactiveAfterSeconds": 0
+  },
+  {{/storage.local_persistence.enabled}}
+
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}
