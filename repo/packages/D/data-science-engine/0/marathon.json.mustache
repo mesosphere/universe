@@ -80,7 +80,6 @@
       {{/security.tls.enabled}}
     ],
     "docker": {
-
       {{#service.gpu.enabled}}
         {{#advanced.jupyter_notebook_image}}
             "image": "{{advanced.jupyter_notebook_image}}",
@@ -94,7 +93,6 @@
       {{/service.gpu.enabled}}
       "forcePullImage": {{advanced.force_pull_jupyter_image}}
     }
-
     {{#networking.virtual_network_enabled}}
     ,
     "portMappings": [
@@ -172,9 +170,7 @@
         }
     ]
   {{/networking.virtual_network_enabled}}
-
   },
-
   {{#networking.virtual_network_enabled}}
   "networks": [
       {
@@ -272,7 +268,6 @@
     }
   ],
   {{/networking.virtual_network_enabled}}
-
   "secrets": {
     {{#service.service_account_secret}}
     "serviceCredential": {
@@ -326,7 +321,6 @@
      }
     {{/storage.s3.aws_secret_access_key}}
   },
-
   "env": {
     {{#security.kerberos.enabled}}
     "KERBEROS_ENABLED": "true",
@@ -364,7 +358,6 @@
         "secret": "tls_key_password"
       },
       {{/security.tls.keystore_secret}}
-
       {{#security.tls.jaas_secret}}
       "TLS_SECRET_NAMES": "{{security.tls.truststore_secret}},{{security.tls.keystore_secret}},{{security.tls.ca_bundle_secret}},{{security.tls.jaas_secret}}",
       "TLS_SECRET_ENVKEYS": "TRUSTSTORE,KEYSTORE,TRUSTSTORE_CA,JAAS_CONF",

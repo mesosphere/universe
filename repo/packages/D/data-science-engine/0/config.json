@@ -52,7 +52,7 @@
         "jupyter_password": {
           "type": "string",
           "title": "Data Science Engine Notebook Password",
-          "description": "Data Science Engine Notebook Password (JUPYTER_PASSWORD). Defaults to jupyter unless OpenID Connect has been configured.",
+          "description": "Data Science Engine Notebook Password (JUPYTER_PASSWORD). Defaults to 'jupyter' unless OpenID Connect has been configured.",
           "default": "jupyter"
         },
         "jupyter_conf_urls": {
