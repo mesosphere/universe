@@ -1,0 +1,22 @@
+{
+    "packagingVersion": "4.0", 
+    "upgradesFrom": [
+        "1.0.0-4.1.1"
+    ], 
+    "downgradesTo": [], 
+    "minDcosReleaseVersion": "1.9", 
+    "name": "hivemq", 
+    "version": "1.0.0-4.2.0", 
+    "maintainer": "support@hivemq.com", 
+    "description": "HiveMQ is a MQTT broker designed for the fast, efficient and reliable bi-directional movement of data between device and the cloud.", 
+    "selected": false, 
+    "framework": true, 
+    "tags": [
+        "0.55.4", 
+        "hivemq", 
+        "mqtt", 
+        "iot"
+    ], 
+    "postInstallNotes": "HiveMQ is being installed!\nNote that this service runs in evaluation mode by default.\nDefault configuration: 3 cluster nodes | 4 CPU cores | 4GB RAM\n\n\tDocumentation: https://docs.mesosphere.com/services/hivemq",
+    "postUninstallNotes": "HiveMQ is being uninstalled."
+}
