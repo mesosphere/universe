@@ -1,0 +1,130 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "Unique name for the Kibana service instance consisting of a series of words separated by slashes. Each word must be at least 1 alphanumeric character and may only contain digits (`0-9`), dashes (`-`), dots (`.`), and lowercase letters (`a-z`). The word may not begin or end with a dash",
+          "type": "string",
+          "pattern": "^(\\/?((\\.\\.)|(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]))?($|\\/))+$",
+          "default": "kibana"
+        },
+        "user": {
+          "description": "The user that runs the Kibana services and owns the Mesos sandbox.",
+          "type": "string",
+          "default": "nobody"
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "description": "Labels to pass to the virtual network plugin. Array of key-value lables objects. Example: [{'key':'k_0','value':'v_0'},...,{'key':'k_N','value':'v_N'}]",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "default": {}
+          },
+          "default": []
+        }
+      },
+      "required": [
+        "name",
+        "user"
+      ]
+    },
+    "kibana": {
+      "description": "Kibana service configuration properties",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "plugins": {
+          "description": "An optional comma-separated list of URLs to ZIP files containing Kibana plugins.",
+          "type": "string",
+          "default": ""
+        },
+        "elasticsearch_url": {
+          "description": "The URL of the Elasticsearch cluster to use for all your queries.",
+          "type": "string",
+          "default": "http://coordinator.elastic.l4lb.thisdcos.directory:9200"
+        },
+        "elasticsearch_tls": {
+          "description": "Enable TLS encryption for communicating with Elastic (required when Elastic has TLS support enabled).",
+          "type": "boolean",
+          "default": false
+        },
+        "elasticsearch_xpack_security_enabled": {
+          "description": "Set it to true when Elasticsearch X-Pack security is enabled. Defaults to false",
+          "type": "boolean",
+          "default": false
+        },
+        "user": {
+          "description": "Kibana username to use for X-Pack authentication, if enabled",
+          "type": "string",
+          "default": "kibana"
+        },
+        "password": {
+          "description": "Password to use for X-Pack authentication, if enabled. Note that you are not setting the password here. You are specifying the credentials for Kibana to use when sending requests.",
+          "type": "string",
+          "default": "changeme"
+        },
+        "placement": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "default": []
+        },
+        "cpus": {
+          "description": "Kibana CPU requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "description": "Kibana mem requirements",
+          "type": "integer",
+          "default": 2048
+        },
+        "xpack_enabled": {
+          "description": "[DEPRECATED] X-Pack is enabled by default on Kibana 6.3+. Changing this setting now has no effect.",
+          "type": "boolean",
+          "default": true
+        },
+        "custom_kibana_yml": {
+          "description": "Custom YAML to be appended to kibana.yml. This field must be base64 encoded.",
+          "type": "string",
+          "media": {
+            "binaryEncoding": "base64",
+            "type": "application/x-yaml"
+          },
+          "default": ""
+        }
+      },
+      "required": [
+        "elasticsearch_url"
+      ]
+    }
+  }
+}
