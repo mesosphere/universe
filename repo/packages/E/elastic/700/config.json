@@ -1062,7 +1062,7 @@
           "default": ""
         },
         "script_painless_regex_enabled": {
-          "description": "Regexes are disabled by default because they circumvent Painless\u2019s protection against long running and memory hungry scripts. Set true to enable.",
+          "description": "Regexes are disabled by default because they circumvent Painless's protection against long running and memory hungry scripts. Set true to enable.",
           "type": "boolean",
           "default": false
         },
@@ -1262,7 +1262,7 @@
           "default": 0
         },
         "xpack_ml_max_machine_memory_percent": {
-          "description": "The maximum percentage of the machine\u2019s memory that machine learning may use for running analytics processes. (These processes are separate to the Elasticsearch JVM.) Defaults to 30 percent.",
+          "description": "The maximum percentage of the machine's memory that machine learning may use for running analytics processes. (These processes are separate to the Elasticsearch JVM.) Defaults to 30 percent.",
           "type": "integer",
           "default": 30
         },
