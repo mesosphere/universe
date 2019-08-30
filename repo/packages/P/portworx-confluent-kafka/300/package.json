@@ -11,6 +11,7 @@
   "description": "Apache Kafka by Confluent using Portworx volumes\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/kafka.html",
   "selected": false,
   "framework": true,
+  "hasKnownIssues": true,
   "tags": [
     "message",
     "broker",

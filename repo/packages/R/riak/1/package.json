@@ -7,6 +7,7 @@
   "tags": ["basho", "framework", "database", "riak", "riak-kv", "riak-ts"],
   "maintainer": "help@basho.com",
   "description": "A distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability.",
+  "hasKnownIssues": true,
   "scm": "https://github.com/basho-labs/riak-mesos.git",
   "website": "http://basho-labs.github.io/riak-mesos/",
   "postInstallNotes": "Thank you for installing Riak on DC/OS.\nPlease run `dcos riak framework wait-for-service [--timeout <secs>]` until the Framework has fully started.\nVisit https://github.com/basho-labs/riak-mesos for usage information.",

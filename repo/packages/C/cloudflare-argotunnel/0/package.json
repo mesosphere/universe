@@ -9,6 +9,7 @@
     "description": " Cloudflare Argo Tunnel is a private connection between your services and Cloudflare. Tunnel makes it so that only traffic that routes through the Cloudflare network can reach your service.\n\nYou can think of Argo Tunnel as a virtual P.O. box. It lets someone send you packets without knowing your real address. In other words, its a private link. Only Cloudflare can see the service and communicate with it, and for the rest of the internet, its unroutable, as if the service is not even there.\n\n\tDocumentation: https://github.com/dcos/examples/tree/master/cloudflare-argotunnel", 
     "selected": false,
     "framework": false,
+    "hasKnownIssues": true,
     "tags": [
         "cloudflare-argotunnel"
     ],

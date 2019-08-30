@@ -7,6 +7,7 @@
   "maintainer": "hello@buoyant.io",
   "website": "https://linkerd.io",
   "tags": ["linkerd", "namerd", "buoyant", "loadbalancer", "service-discovery", "proxy", "microservices", "rpc"],
+  "hasKnownIssues": true,
   "preInstallNotes": "NOTE: This package has been deprecated. We recommend a minimum of 0.25 CPUs and 256 MB of RAM available for namerd.",
   "postInstallNotes": "namerd DCOS Service has been successfully installed!\nSee https://linkerd.io for documentation.",
   "postUninstallNotes": "namerd DCOS Service has been uninstalled and will no longer run.",

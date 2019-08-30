@@ -7,6 +7,7 @@
   "maintainer" : "dcos-support@appliedis.com",
   "description" : "GeoServer is an open source server for sharing geospatial data. GeoServer 2.11.2 implements Open Geospatial Consortium (OGC) Web Map Service (WMS), Web Feature Service (WFS), Web Coverage Service (WCS) and Catalog Serivce for the Web (CSW). The GeoServer project can be found at http://geoserver.org/.",
   "framework" : true,
+  "hasKnownIssues": true,
   "licenses" : [ {
     "name" : "Apache License Version 2.0",
     "url" : "https://github.com/appliedis/dcos-geoserver/blob/master/LICENSE"
