@@ -1,0 +1,104 @@
+{
+  "properties": {
+    "replicator": {
+      "properties": {
+        "name": {
+          "default": "replicator",
+          "description": "Service name for the Confluent Enterprise Replicator",
+          "type": "string"
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "default": ""
+              },
+              "value": {
+                "type": "string",
+                "default": ""
+              }
+            }
+          },
+          "description": "Labels to pass to the virtual network plugin (e.g., [{\"key\": \"key_1\", \"value\": \"value_1\"}, {\"key\": \"key_2\", \"value\": \"value_2\"}])",
+          "default": []
+        },
+        "user": {
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "nobody",
+          "title": "User"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 2,
+          "description": "CPU shares to allocate to each connect worker instance.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 1024,
+          "description": "Memory (MB) to allocate to each connect worker instance.",
+          "minimum": 512,
+          "type": "number"
+        },
+        "heap": {
+          "default": 768,
+          "description": "JVM heap allocation (in MB) for connect worker task; should be ~256MB less than total memory for the instance.",
+          "minimum": 256,
+          "type": "number"
+        },
+        "role": {
+          "default": "*",
+          "description": "Deploy connect worker only on nodes with this role.",
+          "type": "string"
+        },
+        "kafka-service": {
+          "default": "confluent-kafka",
+          "description": "Target Apache Kafka by Confluent service to which these tasks will connect. ",
+          "type": "string"
+        },
+        "zookeeper-connect": {
+          "default": "master.mesos:2181/dcos-service-confluent-kafka",
+          "description": "Zookeeper Connect string for service cluster. Format is comma-separated list of <zk-host>:<zkport>/<kservice>",
+          "type": "string"
+        },
+        "schema-registry-service": {
+          "default": "schema-registry",
+          "description": "Schema Registry service to be used by connect workers. The named VIP associated with this service will be used to specify the converter-schema-registry-url's",
+          "type": "string"
+        },
+        "storage-topic": {
+          "default": "replicator",
+          "description": "Storage topic used to for replicator offset, config and status topic",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "instances",
+        "name"
+      ],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}
