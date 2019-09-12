@@ -1,0 +1,223 @@
+{
+    "id": "{{service.name}}",
+    "cpus": {{service.cpus}},
+    "mem": {{service.mem}},
+    "cmd": "/sbin/init.sh",
+    {{#service.user}}
+    "user": "{{service.user}}",
+    {{/service.user}}
+
+    "env": {
+        {{#security.kerberos.enabled}}
+            {{#security.kerberos.krb5conf}}
+            "SPARK_MESOS_KRB5_CONF_BASE64": "{{security.kerberos.krb5conf}}",
+            {{/security.kerberos.krb5conf}}
+            {{#security.kerberos.kdc.hostname}}
+            "SPARK_SECURITY_KERBEROS_KDC_HOSTNAME": "{{security.kerberos.kdc.hostname}}",
+            {{/security.kerberos.kdc.hostname}}
+            {{#security.kerberos.kdc.port}}
+            "SPARK_SECURITY_KERBEROS_KDC_PORT": "{{security.kerberos.kdc.port}}",
+            {{/security.kerberos.kdc.port}}
+            {{#security.kerberos.realm}}
+            "SPARK_SECURITY_KERBEROS_REALM": "{{security.kerberos.realm}}",
+            {{/security.kerberos.realm}}
+        {{/security.kerberos.enabled}}
+
+        {{#service.virtual_network_enabled}}
+        "VIRTUAL_NETWORK_ENABLED": "true",
+        "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+            {{^service.virtual_network_plugin_labels.isEmpty}}
+            "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{#service.virtual_network_plugin_labels}}{{key}}:{{value}},{{/service.virtual_network_plugin_labels}}",
+            {{/service.virtual_network_plugin_labels.isEmpty}}
+        "VIRTUAL_NETWORK_LABELS": "{{service.virtual_network_name}}",
+        "SPARK_BIND_ADDRESS_DETECTION_METHOD": "hostname=ip-address",
+        {{/service.virtual_network_enabled}}
+        {{#service.service_account_secret}}
+        "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+        "MESOS_MODULES": "{\"libraries\": [{\"file\": \"libdcos_security.so\", \"modules\": [{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"}]}]}",
+        "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+        {{/service.service_account_secret}}
+
+        {{#service.spark-history-server-url}}
+        "SPARK_HISTORY_SERVER_URL": "{{service.spark-history-server-url}}",
+        {{/service.spark-history-server-url}}
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",
+        "SPARK_USER": "{{service.user}}",
+        {{#service.docker_user}}
+        "SPARK_DOCKER_USER": "{{service.docker_user}}",
+        {{/service.docker_user}}
+        "SPARK_DISPATCHER_MESOS_ROLE": "{{service.role}}",
+        "SPARK_DISPATCHER_ENFORCE_ROLE": "{{service.enforce_role}}",
+        "SPARK_DISPATCHER_MESOS_PRINCIPAL": "{{service.service_account}}",
+        "SPARK_DISPATCHER_MESOS_SECRET": "{{service.secret}}",
+        "SPARK_LOG_LEVEL": "{{service.log-level}}"
+    },
+
+    {{#service.service_account_secret}}
+    "secrets": {
+        "serviceCredential": {
+            "source": "{{service.service_account_secret}}"
+        }
+    },
+    {{/service.service_account_secret}}
+    {{#service.virtual_network_enabled}}
+    "networks": [
+        {
+          "name": "{{service.virtual_network_name}}",
+          {{^service.virtual_network_plugin_labels.isEmpty}}
+          "labels": {
+            {{#service.virtual_network_plugin_labels}}
+            "{{key}}": "{{value}}",
+            {{/service.virtual_network_plugin_labels}}
+            "network_name": "{{service.virtual_network_name}}"
+          },
+          {{/service.virtual_network_plugin_labels.isEmpty}}
+          "mode": "container"
+        }
+    ],
+    {{/service.virtual_network_enabled}}
+    {{^service.virtual_network_enabled}}
+    "portDefinitions": [
+        {
+            "port": 0,
+            "protocol": "tcp",
+            "name": "dispatcher",
+            "labels": {
+                "VIP_0": "dispatcher.{{service.name}}:7077"
+            }
+        },
+        {
+            "port": 0,
+            "protocol": "tcp",
+            "name": "dispatcher-ui",
+            "labels": {
+                "VIP_1": "dispatcher.{{service.name}}:4040"
+            }
+        },
+        {
+            "port": 0,
+            "protocol": "tcp",
+            "name": "dispatcher-proxy",
+            "labels": {
+                "VIP_2": "dispatcher.{{service.name}}:80"
+            }
+        }
+    ],
+    {{/service.virtual_network_enabled}}
+    "container": {
+        {{#service.UCR_containerizer}}
+        "type": "MESOS",
+        "docker": {
+            {{#service.docker-image}}
+            "image": "{{service.docker-image}}",
+            {{/service.docker-image}}
+            {{^service.docker-image}}
+            "image": "{{resource.assets.container.docker.spark_docker}}",
+            {{/service.docker-image}}
+            "forcePullImage": true
+        }
+        {{/service.UCR_containerizer}}
+        {{^service.UCR_containerizer}}
+        "type": "DOCKER",
+        "docker": {
+            {{#service.docker-image}}
+                "image": "{{service.docker-image}}",
+            {{/service.docker-image}}
+            {{^service.docker-image}}
+                "image": "{{resource.assets.container.docker.spark_docker}}",
+            {{/service.docker-image}}
+            {{^service.virtual_network_enabled}}
+                "network": "HOST",
+            {{/service.virtual_network_enabled}}
+            {{#service.docker_user}}
+                "parameters": [
+                    {
+                        "key": "user",
+                        "value": "{{service.docker_user}}"
+                    }
+                ],
+            {{/service.docker_user}}
+            {{^service.docker_user}}
+                "parameters": [
+                    {
+                        "key": "user",
+                        "value": "{{service.user}}"
+                    }
+                ],
+            {{/service.docker_user}}
+            "forcePullImage": true
+        }
+        {{/service.UCR_containerizer}}
+        {{#service.virtual_network_enabled}}
+        , "portMappings": [
+            {
+                "containerPort": 7077,
+                "protocol": "tcp",
+                "name": "dispatcher",
+                "labels": {
+                    "VIP_0": "dispatcher.{{service.name}}:7077"
+                }
+            },
+            {
+                "containerPort": 4040,
+                "protocol": "tcp",
+                "name": "dispatcher-ui",
+                "labels": {
+                    "VIP_1": "dispatcher.{{service.name}}:4040"
+                }
+            },
+            {
+                "containerPort": 8080,
+                "protocol": "tcp",
+                "name": "dispatcher-proxy",
+                "labels": {
+                    "VIP_2": "dispatcher.{{service.name}}:8080"
+                }
+            }
+          ]
+        {{/service.virtual_network_enabled}}
+    },
+    "healthChecks": [
+        {
+            "protocol": "MESOS_HTTP",
+            "path": "/",
+            "portIndex": 2,
+            "gracePeriodSeconds": 5,
+            "intervalSeconds": 60,
+            "timeoutSeconds": 10,
+            "maxConsecutiveFailures": 3
+        }
+    ],
+
+    "upgradeStrategy": {
+        "minimumHealthCapacity": 0,
+        "maximumOverCapacity": 0
+    },
+
+    "unreachableStrategy": {
+        "expungeAfterSeconds": 0,
+        "inactiveAfterSeconds": 0
+    },
+    "labels": {
+        {{#hdfs.config-url}}
+            "SPARK_HDFS_CONFIG_URL": "{{hdfs.config-url}}",
+        {{/hdfs.config-url}}
+        "SPARK_URI": "{{service.spark-dist-uri}}",
+        "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+        "DCOS_SERVICE_NAME": "{{service.name}}",
+        "DCOS_SERVICE_PORT_INDEX": "2",
+        {{#security.ssl.enabled}}
+            "DCOS_SERVICE_SCHEME": "https"
+        {{/security.ssl.enabled}}
+        {{^security.ssl.enabled}}
+            "DCOS_SERVICE_SCHEME": "http"
+        {{/security.ssl.enabled}}
+    },
+    "uris": [
+    {{#hdfs.config-url}}
+        "{{hdfs.config-url}}/hdfs-site.xml",
+        "{{hdfs.config-url}}/core-site.xml"
+    {{/hdfs.config-url}}
+    ]
+}
