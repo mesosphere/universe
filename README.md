@@ -2,8 +2,8 @@
 
 | Build | Status |
 |---|---|
-|CI   | [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)|
-| Universe Server | [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_UniverseServer)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_UniverseServer&guest=1)|
+|CI   | [![Build Status](https://teamcity.mesosphere.io/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon?guest=1)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)|
+| Universe Server | [![Build Status](https://teamcity.mesosphere.io/app/rest/builds/buildType:(id:Oss_Universe_UniverseServer)/statusIcon?guest=1)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_UniverseServer&guest=1)|
 
 Mesosphere Universe registry of packages made available for DC/OS Clusters.
 

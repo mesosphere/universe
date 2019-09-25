@@ -454,6 +454,14 @@
         "$ref": "#/dcosReleaseVersion",
         "description": "The minimum DC/OS Release Version the package can run on."
       },
+      "hasKnownIssues": {
+        "type": "boolean",
+        "description": "Boolean field indicating if the package has any known issues."
+      },
+      "lastUpdated": {
+        "type": "number",
+        "description": "A unix epoch depicting the last updated date of the package base tech"
+      },
       "marathon": {
         "$ref": "#/marathon"
       },
@@ -576,6 +584,14 @@
       "minDcosReleaseVersion": {
         "$ref": "#/dcosReleaseVersion",
         "description": "The minimum DC/OS Release Version the package can run on."
+      },
+      "hasKnownIssues": {
+        "type": "boolean",
+        "description": "Boolean field indicating if the package has any known issues."
+      },
+      "lastUpdated": {
+        "type": "number",
+        "description": "A unix epoch depicting the last updated date of the package base tech"
       },
       "marathon": {
         "$ref": "#/marathon"
@@ -713,6 +729,14 @@
         "required": [
           "packageName"
         ]
+      },
+      "hasKnownIssues": {
+        "type": "boolean",
+        "description": "Boolean field indicating if the package has any known issues."
+      },
+      "lastUpdated": {
+        "type": "number",
+        "description": "A unix epoch depicting the last updated date of the package base tech"
       },
       "marathon": {
         "$ref": "#/marathon"
