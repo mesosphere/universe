@@ -454,7 +454,7 @@
         "$ref": "#/dcosReleaseVersion",
         "description": "The minimum DC/OS Release Version the package can run on."
       },
-      "knownIssues": {
+      "hasKnownIssues": {
         "type": "boolean",
         "description": "Boolean field indicating if the package has any known issues."
       },
@@ -585,7 +585,7 @@
         "$ref": "#/dcosReleaseVersion",
         "description": "The minimum DC/OS Release Version the package can run on."
       },
-      "knownIssues": {
+      "hasKnownIssues": {
         "type": "boolean",
         "description": "Boolean field indicating if the package has any known issues."
       },
@@ -730,7 +730,7 @@
           "packageName"
         ]
       },
-      "knownIssues": {
+      "hasKnownIssues": {
         "type": "boolean",
         "description": "Boolean field indicating if the package has any known issues."
       },
