@@ -493,15 +493,12 @@ Currently Universe Server provides support for the following versions of DC/OS
 
 | DC/OS Release Version | Support Level |
 |-----------------------|---------------|
-| 1.6.1                 | Full Support  |
-| 1.7                   | Full Support  |
+| 1.6.1                 | Deprecated    |
+| 1.7                   | Deprecated    |
 | 1.8                   | Full Support  |
 | 1.9                   | Full Support  |
 | 1.10                  | Full Support  |
 | 1.11                  | Full Support  |
 | 1.12                  | Full Support  |
 | 1.13                  | Full Support  |
-| 1.14                  | Full Support  |
-
-
-
+| 2.0                   | Full Support  |
