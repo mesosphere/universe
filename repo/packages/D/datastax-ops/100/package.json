@@ -3,10 +3,12 @@
   "name": "datastax-ops",
   "version": "2.1.2-6.1.2",
   "upgradesFrom": [
-    "2.0.5-6.1.2", "2.1.1-6.1.2"
+    "2.0.5-6.1.2",
+    "2.1.1-6.1.2"
   ],
   "downgradesTo": [
-    "2.0.5-6.1.2", "2.1.1-6.1.2"
+    "2.0.5-6.1.2",
+    "2.1.1-6.1.2"
   ],
   "maintainer": "techpartner@datastax.com",
   "minDcosReleaseVersion": "1.9",
@@ -30,5 +32,6 @@
       "name": "Datastax Limited No-Fee License",
       "url": "https://www.datastax.com/enterprise-terms"
     }
-  ]
+  ],
+  "lastUpdated": 1546546726000
 }

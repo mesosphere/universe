@@ -8,7 +8,11 @@
   "website": "https://wordpress.com/",
   "framework": true,
   "description": "WordPress is a free and open source blogging tool and a content management system (CMS) based on PHP and MySQL.",
-  "tags": ["blog", "cms", "website"],
+  "tags": [
+    "blog",
+    "cms",
+    "website"
+  ],
   "preInstallNotes": "This DC/OS Service is currently in preview.",
   "postInstallNotes": "WordPress has been installed.",
   "postUninstallNotes": "WordPress has been uninstalled.",
@@ -18,5 +22,6 @@
       "url": "https://wordpress.org/about/license/"
     }
   ],
-  "selected": false
+  "selected": false,
+  "lastUpdated": 1491426142000
 }

@@ -5,7 +5,11 @@
   "scm": "http://hg.nginx.org/nginx/",
   "description": "Nginx package",
   "maintainer": "support@nginx.com",
-  "tags": ["proxy", "web-server", "cache"],
+  "tags": [
+    "proxy",
+    "web-server",
+    "cache"
+  ],
   "preInstallNotes": "Preparing to install nginx.",
   "postInstallNotes": "Nginx has been installed.",
   "postUninstallNotes": "Nginx was uninstalled successfully.",
@@ -14,5 +18,6 @@
       "name": "BSD like",
       "url": "http://nginx.org/LICENSE"
     }
-  ]
+  ],
+  "lastUpdated": 1461086408000
 }

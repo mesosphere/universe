@@ -4,7 +4,14 @@
   "name": "riak",
   "version": "2.0.0",
   "framework": true,
-  "tags": ["basho", "framework", "database", "riak", "riak-kv", "riak-ts"],
+  "tags": [
+    "basho",
+    "framework",
+    "database",
+    "riak",
+    "riak-kv",
+    "riak-ts"
+  ],
   "maintainer": "help@basho.com",
   "description": "A distributed NoSQL key-value data store that offers high availability, fault tolerance, operational simplicity, and scalability.",
   "scm": "https://github.com/basho-labs/riak-mesos.git",
@@ -17,5 +24,6 @@
       "name": "Apache License Version 2.0",
       "url": "https://github.com/basho-labs/riak-mesos/blob/master/LICENSE"
     }
-  ]
+  ],
+  "lastUpdated": 1491426142000
 }

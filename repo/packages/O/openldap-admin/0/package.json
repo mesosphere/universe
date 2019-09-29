@@ -9,7 +9,7 @@
   "tags": [
     "ldap",
     "directory"
-    ],
+  ],
   "preInstallNotes": "In order for Open LDAP Admin service to start successfully it requires atleast 0.1 CPU and 128MB of RAM including ports. WARNING: OpenLDAP Admin on DCOS is currently in ALPHA. There may be bugs, incomplete\nfeatures, incorrect documentation, or other discrepancies.\n",
   "postInstallNotes": "OpenLDAP Admin has been installed.",
   "postUninstallNotes": "OpenLDAP Admin has been uninstalled. Note that any data persisted to a NFS share still exists and will need to be manually removed.",
@@ -18,5 +18,6 @@
       "name": "MIT License",
       "url": "https://raw.githubusercontent.com/dinkel/docker-phpldapadmin/master/LICENSE"
     }
-  ]
+  ],
+  "lastUpdated": 1532967904000
 }

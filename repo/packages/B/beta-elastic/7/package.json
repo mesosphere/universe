@@ -15,16 +15,21 @@
     "x-pack"
   ],
   "version": "1.0.16-5.5.1-beta",
-  "upgradesFrom": ["1.0.15-5.5.1-beta"],
-  "downgradesTo": ["1.0.15-5.5.1-beta"],
+  "upgradesFrom": [
+    "1.0.15-5.5.1-beta"
+  ],
+  "downgradesTo": [
+    "1.0.15-5.5.1-beta"
+  ],
   "licenses": [
     {
-        "name": "Apache License Version 2.0",
-        "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/LICENSE.txt"
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/LICENSE.txt"
     },
     {
-        "name": "Elastic License",
-        "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/x-pack/README.md"
+      "name": "Elastic License",
+      "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/x-pack/README.md"
     }
- ]
+  ],
+  "lastUpdated": 1546546758000
 }

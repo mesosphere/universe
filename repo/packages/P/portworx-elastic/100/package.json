@@ -24,12 +24,13 @@
   "postUninstallNotes": "The DC/OS Elastic service is being uninstalled\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required.",
   "licenses": [
     {
-        "name": "Apache License Version 2.0",
-        "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/LICENSE.txt"
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/LICENSE.txt"
     },
     {
-        "name": "Elastic License",
-        "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/x-pack/README.md"
+      "name": "Elastic License",
+      "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/x-pack/README.md"
     }
-  ]
+  ],
+  "lastUpdated": 1548183551000
 }

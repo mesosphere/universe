@@ -10,7 +10,7 @@
     "mysql",
     "database",
     "admin"
-    ],
+  ],
   "preInstallNotes": "MySQL Admin requires at least 0.2 CPU and 256MB of RAM.\n\nWARNING: MySQL Admin on DCOS is currently EXPERIMENTAL. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nThis package will automatically connect to an existing DC/OS `mysql` package through an automated Virtual IP.\n\nThis package is accessible through the DC/OS `Services` tab. If the `external_access`is enabled on installation, it will also create an entry in the DC/OS external load balancer for accessing the UI from outside the cluster, by default in port `13306`. Access the UI at `http://your_DCOS_URL/services/mysql-admin` or at `http://your_public_node_ip:13306` if `external_access` is enabled",
   "postInstallNotes": "MySQL Admin has been installed.\n\nYou can now access the UI at `http://your_DCOS_URL/services/mysql-admin` or at `http://your_public_node_ip:13306` if you selected `external_access` on installation.\n\nDC/OS MySQL default Login: `admin`\nDefault password: `password`",
   "postUninstallNotes": "MySQL Admin has been uninstalled.",
@@ -19,5 +19,6 @@
       "name": "GNU GPL License",
       "url": "https://raw.githubusercontent.com/phpmyadmin/docker/master/LICENSE"
     }
-  ]
+  ],
+  "lastUpdated": 1532967904000
 }

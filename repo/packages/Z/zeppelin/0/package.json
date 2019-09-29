@@ -6,12 +6,20 @@
   "maintainer": "https://dcos.io/community/",
   "description": "Zeppelin is a web-based notebook that enables interactive data analytics",
   "framework": true,
-  "tags": ["nflabs", "framework", "bigdata", "spark", "notebook", "interactive"],
+  "tags": [
+    "nflabs",
+    "framework",
+    "bigdata",
+    "spark",
+    "notebook",
+    "interactive"
+  ],
   "postInstallNotes": "Zeppelin has been successfully installed!\nNote that the service is experimental and there may be bugs, incomplete features, incorrect documentation or other discrepancies.",
   "licenses": [
     {
       "name": "Apache License Version 2.0",
       "url": "https://raw.githubusercontent.com/apache/zeppelin/master/LICENSE"
     }
-  ]
+  ],
+  "lastUpdated": 1546539198000
 }

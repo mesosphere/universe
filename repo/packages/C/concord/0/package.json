@@ -7,7 +7,12 @@
   "selected": false,
   "framework": true,
   "website": "http://concord.io",
-  "tags": ["stream", "framework", "pubsub", "multi-lang"],
+  "tags": [
+    "stream",
+    "framework",
+    "pubsub",
+    "multi-lang"
+  ],
   "scm": "https://github.com/concord",
   "licenses": [
     {
@@ -17,5 +22,6 @@
   ],
   "preInstallNotes": "This DC/OS Service is currently in preview.",
   "postInstallNotes": "Concord has been installed.",
-  "postUninstallNotes": "Concord has been uninstalled."
+  "postUninstallNotes": "Concord has been uninstalled.",
+  "lastUpdated": 1491426142000
 }

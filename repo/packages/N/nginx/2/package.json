@@ -5,7 +5,12 @@
   "version": "1.10.1",
   "scm": "http://hg.nginx.org/nginx/",
   "maintainer": "support@nginx.com",
-  "tags": ["proxy", "web-server", "cache", "reverse-proxy"],
+  "tags": [
+    "proxy",
+    "web-server",
+    "cache",
+    "reverse-proxy"
+  ],
   "preInstallNotes": "Preparing to install nginx.",
   "postInstallNotes": "Nginx has been installed.",
   "postUninstallNotes": "Nginx was uninstalled successfully.",
@@ -14,5 +19,6 @@
       "name": "BSD like",
       "url": "http://nginx.org/LICENSE"
     }
-  ]
+  ],
+  "lastUpdated": 1467739304000
 }

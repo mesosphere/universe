@@ -24,12 +24,13 @@
   "postUninstallNotes": "The DC/OS Elastic service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/elastic/uninstall to remove any persistent state if required.",
   "licenses": [
     {
-        "name": "Apache License Version 2.0",
-        "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/LICENSE.txt"
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/LICENSE.txt"
     },
     {
-        "name": "Elastic License",
-        "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/x-pack/README.md"
+      "name": "Elastic License",
+      "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/x-pack/README.md"
     }
- ]
+  ],
+  "lastUpdated": 1546546758000
 }

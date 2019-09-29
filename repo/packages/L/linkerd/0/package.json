@@ -6,7 +6,16 @@
   "description": "A dynamic linker for microservices.",
   "maintainer": "hello@buoyant.io",
   "website": "https://linkerd.io",
-  "tags": ["linkerd", "namerd", "buoyant", "loadbalancer", "service-discovery", "proxy", "microservices", "rpc"],
+  "tags": [
+    "linkerd",
+    "namerd",
+    "buoyant",
+    "loadbalancer",
+    "service-discovery",
+    "proxy",
+    "microservices",
+    "rpc"
+  ],
   "preInstallNotes": "We recommend a minimum of 0.25 CPUs and 256 MB of RAM available for linkerd. We also recommend running linkerd on every host, and connecting to it via $HOST:4140. To ensure this, set instances to the number of nodes in your cluster.",
   "postInstallNotes": "linkerd DCOS Service has been successfully installed!\nSee https://linkerd.io for documentation.",
   "postUninstallNotes": "linkerd DCOS Service has been uninstalled and will no longer run.",
@@ -15,5 +24,6 @@
       "name": "Apache License Version 2.0",
       "url": "https://github.com/BuoyantIO/linkerd/blob/master/LICENSE"
     }
-  ]
+  ],
+  "lastUpdated": 1460944983000
 }

@@ -6,7 +6,11 @@
   "description": "Apache Kafka running on DC/OS",
   "selected": true,
   "framework": true,
-  "tags": ["message", "broker", "pubsub"],
+  "tags": [
+    "message",
+    "broker",
+    "pubsub"
+  ],
   "postInstallNotes": "DC/OS Kafka Service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/kafka/\n\tIssues: https://docs.mesosphere.com/support/",
   "postUninstallNotes": "DC/OS Kafka Service has been uninstalled.\nPlease follow the instructions at https://docs.mesosphere.com/service-docs/kafka/uninstall to remove any persistent state if required.",
   "licenses": [
@@ -14,5 +18,6 @@
       "name": "Apache License Version 2.0",
       "url": "https://raw.githubusercontent.com/apache/kafka/trunk/LICENSE"
     }
-  ]
+  ],
+  "lastUpdated": 1546546630000
 }

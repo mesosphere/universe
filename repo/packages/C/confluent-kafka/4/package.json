@@ -6,7 +6,12 @@
   "description": "Confluent Platform running on DCOS",
   "selected": false,
   "framework": true,
-  "tags": ["message", "broker", "pubsub", "kafka"],
+  "tags": [
+    "message",
+    "broker",
+    "pubsub",
+    "kafka"
+  ],
   "postInstallNotes": "DCOS Confluent Platform is being installed.",
   "postUninstallNotes": "DCOS Confluent Platform has been uninstalled. Please run the framework_cleaner to remove any persistent state if required.",
   "licenses": [
@@ -14,5 +19,6 @@
       "name": "Apache License Version 2.0",
       "url": "https://raw.githubusercontent.com/apache/kafka/trunk/LICENSE"
     }
-  ]
+  ],
+  "lastUpdated": 1546546630000
 }

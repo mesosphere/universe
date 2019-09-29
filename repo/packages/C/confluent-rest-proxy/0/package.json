@@ -5,7 +5,12 @@
   "scm": "https://github.com/confluentinc/kafka-rest",
   "description": "Confluent Platform REST Proxy service",
   "maintainer": "partner-support@confluent.io",
-  "tags": ["kafka", "confluent", "proxy", "rest"],
+  "tags": [
+    "kafka",
+    "confluent",
+    "proxy",
+    "rest"
+  ],
   "preInstallNotes": "Preparing to install confluent-rest-proxy",
   "postInstallNotes": "confluent-rest-proxy has been installed.",
   "postUninstallNotes": "confluent-rest-proxy was uninstalled successfully.",
@@ -14,5 +19,6 @@
       "name": "Apache License v2",
       "url": "https://raw.githubusercontent.com/confluentinc/kafka-rest/master/LICENSE"
     }
-  ]
+  ],
+  "lastUpdated": 1469936831000
 }

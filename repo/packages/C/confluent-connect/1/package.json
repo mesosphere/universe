@@ -5,15 +5,20 @@
   "scm": "https://github.com/confluentinc/kafka",
   "description": "confluent-connect package",
   "maintainer": "partner-support@confluent.io",
-  "tags": ["kafka", "confluent", "connect"],
+  "tags": [
+    "kafka",
+    "confluent",
+    "connect"
+  ],
   "preInstallNotes": "Preparing to install confluent-connect",
   "postInstallNotes": "confluent-connect has been installed.",
   "postUninstallNotes": "confluent-connect was uninstalled successfully.",
-  "minDcosReleaseVersion" : "1.8",
+  "minDcosReleaseVersion": "1.8",
   "licenses": [
     {
       "name": "Apache License v2",
       "url": "https://www.apache.org/licenses/LICENSE-2.0"
     }
-  ]
+  ],
+  "lastUpdated": 1475689040000
 }

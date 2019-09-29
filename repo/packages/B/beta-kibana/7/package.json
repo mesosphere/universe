@@ -23,12 +23,13 @@
   "postUninstallNotes": "The DC/OS Kibana service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/services/elastic/uninstall to remove any persistent state if required.",
   "licenses": [
     {
-        "name": "Apache License Version 2.0",
-        "url": "https://raw.githubusercontent.com/elastic/kibana/master/LICENSE.txt"
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/elastic/kibana/master/LICENSE.txt"
     },
     {
-        "name": "Elastic License",
-        "url": "https://raw.githubusercontent.com/elastic/kibana/master/x-pack/README.md"
+      "name": "Elastic License",
+      "url": "https://raw.githubusercontent.com/elastic/kibana/master/x-pack/README.md"
     }
- ]
+  ],
+  "lastUpdated": 1546546758000
 }

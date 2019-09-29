@@ -8,15 +8,24 @@
   "framework": true,
   "scm": "https://github.com/tobilg/dcos-commons.git",
   "website": "https://github.com/tobilg/dcos-commons/tree/mongodb-replicaset/frameworks/mongodb-replicaset",
-  "tags": ["MongoDB", "ReplicaSet", "database", "nosql", "db", "json", "stateful"],
+  "tags": [
+    "MongoDB",
+    "ReplicaSet",
+    "database",
+    "nosql",
+    "db",
+    "json",
+    "stateful"
+  ],
   "preInstallNotes": "This DC/OS Service is currently in preview. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.",
   "postInstallNotes": "The MongoDB ReplicaSet service was installed!",
   "postUninstallNotes": "The MongoDB ReplicaSet service was unistalled!",
-  "minDcosReleaseVersion" : "9999",
+  "minDcosReleaseVersion": "9999",
   "licenses": [
     {
       "name": "MIT License",
       "url": "https://raw.githubusercontent.com/tobilg/dcos-commons/mongodb-replicaset/frameworks/mongodb-replicaset/LICENSE"
     }
-  ]
+  ],
+  "lastUpdated": 1533559807000
 }
