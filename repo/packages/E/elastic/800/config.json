@@ -760,7 +760,7 @@
           "default": false
         },
         "xpack_security_transport_ssl_client_authentication": {
-          "description": "Controls the server\u2019s behavior in regard to requesting a certificate from client connections.",
+          "description": "Controls the server's behavior in regard to requesting a certificate from client connections.",
           "type": "string",
           "enum": [
             "required",
@@ -780,7 +780,7 @@
           "default": "full"
         },
         "xpack_security_http_ssl_client_authentication": {
-          "description": "Controls the server\u2019s behavior in regard to requesting a certificate from client connections.",
+          "description": "Controls the server's behavior in regard to requesting a certificate from client connections.",
           "type": "string",
           "enum": [
             "required",
