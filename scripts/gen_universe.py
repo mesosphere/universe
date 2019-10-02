@@ -5,7 +5,6 @@ import argparse
 import base64
 import collections
 import copy
-import git
 import itertools
 import json
 import jsonschema
@@ -17,8 +16,8 @@ import re
 import zipfile
 
 
-project_dir = "{}/..".format(os.path.dirname(os.path.realpath(__file__)))
-schema_dir = os.environ.get("SCHEMA_DIR", "{}/repo/meta/schema/".format(project_dir))
+dir_path = os.path.dirname(os.path.realpath(__file__))
+schema_dir = os.environ.get("SCHEMA_DIR", "{}/../repo/meta/schema/".format(dir_path))
 repo_definitions_json = "{}/vX-repo-definitions.json".format(schema_dir)
 
 
@@ -53,10 +52,6 @@ def main():
         print('The path in --repository [{}] is not a directory.'.format(
             args.repository))
         return
-    else:
-        global git_repo
-        git_repo = git.Git(project_dir)
-        print("universe git repo detected at {}".format(project_dir))    
 
     packages = [
         generate_package_from_path(
@@ -282,18 +277,9 @@ def read_package(path):
     :rtype: dict
     """
 
-    package_json_path = path / 'package.json'
-
-    with package_json_path.open(encoding='utf-8') as file_object:
-        package_json = json.load(file_object)
-
-        # Update the `lastUpdated` field in the `package.json` if it is not already present.
-        if (LooseVersion(package_json.get('packagingVersion', '0.0')) >= LooseVersion("3.0")) \
-                and ("lastUpdated" not in package_json):
-            last_updated = git_repo.log("-1", '--date=unix', '--format=%cd', '--', path)
-            if last_updated:
-                package_json["lastUpdated"] = int(last_updated)
-        return package_json
+    path = path / 'package.json'
+    with path.open(encoding='utf-8') as file_object:
+        return json.load(file_object)
 
 
 def read_resource(path):
