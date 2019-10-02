@@ -1,0 +1,19 @@
+{
+  "assets": {
+    "uris": {
+      "kibana-tar-gz": "https://downloads.mesosphere.com/elastic/assets/kibana-7.3.2-linux-x86_64.tar.gz",
+      "init-sh": "https://downloads.mesosphere.com/kibana/assets/3.0.0-7.3.2/init.sh",
+      "nginx-conf-tmpl": "https://downloads.mesosphere.com/kibana/assets/3.0.0-7.3.2/nginx.conf.tmpl"
+    },
+    "container": {
+      "docker": {
+        "nginx": "nginx:1.15.12"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/elastic/assets/icon-kibana-bb.svg",
+    "icon-medium": "https://downloads.mesosphere.com/elastic/assets/icon-kibana-bb.svg",
+    "icon-large": "https://downloads.mesosphere.com/elastic/assets/icon-kibana-bb.svg"
+  }
+}
