@@ -1,0 +1,59 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-8u212b03-hotspot-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.12.0.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/elastic/assets/3.0.0-7.3.2/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/elastic/assets/3.0.0-7.3.2/elastic-scheduler.zip",
+      "elasticsearch-jre-tar-gz": "https://downloads.mesosphere.com/elastic/assets/openjdk-11.0.2_linux-x64_bin.tar.gz",
+      "elasticsearch-tar-gz": "https://downloads.mesosphere.com/elastic/assets/elasticsearch-7.3.2-linux-x86_64.tar.gz",
+      "diagnostics-zip": "https://downloads.mesosphere.com/elastic/assets/support-diagnostics-7.0.9-dist.zip",
+      "prometheus-exporter-tar-gz": "https://downloads.mesosphere.com/elastic/assets/elasticsearch-prometheus-exporter-1.1.0-linux-amd64.tar.gz"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/elastic-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/elastic-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/elastic-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "859a6c40dc22015bff530ce483e632c8b0dd91f34bab9c6527ec98e893d3478a"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/elastic/assets/3.0.0-7.3.2/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "706f1aca1492a660c0b74c4ddab1e91d8a3955a3516fd7ef054bffdcd6fbbea7"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/elastic/assets/3.0.0-7.3.2/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "ba6a761f6a64276e7a3461eef2b9699f6b66d6431db2c77c8229d9fbbd35beb2"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/elastic/assets/3.0.0-7.3.2/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
