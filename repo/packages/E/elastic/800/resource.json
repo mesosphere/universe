@@ -3,8 +3,8 @@
     "uris": {
       "jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-8u212b03-hotspot-linux-x64.tar.gz",
       "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.14-beta.tar.gz",
-      "bootstrap-zip": "https://downloads.mesosphere.com/elastic/assets/2.8.0-7.3.2/bootstrap.zip",
-      "scheduler-zip": "https://downloads.mesosphere.com/elastic/assets/2.8.0-7.3.2/elastic-scheduler.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/elastic/assets/3.0.0-7.3.2/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/elastic/assets/3.0.0-7.3.2/elastic-scheduler.zip",
       "elasticsearch-jre-tar-gz": "https://downloads.mesosphere.com/elastic/assets/openjdk-11.0.2_linux-x64_bin.tar.gz",
       "elasticsearch-tar-gz": "https://downloads.mesosphere.com/elastic/assets/elasticsearch-7.3.2-linux-x86_64.tar.gz",
       "diagnostics-zip": "https://downloads.mesosphere.com/elastic/assets/support-diagnostics-7.0.9-dist.zip",
@@ -27,7 +27,7 @@
             }
           ],
           "kind": "executable",
-          "url": "https://downloads.mesosphere.com/elastic/assets/2.8.0-7.3.2/dcos-service-cli-darwin"
+          "url": "https://downloads.mesosphere.com/elastic/assets/3.0.0-7.3.2/dcos-service-cli-darwin"
         }
       },
       "linux": {
@@ -39,7 +39,7 @@
             }
           ],
           "kind": "executable",
-          "url": "https://downloads.mesosphere.com/elastic/assets/2.8.0-7.3.2/dcos-service-cli-linux"
+          "url": "https://downloads.mesosphere.com/elastic/assets/3.0.0-7.3.2/dcos-service-cli-linux"
         }
       },
       "windows": {
@@ -51,7 +51,7 @@
             }
           ],
           "kind": "executable",
-          "url": "https://downloads.mesosphere.com/elastic/assets/2.8.0-7.3.2/dcos-service-cli.exe"
+          "url": "https://downloads.mesosphere.com/elastic/assets/3.0.0-7.3.2/dcos-service-cli.exe"
         }
       }
     }
