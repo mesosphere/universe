@@ -1,0 +1,142 @@
+{
+    "type": "object", 
+    "properties": {
+        "service": {
+            "type": "object", 
+            "description": "DC/OS service configuration properties", 
+            "properties": {
+                "name": {
+                    "description": "The name of the service instance", 
+                    "type": "string", 
+                    "default": "grafana", 
+                    "title": "Service name"
+                }, 
+                "user": {
+                    "description": "The user that the service will run as.", 
+                    "type": "string", 
+                    "default": "root", 
+                    "title": "User"
+                }, 
+                "service_account": {
+                    "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "service_account_secret": {
+                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.", 
+                    "type": "string", 
+                    "default": "", 
+                    "title": "Credential secret name (optional)"
+                }, 
+                "mesos_api_version": {
+                    "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)", 
+                    "type": "string", 
+                    "enum": [
+                        "V0", 
+                        "V1"
+                    ], 
+                    "default": "V1"
+                }, 
+                "log_level": {
+                    "description": "The log level for the DC/OS service.", 
+                    "type": "string", 
+                    "enum": [
+                        "OFF", 
+                        "FATAL", 
+                        "ERROR", 
+                        "WARN", 
+                        "INFO", 
+                        "DEBUG", 
+                        "TRACE", 
+                        "ALL"
+                    ], 
+                    "default": "INFO"
+                }
+            }, 
+            "required": [
+                "name", 
+                "user"
+            ]
+        }, 
+        "grafana": {
+            "description": "grafana pod configuration properties", 
+            "type": "object", 
+            "properties": {
+                "cpus": {
+                    "description": "Grafana pod CPU requirements", 
+                    "type": "number", 
+                    "default": 0.2
+                }, 
+                "mem": {
+                    "description": "Grafana pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 2048
+                },
+                "volume": {
+                    "description": "Grafana volume requirements",
+                    "type": "object",
+                    "properties": {
+                        "path": {
+                            "description": "Location of persistent volume to store data",
+                            "type": "string",
+                            "default": "grafana-data"
+                        },
+                        "type": {
+                            "description": "The type of persistent volume to use, one of ROOT or MOUNT",
+                            "type": "string",
+                            "default": "ROOT",
+                            "enum": [
+                                "ROOT",
+                                "MOUNT",
+                                "PATH"
+                            ]
+                        },
+                        "size": {
+                            "description": "The size of the persistent volume in MB",
+                            "type": "integer",
+                            "default": 512,
+                            "minimum": 512
+                        }
+                    }
+                },
+                "ini": {
+                    "description": "Base64 encoded conf/grafana.ini",
+                    "type": "string",
+                    "media": {
+                        "binaryEncoding": "base64", 
+                        "type": "application/x-yaml"
+                    },
+                    "default": "YXBwX21vZGUgPSBwcm9kdWN0aW9uCmluc3RhbmNlX25hbWUgPSAke0hPU1ROQU1FfQpbcGF0aHNdCmRhdGEgPSAvZ3JhZmFuYS1kYXRhCjt0ZW1wX2RhdGFfbGlmZXRpbWUgPSAyNGgKbG9ncyA9IC9ncmFmYW5hLWRhdGEKcGx1Z2lucyA9IC9ncmFmYW5hLWRhdGEvcGx1Z2lucwpwcm92aXNpb25pbmcgPSBjb25mL3Byb3Zpc2lvbmluZwoK"
+                },
+                "provisioning": {
+                    "description": "Provisioning properties to be used",
+                    "type": "object",
+                    "properties": {
+                        "datasources": {
+                            "description": "Base64 encoded conf/provisioning/datasources/datasources.yml",
+                            "type": "string",
+                            "media": {
+                                "binaryEncoding": "base64",
+                                "type": "application/x-yaml"
+                            },
+                            "default": "YXBpVmVyc2lvbjogMQoKI2RlbGV0ZURhdGFzb3VyY2VzOgojICAtIG5hbWU6IFByb21ldGhldXMKIyAgICBvcmdJZDogMQoKI2RhdGFzb3VyY2VzOgojICAtIG5hbWU6IFByb21ldGhldXMKIyAgICB0eXBlOiBwcm9tZXRoZXVzCiMgICAgYWNjZXNzOiBwcm94eQojICAgIG9yZ0lkOiAxCiMgICAgdXJsOiBodHRwOi8vcHJvbWV0aGV1cy5wcm9tZXRoZXVzLmw0bGIudGhpc2Rjb3MuZGlyZWN0b3J5OjkwOTAKIyAgICBpc0RlZmF1bHQ6IHRydWUKIyAgICBqc29uRGF0YTogeyAidGltZUludGVydmFsIjogIjMwcyIgfQo"
+                        },
+                        "dashboards": {
+                            "description": "Base64 encoded conf/provisioning/dashboards/dashboards.yml config",
+                            "type": "string",
+                            "media": {
+                                "binaryEncoding": "base64",
+                                "type": "application/x-yaml"
+                            },
+                            "default": "YXBpVmVyc2lvbjogMQoK"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "cpus", 
+                "mem"
+            ]
+        }
+    }
+}
