@@ -1,0 +1,472 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "hello-world"
+        },
+        "user": {
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "nobody"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of the Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "role": {
+          "description": "The service role used to subscribe to Mesos and to deploy this service's footprint. The specified value is validated by Marathon when enforce-role is set on the group where this service is deployed.",
+          "type": "string",
+          "default": ""
+        },
+        "enable_role_migration": {
+          "description": "When this flag is enabled, the scheduler subscribes with both the service-role and the legacy role. This flag is intended for migration to the new quota-enabled schedulers. ",
+          "type": "boolean",
+          "default": false
+        },
+        "service_account_secret": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        },
+        "region": {
+          "description": "The region that the service's tasks should run in.",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-region+string"
+          }
+        },
+        "sleep": {
+          "description": "The sleep duration in seconds before tasks exit.",
+          "type": "number",
+          "default": 1000
+        },
+        "test_boolean": {
+          "description": "A boolean value for testing purposes",
+          "type": "boolean",
+          "default": true
+        },
+        "test_profile_volume_command": {
+          "description": "A shell command to test if a given path is on a profile volume, or empty for no test",
+          "type": "string",
+          "default": ""
+        },
+        "scenario": {
+          "description": "A comma-separated list of SDK customization scenarios to perform on the service(s)",
+          "type": "string",
+          "default": "YAML"
+        },
+        "yaml": {
+          "description": "A single example YAML file to deploy, or an empty string to launch an empty multi-scheduler",
+          "type": "string",
+          "enum": [
+            "canary",
+            "custom_tld",
+            "discovery",
+            "enable-disable",
+            "executor_volume",
+            "finish_state",
+            "foobar_service_name",
+            "gpu_resource",
+            "graceful-shutdown",
+            "host-volume",
+            "marathon_constraint",
+            "multistep_plan",
+            "multiport",
+            "nonessential_tasks",
+            "overlay",
+            "pause",
+            "plan",
+            "pod-mount-volume",
+            "pod-profile-mount-volume",
+            "pre-reserved",
+            "pre-reserved-sidecar",
+            "profile-mount-volume",
+            "secrets",
+            "share_pid_namespace",
+            "sidecar",
+            "simple",
+            "taskcfg",
+            "svc",
+            "tls",
+            "uri",
+            "web-url",
+            "non_recoverable_state",
+            "crash-loop",
+            "seccomp",
+            "shm",
+            ""
+          ],
+          "default": "svc"
+        },
+        "yamls": {
+          "description": "A comma-separated list of example YAML files to deploy in a multi-scheduler, in addition to any listed in 'yaml'",
+          "type": "string",
+          "default": ""
+        },
+        "allow_region_awareness": {
+          "description": "Allow region awareness",
+          "type": "boolean",
+          "default": true
+        },
+        "custom_service_tld": {
+          "description": "Specifies a custom TLD to use for endpoints",
+          "type": "string",
+          "default": ""
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "description": "Placement constraint for the hello-world scheduler",
+          "default": []
+        },
+        "verbose_mesos_logging": {
+          "description": "Sets the value of GLOG_v env-var used by Mesos. Enabled by default, set to 0 to disable.",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "default": 1
+        },
+        "task_failure_backoff": {
+          "description": "Configuration for back off of failed/error tasks",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enable backoff delay",
+              "type": "boolean",
+              "default": true
+            },
+            "backoff_factor": {
+              "description": "The rate of advancing the backoff delay on a failing task",
+              "type": "number",
+              "default": 1.15
+            },
+            "initial_backoff": {
+              "description": "Initial backoff delay for a task that failed for the first time (in seconds)",
+              "type": "integer",
+              "default": 60
+            },
+            "max_launch_delay": {
+              "description": "Maximum launch delay for any task (in seconds)",
+              "type": "integer",
+              "default": 300
+            }
+          },
+          "required": [
+            "enabled"
+          ]
+        },
+        "check": {
+          "description": "Checks are a way to understand the health of a service. These HTTP checks are intended to be consumed by services external to Mesos/Marathon which will take appropriate action on them.",
+          "type": "object",
+          "properties": {
+            "intervalSeconds": {
+              "description": "Number of seconds to wait between checks",
+              "type": "integer",
+              "default": 60
+            },
+            "timeoutSeconds": {
+              "description": "Number of seconds after which a check times out, regardless of the response. This value must be smaller than intervalSeconds",
+              "type": "integer",
+              "default": 20
+            },
+            "delaySeconds": {
+              "description": "Amount of time to wait until starting the checks",
+              "type": "integer",
+              "default": 15
+            }
+          }
+        }
+      }
+    },
+    "debug": {
+      "description": "Config to start the scheduler with remote debug options enabled. THIS SHOULD NOT HAVE ANY DEFAULTS",
+      "type": "object",
+      "properties": {
+        "suspend": {
+          "description": "Suspend the JVM until a debugger is attached",
+          "type": "string",
+          "enum": [
+            "y",
+            "n"
+          ],
+          "default": "n"
+        },
+        "address": {
+          "description": "Interface to listen. This is a string to support *:6242 style to bind to all interfaces",
+          "type": "string"
+        }
+      }
+    },
+    "hello": {
+      "description": "Hello pod configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "Hello pod CPU requirements",
+          "type": "number",
+          "default": 0.1
+        },
+        "gpus": {
+          "description": "Hello pod GPU requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "description": "Hello pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 252
+        },
+        "disk": {
+          "description": "Hello pod persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 25
+        },
+        "volume_profile": {
+          "description": "Hello pod persistent volume profile requirements",
+          "type": "string",
+          "default": ""
+        },
+        "count": {
+          "description": "Number of Hello pods to run",
+          "type": "integer",
+          "default": 1
+        },
+        "placement": {
+          "description": "Placement constraints for Hello pods",
+          "type": "string",
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "secret1": {
+          "description": "secret1",
+          "type": "string",
+          "default": ""
+        },
+        "secret2": {
+          "description": "secret2",
+          "type": "string",
+          "default": ""
+        },
+        "kill_grace_period": {
+          "description": "The number of seconds of grace to await a clean shutdown following SIGTERM before sending SIGKILL, default: `0`",
+          "type": "integer",
+          "default": 0
+        },
+        "port_one": {
+          "description": "any arbitrary port can be used",
+          "type": "integer",
+          "default": 1729
+        },
+        "labels": {
+          "description": "labels",
+          "type": "string",
+          "default": ""
+        },
+        "seccomp-unconfined": {
+          "description": "unconfined from the default seccomp profile",
+          "type": "boolean",
+          "default": false
+        },
+        "seccomp-profile-name": {
+          "description": "seccomp profile to run pod with",
+          "type": "string",
+          "default": ""
+        },
+        "rlimits": {
+          "description": "POSIX resource limits applied to the pod. Excercise caution when modifying these default values as it can lead to spurious task failures.",
+          "type": "object",
+          "properties": {
+            "rlimit_nofile": {
+              "description": "Specifies RLIMIT_NOFILE, a value one greater than the maximum file descriptor number that can be opened by this process.",
+              "type": "object",
+              "properties": {
+                "soft": {
+                  "type": "integer",
+                  "description": "The  soft  limit  is  the  value that the kernel enforces for the corresponding resource.",
+                  "default": 128000,
+                  "minimum": 128000
+                },
+                "hard": {
+                  "type": "integer",
+                  "description": "The  hard  limit  acts as a ceiling for the soft limit.",
+                  "default": 128000,
+                  "minimum": 128000
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "cpus",
+        "gpus",
+        "mem",
+        "disk",
+        "count"
+      ]
+    },
+    "world": {
+      "description": "World pod configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "World pod CPU requirements",
+          "type": "number",
+          "default": 0.2
+        },
+        "mem": {
+          "description": "World pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 512
+        },
+        "disk": {
+          "description": "World pod persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 25
+        },
+        "count": {
+          "description": "Number of World pods to run",
+          "type": "integer",
+          "default": 2
+        },
+        "placement": {
+          "description": "Placement constraints for World pods",
+          "type": "string",
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "secret1": {
+          "description": "secret1",
+          "type": "string",
+          "default": ""
+        },
+        "secret2": {
+          "description": "secret2",
+          "type": "string",
+          "default": ""
+        },
+        "secret3": {
+          "description": "secret3",
+          "type": "string",
+          "default": ""
+        },
+        "kill_grace_period": {
+          "description": "The number of seconds of grace to await a clean shutdown following SIGTERM before sending SIGKILL, default: `0`",
+          "type": "integer",
+          "default": 0
+        },
+        "readiness_check": {
+          "description": "Readiness check settings. Excercise caution when modifying these default values as it can lead to spurious task failures.",
+          "type": "object",
+          "properties": {
+            "interval": {
+              "type": "integer",
+              "description": "The period in seconds to wait after the last readiness check has completed to start the next check.",
+              "default": 5,
+              "minimum": 5
+            },
+            "delay": {
+              "type": "integer",
+              "description": "An amount of time in seconds to wait before starting the readiness check attempts.",
+              "default": 0,
+              "minimum": 0
+            },
+            "timeout": {
+              "type": "integer",
+              "description": "An amount of time in seconds to wait for a readiness check to succeed.",
+              "default": 10,
+              "minimum": 10
+            }
+          }
+        },
+        "rlimits": {
+          "description": "POSIX resource limits applied to the pod. Excercise caution when modifying these default values as it can lead to spurious task failures.",
+          "type": "object",
+          "properties": {
+            "rlimit_nofile": {
+              "description": "Specifies RLIMIT_NOFILE, a value one greater than the maximum file descriptor number that can be opened by this process.",
+              "type": "object",
+              "properties": {
+                "soft": {
+                  "type": "integer",
+                  "description": "The  soft  limit  is  the  value that the kernel enforces for the corresponding resource.",
+                  "default": 128000,
+                  "minimum": 128000
+                },
+                "hard": {
+                  "type": "integer",
+                  "description": "The  hard  limit  acts as a ceiling for the soft limit.",
+                  "default": 128000,
+                  "minimum": 128000
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk",
+        "count"
+      ]
+    },
+    "tls": {
+      "description": "TLS pod configuration properties",
+      "type": "object",
+      "properties": {
+        "keystore_app_version": {
+          "description": "Keystore app version",
+          "type": "string",
+          "default": "0.1-SNAPSHOT"
+        },
+        "nginx_container_version": {
+          "description": "NGINX TLS container version",
+          "type": "string",
+          "default": "0.1"
+        },
+        "discovery_task_prefix": {
+          "description": "Service discovery prefix name for discovery task",
+          "type": "string",
+          "default": "discovered"
+        }
+      }
+    }
+  }
+}
