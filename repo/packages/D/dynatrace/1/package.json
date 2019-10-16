@@ -15,5 +15,6 @@
     "postInstallNotes": "Dynatrace has been installed on DC/OS agents.\nLog in to your Dynatrace account and monitor your DC/OS cluster. You will shorty see your cluster and container insights in Dynatrace.",
     "postUninstallNotes": "Dynatrace has been uninstalled from your DC/OS agents and will no longer run.",
     "preInstallNotes": "This DC/OS Service is currently in preview.\nPass your Dynatrace OneAgent Download URL and number of DC/OS agent nodes as package options.\nBy default Marathon will allcoate 0.1 CPU and 400m memory per Dynatrace OneAgent task.",
-    "website": "https://www.dynatrace.com/technologies/cloud-and-microservices/dcos-monitoring/"
+    "website": "https://www.dynatrace.com/technologies/cloud-and-microservices/dcos-monitoring/",
+    "lastUpdated": 1509489928
 }
