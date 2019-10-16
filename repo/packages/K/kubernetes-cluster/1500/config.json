@@ -1,0 +1,633 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of the service instance. The name must contain only alphanumeric characters, underscores and dashes up to a maximum of 24 characters, and must start and end with an alphanumeric character).",
+          "type": "string",
+          "default": "kubernetes-cluster"
+        },
+        "region": {
+          "description": "The Kubernetes cluster will run in this region. When no region is specified the cluster is constrained to the local region.",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-region+string"
+          }
+        },
+        "sleep": {
+          "description": "The sleep duration in seconds before tasks exit.",
+          "type": "number",
+          "default": 1000
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of the Mesos framework.",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-service-account+string"
+          }
+        },
+        "service_account_secret": {
+          "title": "Credential secret name (optional)",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-secret+string"
+          }
+        },
+        "role": {
+          "description": "The service role used to subscribe to Mesos and to deploy this service's footprint. The specified value is validated by Marathon when enforce-role is set on the group where this service is deployed.",
+          "type": "string",
+          "default": ""
+        },
+        "enable_role_migration": {
+          "description": "When this flag is enabled, the scheduler subscribes with both the service-role and the legacy role. This flag is intended for migration to the new quota-enabled schedulers. ",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the DC/OS virtual network to use.",
+          "type": "string",
+          "default": "dcos"
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        },
+        "use_agent_docker_certs": {
+          "type": "boolean",
+          "default": false,
+          "title": "Use the agent's Docker certificates",
+          "description": "Whether to use the agent's Docker certificates in order to access private Docker registries."
+        },
+        "check": {
+          "description": "Health check used to determine the scheduler health based on the status of the scheduler plans.",
+          "type": "object",
+          "properties": {
+            "intervalSeconds": {
+              "type": "integer",
+              "description": "The period in seconds to wait after the last check has completed to start the next check.",
+              "default": 30,
+              "minimum": 30
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "description": " An amount of time in seconds to wait for check to succeed.",
+              "default": 20,
+              "minimum": 20
+            },
+            "delaySeconds": {
+              "type": "integer",
+              "description": "An amount of time in seconds to wait before starting the check attempts.",
+              "default": 15,
+              "minimum": 15
+            }
+          }
+        }
+      }
+    },
+    "kubernetes": {
+      "description": "Kubernetes general properties",
+      "type": "object",
+      "properties": {
+        "authorization_mode": {
+          "description": "The authorization mode to use.",
+          "type": "string",
+          "enum": [
+            "AlwaysAllow",
+            "RBAC"
+          ],
+          "default": "AlwaysAllow"
+        },
+        "high_availability": {
+          "type": "boolean",
+          "default": false,
+          "title": "Control Plane High-availability",
+          "description": "Whether to deploy a highly-available control plane."
+        },
+        "service_cidr": {
+          "title": "Service CIDR",
+          "description": "Kubernetes Service CIDR block, e.g. '10.100.0.0/16'. It MUST NOT overlap with DC/OS VIP CIDR block.",
+          "type": "string",
+          "default": "10.100.0.0/16",
+          "pattern": "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(\\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])){3}/([12]?[0-9]|3[0-2])$"
+        },
+        "dcos_token_authentication": {
+          "type": "boolean",
+          "default": false,
+          "title": "DC/OS token authentication",
+          "description": "Whether to enable DC/OS token authentication."
+        },
+        "oidc": {
+          "type": "object",
+          "description": "",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false,
+              "title": "Enable OIDC",
+              "description": "Whether to enable OIDC support."
+            },
+            "issuer_url": {
+              "type": "string",
+              "default": "",
+              "description": "URL of OIDC Identity Provider"
+            },
+            "client_id": {
+              "type": "string",
+              "default": "",
+              "description": "The unique name for this client, generated by your OIDC provider. Must be set if oidc-issuer-url is set."
+            },
+            "ca_file": {
+              "type": "string",
+              "default": "",
+              "description": "Path to the CA certificate that signed the certificate of the Identity Provider. It must be available in the same location in all agents where a the control-plane task can be deployed to. This file will mounted as /mnt/mesos/sandbox/oidc-custom-ca.pem inside the control-plane tasks."
+            },
+            "username_claim": {
+              "type": "string",
+              "default": "sub",
+              "description": "This is sub by default, but sub can vary depending on your OIDC provider, or may not be friendly (e.g. a uuid). Other friendlier claims will have the full oidc-issuer-url prepended to the claim name. The exception for this is the email claim."
+            },
+            "username_prefix": {
+              "type": "string",
+              "default": "oidc",
+              "description": "A string that is inserted in front of the username to  signify that it's an OIDC user and prevent possible clashing with an account that's already present. Default is oidc: e.g. oidc:alice@example.com"
+            },
+            "groups_claim": {
+              "type": "string",
+              "default": "",
+              "description": "The name of the claim to map to groups within Kubernetes."
+            },
+            "groups_prefix": {
+              "type": "string",
+              "default": "oidc",
+              "description": "String that is inserted in front of the group name to prevent clashing. Default is oidc: e.g. oidc:/kubernetes-users"
+            },
+            "required_claim": {
+              "type": "string",
+              "default": "",
+              "description": "A key=value pair that describes a required claim in the ID Token. If set, the claim is verified to be present in the ID Token with a matching value."
+            },
+            "signing_algs": {
+              "type": "string",
+              "default": "RS256",
+              "description": "Comma-separated list of allowed JOSE asymmetric signing algorithms. JWTs with a 'alg' header value not in this list will be rejected. Values are defined by RFC 7518 at tools.ietf.org/html/rfc7518#section-3.1."
+            }
+          }
+        },
+        "metrics_exporter": {
+          "type": "object",
+          "description": "Kubernetes cluster metrics exporter settings.",
+          "properties": {
+            "enabled": {
+              "description": "Enable ",
+              "type": "boolean",
+              "default": false
+            },
+            "cpus": {
+              "title": "CPU count",
+              "description": "The CPU required by Kubernetes cluster metrics exporter.",
+              "type": "number",
+              "default": 1
+            },
+            "mem": {
+              "title": "Memory size (MB)",
+              "description": "The RAM required by Kubernetes cluster metrics exporter.",
+              "type": "integer",
+              "default": 1024
+            },
+            "disk": {
+              "title": "Disk",
+              "description": "Amount of persistent disk required by Kubernetes metrics exporter (in MB)",
+              "type": "integer",
+              "default": 1024
+            },
+            "port": {
+              "title": "Port",
+              "description": "Port where metrics exporter will expose metrics endpoint.",
+              "type": "integer",
+              "default": 9901
+            }
+          }
+        },
+        "control_plane_reserved_resources": {
+          "type": "object",
+          "description": "Reserved resources for Kubernetes control plane.",
+          "properties": {
+            "cpus": {
+              "title": "CPU count",
+              "description": "The CPU required by every instance of the control plane.",
+              "type": "number",
+              "default": 1.5
+            },
+            "mem": {
+              "title": "Memory size (MB)",
+              "description": "The RAM required by every instance of the control plane.",
+              "type": "integer",
+              "default": 4096
+            },
+            "disk": {
+              "title": "Control Plane Disk size (MB)",
+              "description": "Amount of persistent disk available for the control plane docker instance (in MB)",
+              "type": "integer",
+              "default": 10240
+            }
+          }
+        },
+        "apiserver_edgelb": {
+          "type": "object",
+          "description": "Kubernetes API edgelb exposure options.",
+          "properties": {
+            "expose": {
+              "title": "Expose via edgelb",
+              "description": "Enable exposure of Kubernetes API via edgelb labels (default: true).",
+              "type": "boolean",
+              "default": true
+            },
+            "template": {
+              "title": "Edgelb Pool Template",
+              "description": "Name of the Pool Template to expose via (default: default).",
+              "type": "string",
+              "default": "default"
+            },
+            "certificate": {
+              "title": "Frontend Certificate",
+              "description": "Certificate secret name for the frontend (default: $AUTOCERT).",
+              "type": "string",
+              "default": "$AUTOCERT"
+            },
+            "port": {
+              "title": "Frontend Port",
+              "description": "Port the frontend will listen on (default: 6443).",
+              "type": "integer",
+              "default": 6443
+            },
+            "path": {
+              "title": "Frontend path",
+              "description": "The path to expose the api on (default: the value of service.name).",
+              "type": "string",
+              "default": ""
+            }
+          }
+        },
+        "control_plane_placement": {
+          "type": "string",
+          "description": "Control Plane node placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).",
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "control_plane_pre_reserved_role": {
+          "title": "Control plane pre-reserved role",
+          "type": "string",
+          "description": "Kubernetes control-plane pre-reserved role.",
+          "default": "*"
+        },
+        "private_node_count": {
+          "title": "Private Node Count",
+          "description": "Number of desired private Kubernetes nodes.",
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        },
+        "private_reserved_resources": {
+          "type": "object",
+          "description": "Reserved resources for Kubernetes private nodes",
+          "properties": {
+            "kube_cpus": {
+              "title": "Node CPU available for pods",
+              "description": "Amount of CPU resources available for pods.",
+              "type": "number",
+              "default": 2
+            },
+            "kube_mem": {
+              "title": "Node RAM memory available for pods (in MB)",
+              "description": "Amount of memory RAM resources available for pods (in MB).",
+              "type": "integer",
+              "default": 2048
+            },
+            "kube_disk": {
+              "title": "Node Disk size (MB)",
+              "description": "Amount of persistent disk available for pods (in MB)",
+              "type": "integer",
+              "default": 10240
+            },
+            "system_cpus": {
+              "title": "Kube-reserved CPU count",
+              "description": "CPU reserved for kubelet and container runtime daemons.",
+              "type": "number",
+              "default": 1,
+              "minimum": 1
+            },
+            "system_mem": {
+              "title": "Kube-reserved RAM memory (in MB)",
+              "description": "RAM memory reserved for kubelet and container runtime daemons (in MB).",
+              "type": "integer",
+              "default": 1024,
+              "minimum": 1024
+            }
+          }
+        },
+        "private_node_placement": {
+          "type": "string",
+          "description": "Private Kubernetes node placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).",
+          "default": "",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "private_node_pre_reserved_role": {
+          "title": "Private node pre-reserved role",
+          "type": "string",
+          "description": "Kubernetes private node pre-reserved role.",
+          "default": "*"
+        },
+        "proxy": {
+          "title": "Proxy injection configuration",
+          "description": "Configure the injection of proxy settings to Kubernetes.",
+          "type": "object",
+          "properties": {
+            "override_injection": {
+              "description": "By default agent proxy configurations are injected. This option allows for manual configuration of these proxy rules as defined in the HTTP, HTTPS and No Proxy fields. Leave these fields blank to completely disable proxy rules for Kubernetes.",
+              "type": "boolean",
+              "enum": [
+                true,
+                false
+              ],
+              "default": false
+            }
+          },
+          "dependencies": {
+            "override_injection": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "override_injection": {
+                      "enum": [
+                        false
+                      ]
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "override_injection": {
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "http_proxy": {
+                      "description": "http proxy server to use, leave blank if you wish to define none.",
+                      "type": "string",
+                      "default": ""
+                    },
+                    "https_proxy": {
+                      "description": "https proxy server to use, leave blank if you wish to define none.",
+                      "type": "string",
+                      "default": ""
+                    },
+                    "no_proxy": {
+                      "description": "This option is used when HTTP or HTTPS proxies are define, all entries must be separated by comma (,), cidrs must be valid, no wildcards (*)",
+                      "type": "string",
+                      "default": ""
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "public_node_count": {
+          "title": "Public Node Count",
+          "description": "Number of desired public Kubernetes nodes.",
+          "type": "integer",
+          "default": 0
+        },
+        "public_reserved_resources": {
+          "type": "object",
+          "description": "Reserved resources for Kubernetes public nodes",
+          "properties": {
+            "kube_cpus": {
+              "title": "Node CPU available for pods",
+              "description": "Amount of CPU resources available for pods.",
+              "type": "number",
+              "default": 0.5
+            },
+            "kube_mem": {
+              "title": "Node RAM memory available for pods (in MB)",
+              "description": "Amount of memory RAM resources available for pods (in MB).",
+              "type": "integer",
+              "default": 512
+            },
+            "kube_disk": {
+              "title": "Node Disk size (MB)",
+              "description": "Amount of persistent disk available for pods (in MB)",
+              "type": "integer",
+              "default": 2048
+            },
+            "system_cpus": {
+              "title": "Kube-reserved CPU count",
+              "description": "CPU reserved for kubelet and container runtime daemons.",
+              "type": "number",
+              "default": 1,
+              "minimum": 1
+            },
+            "system_mem": {
+              "title": "Kube-reserved RAM memory (in MB)",
+              "description": "RAM memory reserved for kubelet and container runtime daemons (in MB).",
+              "type": "integer",
+              "default": 1024,
+              "minimum": 1024
+            }
+          }
+        },
+        "public_node_placement": {
+          "type": "string",
+          "description": "Public Kubernetes node placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).",
+          "default": "",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "public_node_pre_reserved_role": {
+          "title": "Public node pre-reserved role",
+          "type": "string",
+          "description": "Kubernetes public node pre-reserved role.",
+          "default": "slave_public"
+        },
+        "maximum_container_log_size": {
+          "title": "Maximum size for each pod's container's log file (in MB)",
+          "type": "integer",
+          "description": "The maximum size (in MB) that each pod's container's log file may reach before older entries are deleted.",
+          "default": 1,
+          "minimum": 1
+        },
+        "audit": {
+          "type": "object",
+          "description": "Kubernetes auditing provides a security-relevant chronological set of records documenting the sequence of activities that have affected system by individual users, administrators or other components of the system. Log backend writes audit events to a file in JSON format. You can configure log audit backend using the following options. NOTE: This feature is available only in Enterprise DC/OS.",
+          "properties": {
+            "policy": {
+              "title": "Audit Policy",
+              "description": "Name of the Secret Store Kubernetes policy file to use. When empty Kubernetes auditing is disabled. NOTE: This feature is available only in Enterprise DC/OS.",
+              "type": "string",
+              "default": ""
+            },
+            "log_maxage": {
+              "type": "integer",
+              "default": 30,
+              "description": "Defines the maximum number of days to retain old audit log files."
+            },
+            "log_maxbackup": {
+              "type": "integer",
+              "default": 10,
+              "description": "Defines the maximum number of audit log files to retain."
+            },
+            "log_maxsize": {
+              "type": "integer",
+              "default": 100,
+              "description": "Defines the maximum size in megabytes of the audit log file before it gets rotated."
+            }
+          }
+        }
+      }
+    },
+    "calico": {
+      "title": "Calico configuration",
+      "description": "Calico provides secure network connectivity for containers and virtual machine workloads.",
+      "type": "object",
+      "properties": {
+        "calico_ipv4pool_cidr": {
+          "description": "When using Calico IPAM, each workload is assigned an address from the selection of configured IP pools. You may want to modify the IP pool of a running cluster.",
+          "type": "string",
+          "default": "192.168.0.0/16"
+        },
+        "cni_mtu": {
+          "description": "Typically the MTU for your kubernetes workload interfaces should match the network MTU. If you need IP-in-IP then the MTU size for both the workload and tunnel interfaces should be 20 bytes less than the network MTU for your network. This is due to the extra 20 byte header that the tunnel will add to each packet.",
+          "type": "integer",
+          "default": 1400
+        },
+        "ip_autodetection_method": {
+          "description": "Each Kubernetes node must be configured with an IPv4 address that has access to the virtual network (as defined in option \"virtual_network_name\" above). Calico will autodetect these IP addresses based on the method defined here. For more information, please refer to the official documentation at docs.projectcalico.org/v3.5/reference/node/configuration#ip-autodetection-methods.",
+          "type": "string",
+          "default": "interface=(m-dcos|eth0)"
+        },
+        "ipv4pool_ipip": {
+          "description": "Calico can be configured to use IP-in-IP encapsulation by enabling the IPIP option on the IP pool resource. When enabled, Calico will use IP-in-IP encapsulation when routing packets to workload IPs falling in the IP pool range.",
+          "type": "string",
+          "enum": [
+            "Always",
+            "CrossSubnet",
+            "Off"
+          ],
+          "default": "Always"
+        },
+        "felix_ipinipmtu": {
+          "description": "The MTU Calico sets on the tunnel device created in the kube-node task.",
+          "type": "integer",
+          "default": 1420
+        },
+        "felix_ipinipenabled": {
+          "description": "Whether Calico should configure an IPinIP interface on the kube-node.",
+          "type": "boolean",
+          "default": true
+        },
+        "typha": {
+          "title": "Typha configuration",
+          "description": "Typha sits in between Felix and the Kubernetes API server, reducing Calico's load on the API server. Recommended when deploying Kubernetes cluster with more than 50 nodes.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Whether to enable Calico Typha deployment. Recommended when deploying Kubernetes cluster with more than 50 nodes.",
+              "type": "boolean",
+              "default": false
+            },
+            "replicas": {
+              "description": "Number of Typha replicas. We recommend using Typha if you have more than 50 nodes. Above 100 nodes it is essential. Use one replica for every 100-200 nodes. In production, we recommend running at least 3 replicas to reduce the impact of rolling upgrade.",
+              "type": "integer",
+              "default": 3,
+              "minimum": 1
+            }
+          }
+        }
+      }
+    },
+    "etcd": {
+      "description": "etcd properties",
+      "type": "object",
+      "properties": {
+        "5_etcd_nodes": {
+          "title": "5 node etcd cluster",
+          "description": "When high_availability is set to \"true\" in the package JSON, a Kubernetes cluster with 3 etcd nodes will be created. However, some Kubernetes clusters require more than 3 etcd nodes for production. Cluster administrators can use this option for those scenarios. This option will provision 5 etcd nodes for the Kubernetes cluster instead.",
+          "type": "boolean",
+          "default": false
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "etcd node CPU requirements.",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "etcd node RAM requirements (in MB).",
+          "type": "integer",
+          "default": 1024
+        },
+        "data_disk": {
+          "title": "Disk size (MB) for data",
+          "description": "etcd node persistent disk requirements (in MB) for the data",
+          "type": "integer",
+          "default": 3072
+        },
+        "wal_disk": {
+          "title": "Disk size (MB) for logs",
+          "description": "etcd node persistent disk requirements (in MB) for the logs",
+          "type": "integer",
+          "default": 512
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require pre-configuration in DC/OS.",
+          "type": "string",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "placement": {
+          "type": "string",
+          "description": "etcd placement constraints (e.g., [[\"hostname\", \"UNIQUE\"]]).",
+          "default": "",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "pre_reserved_role": {
+          "title": "Pre-reserved role",
+          "type": "string",
+          "description": "etcd pre-reserved role.",
+          "default": "*"
+        }
+      }
+    }
+  }
+}
