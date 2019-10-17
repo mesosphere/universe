@@ -300,6 +300,14 @@
         },
         "command": {
           "$ref": "#/definitions/command"
+        },
+        "hasKnownIssues": {
+          "type": "boolean",
+          "description": "Boolean field indicating if the package has any known issues."
+        },
+        "lastUpdated": {
+          "type": "number",
+          "description": "A unix epoch depicting the last updated date of the package base tech"
         }
       },
       "required": [
@@ -408,6 +416,14 @@
         },
         "config": {
           "$ref": "#/definitions/config"
+        },
+        "hasKnownIssues": {
+          "type": "boolean",
+          "description": "Boolean field indicating if the package has any known issues."
+        },
+        "lastUpdated": {
+          "type": "number",
+          "description": "A unix epoch depicting the last updated date of the package base tech"
         }
       },
       "required": [
@@ -518,7 +534,15 @@
               "$ref": "#/definitions/packageVersionDefinition"
             }
           }
-        },  
+        },
+        "hasKnownIssues": {
+          "type": "boolean",
+          "description": "Boolean field indicating if the package has any known issues."
+        },
+        "lastUpdated": {
+          "type": "number",
+          "description": "A unix epoch depicting the last updated date of the package base tech"
+        },
         "marathon": {
           "$ref": "#/definitions/marathon"
         },

@@ -1,0 +1,198 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "connect": {
+      "properties": {
+        "name": {
+          "default": "connect",
+          "description": "Service name for the connect worker application(s)",
+          "type": "string"
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "default": ""
+              },
+              "value": {
+                "type": "string",
+                "default": ""
+              }
+            }
+          },
+          "description": "Labels to pass to the virtual network plugin (e.g., [{\"key\": \"key_1\", \"value\": \"value_1\"}, {\"key\": \"key_2\", \"value\": \"value_2\"}])",
+          "default": []
+        },
+        "user": {
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "nobody",
+          "title": "User"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 2,
+          "description": "CPU shares to allocate to each connect worker instance.",
+          "minimum": 1,
+          "type": "number"
+        },
+        "mem": {
+          "default": 1024,
+          "description": "Memory (MB) to allocate to each connect worker instance.",
+          "minimum": 512,
+          "type": "number"
+        },
+        "heap": {
+          "default": 768,
+          "description": "JVM heap allocation (in MB) for connect worker task; should be ~256MB less than total memory for the instance.",
+          "minimum": 256,
+          "type": "number"
+        },
+        "role": {
+          "default": "*",
+          "description": "Deploy connect worker only on nodes with this role.",
+          "type": "string"
+        },
+        "group_id": {
+          "description": "A unique string that identifies the Connect cluster group this worker belongs to.",
+          "type": "string",
+          "default": "dcos-connect-group"
+        },
+        "access-control-allow-methods": {
+          "description": "Access control allow methods allows cross origin HTTP requests,e.g GET,POST,PUT,DELETE,HEAD",
+          "type": "string",
+          "default": ""
+        },
+        "access-control-allow-origin": {
+          "description": "Access control allow origin tells which domain should be accessible,by default empty string means that the resource can be accessed by any domain",
+          "type": "string",
+          "default": ""
+        },
+        "key_converter": {
+          "description": "Key converter, e.g. org.apache.kafka.connect.json.JsonConverter, io.confluent.connect.avro.AvroConverter, ...",
+          "type": "string",
+          "default": "io.confluent.connect.avro.AvroConverter"
+        },
+        "key_converter_schema_enable": {
+          "description": "Key converter schema check enable.",
+          "type": "boolean",
+          "default": true
+        },
+        "value_converter": {
+          "description": "Value converter, e.g. org.apache.kafka.connect.json.JsonConverter, io.confluent.connect.avro.AvroConverter, ...",
+          "type": "string",
+          "default": "io.confluent.connect.avro.AvroConverter"
+        },
+        "value_converter_schema_enable": {
+          "description": "Value converter schema check enable.",
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "instances",
+        "name"
+      ],
+      "type": "object"
+    },
+    "kafka": {
+      "type": "object",
+      "description": "Rest proxy kafka service configuration",
+      "properties": {
+        "bootstrap_servers": {
+          "title": "Kafka bootstrap servers",
+          "description": "The name of the kafka bootstrapserver. Broker vip (for TLS it is broker-tls.confluent-kafka.l4lb.thisdcos.directory:9093) or comma separated list of broker dns names (like in the kerberos case). Note slahes in a kafka service name have to be removed.",
+          "type": "string",
+          "default": "broker.confluent-kafka.l4lb.thisdcos.directory:9092"
+        },
+        "zookeeper_connect": {
+          "title": "Zookeeper connect",
+          "description": "... . Note slahes in a kafka service name have to be removed, all excpet the first get replaced by two underscores.",
+          "type": "string",
+          "default": "master.mesos:2181/dcos-service-confluent-kafka"
+        },
+        "client_security_protocol": {
+          "title": "Kafka client security protocol",
+          "description": "Protocol used to communicate with brokers. Valid values are: PLAINTEXT, SSL, SASL_PLAINTEXT, SASL_SSL",
+          "type": "string",
+          "default": "PLAINTEXT"
+        },
+        "kerberos_enabled": {
+          "description": "Enable kerberos",
+          "type": "boolean",
+          "default": false
+        },
+        "client_sasl_mechanism": {
+          "title": "Kafka client sasl mechanism",
+          "description": "SASL mechanism used for client connections. This may be any mechanism for which a security provider is available. GSSAPI is the default mechanism.",
+          "type": "string",
+          "default": "GSSAPI"
+        },
+        "client_sasl_kerberos_service_name": {
+          "title": "Kafka client sasl kerberos service name",
+          "description": "The Kerberos principal name that Kafka runs as. This can be defined either in Kafka's JAAS config or in Kafka's config.",
+          "type": "string",
+          "default": "kafka"
+        },
+        "kerberos_keytab_secret": {
+          "title": "Kerberos keytab secret",
+          "description": "Kerberos keytab secret containing keytab",
+          "type": "string",
+          "default": "__dcos_base64___keytab"
+        },
+        "kerberos_jaas_secret": {
+          "title": "Kerberos jaas secret",
+          "description": "Kerberos jaas secret containing jaas config",
+          "type": "string",
+          "default": "jaas"
+        },
+        "kerberos_krb5_secret": {
+          "title": "Kerberos krb5 secret",
+          "description": "Kerberos krb5 secret containing krb5 config",
+          "type": "string",
+          "default": "krb5"
+        }
+      },
+      "required": [
+        "bootstrap_servers",
+        "zookeeper_connect"
+      ]
+    },
+    "schema-registry": {
+      "type": "object",
+      "description": "Connect schema registry configuration",
+      "properties": {
+        "url": {
+          "title": "Schema registry url",
+          "description": "The base URL for the schema registry.",
+          "type": "string",
+          "default": "http://schema-registry.marathon.l4lb.thisdcos.directory:8081"
+        }
+      },
+      "required": [
+        "url"
+      ]
+    }
+  },
+  "type": "object"
+}

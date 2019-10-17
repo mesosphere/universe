@@ -1,0 +1,31 @@
+{
+  "packagingVersion": "4.0",
+  "name": "confluent-replicator",
+  "version": "2.7.0-5.3.0",
+  "upgradesFrom": [
+    "2.6.0-5.1.2"
+  ],
+  "downgradesTo": [
+    "2.6.0-5.1.2"
+  ],
+  "scm": "https://github.com/confluentinc/cp-docker-images",
+  "description": "Confluent Enterprise Replicator for multi-data center synchronization of topic data\n\n\tDocumentation: https://docs.confluent.io/5.3.0/connect/connect-replicator/docs/index.html",
+  "maintainer": "partner-support@confluent.io",
+  "tags": [
+    "kafka",
+    "confluent",
+    "connect",
+    "replicator"
+  ],
+  "preInstallNotes": "This DC/OS Service is currently in preview. Preparing to install Replicator service",
+  "postInstallNotes": "Replicator service has been installed.",
+  "postUninstallNotes": "Replicator service was uninstalled successfully.",
+  "minDcosReleaseVersion": "1.11",
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "lastUpdated": 1571120354
+}

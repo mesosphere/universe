@@ -1,0 +1,30 @@
+{
+  "packagingVersion": "4.0",
+  "name": "spark",
+  "version": "2.9.0-2.4.3",
+  "scm": "https://github.com/mesosphere/spark-build.git",
+  "maintainer": "support@mesosphere.io",
+  "website": "https://docs.mesosphere.com/services/spark/2.9.0-2.4.3/",
+  "description": "Apache Spark is a unified analytics engine for large-scale data processing. Documentation: https://docs.mesosphere.com/services/spark/2.9.0-2.4.3/",
+  "framework": true,
+  "upgradesFrom": [],
+  "downgradesTo": [],
+  "preInstallNotes": "Default configuration requires 1 agent node with: 1 CPU | 1024 MB MEM",
+  "postInstallNotes": "DC/OS Spark is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/services/spark/2.9.0-2.4.3/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "The Apache Spark DC/OS Service has been uninstalled and will no longer run.\nPlease follow the instructions at https://docs.mesosphere.com/services/spark/2.9.0-2.4.3/uninstall/ to clean up any persisted state.",
+  "tags": [
+    "bigdata",
+    "mapreduce",
+    "batch",
+    "analytics"
+  ],
+  "selected": true,
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/apache/spark/master/LICENSE"
+    }
+  ],
+  "minDcosReleaseVersion": "1.11",
+  "lastUpdated": 1571120354
+}

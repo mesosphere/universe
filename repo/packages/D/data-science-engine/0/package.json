@@ -6,7 +6,7 @@
   "scm": "https://github.com/mesosphere/jupyter-service",
   "maintainer": "support+data-science-engine@mesosphere.com",
   "website": "https://docs.mesosphere.com/services/data-science-engine",
-  "description": "DC/OS Data Science Engine provisions Jupyter Notebooks, an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text.\nUses include: data cleaning and transformation, numerical simulation, statistical modeling, data visualization, machine learning, and much more.",
+  "description": "**DSEngine is only available as an add-on to a base subscription to Enterprise DC/OS. Access to DSEngine is subject to additional fees. Please contact your D2iQ Account Executive should you wish to see a demonstration of DSEngine or to acquire access to DSEngine.**  \n\nDC/OS Data Science Engine provisions Jupyter Notebooks, an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text.  \nUses include: data cleaning and transformation, numerical simulation, statistical modeling, data visualization, machine learning, and much more.",
   "framework": true,
   "selected": true,
   "upgradesFrom": [],
@@ -36,5 +36,6 @@
       "name": "APACHE LICENSE, VERSION 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0"
     }
-  ]
+  ],
+  "lastUpdated": 1569636747
 }

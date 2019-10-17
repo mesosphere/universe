@@ -1,0 +1,31 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [
+    "*"
+  ],
+  "downgradesTo": [
+    "*"
+  ],
+  "minDcosReleaseVersion": "1.11",
+  "name": "hello-world",
+  "version": "3.2.0-0.56.2",
+  "maintainer": "support@mesosphere.io",
+  "description": "An example implementation of a stateful service using the DC/OS SDK",
+  "selected": false,
+  "framework": true,
+  "tags": [
+    "example",
+    "reference",
+    "hello-world"
+  ],
+  "preInstallNotes": "This DC/OS Service is currently in preview.",
+  "postInstallNotes": "The DC/OS hello-world service is being installed!\n\n\tDocumentation: https://github.com/mesosphere/dcos-commons/blob/master/frameworks/helloworld/README.md\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "The DC/OS hello-world service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/1.9/deploying-services/uninstall/#framework-cleaner to remove any persistent state if required.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/mesosphere/dcos-commons/master/LICENSE"
+    }
+  ],
+  "lastUpdated": 1571120354
+}

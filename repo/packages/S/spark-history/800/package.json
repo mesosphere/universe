@@ -1,0 +1,29 @@
+{
+  "packagingVersion": "4.0",
+  "name": "spark-history",
+  "version": "2.9.0-2.4.3",
+  "scm": "https://github.com/mesosphere/spark-build.git",
+  "maintainer": "support@mesosphere.io",
+  "website": "https://docs.mesosphere.com/services/spark/2.9.0-2.4.3/",
+  "description": "The Apache Spark History Server allows you to view the state of running and completed Spark jobs. Documentation: https://docs.mesosphere.com/services/spark/2.9.0-2.4.3/",
+  "upgradesFrom": [],
+  "downgradesTo": [],
+  "preInstallNotes": "Default configuration requires 1 agent node with: 1 CPU | 1024 MB MEM",
+  "postInstallNotes": "The Apache Spark History Server is being installed!",
+  "postUninstallNotes": "The Apache Spark History Server has been uninstalled and will no longer run.",
+  "tags": [
+    "bigdata",
+    "mapreduce",
+    "batch",
+    "analytics"
+  ],
+  "selected": true,
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/apache/spark/master/LICENSE"
+    }
+  ],
+  "minDcosReleaseVersion": "1.11",
+  "lastUpdated": 1571120354
+}

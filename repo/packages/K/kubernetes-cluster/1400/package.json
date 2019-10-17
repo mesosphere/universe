@@ -1,0 +1,33 @@
+{
+  "packagingVersion": "5.0",
+  "minDcosReleaseVersion": "1.12",
+  "upgradesFrom": [
+    "*"
+  ],
+  "name": "kubernetes-cluster",
+  "version": "2.4.3-1.15.3",
+  "maintainer": "support@mesosphere.com",
+  "description": "Kubernetes Cluster",
+  "selected": true,
+  "framework": true,
+  "tags": [
+    "kubernetes"
+  ],
+  "preInstallNotes": "Kubernetes on DC/OS.\n\n\tDO NOT INSTALL THIS PACKAGE BUT THE kubernetes ONE.\n\n\tDocumentation: https://docs.mesosphere.com/services/kubernetes/",
+  "postInstallNotes": "DC/OS Kubernetes is being installed!",
+  "postUninstallNotes": "DC/OS Kubernetes is being uninstalled.",
+  "manager": {
+    "packageName": "kubernetes"
+  },
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/master/LICENSE"
+    },
+    {
+      "name": "Proprietary",
+      "url": "https://mesosphere.com/mesosphere-enterprise-terms/"
+    }
+  ],
+  "lastUpdated": 1571120354
+}

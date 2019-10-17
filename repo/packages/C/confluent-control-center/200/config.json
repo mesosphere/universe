@@ -1,0 +1,199 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "control-center": {
+      "properties": {
+        "name": {
+          "default": "control-center",
+          "description": "Name for this control-center application",
+          "type": "string"
+        },
+        "listener_protocol": {
+          "title": "Control center listener protocol",
+          "description": "Control center listener protocol, http or https.",
+          "type": "string",
+          "default": "http"
+        },
+        "keystore_secret": {
+          "title": "Keystore secret",
+          "description": "Keystore secret.",
+          "type": "string",
+          "default": ""
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "default": ""
+              },
+              "value": {
+                "type": "string",
+                "default": ""
+              }
+            }
+          },
+          "description": "Labels to pass to the virtual network plugin (e.g., [{\"key\": \"key_1\", \"value\": \"value_1\"}, {\"key\": \"key_2\", \"value\": \"value_2\"}])",
+          "default": []
+        },
+        "user": {
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "nobody",
+          "title": "User"
+        },
+        "instances": {
+          "default": 1,
+          "description": "Number of instances to run.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 2,
+          "description": "CPU shares to allocate to each control-center instance.",
+          "minimum": 2,
+          "type": "number"
+        },
+        "mem": {
+          "default": 4096,
+          "description": "Memory (MB) to allocate to each control-center task.",
+          "minimum": 4096,
+          "type": "number"
+        },
+        "role": {
+          "default": "*",
+          "description": "Deploy control-center only on nodes with this role.",
+          "type": "string"
+        },
+        "confluent-controlcenter-internal-topics-partitions": {
+          "default": 3,
+          "description": "Parition count for internal control-center kafka topics",
+          "type": "number"
+        },
+        "confluent-controlcenter-internal-topics-replication": {
+          "default": 2,
+          "description": "Replication factor for internal control-center kafka topics",
+          "type": "number"
+        },
+        "confluent-monitoring-interceptor-topic-partitions": {
+          "default": 3,
+          "description": "Parition count for kafka topics used to store data from the interceptor classes",
+          "type": "number"
+        },
+        "confluent-monitoring-interceptor-topic-replication": {
+          "default": 2,
+          "description": "Replication factor for kafka topics used to store data from the interceptor classes",
+          "type": "number"
+        },
+        "confluent-license": {
+          "default": "",
+          "description": "License key for Confluent Enterprise (default is 30-day trial)",
+          "type": "string"
+        },
+        "ciphers": {
+          "default": "TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_256_GCM_SHA384,TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384",
+          "description": "Comma-separated list of JSSE Cipher Suite Names",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "instances",
+        "name"
+      ],
+      "type": "object"
+    },
+    "kafka": {
+      "type": "object",
+      "description": "Control center kafka service configuration",
+      "properties": {
+        "bootstrap_servers": {
+          "title": "Kafka bootstrap servers",
+          "description": "The name of the kafka bootstrapserver. Broker vip (for TLS it is broker-tls.confluent-kafka.l4lb.thisdcos.directory:9093) or comma separated list of broker dns names (like in the kerberos case). Note slahes in a kafka service name have to be removed.",
+          "type": "string",
+          "default": "broker.confluent-kafka.l4lb.thisdcos.directory:9092"
+        },
+        "zookeeper_connect": {
+          "title": "Zookeeper connect",
+          "description": "... . Note slahes in a kafka service name have to be removed, all excpet the first get replaced by two underscores.",
+          "type": "string",
+          "default": "master.mesos:2181/dcos-service-confluent-kafka"
+        },
+        "client_security_protocol": {
+          "title": "Kafka client security protocol",
+          "description": "Protocol used to communicate with brokers. Valid values are: PLAINTEXT, SSL, SASL_PLAINTEXT, SASL_SSL",
+          "type": "string",
+          "default": "PLAINTEXT"
+        },
+        "kerberos_enabled": {
+          "description": "Enable kerberos",
+          "type": "boolean",
+          "default": false
+        },
+        "client_sasl_mechanism": {
+          "title": "Kafka client sasl mechanism",
+          "description": "SASL mechanism used for client connections. This may be any mechanism for which a security provider is available. GSSAPI is the default mechanism.",
+          "type": "string",
+          "default": "GSSAPI"
+        },
+        "client_sasl_kerberos_service_name": {
+          "title": "Kafka client sasl kerberos service name",
+          "description": "The Kerberos principal name that Kafka runs as. This can be defined either in Kafka's JAAS config or in Kafka's config.",
+          "type": "string",
+          "default": "kafka"
+        },
+        "kerberos_keytab_secret": {
+          "title": "Kerberos keytab secret",
+          "description": "Kerberos keytab secret containing keytab",
+          "type": "string",
+          "default": "__dcos_base64___keytab"
+        },
+        "kerberos_jaas_secret": {
+          "title": "Kerberos jaas secret",
+          "description": "Kerberos jaas secret containing jaas config",
+          "type": "string",
+          "default": "jaas"
+        },
+        "kerberos_krb5_secret": {
+          "title": "Kerberos krb5 secret",
+          "description": "Kerberos krb5 secret containing krb5 config",
+          "type": "string",
+          "default": "krb5"
+        }
+      },
+      "required": [
+        "bootstrap_servers",
+        "zookeeper_connect"
+      ]
+    },
+    "connect": {
+      "type": "object",
+      "description": "Control center connect service configuration",
+      "properties": {
+        "connect_cluster": {
+          "title": "Control center connect cluster configuration",
+          "description": "Comma-separated list of URLs for the Connect cluster. This must be set if you wish to manage a connect cluster.",
+          "type": "string",
+          "default": "connect.marathon.l4lb.thisdcos.directory:8083"
+        }
+      },
+      "required": [
+        "connect_cluster"
+      ]
+    }
+  },
+  "type": "object"
+}

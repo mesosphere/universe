@@ -1,0 +1,30 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [
+    "*"
+  ],
+  "minDcosReleaseVersion": "1.12",
+  "name": "kubernetes",
+  "version": "2.4.3-1.15.3",
+  "maintainer": "support@mesosphere.io",
+  "description": "Mesosphere Kubernetes Engine",
+  "selected": true,
+  "framework": true,
+  "tags": [
+    "kubernetes"
+  ],
+  "preInstallNotes": "Mesosphere Kubernetes Engine",
+  "postInstallNotes": "The Mesosphere Kubernetes Engine service is being installed.",
+  "postUninstallNotes": "The Mesosphere Kubernetes Engine service is being uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/kubernetes/kubernetes/master/LICENSE"
+    },
+    {
+      "name": "Proprietary",
+      "url": "https://mesosphere.com/mesosphere-enterprise-terms/"
+    }
+  ],
+  "lastUpdated": 1571120354
+}

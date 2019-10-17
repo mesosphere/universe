@@ -1,0 +1,40 @@
+{
+  "packagingVersion": "4.0",
+  "minDcosReleaseVersion": "1.11",
+  "upgradesFrom": [
+    "2.4.0-1.1.1",
+    "2.5.0-2.1.0",
+    "2.6.0-2.2.1",
+    "2.7.0-2.3.0"
+  ],
+  "downgradesTo": [
+    "2.4.0-1.1.1",
+    "2.5.0-2.1.0",
+    "2.6.0-2.2.1",
+    "2.7.0-2.3.0"
+  ],
+  "name": "kafka",
+  "version": "2.8.0-2.3.0",
+  "maintainer": "support@mesosphere.io",
+  "description": "Apache Kafka is used for building real-time data pipelines and streaming apps. It is horizontally scalable, fault-tolerant, wicked fast, and runs in production in thousands of companies.",
+  "selected": true,
+  "framework": true,
+  "tags": [
+    "message",
+    "broker",
+    "pubsub",
+    "kafka"
+  ],
+  "preInstallNotes": "Default configuration requires 3 agent nodes each with: 1.0 CPU, 2048 MB MEM and 1,5000 MB Disk.\n\nNote that Kafka requires a Zookeeper instance to be available before starting. It is a good practice to deploy a dedicated Zookeeper service, but you can always fall-back into using the DC/OS core Zookeeper instance instead.",
+  "postInstallNotes": "The DC/OS Apache Kafka service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/kafka/2.8.0-5.3.0/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "The DC/OS Apache Kafka service is being uninstalled.\n\nFor DC/OS versions from 1.11 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/kafka/2.8.0-5.3.0/uninstall to remove any persistent state if required.",
+  "scm": "https://github.com/mesosphere/dcos-kafka-service",
+  "website": "https://docs.mesosphere.com/services/kafka/2.8.0-5.3.0",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/apache/kafka/trunk/LICENSE"
+    }
+  ],
+  "lastUpdated": 1571120354
+}

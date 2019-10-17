@@ -62,13 +62,13 @@
       "cache": true
     },
     {
-      "uri": "https://downloads.mesosphere.com/kibana/assets/2.7.0-6.8.1/nginx.conf.tmpl",
-      "cache": true
-    },
-    {
-      "uri": "https://downloads.mesosphere.com/kibana/assets/2.7.0-6.8.1/init.sh",
+      "uri": "{{resource.assets.uris.init-sh}}",
       "cache": true,
       "executable": true
+    },
+    {
+      "uri": "{{resource.assets.uris.nginx-conf-tmpl}}",
+      "cache": true
     }
   ],
   "upgradeStrategy":{

@@ -2,8 +2,8 @@
 
 | Build | Status |
 |---|---|
-|CI   | [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)|
-| Universe Server | [![Build Status](https://teamcity.mesosphere.io/guestAuth/app/rest/builds/buildType:(id:Oss_Universe_UniverseServer)/statusIcon)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_UniverseServer&guest=1)|
+|CI   | [![Build Status](https://teamcity.mesosphere.io/app/rest/builds/buildType:(id:Oss_Universe_Ci)/statusIcon?guest=1)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_Ci&guest=1)|
+| Universe Server | [![Build Status](https://teamcity.mesosphere.io/app/rest/builds/buildType:(id:Oss_Universe_UniverseServer)/statusIcon?guest=1)](https://teamcity.mesosphere.io/viewType.html?buildTypeId=Oss_Universe_UniverseServer&guest=1)|
 
 Mesosphere Universe registry of packages made available for DC/OS Clusters.
 
@@ -493,15 +493,12 @@ Currently Universe Server provides support for the following versions of DC/OS
 
 | DC/OS Release Version | Support Level |
 |-----------------------|---------------|
-| 1.6.1                 | Full Support  |
-| 1.7                   | Full Support  |
+| 1.6.1                 | Deprecated    |
+| 1.7                   | Deprecated    |
 | 1.8                   | Full Support  |
 | 1.9                   | Full Support  |
 | 1.10                  | Full Support  |
 | 1.11                  | Full Support  |
 | 1.12                  | Full Support  |
 | 1.13                  | Full Support  |
-| 1.14                  | Full Support  |
-
-
-
+| 2.0                   | Full Support  |

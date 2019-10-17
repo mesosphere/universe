@@ -1,0 +1,92 @@
+{
+  "id": "/{{replicator.name}}",
+  "instances": {{replicator.instances}},
+  "cpus": {{replicator.cpus}},
+  "mem": {{replicator.mem}},
+  "user": "{{replicator.user}}",
+  "maintainer": "partner-support@confluent.io", 
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      {{^replicator.virtual_network_enabled}}
+      "network": "BRIDGE",
+      {{/replicator.virtual_network_enabled}} 
+      "portMappings": [ {
+          "containerPort": 8083,
+          "hostPort": 0,
+          "protocol": "tcp",
+          "labels": {
+            "VIP_0": "{{replicator.name}}:8083"
+          }
+      } ],
+      "image": "{{resource.assets.container.docker.image}}",
+      "forcePullImage": true
+    }
+  },
+  {{#replicator.virtual_network_enabled}}
+  "networks": [
+    {
+      "name": "{{replicator.virtual_network_name}}",
+      {{^replicator.virtual_network_plugin_labels.isEmpty}}
+      "labels": {
+      {{#replicator.virtual_network_plugin_labels}}
+          "{{key}}": "{{value}}",
+      {{/replicator.virtual_network_plugin_labels}}
+      "network_name": "{{replicator.virtual_network_name}}"
+      },
+      {{/replicator.virtual_network_plugin_labels.isEmpty}}
+      "mode": "container"
+    }
+  ],
+  {{/replicator.virtual_network_enabled}}
+  "env": {
+    "CONNECT_BOOTSTRAP_SERVERS": "broker.{{replicator.kafka-service}}.l4lb.thisdcos.directory:9092",
+    "CONNECT_REST_PORT": "8083",
+    "CONNECT_GROUP_ID": "dcos-{{replicator.name}}-group",
+    "CONNECT_CONFIG_STORAGE_TOPIC": "dcos-{{replicator.storage-topic}}-configs",
+    "CONNECT_OFFSET_STORAGE_TOPIC": "dcos-{{replicator.storage-topic}}-offsets",
+    "CONNECT_STATUS_STORAGE_TOPIC": "dcos-{{replicator.storage-topic}}-status",
+    "CONNECT_KEY_CONVERTER" : "org.apache.kafka.connect.json.JsonConverter",
+    "CONNECT_VALUE_CONVERTER" : "org.apache.kafka.connect.json.JsonConverter",
+    "CONNECT_INTERNAL_KEY_CONVERTER" : "org.apache.kafka.connect.json.JsonConverter",
+    "CONNECT_INTERNAL_VALUE_CONVERTER" : "org.apache.kafka.connect.json.JsonConverter",
+    "FRAMEWORK_USER": "{{replicator.user}}",
+    {{#replicator.virtual_network_enabled}}
+    "VIRTUAL_NETWORK_ENABLED": "true",
+    "VIRTUAL_NETWORK_NAME": "{{replicator.virtual_network_name}}",
+    {{^replicator.virtual_network_plugin_labels.isEmpty}}
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{#replicator.virtual_network_plugin_labels}}{{key}}:{{value}},{{/replicator.virtual_network_plugin_labels}}",
+    {{/replicator.virtual_network_plugin_labels.isEmpty}}
+    "VIRTUAL_NETWORK_LABELS": "{{replicator.virtual_network_name}}",
+    {{/replicator.virtual_network_enabled}}
+    "CONNECT_PRODUCER_INTERCEPTOR_CLASSES" : "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor",
+    "CONNECT_CONSUMER_INTERCEPTOR_CLASSES" : "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor",
+    "CONNECT_ZOOKEEPER_CONNECT": "{{replicator.zookeeper-connect}}",
+    "KAFKA_HEAP_OPTS": "-Xmx{{replicator.heap}}M"
+  },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": { "value": "curl -k -I http://localhost:8083 | grep \"HTTP/1.1 200 OK\"" },
+      "gracePeriodSeconds": 180,
+      "intervalSeconds": 10,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "acceptedResourceRoles": [
+    "{{replicator.role}}"
+  ],
+  "labels": {
+    "DCOS_SERVICE_NAME": "{{replicator.name}}",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{replicator.name}}"
+  }
+}
