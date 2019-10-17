@@ -1,0 +1,455 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "dcos-monitoring"
+        },
+        "user": {
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "nobody"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of the Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        },
+        "placement_constraints": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "description": "Placement constraints for the dcos-monitoring scheduler",
+          "default": []
+        }
+      },
+      "additionalProperties": false
+    },
+    "prometheus": {
+      "description": "Prometheus configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "Prometheus pod CPU requirements",
+          "type": "number",
+          "default": 1.0
+        },
+        "mem": {
+          "description": "Prometheus pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 1024
+        },
+        "volume": {
+          "description": "Prometheus volume requirements",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "The type of persistent volume to use, one of ROOT or MOUNT",
+              "type": "string",
+              "default": "ROOT",
+              "enum": [
+                "ROOT",
+                "MOUNT"
+              ]
+            },
+            "size": {
+              "description": "The size of the persistent volume in MB",
+              "type": "integer",
+              "default": 2000,
+              "minimum": 2000
+            },
+            "profile": {
+              "description": "The volume profile to use for the persistent volume",
+              "type": "string",
+              "default": ""
+            }
+          },
+          "additionalProperties": false
+        },
+        "prereserved_role": {
+          "description": "Pre-reserved role name",
+          "type": "string",
+          "default": ""
+        },
+        "placement_constraints": {
+          "type": "string",
+          "description": "The Marathon-style placement constraints string controlling Prometheus server placement",
+          "default": "",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "interval": {
+          "description": "Master scrape interval",
+          "type": "number",
+          "default": 30
+        },
+        "timeout": {
+          "description": "Master scrape timeout",
+          "type": "number",
+          "default": 25
+        },
+        "dcos_metrics_node_port": {
+          "description": "Port where to scrape dcos-metrics in each node",
+          "type": "number",
+          "default": 61091
+        },
+        "storage_tsdb_retention": {
+          "description": "Determine when to remove old data",
+          "type": "string",
+          "default": "15d"
+        },
+        "admin_router_proxy": {
+          "description": "Configuration for Admin Router integration",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Whether to enable Admin Router integration for Prometheus UI",
+              "type": "boolean",
+              "default": true
+            },
+            "url": {
+              "description": "The DC/OS URL (without the tailing slash)",
+              "type": "string",
+              "default": ""
+            }
+          },
+          "additionalProperties": false
+        },
+        "marathon_lb_proxy": {
+          "description": "Configuration for Marathon LB integration",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Whether to enable Marathon LB integration for Prometheus",
+              "type": "boolean",
+              "default": false
+            },
+            "vhost": {
+              "description": "Fully qualified domain name (FQDN) for VHOST",
+              "type": "string",
+              "default": ""
+            }
+          },
+          "additionalProperties": false
+        },
+        "alert_rules_repository": {
+          "description": "Repository for alert rules",
+          "type": "object",
+          "properties": {
+            "url": {
+              "description": "The URL to the git repository",
+              "type": "string",
+              "default": ""
+            },
+            "path": {
+              "description": "Path in the repository to load rules from (e.g., /, /foo)",
+              "type": "string",
+              "default": ""
+            },
+            "reference_name": {
+              "description": "Git repository reference name (e.g., refs/heads/master)",
+              "type": "string",
+              "default": ""
+            },
+            "credentials": {
+              "description": "Credentials (must be stored as DC/OS Secrets in the Secret Store) for accessing the repository",
+              "type": "object",
+              "properties": {
+                "username_secret": {
+                  "description": "Name of the DC/OS Secret storing the username of the repository",
+                  "type": "string",
+                  "default": ""
+                },
+                "password_secret": {
+                  "description": "Name of the DC/OS Secret storing the password (or API token) of the repository",
+                  "type": "string",
+                  "default": ""
+                },
+                "deploy_key_secret": {
+                  "description": "Name of DC/OS Secret stored in the Secret Store for the deploy key",
+                  "type": "string",
+                  "default": ""
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "pushgateway": {
+      "description": "Pushgateway configuration properties",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Whether to enable the Pushgateway service",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "grafana": {
+      "description": "Grafana configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "Grafana pod CPU requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "description": "Grafana pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 256
+        },
+        "data_volume": {
+          "description": "Grafana data volume requirements",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "The type of persistent volume to use, one of ROOT or MOUNT",
+              "type": "string",
+              "default": "ROOT",
+              "enum": [
+                "ROOT",
+                "MOUNT"
+              ]
+            },
+            "size": {
+              "description": "The size of the persistent volume in MB",
+              "type": "integer",
+              "default": 50,
+              "minimum": 50
+            },
+            "profile": {
+              "description": "The volume profile to use for the persistent volume",
+              "type": "string",
+              "default": ""
+            }
+          },
+          "additionalProperties": false
+        },
+        "ui_port": {
+          "description": "The port to connect to the Grafana UI",
+          "type": "integer",
+          "default": 3000
+        },
+        "admin_router_proxy": {
+          "description": "Whether to use Admin Router as the proxy to access Grafana UI",
+          "type": "boolean",
+          "default": true
+        },
+        "admin_credentials": {
+          "description": "Username/password (must be stored as DC/OS Secrets in the Secret Store) for the admin user",
+          "type": "object",
+          "properties": {
+            "username_secret": {
+              "description": "Name of the DC/OS Secret storing the username of the admin user",
+              "type": "string",
+              "default": ""
+            },
+            "password_secret": {
+              "description": "Name of the DC/OS Secret storing the password of the admin user",
+              "type": "string",
+              "default": ""
+            }
+          },
+          "additionalProperties": false
+        },
+        "placement_constraints": {
+          "type": "string",
+          "description": "The Marathon-style placement constraints string controlling Grafana server placement",
+          "default": "",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "use_light_theme": {
+          "description": "Whether to use the Light theme for dashboards (alternative is the Dark theme)",
+          "type": "boolean",
+          "default": true
+        },
+        "default_dashboards": {
+          "description": "Whether to load default Grafana dashboards associated with this package",
+          "type": "boolean",
+          "default": true
+        },
+        "dashboard_config_repository": {
+          "description": "Repository for Grafana dashboard configs",
+          "type": "object",
+          "properties": {
+            "url": {
+              "description": "The URL to the git repository",
+              "type": "string",
+              "default": ""
+            },
+            "path": {
+              "description": "Path in the repository to load configs from (e.g., /, /foo)",
+              "type": "string",
+              "default": ""
+            },
+            "reference_name": {
+              "description": "Git repository reference name (e.g., refs/heads/master)",
+              "type": "string",
+              "default": ""
+            },
+            "credentials": {
+              "description": "Credentials (must be stored as DC/OS Secrets in the Secret Store) for accessing the repository",
+              "type": "object",
+              "properties": {
+                "username_secret": {
+                  "description": "Name of the DC/OS Secret storing the username of the repository",
+                  "type": "string",
+                  "default": ""
+                },
+                "password_secret": {
+                  "description": "Name of the DC/OS Secret storing the password (or API token) of the repository",
+                  "type": "string",
+                  "default": ""
+                },
+                "deploy_key_secret": {
+                  "description": "Name of the DC/OS Secret storing the deploy key",
+                  "type": "string",
+                  "default": ""
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "alertmanager": {
+      "description": "Alertmanager settings",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "description": "Alertmanager pod CPU requirements",
+          "type": "number",
+          "default": 0.3
+        },
+        "mem": {
+          "description": "Alertmanager pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 512
+        },
+        "data_volume": {
+          "description": "Alertmanager data volume requirements",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "The type of persistent volume to use, one of ROOT or MOUNT",
+              "type": "string",
+              "default": "ROOT",
+              "enum": [
+                "ROOT",
+                "MOUNT"
+              ]
+            },
+            "size": {
+              "description": "The size of the persistent volume in MB",
+              "type": "integer",
+              "default": 50,
+              "minimum": 50
+            },
+            "profile": {
+              "description": "The volume profile to use for the persistent volume",
+              "type": "string",
+              "default": ""
+            }
+          },
+          "additionalProperties": false
+        },
+        "secrets": {
+          "description": "DC/OS Secrets stored in the Secret Store that will be used by Alertmanager",
+          "type": "object",
+          "properties": {
+            "slack_api_url_secret": {
+              "description": "Name of the DC/OS Secret storing the Slack webhook url",
+              "type": "string",
+              "default": ""
+            }
+          },
+          "additionalProperties": false
+        },
+        "config_repository": {
+          "description": "Repository for Alertmanager configs",
+          "type": "object",
+          "properties": {
+            "url": {
+              "description": "The URL to the git repository",
+              "type": "string",
+              "default": ""
+            },
+            "path": {
+              "description": "Path in the repository to load configs from (e.g., /, /foo)",
+              "type": "string",
+              "default": ""
+            },
+            "credentials": {
+              "description": "Credentials (must be stored as DC/OS Secrets in the Secret Store) for accessing the repository",
+              "type": "object",
+              "properties": {
+                "username_secret": {
+                  "description": "Name of the DC/OS Secret storing the username of the repository",
+                  "type": "string",
+                  "default": ""
+                },
+                "password_secret": {
+                  "description": "Name of the DC/OS Secret storing the password (or API token) of the repository",
+                  "type": "string",
+                  "default": ""
+                },
+                "deploy_key_secret": {
+                  "description": "Name of the DC/OS Secret storing the deploy key",
+                  "type": "string",
+                  "default": ""
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
