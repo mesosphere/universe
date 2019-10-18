@@ -18,7 +18,6 @@ import urllib.parse
 import urllib.request
 
 HTTP_ROOT = "http://master.mesos:8082/"
-DOCKER_ROOT = "master.mesos:5000"
 
 
 def main():
@@ -37,6 +36,10 @@ def main():
     parser.add_argument(
         '--server_url',
         default=HTTP_ROOT,
+        help="URL for http server")
+    parser.add_argument(
+        '--docker_url',
+        default="master.mesos:5000",
         help="URL for http server")
     parser.add_argument(
         '--repository',
@@ -98,8 +101,15 @@ def main():
         failed_resources = []
         failed_images = []
 
+        # This has a short circuit detection of an invalid package
+        # If the package is invalid, returns (packageinfo, False)
+        # Otherwise, if we're successful, return (packagename, True)
+        # Doing some weird stuff with typing here, but it actually works well
         def handle_package(opts):
             package, version, path = opts
+            # Short circuit handling bad packages
+            if path is None:
+                return (package, version), False
             try:
                 prepare_repository(
                     package,
@@ -108,6 +118,7 @@ def main():
                     pathlib.Path(args.repository),
                     repo_artifacts,
                     args.server_url,
+                    args.docker_url,
                     args.nonlocal_images,
                     args.nonlocal_cli
                 )
@@ -138,7 +149,7 @@ def main():
                 remove_package(package, dir_path)
                 failed_packages.append(package)
 
-            return package
+            return package, True
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
             for package in executor.map(
@@ -148,7 +159,12 @@ def main():
                     packages,
                     args.selected,
                     dcos_version)):
-                print("Completed: {}".format(package))
+                # Detect second return from handle_package, and on False, notify
+                if package[1]:
+                    print("Completed: {}".format(package[0]))
+                else:
+                    print("Failed: {}".format(package[0]))
+                    failed_packages.append(package[0])
 
         build_repository(
             pathlib.Path(
@@ -231,7 +247,16 @@ def enumerate_dcos_packages(
     if pending_packages:
         print("Error: couldn't find the following packages")
         print(pending_packages)
-        sys.exit(1)
+        for package in pending_packages:
+            yield (
+                # Yield a 'bad' package with a `None` path;
+                # This will be detected by handle_packages
+                package[0],
+                package[1],
+                None
+            )
+        # Exiting here doesn't work because of threading.
+        # sys.exit(1)
 
 
 def include_revision(
@@ -412,6 +437,7 @@ def prepare_repository(
     source_repo,
     dest_repo,
     http_root,
+    docker_root,
     skip_images,
     skip_cli
 ):
@@ -458,7 +484,7 @@ def prepare_repository(
         if 'assets' in resource:
             if 'container' in resource["assets"]:
                 resource["assets"]["container"]["docker"] = {
-                    n: format_image_name(DOCKER_ROOT, image_name)
+                    n: format_image_name(docker_root, image_name)
                     for n, image_name in resource["assets"]["container"].get(
                         "docker", {}).items()}
 

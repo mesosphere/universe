@@ -5,6 +5,7 @@ static_image ?= universe-static:$(static_version)
 .PHONY: certs base clean gen-universe
 
 certs:
+	echo "Creating a CA certificate"
 	mkdir certs && openssl req \
 		-newkey rsa:4096 -nodes -sha256 -keyout certs/domain.key \
 		-x509 -days 365 -out certs/domain.crt \

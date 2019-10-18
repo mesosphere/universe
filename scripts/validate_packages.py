@@ -4,8 +4,11 @@ import json
 import jsonschema
 import os
 import re
+import pystache
 import sys
 from distutils.version import LooseVersion
+from pystache.parser import ParsingError
+
 
 SCRIPTS_DIR = os.path.dirname(os.path.realpath(__file__))
 UNIVERSE_DIR = os.path.join(SCRIPTS_DIR, "..")
@@ -33,7 +36,7 @@ V3_RESOURCE_JSON_SCHEMA = _get_json_schema('v3-resource-schema.json')
 
 def main():
     # traverse prefix dirs ("A", "B", etc)
-    for letter in os.listdir(PKG_DIR):
+    for letter in sorted(os.listdir(PKG_DIR)):
         if not LETTER_PATTERN.match(letter):
             sys.exit(
                 "\tERROR\n\n"
@@ -42,7 +45,7 @@ def main():
             )
         prefix_path = os.path.join(PKG_DIR, letter)
         # traverse each package dir directory (e.g., "cassandra")
-        for given_package in os.listdir(prefix_path):
+        for given_package in sorted(os.listdir(prefix_path)):
             package_path = os.path.join(prefix_path, given_package)
             _validate_package(given_package, package_path)
 
@@ -51,7 +54,7 @@ def main():
 
 def _validate_package(given_package, path):
     eprint("Validating {}...".format(given_package))
-    for rev in os.listdir(path):
+    for rev in sorted(os.listdir(path), key=int):
         _validate_revision(given_package, rev, os.path.join(path, rev))
 
 
@@ -94,10 +97,10 @@ def _validate_revision(given_package, revision, path):
     command_json = None
     if os.path.isfile(command_json_path):
         eprint("\t\tcommand.json:", end='')
-        if packaging_version == "4.0":
+        if packaging_version >= LooseVersion("4.0"):
             sys.exit(
                 "\tERROR\n\n"
-                "Command file is not support for version 4.0 packages"
+                "Command file is not support for version 4.0 and above packages"
             )
         else:
             command_json = _validate_json(
@@ -113,12 +116,11 @@ def _validate_revision(given_package, revision, path):
         _validate_json(config_json_path, CONFIG_JSON_SCHEMA)
         eprint("\tOK")
 
-    # validate existence of required marathon.json for v2
-    if packaging_version == "2.0":
-        marathon_json_path = os.path.join(path, 'marathon.json.mustache')
+    # validate (optional) marathon.json.mustache
+    marathon_json_path = os.path.join(path, 'marathon.json.mustache')
+    if os.path.isfile(marathon_json_path):
         eprint("\t\tmarathon.json.mustache:", end='')
-        if not os.path.isfile(marathon_json_path):
-            sys.exit("\tERROR\n\nMissing required marathon.json.mustache")
+        _validate_mustache_template(marathon_json_path)
         eprint("\tOK")
 
     # validate resource.json
@@ -183,6 +185,15 @@ def _validate_jsonschema(instance, schema):
     errors = list(validator.iter_errors(instance))
     if len(errors) != 0:
         sys.exit("\tERROR\n\nValidation error: {}".format(errors))
+
+
+def _validate_mustache_template(mustache_path):
+    with open(mustache_path, encoding='utf-8') as f:
+        mustache_template = f.read()
+        try:
+            pystache.parse(mustache_template)
+        except ParsingError as pe:
+            sys.exit("\tERROR\n\nParsing error: {}".format(str(pe)))
 
 
 if __name__ == '__main__':

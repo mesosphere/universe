@@ -124,6 +124,8 @@ image to create a `universe-base` image
     ## Will add certs to universe-static and create universe-base
     ```
 
+    **NOTE: Using `make certs` will result in creating a CA certificate. If you have concerns with using local-universe, look at [Package Registry](https://docs.mesosphere.com/latest/administering-clusters/package-registry)**
+
 1. Add content (see above)
 
     ```bash

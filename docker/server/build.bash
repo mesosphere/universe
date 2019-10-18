@@ -27,8 +27,6 @@ function prepare {(
     mkdir -p ${DOCKER_SERVER_DIR}/target
     # copy over the build json repos
     cp -r ${DOCKER_SERVER_DIR}/../../target/repo-*.json ${DOCKER_SERVER_DIR}/target
-    # copy over the build zip repos (only 1.6.1 and 1.7)
-    cp -r ${DOCKER_SERVER_DIR}/../../target/repo-*.zip ${DOCKER_SERVER_DIR}/target
     # copy over the packages files
     (cd ${DOCKER_SERVER_DIR}/../../target; rsync -R */package/* ${DOCKER_SERVER_DIR}/target)
   else
