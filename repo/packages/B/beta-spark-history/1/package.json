@@ -1,6 +1,6 @@
 {
   "packagingVersion": "3.0",
-  "preInstallNotes": "Default configuration requires 1 agent node with: 1 CPU | 1024 MB MEM",
+  "preInstallNotes": "**WARNING: package is known to have issues and will not install properly with default settings**\n\nDefault configuration requires 1 agent node with: 1 CPU | 1024 MB MEM",
   "postInstallNotes": "The Apache Spark History Server is being installed!",
   "scm": "https://github.com/apache/spark.git",
   "maintainer": "support@mesosphere.io",
