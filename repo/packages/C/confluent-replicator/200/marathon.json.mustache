@@ -40,6 +40,7 @@
   ],
   {{/replicator.virtual_network_enabled}}
   "env": {
+    "CONNECT_PLUGIN_PATH": "/usr/share/java",
     "CONNECT_BOOTSTRAP_SERVERS": "broker.{{replicator.kafka-service}}.l4lb.thisdcos.directory:9092",
     "CONNECT_REST_PORT": "8083",
     "CONNECT_GROUP_ID": "dcos-{{replicator.name}}-group",
