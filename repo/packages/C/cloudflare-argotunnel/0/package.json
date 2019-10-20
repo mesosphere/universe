@@ -12,7 +12,7 @@
     "tags": [
         "cloudflare-argotunnel"
     ],
-    "preInstallNotes": "\n\n**WARNING: package is known to have issues and will not install properly with default settings**\n\nThe DC/OS Cloudflare Argo Tunnel service requires secret support so only works with DC/OS Enterprise.\n\n",
+    "preInstallNotes": "\n\nThe DC/OS Cloudflare Argo Tunnel service requires secret support so only works with DC/OS Enterprise.\n\n",
     "postInstallNotes": "DC/OS CLOUDFLARE Argo Tunnel is being installed!\n\n\tDocumentation: https://github.com/dcos/examples/tree/master/cloudflare-argotunnel",
     "postUninstallNotes": "DC/OS CLOUDFLARE Argo Tunnel is being uninstalled.",
     "licenses": [
@@ -21,5 +21,6 @@
             "url": "https://github.com/cloudflare/cloudflared/blob/master/LICENSE"
         }
     ],
+    "hasKnownIssues": true,
     "lastUpdated": 1546633364
 }

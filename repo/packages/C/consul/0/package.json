@@ -12,7 +12,6 @@
     "tags": [
         "consul"
     ],
-    "preInstallNotes": "\n\n**WARNING: package is known to have issues and will not install properly with default settings**",
     "postInstallNotes": "DC/OS Consul is being installed!\n\n\tDocumentation: https://github.com/maibornwolff/dcos-consul\n\tIssues: https://github.com/maibornwolff/dcos-consul", 
     "postUninstallNotes": "DC/OS Consul is being uninstalled.",
     "licenses": [
@@ -21,5 +20,6 @@
             "url": "https://raw.githubusercontent.com/hashicorp/consul/master/LICENSE"
         }
     ],
+    "hasKnownIssues": true,
     "lastUpdated": 1552664069
 }

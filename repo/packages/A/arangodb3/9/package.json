@@ -8,7 +8,7 @@
   "description": "A distributed free and open-source database with a flexible data model for documents, graphs, and key-values. Build high performance applications using a convenient SQL-like query language or JavaScript extensions. Guidance on how to install can be found here: https://github.com/dcos/examples/tree/master/arangodb",
   "framework": true,
   "tags": [ "arangodb", "NoSQL", "database" ],
-  "preInstallNotes": "**WARNING: package is known to have issues and will not install properly with default settings**\n\nThe default configuration requires at least 3 nodes having 4.75 CPU, 22GB of memory and 20GB of persistent disk storage in total.",
+  "preInstallNotes": "The default configuration requires at least 3 nodes having 4.75 CPU, 22GB of memory and 20GB of persistent disk storage in total.",
   "postInstallNotes": "The ArangoDB DCOS Service has been successfully installed!\n\n\tDocumentation: https://github.com/arangodb/arangodb3-dcos\n\tIssues: https://github.com/arangodb/arangodb3-dcos/issues",
   "postUninstallNotes": "The ArangoDB DCOS Service has been uninstalled and will no longer run.\nPlease follow the instructions at https://github.com/arangodb/arangodb3-dcos to clean up any persisted state.",
     "licenses": [
@@ -18,5 +18,6 @@
     }
   ],
   "selected": false,
+  "hasKnownIssues": true,
   "lastUpdated": 1509375060
 }

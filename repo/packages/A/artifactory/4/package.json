@@ -14,7 +14,7 @@
     "artifactory",
     "repository"
   ],
-  "preInstallNotes": "**WARNING: package is known to have issues and will not install properly with default settings**\n\nYou will need at least 1 public agent in your cluster to install Artifactory-lb.",
+  "preInstallNotes": "You will need at least 1 public agent in your cluster to install Artifactory-lb.",
   "postInstallNotes": "Artifactory has been installed. Please install Artifactory-lb if not already installed.",
   "postUninstallNotes": "Artifactory has been uninstalled.",
   "licenses": [
@@ -24,5 +24,6 @@
     }
   ],
   "selected": false,
+  "hasKnownIssues": true,
   "lastUpdated": 1529518291
 }
