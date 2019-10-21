@@ -1,0 +1,42 @@
+{
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "f0028105a0bea830d5bdc9f07a3f9c9c3af433a016a6bf1b7921cf646e397376"
+            }
+          ],
+          "kind": "zip",
+          "url": "https://github.com/dcos/dcos-http-cli/releases/download/0.1.0/dcos-http-cli.darwin.zip"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "a0a59e0fe4949b96fe3062a6cfa5e6548aa3b43160f9abe354b41676eb5b98c6"
+            }
+          ],
+          "kind": "zip",
+          "url": "https://github.com/dcos/dcos-http-cli/releases/download/0.1.0/dcos-http-cli.linux.zip"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "3ee8ac318abb9c23b67a55e8758419a6d99828c3b60d5dc22546da9bdbcea9f2"
+            }
+          ],
+          "kind": "zip",
+          "url": "https://github.com/dcos/dcos-http-cli/releases/download/0.1.0/dcos-http-cli.windows.zip"
+        }
+      }
+    }
+  }
+}
