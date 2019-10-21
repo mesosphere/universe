@@ -1,0 +1,462 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS Apache ZooKeeper configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of the ZooKeeper service instance",
+          "type": "string",
+          "default": "kafka-zookeeper",
+          "pattern": "^(\\/?((\\.\\.)|(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]))?($|\\/))+$"
+        },
+        "user": {
+          "title": "User",
+          "description": "The user that runs the ZooKeeper nodes and owns the Mesos sandbox.",
+          "type": "string",
+          "default": "nobody"
+        },
+        "service_account": {
+          "title": "DC/OS Service Account (optional)",
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-service-account+string"
+          }
+        },
+        "service_account_secret": {
+          "title": "DC/OS Service Account Secret (optional)",
+          "description": "Name of the Secret Store credential to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-secret+string"
+          }
+        },
+        "virtual_network_enabled": {
+          "title": "Virtual Network Enabled",
+          "description": "Enable virtual networking.",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "title": "Virtual Network Name",
+          "description": "The name of the virtual network to join.",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "title": "Virtual Network Plugin Labels",
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        },
+        "enable_metrics": {
+          "title": "Enable Metrics",
+          "description": "Enable DC/OS Metrics reporting.",
+          "type": "boolean",
+          "default": true
+        },
+        "log_level": {
+          "title": "Scheduler Log Level",
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        },
+        "mesos_api_version": {
+          "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)",
+          "type": "string",
+          "default": "V1"
+        },
+        "region": {
+          "description": "All ZooKeeper nodes will run in this region. When no region is specified, the nodes are constrained to the local region.",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-region+string"
+          }
+        },
+        "security": {
+          "description": "Security settings",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kerberos": {
+              "description": "Kerberos configuration properties.",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "enabled": {
+                  "description": "Enable kerberos authentication.",
+                  "type": "boolean",
+                  "default": false
+                },
+                "kdc": {
+                  "description": "KDC settings for Kerberos",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "hostname": {
+                      "type": "string",
+                      "description": "The name or address of a host running a KDC for the realm."
+                    },
+                    "port": {
+                      "type": "integer",
+                      "description": "The port of the host running a KDC for that realm."
+                    }
+                  }
+                },
+                "primary": {
+                  "type": "string",
+                  "description": "The Kerberos primary used by ZooKeeper tasks.",
+                  "default": "zookeeper"
+                },
+                "realm": {
+                  "type": "string",
+                  "description": "The Kerberos realm used to render the principal of ZooKeeper tasks."
+                },
+                "keytab_secret": {
+                  "type": "string",
+                  "description": "The name of the DC/OS secret storing the keytab",
+                  "media": {
+                    "type": "application/x-secret+string"
+                  }
+                },
+                "debug": {
+                  "type": "boolean",
+                  "description": "Turn debug Kerberos logging on or off to assist in diagnosing issues with Kerberos authentication.",
+                  "default": false
+                },
+                "advanced": {
+                  "description": "Advanced Kerberos configuration. These settings can be used to enable or disable Kerberos on a running service. The defaults require full authentication between clients and quorum peers.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "required_for_client": {
+                      "description": "Require Kerberos authentication for clients. Unauthenticated clients can only ping, create a session, close a session, or SASL-authenticate with the ZooKeeper service (see: requireClientAuthScheme).",
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "required_for_quorum_learner": {
+                      "description": "Require Kerberos authentication for quorum peer learners. If this is set to true, a quorum peer learner will send authentication packet to quorum peer servers then proceeds with leader election on successful authentication. If false, the learner procedes with leader election without any authentication.",
+                      "type": "boolean",
+                      "default": true
+                    },
+                    "required_for_quorum_server": {
+                      "description": "Require Kerberos authentication for quorum peer servers. If this is set to true, then all unauthenticated quorum peer learner connection requests will be rejected. If false, then quorum peer server will accept quorum peer learner connection request and then proceeds with leader election even if the authentication did not succeed.",
+                      "type": "boolean",
+                      "default": true
+                    }
+                  }
+                }
+              }
+            },
+            "custom_domain": {
+              "type": "string",
+              "description": "A custom domain to be used in place of autoip.dcos.thisdcos.directory. This can be used to expose the service securely outside of the cluster, but requires setting up external DNS. See the service documentation for details."
+            }
+          }
+        },
+        "readiness_check": {
+          "description": "Readiness check settings. Excercise caution when modifying these default values as it can lead to spurious task failures.",
+          "type": "object",
+          "properties": {
+            "interval": {
+              "type": "integer",
+              "description": "The period in seconds to wait after the last readiness check has completed to start the next check.",
+              "default": 5,
+              "minimum": 5
+            },
+            "delay": {
+              "type": "integer",
+              "description": "An amount of time in seconds to wait before starting the readiness check attempts.",
+              "default": 0,
+              "minimum": 0
+            },
+            "timeout": {
+              "type": "integer",
+              "description": "An amount of time in seconds to wait for a readiness check to succeed.",
+              "default": 60,
+              "minimum": 60
+            }
+          }
+        },
+        "rlimits": {
+          "description": "POSIX resource limits applied to the pod. Excercise caution when modifying these default values as it can lead to spurious task failures.",
+          "type": "object",
+          "properties": {
+            "rlimit_nofile": {
+              "description": "Specifies RLIMIT_NOFILE, a value one greater than the maximum file descriptor number that can be opened by this process.",
+              "type": "object",
+              "properties": {
+                "soft": {
+                  "type": "integer",
+                  "description": "The  soft  limit  is  the  value that the kernel enforces for the corresponding resource.",
+                  "default": 128000,
+                  "minimum": 128000
+                },
+                "hard": {
+                  "type": "integer",
+                  "description": "The  hard  limit  acts as a ceiling for the soft limit.",
+                  "default": 128000,
+                  "minimum": 128000
+                }
+              }
+            }
+          }
+        },
+        "check": {
+          "description": "Health check used to determine the scheduler health based on the status of the scheduler plans.",
+          "type": "object",
+          "properties": {
+            "intervalSeconds": {
+              "type": "integer",
+              "description": "The period in seconds to wait after the last check has completed to start the next check.",
+              "default": 30,
+              "minimum": 30
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "description": " An amount of time in seconds to wait for check to succeed.",
+              "default": 20,
+              "minimum": 20
+            },
+            "delaySeconds": {
+              "type": "integer",
+              "description": "An amount of time in seconds to wait before starting the check attempts.",
+              "default": 15,
+              "minimum": 15
+            }
+          }
+        }
+      },
+      "required": [
+        "name",
+        "user"
+      ]
+    },
+    "node": {
+      "description": "ZooKeeper pod configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of ZooKeeper pods to run. CAN ONLY BE 3 OR 5",
+          "type": "integer",
+          "enum": [
+            3,
+            5
+          ],
+          "default": 3
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Placement constraint for nodes. Example: [[\"hostname\", \"UNIQUE\"]]",
+          "type": "string",
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "ZooKeeper pod CPU requirements",
+          "type": "number",
+          "default": 1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "ZooKeeper pod memory requirements (in MB)",
+          "type": "integer",
+          "default": 4000
+        },
+        "heap": {
+          "title": "Heap size (MB)",
+          "description": "ZooKeeper pod memory requirements (in MB)",
+          "type": "integer",
+          "default": 3000
+        },
+        "data_disk": {
+          "title": "Data Disk Size (MB)",
+          "description": "Disk size of device designated for data (MB)",
+          "type": "integer",
+          "default": 5000
+        },
+        "data_disk_type": {
+          "title": "Data Disk Type",
+          "description": "Disk type [ROOT, MOUNT] of device designated for data.",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "data_volume_profile": {
+          "type": "string",
+          "description": "Volume profile to be used for storing Zookeeper data."
+        },
+        "log_disk": {
+          "title": "Log Disk Size (MB)",
+          "description": "Disk size of device designated for logging (MB)",
+          "type": "integer",
+          "default": 5000
+        },
+        "log_disk_type": {
+          "title": "Log Disk Type",
+          "description": "Disk type [ROOT, MOUNT] of device designated for logging",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "log_volume_profile": {
+          "type": "string",
+          "description": "Volume profile to be used for storing Zookeeper logs."
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "data_disk",
+        "data_disk_type",
+        "log_disk",
+        "log_disk_type"
+      ]
+    },
+    "zookeeper": {
+      "description": "ZooKeeper-specific configuration paramters (for more information, see the ZooKeeper admin docs)",
+      "type": "object",
+      "properties": {
+        "tick_time": {
+          "title": "tickTime",
+          "description": "Length of a single tick, which is the basic time unit used by ZooKeeper",
+          "type": "number",
+          "default": 2000
+        },
+        "client_port": {
+          "title": "Client port",
+          "description": "Client port for host to listen to client frameworks on",
+          "type": "integer",
+          "default": 1140
+        },
+        "follower_port": {
+          "title": "Follower port",
+          "description": "Port followers use to connect to the leader. Same for every node in cluster.",
+          "type": "integer",
+          "default": 1240
+        },
+        "leader_election_port": {
+          "title": "Leader election port",
+          "description": "Port used in cluster for leader elections. Same for every node in cluster.",
+          "type": "integer",
+          "default": 1340
+        },
+        "init_limit": {
+          "title": "initLimit",
+          "description": "Initial ZK limit",
+          "type": "number",
+          "default": 5
+        },
+        "sync_enabled": {
+          "title": "syncEnabled",
+          "description": "If sync is enabled, the observers log transaction and write snapshots to disk like the participants do.",
+          "type": "boolean",
+          "default": true
+        },
+        "sync_limit": {
+          "title": "syncLimit",
+          "description": "The amount of time, in ticks, to allow followers to sync with the ZooKeeper leader. If followers fall too far behind a leader, they will be dropped.",
+          "type": "number",
+          "default": 2
+        },
+        "global_outstanding_limit": {
+          "title": "globalOutstandingLimit",
+          "description": "Clients can submit requests faster than ZooKeeper can process them, especially if there are a lot of clients. To prevent ZooKeeper from running out of memory due to queued requests, ZooKeeper will throttle clients so that there is no more than globalOutstandingLimit outstanding requests in the system. The default limit is 1,000.",
+          "type": "integer",
+          "default": 1000
+        },
+        "pre_alloc_size": {
+          "title": "preAllocSize",
+          "description": "To avoid seeks ZooKeeper allocates space in the transaction log file in blocks of preAllocSize kilobytes. The default block size is 64M. One reason for changing the size of the blocks is to reduce the block size if snapshots are taken more often.",
+          "type": "integer",
+          "default": 65536
+        },
+        "snap_count": {
+          "title": "snapCount",
+          "description": "ZooKeeper logs transactions to a transaction log. After snapCount transactions are written to a log file a snapshot is started and a new transaction log file is created. The default snapCount is 100,000.",
+          "type": "integer",
+          "default": 100000
+        },
+        "max_client_cnxns": {
+          "title": "maxClientCnxns",
+          "description": "Limits the number of concurrent connections (at the socket level) that a single client, identified by IP address, may make to a single member of the ZooKeeper ensemble. This is used to prevent certain classes of DoS attacks, including file descriptor exhaustion. The default is 60. Setting this to 0 entirely removes the limit on concurrent connections.",
+          "type": "integer",
+          "default": 300
+        },
+        "min_session_timeout": {
+          "title": "minSessionTimeout",
+          "description": "the minimum session timeout in milliseconds that the server will allow the client to negotiate. Defaults to 2 times the tickTime.",
+          "type": "integer",
+          "default": 4000
+        },
+        "max_session_timeout": {
+          "title": "maxSessionTimeout",
+          "description": " the maximum session timeout in milliseconds that the server will allow the client to negotiate. Defaults to 20 times the tickTime.",
+          "type": "integer",
+          "default": 40000
+        },
+        "fsync_warning_threshold_ms": {
+          "title": "fsync.warningthresholdms",
+          "description": "A warning message will be output to the log whenever an fsync in the Transactional Log (WAL) takes longer than this value. The values is specified in milliseconds and defaults to 1000. This value can only be set as a system property.",
+          "type": "number",
+          "default": 1000
+        },
+        "autopurge_snap_retain_count": {
+          "title": "autopurge.snapRetainCount",
+          "description": "When enabled, ZooKeeper auto purge feature retains the autopurge.snapRetainCount most recent snapshots and the corresponding transaction logs in the dataDir and dataLogDir respectively and deletes the rest. Minimum value is 3.",
+          "type": "number",
+          "default": 3
+        },
+        "autopurge_purge_interval": {
+          "title": "autopurge.purgeInterval",
+          "description": "The time interval in hours for which the purge task has to be triggered. Set to a positive integer (1 and above) to enable the auto purging. Defaults to 0.",
+          "type": "number",
+          "default": 0
+        },
+        "leader_serves": {
+          "title": "leaderServes",
+          "description": "Leader accepts client connections. Default value is yes. The leader machine coordinates updates. For higher update throughput at thes slight expense of read throughput the leader can be configured to not accept clients and focus on coordination. The default to this option is yes, which means that a leader will accept client connections.",
+          "type": "string",
+          "default": "yes"
+        },
+        "cnx_timeout": {
+          "title": "cnxTimeout",
+          "description": "Sets the timeout value for opening connections for leader election notifications. Only applicable if you are using electionAlg 3. Default value is 5 seconds",
+          "type": "integer",
+          "default": 60
+        }
+      },
+      "required": [
+        "tick_time",
+        "client_port",
+        "follower_port",
+        "leader_election_port"
+      ]
+    }
+  }
+}
