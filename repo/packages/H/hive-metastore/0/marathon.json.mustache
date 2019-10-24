@@ -1,0 +1,144 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 0.5,
+  "mem": 1024,
+  "instances": 1,
+  "user": "{{service.user}}",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && ./bootstrap -resolve=false -template=false && ./hive-metastore-scheduler/bin/hive-metastore ./hive-metastore-scheduler/svc.yml",
+  "constraints": {{service.constraints}},
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "container": {
+    "type": "MESOS",
+    "volumes": [
+      {
+        "containerPath": "secrets/service-account.json",
+        "secret": "serviceCredential"
+      }
+    ]
+  },
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    "PACKAGE_NAME": "hive-metastore",
+    "PACKAGE_VERSION": "1.0.0-3.0.0",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1571723583789",
+    "PACKAGE_BUILD_TIME_STR": "Tue Oct 22 2019 05:53:03 +0000",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "TASKCFG_ALL_HIVE_METASTORE_VERSION": "apache-hive-metastore-3.0.0-bin",
+    "HIVE_METASTORE_DATABASE_ADDRESS": "{{hive_metastore.database_address}}",
+    "TASKCFG_ALL_HIVE_METASTORE_CONNECTION_URL": "",
+    "TASKCFG_ALL_HIVE_METASTORE_CONNECTION_DRIVER_NAME": "",
+    "TASKCFG_ALL_HIVE_METASTORE_THRIFT_URIS": "",
+
+    "TASKCFG_ALL_DATABASE_USERNAME": "{{hive_metastore.database_user_name}}",
+    "DATABASE_PASSWORD": "{{hive_metastore.database_password}}",
+    "HIVE_SECRETS_ENABLED": "{{hive_metastore.enable_secrets}}",
+
+    "HIVE_METASTORE_COUNT": "{{hive_metastore.count}}",
+    "HIVE_METASTORE_CPUS": "{{hive_metastore.cpus}}",
+    "HIVE_METASTORE_MEM": "{{hive_metastore.mem}}",
+    "HIVE_METASTORE_DISK": "{{hive_metastore.disk}}",
+    "HIVE_METASTORE_DISK_TYPE": "{{hive_metastore.disk_type}}",
+    {{#hive_metastore.volume_profile}}
+    "HIVE_METASTORE_VOLUME_PROFILE": "{{hive_metastore.volume_profile}}",
+    {{/hive_metastore.volume_profile}}
+    "TASKCFG_ALL_HIVE_METASTORE_THRIFT_PORT": "{{hive_metastore.port}}",
+    "TASKCFG_ALL_HIVE_METASTORE_THRIFT_URI_SELECTION": "{{hive_metastore.thrift_uri_selection}}",
+
+    "HIVE_METASTORE_PLACEMENT": "{{{hive_metastore.placement}}}",
+    "DATABASE_NAME": "{{hive_metastore.database}}",
+    {{#hive_metastore.kill_grace_period}}
+    "HIVE_METASTORE_KILL_GRACE_PERIOD": "{{hive_metastore.kill_grace_period}}",
+    {{/hive_metastore.kill_grace_period}}
+
+    {{#service.region}}
+    "SERVICE_REGION": "{{service.region}}",
+    {{/service.region}}
+
+    {{#service.virtual_network_enabled}}
+    "VIRTUAL_NETWORK_ENABLED": "{{service.virtual_network_enabled}}",
+    "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "HIVE_METASTORE_URI": "{{resource.assets.uris.hive-metastore-tar-gz}}",
+    "HADOOP_URI": "{{resource.assets.uris.hadoop-tar-gz}}",
+    "MYSQL_CONNECTOR_URI": "{{resource.assets.uris.mysql-java-connector-tar-gz}}",
+
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": "secrets/service-account.json",
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\",\"parameters\":[{\"key\":\"service_account_credential\",\"value\":\"file://secrets/service-account.json\"}]},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"service_account_credential\",\"value\":\"file://secrets/service-account.json\"},{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.service_account_secret}}
+
+
+    {{#service.security.custom_domain}}
+    "SERVICE_TLD": "{{service.security.custom_domain}}",
+    {{/service.security.custom_domain}}
+
+    "READINESS_CHECK_INTERVAL": "{{service.readiness_check.interval}}",
+    "READINESS_CHECK_DELAY": "{{service.readiness_check.delay}}",
+    "READINESS_CHECK_TIMEOUT": "{{service.readiness_check.timeout}}",
+
+    "ALLOW_REGION_AWARENESS": "true",
+    "TASKCFG_ALL_PACKAGE_VERSION_TO_FORCE_UPDATE": "stub-universe"
+  },
+  "fetch": [
+    { "uri": "{{resource.assets.uris.bootstrap-zip}}", "cache": true },
+    { "uri": "{{resource.assets.uris.jre-tar-gz}}", "cache": true },
+    { "uri": "{{resource.assets.uris.scheduler-zip}}", "cache": true },
+    { "uri": "{{resource.assets.uris.libmesos-bundle-tar-gz}}", "cache": true }
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "check": {
+    "http": {
+      "portIndex": 0,
+      "path": "/v1/health",
+      "scheme": "HTTP"
+    },
+    "intervalSeconds": {{service.check.intervalSeconds}},
+    "timeoutSeconds": {{service.check.timeoutSeconds}},
+    "delaySeconds": {{service.check.delaySeconds}}
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/v1/health",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api"
+    }
+  ]
+}
