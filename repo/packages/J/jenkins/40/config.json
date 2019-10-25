@@ -1,0 +1,187 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "description": "Configuration properties for the Jenkins service for DC/OS.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Unique name for the service instance consisting of a series of words separated by slashes. Each word must be at least 1 alphanumeric character and may only contain digits (`0-9`), dashes (`-`), dots (`.`), and lowercase letters (`a-z`). The word may not begin or end with a dash",
+          "type": "string",
+          "pattern": "^(\\/?((\\.\\.)|(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9]))?($|\\/))+$",
+          "default": "jenkins"
+        },
+        "cpus": {
+          "description": "CPU shares to allocate to each Jenkins master.",
+          "type": "number",
+          "default": 1.0,
+          "minimum": 0.1
+        },
+        "mem": {
+          "description": "Memory (in MB) to allocate to each Jenkins master.",
+          "type": "number",
+          "default": 4096.0,
+          "minimum": 2048.0
+        },
+        "user": {
+          "description": "The user that the service will run as. In 'strict' security mode, running tasks as root is disabled by default. Ensure that this user exists on each of the agents in your DC/OS cluster.",
+          "type": "string"
+        },
+        "marathon-name": {
+          "description": "The name of the Marathon framework the Jenkins master is deployed from. Change when using a MoM (Marathon on Marathon).",
+          "type": "string",
+          "default": "marathon"
+        }
+      },
+      "required": [
+        "name",
+        "cpus",
+        "mem"
+      ]
+    },
+    "storage": {
+      "description": "Storage-related configuration properties for Jenkins on DC/OS.",
+      "type": "object",
+      "properties": {
+        "host-volume": {
+          "description": "The location of a volume on the host to be used for persisting Jenkins configuration and build data. The final location will be derived from this value plus the name set in `name` (e.g. `/mnt/host_volume/jenkins`). Note that this path must be the same on all DC/OS agents.",
+          "type": "string"
+        },
+        "pinned-hostname": {
+          "description": "An optional DC/OS agent hostname to run this Jenkins instance on (e.g. 10.0.0.1).",
+          "type": "string"
+        }
+      }
+    },
+    "networking": {
+      "description": "Networking-related configuration properties for Jenkins on DC/OS.",
+      "type": "object",
+      "properties": {
+        "known-hosts": {
+          "description": "A space-separated list of hosts used to populate the SSH known hosts file on the Jenkins master.",
+          "type": "string",
+          "default": "github.com"
+        },
+        "virtual-host": {
+          "description": "The virtual host address to configure for integration with Marathon-lb.",
+          "type": "string"
+        },
+        "https-redirect": {
+          "description": "Whether Marathon-lb should redirect HTTP traffic to HTTPS. This requires 'virtual-host' to be set. By default, this is false.",
+          "type": "boolean",
+          "default": false
+        },
+        "agent-port": {
+          "description": "The port that Jenkins agents will use to connect to the master. The default port is set to 50000; a value of 0 will result in a random port being chosen.",
+          "type": "integer",
+          "default": 50000
+        }
+      }
+    },
+    "roles": {
+      "description": "Role configuration properties for Jenkins on DC/OS. These properties are overriden when Marathon's enforceRole is enabled for top-level groups.",
+      "type": "object",
+      "properties": {
+        "jenkins-master-role": {
+          "description": "The role that the Jenkins master itself runs as using Marathon. Overriden by value of group-role when enforceRole is enabled at top-level group.",
+          "type": "string",
+          "default": "slave_public"
+        },
+        "jenkins-agent-role": {
+          "description": "The role passed to the internal Jenkins configuration that denotes which role to launch Jenkins agents as. Overriden by value of group-role when enforceRole is enabled at top-level group.",
+          "type": "string",
+          "default": "*"
+        }
+      }
+    },
+    "security": {
+      "description": "Security configuration properties for Jenkins on DC/OS.",
+      "type": "object",
+      "properties": {
+        "strict-mode": {
+          "description": "Enabled if Enterprise DC/OS is provisioned using the 'strict' security mode flag. When enabled, tasks run as the user specified below.",
+          "type": "boolean",
+          "default": false
+        },
+        "secret-name": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
+    "health-checks": {
+      "description": "Mesos health-check properties for Jenkins on DC/OS.",
+      "type": "object",
+      "properties": {
+        "grace-period": {
+          "description": "Health check failures are ignored within this number of seconds or until the task becomes healthy for the first time.",
+          "type": "integer",
+          "default": 30
+        },
+        "interval": {
+          "description": "Number of seconds to wait between health checks.",
+          "type": "integer",
+          "default": 60
+        },
+        "timeout": {
+          "description": "Number of seconds after which a health check is considered a failure regardless of the response.",
+          "type": "integer",
+          "default": 20
+        },
+        "max-consecutive-failures": {
+          "description": "Number of consecutive health check failures after which the unhealthy task should be killed.",
+          "type": "integer",
+          "default": 3
+        }
+      }
+    },
+    "advanced": {
+      "description": "Advanced configuration properties for the Jenkins service. Under normal circumstances, you shouldn't need to modify these values.",
+      "type": "object",
+      "properties": {
+        "mesos-master": {
+          "description": "URL of this cluster's Mesos master.",
+          "type": "string",
+          "default": "zk://zk-1.zk:2181,zk-2.zk:2181,zk-3.zk:2181,zk-4.zk:2181,zk-5.zk:2181/mesos"
+        },
+        "jvm-opts": {
+          "description": "Optional arguments to pass to the JVM.",
+          "type": "string",
+          "default": "-Xms1024m -Xmx1024m"
+        },
+        "jenkins-opts": {
+          "description": "Optional arguments to pass to Jenkins.",
+          "type": "string"
+        },
+        "jenkins-agent-user": {
+          "description": "The user that the jenkins agent task will run as.",
+          "type": "string",
+          "default": "root"
+        },
+        "docker-image": {
+          "description": "The Docker image to use for the Jenkins service. By default, this package will use the Jenkins image in the Mesosphere organization on Docker Hub, which you must be authenticated against. Otherwise, specify the host, image, and tag for the Jenkins image on your private Docker Registry.",
+          "type": "string"
+        },
+        "docker-credentials-uri": {
+          "description": "An optional URI to be fetched and extracted that contains docker credentials (e.g. file:///etc/docker/docker.tar.gz).",
+          "type": "string"
+        },
+        "containerizer": {
+          "description": "The containerizer used to deploy the Jenkins master.",
+          "type": "string",
+          "enum": [
+            "MESOS",
+            "DOCKER"
+          ],
+          "default": "DOCKER"
+        },
+        "prometheus-endpoint": {
+          "description": "An optional, relative URL path to be used by Prometheus. (e.g. 'prometheus/metrics')",
+          "type": "string",
+          "default": "v1/metrics/prometheus"
+        }
+      }
+    }
+  }
+}
