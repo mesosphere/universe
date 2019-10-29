@@ -1,0 +1,74 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "pushgateway": "prom/pushgateway:v0.5.2",
+        "grafana": "grafana/grafana:5.3.4",
+        "nginx": "nginx:1.15.7"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u192-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.12.0.tar.gz",
+      "scheduler-zip": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/scheduler.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.57.1/bootstrap.zip",
+      "scheduler-assets-tar-gz": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/scheduler-assets.tar.gz",
+      "prometheus-tar-gz": "https://downloads.mesosphere.com/prometheus/assets/prometheus-2.2.1.linux-amd64.tar.gz",
+      "discovery-helper": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/discovery-helper.zip",
+      "dashboard-refresher": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/dashboard-refresher.zip",
+      "alertmanager-config": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/alertmanager-config.zip",
+      "fetcher": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/fetcher.zip",
+      "default-dashboards-master-tar-gz": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/default-dashboards-master.tar.gz",
+      "default-dashboards-1-12-x-tar-gz": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/default-dashboards-1.12.x.tar.gz",
+      "default-dashboards-1-13-x-tar-gz": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/default-dashboards-1.13.x.tar.gz",
+      "default-dashboards-2-0-x-tar-gz": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/default-dashboards-2.0.x.tar.gz",
+      "alertmanager-tar-gz": "https://github.com/prometheus/alertmanager/releases/download/v0.15.2/alertmanager-0.15.2.linux-amd64.tar.gz",
+      "jq": "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
+    }
+  },
+  "images": {
+    "icon-large": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/icon-large.png",
+    "icon-medium": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/icon-medium.png",
+    "icon-small": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/icon-small.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "22945b511982aa6add576748f50f20b4bdd8e68270a3c6894814ed6e190dd8ae"
+            }
+          ],
+          "kind": "zip",
+          "url": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/dcos-monitoring-cli-darwin.zip"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "fe0f49b077d924118d8cae66338f008ad6b7036f4d18edcd903ddb0aaea9db8c"
+            }
+          ],
+          "kind": "zip",
+          "url": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/dcos-monitoring-cli-linux.zip"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "83066e2e8c000af4df1b1d273300d54a5b288f6c7517addd1f009b56edfdf7f2"
+            }
+          ],
+          "kind": "zip",
+          "url": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.1.0/dcos-monitoring-cli-windows.zip"
+        }
+      }
+    }
+  }
+}
