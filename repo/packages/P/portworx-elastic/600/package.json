@@ -1,0 +1,36 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [
+    "1.3.3-2.5.0-6.3.2"
+  ],
+  "downgradesTo": [
+    "1.3.3-2.5.0-6.3.2"
+  ],
+  "minDcosReleaseVersion": "1.11",
+  "name": "portworx-elastic",
+  "version": "1.3.7-2.7.0-6.8.1",
+  "maintainer": "support@portworx.com",
+  "description": "Elasticsearch 6.8.1, and X-Pack",
+  "selected": false,
+  "framework": true,
+  "tags": [
+    "elastic",
+    "elasticsearch",
+    "kibana",
+    "x-pack",
+    "portworx"
+  ],
+  "preInstallNotes": "Default configuration requires 3 agent nodes each with: CPU: 4.0 | Memory: 9216MB | Disk: 13500MB\n\nMore specifically, each instance type requires:\n\nMaster node: 3 instances | 1.0 CPU | 2048 MB MEM | 1 2000 MB Disk\n\nData node: 2 instances | 1.0 CPU | 4096 MB MEM | 1 10000 MB Disk\n\nCoordinator node: 1 instance | 1.0 CPU | 2048 MB MEM | 1 1000 MB Disk\n\nIngest node: No instances by default | 0.5 CPU | 2048 MB MEM | 1 2000 MB Disk\n\nData node: 2 instances | 1.0 CPU | 4096 MB MEM | 1 10000 MB Disk\n\nCoordinator node: 1 instance | 1.0 CPU | 2048 MB MEM | 1 1000 MB Disk\n\nIngest node: No instances by default | 0.5 CPU | 2048 MB MEM | 1 2000 MB Disk\n\nPortworx should be installed on the Private Agents to be able to provision volumes.",
+  "postInstallNotes": "The DC/OS Elastic service is being installed!\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/elasticsearch.html",
+  "postUninstallNotes": "The DC/OS Elastic service is being uninstalled\nPlease follow the instructions at https://docs.portworx.com/install-with-other/dcos/operate-and-maintain/framework-cleanup to remove any persistent state if required.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/LICENSE.txt"
+    },
+    {
+      "name": "Elastic License",
+      "url": "https://raw.githubusercontent.com/elastic/elasticsearch/master/x-pack/README.md"
+    }
+  ]
+}
