@@ -1,0 +1,239 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "hive-metastore"
+        },
+        "user": {
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "nobody"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of the Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        },
+        "region": {
+          "description": "The region that the service's tasks should run in.",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-region+string"
+          }
+        },
+        "security": {
+          "description": "Hive Metastore security settings",
+          "type": "object",
+          "properties": {
+            "custom_domain": {
+              "type": "string",
+              "description": "A custom domain to be used in place of autoip.dcos.thisdcos.directory. This can be used to expose the service securely outside of the cluster, but requires setting up external DNS. See the service documentation for details."
+            }
+          }
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "description": "Placement constraint for the hive-metastore scheduler",
+          "default": []
+        },
+        "readiness_check": {
+          "description": "Readiness check settings. Exercise caution when modifying these default values as it can lead to spurious task failures.",
+          "type": "object",
+          "properties": {
+            "interval": {
+              "type": "integer",
+              "description": "The period in seconds to wait after the last readiness check has completed to start the next check.",
+              "default": 60,
+              "minimum": 5
+            },
+            "delay": {
+              "type": "integer",
+              "description": "An amount of time in seconds to wait before starting the readiness check attempts.",
+              "default": 10,
+              "minimum": 0
+            },
+            "timeout": {
+              "type": "integer",
+              "description": "An amount of time in seconds to wait for a readiness check to succeed.",
+              "default": 120,
+              "minimum": 10
+            }
+          }
+        },
+        "check": {
+          "description": "Checks are a way to understand the health of a service. These HTTP checks are intended to be consumed by services external to Mesos/Marathon which will take appropriate action on them.",
+          "type": "object",
+          "properties": {
+            "intervalSeconds": {
+              "description": "Number of seconds to wait between checks",
+              "type": "integer",
+              "default": 60
+            },
+            "timeoutSeconds": {
+              "description": "Number of seconds after which a check times out, regardless of the response. This value must be smaller than intervalSeconds",
+              "type": "integer",
+              "default": 20
+            },
+            "delaySeconds": {
+              "description": "Amount of time to wait until starting the checks",
+              "type": "integer",
+              "default": 15
+            }
+          }
+        }
+      }
+    },
+    "hive_metastore": {
+      "description": "Hive Metastore configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "description": "Number of hive-metastore instances. When backed by Derby, the maximum allowable number is 1 because it is primarily used for testing and is not recommended for production use. For other databases, the recommended number of instances is 2 or more",
+          "type": "number",
+          "default": 1
+        },
+        "cpus": {
+          "description": "Hive Metastore pod CPU requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "description": "Hive Metastore pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk": {
+          "description": "Hive Metastore pod persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 4096
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "type": "string",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "volume_profile": {
+          "type": "string",
+          "description": "Volume profile to be used for storing Hive Node data."
+        },
+        "port": {
+          "title": "hive metastore port",
+          "description": "hive metastore servers will run at this port.",
+          "type": "integer",
+          "default": 9083
+        },
+        "placement": {
+          "description": "Placement constraints for hive-metastore pods",
+          "type": "string",
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "kill_grace_period": {
+          "description": "The number of seconds of grace to await a clean shutdown following SIGTERM before sending SIGKILL, default: `0`",
+          "type": "integer",
+          "default": 0
+        },
+        "database": {
+          "description": "Database name for connection with hive-metastore",
+          "type": "string",
+          "enum": [
+            "mysql",
+            "derby"
+          ],
+          "default": "derby"
+        },
+        "thrift_uri_selection": {
+          "description": "The order in which the service will attempt to connect to each server as defined in Thrift URIs List",
+          "type": "string",
+          "enum": [
+            "SEQUENTIAL",
+            "RANDOM"
+          ],
+          "default": "SEQUENTIAL"
+        },
+        "database_user_name": {
+          "description": "The username used to log into hive-metastore's remote database.",
+          "type": "string",
+          "default": ""
+        },
+        "enable_secrets": {
+          "description": "Enables storing database credentials in the DC/OS Secret Store",
+          "type": "boolean",
+          "default": false
+        },
+        "database_password": {
+          "description": "If using the DC/OS Secret Store, this value should be the path in the secret store that contains the user password. Otherwise, this can be a plaintext database password.",
+          "type": "string",
+          "default": ""
+        },
+        "database_address": {
+          "description": "The address of the backing database used by the Hive Metastore. For example, for mysql, you might use 'mysql.marathon.l4lb.thisdcos.directory:3306'. If left empty, the Hive Metastore will use its internal Derby database.",
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk"
+      ]
+    }
+  }
+}
