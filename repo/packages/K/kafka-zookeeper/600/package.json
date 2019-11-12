@@ -1,0 +1,34 @@
+{
+  "packagingVersion": "4.0",
+  "minDcosReleaseVersion": "1.11",
+  "upgradesFrom": [
+    "2.5.0-3.4.13",
+    "2.6.0-3.4.14"
+  ],
+  "downgradesTo": [
+    "2.5.0-3.4.13",
+    "2.6.0-3.4.14"
+  ],
+  "name": "kafka-zookeeper",
+  "version": "2.7.0-3.4.14",
+  "maintainer": "support@mesosphere.com",
+  "description": "Apache ZooKeeper is a centralized service for maintaining configuration information, naming, providing distributed synchronization, and providing group services. All of these kinds of services are used in some form or another by distributed applications",
+  "selected": true,
+  "framework": true,
+  "tags": [
+    "zookeeper",
+    "kafka"
+  ],
+  "preInstallNotes": "Default configuration requires 3 agent nodes each with: 1.0 CPU | 4000 MB MEM | 5000 MB Disk\n\nVersions: Apache ZooKeeper 3.4.14 ",
+  "postInstallNotes": "The DC/OS Apache ZooKeeper service is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/kafka-zookeeper/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "The DC/OS Apache ZooKeeper service is being uninstalled.\n\nFor DC/OS versions from 1.11 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/kafka-zookeeper/uninstall to remove any persistent state if required.",
+  "scm": "https://github.com/mesosphere/dcos-zookeeper",
+  "website": "https://docs.mesosphere.com/services/kafka-zookeeper/2.7.0-3.4.14",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/apache/zookeeper/master/LICENSE.txt"
+    }
+  ],
+  "lastUpdated": 1571120354
+}

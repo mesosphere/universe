@@ -1,0 +1,35 @@
+{
+  "packagingVersion": "4.0",
+  "minDcosReleaseVersion": "1.11",
+  "upgradesFrom": [
+    "2.6.0-5.1.2e",
+    "2.5.0-4.1.3e"
+  ],
+  "downgradesTo": [
+    "2.6.0-5.1.2e",
+    "2.5.0-4.1.3e"
+  ],
+  "name": "confluent-zookeeper",
+  "version": "2.7.0-5.1.2e",
+  "maintainer": "partner-support@confluent.io",
+  "description": "Apache Zookeeper by Confluent\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/confluent-zookeeper/",
+  "selected": true,
+  "framework": true,
+  "tags": [
+    "confluent",
+    "zookeeper",
+    "kafka"
+  ],
+  "preInstallNotes": "Default configuration requires 3 agent nodes each with: 1.0 CPU | 4000 MB MEM | 5000 MB Disk",
+  "postInstallNotes": "Apache Zookeeper by Confluent is being installed.\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/confluent-zookeeper/\n\tCommunity Support: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "Apache Zookeeper by Confluent is being uninstalled.\n\nFor DC/OS versions from 1.11 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/service-docs/confluent-zookeeper/uninstall to remove any persistent state if required.",
+  "scm": "https://github.com/mesosphere/confluent-zookeeper",
+  "website": "https://docs.mesosphere.com/services/confluent-zookeeper/2.7.0-5.1.2e",
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://raw.githubusercontent.com/confluentinc/kafka/trunk/LICENSE"
+    }
+  ],
+  "lastUpdated": 1571120354
+}

@@ -1,0 +1,31 @@
+{
+  "packagingVersion": "4.0",
+  "minDcosReleaseVersion": "1.11",
+  "upgradesFrom": [
+    "1.3.2-2.6.0-5.1.2"
+  ],
+  "downgradesTo": [],
+  "name": "portworx-confluent-kafka",
+  "version": "1.3.7-2.8.1-5.3.1",
+  "maintainer": "support@portworx.com",
+  "description": "Apache Kafka by Confluent using Portworx volumes\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/kafka.html",
+  "selected": false,
+  "framework": true,
+  "tags": [
+    "message",
+    "broker",
+    "pubsub",
+    "confluent",
+    "kafka",
+    "portworx"
+  ],
+  "preInstallNotes": "Default configuration requires 3 agent nodes each with: 1.0 CPU | 4096 MB MEM | 15000 MB Disk\n\nPortworx should be installed on the Private Agents to be able to provision volumes.",
+  "postInstallNotes": "Apache Kafka by Confluent using Portworx volumes is being installed.\n\n\tDocumentation: https://docs.portworx.com/scheduler/mesosphere-dcos/kafka.html",
+  "postUninstallNotes": "Apache Kafka by Confluent is being uninstalled.\n\nFor DC/OS versions from 1.11 no further action is required. For older DC/OS versions follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required.",
+  "licenses": [
+    {
+      "name": "Apache License v2",
+      "url": "https://raw.githubusercontent.com/confluentinc/kafka/trunk/LICENSE"
+    }
+  ]
+}
