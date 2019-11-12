@@ -1,0 +1,61 @@
+{
+  "assets": {
+    "uris": {
+      "alluxio-agent-darwin_386": "https://alluxio-dcos-release.s3.amazonaws.com/agent/v1.5.0/darwin_386/alluxio-dcos",
+      "alluxio-agent-darwin_amd64": "https://alluxio-dcos-release.s3.amazonaws.com/agent/v1.5.0/darwin_amd64/alluxio-dcos",
+      "alluxio-agent-linux_386": "https://alluxio-dcos-release.s3.amazonaws.com/agent/v1.5.0/linux_386/alluxio-dcos",
+      "alluxio-agent-linux_amd64": "https://alluxio-dcos-release.s3.amazonaws.com/agent/v1.5.0/linux_amd64/alluxio-dcos",
+      "bootstrap-zip": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.4.0-2.1.0-1.0/bootstrap.zip",
+      "executor-zip": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.4.0-2.1.0-1.0/executor.zip",
+      "java-tar-gz": "https://alluxio-dcos-release.s3.amazonaws.com/jdk/jdk1.8.0_144_jce_policy.tar.gz",
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-master-28f8827.tar.gz",
+      "scheduler-zip": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.4.0-2.1.0-1.0/alluxio-enterprise-scheduler.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://alluxio-dcos-release.s3.amazonaws.com/icons/v1.0.0/alluxio_logo_small.png?raw=true",
+    "icon-medium": "https://alluxio-dcos-release.s3.amazonaws.com/icons/v1.0.0/alluxio_logo_medium.png?raw=true",
+    "icon-large": "https://alluxio-dcos-release.s3.amazonaws.com/icons/v1.0.0/alluxio_logo_large.png?raw=true"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "b136743fa6a0565bc920d18f1ea96d3f1fd6c1b2446493c8bb236f938e9c31df"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.4.0-2.1.0-1.0/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "da4bc643879f024642ddd85feabe0179da06b485c5d3ae1596879d02c1b95508"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.4.0-2.1.0-1.0/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "2af80bd3fc733a09719731738cae6586c5afc6f97baa64f282cde735eb3553cb"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://alluxio-dcos-release.s3.amazonaws.com/artifacts/2.4.0-2.1.0-1.0/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
