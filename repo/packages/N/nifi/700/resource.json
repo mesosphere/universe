@@ -1,0 +1,66 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-8u212b03-hotspot-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.14-beta.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.57.1/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/nifi/assets/1.0.0-1.9.2/nifi-scheduler.zip",
+      "nifi-tar-gz": "https://downloads.mesosphere.com/nifi/assets/nifi-1.9.2-bin.tar.gz",
+      "nifi-toolkit": "https://downloads.mesosphere.com/nifi/assets/nifi-toolkit-1.9.2-bin.tar.gz",
+      "nifi-janitor-jar": "https://downloads.mesosphere.com/nifi/assets/1.0.0-1.9.2/nifi-janitor.jar",
+      "nifi-statsd-jar": "https://downloads.mesosphere.com/nifi/assets/1.0.0-1.9.2/nifi-statsd.jar",
+      "nifi-api-access-jar": "https://downloads.mesosphere.com/nifi/assets/1.0.0-1.9.2/nifi-api-access.jar",
+      "nifi-python-tar-gz": "https://downloads.mesosphere.com/nifi/assets/python-2.7.14.tar.gz"
+    },
+    "container": {
+      "docker": {
+        "nifi": "mesosphere/nifi:base-40aa659f4968437c9b88b7196d82fdf5ae7a2f99"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/nifi/assets/nifi-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/nifi/assets/nifi-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/nifi/assets/nifi-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "188a429339c2eb645f9d7f888a6f63419abe6e38e1f97a3b95cbffc66d69a871"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/nifi/assets/1.0.0-1.9.2/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "6900f8e1122fbd993b906a3983858f26560538db3f1d240ef8bf2bb92ea6dab3"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/nifi/assets/1.0.0-1.9.2/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "224f0986c285edef2371fb3fa3188d90466e08c99f5264e4047fe7cc428f266a"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/nifi/assets/1.0.0-1.9.2/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
