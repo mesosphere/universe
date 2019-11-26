@@ -1,0 +1,223 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "user": "{{service.user}}",
+  "container": {
+    "type": "MESOS",
+    "docker": {
+      "image": "{{resource.assets.container.docker.nginx}}"
+    }
+  },
+  "cmd": "./init.sh",
+  "constraints": {{service.placement_constraints}},
+  "labels": {
+    {{#prometheus.marathon_lb_proxy.enabled}}
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_ENABLED": "true",
+    {{#prometheus.marathon_lb_proxy.vhost}}
+    "HAPROXY_0_VHOST": "{{prometheus.marathon_lb_proxy.vhost}}",
+    {{/prometheus.marathon_lb_proxy.vhost}}
+    "HAPROXY_0_BACKEND_SERVER_OPTIONS": "  server dcos-monitoring prometheus.{{service.name}}.l4lb.thisdcos.directory:9090",
+    {{/prometheus.marathon_lb_proxy.enabled}}
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "1",
+    {{#grafana.admin_router_proxy}}
+    "DCOS_SERVICE_WEB_PATH": "/grafana",
+    {{/grafana.admin_router_proxy}}
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+  {{/service.service_account_secret}}
+  {{^service.service_account_secret}}
+  {{#grafana.admin_credentials.username_secret}}
+  "secrets": {
+  {{/grafana.admin_credentials.username_secret}}
+  {{/service.service_account_secret}}
+    {{#service.service_account_secret}}
+    "serviceCredential": { "source": "{{service.service_account_secret}}" },
+    {{/service.service_account_secret}}
+    {{#grafana.admin_credentials.username_secret}}
+    "grafanaAdminUsername": { "source": "{{grafana.admin_credentials.username_secret}}" },
+    "grafanaAdminPassword": { "source": "{{grafana.admin_credentials.password_secret}}" },
+    {{/grafana.admin_credentials.username_secret}}
+  {{#service.service_account_secret}}
+    "dummy": { "source": "dummy" }
+  },
+  {{/service.service_account_secret}}
+  {{^service.service_account_secret}}
+  {{#grafana.admin_credentials.username_secret}}
+    "dummy": { "source": "dummy" }
+  },
+  {{/grafana.admin_credentials.username_secret}}
+  {{/service.service_account_secret}}
+  "env": {
+    "MESOS_API_VERSION": "V1",
+
+    "PACKAGE_NAME": "dcos-monitoring",
+    "PACKAGE_VERSION": "v1.2.0",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1574793289545",
+    "PACKAGE_BUILD_TIME_STR": "Tue Nov 26 2019 18:34:49 +0000",
+
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+    "SERVICE_NAME": "{{service.name}}",
+    "SERVICE_PRINCIPAL": "{{service.service_account}}",
+    "SERVICE_USER": "{{service.user}}",
+
+    {{#prometheus.prereserved_role}}
+    "PROMETHEUS_PRERESERVED_ROLE": "{{prometheus.prereserved_role}}",
+    {{/prometheus.prereserved_role}}
+    "PROMETHEUS_CPUS": "{{prometheus.cpus}}",
+    "PROMETHEUS_MEM": "{{prometheus.mem}}",
+    "PROMETHEUS_DCOS_METRICS_NODE_PORT": "{{prometheus.dcos_metrics_node_port}}",
+    "PROMETHEUS_VOLUME_TYPE": "{{prometheus.volume.type}}",
+    "PROMETHEUS_VOLUME_SIZE": "{{prometheus.volume.size}}",
+    "PROMETHEUS_VOLUME_PROFILE": "{{prometheus.volume.profile}}",
+    "PROMETHEUS_STORAGE_TSDB_RETENTION": "{{prometheus.storage_tsdb_retention}}",
+    "PROMETHEUS_PLACEMENT_CONSTRAINTS": "{{prometheus.placement_constraints}}",
+    "PROMETHEUS_ADMIN_ROUTER_PROXY_ENABLED": "{{prometheus.admin_router_proxy.enabled}}",
+    "PROMETHEUS_ADMIN_ROUTER_PROXY_URL": "{{prometheus.admin_router_proxy.url}}",
+    "PROMETHEUS_MARATHON_LB_PROXY_ENABLED": "{{prometheus.marathon_lb_proxy.enabled}}",
+    "PROMETHEUS_MARATHON_LB_PROXY_VHOST": "{{prometheus.marathon_lb_proxy.vhost}}",
+    "PROMETHEUS_ALERT_RULES_REPOSITORY_URL": "{{prometheus.alert_rules_repository.url}}",
+    "PROMETHEUS_ALERT_RULES_REPOSITORY_PATH": "{{prometheus.alert_rules_repository.path}}",
+    "PROMETHEUS_ALERT_RULES_REPOSITORY_REFERENCE_NAME": "{{prometheus.alert_rules_repository.reference_name}}",
+    "PROMETHEUS_ALERT_RULES_REPOSITORY_USERNAME": "{{prometheus.alert_rules_repository.credentials.username_secret}}",
+    "PROMETHEUS_ALERT_RULES_REPOSITORY_PASSWORD": "{{prometheus.alert_rules_repository.credentials.password_secret}}",
+    "PROMETHEUS_ALERT_RULES_REPOSITORY_DEPLOY_KEY":"{{prometheus.alert_rules_repository.credentials.deploy_key_secret}}",
+    "SCRAPE_INTERVAL": "{{prometheus.interval}}",
+    "SCRAPE_TIMEOUT": "{{prometheus.timeout}}",
+    {{#prometheus.alert_rules_repository.credentials.username_secret}}
+    "PROMETHEUS_ALERT_RULES_REPOSITORY_CREDENTIALS_ENABLED": "true",
+    {{/prometheus.alert_rules_repository.credentials.username_secret}}
+    {{^prometheus.alert_rules_repository.credentials.username_secret}}
+    {{#prometheus.alert_rules_repository.credentials.deploy_key_secret}}
+    "PROMETHEUS_ALERT_RULES_REPOSITORY_CREDENTIALS_ENABLED": "true",
+    {{/prometheus.alert_rules_repository.credentials.deploy_key_secret}}
+    {{/prometheus.alert_rules_repository.credentials.username_secret}}
+
+    "PUSHGATEWAY_ENABLED": "{{pushgateway.enabled}}",
+
+    "GRAFANA_CPUS": "{{grafana.cpus}}",
+    "GRAFANA_MEM": "{{grafana.mem}}",
+    "GRAFANA_DATA_VOLUME_TYPE": "{{grafana.data_volume.type}}",
+    "GRAFANA_DATA_VOLUME_SIZE": "{{grafana.data_volume.size}}",
+    "GRAFANA_DATA_VOLUME_PROFILE": "{{grafana.data_volume.profile}}",
+    "GRAFANA_UI_PORT": "{{grafana.ui_port}}",
+    "GRAFANA_ADMIN_ROUTER_PROXY": "{{grafana.admin_router_proxy}}",
+    "GRAFANA_ADMIN_CREDENTIALS_USERNAME": "{{grafana.admin_credentials.username_secret}}",
+    "GRAFANA_ADMIN_CREDENTIALS_PASSWORD": "{{grafana.admin_credentials.password_secret}}",
+    {{#grafana.admin_credentials.username_secret}}
+    "GRAFANA_ADMIN_CREDENTIALS_USERNAME_VALUE": { "secret": "grafanaAdminUsername" },
+    "GRAFANA_ADMIN_CREDENTIALS_PASSWORD_VALUE": { "secret": "grafanaAdminPassword" },
+    {{/grafana.admin_credentials.username_secret}}
+    "GRAFANA_PLACEMENT_CONSTRAINTS": "{{grafana.placement_constraints}}",
+    "GRAFANA_USE_LIGHT_THEME": "{{grafana.use_light_theme}}",
+    "GRAFANA_DEFAULT_DASHBOARDS": "{{grafana.default_dashboards}}",
+    "GRAFANA_DASHBOARD_CONFIG_REPOSITORY_URL": "{{grafana.dashboard_config_repository.url}}",
+    "GRAFANA_DASHBOARD_CONFIG_REPOSITORY_PATH": "{{grafana.dashboard_config_repository.path}}",
+    "GRAFANA_DASHBOARD_CONFIG_REPOSITORY_REFERENCE_NAME": "{{grafana.dashboard_config_repository.reference_name}}",
+    "GRAFANA_DASHBOARD_CONFIG_REPOSITORY_USERNAME": "{{grafana.dashboard_config_repository.credentials.username_secret}}",
+    "GRAFANA_DASHBOARD_CONFIG_REPOSITORY_PASSWORD": "{{grafana.dashboard_config_repository.credentials.password_secret}}",
+    "GRAFANA_DASHBOARD_CONFIG_REPOSITORY_DEPLOY_KEY":"{{grafana.dashboard_config_repository.credentials.deploy_key_secret}}",
+    {{#grafana.dashboard_config_repository.credentials.username_secret}}
+    "GRAFANA_DASHBOARD_CONFIG_REPOSITORY_CREDENTIALS_ENABLED": "true",
+    {{/grafana.dashboard_config_repository.credentials.username_secret}}
+    {{^grafana.dashboard_config_repository.credentials.username_secret}}
+    {{#grafana.dashboard_config_repository.credentials.deploy_key_secret}}
+    "GRAFANA_DASHBOARD_CONFIG_REPOSITORY_CREDENTIALS_ENABLED": "true",
+    {{/grafana.dashboard_config_repository.credentials.deploy_key_secret}}
+    {{/grafana.dashboard_config_repository.credentials.username_secret}}
+
+    "ALERTMANAGER_CPUS": "{{alertmanager.cpus}}",
+    "ALERTMANAGER_MEM": "{{alertmanager.mem}}",
+    "ALERTMANAGER_DATA_VOLUME_TYPE": "{{alertmanager.data_volume.type}}",
+    "ALERTMANAGER_DATA_VOLUME_SIZE": "{{alertmanager.data_volume.size}}",
+    "ALERTMANAGER_DATA_VOLUME_PROFILE": "{{alertmanager.data_volume.profile}}",
+    "ALERTMANAGER_SECRETS_SLACK_API_URL": "{{alertmanager.secrets.slack_api_url_secret}}",
+    "ALERTMANAGER_CONFIG_REPOSITORY_URL": "{{alertmanager.config_repository.url}}",
+    "ALERTMANAGER_CONFIG_REPOSITORY_PATH": "{{alertmanager.config_repository.path}}",
+    "ALERTMANAGER_CONFIG_REPOSITORY_USERNAME": "{{alertmanager.config_repository.credentials.username_secret}}",
+    "ALERTMANAGER_CONFIG_REPOSITORY_PASSWORD": "{{alertmanager.config_repository.credentials.password_secret}}",
+    "ALERTMANAGER_CONFIG_REPOSITORY_DEPLOY_KEY": "{{alertmanager.config_repository.credentials.deploy_key_secret}}",
+    {{#alertmanager.config_repository.url}}
+    "ALERTMANAGER_ENABLED": "true",
+    {{/alertmanager.config_repository.url}}
+    {{#alertmanager.config_repository.credentials.username_secret}}
+    "ALERTMANAGER_CONFIG_REPOSITORY_CREDENTIALS_ENABLED": "true",
+    {{/alertmanager.config_repository.credentials.username_secret}}
+    {{^alertmanager.config_repository.credentials.username_secret}}
+    {{#alertmanager.config_repository.credentials.deploy_key_secret}}
+    "ALERTMANAGER_CONFIG_REPOSITORY_CREDENTIALS_ENABLED": "true",
+    {{/alertmanager.config_repository.credentials.deploy_key_secret}}
+    {{/alertmanager.config_repository.credentials.username_secret}}
+
+    {{#service.service_account_secret}}
+    "SERVICE_SERVICE_ACCOUNT_SECRET": "{{service.service_account_secret}}",
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.service_account_secret}}
+
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "JQ_URI": "{{resource.assets.uris.jq}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "PROMETHEUS_URI": "{{resource.assets.uris.prometheus-tar-gz}}",
+    "GRAFANA_IMAGE": "{{resource.assets.container.docker.grafana}}",
+    "PUSHGATEWAY_IMAGE": "{{resource.assets.container.docker.pushgateway}}",
+    "DISCOVERY_HELPER_URI": "{{resource.assets.uris.discovery-helper}}",
+    "DISCOVERY_HELPER_TOKEN_INTERVAL": "{{service.token_interval}}",
+    "DASHBOARD_REFRESHER_URI": "{{resource.assets.uris.dashboard-refresher}}",
+    "ALERTMANAGER_CONFIG_URI": "{{resource.assets.uris.alertmanager-config}}",
+    "DEFAULT_DASHBOARDS_MASTER_URI": "{{resource.assets.uris.default-dashboards-master-tar-gz}}",
+    "DEFAULT_DASHBOARDS_1_12_X_URI": "{{resource.assets.uris.default-dashboards-1-12-x-tar-gz}}",
+    "DEFAULT_DASHBOARDS_1_13_X_URI": "{{resource.assets.uris.default-dashboards-1-13-x-tar-gz}}",
+    "DEFAULT_DASHBOARDS_2_0_X_URI": "{{resource.assets.uris.default-dashboards-2-0-x-tar-gz}}",
+    "FETCHER_URI": "{{resource.assets.uris.fetcher}}",
+    "ALERTMANAGER_URI": "{{resource.assets.uris.alertmanager-tar-gz}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.bootstrap-zip}}",
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "{{resource.assets.uris.scheduler-assets-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/v1/health",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "proxy"
+    }
+  ]
+}

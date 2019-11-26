@@ -1,0 +1,34 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [
+    "v1.2.0"
+  ],
+  "downgradesTo": [
+    "v1.2.0"
+  ],
+  "minDcosReleaseVersion": "1.12",
+  "name": "dcos-monitoring",
+  "version": "v1.2.0",
+  "maintainer": "support@mesosphere.io",
+  "description": "Makes it easy to monitor DC/OS components and your services on the DC/OS cluster.",
+  "selected": true,
+  "framework": true,
+  "tags": [
+    "alertmanager",
+    "alerts",
+    "grafana",
+    "logging",
+    "metrics",
+    "monitoring",
+    "prometheus"
+  ],
+  "preInstallNotes": "Default configuration requires 2 agent nodes with: 2.0 CPU | 2048 MB MEM | 2100 MB Disk",
+  "postInstallNotes": "Package dcos-monitoring is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/dcos-monitoring/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "Package dcos-monitoring is being uninstalled.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}
