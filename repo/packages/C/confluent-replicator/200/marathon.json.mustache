@@ -6,7 +6,7 @@
   "user": "{{replicator.user}}",
   "maintainer": "partner-support@confluent.io", 
   "container": {
-    "type": "DOCKER",
+    "type": "MESOS",
     "docker": {
       {{^replicator.virtual_network_enabled}}
       "network": "BRIDGE",
