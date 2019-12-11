@@ -8,7 +8,12 @@
   "container": {
     "type": "MESOS",
     "docker": {
-      {{#replicator.virtual_network_enabled}} 
+      "image": "{{resource.assets.container.docker.image}}",
+      "forcePullImage": true
+    },
+    {{^replicator.virtual_network_enabled}}
+      "network": "BRIDGE",
+    {{/replicator.virtual_network_enabled}} 
       "portMappings": [ {
           "containerPort": 8083,
           "hostPort": 0,
@@ -16,11 +21,7 @@
           "labels": {
             "VIP_0": "{{replicator.name}}:8083"
           }
-      } ],
-      {{/replicator.virtual_network_enabled}}
-      "image": "{{resource.assets.container.docker.image}}",
-      "forcePullImage": true
-    }
+      } ]
   },
   {{#replicator.virtual_network_enabled}}
   "networks": [
