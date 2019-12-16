@@ -1113,13 +1113,13 @@
         },
         "tracetype_query_ttl": {
           "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__tracetype_query_ttl",
-          "description": "\ufeffTTL for different trace types used during logging of the query process",
+          "description": "TTL for different trace types used during logging of the query process",
           "type": "integer",
           "default": 86400
         },
         "tracetype_repair_ttl": {
           "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__tracetype_repair_ttl",
-          "description": "\ufeffTTL for different trace types used during logging of the repair process",
+          "description": "TTL for different trace types used during logging of the repair process",
           "type": "integer",
           "default": 604800
         },
