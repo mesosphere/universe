@@ -1,0 +1,837 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of this DC/OS DSE OpsCenter instance",
+          "type": "string",
+          "default": "datastax-ops"
+        },
+        "service_secret_name": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-secret+string"
+          }
+        },
+        "service_account": {
+          "description": "The principal for the service instance",
+          "type": "string",
+          "default": "datastax-ops-service-account",
+          "media": {
+            "type": "application/x-service-account+string"
+          }
+        },
+        "user": {
+          "description": "The user that runs the Cassandra nodes and owns the Mesos sandbox",
+          "type": "string",
+          "default": "nobody"
+        },
+        "mesos_api_version": {
+          "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)",
+          "type": "string",
+          "default": "V1"
+        },
+        "virtual_networks": {
+          "description": "Enable DC/OS Virtual Networking",
+          "type": "boolean",
+          "default": false
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        },
+        "region": {
+          "description": "All OpsCenter nodes will run in this region.  When no region is specified the nodes are constrained to the local region",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-region+string"
+          }
+        },
+        "security": {
+          "description": "OpsCenter security settings",
+          "type": "object",
+          "properties": {
+            "transport_encryption": {
+              "type": "object",
+              "description": "Transport encryption settings",
+              "properties": {
+                "enabled": {
+                  "description": "Enable transport encryption (TLS)",
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            },
+            "custom_domain": {
+              "type": "string",
+              "description": "A custom domain to be used in place of autoip.dcos.thisdcos.directory. This can be used to expose the service securely outside of the cluster, but requires setting up external DNS. See the service documentation for details"
+            }
+          }
+        },
+        "check": {
+          "description": "Health check used to determine the scheduler health based on the status of the scheduler plans",
+          "type": "object",
+          "properties": {
+            "intervalSeconds": {
+              "type": "integer",
+              "description": "The period in seconds to wait after the last check has completed to start the next check",
+              "default": 30,
+              "minimum": 30
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "description": " An amount of time in seconds to wait for check to succeed",
+              "default": 20,
+              "minimum": 20
+            },
+            "delaySeconds": {
+              "type": "integer",
+              "description": "An amount of time in seconds to wait before starting the check attempts",
+              "default": 15,
+              "minimum": 15
+            }
+          }
+        }
+      }
+    },
+    "opscenter": {
+      "description": "OpsCenter pod configuration properties",
+      "type": "object",
+      "properties": {
+        "stomp_port": {
+          "title": "Stomp port",
+          "description": "Port used for DSE agents to reach OpsCenter. DSE default is 61620",
+          "type": "integer",
+          "default": 31620
+        },
+        "placement_constraint": {
+          "title": "OpsCenter placement constraint",
+          "description": "Placement constraints for the OpsCenter node. Example: [[\"hostname\", \"UNIQUE\"]]",
+          "type": "string",
+          "default": "[]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "virtual_network": {
+          "description": "Name of virtual network for Opscenter pod(s)",
+          "type": "string",
+          "default": "dcos"
+        },
+        "cni_plugin_labels": {
+          "description": "Labels to pass to CNI plugin. Comma-seperated key:value pairs. For example [k_0:v_0,k_1:v_1,...,k_n:v_n]",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "OpsCenter CPU count",
+          "description": "Specify OpsCenter CPU count",
+          "type": "number",
+          "default": 2
+        },
+        "mem": {
+          "title": "OpsCenter memory size (MB)",
+          "description": "OpsCenter memory size (MB)",
+          "type": "integer",
+          "default": 4000
+        },
+        "heap": {
+          "title": "OpsCenter heap size (MB)",
+          "description": "OpsCenter heap size (MB)",
+          "type": "integer",
+          "default": 2000
+        },
+        "jvm_opts": {
+          "title": "OpsCenter custom JVM/GC options",
+          "description": "For example '-XX:+CMSSomeSetting -XX:+SettingForGC'. See OpsCenter JVM Tuning documentation",
+          "type": "string",
+          "default": ""
+        },
+        "disk": {
+          "title": "OpsCenter persistent volume size (MB)",
+          "description": "OpsCenter persistent volume size (MB)",
+          "type": "integer",
+          "default": 10240
+        },
+        "disk_type": {
+          "description": "OpsCenter persistent disk type [ROOT, MOUNT]",
+          "type": "string",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "volume_profile": {
+          "type": "string",
+          "description": "Volume profile to be used for storing OpsCenter data"
+        },
+        "gui_port": {
+          "title": "OpsCenter GUI port",
+          "description": "OpsCenter GUI port",
+          "type": "integer",
+          "default": 8888
+        },
+        "spark_master_proxy_port": {
+          "title": "OpsCenter Spark Master proxy port",
+          "description": "OpsCenter Spark Master proxy port",
+          "type": "integer",
+          "default": 17080
+        },
+        "cassandra_username": {
+          "title": "The username used to connect to Cassandra if authentication is enabled",
+          "description": "The username used to connect to Cassandra if authentication is enabled in DSE instance",
+          "type": "string",
+          "default": "cassandra"
+        },
+        "cassandra_password": {
+          "title": "The password used to connect to Cassandra if authentication is enabled",
+          "description": "The password used to connect to Cassandra if authentication is enabled in DSE instance",
+          "type": "string",
+          "default": "cassandra"
+        },
+        "authentication": {
+          "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-enabled",
+          "type": "object",
+          "description": "Authentication Configuration",
+          "properties": {
+            "enabled": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-enabled",
+              "type": "boolean",
+              "description": "Enable Authentication for accessing OpsCenter",
+              "default": false
+            },
+            "login_user": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-authentication_method",
+              "type": "string",
+              "description": "User name for OpsCenter's Internal or LDAP authentication",
+              "default": "admin"
+            },
+            "login_password": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-authentication_method",
+              "type": "string",
+              "description": "Password for OpsCenter's Internal or LDAP authentication",
+              "default": "admin"
+            },
+            "method": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-authentication_method",
+              "type": "string",
+              "description": "Authentication Method",
+              "default": ""
+            },
+            "timeout": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-timeout",
+              "description": "This sets the session timeout, in seconds",
+              "type": "integer"
+            },
+            "password_hash_type": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-password_hash_type",
+              "description": "The 1-way password hash algorithm to use when storing user passwords",
+              "type": "string"
+            },
+            "sqlite_connection_timeout": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-sqlite_connection_timeout",
+              "description": "The number of seconds that opscenterd waits to receive a successful SQLite connection before a timeout",
+              "type": "integer"
+            },
+            "sqlite_max_active_connections": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__authentication-sqlite_max_active_connections",
+              "description": "The maximum number of simultaneous active connections to the SQLite database",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "ldap": {
+          "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-server_host",
+          "type": "object",
+          "description": "LDAP Configuration",
+          "properties": {
+            "enabled": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-server_host",
+              "type": "boolean",
+              "description": "Enable LDAP",
+              "default": false
+            },
+            "server_host": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-server_host",
+              "type": "string",
+              "description": "Hostname of LDAP server",
+              "default": "localhost"
+            },
+            "server_port": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-server_port",
+              "type": "integer",
+              "description": "Port of LDAP server",
+              "default": 389
+            },
+            "search_dn": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-search_dn",
+              "description": "DN of the user that be used to search for users on the LDAP server",
+              "type": "string"
+            },
+            "search_password": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-search_password",
+              "description": "Password of the search user",
+              "type": "string"
+            },
+            "user_search_base": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-user_search_base",
+              "description": "The ldap search base used to find a user",
+              "type": "string"
+            },
+            "user_search_filter": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-user_search_filter",
+              "description": "The ldap search filter used to uniquely identify a user",
+              "type": "string",
+              "default": "(uid={0})"
+            },
+            "user_memberof_attribute": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-user_memberof_attribute",
+              "description": "Set to the attribute on the user entry containing group membership information",
+              "type": "string"
+            },
+            "group_search_type": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-group_search_type",
+              "description": "It defines how group membership will be determined for a user",
+              "type": "string",
+              "enum": [
+                "directory_search",
+                "memberof_search"
+              ],
+              "default": "directory_search"
+            },
+            "group_search_base": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-group_search_base",
+              "description": "The ldap search base used to find a group",
+              "type": "string"
+            },
+            "group_search_filter_with_dn": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-group_search_filter_with_dn",
+              "description": "The ldap search filter used to find a user's group. Uses the full user's DN from a user search",
+              "type": "string",
+              "default": "(member={0})"
+            },
+            "group_name_attribute": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-group_name_attribute",
+              "description": "The ldap field name used to identify a group's name",
+              "type": "string"
+            },
+            "admin_group_name": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-admin_group_name",
+              "description": "The name of the admin group or a comma separated list of admin group names",
+              "type": "string"
+            },
+            "ldap_security": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ldap-ldap_security",
+              "description": "The type of security to use with LDAP: None, TLS, SSL, SSL_TLS when set to TLS or SSL_TLS uses TLS start",
+              "type": "string",
+              "default": "None"
+            },
+            "connection_timeout": {
+              "id": "https://docs.datastax.com/en/latest-dse/datastax_enterprise/config/configDseYaml.html#configDseYaml__connection_timeout",
+              "description": "The number of seconds to wait before concluding the ldap server is down",
+              "type": "integer",
+              "default": 20
+            }
+          },
+          "additionalProperties": false
+        },
+        "webserver": {
+          "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__webserver",
+          "description": "Configuration properties for OpsCenter web server",
+          "type": "object",
+          "properties": {
+            "staticdir": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__webserver-staticdir",
+              "description": "The location in the file system where static content for the OpsCenter web site resides",
+              "type": "string"
+            },
+            "sub_process_timeout": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__webserver-sub_process_timeout",
+              "description": "The time in seconds OpsCenter waits for subprocesses to complete before a timeout",
+              "type": "integer"
+            },
+            "ssl_port": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__webserver-ssl_port",
+              "description": "The port on which to serve SSL traffic",
+              "type": "integer",
+              "default": 8443
+            }
+          },
+          "additionalProperties": false
+        },
+        "http_proxy_settings": {
+          "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__http_proxy_settings",
+          "description": "Proxy Settings for external connections",
+          "type": "object",
+          "properties": {
+            "proxy_url": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__http_proxy_settings-proxy_url",
+              "description": "The URL of a proxy server that OpsCenter will use for external http/https connections",
+              "type": "string"
+            },
+            "proxy_username": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__http_proxy_settings-proxy_username",
+              "description": "Proxy username for basic proxy HTTP authorization",
+              "type": "string"
+            },
+            "proxy_password": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__http_proxy_settings-proxy_password",
+              "description": "Proxy password for basic proxy HTTP authorization",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "logging": {
+          "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__logging",
+          "description": "Configuration options for logging",
+          "type": "object",
+          "properties": {
+            "resource_usage_interval": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__logging-resource_usage_interval",
+              "description": "The interval in seconds in which OpsCenter logs the system resource usage",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "definitions": {
+          "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions",
+          "description": "Configuration properties for definition files",
+          "type": "object",
+          "properties": {
+            "definitions_dir": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-definitions_dir",
+              "description": "The file system location where definition files are stored",
+              "type": "string"
+            },
+            "auto_update": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-auto_update",
+              "description": "Specifies whether OpsCenter should automatically attempt to periodically update the definition files",
+              "type": "boolean",
+              "default": true
+            },
+            "download_host": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-download_host",
+              "description": "The host that definition file update requests will be made to",
+              "type": "string"
+            },
+            "download_port": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-download_port",
+              "description": "The port used to request definition file updates on download_host",
+              "type": "integer"
+            },
+            "download_filename": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-download_filename",
+              "description": "The name of the tar file on the download_host that contains definition file updates",
+              "type": "string"
+            },
+            "hash_filename": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-hash_filename",
+              "description": "The name of the hash file on the download_host used to determine if the definition file requires an update",
+              "type": "string"
+            },
+            "sleep": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__definitions-sleep",
+              "description": "The duration in seconds between checks to update the definition files",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "agents": {
+          "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents",
+          "description": "Configuration properties for DataStax agents",
+          "type": "object",
+          "properties": {
+            "config_sleep": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-config_sleep",
+              "description": "The durations in seconds in between updates to the agent config md5",
+              "type": "integer"
+            },
+            "agent_install_poll_period": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-agent_install_poll_period",
+              "description": "How often OpsCenter will update agent install status during an agent install",
+              "type": "integer"
+            },
+            "agent_install_mute_period": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-agent_install_mute_period",
+              "description": "The number of seconds to wait after agent install before checking DataStax Agents for known problems",
+              "type": "integer"
+            },
+            "agent_install_timeout_period": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-agent_install_timeout_period",
+              "description": "The number of seconds to wait for the install to complete before automatically terminating the install",
+              "type": "integer"
+            },
+            "ssh_executable": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-ssh_executable",
+              "description": "The location of the ssh executable binary",
+              "type": "string"
+            },
+            "scp_executable": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-scp_executable",
+              "description": "The location of the scp executable binary",
+              "type": "string"
+            },
+            "ssh_keygen_executable": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-ssh_keygen_executable",
+              "description": "The location of the ssh-keygen executable binary",
+              "type": "string"
+            },
+            "ssh_keyscan_executable": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-ssh_keyscan_executable",
+              "description": "The location of the ssh-keyscan executable binary",
+              "type": "string"
+            },
+            "ssh_user_known_hosts_file": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-ssh_user_known_hosts_file",
+              "description": "The location of the OpsCenter user's known_hosts file that will be used by OpsCenter during SSH communications",
+              "type": "string"
+            },
+            "ssh_sys_known_hosts_file": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-ssh_sys_known_hosts_file",
+              "description": "The location of the system wide known_hosts file that will be used by OpsCenter during SSH communications",
+              "type": "string"
+            },
+            "tmp_dir": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-tmp_dir",
+              "description": "The path to a tmp directory on the OpsCenter machine used for installing DataStax Agents",
+              "type": "string"
+            },
+            "not_seen_threshold": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-not_seen_threshold",
+              "description": "The maximum time in seconds since the last agent status about a specific connection, such as stomp, was sent before that agent connection is considered down",
+              "type": "integer"
+            },
+            "call_agent_retry": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-call_agent_retry",
+              "description": "Number of times to try different up nodes on agent requests",
+              "type": "integer"
+            },
+            "agent_aggregation_flush": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-agent_aggregation_flush",
+              "description": "The number of seconds between log flushes for verbose aggregated and periodically batched agent messages",
+              "type": "integer"
+            },
+            "http_poll_period": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-http_poll_period",
+              "description": "The frequency in seconds between attempts to poll agent http health",
+              "type": "integer"
+            },
+            "path_to_install_script": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-path_to_install_script",
+              "description": "The location of the scripts to be installed along with agents",
+              "type": "string"
+            },
+            "path_to_sudowrap": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__agents-path_to_sudowrap",
+              "description": "The location of the sudo_with_pass.py wrapper for old Red Hat installations",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "stat_reporter": {
+          "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__stat_reporter",
+          "description": "Configuration properties for stats reporter",
+          "type": "object",
+          "properties": {
+            "initial_sleep": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__stat_reporter-initial_sleep",
+              "description": "The delay in seconds before the cluster stats reporter starts to run",
+              "type": "integer"
+            },
+            "interval": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__stat_reporter-interval",
+              "description": "The interval in seconds between usage metric reports to DataStax Support",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "repair_service": {
+          "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service",
+          "description": "Configuration properties for repair service",
+          "type": "object",
+          "properties": {
+            "persist_directory": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-persist_directory",
+              "description": "The location in which to store a file with the current repair service status",
+              "type": "string"
+            },
+            "persist_period": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-persist_period",
+              "description": "The minimum number of seconds between Repair Service writing the persist file to disk",
+              "type": "integer"
+            },
+            "restart_period": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-restart_period",
+              "description": "The period of time in seconds the Repair Service pauses in response to certain events before verifying the cluster stability and restarting repairs",
+              "type": "integer"
+            },
+            "cluster_stabilization_period": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-cluster_stabilization_period",
+              "description": "The frequency in seconds that the Repair Service checks for cluster stability before making repairs",
+              "type": "integer"
+            },
+            "single_task_err_threshold": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-single_task_err_threshold",
+              "description": "The maximum number of times to retry a repair task before temporarily skipping the task and moving on to the next task",
+              "type": "integer"
+            },
+            "max_parallel_repairs": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-max_parallel_repairs",
+              "description": "The maximum number of subrange repairs to run in parallel",
+              "type": "integer"
+            },
+            "max_pending_repairs": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-max_pending_repairs",
+              "description": "The maximum number of pending repairs allowed to be running on a node at one time",
+              "type": "integer"
+            },
+            "single_repair_timeout": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-single_repair_timeout",
+              "description": "The maximum length of time in seconds for a repair to complete",
+              "type": "integer"
+            },
+            "min_repair_time": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-min_repair_time",
+              "description": "The minimum length of time in seconds for a repair to complete",
+              "type": "integer"
+            },
+            "min_throughput": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-min_throughput",
+              "description": "The minimum throughput in bytes needed to calculate parallel repairs",
+              "type": "integer"
+            },
+            "num_recent_throughputs": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-num_recent_throughputs",
+              "description": "The maximum most recent completed repair throughputs used to calculate the average repair throughput, which is then used to determine how many parallel repairs are needed",
+              "type": "integer"
+            },
+            "error_logging_window": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-error_logging_window",
+              "description": "The frequency in seconds to log errors and trigger alerts after exceeding time_to_completion",
+              "type": "integer"
+            },
+            "incremental_repair_tables": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-incremental_repair_tables",
+              "description": "The list of keyspaces and tables to include in incremental repairs",
+              "type": "string"
+            },
+            "incremental_sleep": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-incremental_sleep",
+              "description": "The number of seconds to pause after completing all incremental repairs for a cluster",
+              "type": "integer"
+            },
+            "incremental_threshold": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-incremental_threshold",
+              "description": "The minimum number of bytes required to consider a table for incremental repairs",
+              "type": "integer"
+            },
+            "prioritization_page_size": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-prioritization_page_size",
+              "description": "The maximum number of remaining subrange repair tasks for the repair service to evaluate when choosing the next low-impact repair to run",
+              "type": "integer"
+            },
+            "offline_splits": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-offline_splits",
+              "description": "The minimum number of subrange splits for a node to have per keyspace when falling back to offline splits if the node is unable to communicate with its agent to get more optimal splits",
+              "type": "integer"
+            },
+            "ignore_keyspaces": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-ignore_keyspaces",
+              "description": "The list of keyspaces to ignore during a subrange or distributed subrange repair in addition to system keyspaces",
+              "type": "string",
+              "default": "OpsCenter"
+            },
+            "ignore_table": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-ignore_table",
+              "description": "The list of keyspace and tables to exclude during a subrange repair",
+              "type": "string"
+            },
+            "time_to_completion_target_percentage": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-time_to_completion_target_percentage",
+              "description": "A percentage of the time to completion that the repair service should target, including slowing down or reducing parallelism as necessary to avoid overtaxing the cluster",
+              "type": "number"
+            },
+            "incremental_repair_datacenters": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-incremental_repair_datacenters",
+              "description": "Restricts incremental repairs by datacenters or racks. Setting this option improves performance by limiting the repair requests to only those replicas within the datacenters and any specified racks",
+              "type": "string"
+            },
+            "tokenranges_http_timeout": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-tokenranges_http_timeout",
+              "description": "The timeout in seconds for the HTTP call to the agent to retrieve node token range splits",
+              "type": "integer"
+            },
+            "max_down_node_retry": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-max_down_node_retry",
+              "description": "The maximum number of attempts to retry a repair task when a node containing a replica is down",
+              "type": "integer"
+            },
+            "incremental_err_alert_threshold": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-incremental_err_alert_threshold",
+              "description": "The threshold for the number of errors during incremental repair to ignore before alerting that incremental repair seems to be failing more than an acceptable amount",
+              "type": "integer"
+            },
+            "snapshot_override": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__repair_service-snapshot_override",
+              "description": "Specifies whether to override the default snapshot repair behavior",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "ui": {
+          "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ui",
+          "description": "Configuration properties for UI",
+          "type": "object",
+          "properties": {
+            "default_api_timeout": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ui-default_api_timeout",
+              "description": "The default timeout value in seconds for an API call from the OpsCenter UI to the OpsCenter API",
+              "type": "integer"
+            },
+            "max_metrics_requests": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ui-max_metrics_requests",
+              "description": "The maximum concurrent metrics requests from the OpsCenter UI to opscenterd",
+              "type": "integer"
+            },
+            "node_detail_refresh_delay": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ui-node_detail_refresh_delay",
+              "description": "The time in seconds between polling calls to update node details",
+              "type": "integer"
+            },
+            "storagemap_ttl": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__ui-storagemap_ttl",
+              "description": "How often in seconds the data in the storage capacity chart is updated in the OpsCenter UI",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "request_tracker": {
+          "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__request_tracker",
+          "description": "Configuration properties for request tracker",
+          "type": "object",
+          "properties": {
+            "queue_size": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__request_tracker-queue_size",
+              "description": "The maximum number of requests that can be tracked",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "clusters": {
+          "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__clusters",
+          "type": "object",
+          "properties": {
+            "add_cluster_timeout": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__clusters-add_cluster_timeout",
+              "description": "How long in seconds OpsCenter will wait when adding a cluster before reporting an error",
+              "type": "integer"
+            },
+            "startup_sleep": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__clusters-startup_sleep",
+              "description": "How long in seconds OpsCenter will wait between connecting to clusters on startup",
+              "type": "integer"
+            },
+            "max_schema_agreement_wait": {
+              "id": "https://docs.datastax.com/en/opscenter/6.7/opsc/configure/opscConfigProps_r.html#opscConfigProps__clusters-max_schema_agreement_wait",
+              "description": "The maximum time in seconds to wait for schema agreement after executing a schema-altering query",
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "heap",
+        "disk",
+        "disk_type",
+        "gui_port"
+      ]
+    },
+    "dse": {
+      "description": "DSE node properties",
+      "type": "object",
+      "properties": {
+        "cluster_name": {
+          "title": "DSE cluster name",
+          "description": "DSE cluster name",
+          "type": "string",
+          "default": "cluster_datastax"
+        },
+        "seed_hostname1": {
+          "title": "First DSE seed node hostname",
+          "description": "First DSE seed node hostname",
+          "type": "string",
+          "default": "dse-0-node.datastax-dse.autoip.dcos.thisdcos.directory"
+        },
+        "seed_hostname2": {
+          "title": "Second DSE seed node hostname",
+          "description": "Second DSE seed node hostname",
+          "type": "string",
+          "default": "dse-1-node.datastax-dse.autoip.dcos.thisdcos.directory"
+        },
+        "jmx_port": {
+          "title": "JMX port",
+          "description": "JMX port",
+          "type": "integer",
+          "default": 7199
+        },
+        "agent_port": {
+          "title": "DataStax Agent API port",
+          "description": "DataStax Agent API port",
+          "type": "integer",
+          "default": 21621
+        },
+        "native_port": {
+          "title": "Cassandra native client port",
+          "description": "Cassandra native client port",
+          "type": "integer",
+          "default": 9042
+        },
+        "spark_master_webui_port": {
+          "title": "Spark master web UI port",
+          "description": "Spark master web UI port",
+          "type": "integer",
+          "default": 7080
+        }
+      },
+      "required": [
+        "jmx_port",
+        "agent_port",
+        "native_port",
+        "cluster_name",
+        "spark_master_webui_port"
+      ],
+      "extraProperties": false
+    }
+  }
+}
