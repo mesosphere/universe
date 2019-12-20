@@ -1,0 +1,2881 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of this DC/OS DSE instance",
+          "type": "string",
+          "default": "datastax-dse"
+        },
+        "service_secret_name": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-secret+string"
+          }
+        },
+        "service_account": {
+          "description": "The principal for the service instance",
+          "type": "string",
+          "default": "datastax-dse-service-account",
+          "media": {
+            "type": "application/x-service-account+string"
+          }
+        },
+        "user": {
+          "description": "The user that runs the Cassandra nodes and owns the Mesos sandbox",
+          "type": "string",
+          "default": "nobody"
+        },
+        "mesos_api_version": {
+          "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)",
+          "type": "string",
+          "default": "V1"
+        },
+        "virtual_networks": {
+          "description": "Enable DC/OS Virtual Networking",
+          "type": "boolean",
+          "default": false
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        },
+        "region": {
+          "description": "All DSE nodes will run in this region.  When no region is specified the nodes are constrained to the local region",
+          "type": "string",
+          "default": "",
+          "media": {
+            "type": "application/x-region+string"
+          }
+        },
+        "security": {
+          "description": "DSE security settings",
+          "type": "object",
+          "properties": {
+            "transport_encryption": {
+              "type": "object",
+              "description": "Transport encryption settings",
+              "properties": {
+                "enabled": {
+                  "description": "Enable transport encryption (TLS)",
+                  "type": "boolean",
+                  "default": false
+                },
+                "allow_plaintext": {
+                  "description": "Allow plaintext alongside encrypted traffic",
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            },
+            "custom_domain": {
+              "type": "string",
+              "description": "A custom domain to be used in place of autoip.dcos.thisdcos.directory. This can be used to expose the service securely outside of the cluster, but requires setting up external DNS. See the service documentation for details"
+            }
+          }
+        },
+        "readiness_check": {
+          "description": "Readiness check settings. Excercise caution when modifying these default values as it can lead to spurious task failures",
+          "type": "object",
+          "properties": {
+            "interval": {
+              "type": "integer",
+              "description": "The period in seconds to wait after the last readiness check has completed to start the next check",
+              "default": 5,
+              "minimum": 5
+            },
+            "delay": {
+              "type": "integer",
+              "description": "An amount of time in seconds to wait before starting the readiness check attempts",
+              "default": 30,
+              "minimum": 30
+            },
+            "timeout": {
+              "type": "integer",
+              "description": "An amount of time in seconds to wait for a readiness check to succeed",
+              "default": 120,
+              "minimum": 120
+            }
+          }
+        },
+        "check": {
+          "description": "Health check used to determine the scheduler health based on the status of the scheduler plans",
+          "type": "object",
+          "properties": {
+            "intervalSeconds": {
+              "type": "integer",
+              "description": "The period in seconds to wait after the last check has completed to start the next check",
+              "default": 30,
+              "minimum": 30
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "description": " An amount of time in seconds to wait for check to succeed",
+              "default": 20,
+              "minimum": 20
+            },
+            "delaySeconds": {
+              "type": "integer",
+              "description": "An amount of time in seconds to wait before starting the check attempts",
+              "default": 15,
+              "minimum": 15
+            }
+          }
+        }
+      }
+    },
+    "cluster": {
+      "description": "DSE pod configuration properties",
+      "type": "object",
+      "properties": {
+        "cluster_name": {
+          "title": "DSE Cluster name",
+          "description": "Specify DSE Cluster Name",
+          "type": "string",
+          "default": "cluster_datastax"
+        },
+        "dc_name": {
+          "title": "DSE Datacenter name",
+          "description": "Specify DSE Data Center Name",
+          "type": "string",
+          "default": "dc_datastax"
+        },
+        "external_seeds": {
+          "title": "External seed nodes",
+          "description": "Comma-separated list of seed hosts for multi-DC operation",
+          "type": "string",
+          "default": ""
+        },
+        "dse_search": {
+          "title": "Enable DSE Search",
+          "description": "Check to Enable DSE Search",
+          "type": "boolean",
+          "default": true
+        },
+        "dse_analytics": {
+          "title": "Enable DSE Analytics",
+          "description": "Check to Enable DSE Analytics",
+          "type": "boolean",
+          "default": true
+        },
+        "dse_graph": {
+          "title": "Enable DSE Graph",
+          "description": "Check to Enable DSE Graph",
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": [
+        "cluster_name",
+        "dc_name",
+        "dse_search",
+        "dse_analytics",
+        "dse_graph"
+      ]
+    },
+    "dsenode": {
+      "description": "DSE node pod configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of DSE nodes in the cluster",
+          "type": "number",
+          "default": 3
+        },
+        "placement_constraint": {
+          "title": "Node placement constraint",
+          "description": "Placement constraints for nodes (e.g., [[\"hostname\", \"MAX_PER\", \"1\"]])",
+          "type": "string",
+          "default": "[[\"hostname\", \"MAX_PER\", \"1\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "virtual_network": {
+          "description": "Name of virtual network for dse node(s) to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "cni_plugin_labels": {
+          "description": "Labels to pass to CNI plugin. Comma-seperated key:value pairs. For example [k_0:v_0,k_1:v_1,...,k_n:v_n]",
+          "type": "string",
+          "default": ""
+        },
+        "cpus": {
+          "title": "DSE node CPU count",
+          "description": "DSE node CPU count",
+          "type": "number",
+          "default": 2
+        },
+        "mem": {
+          "title": "DSE node memory size (MB)",
+          "description": "DSE node memory size (MB)",
+          "type": "integer",
+          "default": 8000
+        },
+        "heap": {
+          "title": "DSE node heap size (MB)",
+          "type": "integer",
+          "default": 4000
+        },
+        "jvm_opts": {
+          "title": "DSE node JVM/GC options",
+          "description": "Configure DSE node JVM/GC options",
+          "type": "string",
+          "default": "-XX:+UseG1GC -XX:G1RSetUpdatingPauseTimePercent=5 -XX:MaxGCPauseMillis=500"
+        },
+        "agent_cpus": {
+          "title": "DSE agent CPU count",
+          "description": "Specify DSE agent CPU count",
+          "type": "number",
+          "default": 0.5
+        },
+        "agent_mem": {
+          "title": "DSE agent memory size (MB)",
+          "description": "DSE agent memory size (MB)",
+          "type": "integer",
+          "default": 500
+        },
+        "data_disk": {
+          "title": "Persistent data volume size (MB)",
+          "description": "Persistent data volume size (MB)",
+          "type": "integer",
+          "default": 10240
+        },
+        "data_disk_type": {
+          "title": "Persistent data volume type [ROOT, MOUNT]",
+          "description": "Persistent data volume type [ROOT, MOUNT]",
+          "type": "string",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "data_volume_profile": {
+          "description": "Volume profile to be used for storing DSE Node data",
+          "type": "string"
+        },
+        "install_disk": {
+          "title": "Persistent DSE installation volume size",
+          "description": "Persistent DSE installation volume size",
+          "type": "integer",
+          "default": 1000
+        },
+        "install_disk_type": {
+          "title": "Persistent DSE installation volume type",
+          "description": "Specify Persistent DSE installation volume type [ROOT, MOUNT]",
+          "type": "string",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "install_volume_profile": {
+          "description": "Volume profile to be used for storing DSE Node installation",
+          "type": "string"
+        },
+        "log_disk": {
+          "title": "Persistent log volume size (MB)",
+          "description": "Persistent log volume size (MB)",
+          "type": "integer",
+          "default": 1000
+        },
+        "log_disk_type": {
+          "title": "Persistent log volume type [ROOT, MOUNT]",
+          "description": "Specify Persistent log volume type [ROOT, MOUNT]",
+          "type": "string",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "log_volume_profile": {
+          "description": "Volume profile to be used for storing DSE Node logs",
+          "type": "string"
+        },
+        "separate_commit_log_disk": {
+          "title": "Use a separate volume for commit log data?",
+          "description": "Check to specify whether to use a separate volume for commit log data",
+          "type": "boolean",
+          "default": false
+        },
+        "commit_log_disk": {
+          "title": "Persistent commit log volume size (MB)",
+          "description": "Persistent commit log volume size (MB)",
+          "type": "integer",
+          "default": 10000
+        },
+        "commit_log_disk_type": {
+          "title": "Persistent commit log volume type [ROOT, MOUNT]",
+          "description": "Specify Persistent commit log volume type [ROOT, MOUNT]",
+          "type": "string",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "commit_log_volume_profile": {
+          "description": "Volume profile to be used for storing DSE Node commit logs",
+          "type": "string"
+        },
+        "separate_cdc_log_disk": {
+          "title": "Use a separate volume for CDC log data?",
+          "description": "Check to specify whether to use a separate volume for CDC (Change Data Capture) log data",
+          "type": "boolean",
+          "default": false
+        },
+        "cdc_log_disk": {
+          "title": "Persistent CDC log volume size (MB)",
+          "description": "Persistent CDC (Change Data Capture) log volume size (MB)",
+          "type": "integer",
+          "default": 10000
+        },
+        "cdc_log_disk_type": {
+          "title": "Persistent CDC log volume type [ROOT, MOUNT]",
+          "description": "Specify Persistent CDC (Change Data Capture) log volume type [ROOT, MOUNT]",
+          "type": "string",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "cdc_log_volume_profile": {
+          "description": "Volume profile to be used for storing DSE Node CDC (Change Data Capture) logs",
+          "type": "string"
+        },
+        "solr_disk": {
+          "title": "Persistent DSE Search volume size (MB)",
+          "description": "Persistent DSE Search volume size (MB)",
+          "type": "integer",
+          "default": 10240
+        },
+        "solr_disk_type": {
+          "title": "Persistent DSE Search volume type [ROOT, MOUNT]",
+          "description": "Specify Persistent DSE Search volume type [ROOT, MOUNT]",
+          "type": "string",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "solr_volume_profile": {
+          "description": "Volume profile to be used for storing DSE Search data",
+          "type": "string"
+        },
+        "deploy_strategy": {
+          "title": "Deployment strategy to use [serial, serial-canary]",
+          "description": "Deployment strategy to use [serial, serial-canary]",
+          "type": "string",
+          "enum": [
+            "serial",
+            "serial-canary"
+          ],
+          "default": "serial"
+        },
+        "native_port": {
+          "title": "Cassandra native client port",
+          "description": "Cassandra native client port",
+          "type": "integer",
+          "default": 9042
+        },
+        "native_ssl_port": {
+          "title": "Cassandra native client ssl port (if separate from native_port)",
+          "description": "Cassandra native client ssl port (if separate from native_port)",
+          "type": "string",
+          "default": ""
+        },
+        "internode_port": {
+          "title": "Cassandra inter-node cluster communication port",
+          "description": "Cassandra inter-node cluster communication port",
+          "type": "integer",
+          "default": 7000
+        },
+        "internode_ssl_port": {
+          "title": "Cassandra SSL inter-node cluster communication port",
+          "description": "Cassandra SSL inter-node cluster communication port",
+          "type": "integer",
+          "default": 7001
+        },
+        "internode_messaging_port": {
+          "title": "DSE inter-node messaging service port",
+          "description": "DSE inter-node messaging service port",
+          "type": "integer",
+          "default": 8609
+        },
+        "jmx_port": {
+          "title": "JMX port",
+          "description": "JMX port",
+          "type": "integer",
+          "default": 7199
+        },
+        "agent_port": {
+          "title": "DataStax Agent API port",
+          "description": "DataStax Agent API port",
+          "type": "integer",
+          "default": 21621
+        },
+        "gremlin_agent_port": {
+          "title": "Gremlin graph service port",
+          "description": "Gremlin graph service port",
+          "type": "integer",
+          "default": 8182
+        },
+        "solr_admin_port": {
+          "title": "Solr admin port",
+          "description": "Solr admin port",
+          "type": "integer",
+          "default": 8983
+        },
+        "spark_master_port": {
+          "title": "Spark master port",
+          "description": "Spark master port",
+          "type": "integer",
+          "default": 7077
+        },
+        "spark_master_webui_port": {
+          "title": "Spark master web UI port",
+          "description": "Spark master web UI port",
+          "type": "integer",
+          "default": 7080
+        },
+        "spark_worker_webui_port": {
+          "title": "Spark worker web UI port",
+          "description": "Spark worker web UI port",
+          "type": "integer",
+          "default": 7081
+        },
+        "rlimit_memlock": {
+          "type": "integer",
+          "default": -1
+        },
+        "rlimit_nofile": {
+          "type": "integer",
+          "default": 100000
+        },
+        "rlimit_nproc": {
+          "type": "integer",
+          "default": 32768
+        },
+        "nodetool_cpus": {
+          "title": "How many CPUs needed to execute nodetool command",
+          "description": "Specify number of CPUs needed to execute nodetool command",
+          "type": "number",
+          "default": 0.5
+        },
+        "nodetool_mem": {
+          "title": "How much memory (MB) needed to execute nodetool command",
+          "description": "Specify amount of memory (MB) needed to execute nodetool command",
+          "type": "integer",
+          "default": 256
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "data_disk",
+        "data_disk_type",
+        "count",
+        "log_disk",
+        "native_port",
+        "internode_port",
+        "internode_ssl_port",
+        "jmx_port",
+        "solr_admin_port",
+        "spark_master_port",
+        "spark_master_webui_port",
+        "spark_worker_webui_port"
+      ]
+    },
+    "cassandra": {
+      "description": "cassandra.yaml configuration properties",
+      "type": "object",
+      "properties": {
+        "num_tokens": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__num_tokens",
+          "description": "The number of tokens randomly assigned to node(s) in a cluster that use vnodes",
+          "type": "integer",
+          "default": 256
+        },
+        "allocate_tokens_for_local_replication_factor": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__allocate_tokens_for_local_replication_factor",
+          "description": "Replication Factor of keyspaces in datacenter - triggers the recommended algorithmic allocation for the Replication Factor and num_tokens for this node",
+          "type": "string",
+          "default": ""
+        },
+        "initial_token": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__initial_token",
+          "description": "The token to start the contiguous range. Set this property for single-node-per-token architecture, in which a node owns exactly one contiguous range in the ring space",
+          "type": "string",
+          "default": ""
+        },
+        "hinted_handoff_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__hinted_handoff_enabled",
+          "description": "If true, hinted handoff is enabled for the cluster",
+          "type": "boolean",
+          "default": true
+        },
+        "max_hint_window_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__max_hint_window_in_ms",
+          "description": "The maximum amount of time, in ms, that hints are generates hints for an unresponsive node",
+          "type": "integer",
+          "default": 10800000
+        },
+        "hinted_handoff_throttle_in_kb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__hinted_handoff_throttle_in_kb",
+          "description": "The maximum throttle per delivery thread in kilobytes per second",
+          "type": "integer",
+          "default": 1024
+        },
+        "max_hints_delivery_threads": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__max_hints_delivery_threads",
+          "description": "The maximum number of delivery threads for hinted handoff",
+          "type": "integer",
+          "default": 2
+        },
+        "hints_flush_period_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__hints_flush_period_in_ms",
+          "description": "The number of milliseconds Cassandra waits before flushing hints from internal buffers to disk",
+          "type": "integer",
+          "default": 10000
+        },
+        "max_hints_file_size_in_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__max_hints_file_size_in_mb",
+          "description": "The maximum size for a single hints file, in megabytes",
+          "type": "integer",
+          "default": 128
+        },
+        "hints_compression_class": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__hints_compression",
+          "description": "The compressor for hint files. Supported compressors: LZ, Snappy, and Deflate",
+          "type": "string",
+          "default": ""
+        },
+        "hints_compression_parameter": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__hints_compression",
+          "description": "Optional parameters for the compressor",
+          "type": "string",
+          "default": ""
+        },
+        "batchlog_replay_throttle_in_kb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__batchlog_replay",
+          "description": "The total throttle for log replay in Kpbs",
+          "type": "integer",
+          "default": 1024
+        },
+        "batchlog_endpoint_strategy": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__batchlog_endpoint_strategy",
+          "description": "Strategy to choose the batchlog storage endpoints [random_remote, dynamic_remote, dynamic]",
+          "type": "string",
+          "default": "random_remote"
+        },
+        "authenticator": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__authenticator",
+          "description": "The authentication backend. It implements IAuthenticator, which is used to identify users",
+          "type": "string",
+          "default": "AllowAllAuthenticator"
+        },
+        "authorizer": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__authorizer",
+          "description": "The authorization backend. It implements IAuthenticator, which limits access and provides permissions",
+          "type": "string",
+          "default": "AllowAllAuthorizer"
+        },
+        "role_manager": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__role_manager",
+          "description": "Specify RoleManager class. Default: DseRoleManager that supports, LDAP, Kerberos and internal roles",
+          "type": "string",
+          "default": "com.datastax.bdp.cassandra.auth.DseRoleManager"
+        },
+        "system_keyspaces_filtering": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__system_keyspaces_filtering",
+          "description": "Whether to enable system keyspace filtering so that users can access and view only schema information for rows in the system and system_schema keyspaces to which they have access",
+          "type": "boolean",
+          "default": false
+        },
+        "roles_validity_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__roles_validity_in_ms",
+          "description": "Validity period for roles cache in milliseconds",
+          "type": "integer",
+          "default": 120000
+        },
+        "roles_update_interval_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__roles_update_interval_in_ms",
+          "description": "Refresh interval for roles cache. After this interval, cache entries become eligible for refresh",
+          "type": "integer",
+          "default": 2000
+        },
+        "permissions_validity_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__permissions_validity_in_ms",
+          "description": "How long permissions in cache remain valid to manage performance impact of permissions queries",
+          "type": "integer",
+          "default": 120000
+        },
+        "permissions_update_interval_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__permissions_update_interval_in_ms",
+          "description": "Sets refresh interval for the standard authentication cache and the row-level access control (RLAC) cache",
+          "type": "integer",
+          "default": 1000
+        },
+        "partitioner": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__partitioner",
+          "description": "The partitioner used to distribute rows across the cluster. Murmur3Partitioner is the recommended setting. RandomPartitioner and ByteOrderedPartitioner are supported for legacy applications",
+          "type": "string",
+          "default": "org.apache.cassandra.dht.Murmur3Partitioner"
+        },
+        "cdc_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__cdc_enabled",
+          "description": "Whether to enable change data capture (CDC) functionality on a per-node basis",
+          "type": "boolean",
+          "default": false
+        },
+        "disk_failure_policy": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__disk_failure_policy",
+          "description": "Sets how the database responds to disk failure. Recommend settings: stop or best_effort. All Valid values: die, stop_paranoid, stop, best_effort, ignore",
+          "type": "string",
+          "default": "stop"
+        },
+        "commit_failure_policy": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__commit_failure_policy",
+          "description": "Policy for commit disk failures. All Valid values: die, stop_commit, stop, ignore",
+          "type": "string",
+          "default": "stop"
+        },
+        "prepared_statements_cache_size_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__prepared_statements_cache_size_mb",
+          "description": "Maximum size of the native protocol prepared statement cache. Change this value only if there are more prepared statements than fit in the cache",
+          "type": "string",
+          "default": ""
+        },
+        "key_cache_save_period": {
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__key_cache_save_period",
+          "description": "The duration in seconds that keys are saved in cache. Saved caches greatly improve cold-start speeds and has relatively little effect on I/O",
+          "type": "integer",
+          "default": 14400
+        },
+        "key_cache_keys_to_save": {
+          "description": "The number of keys from the key cache to save",
+          "type": "integer",
+          "default": 100
+        },
+        "row_cache_class_name": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__row_cache_class_name",
+          "description": "The classname of the row cache provider to use",
+          "type": "string",
+          "default": "org.apache.cassandra.cache.OHCProvider"
+        },
+        "row_cache_size_in_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__row_cache_size_in_mb",
+          "description": "Maximum size of the row cache in memory. Row cache can save more time than key_cache_size_in_mb, but is space-intensive because it contains the entire row. Use the row cache only for hot rows or static rows. 0 disables the row cache",
+          "type": "integer",
+          "default": 0
+        },
+        "row_cache_save_period": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__row_cache_save_period",
+          "description": "Duration in seconds that rows are saved in cache. 0 disables caching",
+          "type": "integer",
+          "default": 0
+        },
+        "row_cache_keys_to_save": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__row_cache_keys_to_save",
+          "description": "The number of keys from the row cache to save",
+          "type": "integer",
+          "default": 100
+        },
+        "counter_cache_size_in_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__counter_cache_size_in_mb",
+          "description": "Counter cache helps to reduce counter locks' contention for hot counter cells",
+          "type": "string",
+          "default": ""
+        },
+        "counter_cache_save_period": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__counter_cache_save_period",
+          "description": "The time, in seconds, after which the database saves the counter cache (keys only)",
+          "type": "integer",
+          "default": 7200
+        },
+        "counter_cache_keys_to_save": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__counter_cache_keys_to_save",
+          "description": "Number of keys from the counter cache to save",
+          "type": "integer",
+          "default": 100
+        },
+        "commitlog_sync": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__commitlog_sync",
+          "description": "Commit log synchronization method. All Valid values: periodic, group, batch",
+          "type": "string",
+          "default": "periodic"
+        },
+        "commitlog_sync_period_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__commitlog_sync",
+          "description": "The number of milliseconds between disk fsync calls",
+          "type": "integer",
+          "default": 10000
+        },
+        "commitlog_batch_window_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__commitlog_sync_batch_window_in_ms",
+          "description": "The maximum length of time that queries may be batched together",
+          "type": "string",
+          "default": ""
+        },
+        "commitlog_segment_size_in_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__commitlog_segment_size_in_mb",
+          "description": "The size of each commit log segment in MB",
+          "type": "integer",
+          "default": 32
+        },
+        "commitlog_compression_class": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__commitlog_compression",
+          "description": "The compressor to use if commit log is compressed. Class name can be LZ4Compressor, Snappy, or Deflate",
+          "type": "string",
+          "default": "LZ4Compressor"
+        },
+        "commitlog_compression_parameter": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__commitlog_compression",
+          "description": "Optional parameters for the compressor",
+          "type": "string",
+          "default": ""
+        },
+        "concurrent_validations": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__concurrent_validations",
+          "description": "Number of simultaneous repair validations",
+          "type": "integer",
+          "default": 0
+        },
+        "concurrent_materialized_view_builders": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__concurrent_materialized_view_builders",
+          "description": "Number of simultaneous materialized view builder tasks allowed to run concurrently",
+          "type": "integer",
+          "default": 2
+        },
+        "file_cache_size_in_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__file_cache_size_in_mb",
+          "description": "Maximum memory for buffer pooling and SSTable chunk cache",
+          "type": "integer",
+          "default": 1024
+        },
+        "disk_optimization_strategy": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__disk_optimization_strategy",
+          "description": "The strategy for optimizing disk reads. Can be either ssd (solid state disks) or spinning (spinning disks)",
+          "type": "string",
+          "default": "ssd"
+        },
+        "memtable_space_in_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__memtable_space_in_mb",
+          "description": "Total permitted memory to use for memtables",
+          "type": "integer",
+          "default": 2048
+        },
+        "memtable_cleanup_threshold": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__memtable_cleanup_threshold",
+          "description": "Ratio used for automatic memtable flush",
+          "type": "number",
+          "default": 0.2
+        },
+        "memtable_allocation_type": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__memtable_allocation_type",
+          "description": "The type of allocations for the Cassandra memtable. heap_buffers keep all data on the JVM heap. offheap_buffers may reduce heap utilization for large string or binary values. offheap_objects may improve heap size for small integers or UUIDs as well. Both off heap options will increase read latency",
+          "type": "string",
+          "default": "offheap_objects"
+        },
+        "commitlog_total_space_in_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__commitlog_total_space_in_mb",
+          "description": "Total space to use for commit logs on disk",
+          "type": "integer",
+          "default": 8192
+        },
+        "memtable_flush_writers": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__memtable_flush_writers",
+          "description": "The number of memtable flush writer threads per disk and the total number of memtables that can be flushed concurrently, generally a combination of computer and I/O bound",
+          "type": "integer",
+          "default": 4
+        },
+        "cdc_total_space_in_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__cdc_total_space_in_mb",
+          "description": "Total space to use for change-data-capture (CDC) logs on disk",
+          "type": "string",
+          "default": ""
+        },
+        "cdc_free_space_check_interval_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__cdc_free_space_check_interval_ms",
+          "description": "Interval between checks for new available space for CDC-tracked tables when the cdc_total_space_in_mb threshold is reached and the CDCCompactor is running behind or experiencing back pressure",
+          "type": "integer",
+          "default": 250
+        },
+        "index_summary_capacity_in_mb": {
+          "type": "string",
+          "default": ""
+        },
+        "index_summary_resize_interval_in_minutes": {
+          "id": "https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra_yaml.html#configCassandra_yaml__index_summary_resize_interval_in_minutes",
+          "description": "How frequently index summaries should be re-sampled in minutes. This is done periodically to redistribute memory from the fixed-size pool to SSTables proportional their recent read rates",
+          "type": "integer",
+          "default": 60
+        },
+        "trickle_fsync": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__trickle_fsync",
+          "description": "When set to true, causes fsync to force the operating system to flush the dirty buffers at the set interval trickle_fsync_interval_in_kb",
+          "type": "boolean",
+          "default": true
+        },
+        "trickle_fsync_interval_in_kb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__trickle_fsync_interval_in_kb",
+          "description": "The size of the fsync in kilobytes",
+          "type": "integer",
+          "default": 10240
+        },
+        "internode_authenticator": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__internode_authenticator",
+          "description": "Internode authentication backend to enable secure connections from peer nodes",
+          "type": "string",
+          "default": "org.apache.cassandra.auth.AllowAllInternodeAuthenticator"
+        },
+        "start_native_transport": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__start_native_transport",
+          "description": "Enables or disables the native transport server",
+          "type": "boolean",
+          "default": true
+        },
+        "native_transport_max_frame_size_in_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__native_transport_max_frame_size_in_mb",
+          "description": "The maximum allowed size of a frame",
+          "type": "integer",
+          "default": 256
+        },
+        "native_transport_max_concurrent_connections": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__native_transport_max_concurrent_connections",
+          "description": "The maximum number of concurrent client connections",
+          "type": "integer",
+          "default": -1
+        },
+        "native_transport_max_concurrent_connections_per_ip": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__native_transport_max_concurrent_connections_per_ip",
+          "description": "The maximum number of concurrent client connections per source IP address",
+          "type": "integer",
+          "default": -1
+        },
+        "native_transport_address": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__native_transport_address",
+          "description": "The address or interface to bind the native transport server to",
+          "type": "string",
+          "default": "localhost"
+        },
+        "native_transport_keepalive": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__native_transport_keepalive",
+          "description": "Whether to enable keepalive on native connections",
+          "type": "boolean",
+          "default": true
+        },
+        "internode_send_buff_size_in_bytes": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__internode_send_buff_size_in_bytes",
+          "description": "The sending socket buffer size, in bytes, for inter-node calls",
+          "type": "string",
+          "default": ""
+        },
+        "internode_recv_buff_size_in_bytes": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__internode_recv_buff_size_in_bytes",
+          "description": "The receiving socket buffer size in bytes for inter-node calls",
+          "type": "string",
+          "default": ""
+        },
+        "incremental_backups": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__incremental_backups",
+          "description": "Check to enable incremental backups",
+          "type": "boolean",
+          "default": false
+        },
+        "snapshot_before_compaction": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__snapshot_before_compaction",
+          "description": "Enable to take a snapshot before each compaction.",
+          "type": "boolean",
+          "default": false
+        },
+        "auto_snapshot": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__auto_snapshot",
+          "description": "Whether to enable snapshots of the data before truncating a keyspace or dropping a table",
+          "type": "boolean",
+          "default": true
+        },
+        "tombstone_warn_threshold": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__tombstone_warn_threshold",
+          "description": "The database issues a warning if a query scans more than this number of tombstones",
+          "type": "integer",
+          "default": 1000
+        },
+        "tombstone_failure_threshold": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__tombstone_failure_threshold",
+          "description": "The database aborts a query if it scans more than this number of tombstones",
+          "type": "integer",
+          "default": 100000
+        },
+        "column_index_size_in_kb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__column_index_size_in_kb",
+          "description": "Granularity of the index of rows within a partition",
+          "type": "integer",
+          "default": 16
+        },
+        "column_index_cache_size_in_kb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__column_index_cache_size_in_kb",
+          "description": "Threshold for the total size of all index entries for a partition that the database stores in the partition key cache",
+          "type": "integer",
+          "default": 2
+        },
+        "batch_size_warn_threshold_in_kb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__batch_size_warn_threshold_in_kb",
+          "description": "Threshold to log a warning message when any multiple-partition batch size exceeds this value in kilobytes",
+          "type": "integer",
+          "default": 64
+        },
+        "batch_size_fail_threshold_in_kb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__batch_size_fail_threshold_in_kb",
+          "description": "Threshold to fail and log WARN on any multiple-partition batch whose size exceeds this value",
+          "type": "integer",
+          "default": 640
+        },
+        "unlogged_batch_across_partitions_warn_threshold": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__unlogged_batch_across_partitions_warn_threshold",
+          "description": "Threshold to log a WARN message on any batches not of type LOGGED that span across more partitions than this limit",
+          "type": "integer",
+          "default": 10
+        },
+        "concurrent_compactors": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__concurrent_compactors",
+          "description": "The number of concurrent compaction processes allowed to run simultaneously on a node, not including validation compactions for anti-entropy repair",
+          "type": "integer",
+          "default": 1
+        },
+        "compaction_throughput_mb_per_sec": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__compaction_throughput_mb_per_sec",
+          "description": "The MB per second to throttle compaction for the entire system",
+          "type": "integer",
+          "default": 16
+        },
+        "compaction_large_partition_warning_threshold_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__compaction_large_partition_warning_threshold_mb",
+          "description": "The partition size threshold before logging a warning",
+          "type": "integer",
+          "default": 100
+        },
+        "sstable_preemptive_open_interval_in_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__sstable_preemptive_open_interval_in_mb",
+          "description": "The size of the SSTables to trigger preemptive opens by compaction process",
+          "type": "integer",
+          "default": 50
+        },
+        "stream_throughput_outbound_megabits_per_sec": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__stream_throughput_outbound_megabits_per_sec",
+          "description": "Throttle for the throughput of all outbound streaming file transfers on a node in megabits per second",
+          "type": "integer",
+          "default": 200
+        },
+        "inter_dc_stream_throughput_outbound_megabits_per_sec": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__inter_dc_stream_throughput_outbound_megabits_per_sec",
+          "description": "Throttle for all streaming file transfers between datacenters, and for network stream traffic as configured with stream_throughput_outbound_megabits_per_sec",
+          "type": "integer",
+          "default": 200
+        },
+        "read_request_timeout_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__read_request_timeout_in_ms",
+          "description": "Duration for how long the coordinator waits for read operations to complete before timing it out",
+          "type": "integer",
+          "default": 5000
+        },
+        "range_request_timeout_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__range_request_timeout_in_ms",
+          "description": "Duration for how long the coordinator waits for sequential or index scans to complete before timing it out",
+          "type": "integer",
+          "default": 10000
+        },
+        "aggregated_request_timeout_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__aggregated_request_timeout_in_ms",
+          "description": "Duration for how long the coordinator waits for sequential or index scans to complete",
+          "type": "integer",
+          "default": 120000
+        },
+        "write_request_timeout_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__write_request_timeout_in_ms",
+          "description": "Duration for how long the coordinator waits for write requests to complete with at least one node in the local datacenter",
+          "type": "integer",
+          "default": 2000
+        },
+        "counter_write_request_timeout_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__counter_write_request_timeout_in_ms",
+          "description": "Duration for how long the coordinator waits for counter writes to complete before timing it out",
+          "type": "integer",
+          "default": 5000
+        },
+        "cas_contention_timeout_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__cas_contention_timeout_in_ms",
+          "description": "Duration for how long the coordinator continues to retry a CAS (compare and set) operation that contends with other proposals for the same row",
+          "type": "integer",
+          "default": 1000
+        },
+        "truncate_request_timeout_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__cqlTruncateequest_timeout_in_ms",
+          "description": "Duration for how long the coordinator waits for a truncate (the removal of all data from a table) to complete before timing it out",
+          "type": "integer",
+          "default": 60000
+        },
+        "request_timeout_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__request_timeout_in_ms",
+          "description": "The default timeout value for other miscellaneous operations. Lowest acceptable value is 10 ms",
+          "type": "integer",
+          "default": 10000
+        },
+        "cross_dc_rtt_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__cross_dc_rtt_in_ms",
+          "description": "Duration for how much to increase the cross-datacenter timeout (write_request_timeout_in_ms + cross_dc_rtt_in_ms) for requests that involve only nodes in a remote datacenter",
+          "type": "integer",
+          "default": 0
+        },
+        "slow_query_log_timeout_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__slow_query_log_timeout_in_ms",
+          "description": "Duration for how long before a node logs slow queries. Select queries that exceed this value generate an aggregated log message to identify slow queries",
+          "type": "integer",
+          "default": 500
+        },
+        "cross_node_timeout": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__cross_node_timeout",
+          "description": "Enable operation timeout information exchange between nodes to accurately measure request timeouts",
+          "type": "boolean",
+          "default": false
+        },
+        "streaming_connections_per_host": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__streaming_connections_per_host",
+          "description": "Maximum number of connections per host for streaming",
+          "type": "integer",
+          "default": 1
+        },
+        "phi_convict_threshold": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__phi_convict_threshold",
+          "description": "The sensitivity of the failure detector on an exponential scale. Generally, this setting does not need adjusting",
+          "type": "integer",
+          "default": 8
+        },
+        "endpoint_snitch": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__endpoint_snitch",
+          "description": "A class that implements the IEndpointSnitch interface. The database uses the snitch to locate nodes and route requests",
+          "type": "string",
+          "default": "GossipingPropertyFileSnitch"
+        },
+        "dynamic_snitch_update_interval_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__dynamic_snitch_update_interval_in_ms",
+          "description": "The time interval, in milliseconds, between the calculation of node scores",
+          "type": "integer",
+          "default": 100
+        },
+        "dynamic_snitch_reset_interval_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__dynamic_snitch_reset_interval_in_ms",
+          "description": "Time interval after which the database resets all node scores. This allows a bad node to recover",
+          "type": "integer",
+          "default": 600000
+        },
+        "dynamic_snitch_badness_threshold": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__dynamic_snitch_badness_threshold",
+          "description": "The performance threshold for dynamically routing client requests away from a poorly performing node",
+          "type": "number",
+          "default": 0.1
+        },
+        "internode_compression": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__internode_compression",
+          "description": "Controls whether traffic between nodes is compressed. Valid values: all , dc or none",
+          "type": "string",
+          "default": "dc"
+        },
+        "inter_dc_tcp_nodelay": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__inter_dc_tcp_nodelay",
+          "description": "Enable tcp_nodelay for inter-datacenter communication",
+          "type": "boolean",
+          "default": false
+        },
+        "tracetype_query_ttl": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__tracetype_query_ttl",
+          "description": "TTL for different trace types used during logging of the query process",
+          "type": "integer",
+          "default": 86400
+        },
+        "tracetype_repair_ttl": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__tracetype_repair_ttl",
+          "description": "TTL for different trace types used during logging of the repair process",
+          "type": "integer",
+          "default": 604800
+        },
+        "gc_log_threshold_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__gc_log_threshold_in_ms",
+          "description": "The threshold for log messages at the INFO level. Adjust to minimize logging",
+          "type": "integer",
+          "default": 200
+        },
+        "gc_warn_threshold_in_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__gc_warn_threshold_in_ms",
+          "description": "Threshold for GC pause. Any GC pause longer than this interval is logged at the WARN level",
+          "type": "integer",
+          "default": 1000
+        },
+        "enable_user_defined_functions": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__enable_user_defined_functions",
+          "description": "Check to enable user defined functions (UDFs), code that is executed inside Cassandra daemons",
+          "type": "boolean",
+          "default": false
+        },
+        "enable_scripted_user_defined_functions": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__enable_scripted_user_defined_functions",
+          "description": "Check to enable the use of JavaScript language in UDFs. Scripted UDFs are less performant than UDFs and produce more garbage on the heap",
+          "type": "boolean",
+          "default": false
+        },
+        "enable_user_defined_functions_threads": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__enable_user_defined_functions_threads",
+          "description": "Check to enable sandbox for asynchronous JavaScript UDF execution",
+          "type": "boolean",
+          "default": true
+        },
+        "windows_timer_interval": {
+          "type": "integer",
+          "default": 1
+        },
+        "user_defined_function_warn_micros": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__user_defined_function_warn_micros",
+          "description": "Threshold in microseconds (CPU time). When a UDF runs too long and this threshold is exceeded, a warning is logged and sent to the client",
+          "type": "integer",
+          "default": 500
+        },
+        "user_defined_function_fail_micros": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__user_defined_function_fail_micros",
+          "description": "Threshold in microseconds (CPU time). When a fatal UDF run-time situation is detected and this threshold is exceeded, the UDF is stopped",
+          "type": "integer",
+          "default": 10000
+        },
+        "user_defined_function_warn_heap_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__user_defined_function_warn_heap_mb",
+          "description": "Threshold in MB for heap allocations. When this threshold is exceeded, a warning is logged and sent to the client",
+          "type": "integer",
+          "default": 200
+        },
+        "user_defined_function_fail_heap_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__user_defined_function_fail_heap_mb",
+          "description": "Threshold in MB for heap allocations. When this threshold is exceeded, the UDF is stopped",
+          "type": "integer",
+          "default": 500
+        },
+        "user_function_timeout_policy": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__user_function_timeout_policy",
+          "description": "Defines action when a scripted UDF exceeds user_defined_function_fail_micros threshold",
+          "type": "string",
+          "default": "die"
+        },
+        "max_value_size_in_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__max_value_size_in_mb",
+          "description": "The maximum size of any value in SSTables. SSTables are marked as corrupted when the threshold is exceeded",
+          "type": "integer",
+          "default": 256
+        },
+        "otc_coalescing_strategy": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__otc_coalescing_strategy",
+          "description": "Strategy to combine multiple network messages into a single packet for outbound TCP connections to nodes in the same data center",
+          "type": "string",
+          "default": "DISABLED"
+        },
+        "otc_coalescing_window_us": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__otc_coalescing_window_us",
+          "description": "Duration for how many microseconds to wait for coalescing messages to nodes in the same datacenter",
+          "type": "integer",
+          "default": 200
+        },
+        "otc_coalescing_enough_coalesced_messages": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__otc_coalescing_enough_coalesced_messages",
+          "description": "The threshold for the number of messages to nodes in the same data center",
+          "type": "integer",
+          "default": 8
+        },
+        "seed_gossip_probability": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__seed_gossip_probability",
+          "description": "The percentage of time that gossip messages are sent to a seed node during each round of gossip",
+          "type": "number",
+          "default": 1
+        },
+        "back_pressure_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__back_pressure_enabled",
+          "description": "Whether to enable for the coordinator to apply the specified back pressure strategy to each mutation that is sent to replicas",
+          "type": "boolean",
+          "default": false
+        },
+        "back_pressure_strategy_class_name": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__back_pressureClass_name",
+          "description": "The default class_name uses the ratio between incoming mutation responses and outgoing mutation requests",
+          "type": "string",
+          "default": "org.apache.cassandra.net.RateBasedBackPressure"
+        },
+        "back_pressure_strategy_high_ratio": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__back_pressureHigh_ratio",
+          "description": "When outgoing mutations are below this value, they are rate limited according to the incoming rate decreased by the factor",
+          "type": "string",
+          "default": "0.90"
+        },
+        "back_pressure_strategy_factor": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__back_pressureFactor",
+          "description": "When backpressure is below high ratio, outgoing mutations are rate limited according to the incoming rate decreased by the given factor; if above high ratio, the rate limiting is increased by the given factor(1-10)",
+          "type": "string",
+          "default": "5"
+        },
+        "back_pressure_strategy_flow": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__back_pressureFlow",
+          "description": "The flow speed to apply rate limiting",
+          "type": "string",
+          "enum": [
+            "FAST",
+            "SLOW"
+          ],
+          "default": "FAST"
+        },
+        "continuous_paging_max_concurrent_sessions": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__max_concurrent_sessions",
+          "description": "The maximum number of concurrent sessions. Additional sessions are rejected with an unavailable error",
+          "type": "integer",
+          "default": 60
+        },
+        "continuous_paging_max_session_pages": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__max_session_pages",
+          "description": "The maximum number of pages that can be buffered for each session",
+          "type": "integer",
+          "default": 4
+        },
+        "continuous_paging_max_page_size_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__max_page_size_mb",
+          "description": "The maximum size of a page, in MB. If an individual CQL row is larger than this value, the page can be larger than this value",
+          "type": "integer",
+          "default": 8
+        },
+        "continuous_paging_max_local_query_time_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__max_local_query_time_ms",
+          "description": "The maximum time for a local continuous query to run. When this threshold is exceeded, the session is swapped out and rescheduled",
+          "type": "integer",
+          "default": 5000
+        },
+        "continuous_paging_client_timeout_sec": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__client_timeout_sec",
+          "description": "Duration for how long the server will wait, in seconds, for clients to request more pages if the client is not reading and the server queue is full",
+          "type": "integer",
+          "default": 600
+        },
+        "continuous_paging_cancel_timeout_sec": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__cancel_timeout_sec",
+          "description": "Duration for how long to wait before checking if a paused session can be resumed",
+          "type": "integer",
+          "default": 5
+        },
+        "continuous_paging_paused_check_interval_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__paused_check_interval_ms",
+          "description": "Duration for how long to wait, in milliseconds, before checking if a continuous paging sessions can be resumed, when that session is paused because of backpressure",
+          "type": "integer",
+          "default": 1
+        },
+        "nodesync_rate_in_kb": {
+          "description": "The maximum bytes per second for data validation on the local node",
+          "type": "integer",
+          "default": 1024
+        },
+        "otc_backlog_expiration_interval_ms": {
+          "type": "integer",
+          "default": 200
+        },
+        "tpc_cores": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__tpc_cores",
+          "description": "Number of TPC event loops. If not set, the default is the number of cores (processors on the machine) minus one",
+          "type": "string",
+          "default": ""
+        },
+        "tpc_io_cores": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__tpc_io_cores",
+          "description": "The number of tpc_cores to use for asynchronous disk reads",
+          "type": "string",
+          "default": ""
+        },
+        "io_global_queue_depth": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configCassandra_yaml.html#configCassandra_yaml__io_global_queue_depth",
+          "description": "Global IO queue depth used for reads when AIO is enabled (the default for SSDs). The optimal queue depth as found with the fio tool for a given disk setup",
+          "type": "string",
+          "default": ""
+        },
+        "commitlog_archiving_enabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "commitlog_archiving_archive_command": {
+          "type": "string",
+          "default": ""
+        },
+        "commitlog_archiving_restore_command": {
+          "type": "string",
+          "default": ""
+        },
+        "commitlog_archiving_restore_directories": {
+          "type": "string",
+          "default": ""
+        },
+        "commitlog_archiving_precision": {
+          "type": "string",
+          "enum": [
+            "MICROSECONDS",
+            "MILLISECONDS",
+            "SECONDS"
+          ],
+          "default": "MICROSECONDS"
+        }
+      },
+      "required": [
+        "authenticator",
+        "authorizer",
+        "num_tokens",
+        "hinted_handoff_enabled",
+        "max_hint_window_in_ms",
+        "hinted_handoff_throttle_in_kb",
+        "max_hints_delivery_threads",
+        "batchlog_replay_throttle_in_kb",
+        "partitioner",
+        "key_cache_save_period",
+        "row_cache_size_in_mb",
+        "row_cache_save_period",
+        "commitlog_sync_period_in_ms",
+        "commitlog_segment_size_in_mb",
+        "memtable_allocation_type",
+        "index_summary_resize_interval_in_minutes"
+      ]
+    },
+    "dse": {
+      "description": "dse.yaml configuration properties",
+      "type": "object",
+      "properties": {
+        "global_performance_service": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#GlobalPerformanceServiceoptions",
+          "description": "Global Performance Service options",
+          "type": "object",
+          "properties": {
+            "performance_max_threads": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__performance_max_threads",
+              "description": "Maximum number of background threads used by the performance service",
+              "type": "integer",
+              "default": 32
+            },
+            "performance_core_threads": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__performance_core_threads",
+              "description": "Number of background threads used by the performance service",
+              "type": "integer",
+              "default": 4
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "performance_max_threads",
+            "performance_core_threads"
+          ]
+        },
+        "max_memory_to_lock_fraction": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__max_memory_to_lock_fraction",
+          "description": "Specify a fraction of the system memory for DSE In-Memory",
+          "type": "number",
+          "default": 0.2
+        },
+        "max_memory_to_lock_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__max_memory_to_lock_mb",
+          "description": "A maximum amount of memory in megabytes (MB) to be locked",
+          "type": "integer"
+        },
+        "ttl_index_rebuild_options_fixed_rate_period": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__fix_rate_period",
+          "description": "Time interval to check for expired data in seconds",
+          "type": "integer",
+          "default": 300
+        },
+        "ttl_index_rebuild_options_initial_delay": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__initial_delay",
+          "description": "The number of seconds to delay the first TTL check to speed up start-up time",
+          "type": "integer",
+          "default": 20
+        },
+        "ttl_index_rebuild_options_max_docs_per_batch": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__max_docs_per_batch",
+          "description": "The maximum number of documents to check and delete per batch by the TTL rebuild thread",
+          "type": "integer",
+          "default": 200
+        },
+        "ttl_index_rebuild_options_thread_pool_size": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__thread_pool_size",
+          "description": "The maximum number of cores that can execute TTL cleanup concurrently",
+          "type": "integer",
+          "default": 1
+        },
+        "solr_resource_upload_limit_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr_resource_upload_limit_mb",
+          "description": "Option to disable or configure the maximum file size of the search index config or schema",
+          "type": "integer",
+          "default": 10
+        },
+        "shard_transport_options_netty_client_request_timeout": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__netty_client_request_timeout",
+          "description": "Timeout behavior during distributed queries. The internal timeout for all search queries to prevent long running queries",
+          "type": "integer",
+          "default": 60000
+        },
+        "back_pressure_threshold_per_core": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__back_pressure_threshold_per_core",
+          "description": "The maximum number of queued partitions during search index rebuilding and reindexing",
+          "type": "integer"
+        },
+        "flush_max_time_per_core": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__flush_max_time_per_core",
+          "description": "The maximum time, in minutes, to wait for the flushing of asynchronous index updates that occurs at DSE Search commit time or at flush time",
+          "type": "integer"
+        },
+        "load_max_time_per_core": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__load_max_time_per_core",
+          "description": "The maximum time, in minutes, to wait for each DSE Search index to load on startup or create/reload operations",
+          "type": "integer"
+        },
+        "enable_index_disk_failure_policy": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__enable_index_disk_failure_policy",
+          "description": "Check to enable applying the configured disk failure policy if IOExceptions occur during index update operations",
+          "type": "boolean"
+        },
+        "solr_data_dir": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr_data_dir",
+          "description": "Directory path to store DSE Search index data",
+          "type": "string"
+        },
+        "solr_field_cache_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr_field_cache_enabled",
+          "description": "Check to enable the DSE search field cache",
+          "type": "boolean"
+        },
+        "cql_solr_query_row_timeout": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__cql_solr_query_row_timeout",
+          "description": "The maximum time in milliseconds to wait for each row to be read from the database during CQL Solr queries",
+          "type": "integer"
+        },
+        "performance_max_threads": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__performance_max_threads",
+          "description": "Maximum number of background threads used by the performance service",
+          "type": "integer"
+        },
+        "graph_events_ttl_seconds": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__graph_ttl_seconds",
+          "description": "The time to live for graph events in milliseconds",
+          "type": "integer",
+          "default": 600
+        },
+        "cql_slow_log_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__graphEventsEnabled",
+          "description": "Enables (true) or disables (false) log entries for slow queries",
+          "type": "boolean",
+          "default": true
+        },
+        "cql_slow_log_options_threshold": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__cql-slow-log.threshold_ms",
+          "description": "The threshold for log entries of slow queries in milliseconds or as a percentile",
+          "type": "number",
+          "default": 2000
+        },
+        "cql_slow_log_options_minimum_samples": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__slow_log-min_samples",
+          "description": "The initial number of queries before activating the percentile filter",
+          "type": "integer",
+          "default": 100
+        },
+        "cql_slow_log_options_ttl_seconds": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__cql-slow-log.ttl_seconds",
+          "description": "Time, in milliseconds, to keep the slow query log entries",
+          "type": "integer",
+          "default": 259200
+        },
+        "cql_slow_log_options_skip_writing_to_db": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__cql_slow_log.skip_writing_to_db",
+          "description": "Whether to keep slow queries in-memory only and not write data to database",
+          "type": "boolean",
+          "default": true
+        },
+        "cql_slow_log_options_num_slowest_queries": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__cql_slow_log.num_slowest_queries",
+          "description": "The number of slow queries to keep in-memory",
+          "type": "integer",
+          "default": 5
+        },
+        "cql_system_info_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__cql_system_info.enabled",
+          "description": "Enable to collect system-wide performance information about a cluster",
+          "type": "boolean",
+          "default": false
+        },
+        "cql_system_info_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__cql_system_info.refresh_rate_ms",
+          "description": "The length of the sampling period in milliseconds; the frequency to update the statistics",
+          "type": "integer",
+          "default": 10000
+        },
+        "resource_level_latency_tracking_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__resourceLevelenabled",
+          "description": "Enable to collect object I/O performance statistics",
+          "type": "boolean",
+          "default": false
+        },
+        "resource_level_latency_tracking_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__resourceLevelenabled_refresh_rate_ms",
+          "description": "The length of the sampling period in milliseconds; the frequency to update the statistics",
+          "type": "integer",
+          "default": 10000
+        },
+        "db_summary_stats_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__db_summary_stats_options_enabled",
+          "description": "Enable to collect database summary performance information",
+          "type": "boolean",
+          "default": false
+        },
+        "db_summary_stats_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__refresh_rate_ms",
+          "description": "The length of the sampling period in milliseconds; the frequency to update the statistics",
+          "type": "integer",
+          "default": 10000
+        },
+        "cluster_summary_stats_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__cluster_summary_stats_options_enabled",
+          "description": "Enable to collect statistics at a cluster-wide level",
+          "type": "boolean",
+          "default": false
+        },
+        "cluster_summary_stats_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__cluster_summary_stats_options_refresh_rate_ms",
+          "description": "The length of the sampling period in milliseconds; the frequency to update the statistics",
+          "type": "integer",
+          "default": 10000
+        },
+        "spark_cluster_info_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__configDseYamlenabled-4JWrVcBh",
+          "description": "Enable to collect Spark performance statistics",
+          "type": "boolean",
+          "default": false
+        },
+        "spark_cluster_info_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__configDseYamlrefreshratems-FTDIykZD",
+          "description": "The length of the sampling period in milliseconds; the frequency to update the statistics",
+          "type": "integer",
+          "default": 10000
+        },
+        "spark_application_info_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__spark_application_info_options_enabled",
+          "description": "Enables or disables collecting Spark application information",
+          "type": "boolean",
+          "default": false
+        },
+        "spark_application_info_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__spark_application_info_options_refresh_rate_ms",
+          "description": "The time in milliseconds in which the data will be collected and stored",
+          "type": "integer",
+          "default": 10000
+        },
+        "spark_application_info_options_driver_sink": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__executor_sink",
+          "description": "Enables or disables collecting metrics from the Spark Driver",
+          "type": "boolean",
+          "default": false
+        },
+        "spark_application_info_options_driver_connector_source": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__driver_connectorSource",
+          "description": "Enables or disables collecting Spark Cassandra Connector metrics",
+          "type": "boolean",
+          "default": false
+        },
+        "spark_application_info_options_driver_jvm_source": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__driver_jvmSource",
+          "description": "Enables or disables collecting JVM heap and garbage collection metrics from the Spark Driver",
+          "type": "boolean",
+          "default": false
+        },
+        "spark_application_info_options_driver_state_source": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__driver_stateSource",
+          "description": "Enables or disables collecting application state metrics",
+          "type": "boolean",
+          "default": false
+        },
+        "spark_application_info_options_executor_sink": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__executor_sink",
+          "description": "Enables or disables collecting Spark executor metrics",
+          "type": "boolean",
+          "default": false
+        },
+        "spark_application_info_options_executor_connector_source": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__executor_connectorSource",
+          "description": "Enables or disables collecting Spark Cassandra Connector metrics from the Spark executors",
+          "type": "boolean",
+          "default": false
+        },
+        "spark_application_info_options_executor_jvm_source": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__executor_jvmSource",
+          "description": "Enables or disables collecting JVM heap or garbage collection metrics from the Spark executors",
+          "type": "boolean",
+          "default": false
+        },
+        "histogram_data_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__histogram_data_options_enabled",
+          "description": "Enable the collection of histogram metrics data using the DataStax Enterprise Performance Service",
+          "type": "boolean",
+          "default": false
+        },
+        "histogram_data_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__histogram_data_options_refresh",
+          "description": "The length of the sampling period in milliseconds; the frequency to update the statistics",
+          "type": "integer",
+          "default": 10000
+        },
+        "histogram_data_options_retention_count": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__histogram-data-options",
+          "description": "Count to control the number of complete histograms kept in the tables at any one time",
+          "type": "integer",
+          "default": 10000
+        },
+        "user_level_latency_tracking_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__user_level_latency_tracking_options_enabled",
+          "description": "To enable collecting user activity diagnostics using the DSE Performance Service",
+          "type": "boolean",
+          "default": false
+        },
+        "user_level_latency_tracking_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__user_level_latency_tracking_options_refresh_rate_ms",
+          "description": "The length of the sampling period in milliseconds; the frequency to update the statistics.",
+          "type": "integer",
+          "default": 10000
+        },
+        "user_level_latency_tracking_options_top_stats_limit": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__top_stats_limit",
+          "description": "Change to limit the number of individual metrics",
+          "type": "integer",
+          "default": 100
+        },
+        "user_level_latency_tracking_options_quantiles": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__quantiles",
+          "type": "boolean",
+          "default": false
+        },
+        "solr_slow_sub_query_log_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr_slow_sub_query_log_options_enabled",
+          "description": "Enable to identify slow search queries using the DataStax Enterprise Performance Service",
+          "type": "boolean",
+          "default": false
+        },
+        "solr_slow_sub_query_log_options_ttl_seconds": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr-slow-sub-query-log-options_ttl_seconds",
+          "description": "Duration for how many seconds a record survives before it is expired from the performance object",
+          "type": "integer",
+          "default": 604800
+        },
+        "solr_slow_sub_query_log_options_async_writers": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr-slow-sub-query-log-options_ttl_seconds",
+          "description": "The number of server threads dedicated to writing in the log",
+          "type": "integer",
+          "default": 1
+        },
+        "solr_slow_sub_query_log_options_threshold_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr-slow-sub-query-log-options_ttl_seconds",
+          "description": "Duration for the slow log, the level (in milliseconds) at which a sub-query slow enough to be reported",
+          "type": "integer",
+          "default": 3000
+        },
+        "solr_update_handler_metrics_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr-update-handler-metrics_options_enabled",
+          "description": "Enables collection of handler statistics metrics",
+          "type": "boolean",
+          "default": false
+        },
+        "solr_update_handler_metrics_options_ttl_seconds": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr-update-handler-metrics_option_ttl_seconds",
+          "description": "Duration for how many seconds a record survives before it is expired from the performance object",
+          "type": "integer",
+          "default": 604800
+        },
+        "solr_update_handler_metrics_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr-update-handler-metrics_option_refresh_rate_ms",
+          "description": "Period (in milliseconds) between sample recordings for periodically updating Solr update handler metrics statistics",
+          "type": "integer",
+          "default": 60000
+        },
+        "solr_request_handler_metrics_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/mgmtServices/searchPerformance/collectingRequestHandlerStatistics.html",
+          "description": "Enables to record core-specific direct and request update handler statistics over time",
+          "type": "boolean",
+          "default": false
+        },
+        "solr_request_handler_metrics_options_ttl_seconds": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/mgmtServices/searchPerformance/collectingRequestHandlerStatistics.html",
+          "description": "Duration for how many seconds a record survives before it is expired from the performance object",
+          "type": "integer",
+          "default": 604800
+        },
+        "solr_request_handler_metrics_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/mgmtServices/searchPerformance/collectingRequestHandlerStatistics.html",
+          "description": "Period (in milliseconds) between sample recordings for periodically updating Solr request handler metrics statistics",
+          "type": "integer",
+          "default": 60000
+        },
+        "solr_index_stats_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr_index_stats_options_enabled",
+          "description": "Enables object records search index statistics over time",
+          "type": "boolean",
+          "default": false
+        },
+        "solr_index_stats_options_ttl_seconds": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr_index_stats_options_ttl_seconds",
+          "description": "Duration for how many seconds a record survives before it is expired from the performance object",
+          "type": "integer",
+          "default": 604800
+        },
+        "solr_index_stats_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr-index-stats-options_refresh_rate_ms",
+          "description": "Period (in milliseconds) between sample recordings for periodically updating Solr index metrics statistics",
+          "type": "integer",
+          "default": 60000
+        },
+        "solr_cache_stats_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr-cache-stats-options_enabled",
+          "description": "Enables object records current and cumulative cache statistics",
+          "type": "boolean",
+          "default": false
+        },
+        "solr_cache_stats_options_ttl_seconds": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr_cache_stats_options_ttl_seconds",
+          "description": "Duration for how many seconds a record survives before it is expired from the performance object",
+          "type": "integer",
+          "default": 604800
+        },
+        "solr_cache_stats_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr_cache_stats_options_refresh_rate_ms",
+          "description": "Period (in milliseconds) between sample recordings for periodically updating Solr cache metrics statistics",
+          "type": "integer",
+          "default": 60000
+        },
+        "solr_latency_snapshot_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr_latency_snapshot_options_enabled",
+          "description": "Enables the performance service to create the required tables and schedules the job to periodically update the relevant snapshot from the specified data source",
+          "type": "boolean",
+          "default": false
+        },
+        "solr_latency_snapshot_options_ttl_seconds": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr_latency_snapshot_options_ttl_seconds",
+          "description": "Duration for how many seconds a record survives before it is expired from the performance object",
+          "type": "integer",
+          "default": 604800
+        },
+        "solr_latency_snapshot_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__solr_latency_snapshot_options_refresh_rate_ms",
+          "description": "Period (in milliseconds) between sample recordings for periodically updating Solr latency snapshot metrics statistics",
+          "type": "integer",
+          "default": 60000
+        },
+        "node_health_options_refresh_rate_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__node-health-refresh_rate_ms",
+          "description": "Period (in milliseconds) between sample recordings for periodically updating Node Health metrics statistics",
+          "type": "integer",
+          "default": 60000
+        },
+        "node_health_options_uptime_ramp_up_period_seconds": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__uptime_ramp_up_period_seconds",
+          "description": "Amount of continuous uptime required for the node's uptime score to advance the node health score from 0 to 1 (full health), assuming there are no recent dropped mutations",
+          "type": "integer",
+          "default": 86400
+        },
+        "node_health_options_dropped_mutation_window_minutes": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__dropped_mutation_window_minutes",
+          "description": "The historic time window over which the rate of dropped mutations affect the node health score",
+          "type": "integer",
+          "default": 30
+        },
+        "enable_health_based_routing": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__enable_health_based_routing",
+          "description": "Health-based routing enables a trade-off between index consistency and query throughput",
+          "type": "boolean",
+          "default": true
+        },
+        "async_bootstrap_reindex": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__async_bootstrap_reindex",
+          "description": "Configure whether to asynchronously reindex bootstrapped data for DSE Search service",
+          "type": "boolean",
+          "default": false
+        },
+        "lease_metrics_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__leaseMetricsEnabled",
+          "description": "Enables (true) or disables (false) log entries related to lease holders",
+          "type": "boolean",
+          "default": false
+        },
+        "lease_metrics_options_ttl_seconds": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__ttl_seconds",
+          "description": "Defines the time, in milliseconds, to persist the log of lease holder changes",
+          "type": "integer",
+          "default": 604800
+        },
+        "config_encryption_active": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__config-encryption-active",
+          "description": "Enables decryption of configuration property values using the specified config_encryption_key_name",
+          "type": "boolean",
+          "default": false
+        },
+        "spark_shared_secret_bit_length": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__spark_shared_secret_bit_length",
+          "description": "The length of a shared secret used to authenticate Spark components and encrypt the connections between them",
+          "type": "integer",
+          "default": 256
+        },
+        "spark_security_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__spark_security_enabled",
+          "description": "Enables Spark security based on shared secret infrastructure",
+          "type": "boolean",
+          "default": false
+        },
+        "spark_security_encryption_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__spark_security_encryption_enabled",
+          "description": "Enables encryption between DSE Spark Master and Workers, and of communication channels, except the web UI",
+          "type": "boolean",
+          "default": false
+        },
+        "spark_daemon_readiness_assertion_interval": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__spark_daemon_readiness_assertion_interval",
+          "description": "Time interval, in milliseconds, between subsequent retries by the Spark plugin for Spark Master and Worker readiness to start",
+          "type": "integer"
+        },
+        "spark_worker_log_dir": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/spark/sparkLogging.html?hl=spark_worker_log_dir#sparkLogging__log-directories-zcLiuSeE",
+          "description": "The Spark logging directory is the directory where the Spark components store individual log files",
+          "type": "string",
+          "default": "log-data/spark/worker"
+        },
+        "spark_master_log_dir": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/spark/sparkLogging.html?hl=spark_worker_log_dir#sparkLogging__log-directories-zcLiuSeE",
+          "description": "The Spark logging directory is the directory where the Spark components store individual log files",
+          "type": "string",
+          "default": "log-data/spark/master"
+        },
+        "spark_local_dirs": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/spark/sparkLogging.html?hl=spark_worker_log_dir#sparkLogging__log-directories-zcLiuSeE",
+          "description": "The Spark local directory is the directory where the Spark's temporary components are stored",
+          "type": "string",
+          "default": "dse-data/data/spark/rdd"
+        },
+        "spark_worker_dir": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/spark/sparkLogging.html?hl=spark_worker_log_dir#sparkLogging__log-directories-zcLiuSeE",
+          "description": "The Spark worker directory is the directory where the Spark's working components are stored",
+          "type": "string",
+          "default": "dse-data/data/spark/worker"
+        },
+        "alwayson_sql_log_dir": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/spark/alwaysOnSql.html#alwaysOnSql__alwaysOnSqlConfiguring",
+          "description": "The AlwaysOn SQL Service logging directory is the directory where the AlwaysOn SQL service store log files",
+          "type": "string",
+          "default": "log-data/spark/alwayson_sql"
+        },
+        "spark_executor_dirs": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/spark/sparkConfiguration.html?hl=spark_executor_dir#sparkConfiguration__sparkDir",
+          "description": "Spark Executor(RDD) directory is the directory where RDDs are placed when executors decide to spill them to disk",
+          "type": "string",
+          "default": "dse-data/data/spark/rdd"
+        },
+        "spark_driver_memory": {
+          "type": "string",
+          "default": "1024M"
+        },
+        "spark_history_fs_cleaner_enabled": {
+          "type": "boolean"
+        },
+        "spark_history_fs_cleaner_interval": {
+          "type": "string"
+        },
+        "spark_history_fs_cleaner_maxage": {
+          "type": "string"
+        },
+        "spark_executor_logs_rolling_maxretainedfiles": {
+          "type": "integer"
+        },
+        "spark_executor_logs_rolling_strategy": {
+          "type": "string"
+        },
+        "spark_executor_logs_rolling_maxsize": {
+          "type": "integer"
+        },
+        "spark_network_crypto_enabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "spark_network_crypto_saslfallback": {
+          "type": "boolean",
+          "default": false
+        },
+        "spark_dseshuffle_sasl_port": {
+          "type": "integer",
+          "default": 7447
+        },
+        "spark_dseshuffle_nosasl_port": {
+          "type": "integer",
+          "default": 7437
+        },
+        "spark_master_rest_enabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "spark_task_maxfailures": {
+          "type": "integer",
+          "default": 10
+        },
+        "spark_dse_configuration_fetch_retries": {
+          "type": "integer",
+          "default": 2
+        },
+        "spark_authenticate": {
+          "type": "boolean",
+          "default": false
+        },
+        "spark_authenticate_secretbitlength": {
+          "type": "integer",
+          "default": 256
+        },
+        "spark_authenticate_enablesaslencryption": {
+          "type": "boolean",
+          "default": false
+        },
+        "spark_network_sasl_serveralwaysencrypt": {
+          "type": "boolean",
+          "default": true
+        },
+        "resource_manager_options_worker_options_cores_total": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__spark_cores_total",
+          "description": "The number of total system cores available to Spark",
+          "type": "number",
+          "default": 0.7
+        },
+        "resource_manager_options_worker_options_memory_total": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__spark_memory_total",
+          "description": "The amount of total system memory available to Spark",
+          "type": "number",
+          "default": 0.6
+        },
+        "resource_manager_options_workpools_name": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__spark_workpool_name",
+          "description": "The name of the resource manager work pool",
+          "type": "string",
+          "default": "alwayson_sql"
+        },
+        "resource_manager_options_workpools_cores": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__spark_workpool_cores",
+          "description": "The number of system cores to use in this work pool expressed as either an absolute value or a decimal value",
+          "type": "number",
+          "default": 0.25
+        },
+        "resource_manager_options_workpools_memory": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__spark_workpool_memory",
+          "description": "The amount of memory to use in this work pool expressed as either an absolute value or a decimal value",
+          "type": "number",
+          "default": 0.25
+        },
+        "alwayson_sql_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__enabled",
+          "description": "Check to enable AlwaysOn SQL Service for this node",
+          "type": "boolean",
+          "default": false
+        },
+        "alwayson_sql_options_thrift_port": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__thrift_port",
+          "description": "The Thrift port on which AlwaysOn SQL Service listens",
+          "type": "integer",
+          "default": 10000
+        },
+        "alwayson_sql_options_webui_port": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__web_ui_port",
+          "description": "The port on which the AlwaysOn SQL Service web UI is available",
+          "type": "integer",
+          "default": 9077
+        },
+        "alwayson_sql_options_reserve_port_wait_time_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__reserve_port_wait_time_ms",
+          "description": "The wait time in milliseconds to reserve the thrift_port if it is not available",
+          "type": "integer",
+          "default": 100
+        },
+        "alwayson_sql_status_check_wait_time_ms": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__alwayson_sql_status_check_wait_time_ms",
+          "description": "The time in milliseconds to wait for a health check status of the AlwaysOn SQL Service server",
+          "type": "integer",
+          "default": 500
+        },
+        "alwayson_sql_options_workpool": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__workpool",
+          "description": "The work pool name used by AlwaysOn SQL Service ",
+          "type": "string",
+          "default": "alwayson_sql"
+        },
+        "alwayson_sql_options_log_dsefs_dir": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__log_dsefs_dir",
+          "description": "Location in DSEFS of the AlwaysOn SQL Service log files",
+          "type": "string",
+          "default": "/log-data/spark/alwayson_sql_dsefs"
+        },
+        "alwayson_sql_options_auth_user": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__auth_user",
+          "description": "The role to use for internal communication by AlwaysOn SQL Service if authentication is enabled",
+          "type": "string",
+          "default": "alwayson_sql"
+        },
+        "alwayson_sql_options_runner_max_errors": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__runner_max_errors",
+          "description": "The maximum number of errors that can occur during AlwaysOn SQL Service runner thread runs before stopping the service",
+          "type": "integer",
+          "default": 10
+        },
+        "audit_logging_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__audit_logging_options_enabled",
+          "description": "Enable to configure database activity logging",
+          "type": "boolean",
+          "default": false
+        },
+        "audit_logging_options_logger": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__logger",
+          "description": "The logger to use for recording events",
+          "type": "string",
+          "default": "SLF4JAuditWriter"
+        },
+        "audit_logging_options_included_categories": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__included_categories",
+          "description": "Comma separated list of event categories that are captured",
+          "type": "string"
+        },
+        "audit_logging_options_excluded_categories": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__excluded_categories",
+          "description": "Comma separated list of categories to ignore",
+          "type": "string"
+        },
+        "audit_logging_options_included_keyspaces": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__included_keyspaces",
+          "description": "Specify keyspace names in a comma separated list for which events are logged",
+          "type": "string"
+        },
+        "audit_logging_options_excluded_keyspaces": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__excluded_keyspaces",
+          "description": "Specify a comma separated list for all keyspaces not be listed for log events",
+          "type": "string"
+        },
+        "audit_logging_options_included_roles": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__included_roles",
+          "description": "The roles for which events are logged",
+          "type": "string"
+        },
+        "audit_logging_options_excluded_roles": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__excluded_roles",
+          "description": "The roles for which events are not logged",
+          "type": "string"
+        },
+        "audit_logging_options_retention_time": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__retention_time",
+          "description": "The amount of time, in hours, audit events are retained by supporting loggers",
+          "type": "integer",
+          "default": 0
+        },
+        "audit_logging_options_cassandra_audit_writer_options_mode": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__mode_Caudit",
+          "description": "The mode in which Cassandra audit writer runs in",
+          "type": "string",
+          "default": "sync"
+        },
+        "audit_logging_options_cassandra_audit_writer_options_batch_size": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__batch_size_Caudit",
+          "description": "The maximum number of events the writer dequeues before writing them out to the table",
+          "type": "integer",
+          "default": 50
+        },
+        "audit_logging_options_cassandra_audit_writer_options_flush_time": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__flush_time_Caudit",
+          "description": "The maximum amount of time in milliseconds before an event is removed from the queue by a writer before being written out",
+          "type": "integer",
+          "default": 250
+        },
+        "audit_logging_options_cassandra_audit_writer_options_queue_size": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__queue_size_Caudit",
+          "description": "The size of the queue feeding the asynchronous audit log writer threads",
+          "type": "integer",
+          "default": 30000
+        },
+        "audit_logging_options_cassandra_audit_writer_options_write_consistency": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__write_consistency_Caudit",
+          "description": "The consistency level that is used to write audit events",
+          "type": "string",
+          "default": "QUORUM"
+        },
+        "audit_logging_options_cassandra_audit_writer_options_dropped_event_log": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__dropped_event_log_Caudit",
+          "description": "The directory to store the log file that reports dropped events",
+          "type": "string"
+        },
+        "audit_logging_options_cassandra_audit_writer_options_day_partition_millis": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__day_partition_millis_Caudit",
+          "description": "The interval, in milliseconds, between changing nodes to spread audit log information across multiple nodes",
+          "type": "integer"
+        },
+        "hive_options_insert_max_retries": {
+          "type": "integer",
+          "default": 6
+        },
+        "hive_options_insert_retry_sleep_period": {
+          "type": "integer",
+          "default": 50
+        },
+        "cql_solr_query_paging": {
+          "type": "string",
+          "default": "off"
+        },
+        "internode_messaging_options_frame_length_in_mb": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__frame_length_in_mb",
+          "description": "Maximum internode message frame length",
+          "type": "integer"
+        },
+        "internode_messaging_options_server_acceptor_threads": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__server_acceptor_threads",
+          "description": "The number of server acceptor threads",
+          "type": "integer"
+        },
+        "internode_messaging_options_server_worker_threads": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__server_worker_threads",
+          "description": "The number of server worker threads",
+          "type": "integer"
+        },
+        "internode_messaging_options_client_max_connections": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__client_max_connections",
+          "description": "The maximum number of client connections",
+          "type": "integer"
+        },
+        "internode_messaging_options_client_worker_threads": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__client_worker_threads",
+          "description": "The number of client worker threads",
+          "type": "integer"
+        },
+        "internode_messaging_options_handshake_timeout_seconds": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__handshake_timeout_seconds",
+          "description": "Timeout for communication handshake process",
+          "type": "integer"
+        },
+        "internode_messaging_options_client_request_timeout_seconds": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__client_request_timeout_seconds",
+          "description": "Timeout for non-query search requests like core creation and distributed deletes",
+          "type": "integer"
+        },
+        "graph_adjacency_cache_clean_rate": {
+          "type": "integer",
+          "default": 1024
+        },
+        "graph_adjacency_cache_max_entry_size_in_mb": {
+          "type": "integer",
+          "default": 0
+        },
+        "graph_adjacency_cache_size_in_mb": {
+          "type": "integer",
+          "default": 128
+        },
+        "graph_analytic_evaluation_timeout_in_minutes": {
+          "type": "integer",
+          "default": 10080
+        },
+        "graph_gremlin_server_enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "graph_index_cache_clean_rate": {
+          "type": "integer",
+          "default": 1024
+        },
+        "graph_index_cache_max_entry_size_in_mb": {
+          "type": "integer",
+          "default": 0
+        },
+        "graph_index_cache_size_in_mb": {
+          "type": "integer",
+          "default": 128
+        },
+        "graph_max_query_queue": {
+          "type": "integer",
+          "default": 10000
+        },
+        "graph_realtime_evaluation_timeout_in_seconds": {
+          "type": "integer",
+          "default": 30
+        },
+        "graph_schema_agreement_timeout_in_ms": {
+          "type": "integer",
+          "default": 10000
+        },
+        "graph_schema_mode": {
+          "type": "string",
+          "default": "Production"
+        },
+        "graph_system_evaluation_timeout_in_seconds": {
+          "type": "integer",
+          "default": 180
+        },
+        "graph_window_size": {
+          "type": "integer",
+          "default": 100000
+        },
+        "graph_max_query_params": {
+          "type": "integer",
+          "default": 16
+        },
+        "graph_ids_block_renew": {
+          "type": "number",
+          "default": 0.8
+        },
+        "graph_ids_community_reuse": {
+          "type": "integer",
+          "default": 28
+        },
+        "graph_ids_id_hash_modulus": {
+          "type": "integer",
+          "default": 20
+        },
+        "graph_ids_member_block_size": {
+          "type": "integer",
+          "default": 512
+        },
+        "graph_msg_graph_msg_timeout_in_ms": {
+          "type": "integer",
+          "default": 5000
+        },
+        "graph_shared_data_refresh_interval_in_ms": {
+          "type": "integer",
+          "default": 60000
+        },
+        "graph_gremlin_server_threadPoolWorker": {
+          "type": "integer",
+          "default": 2
+        },
+        "graph_gremlin_server_gremlinPool": {
+          "type": "integer",
+          "default": 8
+        },
+        "dsefs_enabled": {
+          "description": "Enable/Disable DSE File System",
+          "type": "boolean",
+          "default": false
+        },
+        "dsefs_data_disk_type": {
+          "description": "DSE FS persistent disk type [ROOT, MOUNT]",
+          "type": "string",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "dsefs_volume_profile": {
+          "type": "string",
+          "description": "Volume profile to be used for storing DSEFS data"
+        },
+        "dsefs_disk": {
+          "description": "DSE File System size in MB",
+          "type": "integer",
+          "default": 10
+        },
+        "dsefs_keyspace_name": {
+          "type": "string",
+          "default": "dsefs"
+        },
+        "dsefs_public_port": {
+          "type": "integer",
+          "default": 5598
+        },
+        "dsefs_private_port": {
+          "type": "integer",
+          "default": 5599
+        },
+        "dsefs_data_directories_storage_weight": {
+          "type": "number",
+          "default": 1
+        },
+        "dsefs_data_directories_min_free_space": {
+          "type": "string",
+          "default": "2147483648"
+        },
+        "dsefs_service_startup_timeout_ms": {
+          "type": "string",
+          "default": "30000"
+        },
+        "dsefs_service_close_timeout_ms": {
+          "type": "string",
+          "default": "600000"
+        },
+        "dsefs_server_close_timeout_ms": {
+          "type": "string",
+          "default": "2147483647"
+        },
+        "dsefs_compression_frame_max_size": {
+          "type": "string",
+          "default": "1048576"
+        },
+        "dsefs_query_cache_size": {
+          "type": "string",
+          "default": "2048"
+        },
+        "dsefs_query_cache_expire_after_ms": {
+          "type": "string",
+          "default": "2000"
+        },
+        "dsefs_gossip_round_delay_ms": {
+          "type": "string",
+          "default": "2000"
+        },
+        "dsefs_gossip_startup_delay_ms": {
+          "type": "string",
+          "default": "5000"
+        },
+        "dsefs_gossip_shutdown_delay_ms": {
+          "type": "string",
+          "default": "10000"
+        },
+        "dsefs_rest_request_timeout_ms": {
+          "type": "string",
+          "default": "330000"
+        },
+        "dsefs_rest_connection_open_timeout_ms": {
+          "type": "string",
+          "default": "55000"
+        },
+        "dsefs_rest_client_close_timeout_ms": {
+          "type": "string",
+          "default": "60000"
+        },
+        "dsefs_rest_server_request_timeout_ms": {
+          "type": "string",
+          "default": "300000"
+        },
+        "dsefs_rest_idle_connection_timeout_ms": {
+          "type": "string",
+          "default": "0"
+        },
+        "dsefs_transaction_transaction_timeout_ms": {
+          "type": "string",
+          "default": "60000"
+        },
+        "dsefs_transaction_conflict_retry_delay_ms": {
+          "type": "string",
+          "default": "10"
+        },
+        "dsefs_transaction_conflict_retry_count": {
+          "type": "integer",
+          "default": 40
+        },
+        "dsefs_transaction_execution_retry_delay_ms": {
+          "type": "string",
+          "default": "1000"
+        },
+        "dsefs_transaction_execution_retry_count": {
+          "type": "integer",
+          "default": 3
+        },
+        "dsefs_block_allocator_overflow_margin_mb": {
+          "type": "integer",
+          "default": 1024
+        },
+        "dsefs_block_allocator_overflow_factor": {
+          "type": "number",
+          "default": 1.05
+        },
+        "authentication_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__auth_Enabled",
+          "description": "Enables user authentication",
+          "type": "boolean",
+          "default": false
+        },
+        "authentication_options_default_scheme": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__default_scheme",
+          "description": "Sets the first scheme to validate a user against when the driver does not request a specific scheme",
+          "type": "string",
+          "enum": [
+            "internal",
+            "ldap",
+            "kerberos"
+          ],
+          "default": "internal"
+        },
+        "authentication_options_other_schemes": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__other_schemes",
+          "description": "List of schemes that are also checked if validation against the first scheme fails and no scheme was specified by the driver",
+          "type": "string",
+          "enum": [
+            "internal",
+            "ldap",
+            ""
+          ],
+          "default": ""
+        },
+        "authentication_options_scheme_permissions": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__scheme_permissions",
+          "description": "Whether roles need to have permission granted to them in order to use specific authentication schemes",
+          "type": "boolean",
+          "default": true
+        },
+        "authentication_options_allow_digest_with_kerberos": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__allow_digest_with_kerberos",
+          "description": "Allow Kerberos digest-md5 authentication",
+          "type": "boolean",
+          "default": true
+        },
+        "authentication_options_plain_text_without_ssl": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__plain_text_without_ssl",
+          "description": "Controls how the DseAuthenticator responds to plain text authentication requests over unencrypted client connections",
+          "type": "string",
+          "enum": [
+            "block",
+            "warn",
+            "allow"
+          ],
+          "default": "warn"
+        },
+        "authentication_options_transitional_mode": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__transitional_mode",
+          "description": "Whether to enable transitional mode for temporary use during authentication setup in an already established environment",
+          "type": "string",
+          "enum": [
+            "disabled",
+            "permissive",
+            "normal",
+            "strict"
+          ],
+          "default": "disabled"
+        },
+        "role_management_options_mode": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__role_management_options",
+          "description": "Configure the DSE Role Manager by uncommenting role_management_options and setting the mode",
+          "type": "string",
+          "enum": [
+            "internal",
+            "ldap"
+          ],
+          "default": "internal"
+        },
+        "authorization_options_enabled": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__auth_enabled",
+          "description": "Enable to use the DSE Authorizer for role-based access control (RBAC)",
+          "type": "boolean",
+          "default": false
+        },
+        "authorization_options_transitional_mode": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__auth_transitional_mode",
+          "description": "Allows the DSE Authorizer to operate in a temporary transitional mode during setup of authorization in a cluster",
+          "type": "string",
+          "enum": [
+            "disabled",
+            "normal",
+            "strict"
+          ],
+          "default": "disabled"
+        },
+        "authorization_options_allow_row_level_security": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__allow_row_level_security",
+          "description": "Whether to enable row-level access control (RLAC) permissions",
+          "type": "boolean",
+          "default": false
+        },
+        "ldap": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__ldap_options_section",
+          "description": "LDAP Configuration",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__ldap_options_section",
+              "description": "Enable LDAP",
+              "type": "boolean",
+              "default": false
+            },
+            "server_host": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__server_host",
+              "description": "Hostname of LDAP server",
+              "type": "string",
+              "default": "localhost"
+            },
+            "server_port": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__server_port",
+              "description": "Port of LDAP server",
+              "type": "integer",
+              "default": 389
+            },
+            "search_dn": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__search_dn",
+              "description": "Distinguished name (DN) of an account with read access to the user_search_base and group_search_base",
+              "type": "string"
+            },
+            "search_password": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__search_password",
+              "description": "The password of the search_dn account",
+              "type": "string"
+            },
+            "use_ssl": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__use_ssl",
+              "description": "Enable to use an SSL-encrypted connection",
+              "type": "boolean",
+              "default": false
+            },
+            "use_tls": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__use_tls",
+              "description": "Whether to enable TLS connections to the LDAP server",
+              "type": "boolean",
+              "default": false
+            },
+            "truststore_type": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__ldap_truststore_type",
+              "description": "The type of truststore",
+              "type": "string",
+              "default": "jks"
+            },
+            "user_search_base": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__user_search_base",
+              "description": "Distinguished name (DN) of the object to start the recursive search for user entries for authentication and role management memberof searches",
+              "type": "string"
+            },
+            "user_search_filter": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__usersearch-filter",
+              "description": "Attribute that identifies the user that the search filter uses for looking up user names",
+              "type": "string",
+              "default": "(uid={0})"
+            },
+            "user_memberof_attribute": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__user_memberof_attributePL",
+              "description": "Attribute that contains a list of group names; role manager assigns DSE roles that exactly match any group name in the list",
+              "type": "string"
+            },
+            "group_search_type": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_search_typePL",
+              "description": "Required when managing roles with LDAP. Define how group membership is determined for a user",
+              "type": "string",
+              "enum": [
+                "directory_search",
+                "memberof_search"
+              ],
+              "default": "directory_search"
+            },
+            "group_search_base": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_search_basePL",
+              "description": "The unique distinguished name (DN) of the group record from which to start the group membership search on",
+              "type": "string"
+            },
+            "group_search_filter": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_search_filterPL",
+              "description": "Set to any valid LDAP filter for group search",
+              "type": "string",
+              "default": "(uniquemember={0})"
+            },
+            "group_name_attribute": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__group_name_attributePL",
+              "description": "The attribute in the group record that contains the LDAP group name",
+              "type": "string"
+            },
+            "credentials_validity_in_ms": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__credentials_validity_in_ms",
+              "type": "integer",
+              "default": 0
+            },
+            "search_validity_in_seconds": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__search_validity_in_seconds",
+              "type": "integer",
+              "default": 0
+            },
+            "connection_pool_max_active": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__max_active",
+              "description": "The maximum number of active connections to the LDAP server",
+              "type": "integer",
+              "default": 8
+            },
+            "connection_pool_max_idle": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__max_idle",
+              "description": "The maximum number of idle connections in the pool awaiting requests",
+              "type": "integer",
+              "default": 8
+            }
+          },
+          "additionalProperties": false
+        },
+        "advanced_replication": {
+          "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__advanced_replication_options",
+          "type": "object",
+          "description": "Advanced Replication Configuration",
+          "properties": {
+            "enabled": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__advanced_replication_options_enabled",
+              "type": "boolean",
+              "description": "Enable Advanced Replication",
+              "default": false
+            },
+            "conf_driver_pwd_encryption_enabled": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__conf_driver_password_encryption_enabled",
+              "type": "boolean",
+              "description": "Set enabled:true on an edge node to collect data in the replication log. Default: false",
+              "default": false
+            },
+            "security_base_path": {
+              "id": "https://docs.datastax.com/en/dse/6.7/dse-admin/datastax_enterprise/config/configDseYaml.html#configDseYaml__security_base_path",
+              "type": "string",
+              "description": "The base path to prepend to paths in the Advanced Replication configuration locations, including locations to SSL keystore, SSL truststore, and so on",
+              "default": ""
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "global_performance_service",
+        "max_memory_to_lock_fraction",
+        "dsefs_data_disk_type",
+        "dsefs_disk"
+      ]
+    },
+    "opscenter": {
+      "description": "OpsCenter configuration properties",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "title": "Enable DataStax OpsCenter",
+          "description": "Enable DataStax OpsCenter",
+          "type": "boolean",
+          "default": true
+        },
+        "host": {
+          "title": "OpsCenter Host Name",
+          "description": "Hostname of the opscenter instance to connect to",
+          "type": "string",
+          "default": "opscenter-0-node.datastax-ops.autoip.dcos.thisdcos.directory"
+        },
+        "stomp_port": {
+          "title": "Stomp port",
+          "description": "Port used for DSE agents to reach OpsCenter",
+          "type": "integer",
+          "default": 31620
+        },
+        "gui_port": {
+          "title": "OpsCenter GUI port",
+          "description": "OpsCenter GUI port",
+          "type": "integer",
+          "default": 8888
+        },
+        "agent_restart_delay_seconds": {
+          "title": "DataStax Agent restart delay in seconds",
+          "description": "DataStax Agent restart delay in seconds",
+          "type": "integer",
+          "default": 60
+        },
+        "poll_period": {
+          "id": "https://docs.datastax.com/en/opscenter/6.5/opsc/configure/agentAddressConfiguration.html#agentAddressConfiguration__poll_period",
+          "description": "The length of time, specified in seconds, between attempts to poll metrics",
+          "type": "integer"
+        },
+        "disk_usage_update_period": {
+          "id": "https://docs.datastax.com/en/opscenter/6.5/opsc/configure/agentAddressConfiguration.html#agentAddressConfiguration__disk_usage_update_period",
+          "description": "The length of time, in seconds, to wait between attempts to poll the disk for usage",
+          "type": "integer"
+        },
+        "rollup_rate": {
+          "id": "https://docs.datastax.com/en/opscenter/6.5/opsc/configure/agentAddressConfiguration.html#agentAddressConfiguration__rollup_rate",
+          "description": "Maximum number of metrics that can be saved to Cassandra over the [rollup_rate_unit] period of time",
+          "type": "integer",
+          "default": 200
+        },
+        "rollup_rate_unit": {
+          "id": "https://docs.datastax.com/en/opscenter/6.5/opsc/configure/agentAddressConfiguration.html#agentAddressConfiguration__rollup_rate_unit",
+          "description": "Unit of time for rollup_rate. Choose from microsecond, millisecond, second, minute, hour, day, or month",
+          "type": "string",
+          "enum": [
+            "microsecond",
+            "millisecond",
+            "second",
+            "minute",
+            "hour",
+            "day",
+            "month"
+          ],
+          "default": "second"
+        },
+        "jmx_queue_poll_timeout": {
+          "type": "integer",
+          "default": 10
+        },
+        "status_reporting_interval": {
+          "type": "integer"
+        },
+        "metrics_enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "jmx_metrics_threadpool_size": {
+          "type": "integer"
+        },
+        "metrics_ignored_keyspaces": {
+          "type": "string",
+          "default": ""
+        },
+        "metrics_ignored_column_families": {
+          "type": "string",
+          "default": ""
+        },
+        "metrtics_ignored_solr_cores": {
+          "type": "string",
+          "default": ""
+        },
+        "max_reconnect_time": {
+          "type": "integer"
+        },
+        "max_pending_repairs": {
+          "type": "integer"
+        },
+        "storage_keyspace": {
+          "type": "string",
+          "default": ""
+        },
+        "restore_req_update_period": {
+          "type": "integer",
+          "default": 60
+        },
+        "backup_staging_dir": {
+          "type": "string",
+          "default": ""
+        },
+        "tmp_dir": {
+          "type": "string",
+          "default": ""
+        },
+        "remote_backup_retries": {
+          "type": "integer",
+          "default": 3
+        },
+        "remote_backup_timeout": {
+          "type": "integer",
+          "default": 1000
+        },
+        "remote_backup_retry_delay": {
+          "type": "integer",
+          "default": 5000
+        },
+        "remote_verify_initial_delay": {
+          "type": "integer",
+          "default": 1000
+        },
+        "remote_verify_max": {
+          "type": "integer",
+          "default": 30000
+        },
+        "restore_on_transfer_failure": {
+          "type": "boolean",
+          "default": false
+        },
+        "backup_file_queue_max": {
+          "type": "integer",
+          "default": 10000
+        },
+        "remote_backup_region": {
+          "type": "string",
+          "default": "us-west-1"
+        },
+        "max_file_transfer_attempts": {
+          "type": "integer",
+          "default": 30
+        },
+        "sstableloader_max_heap_size": {
+          "type": "string",
+          "default": "256M"
+        },
+        "max_seconds_to_sleep": {
+          "type": "integer",
+          "default": 25
+        },
+        "read_buffer_size": {
+          "type": "integer"
+        },
+        "write_buffer_size": {
+          "type": "integer"
+        },
+        "unthrottled_default": {
+          "type": "string",
+          "default": "10000000000"
+        },
+        "trace_delay": {
+          "type": "integer",
+          "default": 300
+        },
+        "multipart_chunk_size": {
+          "type": "integer"
+        },
+        "support_shell_timeout": {
+          "type": "integer",
+          "default": 30
+        },
+        "graphite_host": {
+          "type": "string",
+          "default": ""
+        },
+        "graphite_port": {
+          "type": "integer"
+        },
+        "graphite_prefix": {
+          "type": "string",
+          "default": ""
+        },
+        "slow_query_past": {
+          "type": "string",
+          "default": "3600000"
+        },
+        "slow_query_refresh": {
+          "type": "integer",
+          "default": 5
+        },
+        "slow_query_fetch_size": {
+          "type": "integer",
+          "default": 500
+        },
+        "slow_query_ignore": {
+          "type": "string",
+          "default": ""
+        },
+        "running_request_cache_size": {
+          "type": "integer"
+        },
+        "finished_request_cache_size": {
+          "type": "integer"
+        },
+        "tcp_request_timeout": {
+          "type": "integer"
+        },
+        "pong_timeout_ms": {
+          "type": "integer"
+        },
+        "ssl_strict_subject_validation": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "stomp_port"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
