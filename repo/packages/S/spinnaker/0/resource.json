@@ -15,7 +15,7 @@
     "uris": {
       "jre-tar-gz": "https://downloads.mesosphere.com/java/jre-8u144-linux-x64.tar.gz",
       "libmesos-bundle-tar-gz": "https://downloads.mesosphere.io/libmesos-bundle/libmesos-bundle-1.10-1.4-63e0814.tar.gz",
-      "scheduler-zip": "https://mbgl-bucket.s3.amazonaws.com/spinnaker/assets/0.1.0-1.4.2/spinnaker-scheduler.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/spinnaker/assets/0.1.0-1.4.2/spinnaker-scheduler.zip",
       "executor-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.30.2/executor.zip",
       "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.30.2/bootstrap.zip"
     }
@@ -36,7 +36,7 @@
             }
           ],
           "kind": "executable",
-          "url": "https://mbgl-bucket.s3.amazonaws.com/spinnaker/assets/0.1.0-1.4.2/dcos-service-cli-darwin"
+          "url": "https://downloads.mesosphere.com/spinnaker/assets/0.1.0-1.4.2/dcos-service-cli-darwin"
         }
       },
       "linux": {
@@ -48,7 +48,7 @@
             }
           ],
           "kind": "executable",
-          "url": "https://mbgl-bucket.s3.amazonaws.com/spinnaker/assets/0.1.0-1.4.2/dcos-service-cli-linux"
+          "url": "https://downloads.mesosphere.com/spinnaker/assets/0.1.0-1.4.2/dcos-service-cli-linux"
         }
       },
       "windows": {
@@ -60,7 +60,7 @@
             }
           ],
           "kind": "executable",
-          "url": "https://mbgl-bucket.s3.amazonaws.com/spinnaker/assets/0.1.0-1.4.2/dcos-service-cli.exe"
+          "url": "https://downloads.mesosphere.com/spinnaker/assets/0.1.0-1.4.2/dcos-service-cli.exe"
         }
       }
     }
