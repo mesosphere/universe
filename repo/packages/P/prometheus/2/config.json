@@ -1,0 +1,198 @@
+{
+    "type": "object", 
+    "properties": {
+        "service": {
+            "type": "object", 
+            "description": "DC/OS service configuration properties", 
+            "properties": {
+                "name": {
+                    "description": "The name of the service instance", 
+                    "type": "string", 
+                    "default": "prometheus", 
+                    "title": "Service name"
+                }, 
+                "user": {
+                    "description": "The user that the service will run as.", 
+                    "type": "string", 
+                    "default": "nobody", 
+                    "title": "User"
+                }, 
+                "service_account": {
+                    "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "service_account_secret": {
+                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.", 
+                    "type": "string", 
+                    "default": "", 
+                    "title": "Credential secret name (optional)"
+                }, 
+                "virtual_network_enabled": {
+                    "description": "Enable virtual networking", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "virtual_network_name": {
+                    "description": "The name of the virtual network to join", 
+                    "type": "string", 
+                    "default": "dcos"
+                }, 
+                "virtual_network_plugin_labels": {
+                    "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "mesos_api_version": {
+                    "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)", 
+                    "type": "string", 
+                    "enum": [
+                        "V0", 
+                        "V1"
+                    ], 
+                    "default": "V1"
+                }, 
+                "log_level": {
+                    "description": "The log level for the DC/OS service.", 
+                    "type": "string", 
+                    "enum": [
+                        "OFF", 
+                        "FATAL", 
+                        "ERROR", 
+                        "WARN", 
+                        "INFO", 
+                        "DEBUG", 
+                        "TRACE", 
+                        "ALL"
+                    ], 
+                    "default": "INFO"
+                }
+            }, 
+            "required": [
+                "name", 
+                "user"
+            ]
+        }, 
+        "prometheus": {
+            "description": "Prometheus configuration properties", 
+            "type": "object", 
+            "properties": {
+                "config": {
+                    "title": "Prometheus yml config", 
+                    "description": "prometheus.yml config base64 encoded", 
+                    "type": "string", 
+                    "media": {
+                        "binaryEncoding": "base64", 
+                        "type": "application/x-yaml"
+                    }, 
+                    "default": "IyBteSBnbG9iYWwgY29uZmlnCmdsb2JhbDoKICBzY3JhcGVfaW50ZXJ2YWw6ICAgICAxNXMgIyBTZXQgdGhlIHNjcmFwZSBpbnRlcnZhbCB0byBldmVyeSAxNSBzZWNvbmRzLiBEZWZhdWx0IGlzIGV2ZXJ5IDEgbWludXRlLgogIGV2YWx1YXRpb25faW50ZXJ2YWw6IDE1cyAjIEV2YWx1YXRlIHJ1bGVzIGV2ZXJ5IDE1IHNlY29uZHMuIFRoZSBkZWZhdWx0IGlzIGV2ZXJ5IDEgbWludXRlLgogICMgc2NyYXBlX3RpbWVvdXQgaXMgc2V0IHRvIHRoZSBnbG9iYWwgZGVmYXVsdCAoMTBzKS4KCiMgQSBzY3JhcGUgY29uZmlndXJhdGlvbiBjb250YWluaW5nIGV4YWN0bHkgb25lIGVuZHBvaW50IHRvIHNjcmFwZToKIyBIZXJlIGl0J3MgUHJvbWV0aGV1cyBpdHNlbGYuCnNjcmFwZV9jb25maWdzOgogIC0gam9iX25hbWU6IG1hc3Rlci1tZXRyaWNzCiAgICAjIEFsbCBtYXN0ZXIgbm9kZXMgYXJlIGF2YWlsYWJsZSBhdCBtYXN0ZXIubWVzb3MgdmlhIHRoZWlyIEEgcmVjb3JkCiAgICBkbnNfc2RfY29uZmlnczoKICAgICAgLSBuYW1lczogWydtYXN0ZXIubWVzb3MnXQogICAgICAgIHR5cGU6ICdBJwogICAgICAgIHBvcnQ6IDYxMDkxCgogIC0gam9iX25hbWU6IGFnZW50LW1ldHJpY3MKICAgICMgQWxsIGFnZW50IG5vZGVzIGFyZSB3cml0dGVuIHJlZ3VsYXJseSB0byBkaXNjb3ZlcnkvYWdlbnRzLmpzb24KICAgIGZpbGVfc2RfY29uZmlnczoKICAgICAgLSBmaWxlczogWydkaXNjb3ZlcnkvYWdlbnRzLmpzb24nXQogICAgICAKICAjIFNlbGYgbW9uaXRvcgogIC0gam9iX25hbWU6IHByb21ldGhldXMKICAgIHNjcmFwZV9pbnRlcnZhbDogNXMKICAgIHN0YXRpY19jb25maWdzOgogICAgICAtIHRhcmdldHM6IFsncHJvbWV0aGV1cy5wcm9tZXRoZXVzLmw0bGIudGhpc2Rjb3MuZGlyZWN0b3J5OjkwOTAnXQogICAgICAKICAtIGpvYl9uYW1lOiBwdXNoZ2F0ZXdheQogICAgaG9ub3JfbGFiZWxzOiB0cnVlCiAgICBzY3JhcGVfaW50ZXJ2YWw6IDE1cwogICAgZG5zX3NkX2NvbmZpZ3M6CiAgICAtIG5hbWVzOiBbJ3B1c2hnYXRld2F5LTAtc2VydmVyLnt7RlJBTUVXT1JLX0hPU1R9fSddCiAgICAgIHR5cGU6ICdBJwogICAgICBwb3J0OiA5MDkxCiAgICAgIApydWxlX2ZpbGVzOgogICAgIyBzZXQgb2YgcnVsZSBmaWxlcyB0byByZWFkIGFsZXJ0aW5nIHJ1bGVzIGZyb20KICAgIC0gICdydWxlcy55bWwnICAgICAgCiAgICAKYWxlcnRpbmc6CiAgYWxlcnRtYW5hZ2VyczoKICAgIC0gc3RhdGljX2NvbmZpZ3M6CiAgICAgIC0gdGFyZ2V0czogWydhbGVydG1hbmFnZXIucHJvbWV0aGV1cy5sNGxiLnRoaXNkY29zLmRpcmVjdG9yeTo5MDkzJ10KCg"
+                }, 
+                "rules": {
+                    "title": "Prometheus rules", 
+                    "description": "prometheus rules base64 encoded", 
+                    "type": "string", 
+                    "media": {
+                        "binaryEncoding": "base64", 
+                        "type": "application/x-yaml"
+                    }, 
+                    "default": "Z3JvdXBzOgotIG5hbWU6IGNwdXJ1bGUKICBydWxlczoKICAtIGFsZXJ0OiBoaWdoY3B1CiAgICBleHByOiBjcHVfdG90YWwgPiAyCiAgICBhbm5vdGF0aW9uczoKICAgICAgREVTQ1JJUFRJT046ICdpdCBoYXBwZW5lZCB5ZWFoJwogICAgICBTVU1NQVJZOiAnaXQgaGFwcGVuZWQnCgo="
+                }, 
+                "count": {
+                    "title": "Node count", 
+                    "description": "Number of prometheus pods to run", 
+                    "type": "integer", 
+                    "default": 1
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "cpus": {
+                    "description": "Prometheus pod CPU requirements", 
+                    "type": "number", 
+                    "default": 2.0
+                }, 
+                "mem": {
+                    "description": "Prometheus pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 4096
+                }, 
+                "volume": {
+                    "description": "Prometheus volume requirements", 
+                    "type": "object", 
+                    "properties": {
+                        "type": {
+                            "description": "The type of persistent volume to use, one of ROOT or MOUNT", 
+                            "type": "string", 
+                            "default": "ROOT", 
+                            "enum": [
+                                "ROOT", 
+                                "MOUNT"
+                            ]
+                        }, 
+                        "size": {
+                            "description": "The size of the persistent volume in MB", 
+                            "type": "integer", 
+                            "default": 25000, 
+                            "minimum": 10000
+                        }
+                    }
+                }
+            }, 
+            "required": [
+                "cpus", 
+                "mem"
+            ]
+        }, 
+        "alertmanager": {
+            "description": "Alertmanager settings", 
+            "type": "object", 
+            "properties": {
+                "config": {
+                    "title": "AlertManager yml config", 
+                    "description": "alertmanager.yml config base64 encoded", 
+                    "type": "string", 
+                    "media": {
+                        "binaryEncoding": "base64", 
+                        "type": "application/x-yaml"
+                    }, 
+                    "default": "cm91dGU6CiBncm91cF9ieTogW2NsdXN0ZXJdCiByZWNlaXZlcjogd2ViaAogZ3JvdXBfaW50ZXJ2YWw6IDFtCgpyZWNlaXZlcnM6Ci0gbmFtZTogd2ViaAogIHdlYmhvb2tfY29uZmlnczoKICAtIHVybDogaHR0cDovL3dlYmhvb2subWFyYXRob24ubDRsYi50aGlzZGNvcy5kaXJlY3Rvcnk6MTIzNAo="
+                }, 
+                "count": {
+                    "title": "Node count", 
+                    "description": "Number of prometheus pods to run", 
+                    "type": "integer", 
+                    "default": 1
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "cpus": {
+                    "description": "Prometheus pod CPU requirements", 
+                    "type": "number", 
+                    "default": 1.0
+                }, 
+                "mem": {
+                    "description": "Prometheus pod mem requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 1024
+                }
+            }, 
+            "required": [
+                "cpus", 
+                "mem"
+            ]
+        }
+    }
+}
