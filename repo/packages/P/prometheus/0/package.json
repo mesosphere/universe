@@ -19,12 +19,5 @@
     ], 
     "preInstallNotes": "Default configuration requires 2 agent nodes each with: 2.0 CPU | 4096 MB MEM | 1 25000 MB Disk.", 
     "postInstallNotes": "DC/OS Prometheus is being installed!", 
-    "postUninstallNotes": "DC/OS Prometheus is being uninstalled.",
-  "licenses": [
-    {
-      "name": "Apache License Version 2.0",
-      "url": "https://raw.githubusercontent.com/prometheus/prometheus/master/LICENSE"
-    }
-  ],
-    "lastUpdated": 1545155980
+    "postUninstallNotes": "DC/OS Prometheus is being uninstalled."
 }

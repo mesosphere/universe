@@ -10,18 +10,18 @@
             "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz", 
             "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/bootstrap.zip", 
             "executor-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/executor.zip", 
-            "scheduler-zip": "https://ecosystem-repo.s3.amazonaws.com/sdk/artifacts/0.42.1/operator-scheduler.zip", 
-            "svc": "https://ecosystem-repo.s3.amazonaws.com/prometheus/artifacts/0.1.1-2.3.2/svc.yml", 
-            "prometheus-tar-gz": "https://github.com/prometheus/prometheus/releases/download/v2.3.2/prometheus-2.3.2.linux-amd64.tar.gz", 
-            "alertmanager-tar-gz": "https://github.com/prometheus/alertmanager/releases/download/v0.15.1/alertmanager-0.15.1.linux-amd64.tar.gz", 
-            "jq": "https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64", 
+            "scheduler-zip": "https://downloads.mesosphere.com/dcosdev-sdk/assets/0.42.1/operator-scheduler.zip", 
+            "svc": "https://downloads.mesosphere.com/prometheus/assets/0.1.1-2.3.2/svc.yml", 
+            "prometheus-tar-gz": "https://downloads.mesosphere.com/prometheus/assets/prometheus-2.3.2.linux-amd64.tar.gz", 
+            "alertmanager-tar-gz": "https://downloads.mesosphere.com/prometheus/assets/alertmanager-0.15.1.linux-amd64.tar.gz", 
+            "jq": "https://downloads.mesosphere.com/prometheus/assets/jq-1.5/jq-linux64", 
             "dcos-cli": "https://downloads.dcos.io/binaries/cli/linux/x86-64/dcos-1.11/dcos"
         }
     }, 
     "images": {
-        "icon-small": "https://s3-us-west-1.amazonaws.com/prometheus-icons/Prometheus-icon-small.png", 
-        "icon-medium": "https://s3-us-west-1.amazonaws.com/prometheus-icons/Prometheus-icon-medium.png", 
-        "icon-large": "https://s3-us-west-1.amazonaws.com/prometheus-icons/Prometheus-icon-large.png"
+        "icon-small": "https://downloads.mesosphere.com/prometheus/assets/Prometheus-icon-small.png", 
+        "icon-medium": "https://downloads.mesosphere.com/prometheus/assets/Prometheus-icon-medium.png", 
+        "icon-large": "https://downloads.mesosphere.com/prometheus/assets/Prometheus-icon-large.png"
     }, 
     "cli": {
         "binaries": {
