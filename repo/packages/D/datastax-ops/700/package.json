@@ -1,0 +1,29 @@
+{
+  "packagingVersion": "4.0",
+  "name": "datastax-ops",
+  "version": "3.2.0-6.7.7",
+  "upgradesFrom": [
+    "3.1.0-6.7.6"
+  ],
+  "downgradesTo": [
+    "3.1.0-6.7.6"
+  ],
+  "maintainer": "techpartner@datastax.com",
+  "minDcosReleaseVersion": "1.11",
+  "description": "Datastax Enterprise OpsCenter",
+  "selected": true,
+  "framework": true,
+  "tags": [
+    "datastax",
+    "dse",
+    "opscenter",
+    "management",
+    "enterprise",
+    "nosql",
+    "database"
+  ],
+  "preInstallNotes": "This DC/OS Service is maintained by DataStax and available to mutual DataStax and Mesosphere customers (eval and production) and prospects (eval) .\n\nFunctionality supported in Opscenter includes Repair, Monitoring, Backup & Restore, as well as some basic admin tools including cleanup, restart, and drain. No other OpsCenter functionality is tested or supported within the DC/OS Integration. Please make any feature requests to techpartner@datastax.com\n\nDefault configuration requires 1 agent node with: 2.5 CPU | 4100 MB MEM | 10240 MB Disk\n\nContact Mesosphere and DataStax before deploying this service to ensure proper support channels are made available. Contact your rep at either company or techpartner@datastax.com. By using this service you agree to the license terms here: https://gist.github.com/012345/d1df9d43a0dfaa49e628c7bfbc9ffb52\n\nVersions: DataStax Enterprise 6.7.7 (Standard and Max) & OpsCenter 6.7.7",
+  "postInstallNotes": "DC/OS Datastax Enterprise OpsCenter is being installed!\n\n\tDocumentation: https://docs.datastax.com\n\tIssues: https://www.datastax.com/contactus",
+  "postUninstallNotes": "DC/OS Datastax Enterprise OpsCenter is being uninstalled.\n\nFor DC/OS versions from 1.11 no further action is required. For older DC/OS versions follow the instructions at https://docs.d2iq.com/mesosphere/dcos/services/dse/stub-universe/uninstall/ to remove any persistent state if required.",
+  "lastUpdated": 1581002365
+}
