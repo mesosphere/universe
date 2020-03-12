@@ -16,5 +16,6 @@
   "preInstallNotes": "Visit https://alluxio.com/products to obtain a license for Alluxio Enterprise Edition.\n\nDefault configuration requires 2 agent nodes each with: CPU: 3 | Memory: 5GB | Disk: 4GB\n\nMore specifically, each instance type requires:\n\nMaster: 1 instance | 2 CPU | 4096 MB MEM | 1 2048 MB Disk\n\nJob master: 1 instance | 1 CPU | 1024 MB MEM | 1 2048 MB Disk\n\nWorker: 1 instance | 2 CPU | 4096 MB MEM | 1 2048 MB Disk \n\nJob worker: 1 instance | 1 CPU | 1024 MB MEM | 1 2048 MB Disk \n\nVersion 2.0.0-1.6.0 contains breaking changes from previous releases. Upgrading from previous versions is not supported.",
   "postInstallNotes": "DC/OS Alluxio is being installed!\n\n\tDocumentation: https://alluxio.com/docs/enterprise/1.7/en/Alluxio-on-DCOS.html \n\tIssues: info@aluxio.com",
   "postUninstallNotes": "DC/OS Alluxio has been uninstalled. \n\n Visit https://alluxio.com/docs/enterprise/1.7/en/Alluxio-on-DCOS.html to troubleshoot any issues.",
+  "hasKnownIssues": true,
   "lastUpdated": 1571120354
 }
