@@ -21,6 +21,7 @@
     "DCOS_SERVICE_PORT_INDEX": "0",
     "DCOS_SERVICE_SCHEME": "http"
   },
+
   {{#service.service_account_secret}}
   "secrets": {
     "serviceCredential": {
@@ -28,11 +29,12 @@
     }
   },
   {{/service.service_account_secret}}
+
   "env": {
     "PACKAGE_NAME": "percona-pxc-mysql",
     "PACKAGE_VERSION": "0.2.0-5.7.21",
-    "PACKAGE_BUILD_TIME_EPOCH_MS": "1552562293172",
-    "PACKAGE_BUILD_TIME_STR": "Thu Mar 14 2019 11:18:13 +0000",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1580917238561",
+    "PACKAGE_BUILD_TIME_STR": "Wed Feb 05 2020 15:40:38 +0000",
     "FRAMEWORK_NAME": "{{service.name}}",
 
     {{#service.check_for_nobody_leave_unchecked_for_root}}
@@ -45,10 +47,9 @@
     "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
     "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
     "MESOS_API_VERSION": "V1",
-    
+
     "TASKCFG_ALL_PXC_CLUSTER_NAME": "{{pxc.cluster_name}}",
     "TASKCFG_ALL_PXC_APP_USER_NAME": "{{pxc.application_user_name}}",
-
 
     "PXC_MYSQL_ROOT_PASSWORD": "{{pxc.mysql_root_password}}",
     "PXC_XTRABKP_PASSWORD": "{{pxc.xtrabackup_password}}",
@@ -58,11 +59,13 @@
     "PXC_COUNT": "{{pxc.count}}",
     "TASKCFG_ALL_PXC_PORT": "{{pxc.pxc_port}}",
     "PXC_PLACEMENT": "{{{pxc.placement_constraint}}}",
+
     {{#service.virtual_network_enabled}}
     "ENABLE_VIRTUAL_NETWORK": "yes",
     "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
     "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
     {{/service.virtual_network_enabled}}
+
     "PXC_CPUS": "{{pxc.cpus}}",
     "PXC_MEM": "{{pxc.mem}}",
     "PXC_DISK": "{{pxc.disk}}",
@@ -101,7 +104,6 @@
 
     "TASKCFG_ALL_PROXYSQL_CLUSTER_NAME_PXC": "{{pxc.cluster_name}}",
 
-
     {{#service.enable_secrets}}
     "TASKCFG_ALL_PXC_ENABLE_SECRETS": "{{service.enable_secrets}}",
     {{/service.enable_secrets}}
@@ -115,7 +117,6 @@
     {{#service.pam_enabled}}
     "TASKCFG_ALL_PXC_PAM_ENABLED": "{{service.pam_enabled}}",
     {{/service.pam_enabled}}
-
 
     "TASKCFG_ALL_PXC_ENCRYPT_CLUSTER_TRAFFIC": "{{pxc-advanced.pxc_encrypt_cluster_traffic}}",
     "TASKCFG_ALL_PXC_MAINT_MODE": "{{pxc-advanced.pxc_maint_mode}}",
@@ -147,7 +148,6 @@
     "TASKCFG_ALL_WSREP_SST_RECEIVE_ADDRESS": "{{pxc-advanced.wsrep_sst_receive_address}}",
     "TASKCFG_ALL_WSREP_SYNC_WAIT": "{{pxc-advanced.wsrep_sync_wait}}",
 
-    
     "IMAGE_IS_NOBODY": "{{service.check_for_nobody_leave_unchecked_for_root}}",
     "PXC_DOCKER_IMAGE_ROOT": "{{resource.assets.container.docker.percona-xtradb-cluster-root}}",
     "PXC_DOCKER_IMAGE_NOBODY": "{{resource.assets.container.docker.percona-xtradb-cluster-nobody}}",
@@ -172,7 +172,6 @@
     "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
     {{/service.service_account_secret}}
     "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
- 
   },
   "uris": [
     "{{resource.assets.uris.bootstrap-zip}}",

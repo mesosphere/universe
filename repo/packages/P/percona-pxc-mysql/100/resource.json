@@ -4,12 +4,12 @@
       "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz",
       "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz",
       "bootstrap-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/bootstrap.zip",
-      "scheduler-zip": "https://pxc-bucket.s3.amazonaws.com/pxc/assets/0.2.0-5.7.21/percona-pxc-mysql-scheduler.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/percona-pxc-mysql/assets/0.2.0-5.7.21/percona-pxc-mysql-scheduler.zip",
       "executor-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/executor.zip",
-      "pip-uri": "https://bootstrap.pypa.io/get-pip.py",
-      "zk-uri": "https://s3-ap-northeast-1.amazonaws.com/pxc-utils/zookeepercli-linux-amd64-binary.tar.gz",
-      "mysqld-exporter-uri": "https://s3-ap-northeast-1.amazonaws.com/pxc-utils/mysqld_exporter-0.7.1.linux-amd64.tar.gz",
-      "mc-uri": "https://dl.minio.io/client/mc/release/linux-amd64/mc"
+      "pip-uri": "https://downloads.mesosphere.com/percona-pxc-mysql/assets/get-pip.py",
+      "zk-uri": "https://downloads.mesosphere.com/percona-pxc-mysql/assets/zookeepercli-linux-amd64-binary.tar.gz",
+      "mysqld-exporter-uri": "https://downloads.mesosphere.com/percona-pxc-mysql/assets/mysqld_exporter-0.7.1.linux-amd64.tar.gz",
+      "mc-uri": "https://downloads.mesosphere.com/percona-pxc-mysql/assets/mc"
     },
     "container": {
       "docker": {
@@ -23,9 +23,9 @@
     }
   },
   "images": {
-    "icon-small": "https://s3.amazonaws.com/pxc-icons/pxc-icon-small.png",
-    "icon-medium": "https://s3.amazonaws.com/pxc-icons/pxc-icon-medium.png",
-    "icon-large": "https://s3.amazonaws.com/pxc-icons/pxc-icon-large.png"
+    "icon-small": "https://downloads.mesosphere.com/percona-pxc-mysql/assets/pxc-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/percona-pxc-mysql/assets/pxc-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/percona-pxc-mysql/assets/pxc-icon-large.png"
   },
   "cli": {
     "binaries": {
