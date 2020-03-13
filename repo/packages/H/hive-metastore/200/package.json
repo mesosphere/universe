@@ -1,0 +1,33 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [
+    "*"
+  ],
+  "downgradesTo": [
+    "*"
+  ],
+  "minDcosReleaseVersion": "1.11",
+  "name": "hive-metastore",
+  "version": "1.2.0-3.0.0",
+  "maintainer": "support@mesosphere.io",
+  "description": "Apache Hive Metastore is the central repository of Hive metadata. It stores the metadata for Hive tables and relations.",
+  "selected": true,
+  "framework": true,
+  "tags": [
+    "hive",
+    "metastore",
+    "hive-metastore"
+  ],
+  "preInstallNotes": "Default configuration requires 1 agent node with: 0.5 CPU, 4096 MB MEM and 4096 MB Disk.",
+  "postInstallNotes": "The DC/OS Apache Hive Metastore service is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/hive-metastore/1.2.0-3.0.0/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "The DC/OS Apache Hive Metastore service is being uninstalled.",
+  "scm": "https://github.com/mesosphere/dcos-hive-metastore",
+  "website": "https://docs.mesosphere.com/services/hive-metastore/1.2.0-3.0.0",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/apache/hive/trunk/LICENSE"
+    }
+  ],
+  "lastUpdated": 1583735316
+}
