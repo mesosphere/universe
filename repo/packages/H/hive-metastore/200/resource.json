@@ -1,0 +1,58 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-11.0.3.7-hotspot-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.14-beta.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.57.3/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/hive-metastore/assets/1.2.0-3.0.0/hive-metastore-scheduler.zip",
+      "hive-metastore-tar-gz": "https://downloads.mesosphere.com/hive-metastore/assets/1.0.0-3.0.0/hive-standalone-metastore-3.0.0-bin.tar.gz",
+      "hadoop-tar-gz": "https://downloads.mesosphere.com/hive-metastore/assets/hadoop-3.2.0.tar.gz",
+      "mysql-java-connector-tar-gz": "https://downloads.mesosphere.com/hive-metastore/assets/mysql-connector-java-5.1.35.tar.gz"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/hive-metastore/assets/icon-hive-metastore-small@2x.png",
+    "icon-medium": "https://downloads.mesosphere.com/hive-metastore/assets/icon-hive-metastore-medium@2x.png",
+    "icon-large": "https://downloads.mesosphere.com/hive-metastore/assets/icon-hive-metastore-large@2x.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "98a515fb580bc98a4fc386dedb5e8357122a8dd45a0118d83eb745bd07f90092"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hive-metastore/assets/1.2.0-3.0.0/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "65468ec43b00f869801ddfa211a4ccb1027c8503f4073a8a5daf91b4dca7d6b2"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hive-metastore/assets/1.2.0-3.0.0/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "777dfa0fa8ab3bc804f176b7081f896011e8e0fd172d1e16f512094da6b4bd59"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/hive-metastore/assets/1.2.0-3.0.0/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
