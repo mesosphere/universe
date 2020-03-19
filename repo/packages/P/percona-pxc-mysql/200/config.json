@@ -1,0 +1,553 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "percona-pxc-mysql",
+          "title": "Service name"
+        },
+        "check_for_nobody_leave_unchecked_for_root": {
+          "description": "The user that the service will run as. If checked, the service will run as nobody. If unchecked, the service will run as root.",
+          "type": "boolean",
+          "default": true,
+          "title": "User"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": "",
+          "title": "Credential secret name (optional)"
+        },
+        "enable_secrets": {
+          "description": "Enables Secrets based storage of passwords. Applicable and enable only in DC/OS Enterprise versions",
+          "type": "boolean",
+          "default": false
+        },
+        "ssl_enabled": {
+          "description": "Enables SSL support for Percona XtraDB Cluster",
+          "type": "boolean",
+          "default": false
+        },
+        "pam_enabled": {
+          "description": "Enables PAM support for Authn and Authz Percona XtraDB Cluster",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        }
+      },
+      "required": [
+        "name",
+        "enable_secrets"
+      ]
+    },
+    "pxc-advanced": {
+      "description": "PXC properties",
+      "type": "object",
+      "properties": {
+        "pxc_encrypt_cluster_traffic": {
+          "title": "Enables automatic configuration of SSL encryption",
+          "description": "Enables automatic configuration of SSL encryption. When disabled, you need to configure SSL manually to encrypt Percona XtraDB Cluster traffic",
+          "type": "string",
+          "default": "OFF"
+        },
+        "pxc_maint_mode": {
+          "description": "Specifies the maintenance mode for taking a node down without adjusting settings in ProxySQL",
+          "type": "string",
+          "enum": [
+            "DISABLED",
+            "SHUTDOWN",
+            "MAINTENANCE"
+          ],
+          "default": "DISABLED"
+        },
+        "pxc_maint_transition_period": {
+          "description": "Defines the transition period when you change pxc_maint_mode to SHUTDOWN or MAINTENANCE .",
+          "type": "number",
+          "default": 10
+        },
+        "pxc_strict_mode": {
+          "description": "Controls PXC Strict Mode , which runs validations to avoid the use of experimental and unsupported features in Percona XtraDB Cluster.",
+          "type": "string",
+          "enum": [
+            "DISABLED",
+            "PERMISSIVE",
+            "ENFORCING",
+            "MASTER"
+          ],
+          "default": "ENFORCING"
+        },
+        "wsrep_auto_increment_control": {
+          "description": "Enables automatic adjustment of auto-increment system variables depending on the size of the cluster",
+          "type": "string",
+          "default": "ON"
+        },
+        "wsrep_causal_reads": {
+          "description": "In some cases, the master may apply events faster than a slave, which can cause master and slave to become out of sync for a brief moment.",
+          "type": "string",
+          "default": "OFF"
+        },
+        "wsrep_certify_nonPK": {
+          "description": "Enables automatic generation of primary keys for rows that do not have them.  Write set replication requires primary keys on all tables to allow for parallel applying of transactions.",
+          "type": "string",
+          "default": "ON"
+        },
+        "wsrep_convert_lock_to_trx": {
+          "description": "Defines whether locking sessions should be converted into transactions. By default, this is disabled.",
+          "type": "string",
+          "default": "OFF"
+        },
+        "wsrep_debug": {
+          "description": "Enables additional debugging output for the database server error log. By default, it is disabled. This variable can be used when trying to diagnose problems or when submitting a bug.",
+          "type": "string",
+          "default": "OFF"
+        },
+        "wsrep_desync": {
+          "description": "Defines  whether  the  node  should  participate  in  Flow  Control. By  default,  this  variable  is  disabled,  meaning that  if  the  receive  queue  becomes  too  big,  the  node  engages  in  Flow  Control",
+          "type": "string",
+          "default": "OFF"
+        },
+        "wsrep_dirty_reads": {
+          "description": "Defines whether the node accepts read queries when in a non-operational state, that is, when it loses connection to the Primary Component.  ",
+          "type": "string",
+          "default": "OFF"
+        },
+        "wsrep_drupal_282555_workaround": {
+          "description": "Enables a workaround for MySQL InnoDB bug that affects Drupal",
+          "type": "string",
+          "default": "OFF"
+        },
+        "wsrep_forced_binlog_format": {
+          "description": "Defines a binary log format that will always be effective, regardless of the client session binlog_format variable value",
+          "type": "string",
+          "enum": [
+            "ROW",
+            "STATEMENT",
+            "MIXED",
+            "NONE"
+          ],
+          "default": "NONE"
+        },
+        "wsrep_load_data_splitting": {
+          "description": "Defines whether the node should split large LOAD DATA transactions.  This variable is enabled by default, meaning that LOAD DATA commands are split into transactions of 10 000 rows or less.",
+          "type": "string",
+          "default": "ON"
+        },
+        "wsrep_log_conflicts": {
+          "description": "Defines whether the node should log additional information about conflicts.  By default, this variable is disabled and Percona XtraDB Cluster uses standard logging features in MySQL.",
+          "type": "string",
+          "default": "OFF"
+        },
+        "wsrep_max_ws_rows": {
+          "description": "Defines the maximum number of rows each write-set can contain",
+          "type": "number",
+          "default": 0
+        },
+        "wsrep_max_ws_size": {
+          "description": "Defines the maximum write-set size (in bytes). Anything bigger than the specified value will be rejected.",
+          "type": "number",
+          "default": 2147483647
+        },
+        "wsrep_on": {
+          "description": "Defines whether updates from the current session should be replicated. If disabled, it does not cause the node to leave the cluster and the node continues to communicate with other nodes.",
+          "type": "string",
+          "default": "ON"
+        },
+        "wsrep_OSU_method": {
+          "description": "Defines the method for Online Schema Upgrade that the node uses to replicate DDL statements",
+          "type": "string",
+          "enum": [
+            "TOI",
+            "RSU"
+          ],
+          "default": "TOI"
+        },
+        "wsrep_recover": {
+          "description": "Recovers database state after crash by parsing GTID from the log.  If the GTID is found, it will be assigned as the initial position for server.",
+          "type": "string",
+          "default": "OFF"
+        },
+        "wsrep_reject_queries": {
+          "description": "Defines whether the node should log additional information about conflicts.  By default, this variable is disabled and Percona XtraDB Cluster uses standard logging features in MySQL.",
+          "type": "string",
+          "enum": [
+            "ALL",
+            "ALL_KILL",
+            "NONE"
+          ],
+          "default": "NONE"
+        },
+        "wsrep_replicate_myisam": {
+          "description": "Defines whether DML statements for MyISAM tables should be replicated. It is disabled by default, because MyISAM replication is still experimental. On the global level, wsrep_replicate_myisam can be set only during startup. On session level, you can change it during runtime as well.",
+          "type": "string",
+          "default": "OFF"
+        },
+        "wsrep_restart_slave": {
+          "description": "Defines whether replication slave should be restarted when the node joins back to the cluster.  Enabling this can be useful because asynchronous replication slave thread is stopped when the node tries to apply the next replication event while the node is in non-primary state.",
+          "type": "string",
+          "default": "OFF"
+        },
+        "wsrep_retry_autocommit": {
+          "description": "Specifies the number of times autocommit transactions will be retried in the cluster if it encounters certification errors. In case there is a conflict, it should be safe for the cluster node to simply retry the statement without returning an error to the client, hoping that it will pass next time.",
+          "type": "number",
+          "default": 1
+        },
+        "wsrep_slave_FK_checks": {
+          "description": "Defines whether foreign key checking is done for applier threads. This is enabled by default.",
+          "type": "string",
+          "default": "ON"
+        },
+        "wsrep_slave_threads": {
+          "description": "Specifies the number of threads that can apply replication transactions in parallel. Galera supports true parallel repli-cation  that  applies  transactions  in  parallel  only  when  it  is  safe  to  do  so.   This  variable  is  dynamic.   You  can  in-crease/decrease it at any time.",
+          "type": "number",
+          "default": 2
+        },
+        "wsrep_slave_UK_checks": {
+          "description": "Defines whether unique key checking is done for applier threads. This is disabled by default.",
+          "type": "string",
+          "default": "OFF"
+        },
+        "wsrep_sst_receive_address": {
+          "description": "Specifies the network address where donor node should send state transfers.  By default, this variable is set to AUTO, meaning that the IP address from wsrep_node_address is used",
+          "type": "string",
+          "default": "AUTO"
+        },
+        "wsrep_sync_wait": {
+          "description": "Controls cluster-wide causality checks on certain statements.  Checks ensure that the statement is executed on a node that is fully synced with the cluster.",
+          "type": "number",
+          "default": 0
+        }
+      }
+    },
+    "pxc": {
+      "description": "Template pod configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of Template pods to run",
+          "type": "integer",
+          "default": 3
+        },
+        "pxc_port": {
+          "title": "PXC Port",
+          "description": "Port number at which Mysql Server will run",
+          "type": "integer",
+          "default": 3306
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]",
+          "type": "string",
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Template pod CPU requirements",
+          "type": "number",
+          "default": 1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Template pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 1024
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "Template pod persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 250
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "key_disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "bkp_disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "psql_disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "backup_store_endpoint": {
+          "title": "Backup Store Endpoint",
+          "description": "Backup service requires an endpoint of a S3 compatible Storage system",
+          "type": "string",
+          "default": "https://s3.amazonaws.com"
+        },
+        "cluster_name": {
+          "description": "Specifies the name of the cluster and should be identical on all nodes.",
+          "type": "string",
+          "default": "cluster1"
+        },
+        "mysql_root_password": {
+          "description": "password for root user for mysqld process of PXC cluster",
+          "type": "string",
+          "default": "root"
+        },
+        "xtrabackup_password": {
+          "description": "Specifies the password for xtrabackup user",
+          "type": "string",
+          "default": "xtrabackup"
+        },
+        "application_user_name": {
+          "description": "Specifies the username for application user for external user access to PXC",
+          "type": "string",
+          "default": "proxymon"
+        },
+        "application_user_password": {
+          "description": "Specifies the password for application user for external user access to PXC",
+          "type": "string",
+          "default": "proxym0n"
+        },
+        "mysqldexporter_password": {
+          "description": "Specifies the password for mysqldexporter user for PXC metrics",
+          "type": "string",
+          "default": "pxcm0n"
+        },
+        "ldap_uri": {
+          "description": "URI for LDAP server",
+          "type": "string",
+          "default": "ldap://openldap.marathon.l4lb.thisdcos.directory:389"
+        },
+        "ldap_base": {
+          "description": "base for LDAP server configuration, for example : dc=example,dc=org",
+          "type": "string",
+          "default": "dc=example,dc=org"
+        },
+        "ldap_binddn": {
+          "description": "binddn for LDAP server configuration, for example : cn=admin,dc=example,dc=org",
+          "type": "string",
+          "default": "cn=admin,dc=example,dc=org"
+        },
+        "ldap_bindpw": {
+          "description": "bindpw for LDAP server configuration or password for the above binddn",
+          "type": "string",
+          "default": "password"
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "disk_type",
+        "cluster_name",
+        "application_user_name",
+        "mysql_root_password",
+        "xtrabackup_password",
+        "application_user_password",
+        "mysqldexporter_password",
+        "ldap_bindpw"
+      ]
+    },
+    "proxysql": {
+      "description": "Template pod configuration properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Proxysql Node count",
+          "description": "Number of Template pods to run",
+          "type": "integer",
+          "default": 1
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]",
+          "type": "string",
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Template pod CPU requirements",
+          "type": "number",
+          "default": 0.1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Template pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 252
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "Template pod persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 25
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "admin_user": {
+          "description": "admin_variables admin user",
+          "type": "string",
+          "default": "admin"
+        },
+        "admin_password": {
+          "description": "Specifies the password for admin user",
+          "type": "string",
+          "default": "admin"
+        },
+        "refresh_interval": {
+          "description": "admin_variables refresh interval",
+          "type": "integer",
+          "default": 2000
+        },
+        "threads": {
+          "description": "mysql_variables threads",
+          "type": "integer",
+          "default": 2
+        },
+        "max_connections": {
+          "description": "mysql_variables max_connections",
+          "type": "integer",
+          "default": 2048
+        },
+        "default_query_delay": {
+          "description": "mysql_variables default_query_delay",
+          "type": "integer",
+          "default": 0
+        },
+        "default_query_timeout": {
+          "description": "mysql_variables default_query_timeout",
+          "type": "integer",
+          "default": 10000
+        },
+        "poll_timeout": {
+          "description": "mysql_variables poll_timeout",
+          "type": "integer",
+          "default": 2000
+        },
+        "default_schema": {
+          "description": "mysql_variables default_schema",
+          "type": "string",
+          "default": "information_schema"
+        },
+        "stacksize": {
+          "description": "mysql_variables stacksize",
+          "type": "integer",
+          "default": 1048576
+        },
+        "connect_timeout_server": {
+          "description": "mysql_variables connect_timeout_server",
+          "type": "integer",
+          "default": 10000
+        },
+        "monitor_history": {
+          "description": "mysql_variables monitor_history",
+          "type": "integer",
+          "default": 60000
+        },
+        "monitor_connect_interval": {
+          "description": "mysql_variables monitor_connect_interval",
+          "type": "integer",
+          "default": 20000
+        },
+        "monitor_ping_interval": {
+          "description": "mysql_variables monitor_ping_interval",
+          "type": "integer",
+          "default": 10000
+        },
+        "ping_timeout_server": {
+          "description": "mysql_variables ping_timeout_server",
+          "type": "integer",
+          "default": 200
+        },
+        "commands_stats": {
+          "description": "mysql_variables commands_stats",
+          "type": "string",
+          "default": "true"
+        },
+        "sessions_sort": {
+          "description": "mysql_variables sessions_sort",
+          "type": "string",
+          "default": "true"
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "admin_user",
+        "admin_password"
+      ]
+    }
+  }
+}
