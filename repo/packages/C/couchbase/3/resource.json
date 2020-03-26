@@ -11,16 +11,16 @@
             "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz", 
             "bootstrap-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/bootstrap.zip", 
             "executor-zip": "http://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/executor.zip", 
-            "scheduler-zip": "https://ecosystem-repo.s3.amazonaws.com/sdk/artifacts/0.42.1/operator-scheduler.zip", 
-            "svc": "https://couchbase-bucket.s3.amazonaws.com/couchbase/artifacts/1.0.0-6.0.0/svc.yml", 
-            "readiness": "https://couchbase-bucket.s3.amazonaws.com/couchbase/artifacts/1.0.0-6.0.0/readiness.sh", 
-            "node": "https://couchbase-bucket.s3.amazonaws.com/couchbase/artifacts/1.0.0-6.0.0/node.sh"
+            "scheduler-zip": "https://downloads.mesosphere.com/dcosdev-sdk/assets/0.42.1/operator-scheduler.zip", 
+            "svc": "https://downloads.mesosphere.com/couchbase/assets/1.0.0-6.0.0/svc.yml", 
+            "readiness": "https://downloads.mesosphere.com/couchbase/assets/1.0.0-6.0.0/readiness.sh", 
+            "node": "https://downloads.mesosphere.com/couchbase/assets/1.0.0-6.0.0/node.sh"
         }
     }, 
     "images": {
-        "icon-small": "https://s3-us-west-1.amazonaws.com/mbgl-bucket/couchbase/assets/couchbase-small.png", 
-        "icon-medium": "https://s3-us-west-1.amazonaws.com/mbgl-bucket/couchbase/assets/couchbase-medium.png", 
-        "icon-large": "https://s3-us-west-1.amazonaws.com/mbgl-bucket/couchbase/assets/couchbase-large.png"
+        "icon-small": "https://downloads.mesosphere.com/couchbase/assets/couchbase-small.png", 
+        "icon-medium": "https://downloads.mesosphere.com/couchbase/assets/couchbase-medium.png", 
+        "icon-large": "https://downloads.mesosphere.com/couchbase/assets/couchbase-large.png"
     }, 
     "cli": {
         "binaries": {
