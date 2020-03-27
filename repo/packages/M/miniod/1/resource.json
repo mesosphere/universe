@@ -2,15 +2,15 @@
     "assets": {
         "uris": {
             "jre-tar-gz": "https://downloads.mesosphere.com/java/server-jre-8u162-linux-x64.tar.gz", 
-            "minio-statsd-jar": "https://minio-s3-bucket.s3.amazonaws.com/miniod/artifacts/0.1.1/minio-statsd.jar", 
+            "minio-statsd-jar": "https://downloads.mesosphere.com/miniod/assets/0.1.1-RELEASE.2019-04-26T02-11-47Z/minio-statsd.jar", 
             "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.11.0.tar.gz", 
             "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/bootstrap.zip", 
             "executor-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.42.1/executor.zip", 
-            "scheduler-zip": "https://minio-s3-bucket.s3.amazonaws.com/miniod/artifacts/0.1.1/operator-scheduler.zip", 
-            "svc": "https://minio-s3-bucket.s3.amazonaws.com/miniod/artifacts/0.1.1/svc.yml", 
-            "minio-config": "https://minio-s3-bucket.s3.amazonaws.com/miniod/artifacts/0.1.1/config.json.mustache", 
-            "minio-init-sh": "https://minio-s3-bucket.s3.amazonaws.com/miniod/artifacts/0.1.1/init.sh", 
-            "minio-synchronize-sh": "https://minio-s3-bucket.s3.amazonaws.com/miniod/artifacts/0.1.1/synchronize-buckets.sh"
+            "scheduler-zip": "https://downloads.mesosphere.com/miniod/assets/0.1.1-RELEASE.2019-04-26T02-11-47Z/operator-scheduler.zip", 
+            "svc": "https://downloads.mesosphere.com/miniod/assets/0.1.1-RELEASE.2019-04-26T02-11-47Z/svc.yml", 
+            "minio-config": "https://downloads.mesosphere.com/miniod/assets/0.1.1-RELEASE.2019-04-26T02-11-47Z/config.json.mustache", 
+            "minio-init-sh": "https://downloads.mesosphere.com/miniod/assets/0.1.1-RELEASE.2019-04-26T02-11-47Z/init.sh", 
+            "minio-synchronize-sh": "https://downloads.mesosphere.com/miniod/assets/0.1.1-RELEASE.2019-04-26T02-11-47Z/synchronize-buckets.sh"
         }, 
         "container": {
             "docker": {
@@ -20,9 +20,9 @@
         }
     }, 
     "images": {
-        "icon-small": "https://downloads.mesosphere.io/assets/universe/000/minio_dark_sm_ic.png", 
-        "icon-medium": "https://downloads.mesosphere.io/assets/universe/000/minio_dark_md_ic.png", 
-        "icon-large": "https://downloads.mesosphere.io/assets/universe/000/minio_dark_lg_ic.png"
+        "icon-small": "https://downloads.mesosphere.com/assets/universe/000/minio_dark_sm_ic.png", 
+        "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/minio_dark_md_ic.png", 
+        "icon-large": "https://downloads.mesosphere.com/assets/universe/000/minio_dark_lg_ic.png"
     }, 
     "cli": {
         "binaries": {
