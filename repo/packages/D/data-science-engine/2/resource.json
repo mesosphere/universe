@@ -1,0 +1,20 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/data-science-engine/assets/icon-service-data-science-engine-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/data-science-engine/assets/icon-service-data-science-engine-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/data-science-engine/assets/icon-service-data-science-engine-large.png",
+    "screenshots": [
+      "https://downloads.mesosphere.com/jupyter/assets/jupyter-screenshot.png"
+    ]
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "jupyter-service-notebook-image-cpu": "mesosphere/jupyter-service:5d778b9b3cf37243c759742046e43ff50a3e5b2df817c95e68deef82c057d55b",
+        "jupyter-service-notebook-image-gpu": "mesosphere/jupyter-service:c80ff1bc8f72561b5c4662ba739af6418e79087b48c844ebd19cea6f968cbdd7-gpu",
+        "jupyter-service-worker-image-cpu": "mesosphere/jupyter-service-worker:278f88cf7f8ee38935e1230ba5d9e5e11d3fa1d68e34cafa0e5b94b9864d428f",
+        "jupyter-service-worker-image-gpu": "mesosphere/jupyter-service-worker:24860f389674ee9c230d019ec4be2525a0f69d6c8318d4c9de22529ba50200dd-gpu"
+      }
+    }
+  }
+}
