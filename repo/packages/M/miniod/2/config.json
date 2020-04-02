@@ -1,0 +1,615 @@
+{
+    "type": "object", 
+    "properties": {
+        "service": {
+            "type": "object", 
+            "description": "DC/OS service configuration properties", 
+            "properties": {
+                "name": {
+                    "description": "The name of the service instance", 
+                    "type": "string", 
+                    "default": "miniod", 
+                    "title": "Service name"
+                }, 
+                "user": {
+                    "description": "The user that the service will run as.", 
+                    "type": "string", 
+                    "default": "nobody", 
+                    "title": "User"
+                }, 
+                "ssl_enabled": {
+                    "description": "Enables SSL support for Minio Cluster", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "service_account": {
+                    "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "service_account_secret": {
+                    "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.", 
+                    "type": "string", 
+                    "default": "", 
+                    "title": "Credential secret name (optional)"
+                }, 
+                "virtual_network_enabled": {
+                    "description": "Enable virtual networking", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "virtual_network_name": {
+                    "description": "The name of the virtual network to join", 
+                    "type": "string", 
+                    "default": "dcos"
+                }, 
+                "virtual_network_plugin_labels": {
+                    "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "log_level": {
+                    "description": "The log level for the DC/OS service.", 
+                    "type": "string", 
+                    "enum": [
+                        "OFF", 
+                        "FATAL", 
+                        "ERROR", 
+                        "WARN", 
+                        "INFO", 
+                        "DEBUG", 
+                        "TRACE", 
+                        "ALL"
+                    ], 
+                    "default": "INFO"
+                }
+            }, 
+            "required": [
+                "name", 
+                "user"
+            ]
+        }, 
+        "minio": {
+            "description": "Minio configuration properties", 
+            "type": "object", 
+            "properties": {
+                "enable_secrets": {
+                    "description": "Enables storing Minio credentials in secret store", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "minio_access_key": {
+                    "title": "Minio Access Key", 
+                    "description": "Minio requires Access Key Id to start in distributed mode.", 
+                    "type": "string", 
+                    "default": "minio"
+                }, 
+                "minio_secret_key": {
+                    "title": "Minio Secret Key", 
+                    "description": "Minio requires Secret Access Key to start in distributed mode.", 
+                    "type": "string", 
+                    "default": "minio123"
+                }, 
+                "minio_port": {
+                    "title": "Minio Port", 
+                    "description": "Minio servers will run at this port.", 
+                    "type": "integer", 
+                    "default": 9000
+                }, 
+                "count": {
+                    "title": "Node count", 
+                    "description": "Number of Minio servers to run. Number of servers should be even and greater than equal to 4.", 
+                    "type": "integer", 
+                    "minimum": 4, 
+                    "default": 4
+                }, 
+                "placement_constraint": {
+                    "title": "Placement constraint", 
+                    "description": "Placement constraints for nodes. Example: [[\"hostname\", \"UNIQUE\"]]", 
+                    "type": "string", 
+                    "default": "[[\"hostname\", \"UNIQUE\"]]", 
+                    "media": {
+                        "type": "application/x-zone-constraints+json"
+                    }
+                }, 
+                "cpus": {
+                    "title": "CPU count", 
+                    "description": "Minio pod CPU requirements", 
+                    "type": "number", 
+                    "default": 2
+                }, 
+                "mem": {
+                    "title": "Memory size (MB)", 
+                    "description": "Minio pod memory requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 252
+                }, 
+                "disk": {
+                    "title": "Disk size (MB)", 
+                    "description": "Minio pod persistent disk requirements (in MB)", 
+                    "type": "integer", 
+                    "default": 200
+                }, 
+                "disk_type": {
+                    "title": "Disk type [ROOT, MOUNT]", 
+                    "description": "Mount volumes require preconfiguration in DC/OS", 
+                    "enum": [
+                        "ROOT", 
+                        "MOUNT"
+                    ], 
+                    "default": "ROOT"
+                }, 
+                "backup_store_endpoint": {
+                    "title": "Backup Store Endpoint", 
+                    "description": "Backup service requires an endpoint of a S3 compatible Storage system", 
+                    "type": "string", 
+                    "default": "https://s3.amazonaws.com"
+                }, 
+                "minio_browser": {
+                    "title": "Minio Browser", 
+                    "description": "Access to Minio Web UI can be enabled or disabled through this option.", 
+                    "type": "string", 
+                    "enum": [
+                        "on", 
+                        "off"
+                    ], 
+                    "default": "on"
+                }, 
+                "minio_storage_class_standard": {
+                    "title": "Minio storage class standard", 
+                    "description": "STANDARD storage class implies more parity than REDUCED_REDUNDANCY class. So, STANDARD parity disks should be either greater than or equal to 2, if REDUCED_REDUNDANCY parity is not set or greater than REDUCED_REDUNDANCY parity, if it is set. Parity blocks can not be higher than data blocks, so STANDARD storage class parity can not be higher than N/2 (N being total number of disks). Default value for STANDARD storage class is N/2 (N is the total number of nodes). Example - EC:3", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "minio_storage_class_rrs": {
+                    "title": "Minio storage class rrs", 
+                    "description": "REDUCED_REDUNDANCY implies lesser parity than STANDARD class. So, REDUCED_REDUNDANCY parity disks should be either less than N/2, if STANDARD parity is not set or less than STANDARD Parity, if it is set. Default value for REDUCED_REDUNDANCY storage class is 2. Example - EC:2", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "minio_cache_enable": {
+                    "title": "Minio cache enable", 
+                    "description": "Enable Disk Caching in Minio, to store content closer to the tenants", 
+                    "type": "boolean", 
+                    "default": false
+                }, 
+                "minio_cache_expiry": {
+                    "title": "Minio cache expiry", 
+                    "description": "Days to cache expiry", 
+                    "type": "integer", 
+                    "default": 90
+                }, 
+                "minio_cache_exclude": {
+                    "title": "Minio cache exclude", 
+                    "description": "list of wildcard patterns for prefixes to exclude from cache", 
+                    "type": "string", 
+                    "default": ""
+                }, 
+                "minio_cache_maxuse": {
+                    "title": "Minio cache maxuse", 
+                    "description": "restricting maximum usage of cache", 
+                    "type": "integer", 
+                    "default": 80
+                }, 
+                "cache_disk": {
+                    "title": "Disk size (MB)", 
+                    "description": "Size of Cache disk (in MB)", 
+                    "type": "integer", 
+                    "default": 252
+                }, 
+                "cache_disk_type": {
+                    "title": "Disk type [ROOT, MOUNT]", 
+                    "description": "Mount volumes require preconfiguration in DC/OS", 
+                    "enum": [
+                        "ROOT", 
+                        "MOUNT"
+                    ], 
+                    "default": "ROOT"
+                }
+            }, 
+            "required": [
+                "count", 
+                "cpus", 
+                "mem", 
+                "disk", 
+                "disk_type"
+            ]
+        }, 
+        "notify": {
+            "description": "Minio configuration properties.", 
+            "type": "object", 
+            "properties": {
+                "amqp": {
+                    "type": "object", 
+                    "description": "Internet protocol for business messaging.", 
+                    "properties": {
+                        "enable": {
+                            "description": "Enable notification service for Ampq.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "url": {
+                            "description": "Endpoint for Amqp.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "exchange": {
+                            "description": "Value of the exchange to route the messages to the different queues.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "routingKey": {
+                            "description": "Value of the key that helps in deciding how to route the message to queues depending on exchange type.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "exchangeType": {
+                            "description": "The routing algorithm to be used.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "deliveryMode": {
+                            "description": "Determines if message will be stored on disk after broker restarts.", 
+                            "type": "integer", 
+                            "default": 0
+                        }, 
+                        "mandatory": {
+                            "description": "Value of the flag which tells the server how to react if a message cannot be routed to a queue.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "immediate": {
+                            "description": "Value of immediate set which routes the message to ready consumers in the matching queue.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "durable": {
+                            "description": "AMQP entities, queues and exchanges, which would survive server restarts.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "internal": {
+                            "description": "If the exchange is internal, it cannot be directly published by a client.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "noWait": {
+                            "description": "If set, the server will not respond to the method.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "autoDeleted": {
+                            "description": "Automatically deletes the queue when last consumer unsubscribes.", 
+                            "type": "boolean", 
+                            "default": false
+                        }
+                    }
+                }, 
+                "nats": {
+                    "type": "object", 
+                    "description": "NATS Server is an open source messaging system for cloud native applications.", 
+                    "properties": {
+                        "enable": {
+                            "description": "Enable notification service for nats.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "address": {
+                            "description": "Remaps one IP address space into another.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "subject": {
+                            "description": "Name of the subject to be used.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "username": {
+                            "description": "Name of the user.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "password": {
+                            "description": "Password of the user.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "token": {
+                            "description": "Wildcard character to be matched.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "secure": {
+                            "description": "Value of the flag to enable security in NATS including user authentication and TLS certificates.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "pingInterval": {
+                            "description": "Interval between successive keep-alive messages.", 
+                            "type": "integer", 
+                            "default": 0
+                        }, 
+                        "streaming": {
+                            "description": "Data streaming facility of NATS.", 
+                            "type": "object", 
+                            "properties": {
+                                "enable": {
+                                    "description": "Enable notification service for Streaming.", 
+                                    "type": "boolean", 
+                                    "default": false
+                                }, 
+                                "clusterID": {
+                                    "description": "ID of the Cluster", 
+                                    "type": "string", 
+                                    "default": ""
+                                }, 
+                                "clientID": {
+                                    "description": "ID of the Client.", 
+                                    "type": "string", 
+                                    "default": ""
+                                }, 
+                                "async": {
+                                    "description": "Enable or disable synchronization", 
+                                    "type": "boolean", 
+                                    "default": false
+                                }, 
+                                "maxPubAcksInflight": {
+                                    "description": "Number of acknowledgements", 
+                                    "type": "integer", 
+                                    "default": 0
+                                }
+                            }
+                        }
+                    }
+                }, 
+                "elasticsearch": {
+                    "type": "object", 
+                    "description": "Elastic search is a highly scalable open-source full-text search and analytics engine.", 
+                    "properties": {
+                        "enable": {
+                            "description": "Enable notification service for Elastice search.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "format": {
+                            "description": "Value among set of preconfigured formats to recognize and parse these strings into a long value representing milliseconds-since-the-epoch in UTC.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "url": {
+                            "description": "Endpoint of Elastic.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "index": {
+                            "description": "Value of the Index.", 
+                            "type": "string", 
+                            "default": ""
+                        }
+                    }
+                }, 
+                "redis": {
+                    "type": "object", 
+                    "description": "Redis is an in-memory remote data structure store used as an database, cache and message broker.", 
+                    "properties": {
+                        "enable": {
+                            "description": "Enable notification service for Redis.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "format": {
+                            "description": "Value among set of preconfigured formats.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "address": {
+                            "description": "Endpoint of Redis cluster.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "password": {
+                            "description": "Password of the user.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "key": {
+                            "description": "Value of the identifier.", 
+                            "type": "string", 
+                            "default": ""
+                        }
+                    }
+                }, 
+                "postgresql": {
+                    "type": "object", 
+                    "description": "Postgresql is a powerful, open source object-relational database system.", 
+                    "properties": {
+                        "enable": {
+                            "description": "Enable notification service for Postgresql.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "format": {
+                            "description": "Value among set of preconfigured formats.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "connectionString": {
+                            "description": "Connect to a data source without using a DSN.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "table": {
+                            "description": "Name of the table to store notification data.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "host": {
+                            "description": "Endpoint of Postgre database.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "port": {
+                            "description": "TCP/IP port on which Postgre is listening for connections.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "user": {
+                            "description": "Name of the Postgre user.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "password": {
+                            "description": "Password of the user in Postgre.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "database": {
+                            "description": "Name of the database to be used.", 
+                            "type": "string", 
+                            "default": ""
+                        }
+                    }
+                }, 
+                "kafka": {
+                    "type": "object", 
+                    "description": "Kafka is for building real time data pipelines and streaming apps.", 
+                    "properties": {
+                        "enable": {
+                            "description": "Enable notification service for Kafka.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "brokers": {
+                            "description": "Endpoint of the Kafka Broker.", 
+                            "type": "string", 
+                            "default": "null"
+                        }, 
+                        "topic": {
+                            "description": "Name of the Kafka Topic to be used.", 
+                            "type": "string", 
+                            "default": ""
+                        }
+                    }
+                }, 
+                "webhook": {
+                    "type": "object", 
+                    "description": "Webhook is an HTTP callback.", 
+                    "properties": {
+                        "enable": {
+                            "description": "Enable notification service for Webhook.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "endpoint": {
+                            "description": "Endpoint of the Webhook.", 
+                            "type": "string", 
+                            "default": ""
+                        }
+                    }
+                }, 
+                "mysql": {
+                    "type": "object", 
+                    "description": "MySQL is an open-source relational database management system.", 
+                    "properties": {
+                        "enable": {
+                            "description": "Enable notification service for Mysql.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "format": {
+                            "description": "Value among set of preconfigured formats.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "dsnString": {
+                            "description": "The DSN (Domain Source Name).", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "table": {
+                            "description": "Name of the table to store notification data.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "host": {
+                            "description": "The hostname on which the database server resides.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "port": {
+                            "description": "The TCP/IP port on which the MySQL server is listening (the default is 3306).", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "user": {
+                            "description": "User name to use for the connection.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "password": {
+                            "description": "Password of the user in Mysql.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "database": {
+                            "description": "The name of the database.", 
+                            "type": "string", 
+                            "default": ""
+                        }
+                    }
+                }, 
+                "mqtt": {
+                    "type": "object", 
+                    "description": "MQTT is an ISO standard publish-subscribe-based messaging protocol.", 
+                    "properties": {
+                        "enable": {
+                            "description": "Enable notification service for Mqtt.", 
+                            "type": "boolean", 
+                            "default": false
+                        }, 
+                        "broker": {
+                            "description": "Endpoint of MQTT Broker.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "topic": {
+                            "description": "Name of the MQTT Topic to be used.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "qos": {
+                            "description": "Quality of service (QoS) is an attribute of an individual message being published.", 
+                            "type": "integer", 
+                            "default": 0
+                        }, 
+                        "clientId": {
+                            "description": "Identifier of the client.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "username": {
+                            "description": "Name of the user for authentication.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "password": {
+                            "description": "Password of the user.", 
+                            "type": "string", 
+                            "default": ""
+                        }, 
+                        "reconnectInterval": {
+                            "description": "Time interval in which to automatically reconnect or re-attach to the server.", 
+                            "type": "integer", 
+                            "default": 0
+                        }, 
+                        "keepAliveInterval": {
+                            "description": "This attribute is used to specify a timeout value for a channel.", 
+                            "type": "integer", 
+                            "default": 0
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
