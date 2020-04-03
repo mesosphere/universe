@@ -196,7 +196,7 @@
                   "default": false
                 },
                 "tls_cert": {
-                  "description": "Secret name that contains tls cert",
+                  "description": "Secret name that contains TLS certificate",
                   "type": "string",
                   "default": "",
                   "media": {
@@ -204,16 +204,16 @@
                   }
                 },
                 "key_store": {
-                  "description": "Secret name that contains key store file.",
+                  "description": "Secret name that contains keystore file",
                   "type": "string",
-                  "title": "key store",
+                  "title": "keystore",
                   "default": "",
                   "media": {
                     "type": "application/x-secret+string"
                   }
                 },
                 "key_store_password_file": {
-                  "description": "Secret name that contains key store password file.",
+                  "description": "Secret name that contains keystore password file.",
                   "type": "string",
                   "default": "",
                   "media": {
@@ -221,7 +221,7 @@
                   }
                 },
                 "trust_store": {
-                  "description": "Secret name that contains trust store file.",
+                  "description": "Secret name that contains truststore file.",
                   "type": "string",
                   "default": "",
                   "media": {
@@ -229,7 +229,7 @@
                   }
                 },
                 "trust_store_password_file": {
-                  "description": "Secret name that contains trust store password file.",
+                  "description": "Secret name that contains truststore password file.",
                   "type": "string",
                   "default": "",
                   "media": {
