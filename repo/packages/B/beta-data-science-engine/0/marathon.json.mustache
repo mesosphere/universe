@@ -1,0 +1,436 @@
+{
+  "id": "{{service.name}}",
+  "instances": 1,
+  "cpus": 1.0,
+  "mem": 1024,
+  "container": {
+    "type": "MESOS",
+    "docker": {
+      "image": "{{resource.assets.container.docker.scheduler}}",
+    "forcePullImage": true
+    },
+    "volumes": [
+      {{#service.service_account_secret}}
+      {
+        "containerPath": "secrets/service-account.json",
+        "secret": "serviceCredential"
+      }
+      {{/service.service_account_secret}}
+    ]
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "cmd": "chmod +x init.sh; ./init.sh",
+  "constraints": {{service.placement_constraints}},
+  "env": {
+    {{#service.service_account_secret}}
+    "SERVICE_SERVICE_ACCOUNT_SECRET": "{{service.service_account_secret}}",
+    {{/service.service_account_secret}}
+    "TASKCFG_ALL_PORT_SPARKHISTORY": "18080",
+    "PACKAGE_NAME": "beta-data-science-engine",
+    "PACKAGE_VERSION": "2.0.0-beta",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1588139321590",
+    "PACKAGE_BUILD_TIME_STR": "Wed Apr 29 2020 05:48:41 +0000",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.service_account}}",
+
+    "SERVICE_NAME":  "{{service.name}}",
+
+    "JUPYTER_CMD": "{{{service.cmd}}}",
+    "JUPYTER_PLACEMENT": "{{service.placement_constraints}}",
+
+    {{#advanced.jupyter_notebook_image}}
+    "JUPYTER_NOTEBOOK_IMAGE": "{{advanced.jupyter_notebook_image}}",
+    {{/advanced.jupyter_notebook_image}}
+    {{^advanced.jupyter_notebook_image}}
+    "JUPYTER_NOTEBOOK_IMAGE": "{{service.jupyter_notebook_image}}",
+    {{/advanced.jupyter_notebook_image}}
+
+
+
+    {{#storage.host_path.enabled}}
+    "STORAGE_HOST_PATH_ENABLED": "{{storage.host_path.enabled}}",
+    "STORAGE_HOST_PATH_CONTAINER_PATH": "{{storage.host_path.container_path}}",
+    "STORAGE_HOST_PATH_PATH": "{{storage.host_path.path}}",
+    {{/storage.host_path.enabled}}
+
+    {{#storage.local_persistence.enabled}}
+    "STORAGE_LOCAL_PERSISTENCE_ENABLED" : "{{storage.local_persistence.enabled}}",
+    "STORAGE_LOCAL_PERSISTENCE_VOLUME_PATH": "{{storage.local_persistence.volume_path}}",
+    "STORAGE_LOCAL_PERSISTENCE_VOLUME_SIZE": "{{storage.local_persistence.volume_size}}",
+    "TASKCFG_ALL_JUPYTER_NOTEBOOK_DIR": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}",
+    {{/storage.local_persistence.enabled}}
+    {{^storage.local_persistence.enabled}}
+    "TASKCFG_ALL_JUPYTER_NOTEBOOK_DIR": "{{advanced.sandbox}}",
+    {{/storage.local_persistence.enabled}}
+
+    {{#security.kerberos.enabled}}
+    "TASKCFG_ALL_KERBEROS_ENABLED": "true",
+    {{#security.kerberos.keytab_secret}}
+    "SECURITY_KERBEROS_KEYTAB_SECRET" :"{{security.kerberos.keytab_secret}}",
+    "TASKCFG_ALL_KERBEROS_KEYTAB": "secrets/kerberos.keytab",
+    {{/security.kerberos.keytab_secret}}
+    {{#security.kerberos.kdc.hostname}}
+    "TASKCFG_ALL_KERBEROS_KDC_HOSTNAME": "{{security.kerberos.kdc.hostname}}",
+    {{/security.kerberos.kdc.hostname}}
+    {{#security.kerberos.kdc.port}}
+    "TASKCFG_ALL_KERBEROS_KDC_PORT": "{{security.kerberos.kdc.port}}",
+    {{/security.kerberos.kdc.port}}
+    {{#security.kerberos.primary}}
+    "TASKCFG_ALL_KERBEROS_PRIMARY": "{{security.kerberos.primary}}",
+    {{/security.kerberos.primary}}
+    {{#security.kerberos.realm}}
+    "TASKCFG_ALL_KERBEROS_REALM": "{{security.kerberos.realm}}",
+    {{/security.kerberos.realm}}
+    {{/security.kerberos.enabled}}
+    {{#security.tls.enabled}}
+    "TLS_ENABLED": "{{security.tls.enabled}}",
+    "TASKCFG_ALL_SPARK_SSL_ENABLED": "true",
+    "TASKCFG_ALL_SPARK_SSL_PROTOCOL": "{{security.tls.protocol}}",
+    {{#security.tls.truststore_secret}}
+    "SECURITY_TLS_TRUSTSTORE_SECRET": "{{security.tls.truststore_secret}}",
+    "SECURITY_TLS_TRUSTSTORE_PATH": "{{security.tls.truststore_path}}",
+    "SECURITY_TLS_TRUSTSTORE_PASSWORD_SECRET": "{{security.tls.truststore_password}}",
+    "TASKCFG_ALL_SPARK_SSL_TRUSTSTORE": "{{security.tls.truststore_path}}",
+    {{/security.tls.truststore_secret}}
+    {{#security.tls.keystore_secret}}
+    "SECURITY_TLS_KEYSTORE_SECRET": "{{security.tls.keystore_secret}}",
+    "SECURITY_TLS_KEYSTORE_PATH": "{{security.tls.keystore_path}}",
+    "SECURITY_TLS_KEY_PASSWORD": "{{security.tls.key_password}}",
+    "SECURITY_TLS_KEYSTORE_PASSWORD" : "{{security.tls.keystore_password}}",
+    "TASKCFG_ALL_SPARK_SSL_KEYSTORE": "{{security.tls.keystore_path}}",
+    {{/security.tls.keystore_secret}}
+    {{#security.tls.ca_bundle_secret}}
+    "SECURITY_TLS_CA_BUNDLE_SECRET": "{{security.tls.ca_bundle_secret}}",
+    "SECURITY_TLS_CA_BUNDLE_PATH": "{{security.tls.ca_bundle_path}}",
+    {{/security.tls.ca_bundle_secret}}
+    "TASKCFG_ALL_TLS_SECRET_NAMES": "{{security.tls.truststore_secret}},{{security.tls.keystore_secret}},{{security.tls.ca_bundle_secret}}",
+    "TASKCFG_ALL_TLS_SECRET_ENVKEYS": "TRUSTSTORE,KEYSTORE,TRUSTSTORE_CA",
+    "TASKCFG_ALL_TLS_SECRET_FILENAMES": "{{security.tls.truststore_path}},{{security.tls.keystore_path}},{{security.tls.ca_bundle_path}}",
+    {{/security.tls.enabled}}
+
+
+
+
+    {{#service.gpu.enabled}}
+    "SERVICE_GPUS": "{{service.gpu.gpus}}",
+    {{/service.gpu.enabled}}
+
+
+
+    "SERVICE_CPUS": "{{service.cpus}}",
+    "SERVICE_MEM": "{{service.mem}}",
+
+
+    {{#storage.s3.aws_access_key_id}}
+    "STORAGE_S3_AWS_ACCESS_KEY_ID": "{{storage.s3.aws_access_key_id}}",
+    {{#storage.s3.aws_secret_access_key}}
+        "TASKCFG_ALL_AWS_SECRET_NAMES": "{{storage.s3.aws_access_key_id}},{{storage.s3.aws_secret_access_key}}",
+        "TASKCFG_ALL_AWS_SECRET_ENVKEYS": "AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY",
+        "TASKCFG_ALL_AWS_SECRET_FILENAMES": "secrets/aws_access_key_id,secrets/aws_secret_access_key",
+    {{/storage.s3.aws_secret_access_key}}
+    {{^storage.s3.aws_secret_access_key}}
+        "TASKCFG_ALL_AWS_SECRET_NAMES": "{{storage.s3.aws_access_key_id}}",
+        "TASKCFG_ALL_AWS_SECRET_ENVKEYS": "AWS_ACCESS_KEY_ID",
+        "TASKCFG_ALL_AWS_SECRET_FILENAMES": "secrets/aws_access_key_id",
+    {{/storage.s3.aws_secret_access_key}}
+    {{/storage.s3.aws_access_key_id}}
+    {{#storage.s3.aws_secret_access_key}}
+    "STORAGE_S3_AWS_SECRET_ACCESS_KEY": "{{storage.s3.aws_secret_access_key}}",
+    {{#storage.s3.aws_access_key_id}}
+        "TASKCFG_ALL_AWS_SECRET_NAMES": "{{storage.s3.aws_access_key_id}},{{storage.s3.aws_secret_access_key}}",
+        "TASKCFG_ALL_AWS_SECRET_ENVKEYS": "AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY",
+        "TASKCFG_ALL_AWS_SECRET_FILENAMES": "secrets/aws_access_key_id,secrets/aws_secret_access_key",
+    {{/storage.s3.aws_access_key_id}}
+    {{^storage.s3.aws_access_key_id}}
+        "TASKCFG_ALL_AWS_SECRET_NAMES": "{{storage.s3.aws_secret_access_key}}",
+        "TASKCFG_ALL_AWS_SECRET_ENVKEYS": "AWS_SECRET_ACCESS_KEY",
+        "TASKCFG_ALL_AWS_SECRET_FILENAMES": "secrets/aws_secret_access_key",
+    {{/storage.s3.aws_access_key_id}}
+    {{/storage.s3.aws_secret_access_key}}
+
+    {{#security.extra_spark_secrets.secret_names}}
+    "TASKCFG_ALL_EXTRA_SECRET_NAMES": "{{security.extra_spark_secrets.secret_names}}",
+    {{/security.extra_spark_secrets.secret_names}}
+    {{#security.extra_spark_secrets.secret_filenames}}
+    "TASKCFG_ALL_EXTRA_SECRET_FILENAMES": "{{security.extra_spark_secrets.secret_filenames}}",
+    {{/security.extra_spark_secrets.secret_filenames}}
+    {{#security.extra_spark_secrets.secret_envkeys}}
+    "TASKCFG_ALL_EXTRA_SECRET_ENVKEYS": "{{security.extra_spark_secrets.secret_envkeys}}",
+    {{/security.extra_spark_secrets.secret_envkeys}}
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": "/mnt/mesos/sandbox/secrets/service-account.json",
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\",\"parameters\":[{\"key\":\"service_account_credential\",\"value\":\"file:///mnt/mesos/sandbox/secrets/service-account.json\"}]},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"service_account_credential\",\"value\":\"file:///mnt/mesos/sandbox/secrets/service-account.json\"},{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.service_account_secret}}
+    {{#networking.virtual_network_enabled}}
+    "TASKCFG_ALL_VIRTUAL_NETWORK_ENABLED": "true",
+    "TASKCFG_ALL_VIRTUAL_NETWORK_NAME": "{{networking.virtual_network_name}}",
+    {{#networking.virtual_network_plugin_labels}}
+    "TASKCFG_ALL_VIRTUAL_NETWORK_PLUGIN_LABELS": "{{networking.virtual_network_plugin_labels}}",
+    {{/networking.virtual_network_plugin_labels}}
+    {{/networking.virtual_network_enabled}}
+    {{#storage.local_persistence.enabled}}
+    "TASKCFG_ALL_CONDA_ENVS_PATH": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}/conda/envs:/opt/conda/envs",
+    "TASKCFG_ALL_CONDA_PKGS_DIRS": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}/conda/pkgs:/opt/conda/pkgs",
+    "TASKCFG_ALL_DCOS_DIR": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}/.dcos",
+    "TASKCFG_ALL_HADOOP_CONF_DIR": "{{advanced.hadoop_conf_dir}}",
+    "TASKCFG_ALL_HOME": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}",
+    "TASKCFG_ALL_JUPYTER_CONFIG_DIR": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}/.jupyter",
+    "TASKCFG_ALL_JUPYTER_RUNTIME_DIR": "{{advanced.sandbox}}/{{storage.local_persistence.volume_path}}/.local/share/jupyter/runtime",
+    {{/storage.local_persistence.enabled}}
+    {{^storage.local_persistence.enabled}}
+    "TASKCFG_ALL_CONDA_ENVS_PATH": "{{advanced.conda_envs_path}}",
+    "TASKCFG_ALL_CONDA_PKGS_DIRS": "{{advanced.conda_pkgs_dir}}",
+    "TASKCFG_ALL_DCOS_DIR": "{{advanced.dcos_dir}}",
+    "TASKCFG_ALL_HADOOP_CONF_DIR": "{{advanced.hadoop_conf_dir}}",
+    "TASKCFG_ALL_HOME": "{{advanced.home}}",
+    "TASKCFG_ALL_JUPYTER_CONFIG_DIR": "{{advanced.jupyter_config_dir}}",
+    "TASKCFG_ALL_JUPYTER_RUNTIME_DIR": "{{advanced.jupyter_runtime_dir}}",
+    {{/storage.local_persistence.enabled}}
+
+    "TASKCFG_ALL_JAVA_OPTS": "'{{advanced.java_opts}}'",
+
+    {{#service.jupyter_conf_urls}}
+    "TASKCFG_ALL_JUPYTER_CONF_URLS": "{{service.jupyter_conf_urls}}",
+    {{/service.jupyter_conf_urls}}
+
+    "TASKCFG_ALL_NB_UID": "{{service.user_id}}",
+    "TASKCFG_ALL_NB_GID": "{{service.group_id}}",
+
+    "TASKCFG_ALL_JUPYTER_PASSWORD": "{{service.jupyter_password}}",
+
+    "NGINX_LOG_LEVEL": "{{advanced.nginx_log_level}}",
+
+    {{#oidc.enabled}}
+    "OIDC_ENABLED": "{{oidc.enabled}}",
+    {{#oidc.authorization_params}}
+    "TASKCFG_ALL_OIDC_AUTHORIZATION_PARAMS": "{{oidc.authorization_params}}",
+    {{/oidc.authorization_params}}
+
+    "TASKCFG_ALL_OIDC_CLIENT_ID": "{{oidc.client_id}}",
+
+    {{#oidc.client_secret}}
+    "TASKCFG_ALL_OIDC_CLIENT_SECRET": "{{oidc.client_secret}}",
+    {{/oidc.client_secret}}
+
+    "TASKCFG_ALL_OIDC_DISCOVERY_URI": "{{oidc.discovery_uri}}",
+
+    {{#oidc.email}}
+    "TASKCFG_ALL_OIDC_EMAIL": "{{oidc.email}}",
+    {{/oidc.email}}
+
+    "TASKCFG_ALL_OIDC_LOGOUT_PATH": "https://{{networking.ingress.hostname}}{{service.name}}{{oidc.logout_path}}",
+
+    {{#oidc.post_logout_redirect_uri}}
+    "TASKCFG_ALL_OIDC_POST_LOGOUT_REDIRECT_URI": "{{oidc.post_logout_redirect_uri}}",
+    {{/oidc.post_logout_redirect_uri}}
+    {{^oidc.post_logout_redirect_uri}}
+    "TASKCFG_ALL_OIDC_POST_LOGOUT_REDIRECT_URI": "https://{{networking.ingress.hostname}}{{service.name}}",
+    {{/oidc.post_logout_redirect_uri}}
+
+    "TASKCFG_ALL_OIDC_REDIRECT_URI": "https://{{networking.ingress.hostname}}/service/{{service.name}}{{oidc.redirect_uri}}",
+
+    {{#oidc.redirect_after_logout_uri}}
+    "TASKCFG_ALL_OIDC_REDIRECT_AFTER_LOGOUT_URI": "{{oidc.redirect_after_logout_uri}}",
+    {{/oidc.redirect_after_logout_uri}}
+    {{^oidc.redirect_after_logout_uri}}
+    "TASKCFG_ALL_OIDC_REDIRECT_AFTER_LOGOUT_URI": "https://{{networking.ingress.hostname}}{{service.name}}",
+    {{/oidc.redirect_after_logout_uri}}
+
+    "TASKCFG_ALL_OIDC_SCOPE": "{{oidc.scope}}",
+
+    {{#oidc.tls_verify}}
+    "TASKCFG_ALL_OIDC_TLS_VERIFY": "yes",
+    {{/oidc.tls_verify}}
+    {{^oidc.tls_verify}}
+    "TASKCFG_ALL_OIDC_TLS_VERIFY": "no",
+    {{/oidc.tls_verify}}
+
+    "TASKCFG_ALL_OIDC_TOKEN_ENDPOINT_AUTH_METHOD": "{{oidc.token_endpoint_auth_method}}",
+
+    {{#oidc.upn}}
+    "TASKCFG_ALL_OIDC_UPN": "{{oidc.upn}}",
+    {{/oidc.upn}}
+
+    "OIDC_USE_SPARTAN_RESOLVER": "{{oidc.use_spartan_resolver}}",
+    {{/oidc.enabled}}
+
+    "TASKCFG_ALL_AWS_REGION": "{{storage.s3.aws_region}}",
+    "TASKCFG_ALL_S3_ENDPOINT": "{{storage.s3.endpoint}}",
+    "TASKCFG_ALL_S3_USE_HTTPS": "{{storage.s3.use_https}}",
+    "TASKCFG_ALL_S3_VERIFY_SSL": "{{storage.s3.verify_ssl}}",
+
+    {{#storage.s3.aws_access_key_id}}
+        {{#storage.s3.aws_secret_access_key}}
+        "TASKCFG_ALL_AWS_SECRET_NAMES": "{{storage.s3.aws_access_key_id}},{{storage.s3.aws_secret_access_key}}",
+        "TASKCFG_ALL_AWS_SECRET_ENVKEYS": "AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY",
+        "TASKCFG_ALL_AWS_SECRET_FILENAMES": "secrets/aws_access_key_id,secrets/aws_secret_access_key",
+        {{/storage.s3.aws_secret_access_key}}
+        {{^storage.s3.aws_secret_access_key}}
+            "TASKCFG_ALL_AWS_SECRET_NAMES": "{{storage.s3.aws_access_key_id}}",
+            "TASKCFG_ALL_AWS_SECRET_ENVKEYS": "AWS_ACCESS_KEY_ID",
+            "TASKCFG_ALL_AWS_SECRET_FILENAMES": "secrets/aws_access_key_id",
+        {{/storage.s3.aws_secret_access_key}}
+    {{/storage.s3.aws_access_key_id}}
+    {{#storage.s3.aws_secret_access_key}}
+        {{#storage.s3.aws_access_key_id}}
+            "TASKCFG_ALL_AWS_SECRET_NAMES": "{{storage.s3.aws_access_key_id}},{{storage.s3.aws_secret_access_key}}",
+            "TASKCFG_ALL_AWS_SECRET_ENVKEYS": "AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY",
+            "TASKCFG_ALL_AWS_SECRET_FILENAMES": "secrets/aws_access_key_id,secrets/aws_secret_access_key",
+        {{/storage.s3.aws_access_key_id}}
+        {{^storage.s3.aws_access_key_id}}
+            "TASKCFG_ALL_AWS_SECRET_NAMES": "{{storage.s3.aws_secret_access_key}}",
+            "TASKCFG_ALL_AWS_SECRET_ENVKEYS": "AWS_SECRET_ACCESS_KEY",
+            "TASKCFG_ALL_AWS_SECRET_FILENAMES": "secrets/aws_secret_access_key",
+        {{/storage.s3.aws_access_key_id}}
+    {{/storage.s3.aws_secret_access_key}}
+
+    "TASKCFG_ALL_SPARK_MASTER_URL": "{{spark.spark_master_url}}",
+    "TASKCFG_ALL_SPARK_USER": "{{spark.spark_user}}",
+    "TASKCFG_ALL_SPARK_DRIVER_CORES": "{{spark.spark_driver_cores}}",
+    "TASKCFG_ALL_SPARK_DRIVER_MEMORY": "{{spark.spark_driver_memory}}",
+    "TASKCFG_ALL_SPARK_DRIVER_JAVA_OPTIONS": "\"{{spark.spark_driver_java_options}}\"",
+
+    "TASKCFG_ALL_SPARK_HISTORY_FS_LOGDIRECTORY": "{{spark.spark_history_fs_logdirectory}}",
+
+    "TASKCFG_ALL_SPARK_SCHEDULER_MINREGISTEREDRESOURCESRATIO": "{{spark.spark_scheduler_min_registered_resources_ratio}}",
+    "TASKCFG_ALL_SPARK_CORES_MAX": "{{spark.spark_cores_max}}",
+    "TASKCFG_ALL_SPARK_EXECUTOR_CORES": "{{spark.spark_executor_cores}}",
+    "TASKCFG_ALL_SPARK_EXECUTOR_MEMORY": "{{spark.spark_executor_memory}}",
+    "TASKCFG_ALL_SPARK_EXECUTOR_JAVA_OPTIONS": "\"{{spark.spark_executor_java_options}}\"",
+
+    "TASKCFG_ALL_SPARK_EVENTLOG_ENABLED": "{{spark.spark_eventlog_enabled}}",
+    "TASKCFG_ALL_SPARK_EVENTLOG_DIR": "{{spark.spark_eventlog_dir}}",
+
+    "TASKCFG_ALL_SPARK_HADOOP_FS_S3A_AWS_CREDENTIALS_PROVIDER": "{{spark.spark_hadoop_fs_s3a_aws_credentials_provider}}",
+
+    {{#advanced.jupyter_worker_image}}
+        "TASKCFG_ALL_SPARK_MESOS_EXECUTOR_DOCKER_IMAGE":"{{advanced.jupyter_worker_image}}",
+    {{/advanced.jupyter_worker_image}}
+    {{^advanced.jupyter_worker_image}}
+        "TASKCFG_ALL_SPARK_MESOS_EXECUTOR_DOCKER_IMAGE":"{{service.jupyter_worker_image}}",
+    {{/advanced.jupyter_worker_image}}
+
+    "TASKCFG_ALL_SPARK_MESOS_EXECUTOR_DOCKER_FORCEPULLIMAGE": "{{spark.spark_mesos_executor_docker_forcepullimage}}",
+    "TASKCFG_ALL_SPARK_MESOS_EXECUTOR_HOME": "{{spark.spark_mesos_executor_home}}",
+    "TASKCFG_ALL_SPARK_MESOS_CONTAINERIZER": "{{spark.spark_mesos_containerizer}}",
+
+    {{#service.gpu.enabled}}
+    "TASKCFG_ALL_SPARK_MESOS_GPUS_MAX": "{{spark.spark_mesos_gpus_max}}",
+    "TASKCFG_ALL_SPARK_MESOS_EXECUTOR_GPUS": "{{spark.spark_mesos_executor_gpus}}",
+    {{/service.gpu.enabled}}
+
+    "TASKCFG_ALL_SPARK_DCOS_SPACE": "{{service.name}}",
+    {{#spark.spark_mesos_principal}}
+    "TASKCFG_ALL_SPARK_MESOS_PRINCIPAL": "{{spark.spark_mesos_principal}}",
+    {{/spark.spark_mesos_principal}}
+
+    {{#spark.spark_mesos_secret}}
+    "TASKCFG_ALL_SPARK_MESOS_SECRET": "{{spark.spark_mesos_secret}}",
+    {{/spark.spark_mesos_secret}}
+
+    {{#spark.spark_mesos_role}}
+    "TASKCFG_ALL_SPARK_MESOS_ROLE": "{{spark.spark_mesos_role}}",
+    {{/spark.spark_mesos_role}}
+
+    {{#spark.spark_mesos_driver_labels}}
+    "TASKCFG_ALL_SPARK_MESOS_DRIVER_LABELS": "{{spark.spark_mesos_driver_labels}}",
+    {{/spark.spark_mesos_driver_labels}}
+
+    {{#spark.spark_mesos_task_labels}}
+    "TASKCFG_ALL_SPARK_MESOS_TASK_LABELS": "{{spark.spark_mesos_task_labels}}",
+    {{/spark.spark_mesos_task_labels}}
+
+    "TASKCFG_ALL_SPARK_EXECUTORENV_JAVA_HOME": "{{spark.spark_executor_java_home}}",
+    "TASKCFG_ALL_SPARK_EXECUTORENV_HADOOP_HDFS_HOME": "{{spark.spark_executor_hadoop_hdfs_home}}",
+    "TASKCFG_ALL_SPARK_EXECUTORENV_HADOOP_OPTS": "'{{spark.spark_executor_hadoop_opts}}'",
+
+    {{#spark.spark_jars_packages}}
+    "TASKCFG_ALL_SPARK_JARS_PACKAGES": "{{spark.spark_jars_packages}}",
+    {{/spark.spark_jars_packages}}
+
+    {{#spark.start_spark_history_server}}
+    "TASKCFG_ALL_START_SPARK_HISTORY": "{{spark.start_spark_history_server}}",
+    {{/spark.start_spark_history_server}}
+
+    {{#advanced.start_tensorboard}}
+    "TASKCFG_ALL_START_TENSORBOARD": "{{advanced.start_tensorboard}}",
+    "TASKCFG_ALL_TENSORBOARD_LOGDIR": "{{advanced.tensorboard_logdir}}",
+    {{/advanced.start_tensorboard}}
+
+    {{#networking.ingress.enabled}}
+    "TASKCFG_ALL_HAPROXY_ENABLED": "{{networking.ingress.enabled}}",
+    "TASKCFG_ALL_HAPROXY_VHOST": "{{networking.ingress.hostname}}",
+    "TASKCFG_ALL_Y_REDIRECT_TO_HTTPS": "true",
+    "TASKCFG_ALL_HAPROXY_PATH": "/service/{{service.name}}",
+    {{/networking.ingress.enabled}}
+
+    "TASKCFG_ALL_TERM": "{{advanced.term}}",
+    "TASKCFG_ALL_USER": "root"
+  },
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "1",
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_PACKAGE_IS_FRAMEWORK": "true",
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    {{#networking.ingress.enabled}}
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_ENABLED": "true",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "true",
+    "HAPROXY_0_VHOST": "{{networking.ingress.hostname}}",
+    "HAPROXY_0_PATH": "/service/{{service.name}}",
+    "HAPROXY_2_ENABLED": "true",
+    "HAPROXY_2_REDIRECT_TO_HTTPS": "true",
+    {{/networking.ingress.enabled}}
+    "DCOS_SERVICE_WEB_PATH": "/"
+  },
+  "healthChecks": [
+     {
+      "protocol": "MESOS_HTTP",
+      "path": "/v1/health",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+     }
+  ],
+  "fetch": [
+    { "uri": "{{resource.assets.uris.bootstrap-zip}}", "cache": true },
+    { "uri": "{{resource.assets.uris.jre-tar-gz}}", "cache": true },
+    { "uri": "{{resource.assets.uris.scheduler-zip}}", "cache": true },
+    { "uri": "{{resource.assets.uris.libmesos-bundle-tar-gz}}", "cache": true },
+    { "uri": "{{resource.assets.uris.init-sh}}", "cache": true }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    },
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "proxy"
+    }
+  ],
+  "upgradeStrategy": {
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}
