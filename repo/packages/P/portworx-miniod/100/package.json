@@ -1,0 +1,23 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [
+    ""
+  ],
+  "downgradesTo": [
+    ""
+  ],
+  "minDcosReleaseVersion": "1.10",
+  "name": "portworx-miniod",
+  "version": "1.3.2-0.1.1",
+  "maintainer": "support@portworx.io",
+  "description": "Minio on DC/OS \n\nDocumentation: https://docs.mesosphere.com/services/minio \n\nIt is customizable and not guaranteed to work with every version of Miniod, use at your own risk. \n Updated: 26 Feb 2020.",
+  "selected": false,
+  "framework": true,
+  "tags": [
+    "minio",
+    "portworx"
+  ],
+  "preInstallNotes": "Default configuration requires 4 agent nodes each with: 2 CPU | 252 MB MEM | 1 200 MB Disk.\n\nPortworx should be installed on the DC/OS private agents in order to provision portworx volumes for this framework",
+  "postInstallNotes": "DC/OS Minio is being installed!\n\n\tIssues: support@portworx.com",
+  "postUninstallNotes": "DC/OS Minio is being uninstalled.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required."
+}
