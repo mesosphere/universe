@@ -1,0 +1,17 @@
+
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "airfield": "maibornwolff/airfield:0.3.0",
+        "zeppelin": "maibornwolff/zeppelin:1.1-0.8.1-all-2.4.0",
+        "spark": "mesosphere/spark:2.7.0-2.4.0-hadoop-2.7"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://github.com/MaibornWolff/dcos-airfield/raw/master/img/icon-service-default-small.png",
+    "icon-medium": "https://github.com/MaibornWolff/dcos-airfield/raw/master/img/icon-service-default-medium.png",
+    "icon-large": "https://github.com/MaibornWolff/dcos-airfield/raw/master/img/icon-service-default-large.png"
+  }
+}

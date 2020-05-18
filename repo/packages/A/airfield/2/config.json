@@ -1,0 +1,145 @@
+
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "airfield",
+          "title": "Service name"
+        },
+        "user": {
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "root",
+          "title": "User"
+        },
+        "service_account_secret": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": "",
+          "title": "Credential secret name (optional)"
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": false
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "marathon_lb_vhost": {
+          "description": "The domain name to make airfield available under, must be pointing to your marathon-lb",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "user"
+      ]
+    },
+    "node": {
+      "description": "airfield pod configuration properties",
+      "type": "object",
+      "properties": {
+        "cpus": {
+          "title": "CPU count",
+          "description": "airfield pod CPU requirements",
+          "type": "number",
+          "default": 0.5
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "airfield pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 512
+        }
+      },
+      "required": [
+        "cpus",
+        "mem"
+      ]
+    },
+    "airfield": {
+      "description": "Airfield specific configuration",
+      "type": "object",
+      "properties": {
+        "consul_endpoint": {
+          "title": "Endpoint for consul",
+          "description": "HTTP Endpoint for consul, e.g. \"http://api.consul.l4lb.thisdcos.directory:8500/v1\" if you use the consul package. Either this or etcd_endpoint must be set",
+          "type": "string"
+        },
+        "etcd_endpoint": {
+          "title": "Endpoint for etcd",
+          "description": "Endpoint for etcd, e.g. \"http://api.etcd.l4lb.thisdcos.directory:2379\" if you use the etcd package. Either this or consul_endpoint must be set",
+          "type": "string"
+        },
+        "app_group": {
+          "title": "Marathon App group for zeppelin instances",
+          "description": "app group to start zeppelin instances under. If not set \"airfield-zeppelin\" is used.",
+          "type": "string"
+        },
+        "dcos_groups_mapping_base64": {
+          "title": "DC/OS groups mapping base64 encoded",
+          "description": "JSON-key-value mapping of group names to marathon app groups. Encoded in base64.",
+          "type": "string"
+        },
+        "config_base_key": {
+          "title": "Key prefix in consul/etcd",
+          "description": "Key prefix in consul/etcd to use for storing airfield config. If not set \"airfield\" is used.",
+          "type": "string"
+        },
+        "dcos_base_url": {
+          "title": "Base URL of the DC/OS adminrouter",
+          "description": "URL of the DC/OS adminrouter. Default works under EE clusters in permissive/strict mode. Set this to \"http://leader.mesos\" if running on OpenSource DC/OS",
+          "type": "string"
+        },
+        "oidc_config_base64": {
+          "title": "Base64-encoded oidc config",
+          "description": "OIDC client configuration. See https://github.com/MaibornWolff/dcos-airfield/blob/master/airfield-microservice/airfield/resources/keycloak_example.json for an example. Encode the file with 'base64 -wc 0 oidc.json' and use the result as value for this config.",
+          "type": "string",
+          "default": ""
+        },
+        "hdfs_config": {
+          "title": "HDFS Config URL",
+          "description": "URL to download hdfs-site.xml and core-site.xml from to configure HDFS access. Will be passed to zeppelin. For a default DC/OS HDFS installation this is 'http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints'",
+          "type": "string"
+        },
+        "cost_tracking": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enable cost tracking",
+              "type": "boolean",
+              "default": false
+            },
+            "currency": {
+              "title": "Currency",
+              "description": "Currency to use when displaying costs. Has no effect on cost calculation.",
+              "type": "string",
+              "default": "EURO"
+            },
+            "cost_gb_per_minute": {
+              "title": "Cost of 1 GB per minute",
+              "description": "Cost of 1 GB of RAM reserved for an instance for 1 minute.",
+              "type": "number",
+              "default": 0.0
+            },
+            "cost_core_per_minute": {
+              "title": "Cost of 1 core per minute",
+              "description": "Cost of 1 cpu core reserved for an instance for 1 minute.",
+              "type": "number",
+              "default": 0.0
+            }
+          }
+        }
+      }
+    }
+  }
+}
