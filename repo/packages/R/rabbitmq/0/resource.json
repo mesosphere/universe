@@ -1,0 +1,61 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-8u212b03-hotspot-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.14-beta.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.56.3/bootstrap.zip",
+      "scheduler-zip": "https://hge-dcos.s3.amazonaws.com/autodelete7d/rabbitmq/20191212-061814-d1H2fxAbVFrQVIte/operator-scheduler.zip",
+      "mc-uri": "https://dl.minio.io/client/mc/release/linux-amd64/mc"
+    },
+    "container": {
+      "docker": {
+        "rabbitmq": "hyge/rabbitmq:3.7.17-management"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://github.com/rabbitmq/rabbitmq-website/blob/master/site/img/rabbitmq_logo_30x30.png?raw=true",
+    "icon-medium": "https://github.com/rabbitmq/rabbitmq-website/blob/master/site/img/rabbitmq_logo_30x30.png?raw=true",
+    "icon-large": "https://github.com/rabbitmq/rabbitmq-website/blob/master/site/img/rabbitmq_logo_30x30.png?raw=true"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "cc1f17a9b1e5154b7da7e448defd62cf82faf69ed12f9975b1e1e7c30bc9da16"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://hge-dcos.s3.amazonaws.com/autodelete7d/rabbitmq/20191212-061814-d1H2fxAbVFrQVIte/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "d191b52e8641b41d770ad86de0e9b4524cd2cc77251762080ceba7656d1baf10"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://hge-dcos.s3.amazonaws.com/autodelete7d/rabbitmq/20191212-061814-d1H2fxAbVFrQVIte/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "be725657f3d6967802885dccd0a98051647f753119728a2ecfb434b3e83dde5a"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://hge-dcos.s3.amazonaws.com/autodelete7d/rabbitmq/20191212-061814-d1H2fxAbVFrQVIte/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
