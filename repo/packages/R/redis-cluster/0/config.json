@@ -1,0 +1,211 @@
+{
+  "properties": {
+    "nodes": {
+      "description": "DC/OS Redis node configuration properties",
+      "properties": {
+        "count": {
+          "default": 6,
+          "description": "Number of Template pods to run, should be a multiple of (replicas + 1)",
+          "title": "Node count",
+          "minimum": 6,
+          "type": "integer"
+        },
+        "replicas": {
+          "default": 1,
+          "description": "Replicas of redis-cluster",
+          "title": "Cluster replicas",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cpus": {
+          "default": 0.5,
+          "description": "Template pod CPU requirements",
+          "title": "CPU count",
+          "type": "number"
+        },
+        "disk": {
+          "default": 1024,
+          "description": "Template pod persistent disk requirements (in MB)",
+          "title": "Disk size (MB)",
+          "type": "integer"
+        },
+        "disk_type": {
+          "default": "ROOT",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "title": "Disk type [ROOT, MOUNT]",
+          "type": "string"
+        },
+        "docker_image": {
+          "default": "redis",
+          "description": "docker image to use",
+          "title": "Docker image",
+          "type": "string"
+        },
+        "mem": {
+          "default": 1024,
+          "description": "Template pod mem requirements (in MB)",
+          "title": "Memory size (MB)",
+          "type": "integer"
+        },
+        "placement_constraint": {
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "description": "Placement constraints for redis-cluster servers. Example: [[\"hostname\", \"UNIQUE\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          },
+          "title": "Placement constraint",
+          "type": "string"
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "disk_type",
+        "docker_image"
+      ],
+      "type": "object"
+    },
+    "service": {
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "log_level": {
+          "default": "INFO",
+          "description": "The log level for the DC/OS service.",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "type": "string"
+        },
+        "name": {
+          "default": "redis-cluster",
+          "description": "The name of the service instance",
+          "title": "Service name",
+          "type": "string"
+        },
+        "placement_constraint": {
+          "default": "",
+          "description": "Marathon-style placement constraint for scheduler. Example: 'hostname:UNIQUE'. By the way since the framework requires specific ports UNIQUE constraints is implicit.",
+          "title": "Placement constraint",
+          "type": "string"
+        },
+        "service_account": {
+          "default": "",
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "type": "string"
+        },
+        "service_account_secret": {
+          "default": "",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "title": "Credential secret name (optional)",
+          "type": "string"
+        },
+        "sleep": {
+          "default": 1000,
+          "description": "The sleep duration in seconds before tasks exit.",
+          "type": "number"
+        },
+        "user": {
+          "default": "root",
+          "description": "The user that the service will run as.",
+          "title": "User",
+          "type": "string"
+        },
+        "virtual_network_enabled": {
+          "default": true,
+          "description": "Enable virtual networking",
+          "type": "boolean"
+        },
+        "virtual_network_name": {
+          "default": "dcos",
+          "description": "The name of the virtual network to join",
+          "type": "string"
+        },
+        "virtual_network_plugin_labels": {
+          "default": "",
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "sleep",
+        "user"
+      ],
+      "type": "object"
+    },
+    "redis": {
+      "description": "Redis configuration properties",
+      "type": "object",
+      "properties": {
+        "port": {
+          "type": "integer",
+          "description": "The port that will be used for redis-cli",
+          "default": 6379
+        },
+        "cluster_node_timeout": {
+          "type": "integer",
+          "description": "The port that will be used for redis-cli",
+          "default": 5000
+        },
+        "requirepass": {
+          "type": "string",
+          "description": "Redis password",
+          "default": ""
+        },
+        "tcp_keepalive": {
+          "type": "integer",
+          "description": "Use SO_KEEPALIVE to send TCP ACKs to clients in absence of communication",
+          "default": 60
+        },
+        "redis_timeout": {
+          "type": "integer",
+          "description": "Timeout value of a redis server. Close the connection after a client is idle for N seconds (0 to disable)",
+          "default": 0
+        },
+        "save900": {
+          "type": "integer",
+          "description": "The number of write operations in 900s required to save a RDB snapshot to disks",
+          "default": 1
+        },
+        "save300": {
+          "type": "integer",
+          "description": "The number of write operations in 300s required to save a RDB snapshot to disks",
+          "default": 10
+        },
+        "save60": {
+          "type": "integer",
+          "description": "The number of write operations in 60s required to save a RDB snapshot to disks",
+          "default": 10000
+        },
+        "appendonly": {
+          "type": "string",
+          "enum": [
+            "yes",
+            "no"
+          ],
+          "description": "Enable the append-only persistent mode",
+          "default": "no"
+        },
+        "config_uri": {
+          "type": "string",
+          "description": "The uri for redis.conf. If uri specified, other configuration will be invalid.",
+          "default": ""
+        }
+      }
+    }
+  },
+  "type": "object"
+}
