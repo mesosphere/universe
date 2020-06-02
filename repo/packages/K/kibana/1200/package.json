@@ -1,0 +1,36 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [
+    "2.7.0-6.8.1"
+  ],
+  "downgradesTo": [
+    "2.7.0-6.8.1"
+  ],
+  "minDcosReleaseVersion": "1.9",
+  "name": "kibana",
+  "version": "2.7.0-6.8.2",
+  "maintainer": "support@mesosphere.io",
+  "description": "Kibana 6, and X-Pack",
+  "selected": true,
+  "framework": true,
+  "tags": [
+    "elastic",
+    "elasticsearch",
+    "kibana",
+    "x-pack"
+  ],
+  "preInstallNotes": "This DC/OS service is currently a beta candidate undergoing testing as part of a formal beta test program. There may be bugs, incomplete features, incorrect documentation, or other discrepancies.\n\nDefault configuration requires 1 agent node with: 0.5 CPU | 2048 MB MEM\n\nContact Mesosphere before deploying this beta candidate service. Product support is available to approved participants in the beta test program.",
+  "postInstallNotes": "The DC/OS Kibana service is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/services/elastic/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "The DC/OS Kibana service is being uninstalled.\n\nFor DC/OS versions from 1.10 no further action is required. For older DC/OS versions follow the instructions at https://docs.mesosphere.com/services/elastic/uninstall to remove any persistent state if required.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/elastic/kibana/master/LICENSE.txt"
+    },
+    {
+      "name": "Elastic License",
+      "url": "https://raw.githubusercontent.com/elastic/kibana/master/x-pack/README.md"
+    }
+  ],
+  "lastUpdated": 1591011992
+}
