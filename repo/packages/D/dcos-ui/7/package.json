@@ -1,0 +1,19 @@
+{
+  "packagingVersion": "4.0",
+  "name": "dcos-ui",
+  "version": "5.1.3",
+  "tags": ["dcos-ui", "dcos", "ui"],
+  "maintainer": "frontend-dev@mesosphere.io",
+  "description": "DC/OS UI",
+  "scm": "https://github.com/dcos/dcos-ui",
+  "website": "https://dcos.io/",
+  "framework": false,
+  "minDcosReleaseVersion": "1.13",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://raw.githubusercontent.com/dcos/dcos-ui/master/LICENSE"
+    }
+  ],
+  "lastUpdated": 1593086641
+}
