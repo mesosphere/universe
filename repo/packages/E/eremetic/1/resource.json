@@ -1,0 +1,14 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/eremetic-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/eremetic-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/eremetic-icon-large.png"
+  },
+  "assets": {
+    "container": {
+      "docker": {
+        "eremetic": "alde/eremetic:0.29.0-2-gcce1ded"
+      }
+    }
+  }
+}
