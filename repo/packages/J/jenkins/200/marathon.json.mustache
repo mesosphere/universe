@@ -1,0 +1,131 @@
+{
+  "id": "{{service.name}}",
+  "cpus": {{jenkins-master.cpus}},
+  "mem": {{jenkins-master.mem}},
+  "instances": 1,
+  {{#service.user}}
+  "user":"{{service.user}}",
+  {{/service.user}}
+  {{#service.security.strict-mode}}
+  "secrets": {
+      "private_key": {
+          "source": "{{service.security.secret-name}}"
+      }
+  },
+  {{/service.security.strict-mode}}
+  "env": {
+      "JENKINS_AGENT_ROLE": "{{service.roles.jenkins-agent-role}}",
+      "JENKINS_AGENT_USER": "{{jenkins-agent.jenkins-agent-user}}",
+      "JENKINS_FRAMEWORK_NAME": "{{service.name}}",
+      "MARATHON_NAME": "{{service.marathon-name}}",
+      {{#service.security.strict-mode}}
+        "DCOS_STRICT_SECURITY_ENABLED": "{{service.security.strict-mode}}",
+        "DCOS_SERVICE_ACCOUNT_PRIVATE_KEY": { "secret": "private_key" },
+        "DCOS_SERVICE_ACCOUNT": "{{service.security.service-account}}",
+      {{/service.security.strict-mode}}
+      "JENKINS_CONTEXT": "/service/{{service.name}}",
+      "JENKINS_MESOS_MASTER": "{{service.mesos-master}}",
+      "JENKINS_HOME": "/var/jenkins_home",
+      {{#service.marathon-lb.virtual-host}}
+      "JENKINS_ROOT_URL": "{{#service.marathon-lb.https-redirect}}https://{{/service.marathon-lb.https-redirect}}{{^service.marathon-lb.https-redirect}}http://{{/service.marathon-lb.https-redirect}}{{service.marathon-lb.virtual-host}}/service/{{service.name}}",
+      {{/service.marathon-lb.virtual-host}}
+      "JVM_OPTS": "{{jenkins-master.jvm-opts}}",
+      "JENKINS_OPTS": "{{jenkins-master.jenkins-opts}}",
+      "PROMETHEUS_ENDPOINT": "{{service.prometheus-endpoint}}",
+      {{#jenkins-master.additional-plugins}}
+      "JENKINS_OPT_ADDITIONAL_PLUGINS": "{{jenkins-master.additional-plugins}}",
+      {{/jenkins-master.additional-plugins}}
+      "SSH_KNOWN_HOSTS": "{{jenkins-master.known-hosts}}",
+
+      "JENKINS_LINUX_AGENT_LABEL": "{{jenkins-agent.linux-agent.label}}",
+      "JENKINS_LINUX_AGENT_CPUS": "{{jenkins-agent.linux-agent.cpus}}",
+      "JENKINS_LINUX_AGENT_MEM": "{{jenkins-agent.linux-agent.mem}}",
+      "JENKINS_LINUX_AGENT_DISK": "{{jenkins-agent.linux-agent.disk}}",
+      "JENKINS_LINUX_AGENT_MAX_EXECUTORS": "{{jenkins-agent.linux-agent.max-executors}}",
+      "JENKINS_LINUX_AGENT_MIN_EXECUTORS": "{{jenkins-agent.linux-agent.min-executors}}",
+      "JENKINS_LINUX_AGENT_IDLE_TERMINATION_MINUTES": "{{jenkins-agent.linux-agent.idle-termination-minutes}}",
+      "JENKINS_LINUX_AGENT_OFFER_SELECTION_ATTRIBUTES": "{{jenkins-agent.linux-agent.offer-selection-attributes}}",
+      "JENKINS_LINUX_AGENT_JNLP_ARGS": "{{jenkins-agent.linux-agent.jnlp-args}}",
+      "JENKINS_LINUX_AGENT_IMAGE": "{{jenkins-agent.linux-agent.image}}"
+  },
+  "portDefinitions": [
+      {"port": 0, "protocol": "tcp", "name": "nginx"},
+      {"port": 0, "protocol": "tcp", "name": "jenkins"},
+      {"port": {{jenkins-master.agent-port}}, "protocol": "tcp", "name": "agent"}
+  ],
+  "requirePorts": true,
+  "container": {
+        "type": "{{service.containerizer}}",
+        "docker": {
+         {{#service.docker-image}}
+             "image": "{{service.docker-image}}"
+         {{/service.docker-image}}
+         {{^service.docker-image}}
+             "image": "{{resource.assets.container.docker.jenkins}}"
+         {{/service.docker-image}}
+        },
+        "volumes": [
+          {{^service.storage.host-volume}}
+          {
+            "containerPath": "jenkins_home",
+            "persistent": {
+            "type": "root",
+            "size": 2048,
+            "constraints": []
+            },
+            "mode": "RW"
+          },
+          {{/service.storage.host-volume}}
+          {
+            "containerPath": "/var/jenkins_home",
+            {{#service.storage.host-volume}}
+            "hostPath": "{{service.storage.host-volume}}/{{service.name}}",
+            {{/service.storage.host-volume}}
+            {{^service.storage.host-volume}}
+            "hostPath": "jenkins_home",
+            {{/service.storage.host-volume}}
+            "mode": "RW"
+          }
+      ]
+   },
+   {{#service.docker-credentials-uri}}
+   "fetch": [
+      {
+          "uri": "{{service.docker-credentials-uri}}",
+          "executable": false,
+          "extract": true
+      }
+   ],
+   {{/service.docker-credentials-uri}}
+   "role": "{{service.roles.jenkins-master-role}}",
+   "healthChecks": [
+    {
+      "path": "/service/{{service.name}}/login",
+      "portIndex": 0,
+      "protocol": "MESOS_HTTP",
+      "gracePeriodSeconds": {{health-checks.grace-period}},
+      "intervalSeconds": {{health-checks.interval}},
+      "timeoutSeconds": {{health-checks.timeout}},
+      "maxConsecutiveFailures": {{health-checks.max-consecutive-failures}}
+    }
+  ],
+  "labels": {
+    {{#service.marathon-lb.virtual-host}}
+    "HAPROXY_GROUP":"external",
+    "HAPROXY_0_VHOST":"{{service.marathon-lb.virtual-host}}",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "{{service.marathon-lb.https-redirect}}",
+    {{/service.marathon-lb.virtual-host}}
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.storage.pinned-hostname}}
+  "constraints": [["hostname", "CLUSTER", "{{service.storage.pinned-hostname}}"]],
+  {{/service.storage.pinned-hostname}}
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}
