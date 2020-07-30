@@ -1,0 +1,24 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [],
+  "downgradesTo": [],
+  "minDcosReleaseVersion": "1.9",
+  "name": "portworx-nifi",
+  "version": "1.3.1-0.3.0-1.7.1",
+  "maintainer": "support@portworx.com",
+  "description": "Apache NiFi backed by Portworx volumes",
+  "selected": false,
+  "framework": true,
+  "tags": [
+    "nifi"
+  ],
+  "preInstallNotes": "Default configuration requires 2 agent nodes each with: 1.1 CPU | 2048 MB MEM | 6 1000 MB Disk\nPortworx should be installed on the Private Agents to be able to provision volumes.",
+  "postInstallNotes": "DC/OS Apache NiFi is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/services/nifi\n\tIssues: Issues: support@portworx.com",
+  "postUninstallNotes": "DC/OS Apache NiFi is being uninstalled.\nPlease follow the instructions at https://docs.portworx.com/scheduler/mesosphere-dcos/framework_cleanup.html to remove any persistent state if required.",
+  "licenses": [
+    {
+      "name": "Apache License Version 2.0",
+      "url": "https://github.com/apache/nifi/blob/master/LICENSE"
+    }
+  ]
+}
