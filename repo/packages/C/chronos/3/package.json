@@ -6,7 +6,11 @@
   "maintainer": "support@mesosphere.io",
   "description": "A fault tolerant job scheduler for Mesos which handles dependencies and ISO8601 based schedules.",
   "framework": true,
-  "tags": ["cron", "analytics", "batch"],
+  "tags": [
+    "cron",
+    "analytics",
+    "batch"
+  ],
   "licenses": [
     {
       "name": "Apache License Version 2.0",
