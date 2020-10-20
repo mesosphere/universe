@@ -1,0 +1,214 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "rabbitmq",
+          "title": "Service name"
+        },
+        "user": {
+          "description": "The user that the service will run as.",
+          "type": "string",
+          "default": "root",
+          "title": "User"
+        },
+        "service_account": {
+          "description": "The service account for DC/OS service authentication. This is typically left empty to use the default unless service authentication is needed. The value given here is passed as the principal of Mesos framework.",
+          "type": "string",
+          "default": ""
+        },
+        "service_account_secret": {
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": "",
+          "title": "Credential secret name (optional)"
+        },
+        "virtual_network_enabled": {
+          "description": "Enable virtual networking",
+          "type": "boolean",
+          "default": true
+        },
+        "virtual_network_name": {
+          "description": "The name of the virtual network to join",
+          "type": "string",
+          "default": "dcos"
+        },
+        "virtual_network_plugin_labels": {
+          "description": "Labels to pass to the virtual network plugin. Comma-separated key:value pairs. For example: k_0:v_0,k_1:v_1,...,k_n:v_n",
+          "type": "string",
+          "default": ""
+        },
+        "log_level": {
+          "description": "The log level for the DC/OS service.",
+          "type": "string",
+          "enum": [
+            "OFF",
+            "FATAL",
+            "ERROR",
+            "WARN",
+            "INFO",
+            "DEBUG",
+            "TRACE",
+            "ALL"
+          ],
+          "default": "INFO"
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for scheduler. Example: 'hostname:UNIQUE'. By the way since the framework requires specific ports UNIQUE constraints is implicit.",
+          "type": "string",
+          "default": ""
+        },
+        "sleep": {
+          "description": "The sleep duration in seconds before tasks exit.",
+          "type": "number",
+          "default": 1000
+        }
+      },
+      "required": [
+        "name",
+        "sleep",
+        "user"
+      ]
+    },
+    "rabbitmq-resources": {
+      "description": "RabbitMQ nodes resources properties",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Node count",
+          "description": "Number of Template pods to run",
+          "type": "integer",
+          "default": 3
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "Template pod CPU requirements",
+          "type": "number",
+          "default": 1
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Template pod mem requirements (in MB)",
+          "type": "integer",
+          "default": 1024
+        },
+        "disk": {
+          "title": "Disk size (MB)",
+          "description": "Template pod persistent disk requirements (in MB)",
+          "type": "integer",
+          "default": 1024
+        },
+        "disk_type": {
+          "title": "Disk type [ROOT, MOUNT]",
+          "description": "Mount volumes require preconfiguration in DC/OS",
+          "type": "string",
+          "enum": [
+            "ROOT",
+            "MOUNT"
+          ],
+          "default": "ROOT"
+        },
+        "docker_image": {
+          "title": "Docker image",
+          "description": "docker image to use",
+          "type": "string",
+          "default": "hyge/rabbitmq:3.7.17-management"
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Placement constraints for rabbitmq servers. Example: [[\"hostname\", \"UNIQUE\"]]",
+          "type": "string",
+          "default": "[[\"hostname\", \"UNIQUE\"]]",
+          "media": {
+            "type": "application/x-zone-constraints+json"
+          }
+        }
+      },
+      "required": [
+        "count",
+        "cpus",
+        "mem",
+        "disk",
+        "disk_type",
+        "docker_image"
+      ]
+    },
+    "rabbitmq-configuration": {
+      "description": "RabbitMQ configuration properties",
+      "type": "object",
+      "properties": {
+        "amqp_port": {
+          "title": "AMQP port",
+          "description": "The port where rabbitmq will listen for processing messages",
+          "type": "integer",
+          "default": 5672
+        },
+        "mgmt_port": {
+          "title": "RabbitMQ HTTP listener port",
+          "description": "The port where rabbitmq management console will listen",
+          "type": "integer",
+          "default": 15672
+        },
+        "cluster_name": {
+          "title": "Cluster Name",
+          "description": "[UNIMPLEMENTED] set the cluster name",
+          "type": "string",
+          "default": "rabbit"
+        },
+        "erlang_cookie": {
+          "title": "Erlang cookie",
+          "description": "The port where rabbitmq will listen",
+          "type": "string",
+          "default": "joinuswehavecookies"
+        },
+        "dist_port": {
+          "title": "DIST port",
+          "description": "The port where rabbitmq will listen for clustering",
+          "type": "integer",
+          "default": 25672
+        },
+        "epmd_port": {
+          "title": "EPMD port",
+          "description": "The port where rabbitmq will listen for processing messages",
+          "type": "integer",
+          "default": 4369
+        },
+        "default_pass": {
+          "title": "Default Password",
+          "description": "The default password",
+          "type": "string",
+          "default": "password"
+        },
+        "default_user": {
+          "title": "Default Admin username",
+          "description": "The default admin username",
+          "type": "string",
+          "default": "admin"
+        },
+        "log_level": {
+          "description": "The log level for the rabbitmq server.",
+          "type": "string",
+          "enum": [
+            "error",
+            "warning",
+            "info",
+            "debug"
+          ],
+          "default": "info"
+        }
+      },
+      "required": [
+        "amqp_port",
+        "mgmt_port",
+        "cluster_name",
+        "erlang_cookie"
+      ]
+    }
+  }
+}
