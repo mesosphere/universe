@@ -1,0 +1,74 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "pushgateway": "prom/pushgateway:v1.2.0",
+        "grafana": "grafana/grafana:7.1.5-ubuntu",
+        "nginx": "nginx:1.19.2"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-11.0.3.7-hotspot-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.14-beta.tar.gz",
+      "scheduler-zip": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/scheduler.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.58.0-rc3/bootstrap.zip",
+      "scheduler-assets-tar-gz": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/scheduler-assets.tar.gz",
+      "prometheus-tar-gz": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/prometheus-2.20.1.linux-amd64.tar.gz",
+      "discovery-helper": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/discovery-helper.zip",
+      "dashboard-refresher": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/dashboard-refresher.zip",
+      "alertmanager-config": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/alertmanager-config.zip",
+      "fetcher": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/fetcher.zip",
+      "default-dashboards-master-tar-gz": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/default-dashboards-master.tar.gz",
+      "default-dashboards-1-12-x-tar-gz": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/default-dashboards-1.12.x.tar.gz",
+      "default-dashboards-1-13-x-tar-gz": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/default-dashboards-1.13.x.tar.gz",
+      "default-dashboards-2-0-x-tar-gz": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/default-dashboards-2.0.x.tar.gz",
+      "alertmanager-tar-gz": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/alertmanager-0.21.0.linux-amd64.tar.gz",
+      "jq": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/jq-linux64"
+    }
+  },
+  "images": {
+    "icon-large": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/icon-large.png",
+    "icon-medium": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/icon-medium.png",
+    "icon-small": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/icon-small.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "14f6255610d3be1751ddabe3414c0f6a78605c4f93dd415737d05e08ee693964"
+            }
+          ],
+          "kind": "zip",
+          "url": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/dcos-monitoring-cli-darwin.zip"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "0f5506ccd994a2fff741627a64a3ae4ae4c6f41050133c7dc3114cf5b3469715"
+            }
+          ],
+          "kind": "zip",
+          "url": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/dcos-monitoring-cli-linux.zip"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "da7f4a391469e2392a9041d93bd82cb6027b6402d5b53972fb20803c954732a7"
+            }
+          ],
+          "kind": "zip",
+          "url": "https://downloads.mesosphere.com/dcos-monitoring/assets/v1.4.2/dcos-monitoring-cli-windows.zip"
+        }
+      }
+    }
+  }
+}
