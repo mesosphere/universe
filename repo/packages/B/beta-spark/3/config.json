@@ -69,7 +69,7 @@
         },
         "docker-image": {
           "type": "string",
-          "description": "The docker image used to run the dispatcher, drivers, and executors. If no image is specified mesosphere/spark:2.12.0-3.0.1-scala-2.12-hadoop-3.2 will be used. If, for example, you need a Spark built with a specific Hadoop version, set this variable to one of the images here: https://hub.docker.com/r/mesosphere/spark/tags/",
+          "description": "The docker image used to run the dispatcher, drivers, and executors. If no image is specified mesosphere/spark:2.12.0-3.0.1-beta-scala-2.12-hadoop-3.2 will be used. If, for example, you need a Spark built with a specific Hadoop version, set this variable to one of the images here: https://hub.docker.com/r/mesosphere/spark/tags/",
           "default": ""
         },
         "log-level": {
