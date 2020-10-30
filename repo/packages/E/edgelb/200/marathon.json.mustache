@@ -1,0 +1,173 @@
+{
+  {{#service.name}}
+  "id": "{{service.name}}/api",
+  {{/service.name}}
+  {{^service.name}}
+  "id": "dcos-edgelb/api",
+  {{/service.name}}
+  "cpus": {{service.cpus}},
+  "mem": {{service.mem}},
+  "instances": 1,
+  "constraints": [["public_ip", "UNLIKE", "true"]],
+  "cmd": "cp -vR /dcosfilestmp/* /dcosfiles/ && /dcosfiles/run",
+  "args": [],
+  "env": {
+    {{#service.secretName}}
+    "DCOS_SECRET_NAME": "{{service.secretName}}",
+    "DCOS_PRINCIPAL": "{{service.principal}}",
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    {{/service.secretName}}
+    {{^service.secretName}}
+    {{#service.dcosServiceAccountCreds}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": "{{service.dcosServiceAccountCreds}}",
+    {{/service.dcosServiceAccountCreds}}
+    {{/service.secretName}}
+    {{#service.name}}
+    "EDGE_LB_SERVICE_NAME": "{{service.name}}",
+    {{/service.name}}
+    {{^service.name}}
+    "EDGE_LB_SERVICE_NAME": "edgelb",
+    {{/service.name}}
+    "EDGELB_LOG_LEVEL": "{{service.logLevel}}",
+    "DCOS_ADDR": "{{service.dcosAddress}}",
+    "DCOS_PROT": "{{service.dcosProtocol}}",
+    "MESOS_ADDR": "{{service.mesosAddress}}",
+    "MESOS_PROT": "{{service.mesosProtocol}}",
+    "MESOS_AUTHNZ": "{{service.mesosAuthNZ}}",
+    "MESOS_RATE_LIMIT": "{{service.mesosRateLimit}}",
+    "MESOS_RATE_BURST": "{{service.mesosRateBurst}}",
+    "METRICS_PREFIX": "{{service.metricsPrefix}}",
+    "APIS_ZK": "{{service.zkHosts}}",
+    "APIS_ZK_TIMEOUT": "{{service.zkTimeout}}",
+    "APIS_ZK_PATH": "{{service.zkPath}}",
+    "APIS_SCHEME": "{{service.apiserverProtocol}}",
+    "CONTAINER_LOGGER_LOGROTATE_MAX_STDOUT_SIZE": "50MB",
+    "CONTAINER_LOGGER_LOGROTATE_MAX_STDERR_SIZE": "50MB",
+    "CONTAINER_LOGGER_LOGROTATE_STDOUT_OPTIONS": "rotate 4",
+    "CONTAINER_LOGGER_LOGROTATE_STDERR_OPTIONS": "rotate 4",
+    "APISERVER_RPC_VIP_PORT": "{{service.rpcVipPort}}",
+    "AWS_ACCESS_KEY_ID": "{{service.awsAccessKeyID}}",
+    "AWS_SECRET_ACCESS_KEY": "{{service.awsSecretAccessKey}}",
+    "AWS_REGION": "{{service.awsRegion}}",
+    "EC2_METADATA_SCHEME": "{{service.ec2MetadataScheme}}",
+    "EC2_METADATA_HOST": "{{service.ec2MetadataHost}}",
+    "EC2_METADATA_PATH": "{{service.ec2MetadataPath}}",
+    "EC2_METADATA_FETCH": "{{service.ec2MetadataFetch}}",
+    "DEFAULT_POOL_TEMPLATE": "{{service.defaultPoolTemplate}}",
+    "DISABLE_TLS_AUTH": "{{service.disableTLSAuth}}"
+  },
+  "container": {
+    "type": "MESOS",
+    "volumes": [
+      {
+        "containerPath": "/dcosfiles",
+        "hostPath": "dcosfiles",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "{{resource.assets.container.docker.image}}",
+      "forcePullImage": {{service.forcePull}},
+      "parameters": []
+    },
+    "portMappings": [
+      {
+        "containerPort": 0,
+        "protocol": "tcp",
+        "name": "api",
+        {{#service.name}}
+        "labels": { "VIP_0": "/api.{{service.name}}:80" }
+        {{/service.name}}
+        {{^service.name}}
+        "labels": { "VIP_0": "/api.edgelb:80" }
+        {{/service.name}}
+      },
+      {
+        "containerPort": 0,
+        "protocol": "tcp",
+        "name": "rpc",
+        {{#service.name}}
+        "labels": { "VIP_0": "/rpc.{{service.name}}:{{service.rpcVipPort}}" }
+        {{/service.name}}
+        {{^service.name}}
+        "labels": { "VIP_0": "/rpc.edgelb:{{service.rpcVipPort}}" }
+        {{/service.name}}
+      },
+      {
+        "containerPort": 0,
+        "protocol": "tcp",
+        "name": "prometheusapiserver",
+        "labels": {
+          "DCOS_METRICS_FORMAT": "prometheus",
+          "DCOS_METRICS_ENDPOINT": "/metrics"
+        }
+      },
+      {
+        "containerPort": 0,
+        "protocol": "tcp",
+        "name": "prometheusmesoslistener",
+        "labels": {
+          "DCOS_METRICS_FORMAT": "prometheus",
+          "DCOS_METRICS_ENDPOINT": "/metrics"
+        }
+      },
+      {
+        "containerPort": 0,
+        "protocol": "tcp",
+        "name": "prometheusdcostemplate",
+        "labels": {
+          "DCOS_METRICS_FORMAT": "prometheus",
+          "DCOS_METRICS_ENDPOINT": "/metrics"
+        }
+      },
+      {
+        "containerPort": 0,
+        "protocol": "tcp",
+        "name": "prometheuscloudcontroller",
+        "labels": {
+          "DCOS_METRICS_FORMAT": "prometheus",
+          "DCOS_METRICS_ENDPOINT": "/metrics"
+        }
+      }
+    ]
+  },
+  "labels": {
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    {{#service.name}}
+    "DCOS_SERVICE_NAME": "{{service.name}}/api",
+    {{/service.name}}
+    {{^service.name}}
+    "DCOS_SERVICE_NAME": "edgelb",
+    {{/service.name}}
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "{{service.apiserverProtocol}}"
+  },
+  {{#service.secretName}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.secretName}}"
+    }
+  },
+  {{/service.secretName}}
+  "uris": [],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/v1/ping",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 60,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "networks": [
+    {
+      "mode": "container/bridge"
+    }
+  ]
+}
