@@ -1,0 +1,54 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "image": "mesosphere/dapis:v1.7.0"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/edgelb-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/edgelb-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/edgelb-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "c606df848bfe9b70fb85b20d329705dc44f587c9367afbab443ec538d1f16361"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/edgelb/assets/v1.7.0/dcos-edgelb-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "aa5482d37e0d9a951c90357c4335beda74839b39963751dbe07b28f89449ce06"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/edgelb/assets/v1.7.0/dcos-edgelb-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "286468c97284986f03c7e19c8443200642374bf5e9c772faf496b857492fab1a"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/edgelb/assets/v1.7.0/dcos-edgelb.exe"
+        }
+      }
+    }
+  }
+}
