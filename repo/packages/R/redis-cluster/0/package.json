@@ -1,0 +1,22 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [
+    "*"
+  ],
+  "downgradesTo": [
+    "*"
+  ],
+  "minDcosReleaseVersion": "1.12",
+  "name": "redis-cluster",
+  "version": "0.1.0-5.0.5",
+  "maintainer": "hge@d2iq.com",
+  "description": "Redis cluster on DC/OS",
+  "selected": false,
+  "framework": true,
+  "tags": [
+    "redis"
+  ],
+  "postInstallNotes": "DC/OS redis-cluster is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/redis-cluster/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS redis-cluster is being uninstalled.",
+  "lastUpdated": 1593620755
+}

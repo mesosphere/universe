@@ -10,6 +10,7 @@
   ],
   "scm": "https://github.com/confluentinc/cp-docker-images",
   "description": "Confluent Control Center service\n\n\tDocumentation: https://docs.confluent.io/5.3.0/control-center/docs/userguide.html\n\tDC/OS Specifics: https://www.confluent.io/whitepaper/deploying-confluent-platform-with-mesosphere",
+  "selected": true,
   "maintainer": "partner-support@confluent.io",
   "tags": [
     "kafka",
@@ -23,8 +24,8 @@
   "minDcosReleaseVersion": "1.11",
   "licenses": [
     {
-      "name": "Apache License v2",
-      "url": "https://raw.githubusercontent.com/confluentinc/control-center/master/LICENSE"
+      "name": "Confluent Enterprise License",
+      "url": "https://docs.confluent.io/current/installation/license.html#c3"
     }
   ],
   "lastUpdated": 1571120354

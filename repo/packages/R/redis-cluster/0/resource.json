@@ -1,0 +1,63 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-8u212b03-hotspot-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.14-beta.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.56.3/bootstrap.zip",
+      "scheduler-zip": "https://hge-dcos.s3.amazonaws.com/autodelete7d/redis-cluster/20200702-002517-7aIl3fsstWyoNKAH/operator-scheduler.zip"
+    },
+    "container": {
+      "docker": {
+        "redis-cli": "hyge/redis-cli"
+      }
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/redis-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/redis-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/redis-icon-large.png",
+    "screenshots": [
+      "https://redis.io/images/redis-white.png"
+    ]
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "e8829cdacf4562988ba8cfb3ff14e0d2ba582dffd587ceb2fb967bfa2001a995"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://hge-dcos.s3.amazonaws.com/autodelete7d/redis-cluster/20200702-002517-7aIl3fsstWyoNKAH/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "180a9646ab16f672d056b8ac8bd3c68c2851165f155fb6c56f78759dab7265b5"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://hge-dcos.s3.amazonaws.com/autodelete7d/redis-cluster/20200702-002517-7aIl3fsstWyoNKAH/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "8e453d38d7e4e492680680080bf9725f31e8f3764d7faa7b0dcafe4db808ca6f"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://hge-dcos.s3.amazonaws.com/autodelete7d/redis-cluster/20200702-002517-7aIl3fsstWyoNKAH/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

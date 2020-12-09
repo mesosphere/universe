@@ -1,0 +1,114 @@
+{
+"id": "{{service.name}}",
+"cpus": 1.0,
+"mem": 2048,
+"instances": 1,
+"constraints": [["public_ip", "UNLIKE", "true"]],
+"cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*/); export JAVA_HOME=${JAVA_HOME%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && ./bootstrap -resolve=false -template=false && ./edgelb-pool-scheduler/bin/edgelb-pool ./edgelb-pool-scheduler/{{service.specFile}}",
+"container": {
+"type": "MESOS"
+},
+"labels": {
+"DCOS_COMMONS_API_VERSION": "v1",
+"DCOS_COMMONS_UNINSTALL": "true",
+"DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+"MARATHON_SINGLE_INSTANCE_APP":"true",
+"DCOS_SERVICE_NAME": "{{service.name}}",
+"DCOS_SERVICE_PORT_INDEX": "0",
+"DCOS_SERVICE_SCHEME": "http"
+},
+{{#service.secretName}}
+    "secrets": {
+    "serviceCredential": {
+    "source": "{{service.secretName}}"
+    }
+    },
+{{/service.secretName}}
+"env": {
+    "PACKAGE_NAME": "edgelb-pool",
+    "PACKAGE_VERSION": "v1.6.0",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1591826956768",
+    "PACKAGE_BUILD_TIME_STR": "Wed Jun 10 2020 22:09:16 +0000",
+    "MESOS_API_VERSION": "{{service.mesosApiVersion}}",
+    "FRAMEWORK_NAME": "{{service.name}}",
+    "FRAMEWORK_PRINCIPAL": "{{service.principal}}",
+    "FRAMEWORK_USER": "{{service.user}}",
+    "POOL_RESERVED_ROLE": "{{{edgelbPool.role}}}",
+    "POOL_NAME": "{{edgelbPool.name}}",
+    "POOL_CONSTRAINTS": "{{{edgelbPool.placementConstraints}}}",
+    "POOL_COUNT": "{{edgelbPool.count}}",
+    "POOL_CPUS": "{{edgelbPool.cpus}}",
+    "POOL_MEM": "{{edgelbPool.mem}}",
+    "POOL_DISK": "{{edgelbPool.disk}}",
+    "POOL_PORTS": "{{edgelbPool.ports}}",
+    "POOL_AUTOCERT_ENABLED": "{{edgelbPool.autoCertEnabled}}",
+    "POOL_IMAGE": "{{resource.assets.container.docker.image}}",
+    "POOL_RELATIVE_VOLUME_PATH": "persistent",
+    "POOL_SECRETS_RELATIVE_PATH": "{{variables.secrets}}",
+    "POOL_ENVFILE_RELATIVE_PATH": "{{variables.envfile}}",
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    {{#service.secretName}}
+    {{#service.mesosAuthNZ}}
+    "DCOS_SECRET_NAME": "{{service.secretName}}",
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.mesosAuthNZ}}
+    {{/service.secretName}}
+    {{#edgelbPool.env}}
+    "TASKCFG_ALL_{{key}}": "{{value}}",
+    {{/edgelbPool.env}}
+    {{#edgelbPool.secrets}}
+    "PARSESECRET_SECRET{{index}}": "{{secret}}",
+    "PARSESECRET_FILE{{index}}": "{{variables.secrets}}/{{file}}",
+    {{/edgelbPool.secrets}}
+    {{#edgelbPool.networks}}
+    "PARSENETWORK_NAME{{index}}": "{{name}}",
+    "PARSENETWORK_LABELS{{index}}": "{{labels}}",
+    {{/edgelbPool.networks}}
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "CONTAINER_LOGGER_LOGROTATE_MAX_STDOUT_SIZE": "25MB",
+    "CONTAINER_LOGGER_LOGROTATE_MAX_STDERR_SIZE": "25MB",
+    "CONTAINER_LOGGER_LOGROTATE_STDOUT_OPTIONS": "rotate 4",
+    "CONTAINER_LOGGER_LOGROTATE_STDERR_OPTIONS": "rotate 4",
+    "POOL_HEALTHCHECK_GRACE_PERIOD": "{{edgelbPool.healthcheckGracePeriod}}",
+    "POOL_HEALTHCHECK_INTERVAL": "{{edgelbPool.healthcheckInterval}}",
+    "POOL_HEALTHCHECK_MAXFAIL": "{{edgelbPool.healthcheckMaxfail}}",
+    "POOL_HEALTHCHECK_TIMEOUT": "{{edgelbPool.healthcheckTimeout}}",
+    "POOL_HEALTHCHECK_CMD_EXECUTION_TIMEOUT": "{{edgelbPool.healthcheckCmdExecutionTimeout}}",
+    "METRICS_PREFIX": "{{service.metricsPrefix}}",
+    "DEPLOYMENT_PATH": "{{service.deploymentPath}}",
+    "ALLOW_REGION_AWARENESS": "true",
+    "DISABLE_TLS_AUTH": "{{service.disableTLSAuth}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}",
+    "{{resource.assets.uris.bootstrap-zip}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/v1/health",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+    ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api",
+      "labels": { "VIP_0": "/api.{{service.name}}:80" }
+    }
+  ]
+}

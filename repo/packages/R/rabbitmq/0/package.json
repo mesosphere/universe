@@ -1,0 +1,23 @@
+{
+  "packagingVersion": "4.0",
+  "upgradesFrom": [
+    "*"
+  ],
+  "downgradesTo": [
+    "*"
+  ],
+  "minDcosReleaseVersion": "1.12",
+  "name": "rabbitmq",
+  "version": "0.1.1-3.7.17",
+  "maintainer": "hge@d2iq.com",
+  "description": "Rabbitmq cluster on DC/OS",
+  "selected": false,
+  "framework": true,
+  "tags": [
+    "0.1.0",
+    "rabbitmq"
+  ],
+  "postInstallNotes": "DC/OS rabbitmq is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/service-docs/rabbitmq/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS rabbitmq is being uninstalled.",
+  "lastUpdated": 1576131497
+}

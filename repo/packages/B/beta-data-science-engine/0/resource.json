@@ -1,0 +1,64 @@
+{
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/data-science-engine/assets/icon-service-data-science-engine-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/data-science-engine/assets/icon-service-data-science-engine-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/data-science-engine/assets/icon-service-data-science-engine-large.png",
+    "screenshots": [
+      "https://downloads.mesosphere.com/jupyter/assets/jupyter-screenshot.png"
+    ]
+  },
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-11.0.3.7-hotspot-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.14-beta.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/data-science-engine/assets/2.0.0-beta/bootstrap.zip",
+      "scheduler-zip": "https://downloads.mesosphere.com/data-science-engine/assets/2.0.0-beta/data-science-engine-scheduler.zip",
+      "init-sh": "https://downloads.mesosphere.com/data-science-engine/assets/2.0.0-beta/init.sh"
+    },
+    "container": {
+      "docker": {
+        "scheduler": "mesosphere/jupyter-service:scheduler-2.0-beta"
+      }
+    }
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "859a6c40dc22015bff530ce483e632c8b0dd91f34bab9c6527ec98e893d3478a"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/data-science-engine/assets/2.0.0-beta/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "706f1aca1492a660c0b74c4ddab1e91d8a3955a3516fd7ef054bffdcd6fbbea7"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/data-science-engine/assets/2.0.0-beta/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "ba6a761f6a64276e7a3461eef2b9699f6b66d6431db2c77c8229d9fbbd35beb2"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/data-science-engine/assets/2.0.0-beta/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}

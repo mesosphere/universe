@@ -1,0 +1,45 @@
+{
+  "packagingVersion": "4.0",
+  "minDcosReleaseVersion": "1.12",
+  "name": "data-science-engine",
+  "version": "2.1.0",
+  "scm": "https://github.com/mesosphere/jupyter-service",
+  "maintainer": "support+data-science-engine@mesosphere.com",
+  "website": "https://docs.mesosphere.com/services/data-science-engine",
+  "description": "**DSEngine is only available as an add-on to a base subscription to Enterprise DC/OS. Access to DSEngine is subject to additional fees. Please contact your D2iQ Account Executive should you wish to see a demonstration of DSEngine or to acquire access to DSEngine.**  \n\nDC/OS Data Science Engine provisions Jupyter Notebooks, an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text.  \nUses include: data cleaning and transformation, numerical simulation, statistical modeling, data visualization, machine learning, and much more.",
+  "framework": true,
+  "selected": true,
+  "upgradesFrom": [
+    "*"
+  ],
+  "downgradesTo": [
+    "*"
+  ],
+  "tags": [
+    "hdfs",
+    "jupyter",
+    "jupyterlab",
+    "notebook",
+    "openid-connect",
+    "s3",
+    "spark",
+    "horovod",
+    "tensorflow",
+    "pytorch",
+    "mxnet"
+  ],
+  "preInstallNotes": "Default configuration requires 1 agent node with: 1 CPU | 4096 MB MEM",
+  "postInstallNotes": "DC/OS Data Science Engine is being installed!\n\n\tDocumentation: https://docs.mesosphere.com/services/data-science-engine/\n\tIssues: https://docs.mesosphere.com/support/",
+  "postUninstallNotes": "DC/OS Data Science Engine has been uninstalled and will no longer run. Note: If applicable, any data on the persistent volume on the agent where this service was deployed will be automatically deleted and the volume will be removed.",
+  "licenses": [
+    {
+      "name": "Modified BSD License (also known as New or Revised or 3-Clause BSD)",
+      "url": "https://raw.githubusercontent.com/jupyter/notebook/master/COPYING.md"
+    },
+    {
+      "name": "APACHE LICENSE, VERSION 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "lastUpdated": 1605389841
+}

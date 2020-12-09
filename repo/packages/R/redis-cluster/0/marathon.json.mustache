@@ -1,0 +1,102 @@
+
+{
+  "id": "{{service.name}}",
+  "cpus": 1.0,
+  "mem": 1024,
+  "instances": 1,
+  "user": "{{service.user}}",
+  "cmd": "export LD_LIBRARY_PATH=$MESOS_SANDBOX/libmesos-bundle/lib:$LD_LIBRARY_PATH; export MESOS_NATIVE_JAVA_LIBRARY=$(ls $MESOS_SANDBOX/libmesos-bundle/lib/libmesos-*.so); export JAVA_HOME=$(ls -d $MESOS_SANDBOX/jdk*); export JAVA_HOME=${JAVA_HOME%%/}; export PATH=$(ls -d $JAVA_HOME/bin):$PATH && export JAVA_OPTS=\"-Xms256M -Xmx512M -XX:-HeapDumpOnOutOfMemoryError\" && ./bootstrap -resolve=false -template=false && ./operator-scheduler/bin/redis-cluster ./operator-scheduler/svc.yml",
+  "labels": {
+    "DCOS_COMMONS_API_VERSION": "v1",
+    "DCOS_COMMONS_UNINSTALL": "true",
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "MARATHON_SINGLE_INSTANCE_APP": "true",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  {{#service.service_account_secret}}
+  "secrets": {
+    "serviceCredential": {
+      "source": "{{service.service_account_secret}}"
+    }
+  },
+  {{/service.service_account_secret}}
+  "env": {
+    {{#service.virtual_network_enabled}}
+    "ENABLE_VIRTUAL_NETWORK": "yes",
+    "VIRTUAL_NETWORK_NAME": "{{service.virtual_network_name}}",
+    "VIRTUAL_NETWORK_PLUGIN_LABELS": "{{service.virtual_network_plugin_labels}}",
+    {{/service.virtual_network_enabled}}
+    "PACKAGE_NAME": "redis-cluster",
+    "PACKAGE_VERSION": "stub-universe",
+    "PACKAGE_BUILD_TIME_EPOCH_MS": "1593620728124",
+    "PACKAGE_BUILD_TIME_STR": "Wed Jul 01 2020 16:25:28 +0000",
+    "SERVICE_NAME": "{{service.name}}",
+    "SERVICE_USER": "{{service.user}}",
+    "SERVICE_PRINCIPAL": "{{service.principal}}",
+    "FRAMEWORK_LOG_LEVEL": "{{service.log_level}}",
+    "MESOS_API_VERSION": "{{service.mesos_api_version}}",
+    "NODE_COUNT": "{{nodes.count}}",
+    "NODE_REPLICAS": "{{nodes.replicas}}",
+    "NODE_CPUS": "{{nodes.cpus}}",
+    "NODE_MEM": "{{nodes.mem}}",
+    "NODE_DISK": "{{nodes.disk}}",
+    "NODE_DISK_TYPE": "{{nodes.disk_type}}",
+    "NODE_DOCKER_IMAGE": "{{ nodes.docker_image }}",
+    "NODE_PLACEMENT": "{{nodes.placement_constraint}}",
+
+    "REDIS_PORT": "{{redis.port}}",
+    "REQUIREPASS": "{{redis.requirepass}}",
+    "REDIS_CONF_URI": "{{redis.config_uri}}",
+    "APPENDONLY": "{{redis.appendonly}}",
+    "RDB900": "{{redis.save900}}",
+    "RDB300": "{{redis.save300}}",
+    "RDB60": "{{redis.save60}}",
+    "TCP_KEEPALIVE":"{{redis.tcp_keepalive}}",
+    "REDIS_TIMEOUT":"{{redis.redis_timeout}}",
+    "CLUSTER_NODE_TIMEOUT": "{{redis.cluster_node_timeout}}",
+
+    "REDIS_CLI_IMAGE": "{{resource.assets.container.docker.redis-cli}}",
+
+    "JAVA_URI": "{{resource.assets.uris.jre-tar-gz}}",
+    "EXECUTOR_URI": "{{resource.assets.uris.executor-zip}}",
+    "BOOTSTRAP_URI": "{{resource.assets.uris.bootstrap-zip}}",
+
+    {{#service.service_account_secret}}
+    "DCOS_SERVICE_ACCOUNT_CREDENTIAL": { "secret": "serviceCredential" },
+    "MESOS_MODULES": "{\"libraries\":[{\"file\":\"libmesos-bundle\/lib\/mesos\/libdcos_security.so\",\"modules\":[{\"name\": \"com_mesosphere_dcos_ClassicRPCAuthenticatee\"},{\"name\":\"com_mesosphere_dcos_http_Authenticatee\",\"parameters\":[{\"key\":\"jwt_exp_timeout\",\"value\":\"5mins\"},{\"key\":\"preemptive_refresh_duration\",\"value\":\"30mins\"}]}]}]}",
+    "MESOS_AUTHENTICATEE": "com_mesosphere_dcos_ClassicRPCAuthenticatee",
+    "MESOS_HTTP_AUTHENTICATEE": "com_mesosphere_dcos_http_Authenticatee",
+    {{/service.service_account_secret}}
+    "LIBMESOS_URI": "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  },
+  "uris": [
+    "{{resource.assets.uris.bootstrap-zip}}",
+    "{{resource.assets.uris.jre-tar-gz}}",
+    "{{resource.assets.uris.scheduler-zip}}",
+    "{{resource.assets.uris.libmesos-bundle-tar-gz}}"
+  ],
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  },
+  "healthChecks": [
+    {
+      "protocol": "MESOS_HTTP",
+      "path": "/v1/health",
+      "gracePeriodSeconds": 900,
+      "intervalSeconds": 30,
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 0
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "api"
+    }
+  ]
+}
