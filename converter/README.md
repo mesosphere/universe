@@ -2,6 +2,9 @@
 
 Wiki : https://wiki.mesosphere.com/display/OPS/Universe+Converter+Service
 
+## Deployment
+this service got migrated from DC/OS prod cluster to konvoy production namespace `dcos`
+https://github.com/mesosphere/dcos-konvoy-deployments/blob/master/universe-converter.yaml
 
 ### Testing
 
