@@ -1,0 +1,63 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "netcat": "mesosphere/zk-nc:0.1"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-8u212b03-hotspot-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.14-beta.tar.gz",
+      "scheduler-zip": "https://downloads.mesosphere.com/confluent-zookeeper/assets/2.7.1-5.1.2e/confluent-zookeeper-scheduler.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.57.0.patch1/bootstrap.zip",
+      "metrics-zip": "https://downloads.mesosphere.com/confluent-zookeeper/assets/2.7.1-5.1.2e/metrics.zip",
+      "setup-helper-zip": "https://downloads.mesosphere.com/confluent-zookeeper/assets/2.7.1-5.1.2e/setup-helper.zip",
+      "zookeeper-tar-gz": "https://packages.confluent.io/archive/5.2/confluent-5.2.1-2.11.tar.gz"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/confluent-connect-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/confluent-connect-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/confluent-connect-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "2df98025de8ebe110135924c91b34211c9e5f42a2e994ac0aa3c41ec774a44fe"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.57.0.patch1/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "a05cfa609cfcca42a2d21863e31e12864b960bebadd9216ce3c4af9c62db62fb"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.57.0.patch1/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "3f2ffeab83bce234c71bf23b0445e7725d8b326f7cb0dbd05a58d3b62958a836"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.57.0.patch1/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
