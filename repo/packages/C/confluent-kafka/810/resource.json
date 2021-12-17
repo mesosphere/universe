@@ -1,0 +1,63 @@
+{
+  "assets": {
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-8u212b03-hotspot-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.14-beta.tar.gz",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.57.0.patch1/bootstrap.zip",
+      "kafka-tgz": "https://packages.confluent.io/archive/5.3/confluent-5.3.1-2.12.tar.gz",
+      "kafka-jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-8u212b03-hotspot-linux-x64.tar.gz",
+      "kafka-scheduler-zip": "https://downloads.mesosphere.com/confluent-kafka/assets/2.8.0-5.3.2/confluent-kafka-scheduler.zip",
+      "kafka-statsd-jar": "https://downloads.mesosphere.com/kafka/assets/kafka-statsd-metrics2-0.5.3.jar",
+      "statsd-client-jar": "https://downloads.mesosphere.com/kafka/assets/java-dogstatsd-client-2.3.jar",
+      "setup-helper-zip": "https://downloads.mesosphere.com/confluent-kafka/assets/2.8.0-5.3.2/setup-helper.zip",
+      "zookeeper-client-jar": "https://downloads.mesosphere.com/kafka/assets/zookeeper-3.4.13.jar",
+      "custom-kafka-principal-jar": "https://downloads.mesosphere.com/kafka/assets/kafka-custom-principal-builder-1.0.0.jar",
+      "netcat": "https://downloads.mesosphere.com/kafka/assets/nc64"
+    }
+  },
+  "images": {
+    "icon-small": "https://downloads.mesosphere.com/assets/universe/000/confluent-connect-icon-small.png",
+    "icon-medium": "https://downloads.mesosphere.com/assets/universe/000/confluent-connect-icon-medium.png",
+    "icon-large": "https://downloads.mesosphere.com/assets/universe/000/confluent-connect-icon-large.png"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "ed2acada4924e10501dda1d2b37537f212b1f4bbc356603c88b0a953b96ced51"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/confluent-kafka/assets/2.8.0-5.3.2/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "0e8dc4cfda6b6ac680c1dc9a52978a99704710185dd37b024ce4c541dcc1c520"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/confluent-kafka/assets/2.8.0-5.3.2/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "c712002b2b35dc5e3217e3cf70ab61e325927e631141aa1ee5e50f5d62f8552f"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/confluent-kafka/assets/2.8.0-5.3.2/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
