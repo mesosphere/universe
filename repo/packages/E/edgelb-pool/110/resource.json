@@ -1,0 +1,60 @@
+{
+  "assets": {
+    "container": {
+      "docker": {
+        "image": "mesosphere/dhap:v1.6.2"
+      }
+    },
+    "uris": {
+      "jre-tar-gz": "https://downloads.mesosphere.com/java/openjdk-jre-11.0.3.7-hotspot-linux-x64.tar.gz",
+      "libmesos-bundle-tar-gz": "https://downloads.mesosphere.com/libmesos-bundle/libmesos-bundle-1.14-beta.tar.gz",
+      "scheduler-zip": "https://downloads.mesosphere.com/edgelb-pool/assets/v1.6.2/edgelb-pool-scheduler.zip",
+      "bootstrap-zip": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.57.3.patch1/bootstrap.zip"
+    }
+  },
+  "images": {
+    "icon-small": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-small.png?raw=true",
+    "icon-medium": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-medium.png?raw=true",
+    "icon-large": "https://github.com/dcos/dcos-ui/blob/master/plugins/services/src/img/icon-service-default-large.png?raw=true"
+  },
+  "cli": {
+    "binaries": {
+      "darwin": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "2df98025de8ebe110135924c91b34211c9e5f42a2e994ac0aa3c41ec774a44fe"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.57.3.patch1/dcos-service-cli-darwin"
+        }
+      },
+      "linux": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "a05cfa609cfcca42a2d21863e31e12864b960bebadd9216ce3c4af9c62db62fb"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.57.3.patch1/dcos-service-cli-linux"
+        }
+      },
+      "windows": {
+        "x86-64": {
+          "contentHash": [
+            {
+              "algo": "sha256",
+              "value": "3f2ffeab83bce234c71bf23b0445e7725d8b326f7cb0dbd05a58d3b62958a836"
+            }
+          ],
+          "kind": "executable",
+          "url": "https://downloads.mesosphere.com/dcos-commons/artifacts/0.57.3.patch1/dcos-service-cli.exe"
+        }
+      }
+    }
+  }
+}
