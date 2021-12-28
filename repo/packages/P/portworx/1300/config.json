@@ -1,0 +1,305 @@
+{
+  "type": "object",
+  "properties": {
+    "service": {
+      "type": "object",
+      "description": "DC/OS service configuration properties",
+      "properties": {
+        "name": {
+          "title": "Service name",
+          "description": "The name of the service instance",
+          "type": "string",
+          "default": "portworx"
+        },
+        "user": {
+          "description": "The user that runs the Portworx tasks.",
+          "type": "string",
+          "default": "root"
+        },
+        "principal": {
+          "title": "Custom principal (optional)",
+          "description": "The principal for the service instance, or empty to use the default.",
+          "type": "string",
+          "default": ""
+        },
+        "pre_reserved_role": {
+          "title": "Pre-reserved role (optional)",
+          "description": "The pre-reserved role to use for the tasks",
+          "type": "string",
+          "default": ""
+        },
+        "secret_name": {
+          "title": "Credential secret name (optional)",
+          "description": "Name of the Secret Store credentials to use for DC/OS service authentication. This should be left empty unless service authentication is needed.",
+          "type": "string",
+          "default": ""
+        },
+        "mesos_api_version": {
+          "description": "Configures the Mesos API version to use. Possible values: V0 (non-HTTP), V1 (HTTP)",
+          "type": "string",
+          "enum": [
+            "V0",
+            "V1"
+          ],
+          "default": "V1"
+        },
+        "task_failure_timeout_minutes": {
+          "title": "Task failure timeout minutes",
+          "description": "If a task is in FAILED or LOST state for the set timeout (in minutes), the task will marked as permanently failed and new replacement task will be launched.",
+          "type": "integer",
+          "default": 5,
+          "minimum": 0
+        }
+      },
+      "required": [
+        "name",
+        "task_failure_timeout_minutes"
+      ]
+    },
+    "node": {
+      "description": "Portworx Node properties",
+      "type": "object",
+      "properties": {
+        "portworx_cluster": {
+          "title": "Portworx Cluster Name",
+          "type": "string",
+          "default": "portworx-dcos"
+        },
+        "portworx_image": {
+          "title": "Portworx Image name",
+          "type": "string",
+          "default": "portworx/px-enterprise:2.0.3"
+        },
+        "portworx_port_range_start": {
+          "title": "Portworx port range start",
+          "description": "Port number from which Portworx will start consuming ports. Cannot be updated once deployed.",
+          "type": "integer",
+          "default": 9001
+        },
+        "portworx_options": {
+          "title": "Portworx Options",
+          "type": "string",
+          "default": "-a -x mesos"
+        },
+        "internal_kvdb": {
+          "title": "Internal KVDB",
+          "description": "Portworx will internally create and manage a key-value store cluster. KVDB servers or package etcd will not be used if internal KVDB is enabled. Note: Do not change this once the cluster is up.",
+          "type": "boolean",
+          "default": false
+        },
+        "kvdb_servers": {
+          "title": "KVDB servers",
+          "description": "Comma seperated IP:PORT entries for the key value database (etcd or consul). If the etcd server is started using the package this will be ignored",
+          "type": "string",
+          "default": ""
+        },
+        "container_parameters": {
+          "title": "Container parameters",
+          "type": "string",
+          "description": "Any additional paramters to pass in to the Portworx container. For example environment variables can be passed in using \"-e\"",
+          "default": ""
+        },
+        "count": {
+          "title": "Node count",
+          "description": "Number of Portworx nodes to run",
+          "type": "integer",
+          "default": 3
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": "hostname:UNIQUE"
+        }
+      },
+      "required": [
+        "count",
+        "portworx_cluster",
+        "portworx_image",
+        "portworx_port_range_start",
+        "portworx_options"
+      ]
+    },
+    "secrets": {
+      "description": "Use DC/OS Secrets for features like volume encryption, cloudsnap authentication, etc. This should be enabled only for DC/OS Enterprise edition. \nNote: DC/OS Secrets will only be supported from Portworx version 1.4",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "title": "Enable DC/OS secrets",
+          "description": "If enabled, provide valid credentials below, so that Portworx can access the secrets as needed",
+          "type": "boolean",
+          "default": false
+        },
+        "base_path": {
+          "title": "Secrets base path",
+          "description": "The secrets base path that is accessible to Portworx (DC/OS user provided to access secrets) for reading and writing secrets. If not provided, Portworx will look for secrets at the top level",
+          "type": "string",
+          "default": ""
+        },
+        "dcos_username_secret": {
+          "title": "DC/OS username secret",
+          "description": "Secret path containing the username of the DC/OS user who has permissions to access the secrets under the secrets base path. Eg. portworx/dcos_username",
+          "type": "string",
+          "default": "portworx/dcos_username"
+        },
+        "dcos_password_secret": {
+          "title": "DC/OS password secret",
+          "description": "Secret path containing the password of the DC/OS user who has permissions to access the secrets under the secrets base path. Eg. portworx/dcos_password",
+          "type": "string",
+          "default": "portworx/dcos_password"
+        }
+      },
+      "required": [
+        "dcos_username_secret",
+        "dcos_password_secret"
+      ]
+    },
+    "etcd": {
+      "description": "Start a 3 node etcd cluster. Required for Portworx if you don't have either etcd or consul already running. For production it is recommended to run an etcd cluster outside your DC/OS cluster.",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "title": "Start etcd",
+          "description": "If disabled, please enter the external etcd server IP on the service tab.",
+          "type": "boolean",
+          "default": false
+        },
+        "proxy_enabled": {
+          "title": "Start the etcd proxy",
+          "description": "Enable if you had installed an older version of the framework which had the etcd proxy. Not required for newer installations.",
+          "type": "boolean",
+          "default": false
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": "hostname:UNIQUE"
+        },
+        "image": {
+          "title": "Etcd Image name",
+          "type": "string",
+          "default": "mesosphere/etcd-mesos:latest"
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "CPU requirements",
+          "type": "number",
+          "default": 0.3
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Mem requirements (in MB)",
+          "type": "integer",
+          "default": 1024
+        },
+        "disk_type": {
+          "title": "Type of disk to use for persisting data",
+          "description": "ROOT or MOUNT",
+          "type": "string",
+          "default": "ROOT"
+        },
+        "disk_size": {
+          "title": "Dize of disk (MB)",
+          "type": "integer",
+          "default": 5120
+        },
+        "node_advertise_port": {
+          "title": "Cluster Node advertise port",
+          "description": "Port on which the etcd cluster nodes will listen",
+          "type": "integer",
+          "default": 1026
+        },
+        "node_peer_port": {
+          "title": "Cluster Node peer port",
+          "description": "Port on which the etcd cluster nodes will communicate with each other",
+          "type": "integer",
+          "default": 1027
+        },
+        "proxy_advertise_port": {
+          "title": "Cluster Proxy advertise port",
+          "description": "Port on which the etcd proxy will listen",
+          "type": "integer",
+          "default": 2379
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "disk_type",
+        "disk_size",
+        "node_advertise_port",
+        "node_peer_port",
+        "proxy_advertise_port",
+        "image"
+      ]
+    },
+    "lighthouse": {
+      "description": "Lighthouse exposes the web UI for Portworx. Start this if you don't want to connect to the central Portworx Lighthouse. \nNote: Lighthouse will work only with Portworx 1.4 and above",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "title": "Start Lighthouse",
+          "description": "Start the Lighthouse service.",
+          "type": "boolean",
+          "default": false
+        },
+        "placement_constraint": {
+          "title": "Placement constraint",
+          "description": "Marathon-style placement constraint for nodes. Example: 'hostname:UNIQUE'",
+          "type": "string",
+          "default": ""
+        },
+        "public_agent": {
+          "title": "public_agent",
+          "description": "Whether to run Lighthouse on a public agent or not. If you do not have a public agent, disable this option to run on a private agent. Remember, this cannot be changed once the framework is deployed.",
+          "type": "boolean",
+          "default": true
+        },
+        "cpus": {
+          "title": "CPU count",
+          "description": "CPU requirements",
+          "type": "number",
+          "default": 0.3
+        },
+        "mem": {
+          "title": "Memory size (MB)",
+          "description": "Mem requirements (in MB)",
+          "type": "integer",
+          "default": 1024
+        },
+        "image": {
+          "title": "Lighthouse Image name",
+          "type": "string",
+          "default": "portworx/px-lighthouse:2.0.1"
+        },
+        "webui_port": {
+          "title": "WebUI Port",
+          "description": "Port on which Lighthouse can be accessed",
+          "type": "integer",
+          "default": 8085
+        },
+        "company_name": {
+          "title": "Company Name",
+          "description": "Company Name to use for creating Lighthouse account",
+          "type": "string",
+          "default": "Portworx"
+        },
+        "admin_username": {
+          "title": "Administrator username",
+          "description": "Username to use for the Lighthouse account. This cannot be changed later.",
+          "type": "string",
+          "default": "admin"
+        }
+      },
+      "required": [
+        "cpus",
+        "mem",
+        "webui_port",
+        "company_name",
+        "admin_username",
+        "image"
+      ]
+    }
+  }
+}
