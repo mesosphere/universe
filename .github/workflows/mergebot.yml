@@ -1,0 +1,55 @@
+name: mergebot
+
+on:
+  pull_request:
+    types: [opened, reopened, edited, synchronize, closed]
+  issue_comment:
+    branches: '**'
+
+  workflow_dispatch:
+
+jobs:
+  handle:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.MERGEBOT_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set mergebot username
+        run: git config --global user.name mesosphere-mergebot
+      - name: Set mergebot email
+        run: git config --global user.email ci-mergebot@d2iq.com
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v4
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+      - name: Fetch Mergebot code
+        uses: actions/checkout@v2
+        with:
+          repository: mesosphere/mergebot
+          path: mergebot_code/mergebot
+          ref: sn/kommander-cli-test
+          persist-credentials: false
+          token: ${{ secrets.MERGEBOT_TOKEN }}
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+      - name: Install mergebot Python dependencies
+        run: pip install -r ./mergebot_code/mergebot/requirements.txt
+      - name: Run Mergebot
+        env:
+          LOG_STDOUT: "true"
+          EVENT_TYPE: ${{ github.event_name }}
+          RUN_ID: ${{ github.run_id }}
+          MERGEBOT_TC_USERNAME: ${{secrets.MERGEBOT_TC_USERNAME}}
+          MERGEBOT_TC_PASSWORD: ${{secrets.MERGEBOT_TC_PASSWORD}}
+          MERGEBOT_TC_TOKEN: ${{secrets.MERGEBOT_TC_TOKEN}}
+          JIRA_USERNAME: ${{secrets.JIRA_USERNAME}}
+          JIRA_PASSWORD: ${{secrets.JIRA_PASSWORD}}
+        run: export EVENT=$(cat ${{github.event_path}}); export MERGEBOT_CONFIG=$(cat mergebot-config.json); cd mergebot_code; cd mergebot; python __main__.py
+
+
